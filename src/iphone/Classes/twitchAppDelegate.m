@@ -6,10 +6,10 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import "twitchAppDelegate.h"
+#import "TwitchAppDelegate.h"
 
 
-@implementation twitchAppDelegate
+@implementation TwitchAppDelegate
 
 @synthesize window;
 @synthesize tabBarController;

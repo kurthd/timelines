@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface twitchAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> {
+@interface TwitchAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> {
     UIWindow *window;
     UITabBarController *tabBarController;
 }
