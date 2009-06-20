@@ -152,6 +152,26 @@
 		vrLen = 237;
 		vrLoc = 0;
 	};
+	052C64240FED70F100B259D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28216C950DB411BC00E5133A /* FirstViewController.h */;
+		name = "FirstViewController.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 237;
+		vrLoc = 0;
+	};
+	052C64250FED70F100B259D7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28216C950DB411BC00E5133A /* FirstViewController.h */;
+		name = "FirstViewController.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 237;
+		vrLoc = 0;
+	};
 	1D3623240D0F684500981E51 /* TwitchAppDelegate.h */ = {
 		isa = PBXFileReference;
 		fileEncoding = 4;
@@ -173,7 +193,7 @@
 	};
 	28216C950DB411BC00E5133A /* FirstViewController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {849, 409}}";
+			sepNavIntBoundsRect = "{{0, 0}, {849, 386}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 237}";
 		};
@@ -234,6 +254,8 @@
 			052C641F0FED703400B259D7 /* PBXTextBookmark */ = 052C641F0FED703400B259D7 /* PBXTextBookmark */;
 			052C64200FED704D00B259D7 /* PBXTextBookmark */ = 052C64200FED704D00B259D7 /* PBXTextBookmark */;
 			052C64210FED705400B259D7 /* PBXTextBookmark */ = 052C64210FED705400B259D7 /* PBXTextBookmark */;
+			052C64240FED70F100B259D7 /* PBXTextBookmark */ = 052C64240FED70F100B259D7 /* PBXTextBookmark */;
+			052C64250FED70F100B259D7 /* PBXTextBookmark */ = 052C64250FED70F100B259D7 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 052C63EC0FED6EA100B259D7 /* Source Control */;
 		userBuildSettings = {

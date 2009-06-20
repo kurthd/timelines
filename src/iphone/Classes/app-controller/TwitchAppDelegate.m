@@ -1,8 +1,4 @@
 //
-//  twitchAppDelegate.m
-//  twitch
-//
-//  Created by John A. Debay on 6/20/09.
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
@@ -14,13 +10,40 @@
 @synthesize window;
 @synthesize tabBarController;
 
+- (void)applicationDidFinishLaunching:(UIApplication *)application
+{
+    UIRemoteNotificationType notificationTypes =
+        (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound);
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application {
+    [[UIApplication sharedApplication]
+        registerForRemoteNotificationTypes:notificationTypes];
     
     // Add the tab bar controller's current view as a subview of the window
     [window addSubview:tabBarController.view];
 }
 
+#pragma mark Notification delegate methods
+
+- (void)application:(UIApplication *)app
+    didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
+{
+    const void * devTokenBytes = [devToken bytes];
+    self.registered = YES;
+    [self sendProviderDeviceToken:devTokenBytes]; // custom method
+}
+ 
+- (void)application:(UIApplication *)app
+    didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
+{
+    NSLog(@"Error in registration. Error: %@", err);
+}
+
+ (void)application:(UIApplication *)application
+    didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"The application received a server notification while running: "
+        "%@.", userInfo);
+}
 
 /*
 // Optional UITabBarControllerDelegate method
