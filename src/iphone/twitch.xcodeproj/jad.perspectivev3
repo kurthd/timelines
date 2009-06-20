@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ActivePerspectiveName</key>
-	<string>Debug</string>
+	<string>Project</string>
 	<key>AllowedModules</key>
 	<array>
 		<dict>
@@ -231,6 +231,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -268,11 +270,12 @@
 							<array>
 								<string>29B97314FDCFA39411CA2CEA</string>
 								<string>080E96DDFE201D6D7F000001</string>
+								<string>052C64150FED700B00B259D7</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>4</integer>
+									<integer>2</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -294,6 +297,8 @@
 							<string>MainColumn</string>
 							<real>185</real>
 						</array>
+						<key>RubberWindowFrame</key>
+						<string>7 59 1117 816 0 0 1440 878 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -309,7 +314,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>052C63E60FED6EA100B259D7</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>TwitchAppDelegate.h</string>
+								<string>FirstViewController.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -317,14 +322,15 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>052C63E70FED6EA100B259D7</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>TwitchAppDelegate.h</string>
+										<string>FirstViewController.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>052C640A0FED6F9900B259D7</string>
+										<string>052C64210FED705400B259D7</string>
 										<key>history</key>
 										<array>
-											<string>052C64080FED6F9800B259D7</string>
+											<string>052C641C0FED703400B259D7</string>
+											<string>052C64200FED704D00B259D7</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -339,6 +345,8 @@
 							<dict>
 								<key>Frame</key>
 								<string>{{0, 0}, {910, 426}}</string>
+								<key>RubberWindowFrame</key>
+								<string>7 59 1117 816 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -362,6 +370,8 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {910, 317}}</string>
+										<key>RubberWindowFrame</key>
+										<string>7 59 1117 816 0 0 1440 878 </string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -500,8 +510,6 @@
 					<dict>
 						<key>Frame</key>
 						<string>{{0, 0}, {1117, 327}}</string>
-						<key>RubberWindowFrame</key>
-						<string>7 59 1117 816 0 0 1440 878 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugCLIModule</string>
@@ -576,11 +584,7 @@
 							</array>
 							<key>Frame</key>
 							<string>{{545, 0}, {572, 215}}</string>
-							<key>RubberWindowFrame</key>
-							<string>7 59 1117 816 0 0 1440 878 </string>
 						</dict>
-						<key>RubberWindowFrame</key>
-						<string>7 59 1117 816 0 0 1440 878 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXDebugSessionModule</string>
