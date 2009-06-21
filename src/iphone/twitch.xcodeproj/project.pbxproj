@@ -455,6 +455,88 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		05B239D00FEEA62800A6A2E6 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.0;
+			};
+			name = Distribution;
+		};
+		05B239D10FEEA62800A6A2E6 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = twitch_Prefix.pch;
+				INFOPLIST_FILE = "twitch-Info.plist";
+				PRODUCT_NAME = Twitch;
+			};
+			name = Distribution;
+		};
+		05B239D20FEEA62C00A6A2E6 /* Release - Doug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Douglas Kurth";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AA7F2B41-6452-442A-ADBF-895609D202AE";
+				SDKROOT = iphoneos3.0;
+			};
+			name = "Release - Doug";
+		};
+		05B239D30FEEA62C00A6A2E6 /* Release - Doug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = twitch_Prefix.pch;
+				INFOPLIST_FILE = "twitch-Info.plist";
+				PRODUCT_NAME = Twitch;
+			};
+			name = "Release - Doug";
+		};
+		05B239D40FEEA63500A6A2E6 /* Debug - Doug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Douglas Kurth";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AA7F2B41-6452-442A-ADBF-895609D202AE";
+				SDKROOT = iphoneos3.0;
+			};
+			name = "Debug - Doug";
+		};
+		05B239D50FEEA63500A6A2E6 /* Debug - Doug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = twitch_Prefix.pch;
+				INFOPLIST_FILE = "twitch-Info.plist";
+				PRODUCT_NAME = Twitch;
+			};
+			name = "Debug - Doug";
+		};
 		1D6058940D05DD3E006BFB54 /* Debug - John */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -480,62 +562,6 @@
 				PRODUCT_NAME = Twitch;
 			};
 			name = "Release - John";
-		};
-		916BD7540FEEA8B4007143A9 /* Debug - Doug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Douglas Kurth";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
-				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AA7F2B41-6452-442A-ADBF-895609D202AE";
-				SDKROOT = iphoneos3.0;
-			};
-			name = "Debug - Doug";
-		};
-		916BD7550FEEA8B4007143A9 /* Debug - Doug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				INFOPLIST_FILE = "twitch-Info.plist";
-				PRODUCT_NAME = Twitch;
-			};
-			name = "Debug - Doug";
-		};
-		916BD7560FEEA8C1007143A9 /* Release - Doug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Douglas Kurth";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
-				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AA7F2B41-6452-442A-ADBF-895609D202AE";
-				SDKROOT = iphoneos3.0;
-			};
-			name = "Release - Doug";
-		};
-		916BD7570FEEA8C1007143A9 /* Release - Doug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				INFOPLIST_FILE = "twitch-Info.plist";
-				PRODUCT_NAME = Twitch;
-			};
-			name = "Release - Doug";
 		};
 		C01FCF4F08A954540054247B /* Debug - John */ = {
 			isa = XCBuildConfiguration;
@@ -572,9 +598,10 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug - John */,
-				916BD7550FEEA8B4007143A9 /* Debug - Doug */,
+				05B239D50FEEA63500A6A2E6 /* Debug - Doug */,
 				1D6058950D05DD3E006BFB54 /* Release - John */,
-				916BD7570FEEA8C1007143A9 /* Release - Doug */,
+				05B239D30FEEA62C00A6A2E6 /* Release - Doug */,
+				05B239D10FEEA62800A6A2E6 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Release - John";
@@ -583,9 +610,10 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug - John */,
-				916BD7540FEEA8B4007143A9 /* Debug - Doug */,
+				05B239D40FEEA63500A6A2E6 /* Debug - Doug */,
 				C01FCF5008A954540054247B /* Release - John */,
-				916BD7560FEEA8C1007143A9 /* Release - Doug */,
+				05B239D20FEEA62C00A6A2E6 /* Release - Doug */,
+				05B239D00FEEA62800A6A2E6 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Release - John";
