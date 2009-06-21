@@ -16,14 +16,12 @@
     NSStringEncoding encoding = NSUTF8StringEncoding;
     NSMutableString * body =
         [NSMutableString stringWithFormat:@"devicetoken=%@", devToken];
-    [body replaceOccurrencesOfString:@"<"
-                          withString:@""
-                             options:0
-                               range:NSMakeRange(0, body.length)];
-    [body replaceOccurrencesOfString:@">"
-                          withString:@""
-                             options:0
-                               range:NSMakeRange(0, body.length)];
+    [body replaceOccurrencesOfString:@"<" withString:@""
+                             options:0 range:NSMakeRange(0, body.length)];
+    [body replaceOccurrencesOfString:@">" withString:@""
+                             options:0 range:NSMakeRange(0, body.length)];
+    [body replaceOccurrencesOfString:@" " withString:@""
+                             options:0 range:NSMakeRange(0, body.length)];
 
     for (id key in args)
         [body appendFormat:@"&%@=%@", key, [args objectForKey:key]];
