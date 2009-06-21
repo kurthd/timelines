@@ -40,6 +40,17 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		28216C970DB411BC00E5133A /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28216C960DB411BC00E5133A /* FirstViewController.m */; };
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
+		916BD7AC0FEEADD7007143A9 /* NetworkAwareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79A0FEEADD7007143A9 /* NetworkAwareViewController.m */; };
+		916BD7AD0FEEADD7007143A9 /* NSArray+IterationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79D0FEEADD7007143A9 /* NSArray+IterationAdditions.m */; };
+		916BD7AE0FEEADD7007143A9 /* NSDate+IsToday.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79F0FEEADD7007143A9 /* NSDate+IsToday.m */; };
+		916BD7AF0FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A10FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.m */; };
+		916BD7B00FEEADD7007143A9 /* NSDate+StringHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A30FEEADD7007143A9 /* NSDate+StringHelpers.m */; };
+		916BD7B10FEEADD7007143A9 /* NSError+InstantiationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A50FEEADD7007143A9 /* NSError+InstantiationAdditions.m */; };
+		916BD7B20FEEADD7007143A9 /* UIColor+TwitchColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A70FEEADD7007143A9 /* UIColor+TwitchColors.m */; };
+		916BD7B30FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A90FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.m */; };
+		916BD7B40FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7AB0FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m */; };
+		916BD7B80FEEAED1007143A9 /* NoDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7B70FEEAED1007143A9 /* NoDataViewController.m */; };
+		916BD7BE0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7BD0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +119,29 @@
 		28A0AB4B0D9B1048005BE974 /* twitch_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twitch_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* twitch-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "twitch-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		916BD7990FEEADD7007143A9 /* NetworkAwareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkAwareViewController.h; path = shared/NetworkAwareViewController.h; sourceTree = "<group>"; };
+		916BD79A0FEEADD7007143A9 /* NetworkAwareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkAwareViewController.m; path = shared/NetworkAwareViewController.m; sourceTree = "<group>"; };
+		916BD79B0FEEADD7007143A9 /* NetworkAwareViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkAwareViewControllerDelegate.h; path = shared/NetworkAwareViewControllerDelegate.h; sourceTree = "<group>"; };
+		916BD79C0FEEADD7007143A9 /* NSArray+IterationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+IterationAdditions.h"; path = "shared/NSArray+IterationAdditions.h"; sourceTree = "<group>"; };
+		916BD79D0FEEADD7007143A9 /* NSArray+IterationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+IterationAdditions.m"; path = "shared/NSArray+IterationAdditions.m"; sourceTree = "<group>"; };
+		916BD79E0FEEADD7007143A9 /* NSDate+IsToday.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+IsToday.h"; path = "shared/NSDate+IsToday.h"; sourceTree = "<group>"; };
+		916BD79F0FEEADD7007143A9 /* NSDate+IsToday.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+IsToday.m"; path = "shared/NSDate+IsToday.m"; sourceTree = "<group>"; };
+		916BD7A00FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+LighthouseStringHelpers.h"; path = "shared/NSDate+LighthouseStringHelpers.h"; sourceTree = "<group>"; };
+		916BD7A10FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+LighthouseStringHelpers.m"; path = "shared/NSDate+LighthouseStringHelpers.m"; sourceTree = "<group>"; };
+		916BD7A20FEEADD7007143A9 /* NSDate+StringHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+StringHelpers.h"; path = "shared/NSDate+StringHelpers.h"; sourceTree = "<group>"; };
+		916BD7A30FEEADD7007143A9 /* NSDate+StringHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+StringHelpers.m"; path = "shared/NSDate+StringHelpers.m"; sourceTree = "<group>"; };
+		916BD7A40FEEADD7007143A9 /* NSError+InstantiationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+InstantiationAdditions.h"; path = "shared/NSError+InstantiationAdditions.h"; sourceTree = "<group>"; };
+		916BD7A50FEEADD7007143A9 /* NSError+InstantiationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+InstantiationAdditions.m"; path = "shared/NSError+InstantiationAdditions.m"; sourceTree = "<group>"; };
+		916BD7A60FEEADD7007143A9 /* UIColor+TwitchColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+TwitchColors.h"; path = "shared/UIColor+TwitchColors.h"; sourceTree = "<group>"; };
+		916BD7A70FEEADD7007143A9 /* UIColor+TwitchColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+TwitchColors.m"; path = "shared/UIColor+TwitchColors.m"; sourceTree = "<group>"; };
+		916BD7A80FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITableViewCell+InstantiationAdditions.h"; path = "shared/UITableViewCell+InstantiationAdditions.h"; sourceTree = "<group>"; };
+		916BD7A90FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITableViewCell+InstantiationAdditions.m"; path = "shared/UITableViewCell+InstantiationAdditions.m"; sourceTree = "<group>"; };
+		916BD7AA0FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+FileLoadingAdditions.h"; path = "shared/UIWebView+FileLoadingAdditions.h"; sourceTree = "<group>"; };
+		916BD7AB0FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+FileLoadingAdditions.m"; path = "shared/UIWebView+FileLoadingAdditions.m"; sourceTree = "<group>"; };
+		916BD7B60FEEAED1007143A9 /* NoDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoDataViewController.h; path = shared/NoDataViewController.h; sourceTree = "<group>"; };
+		916BD7B70FEEAED1007143A9 /* NoDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoDataViewController.m; path = shared/NoDataViewController.m; sourceTree = "<group>"; };
+		916BD7BC0FEEAF13007143A9 /* NSObject+RuntimeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+RuntimeAdditions.h"; path = "shared/NSObject+RuntimeAdditions.h"; sourceTree = "<group>"; };
+		916BD7BD0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+RuntimeAdditions.m"; path = "shared/NSObject+RuntimeAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +257,29 @@
 		05B2393C0FEDD05E00A6A2E6 /* shared */ = {
 			isa = PBXGroup;
 			children = (
+				916BD7BC0FEEAF13007143A9 /* NSObject+RuntimeAdditions.h */,
+				916BD7BD0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m */,
+				916BD7B60FEEAED1007143A9 /* NoDataViewController.h */,
+				916BD7B70FEEAED1007143A9 /* NoDataViewController.m */,
+				916BD7990FEEADD7007143A9 /* NetworkAwareViewController.h */,
+				916BD79A0FEEADD7007143A9 /* NetworkAwareViewController.m */,
+				916BD79B0FEEADD7007143A9 /* NetworkAwareViewControllerDelegate.h */,
+				916BD79C0FEEADD7007143A9 /* NSArray+IterationAdditions.h */,
+				916BD79D0FEEADD7007143A9 /* NSArray+IterationAdditions.m */,
+				916BD79E0FEEADD7007143A9 /* NSDate+IsToday.h */,
+				916BD79F0FEEADD7007143A9 /* NSDate+IsToday.m */,
+				916BD7A00FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.h */,
+				916BD7A10FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.m */,
+				916BD7A20FEEADD7007143A9 /* NSDate+StringHelpers.h */,
+				916BD7A30FEEADD7007143A9 /* NSDate+StringHelpers.m */,
+				916BD7A40FEEADD7007143A9 /* NSError+InstantiationAdditions.h */,
+				916BD7A50FEEADD7007143A9 /* NSError+InstantiationAdditions.m */,
+				916BD7A60FEEADD7007143A9 /* UIColor+TwitchColors.h */,
+				916BD7A70FEEADD7007143A9 /* UIColor+TwitchColors.m */,
+				916BD7A80FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.h */,
+				916BD7A90FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.m */,
+				916BD7AA0FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.h */,
+				916BD7AB0FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m */,
 				05B2393D0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.h */,
 				05B2393E0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.m */,
 			);
@@ -413,6 +470,17 @@
 				05B2393F0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.m in Sources */,
 				05B239670FEDD1E500A6A2E6 /* AbstractUpdatePublisher.m in Sources */,
 				05B2396C0FEDD21B00A6A2E6 /* CredentialsUpdatePublisher.m in Sources */,
+				916BD7AC0FEEADD7007143A9 /* NetworkAwareViewController.m in Sources */,
+				916BD7AD0FEEADD7007143A9 /* NSArray+IterationAdditions.m in Sources */,
+				916BD7AE0FEEADD7007143A9 /* NSDate+IsToday.m in Sources */,
+				916BD7AF0FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.m in Sources */,
+				916BD7B00FEEADD7007143A9 /* NSDate+StringHelpers.m in Sources */,
+				916BD7B10FEEADD7007143A9 /* NSError+InstantiationAdditions.m in Sources */,
+				916BD7B20FEEADD7007143A9 /* UIColor+TwitchColors.m in Sources */,
+				916BD7B30FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.m in Sources */,
+				916BD7B40FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m in Sources */,
+				916BD7B80FEEAED1007143A9 /* NoDataViewController.m in Sources */,
+				916BD7BE0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
