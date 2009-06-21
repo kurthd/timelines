@@ -4,12 +4,13 @@
 
 #import <UIKit/UIKit.h>
 #import "NetworkAwareViewController.h"
+#import "DeviceRegistrarDelegate.h"
 
 @class LogInDisplayMgr, DeviceRegistrar;
 @class CredentialsUpdatePublisher;
 
 @interface TwitchAppDelegate : NSObject
-    <UIApplicationDelegate, UITabBarControllerDelegate>
+    <UIApplicationDelegate, UITabBarControllerDelegate, DeviceRegistrarDelegate>
 {
     UIWindow *window;
     UITabBarController *tabBarController;

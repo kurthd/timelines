@@ -7,6 +7,8 @@
 #import "LogInDisplayMgr.h"
 #import "CredentialsUpdatePublisher.h"
 #import "TwitterCredentials.h"
+#import "UIAlertView+InstantiationAdditions.h"
+#import "InfoPlistConfigReader.h"
 
 @interface TwitchAppDelegate ()
 
@@ -206,6 +208,32 @@
         "%@.", userInfo);
 }
 
+#pragma mark DeviceRegistrarDelegate implementation
+
+- (void)registeredDeviceWithToken:(NSData *)token
+{
+    NSLog(@"Successfully registered the device for push notifications: '%@'.",
+        token);
+}
+
+- (void)failedToRegisterDeviceWithToken:(NSData *)token error:(NSError *)error
+{
+    NSLog(@"Failed to register device for push notifications: '%@', error: "
+        "'%@'.", token, error);
+
+    NSString * title =
+        NSLocalizedString(@"notification.registration.failed.alert.title", @"");
+    NSString * message =
+        [NSString stringWithFormat:@"%@\n\n%@",
+        error.localizedDescription,
+        NSLocalizedString(@"notification.registration.failed.alert.message",
+            @"")];
+
+    UIAlertView * alert = [UIAlertView simpleAlertViewWithTitle:title
+                                                        message:message];
+    [alert show];
+}
+
 #pragma mark Push notification helpers
 
 - (void)registerForPushNotifications
@@ -231,8 +259,13 @@
 
 - (DeviceRegistrar *)registrar
 {
-    if (!registrar)
-        registrar = [[DeviceRegistrar alloc] init];
+    if (!registrar) {
+        NSString * url =
+            [[InfoPlistConfigReader reader]
+            valueForKey:@"DeviceRegistrationUrl"];
+        registrar = [[DeviceRegistrar alloc] initWithUrl:url];
+        registrar.delegate = self;
+    }
 
     return registrar;
 }
