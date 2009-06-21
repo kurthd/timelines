@@ -455,7 +455,73 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		1D6058940D05DD3E006BFB54 /* Debug */ = {
+		05B239D00FEEA62800A6A2E6 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.0;
+			};
+			name = Distribution;
+		};
+		05B239D10FEEA62800A6A2E6 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = twitch_Prefix.pch;
+				INFOPLIST_FILE = "twitch-Info.plist";
+				PRODUCT_NAME = Twitch;
+			};
+			name = Distribution;
+		};
+		05B239D20FEEA62C00A6A2E6 /* Release - Doug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.0;
+			};
+			name = "Release - Doug";
+		};
+		05B239D30FEEA62C00A6A2E6 /* Release - Doug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = twitch_Prefix.pch;
+				INFOPLIST_FILE = "twitch-Info.plist";
+				PRODUCT_NAME = Twitch;
+			};
+			name = "Release - Doug";
+		};
+		05B239D40FEEA63500A6A2E6 /* Debug - Doug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.0;
+			};
+			name = "Debug - Doug";
+		};
+		05B239D50FEEA63500A6A2E6 /* Debug - Doug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -467,9 +533,23 @@
 				INFOPLIST_FILE = "twitch-Info.plist";
 				PRODUCT_NAME = Twitch;
 			};
-			name = Debug;
+			name = "Debug - Doug";
 		};
-		1D6058950D05DD3E006BFB54 /* Release */ = {
+		1D6058940D05DD3E006BFB54 /* Debug - John */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = twitch_Prefix.pch;
+				INFOPLIST_FILE = "twitch-Info.plist";
+				PRODUCT_NAME = Twitch;
+			};
+			name = "Debug - John";
+		};
+		1D6058950D05DD3E006BFB54 /* Release - John */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -479,9 +559,9 @@
 				INFOPLIST_FILE = "twitch-Info.plist";
 				PRODUCT_NAME = Twitch;
 			};
-			name = Release;
+			name = "Release - John";
 		};
-		C01FCF4F08A954540054247B /* Debug */ = {
+		C01FCF4F08A954540054247B /* Debug - John */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -493,9 +573,9 @@
 				PREBINDING = NO;
 				SDKROOT = iphoneos3.0;
 			};
-			name = Debug;
+			name = "Debug - John";
 		};
-		C01FCF5008A954540054247B /* Release */ = {
+		C01FCF5008A954540054247B /* Release - John */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -507,7 +587,7 @@
 				PREBINDING = NO;
 				SDKROOT = iphoneos3.0;
 			};
-			name = Release;
+			name = "Release - John";
 		};
 /* End XCBuildConfiguration section */
 
@@ -515,20 +595,26 @@
 		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "twitch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1D6058940D05DD3E006BFB54 /* Debug */,
-				1D6058950D05DD3E006BFB54 /* Release */,
+				1D6058940D05DD3E006BFB54 /* Debug - John */,
+				05B239D50FEEA63500A6A2E6 /* Debug - Doug */,
+				1D6058950D05DD3E006BFB54 /* Release - John */,
+				05B239D30FEEA62C00A6A2E6 /* Release - Doug */,
+				05B239D10FEEA62800A6A2E6 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release - John";
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "twitch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C01FCF4F08A954540054247B /* Debug */,
-				C01FCF5008A954540054247B /* Release */,
+				C01FCF4F08A954540054247B /* Debug - John */,
+				05B239D40FEEA63500A6A2E6 /* Debug - Doug */,
+				C01FCF5008A954540054247B /* Release - John */,
+				05B239D20FEEA62C00A6A2E6 /* Release - Doug */,
+				05B239D00FEEA62800A6A2E6 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release - John";
 		};
 /* End XCConfigurationList section */
 	};
