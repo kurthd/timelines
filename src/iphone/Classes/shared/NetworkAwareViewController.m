@@ -56,7 +56,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 {
     if (self = [super init]) {
         [self noDataViewController].view.backgroundColor =
-            [UIColor bugWatchBackgroundColor];
+            [UIColor twitchBackgroundColor];
 
         [self setUpdatingText:NSLocalizedString(@"nodata.updating.text", @"")];
         [self setLoadingText:NSLocalizedString(@"nodata.loading.text", @"")];
@@ -163,7 +163,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
         // this seems to get overwritten on the device occasionally, so force
         // it here
         [self noDataViewController].view.backgroundColor =
-            [UIColor bugWatchBackgroundColor];
+            [UIColor twitchBackgroundColor];
 
         // set no data text
         NSString * labelText =
