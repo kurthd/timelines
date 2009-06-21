@@ -31,7 +31,7 @@
     NSLog(@"Sending body: '%@'.", encodedBody);
 
     NSURL * url =
-        [NSURL URLWithString:@"http://megatron.local:3000/register_device"];
+        [NSURL URLWithString:@"http://megatron.local:3000/device/register"];
     NSMutableURLRequest * req =
         [NSMutableURLRequest requestWithURL:url];
     [req setHTTPMethod:@"POST"];

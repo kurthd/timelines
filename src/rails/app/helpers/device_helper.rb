@@ -1,2 +1,2 @@
-module RegisterDeviceHelper
+module DeviceHelper
 end
