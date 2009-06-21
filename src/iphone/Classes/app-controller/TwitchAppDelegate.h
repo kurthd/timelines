@@ -1,16 +1,18 @@
 //
-//  twitchAppDelegate.h
-//  twitch
-//
-//  Created by John A. Debay on 6/20/09.
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface TwitchAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> {
+@class DeviceRegistrar;
+
+@interface TwitchAppDelegate : NSObject
+    <UIApplicationDelegate, UITabBarControllerDelegate>
+{
     UIWindow *window;
     UITabBarController *tabBarController;
+
+    DeviceRegistrar * registrar;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

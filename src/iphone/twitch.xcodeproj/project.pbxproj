@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		052C64190FED703200B259D7 /* TwitchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C64180FED703200B259D7 /* TwitchAppDelegate.m */; };
+		055B782B0FED7D4A008859F7 /* DeviceRegistrar.m in Sources */ = {isa = PBXBuildFile; fileRef = 055B782A0FED7D4A008859F7 /* DeviceRegistrar.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -20,8 +21,10 @@
 /* Begin PBXFileReference section */
 		052C64170FED703200B259D7 /* TwitchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchAppDelegate.h; path = "app-controller/TwitchAppDelegate.h"; sourceTree = "<group>"; };
 		052C64180FED703200B259D7 /* TwitchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchAppDelegate.m; path = "app-controller/TwitchAppDelegate.m"; sourceTree = "<group>"; };
+		055B78290FED7D4A008859F7 /* DeviceRegistrar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceRegistrar.h; path = notifications/DeviceRegistrar.h; sourceTree = "<group>"; };
+		055B782A0FED7D4A008859F7 /* DeviceRegistrar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceRegistrar.m; path = notifications/DeviceRegistrar.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D6058910D05DD3D006BFB54 /* twitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = twitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Twitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		28216C950DB411BC00E5133A /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		28216C960DB411BC00E5133A /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
@@ -56,12 +59,22 @@
 			name = "app-controller";
 			sourceTree = "<group>";
 		};
+		055B78280FED7D31008859F7 /* notifications */ = {
+			isa = PBXGroup;
+			children = (
+				055B78290FED7D4A008859F7 /* DeviceRegistrar.h */,
+				055B782A0FED7D4A008859F7 /* DeviceRegistrar.m */,
+			);
+			name = notifications;
+			sourceTree = "<group>";
+		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				052C64150FED700B00B259D7 /* app-controller */,
 				28216C950DB411BC00E5133A /* FirstViewController.h */,
 				28216C960DB411BC00E5133A /* FirstViewController.m */,
+				055B78280FED7D31008859F7 /* notifications */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -69,7 +82,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* twitch.app */,
+				1D6058910D05DD3D006BFB54 /* Twitch.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,7 +145,7 @@
 			);
 			name = twitch;
 			productName = twitch;
-			productReference = 1D6058910D05DD3D006BFB54 /* twitch.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Twitch.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -172,6 +185,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				28216C970DB411BC00E5133A /* FirstViewController.m in Sources */,
 				052C64190FED703200B259D7 /* TwitchAppDelegate.m in Sources */,
+				055B782B0FED7D4A008859F7 /* DeviceRegistrar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,7 +202,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
 				INFOPLIST_FILE = "twitch-Info.plist";
-				PRODUCT_NAME = twitch;
+				PRODUCT_NAME = Twitch;
 			};
 			name = Debug;
 		};
@@ -200,7 +214,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
 				INFOPLIST_FILE = "twitch-Info.plist";
-				PRODUCT_NAME = twitch;
+				PRODUCT_NAME = Twitch;
 			};
 			name = Release;
 		};

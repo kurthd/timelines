@@ -3,21 +3,38 @@
 //
 
 #import "TwitchAppDelegate.h"
+#import "DeviceRegistrar.h"
 
+@interface TwitchAppDelegate ()
+
+@property (nonatomic, retain) DeviceRegistrar * registrar;
+
+@end
 
 @implementation TwitchAppDelegate
 
 @synthesize window;
 @synthesize tabBarController;
+@synthesize registrar;
+
+- (void)dealloc
+{
+    [tabBarController release];
+    [window release];
+    [registrar release];
+    [super dealloc];
+}
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
     UIRemoteNotificationType notificationTypes =
-        (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound);
+        (UIRemoteNotificationTypeBadge |
+         UIRemoteNotificationTypeSound |
+         UIRemoteNotificationTypeAlert);
 
     [[UIApplication sharedApplication]
         registerForRemoteNotificationTypes:notificationTypes];
-    
+
     // Add the tab bar controller's current view as a subview of the window
     [window addSubview:tabBarController.view];
 }
@@ -27,9 +44,13 @@
 - (void)application:(UIApplication *)app
     didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
 {
-    const void * devTokenBytes = [devToken bytes];
-    self.registered = YES;
-    [self sendProviderDeviceToken:devTokenBytes]; // custom method
+    NSLog(@"Device token: %@.", devToken);
+
+    [self.registrar sendProviderDeviceToken:devToken];
+
+    //const void * devTokenBytes = [devToken bytes];
+    //self.registered = YES;
+    //[self sendProviderDeviceToken:devTokenBytes]; // custom method
 }
  
 - (void)application:(UIApplication *)app
@@ -38,7 +59,7 @@
     NSLog(@"Error in registration. Error: %@", err);
 }
 
- (void)application:(UIApplication *)application
+- (void)application:(UIApplication *)application
     didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     NSLog(@"The application received a server notification while running: "
@@ -57,11 +78,14 @@
 }
 */
 
+#pragma mark Accessors
 
-- (void)dealloc {
-    [tabBarController release];
-    [window release];
-    [super dealloc];
+- (DeviceRegistrar *)registrar
+{
+    if (!registrar)
+        registrar = [[DeviceRegistrar alloc] init];
+
+    return registrar;
 }
 
 @end
