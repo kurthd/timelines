@@ -16,11 +16,20 @@ class DeviceController < ApplicationController
 
       logger.info "Registering username: '#{username}' with device: '#{token}'."
 
-    elsif request.get?
-      logger.debug "Received get request."
-    else
-      logger.debug "I don't know what I received."
-    end
+      iphone = Iphone.find(:conditions => [ 'device_token = ?', token])
+      if iphone == nil
+        iphone = iPhone.new(:device_token => token)
+        iphone.save
+      end
+
+      twitter_user =
+        TwitterUser.new(:username => username, :password => password)
+      twitter_user.save!
+
+      subscription =
+        DeviceSubscription.new(:twitter_user_id => twitter_user.id,
+                               :iphone_id => iphone.id)
+      subscription.save!
   end
 
 end
