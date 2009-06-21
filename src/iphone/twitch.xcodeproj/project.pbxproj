@@ -26,7 +26,6 @@
 		05B2387D0FEDC15800A6A2E6 /* DeviceRegistrar.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B2387C0FEDC15800A6A2E6 /* DeviceRegistrar.m */; };
 		05B238810FEDC29400A6A2E6 /* LogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B238800FEDC29400A6A2E6 /* LogInDisplayMgr.m */; };
 		05B238860FEDC34200A6A2E6 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
-		05B238870FEDC34200A6A2E6 /* SecondView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238840FEDC34200A6A2E6 /* SecondView.xib */; };
 		05B2388A0FEDC35400A6A2E6 /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
 		05B238E20FEDC4F700A6A2E6 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B238E00FEDC4F700A6A2E6 /* LogInViewController.m */; };
 		05B2393F0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B2393E0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.m */; };
@@ -42,6 +41,27 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		28216C970DB411BC00E5133A /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28216C960DB411BC00E5133A /* FirstViewController.m */; };
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
+		916BD7AC0FEEADD7007143A9 /* NetworkAwareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79A0FEEADD7007143A9 /* NetworkAwareViewController.m */; };
+		916BD7AD0FEEADD7007143A9 /* NSArray+IterationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79D0FEEADD7007143A9 /* NSArray+IterationAdditions.m */; };
+		916BD7AE0FEEADD7007143A9 /* NSDate+IsToday.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79F0FEEADD7007143A9 /* NSDate+IsToday.m */; };
+		916BD7AF0FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A10FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.m */; };
+		916BD7B00FEEADD7007143A9 /* NSDate+StringHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A30FEEADD7007143A9 /* NSDate+StringHelpers.m */; };
+		916BD7B10FEEADD7007143A9 /* NSError+InstantiationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A50FEEADD7007143A9 /* NSError+InstantiationAdditions.m */; };
+		916BD7B20FEEADD7007143A9 /* UIColor+TwitchColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A70FEEADD7007143A9 /* UIColor+TwitchColors.m */; };
+		916BD7B30FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A90FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.m */; };
+		916BD7B40FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7AB0FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m */; };
+		916BD7B80FEEAED1007143A9 /* NoDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7B70FEEAED1007143A9 /* NoDataViewController.m */; };
+		916BD7BE0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7BD0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m */; };
+		916BD7CD0FEEB11F007143A9 /* HomeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7CC0FEEB11F007143A9 /* HomeIcon.png */; };
+		916BD7CF0FEEB193007143A9 /* HomeIconWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7CE0FEEB193007143A9 /* HomeIconWhite.png */; };
+		916BD7D10FEEB2DE007143A9 /* MentionsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D00FEEB2DE007143A9 /* MentionsIcon.png */; };
+		916BD7D40FEEB49B007143A9 /* Envelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D20FEEB49B007143A9 /* Envelope.png */; };
+		916BD7D50FEEB49B007143A9 /* LineChart.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D30FEEB49B007143A9 /* LineChart.png */; };
+		916BD7D70FEEB5CB007143A9 /* Star.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D60FEEB5CB007143A9 /* Star.png */; };
+		916BD7D90FEEB770007143A9 /* Profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D80FEEB770007143A9 /* Profile.png */; };
+		916BD7DC0FEEB839007143A9 /* Gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7DA0FEEB839007143A9 /* Gear.png */; };
+		916BD7DD0FEEB839007143A9 /* House.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7DB0FEEB839007143A9 /* House.png */; };
+		916BD7EF0FEEB958007143A9 /* NoDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7ED0FEEB958007143A9 /* NoDataView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,7 +105,6 @@
 		05B2387F0FEDC29400A6A2E6 /* LogInDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogInDisplayMgr.h; path = "log-in/LogInDisplayMgr.h"; sourceTree = "<group>"; };
 		05B238800FEDC29400A6A2E6 /* LogInDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogInDisplayMgr.m; path = "log-in/LogInDisplayMgr.m"; sourceTree = "<group>"; };
 		05B238830FEDC34200A6A2E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		05B238850FEDC34200A6A2E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/SecondView.xib; sourceTree = "<group>"; };
 		05B238890FEDC35400A6A2E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/LogInView.xib; sourceTree = "<group>"; };
 		05B238DF0FEDC4F700A6A2E6 /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogInViewController.h; path = "log-in/LogInViewController.h"; sourceTree = "<group>"; };
 		05B238E00FEDC4F700A6A2E6 /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogInViewController.m; path = "log-in/LogInViewController.m"; sourceTree = "<group>"; };
@@ -112,6 +131,39 @@
 		28A0AB4B0D9B1048005BE974 /* twitch_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twitch_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* twitch-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "twitch-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		916BD7990FEEADD7007143A9 /* NetworkAwareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkAwareViewController.h; path = shared/NetworkAwareViewController.h; sourceTree = "<group>"; };
+		916BD79A0FEEADD7007143A9 /* NetworkAwareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkAwareViewController.m; path = shared/NetworkAwareViewController.m; sourceTree = "<group>"; };
+		916BD79B0FEEADD7007143A9 /* NetworkAwareViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkAwareViewControllerDelegate.h; path = shared/NetworkAwareViewControllerDelegate.h; sourceTree = "<group>"; };
+		916BD79C0FEEADD7007143A9 /* NSArray+IterationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+IterationAdditions.h"; path = "shared/NSArray+IterationAdditions.h"; sourceTree = "<group>"; };
+		916BD79D0FEEADD7007143A9 /* NSArray+IterationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+IterationAdditions.m"; path = "shared/NSArray+IterationAdditions.m"; sourceTree = "<group>"; };
+		916BD79E0FEEADD7007143A9 /* NSDate+IsToday.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+IsToday.h"; path = "shared/NSDate+IsToday.h"; sourceTree = "<group>"; };
+		916BD79F0FEEADD7007143A9 /* NSDate+IsToday.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+IsToday.m"; path = "shared/NSDate+IsToday.m"; sourceTree = "<group>"; };
+		916BD7A00FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+LighthouseStringHelpers.h"; path = "shared/NSDate+LighthouseStringHelpers.h"; sourceTree = "<group>"; };
+		916BD7A10FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+LighthouseStringHelpers.m"; path = "shared/NSDate+LighthouseStringHelpers.m"; sourceTree = "<group>"; };
+		916BD7A20FEEADD7007143A9 /* NSDate+StringHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+StringHelpers.h"; path = "shared/NSDate+StringHelpers.h"; sourceTree = "<group>"; };
+		916BD7A30FEEADD7007143A9 /* NSDate+StringHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+StringHelpers.m"; path = "shared/NSDate+StringHelpers.m"; sourceTree = "<group>"; };
+		916BD7A40FEEADD7007143A9 /* NSError+InstantiationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+InstantiationAdditions.h"; path = "shared/NSError+InstantiationAdditions.h"; sourceTree = "<group>"; };
+		916BD7A50FEEADD7007143A9 /* NSError+InstantiationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+InstantiationAdditions.m"; path = "shared/NSError+InstantiationAdditions.m"; sourceTree = "<group>"; };
+		916BD7A60FEEADD7007143A9 /* UIColor+TwitchColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+TwitchColors.h"; path = "shared/UIColor+TwitchColors.h"; sourceTree = "<group>"; };
+		916BD7A70FEEADD7007143A9 /* UIColor+TwitchColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+TwitchColors.m"; path = "shared/UIColor+TwitchColors.m"; sourceTree = "<group>"; };
+		916BD7A80FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITableViewCell+InstantiationAdditions.h"; path = "shared/UITableViewCell+InstantiationAdditions.h"; sourceTree = "<group>"; };
+		916BD7A90FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITableViewCell+InstantiationAdditions.m"; path = "shared/UITableViewCell+InstantiationAdditions.m"; sourceTree = "<group>"; };
+		916BD7AA0FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+FileLoadingAdditions.h"; path = "shared/UIWebView+FileLoadingAdditions.h"; sourceTree = "<group>"; };
+		916BD7AB0FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+FileLoadingAdditions.m"; path = "shared/UIWebView+FileLoadingAdditions.m"; sourceTree = "<group>"; };
+		916BD7B60FEEAED1007143A9 /* NoDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoDataViewController.h; path = shared/NoDataViewController.h; sourceTree = "<group>"; };
+		916BD7B70FEEAED1007143A9 /* NoDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoDataViewController.m; path = shared/NoDataViewController.m; sourceTree = "<group>"; };
+		916BD7BC0FEEAF13007143A9 /* NSObject+RuntimeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+RuntimeAdditions.h"; path = "shared/NSObject+RuntimeAdditions.h"; sourceTree = "<group>"; };
+		916BD7BD0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+RuntimeAdditions.m"; path = "shared/NSObject+RuntimeAdditions.m"; sourceTree = "<group>"; };
+		916BD7CC0FEEB11F007143A9 /* HomeIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HomeIcon.png; path = images/HomeIcon.png; sourceTree = "<group>"; };
+		916BD7CE0FEEB193007143A9 /* HomeIconWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HomeIconWhite.png; path = images/HomeIconWhite.png; sourceTree = "<group>"; };
+		916BD7D00FEEB2DE007143A9 /* MentionsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MentionsIcon.png; path = images/MentionsIcon.png; sourceTree = "<group>"; };
+		916BD7D20FEEB49B007143A9 /* Envelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Envelope.png; path = images/Envelope.png; sourceTree = "<group>"; };
+		916BD7D30FEEB49B007143A9 /* LineChart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LineChart.png; path = images/LineChart.png; sourceTree = "<group>"; };
+		916BD7D60FEEB5CB007143A9 /* Star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Star.png; path = images/Star.png; sourceTree = "<group>"; };
+		916BD7D80FEEB770007143A9 /* Profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Profile.png; path = images/Profile.png; sourceTree = "<group>"; };
+		916BD7DA0FEEB839007143A9 /* Gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Gear.png; path = images/Gear.png; sourceTree = "<group>"; };
+		916BD7DB0FEEB839007143A9 /* House.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = House.png; path = images/House.png; sourceTree = "<group>"; };
+		916BD7EE0FEEB958007143A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/NoDataView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +280,29 @@
 		05B2393C0FEDD05E00A6A2E6 /* shared */ = {
 			isa = PBXGroup;
 			children = (
+				916BD7BC0FEEAF13007143A9 /* NSObject+RuntimeAdditions.h */,
+				916BD7BD0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m */,
+				916BD7B60FEEAED1007143A9 /* NoDataViewController.h */,
+				916BD7B70FEEAED1007143A9 /* NoDataViewController.m */,
+				916BD7990FEEADD7007143A9 /* NetworkAwareViewController.h */,
+				916BD79A0FEEADD7007143A9 /* NetworkAwareViewController.m */,
+				916BD79B0FEEADD7007143A9 /* NetworkAwareViewControllerDelegate.h */,
+				916BD79C0FEEADD7007143A9 /* NSArray+IterationAdditions.h */,
+				916BD79D0FEEADD7007143A9 /* NSArray+IterationAdditions.m */,
+				916BD79E0FEEADD7007143A9 /* NSDate+IsToday.h */,
+				916BD79F0FEEADD7007143A9 /* NSDate+IsToday.m */,
+				916BD7A00FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.h */,
+				916BD7A10FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.m */,
+				916BD7A20FEEADD7007143A9 /* NSDate+StringHelpers.h */,
+				916BD7A30FEEADD7007143A9 /* NSDate+StringHelpers.m */,
+				916BD7A40FEEADD7007143A9 /* NSError+InstantiationAdditions.h */,
+				916BD7A50FEEADD7007143A9 /* NSError+InstantiationAdditions.m */,
+				916BD7A60FEEADD7007143A9 /* UIColor+TwitchColors.h */,
+				916BD7A70FEEADD7007143A9 /* UIColor+TwitchColors.m */,
+				916BD7A80FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.h */,
+				916BD7A90FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.m */,
+				916BD7AA0FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.h */,
+				916BD7AB0FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m */,
 				05B2393D0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.h */,
 				05B2393E0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.m */,
 			);
@@ -237,8 +312,8 @@
 		05B239440FEDD0E400A6A2E6 /* nibs */ = {
 			isa = PBXGroup;
 			children = (
+				916BD7ED0FEEB958007143A9 /* NoDataView.xib */,
 				05B238820FEDC34200A6A2E6 /* MainWindow.xib */,
-				05B238840FEDC34200A6A2E6 /* SecondView.xib */,
 				05B238880FEDC35400A6A2E6 /* LogInView.xib */,
 			);
 			name = nibs;
@@ -321,6 +396,7 @@
 			isa = PBXGroup;
 			children = (
 				05B23A040FEEB10B00A6A2E6 /* data-model */,
+				916BD7CB0FEEB112007143A9 /* images */,
 				05B239440FEDD0E400A6A2E6 /* nibs */,
 				05B239450FEDD0F800A6A2E6 /* strings */,
 				8D1107310486CEB800E47090 /* twitch-Info.plist */,
@@ -338,6 +414,22 @@
 				05B238310FEDBA6600A6A2E6 /* libxml2.dylib */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		916BD7CB0FEEB112007143A9 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				916BD7DA0FEEB839007143A9 /* Gear.png */,
+				916BD7DB0FEEB839007143A9 /* House.png */,
+				916BD7D80FEEB770007143A9 /* Profile.png */,
+				916BD7D60FEEB5CB007143A9 /* Star.png */,
+				916BD7D20FEEB49B007143A9 /* Envelope.png */,
+				916BD7D30FEEB49B007143A9 /* LineChart.png */,
+				916BD7D00FEEB2DE007143A9 /* MentionsIcon.png */,
+				916BD7CE0FEEB193007143A9 /* HomeIconWhite.png */,
+				916BD7CC0FEEB11F007143A9 /* HomeIcon.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -390,9 +482,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				05B238860FEDC34200A6A2E6 /* MainWindow.xib in Resources */,
-				05B238870FEDC34200A6A2E6 /* SecondView.xib in Resources */,
 				05B2388A0FEDC35400A6A2E6 /* LogInView.xib in Resources */,
 				05B239490FEDD10900A6A2E6 /* Localizable.strings in Resources */,
+				916BD7CD0FEEB11F007143A9 /* HomeIcon.png in Resources */,
+				916BD7CF0FEEB193007143A9 /* HomeIconWhite.png in Resources */,
+				916BD7D10FEEB2DE007143A9 /* MentionsIcon.png in Resources */,
+				916BD7D40FEEB49B007143A9 /* Envelope.png in Resources */,
+				916BD7D50FEEB49B007143A9 /* LineChart.png in Resources */,
+				916BD7D70FEEB5CB007143A9 /* Star.png in Resources */,
+				916BD7D90FEEB770007143A9 /* Profile.png in Resources */,
+				916BD7DC0FEEB839007143A9 /* Gear.png in Resources */,
+				916BD7DD0FEEB839007143A9 /* House.png in Resources */,
+				916BD7EF0FEEB958007143A9 /* NoDataView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +530,17 @@
 				05B239F10FEEABBB00A6A2E6 /* twitch.xcdatamodel in Sources */,
 				05B23A600FEEB59C00A6A2E6 /* Account.m in Sources */,
 				05B23A6C0FEEB70600A6A2E6 /* TwitterCredentials.m in Sources */,
+				916BD7AC0FEEADD7007143A9 /* NetworkAwareViewController.m in Sources */,
+				916BD7AD0FEEADD7007143A9 /* NSArray+IterationAdditions.m in Sources */,
+				916BD7AE0FEEADD7007143A9 /* NSDate+IsToday.m in Sources */,
+				916BD7AF0FEEADD7007143A9 /* NSDate+LighthouseStringHelpers.m in Sources */,
+				916BD7B00FEEADD7007143A9 /* NSDate+StringHelpers.m in Sources */,
+				916BD7B10FEEADD7007143A9 /* NSError+InstantiationAdditions.m in Sources */,
+				916BD7B20FEEADD7007143A9 /* UIColor+TwitchColors.m in Sources */,
+				916BD7B30FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.m in Sources */,
+				916BD7B40FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m in Sources */,
+				916BD7B80FEEAED1007143A9 /* NoDataViewController.m in Sources */,
+				916BD7BE0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,14 +553,6 @@
 				05B238830FEDC34200A6A2E6 /* en */,
 			);
 			name = MainWindow.xib;
-			sourceTree = "<group>";
-		};
-		05B238840FEDC34200A6A2E6 /* SecondView.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				05B238850FEDC34200A6A2E6 /* en */,
-			);
-			name = SecondView.xib;
 			sourceTree = "<group>";
 		};
 		05B238880FEDC35400A6A2E6 /* LogInView.xib */ = {
@@ -466,6 +570,14 @@
 			);
 			name = Localizable.strings;
 			path = strings/en.lproj;
+			sourceTree = "<group>";
+		};
+		916BD7ED0FEEB958007143A9 /* NoDataView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				916BD7EE0FEEB958007143A9 /* en */,
+			);
+			name = NoDataView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
