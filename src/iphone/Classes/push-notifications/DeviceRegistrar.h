@@ -8,6 +8,6 @@
 {
 }
 
-- (void)sendProviderDeviceToken:(NSData *)devToken;
+- (void)sendProviderDeviceToken:(NSData *)devToken args:(NSDictionary *)args;
 
 @end

@@ -1,0 +1,3 @@
+alert.dismiss = "Dismiss";
+
+login.failed.alert.title = "Log In Failed";

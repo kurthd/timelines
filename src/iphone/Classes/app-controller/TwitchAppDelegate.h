@@ -4,7 +4,8 @@
 
 #import <UIKit/UIKit.h>
 
-@class DeviceRegistrar;
+@class LogInDisplayMgr, DeviceRegistrar;
+@class CredentialsUpdatePublisher;
 
 @interface TwitchAppDelegate : NSObject
     <UIApplicationDelegate, UITabBarControllerDelegate>
@@ -12,10 +13,18 @@
     UIWindow *window;
     UITabBarController *tabBarController;
 
+    LogInDisplayMgr * logInDisplayMgr;
+
+    BOOL registeredForPushNotifications;
     DeviceRegistrar * registrar;
+
+    NSMutableArray * credentials;
+    NSMutableArray * unregisteredCredentials;
+
+    CredentialsUpdatePublisher * credentialsUpdatePublisher;
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UITabBarController *tabBarController;
+@property (nonatomic, retain) IBOutlet UIWindow * window;
+@property (nonatomic, retain) IBOutlet UITabBarController * tabBarController;
 
 @end

@@ -11,21 +11,33 @@
     return self = [super init];
 }
 
-- (void)sendProviderDeviceToken:(NSData *)devToken
+- (void)sendProviderDeviceToken:(NSData *)devToken args:(NSDictionary *)args
 {
     NSStringEncoding encoding = NSUTF8StringEncoding;
-    NSString * body = [NSString stringWithFormat:@"devicetoken=%@", devToken];
-    body = [body stringByReplacingOccurrencesOfString:@"<" withString:@""];
-    body = [body stringByReplacingOccurrencesOfString:@">" withString:@""];
-    body = [body stringByAddingPercentEscapesUsingEncoding:encoding];
-    NSLog(@"Sending body: '%@'.", body);
+    NSMutableString * body =
+        [NSMutableString stringWithFormat:@"devicetoken=%@", devToken];
+    [body replaceOccurrencesOfString:@"<"
+                          withString:@""
+                             options:0
+                               range:NSMakeRange(0, body.length)];
+    [body replaceOccurrencesOfString:@">"
+                          withString:@""
+                             options:0
+                               range:NSMakeRange(0, body.length)];
+
+    for (id key in args)
+        [body appendFormat:@"&%@=%@", key, [args objectForKey:key]];
+
+    NSString * encodedBody =
+        [body stringByAddingPercentEscapesUsingEncoding:encoding];
+    NSLog(@"Sending body: '%@'.", encodedBody);
 
     NSURL * url =
         [NSURL URLWithString:@"http://megatron.local:3000/register_device"];
     NSMutableURLRequest * req =
         [NSMutableURLRequest requestWithURL:url];
     [req setHTTPMethod:@"POST"];
-    [req setHTTPBody:[body dataUsingEncoding:encoding]];
+    [req setHTTPBody:[encodedBody dataUsingEncoding:encoding]];
 
     NSURLConnection * conn = [[NSURLConnection alloc] initWithRequest:req
                                                              delegate:self

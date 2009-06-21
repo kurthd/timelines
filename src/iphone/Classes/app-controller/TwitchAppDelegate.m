@@ -4,9 +4,13 @@
 
 #import "TwitchAppDelegate.h"
 #import "DeviceRegistrar.h"
+#import "LogInDisplayMgr.h"
+#import "CredentialsUpdatePublisher.h"
+#import "TwitterCredentials.h"
 
 @interface TwitchAppDelegate ()
 
+@property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
 @property (nonatomic, retain) DeviceRegistrar * registrar;
 
 @end
@@ -15,17 +19,53 @@
 
 @synthesize window;
 @synthesize tabBarController;
+@synthesize logInDisplayMgr;
 @synthesize registrar;
 
 - (void)dealloc
 {
     [tabBarController release];
     [window release];
+
     [registrar release];
+    [logInDisplayMgr release];
+
+    [credentials release];
+    [unregisteredCredentials release];
+
     [super dealloc];
 }
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
+{
+    // TEMPORARY
+    credentials = [[NSMutableArray alloc] init];
+    unregisteredCredentials = [[NSMutableArray alloc] init];
+
+    registeredForPushNotifications = NO;
+
+    /*
+    UIRemoteNotificationType notificationTypes =
+        (UIRemoteNotificationTypeBadge |
+         UIRemoteNotificationTypeSound |
+         UIRemoteNotificationTypeAlert);
+
+    [[UIApplication sharedApplication]
+        registerForRemoteNotificationTypes:notificationTypes];
+     */
+
+    credentialsUpdatePublisher =
+        [[CredentialsUpdatePublisher alloc]
+        initWithListener:self action:@selector(credentialsChanged:)];
+
+    // Add the tab bar controller's current view as a subview of the window
+    [window addSubview:tabBarController.view];
+
+    if (credentials.count == 0)
+        [self.logInDisplayMgr logIn];
+}
+
+- (void)registerForPushNotifications
 {
     UIRemoteNotificationType notificationTypes =
         (UIRemoteNotificationTypeBadge |
@@ -34,19 +74,25 @@
 
     [[UIApplication sharedApplication]
         registerForRemoteNotificationTypes:notificationTypes];
-
-    // Add the tab bar controller's current view as a subview of the window
-    [window addSubview:tabBarController.view];
 }
 
-#pragma mark Notification delegate methods
+#pragma mark Push notification delegate methods
 
 - (void)application:(UIApplication *)app
     didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
 {
     NSLog(@"Device token: %@.", devToken);
 
-    [self.registrar sendProviderDeviceToken:devToken];
+    for (TwitterCredentials * c in unregisteredCredentials) {
+        NSDictionary * args = [NSDictionary dictionaryWithObjectsAndKeys:
+            c.username, @"username",
+            c.password, @"password",
+            nil];
+        [self.registrar sendProviderDeviceToken:devToken args:args];
+    }
+
+    [credentials addObjectsFromArray:unregisteredCredentials];
+    [unregisteredCredentials removeAllObjects];
 
     //const void * devTokenBytes = [devToken bytes];
     //self.registered = YES;
@@ -66,17 +112,13 @@
         "%@.", userInfo);
 }
 
-/*
-// Optional UITabBarControllerDelegate method
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-}
-*/
+#pragma mark Application notifications
 
-/*
-// Optional UITabBarControllerDelegate method
-- (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed {
+- (void)credentialsChanged:(TwitterCredentials *)newCredentials
+{
+    [unregisteredCredentials addObject:newCredentials];
+    [self registerForPushNotifications];
 }
-*/
 
 #pragma mark Accessors
 
@@ -88,5 +130,14 @@
     return registrar;
 }
 
-@end
+- (LogInDisplayMgr *)logInDisplayMgr
+{
+    if (!logInDisplayMgr)
+        logInDisplayMgr =
+            [[LogInDisplayMgr alloc]
+            initWithRootViewController:tabBarController];
 
+    return logInDisplayMgr;
+}
+
+@end
