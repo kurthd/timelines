@@ -1,43 +1,19 @@
+// 
+//  TwitterCredentials.m
+//  twitch
 //
-//  Copyright High Order Bit, Inc. 2009. All rights reserved.
+//  Created by John A. Debay on 6/21/09.
+//  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
 #import "TwitterCredentials.h"
 
-@interface TwitterCredentials ()
+#import "Account.h"
 
-@property (nonatomic, copy) NSString * username;
-@property (nonatomic, copy) NSString * password;
+@implementation TwitterCredentials 
 
-@end
-
-@implementation TwitterCredentials
-
-@synthesize username, password;
-
-+ (id)credentialsWithUsername:(NSString *)aUsername
-                     password:(NSString *)aPassword
-{
-    id obj = [[[self class] alloc] initWithUsername:aUsername
-                                           password:aPassword];
-    return [obj autorelease];
-}
-
-- (void)dealloc
-{
-    self.username = nil;
-    self.password = nil;
-    [super dealloc];
-}
-
-- (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword
-{
-    if (self = [super init]) {
-        self.username = aUsername;
-        self.password = aPassword;
-    }
-
-    return self;
-}
+@dynamic username;
+@dynamic password;
+@dynamic account;
 
 @end

@@ -11,6 +11,8 @@
 @interface LogInDisplayMgr :
     NSObject <LogInViewControllerDelegate, MGTwitterEngineDelegate>
 {
+    NSManagedObjectContext * context;
+
     UIViewController * rootViewController;
     LogInViewController * logInViewController;
 
@@ -21,7 +23,8 @@
     NSString * password;
 }
 
-- (id)initWithRootViewController:(UIViewController *)aRootViewController;
+- (id)initWithRootViewController:(UIViewController *)aRootViewController
+            managedObjectContext:(NSManagedObjectContext *)aContext;
 
 - (void)logIn;
 

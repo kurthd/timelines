@@ -1,20 +1,24 @@
 //
-//  Copyright High Order Bit, Inc. 2009. All rights reserved.
+//  TwitterCredentials.h
+//  twitch
+//
+//  Created by John A. Debay on 6/21/09.
+//  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface TwitterCredentials : NSObject
+@class Account;
+
+@interface TwitterCredentials :  NSManagedObject  
 {
-    NSString * username;
-    NSString * password;
 }
 
-@property (nonatomic, copy, readonly) NSString * username;
-@property (nonatomic, copy, readonly) NSString * password;
-
-+ (id)credentialsWithUsername:(NSString *)aUsername
-                     password:(NSString *)aPassword;
-- (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword;
+@property (nonatomic, copy) NSString * username;
+@property (nonatomic, copy) NSString * password;
+@property (nonatomic, retain) Account * account;
 
 @end
+
+
+

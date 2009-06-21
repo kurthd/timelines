@@ -10,8 +10,10 @@
 
 @interface LogInDisplayMgr ()
 
-- (void)broadcastSuccessfulLogInNotification;
+- (void)displayErrorWithMessage:(NSString *)message;
+- (void)broadcastSuccessfulLogInNotification:(TwitterCredentials *)credentials;
 
+@property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, retain) UIViewController * rootViewController;
 @property (nonatomic, retain) LogInViewController * logInViewController;
 @property (nonatomic, retain) MGTwitterEngine * twitter;
@@ -23,12 +25,15 @@
 
 @implementation LogInDisplayMgr
 
+@synthesize context;
 @synthesize rootViewController, logInViewController;
 @synthesize twitter, logInRequestId;
 @synthesize username, password;
 
 - (void)dealloc
 {
+    self.context = nil;
+
     self.rootViewController = nil;
     self.logInViewController = nil;
 
@@ -42,9 +47,12 @@
 }
 
 - (id)initWithRootViewController:(UIViewController *)aRootViewController
+            managedObjectContext:(NSManagedObjectContext *)aContext
 {
-    if (self = [super init])
+    if (self = [super init]) {
         self.rootViewController = aRootViewController;
+        self.context = aContext;
+    }
 
     return self;
 }
@@ -81,31 +89,36 @@
 - (void)requestSucceeded:(NSString *)requestIdentifier
 {
     NSLog(@"Request '%@' succeeded.", requestIdentifier);
-    [self broadcastSuccessfulLogInNotification];
 
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
+    TwitterCredentials * credentials =
+        (TwitterCredentials *) [NSEntityDescription
+        insertNewObjectForEntityForName:@"TwitterCredentials"
+                 inManagedObjectContext:context];
+
+    credentials.username = self.username;
+    credentials.password = self.password;
+
+    NSError * error;
+    if ([context save:&error]) {
+        [self broadcastSuccessfulLogInNotification:credentials];
+        [self.rootViewController dismissModalViewControllerAnimated:YES];
+    } else {  // handle the error
+        [self displayErrorWithMessage:error.localizedDescription];
+        [self.logInViewController promptForLogIn];
+    }
 }
 
 - (void)requestFailed:(NSString *)requestIdentifier withError:(NSError *)error
 {
     NSLog(@"Request '%@' failed; error: '%@'.", requestIdentifier, error);
 
-    NSString * title = NSLocalizedString(@"login.failed.alert.title", @"");
-    NSString * message = error.localizedDescription;
-
-    UIAlertView * alert = [UIAlertView simpleAlertViewWithTitle:title
-                                                        message:message];
-    [alert show];
-
+    [self displayErrorWithMessage:error.localizedDescription];
     [self.logInViewController promptForLogIn];
 }
 
 - (void)statusesReceived:(NSArray *)statuses forRequest:(NSString *)identifier
 {
     NSLog(@"Statuses recieved for request '%@': %@", identifier, statuses);
-
-    if ([self.logInRequestId isEqualToString:identifier])
-        [self broadcastSuccessfulLogInNotification];
 }
 
 - (void)directMessagesReceived:(NSArray *)messages
@@ -130,11 +143,8 @@
     NSLog(@"Image received for request '%@': %@", identifier, image);
 }
 
-- (void)broadcastSuccessfulLogInNotification
+- (void)broadcastSuccessfulLogInNotification:(TwitterCredentials *)credentials
 {
-    TwitterCredentials * credentials =
-        [TwitterCredentials credentialsWithUsername:self.username
-                                           password:self.password];
     NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
         credentials, @"credentials",
         nil];
@@ -143,6 +153,16 @@
     [nc postNotificationName:@"CredentialsChangedNotification"
                       object:self
                     userInfo:userInfo];
+}
+
+- (void)displayErrorWithMessage:(NSString *)message
+{
+
+    NSString * title = NSLocalizedString(@"login.failed.alert.title", @"");
+
+    UIAlertView * alert = [UIAlertView simpleAlertViewWithTitle:title
+                                                        message:message];
+    [alert show];
 }
 
 #pragma mark Accessors

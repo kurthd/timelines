@@ -12,6 +12,7 @@
 
 @property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
 @property (nonatomic, retain) DeviceRegistrar * registrar;
+@property (nonatomic, retain) NSMutableArray * credentials;
 
 @end
 
@@ -21,6 +22,7 @@
 @synthesize tabBarController;
 @synthesize logInDisplayMgr;
 @synthesize registrar;
+@synthesize credentials;
 
 - (void)dealloc
 {
@@ -33,15 +35,17 @@
     [credentials release];
     [unregisteredCredentials release];
 
+    [managedObjectContext release];
+    [managedObjectModel release];
+    [persistentStoreCoordinator release];
+
     [super dealloc];
 }
 
+#pragma mark UIApplicationDelegate implementation
+
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
-    // TEMPORARY
-    credentials = [[NSMutableArray alloc] init];
-    unregisteredCredentials = [[NSMutableArray alloc] init];
-
     registeredForPushNotifications = NO;
 
     /*
@@ -61,19 +65,94 @@
     // Add the tab bar controller's current view as a subview of the window
     [window addSubview:tabBarController.view];
 
-    if (credentials.count == 0)
+    if (self.credentials.count == 0)
         [self.logInDisplayMgr logIn];
 }
 
-- (void)registerForPushNotifications
+- (void)applicationWillTerminate:(UIApplication *)application
 {
-    UIRemoteNotificationType notificationTypes =
-        (UIRemoteNotificationTypeBadge |
-         UIRemoteNotificationTypeSound |
-         UIRemoteNotificationTypeAlert);
+    NSError *error;
+    if (managedObjectContext != nil) {
+        if ([managedObjectContext hasChanges] &&
+            ![managedObjectContext save:&error]) {
+			// Handle error
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			exit(-1);  // Fail
+        }
+    }
+}
 
-    [[UIApplication sharedApplication]
-        registerForRemoteNotificationTypes:notificationTypes];
+#pragma mark -
+#pragma mark Core Data stack
+
+/**
+ Returns the managed object context for the application.
+ If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
+ */
+- (NSManagedObjectContext *) managedObjectContext {
+	
+    if (managedObjectContext != nil) {
+        return managedObjectContext;
+    }
+	
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (coordinator != nil) {
+        managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [managedObjectContext setPersistentStoreCoordinator: coordinator];
+    }
+    return managedObjectContext;
+}
+
+
+/**
+ Returns the managed object model for the application.
+ If the model doesn't already exist, it is created by merging all of the models found in the application bundle.
+ */
+- (NSManagedObjectModel *)managedObjectModel {
+	
+    if (managedObjectModel != nil) {
+        return managedObjectModel;
+    }
+    managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];    
+    return managedObjectModel;
+}
+
+
+/**
+ Returns the persistent store coordinator for the application.
+ If the coordinator doesn't already exist, it is created and the application's store added to it.
+ */
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
+	
+    if (persistentStoreCoordinator != nil) {
+        return persistentStoreCoordinator;
+    }
+	
+    NSURL *storeUrl = [NSURL fileURLWithPath: [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"CoreDataTest.sqlite"]];
+	
+	NSError *error;
+    persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
+    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]) {
+        // Handle error
+    }    
+	
+    return persistentStoreCoordinator;
+}
+
+
+#pragma mark -
+#pragma mark Application's documents directory
+
+/**
+ Returns the path to the application's documents directory.
+ */
+- (NSString *)applicationDocumentsDirectory
+{
+    NSArray *paths =
+        NSSearchPathForDirectoriesInDomains(
+        NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    return basePath;
 }
 
 #pragma mark Push notification delegate methods
@@ -112,6 +191,19 @@
         "%@.", userInfo);
 }
 
+#pragma mark Push notification helpers
+
+- (void)registerForPushNotifications
+{
+    UIRemoteNotificationType notificationTypes =
+    (UIRemoteNotificationTypeBadge |
+     UIRemoteNotificationTypeSound |
+     UIRemoteNotificationTypeAlert);
+    
+    [[UIApplication sharedApplication]
+        registerForRemoteNotificationTypes:notificationTypes];
+}
+
 #pragma mark Application notifications
 
 - (void)credentialsChanged:(TwitterCredentials *)newCredentials
@@ -135,9 +227,40 @@
     if (!logInDisplayMgr)
         logInDisplayMgr =
             [[LogInDisplayMgr alloc]
-            initWithRootViewController:tabBarController];
+            initWithRootViewController:tabBarController
+                  managedObjectContext:[self managedObjectContext]];
 
     return logInDisplayMgr;
+}
+
+- (NSMutableArray *)credentials
+{
+    if (!credentials) {
+        NSFetchRequest * request = [[NSFetchRequest alloc] init];
+        NSEntityDescription * entity =
+            [NSEntityDescription entityForName:@"TwitterCredentials"
+                        inManagedObjectContext:[self managedObjectContext]];
+        [request setEntity:entity];
+
+        NSSortDescriptor * sortDescriptor =
+            [[NSSortDescriptor alloc] initWithKey:@"username" ascending:NO];
+        NSArray *sortDescriptors =
+            [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+        [request setSortDescriptors:sortDescriptors];
+
+        [sortDescriptors release];
+        [sortDescriptor release];
+
+        NSError * error;
+        credentials =
+            [[managedObjectContext executeFetchRequest:request
+                                                 error:&error] mutableCopy];
+        NSAssert(credentials, @"Failed to load any credentials.");
+
+        [request release];
+    }
+
+    return credentials;
 }
 
 @end
