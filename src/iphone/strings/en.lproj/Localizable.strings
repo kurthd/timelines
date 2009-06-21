@@ -1,3 +1,8 @@
 alert.dismiss = "Dismiss";
 
 login.failed.alert.title = "Log In Failed";
+
+/* NetworkAwareViewController */
+nodata.updating.text = "Updating...";
+nodata.loading.text = "Loading...";
+nodata.noconnection.text = "No Connection";

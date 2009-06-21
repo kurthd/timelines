@@ -62,6 +62,10 @@
 		916BD7DC0FEEB839007143A9 /* Gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7DA0FEEB839007143A9 /* Gear.png */; };
 		916BD7DD0FEEB839007143A9 /* House.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7DB0FEEB839007143A9 /* House.png */; };
 		916BD7EF0FEEB958007143A9 /* NoDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7ED0FEEB958007143A9 /* NoDataView.xib */; };
+		916BD8040FEEBD56007143A9 /* TimelineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8020FEEBD56007143A9 /* TimelineView.xib */; };
+		916BD8160FEEBE26007143A9 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD8150FEEBE26007143A9 /* TimelineViewController.m */; };
+		916BD8190FEEBE35007143A9 /* TimelineDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD8180FEEBE35007143A9 /* TimelineDisplayMgr.m */; };
+		916BD81F0FEEC12B007143A9 /* TimelineDisplayMgrFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD81E0FEEC12B007143A9 /* TimelineDisplayMgrFactory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,6 +168,13 @@
 		916BD7DA0FEEB839007143A9 /* Gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Gear.png; path = images/Gear.png; sourceTree = "<group>"; };
 		916BD7DB0FEEB839007143A9 /* House.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = House.png; path = images/House.png; sourceTree = "<group>"; };
 		916BD7EE0FEEB958007143A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/NoDataView.xib; sourceTree = "<group>"; };
+		916BD8030FEEBD56007143A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TimelineView.xib; sourceTree = "<group>"; };
+		916BD8140FEEBE26007143A9 /* TimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineViewController.h; path = timeline/TimelineViewController.h; sourceTree = "<group>"; };
+		916BD8150FEEBE26007143A9 /* TimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineViewController.m; path = timeline/TimelineViewController.m; sourceTree = "<group>"; };
+		916BD8170FEEBE35007143A9 /* TimelineDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDisplayMgr.h; path = timeline/TimelineDisplayMgr.h; sourceTree = "<group>"; };
+		916BD8180FEEBE35007143A9 /* TimelineDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineDisplayMgr.m; path = timeline/TimelineDisplayMgr.m; sourceTree = "<group>"; };
+		916BD81D0FEEC12B007143A9 /* TimelineDisplayMgrFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDisplayMgrFactory.h; path = timeline/TimelineDisplayMgrFactory.h; sourceTree = "<group>"; };
+		916BD81E0FEEC12B007143A9 /* TimelineDisplayMgrFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineDisplayMgrFactory.m; path = timeline/TimelineDisplayMgrFactory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -315,6 +326,7 @@
 				916BD7ED0FEEB958007143A9 /* NoDataView.xib */,
 				05B238820FEDC34200A6A2E6 /* MainWindow.xib */,
 				05B238880FEDC35400A6A2E6 /* LogInView.xib */,
+				916BD8020FEEBD56007143A9 /* TimelineView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -349,6 +361,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				916BD8130FEEBDF9007143A9 /* timeline */,
 				052C64150FED700B00B259D7 /* app-controller */,
 				05B2387E0FEDC25F00A6A2E6 /* log-in */,
 				05B238F30FEDC85300A6A2E6 /* users */,
@@ -432,6 +445,19 @@
 			name = images;
 			sourceTree = "<group>";
 		};
+		916BD8130FEEBDF9007143A9 /* timeline */ = {
+			isa = PBXGroup;
+			children = (
+				916BD8140FEEBE26007143A9 /* TimelineViewController.h */,
+				916BD8150FEEBE26007143A9 /* TimelineViewController.m */,
+				916BD8170FEEBE35007143A9 /* TimelineDisplayMgr.h */,
+				916BD8180FEEBE35007143A9 /* TimelineDisplayMgr.m */,
+				916BD81D0FEEC12B007143A9 /* TimelineDisplayMgrFactory.h */,
+				916BD81E0FEEC12B007143A9 /* TimelineDisplayMgrFactory.m */,
+			);
+			name = timeline;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -494,6 +520,7 @@
 				916BD7DC0FEEB839007143A9 /* Gear.png in Resources */,
 				916BD7DD0FEEB839007143A9 /* House.png in Resources */,
 				916BD7EF0FEEB958007143A9 /* NoDataView.xib in Resources */,
+				916BD8040FEEBD56007143A9 /* TimelineView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +568,9 @@
 				916BD7B40FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m in Sources */,
 				916BD7B80FEEAED1007143A9 /* NoDataViewController.m in Sources */,
 				916BD7BE0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m in Sources */,
+				916BD8160FEEBE26007143A9 /* TimelineViewController.m in Sources */,
+				916BD8190FEEBE35007143A9 /* TimelineDisplayMgr.m in Sources */,
+				916BD81F0FEEC12B007143A9 /* TimelineDisplayMgrFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,6 +608,14 @@
 				916BD7EE0FEEB958007143A9 /* en */,
 			);
 			name = NoDataView.xib;
+			sourceTree = "<group>";
+		};
+		916BD8020FEEBD56007143A9 /* TimelineView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				916BD8030FEEBD56007143A9 /* en */,
+			);
+			name = TimelineView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

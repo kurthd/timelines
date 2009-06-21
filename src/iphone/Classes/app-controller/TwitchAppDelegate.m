@@ -14,6 +14,8 @@
 @property (nonatomic, retain) DeviceRegistrar * registrar;
 @property (nonatomic, retain) NSMutableArray * credentials;
 
+- (void)initHomeTab;
+
 @end
 
 @implementation TwitchAppDelegate
@@ -38,6 +40,12 @@
     [managedObjectContext release];
     [managedObjectModel release];
     [persistentStoreCoordinator release];
+
+    [homeNetAwareViewController release];
+    [profileNetAwareViewController release];
+    [trendsNetAwareViewController release];
+    [searchNetAwareViewController release];
+    [accountsNetAwareViewController release];
 
     [super dealloc];
 }
@@ -80,6 +88,13 @@
 			exit(-1);  // Fail
         }
     }
+}
+
+#pragma mark initialization helpers
+
+- (void)initHomeTab
+{
+    
 }
 
 #pragma mark -

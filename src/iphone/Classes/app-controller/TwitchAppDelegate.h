@@ -3,6 +3,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NetworkAwareViewController.h"
 
 @class LogInDisplayMgr, DeviceRegistrar;
 @class CredentialsUpdatePublisher;
@@ -27,6 +28,13 @@
     NSManagedObjectModel * managedObjectModel;
     NSManagedObjectContext * managedObjectContext;
     NSPersistentStoreCoordinator * persistentStoreCoordinator;
+
+    // Root view controllers
+    IBOutlet NetworkAwareViewController * homeNetAwareViewController;
+    IBOutlet NetworkAwareViewController * profileNetAwareViewController;
+    IBOutlet NetworkAwareViewController * trendsNetAwareViewController;
+    IBOutlet NetworkAwareViewController * searchNetAwareViewController;
+    IBOutlet NetworkAwareViewController * accountsNetAwareViewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;
