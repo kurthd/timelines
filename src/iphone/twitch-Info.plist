@@ -26,5 +26,7 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
+	<key>DeviceRegistrationUrl</key>
+	<string>http://megatron.local:3000/device/register</string>
 </dict>
 </plist>

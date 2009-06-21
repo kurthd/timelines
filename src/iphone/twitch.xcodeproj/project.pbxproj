@@ -36,6 +36,8 @@
 		05B23A320FEEB29D00A6A2E6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B23A310FEEB29D00A6A2E6 /* CoreData.framework */; };
 		05B23A600FEEB59C00A6A2E6 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23A5F0FEEB59C00A6A2E6 /* Account.m */; };
 		05B23A6C0FEEB70600A6A2E6 /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23A6B0FEEB70600A6A2E6 /* TwitterCredentials.m */; };
+		05B23ACB0FEEC2AE00A6A2E6 /* InfoPlistConfigReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23ACA0FEEC2AE00A6A2E6 /* InfoPlistConfigReader.m */; };
+		05B23B120FEEC48C00A6A2E6 /* PListUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23B110FEEC48C00A6A2E6 /* PListUtils.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -122,6 +124,12 @@
 		05B23A5F0FEEB59C00A6A2E6 /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Account.m; path = users/Account.m; sourceTree = "<group>"; };
 		05B23A6A0FEEB70600A6A2E6 /* TwitterCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterCredentials.h; path = twitter/TwitterCredentials.h; sourceTree = "<group>"; };
 		05B23A6B0FEEB70600A6A2E6 /* TwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterCredentials.m; path = twitter/TwitterCredentials.m; sourceTree = "<group>"; };
+		05B23AC20FEEC09800A6A2E6 /* DeviceRegistrarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceRegistrarDelegate.h; path = "push-notifications/DeviceRegistrarDelegate.h"; sourceTree = "<group>"; };
+		05B23AC80FEEC2AE00A6A2E6 /* ConfigReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigReader.h; path = configuration/ConfigReader.h; sourceTree = "<group>"; };
+		05B23AC90FEEC2AE00A6A2E6 /* InfoPlistConfigReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfoPlistConfigReader.h; path = configuration/InfoPlistConfigReader.h; sourceTree = "<group>"; };
+		05B23ACA0FEEC2AE00A6A2E6 /* InfoPlistConfigReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InfoPlistConfigReader.m; path = configuration/InfoPlistConfigReader.m; sourceTree = "<group>"; };
+		05B23B100FEEC48C00A6A2E6 /* PListUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PListUtils.h; path = shared/PListUtils.h; sourceTree = "<group>"; };
+		05B23B110FEEC48C00A6A2E6 /* PListUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PListUtils.m; path = shared/PListUtils.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Twitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -196,6 +204,7 @@
 			children = (
 				05B2387B0FEDC15800A6A2E6 /* DeviceRegistrar.h */,
 				05B2387C0FEDC15800A6A2E6 /* DeviceRegistrar.m */,
+				05B23AC20FEEC09800A6A2E6 /* DeviceRegistrarDelegate.h */,
 			);
 			name = "push-notifications";
 			sourceTree = "<group>";
@@ -305,6 +314,8 @@
 				916BD7AB0FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m */,
 				05B2393D0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.h */,
 				05B2393E0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.m */,
+				05B23B100FEEC48C00A6A2E6 /* PListUtils.h */,
+				05B23B110FEEC48C00A6A2E6 /* PListUtils.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -346,6 +357,16 @@
 			name = "data-model";
 			sourceTree = "<group>";
 		};
+		05B23AC70FEEC29D00A6A2E6 /* configuration */ = {
+			isa = PBXGroup;
+			children = (
+				05B23AC80FEEC2AE00A6A2E6 /* ConfigReader.h */,
+				05B23AC90FEEC2AE00A6A2E6 /* InfoPlistConfigReader.h */,
+				05B23ACA0FEEC2AE00A6A2E6 /* InfoPlistConfigReader.m */,
+			);
+			name = configuration;
+			sourceTree = "<group>";
+		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -355,6 +376,7 @@
 				05B238F80FEDC8EE00A6A2E6 /* twitter */,
 				05B239620FEDD1A400A6A2E6 /* publishers */,
 				055B78280FED7D31008859F7 /* push-notifications */,
+				05B23AC70FEEC29D00A6A2E6 /* configuration */,
 				05B2393C0FEDD05E00A6A2E6 /* shared */,
 				055B791E0FEDB1B9008859F7 /* vendor */,
 			);
@@ -541,6 +563,8 @@
 				916BD7B40FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m in Sources */,
 				916BD7B80FEEAED1007143A9 /* NoDataViewController.m in Sources */,
 				916BD7BE0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m in Sources */,
+				05B23ACB0FEEC2AE00A6A2E6 /* InfoPlistConfigReader.m in Sources */,
+				05B23B120FEEC48C00A6A2E6 /* PListUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

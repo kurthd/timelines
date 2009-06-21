@@ -4,15 +4,39 @@
 
 #import "DeviceRegistrar.h"
 
+@interface DeviceRegistrar ()
+
+@property (nonatomic, copy) NSString * urlString;
+@property (nonatomic, copy) NSData * deviceToken;
+
+@end
+
 @implementation DeviceRegistrar
 
-- (id)init
+@synthesize delegate;
+@synthesize urlString;
+@synthesize deviceToken;
+
+- (void)dealloc
 {
-    return self = [super init];
+    self.delegate = nil;
+    self.urlString = nil;
+    self.deviceToken = nil;
+    [super dealloc];
+}
+
+- (id)initWithUrl:(NSString *)aUrl
+{
+    if (self = [super init])
+        self.urlString = aUrl;
+
+    return self;
 }
 
 - (void)sendProviderDeviceToken:(NSData *)devToken args:(NSDictionary *)args
 {
+    self.deviceToken = devToken;
+
     NSStringEncoding encoding = NSUTF8StringEncoding;
     NSMutableString * body =
         [NSMutableString stringWithFormat:@"devicetoken=%@", devToken];
@@ -28,10 +52,8 @@
 
     NSString * encodedBody =
         [body stringByAddingPercentEscapesUsingEncoding:encoding];
-    NSLog(@"Sending body: '%@'.", encodedBody);
 
-    NSURL * url =
-        [NSURL URLWithString:@"http://megatron.local:3000/device/register"];
+    NSURL * url = [NSURL URLWithString:self.urlString];
     NSMutableURLRequest * req =
         [NSMutableURLRequest requestWithURL:url];
     [req setHTTPMethod:@"POST"];
@@ -55,11 +77,17 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)conn
 {
     NSLog(@"Connection did finish loading: '%@'.", conn);
+
+    [delegate registeredDeviceWithToken:self.deviceToken];
+    self.deviceToken = nil;
 }
 
 - (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error
 {
     NSLog(@"Connection '%@' did fail with error: '%@'.", conn, error);
+
+    [delegate failedToRegisterDeviceWithToken:self.deviceToken error:error];
+    self.deviceToken = nil;
 }
 
 @end
