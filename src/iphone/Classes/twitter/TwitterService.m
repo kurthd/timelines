@@ -63,9 +63,9 @@
     [self request:requestId isHandledBy:processor];
 }
 
-- (void)fetchTimelineSince:(NSNumber *)updateId
-                      page:(NSNumber *)page
-                     count:(NSNumber *)count
+- (void)fetchTimelineSinceUpdateId:(NSNumber *)updateId
+                              page:(NSNumber *)page
+                             count:(NSNumber *)count
 {
     ResponseProcessor * processor =
         [FetchTimelineResponseProcessor processorWithUpdateId:updateId
@@ -79,6 +79,21 @@
                                 sinceID:[updateId integerValue]
                          startingAtPage:[page integerValue]
                                   count:[count integerValue]];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+- (void)fetchDirectMessagesSinceId:(NSNumber *)updateId page:(NSNumber *)page
+{
+    ResponseProcessor * processor =
+        [FetchDirectMessagesResponseProcessor processorWithUpdateId:updateId
+                                                               page:page
+                                                            context:context
+                                                           delegate:delegate];
+
+    NSString * requestId =
+        [twitter getDirectMessagesSinceID:[updateId integerValue]
+                           startingAtPage:[page integerValue]];
 
     [self request:requestId isHandledBy:processor];
 }
@@ -109,6 +124,8 @@
 {
     NSLog(@"Direct messages recieved for request '%@': %@", requestId,
         messages);
+    [self request:requestId succeededWithResponse: messages];
+    [self cleanUpRequest:requestId];
 }
 
 - (void)userInfoReceived:(NSArray *)userInfo forRequest:(NSString *)identifier

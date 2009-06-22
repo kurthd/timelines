@@ -29,7 +29,8 @@
         [wrapperController setCachedDataAvailable:NO];
 
         if(service.credentials)
-            [service fetchTimelineSince:0 page:0 count:0];
+            //[service fetchTimelineSinceUpdateId:0 page:0 count:0];
+            [service fetchDirectMessagesSinceId:0 page:0];
     }
 
     return self;
@@ -54,7 +55,8 @@
 {
     NSLog(@"New credentials set");
     service.credentials = credentials;
-    [service fetchTimelineSince:0 page:0 count:0];
+    //[service fetchTimelineSinceUpdateId:0 page:0 count:0];
+    [service fetchDirectMessagesSinceId:0 page:0];
 }
 
 @end

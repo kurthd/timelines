@@ -28,4 +28,15 @@
                                      count:(NSNumber *)count
                                      error:(NSError *)error;
 
+#pragma mark Direct messages
+
+@optional
+
+- (void)directMessages:(NSArray *)directMessages
+  fetchedSinceUpdateId:(NSNumber *)updateId
+                  page:(NSNumber *)page;
+- (void)failedToFetchDirectMessagesSinceUpdateId:(NSNumber *)updateId
+                                            page:(NSNumber *)page
+                                           error:(NSError *)error;
+
 @end

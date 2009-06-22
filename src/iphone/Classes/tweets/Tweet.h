@@ -19,7 +19,4 @@
 @property (nonatomic, retain) User * user;
 @property (nonatomic, retain) NSNumber * favoritedCount;
 
-+ (id)tweetWithId:(NSString *)anIdentifier
-          context:(NSManagedObjectContext *)context;
-
 @end

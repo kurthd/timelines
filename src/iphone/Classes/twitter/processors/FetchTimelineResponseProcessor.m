@@ -4,9 +4,10 @@
 
 #import "FetchTimelineResponseProcessor.h"
 #import "User.h"
+#import "User+CoreDataAdditions.h"
 #import "Tweet.h"
-#import "NSDate+TwitterStringHelpers.h"
-#import "NSObject+RuntimeAdditions.h"  // REMOVE ME
+#import "Tweet+CoreDataAdditions.h"
+#import "ResponseProcessor+ParsingHelpers.h"
 
 @interface FetchTimelineResponseProcessor ()
 
@@ -72,36 +73,16 @@
     NSMutableSet * uniqueUsers = [NSMutableSet set];
     for (id status in statuses) {
         NSDictionary * userData = [status objectForKey:@"user"];
-
         NSString * userId = [[userData objectForKey:@"id"] description];
-
         User * user = [User userWithId:userId context:context];
+
         if (!user)
             user = [User createInstance:context];
 
         // only set user data the first time we see it, so we are saving
         // the freshest data
         if (![uniqueUsers containsObject:userId]) {
-            user.username = [userData objectForKey:@"screen_name"];
-            user.name = [userData objectForKey:@"name"];
-            user.bio = [userData objectForKey:@"description"];
-            user.location = [userData objectForKey:@"location"];
-
-            // use key-value coding to convert strings to nsnumbers
-            [user setValue:[userData objectForKey:@"friends_count"]
-                    forKey:@"following"];
-            [user setValue:[userData objectForKey:@"followers_count"]
-                    forKey:@"followers"];
-
-            NSDate * createdAt =
-                [NSDate dateWithTwitterUserString:
-                [userData objectForKey:@"created_at"]];
-            user.created = createdAt;
-
-            user.webpage = [userData objectForKey:@"url"];
-            user.identifier = userId;
-            user.profileImageUrl = [userData objectForKey:@"profile_image_url"];
-
+            [self populateUser:user fromData:userData];
             [uniqueUsers addObject:userId];
         }
 

@@ -4,7 +4,6 @@
 
 #import "Tweet.h"
 #import "User.h"
-#import "NSObject+RuntimeAdditions.h"
 
 @implementation Tweet 
 
@@ -15,26 +14,5 @@
 @dynamic source;
 @dynamic user;
 @dynamic favoritedCount;
-
-+ (id)tweetWithId:(NSString *)targetId
-          context:(NSManagedObjectContext *)context
-{
-    NSPredicate * predicate = 
-    [NSPredicate predicateWithFormat:@"identifier == %@", targetId];
-
-    NSError * error;
-    NSArray * results = [self findAll:predicate context:context error:&error];
-    if (results == nil)
-        NSLog(@"Error finding '%@' objects: '%@'.", [self className], error);
-
-    if (results.count > 1) {
-        NSAssert2(results.count > 1, @"Found %d users with ID: '%@', but there"
-                  "should only be 1.", results.count, targetId);
-        NSLog(@"Found %d users with ID: '%@', but there should only be 1.",
-              results.count, targetId);
-    }
-
-    return [results lastObject];
-}
 
 @end

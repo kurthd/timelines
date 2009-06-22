@@ -99,8 +99,8 @@
     NSString * followingFormatString =
         NSLocalizedString(@"timelineview.userinfo.following", @"");
     followingLabel.text =
-        [NSString stringWithFormat:followingFormatString, aUser.following,
-        aUser.followers];
+        [NSString stringWithFormat:followingFormatString, aUser.friendsCount,
+        aUser.followersCount];
 }
 
 - (void)setTweets:(NSArray *)someTweets
