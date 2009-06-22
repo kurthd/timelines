@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		052C64190FED703200B259D7 /* TwitchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C64180FED703200B259D7 /* TwitchAppDelegate.m */; };
+		05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05977A3B0FEF0C9700E37B9C /* Icon.png */; };
 		05B2380D0FEDB20900A6A2E6 /* MGTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237EE0FEDB20900A6A2E6 /* MGTwitterEngine.m */; };
 		05B2380E0FEDB20900A6A2E6 /* MGTwitterHTTPURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237F20FEDB20900A6A2E6 /* MGTwitterHTTPURLConnection.m */; };
 		05B2380F0FEDB20900A6A2E6 /* MGTwitterLibXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237F40FEDB20900A6A2E6 /* MGTwitterLibXMLParser.m */; };
@@ -77,6 +78,7 @@
 /* Begin PBXFileReference section */
 		052C64170FED703200B259D7 /* TwitchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchAppDelegate.h; path = "app-controller/TwitchAppDelegate.h"; sourceTree = "<group>"; };
 		052C64180FED703200B259D7 /* TwitchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchAppDelegate.m; path = "app-controller/TwitchAppDelegate.m"; sourceTree = "<group>"; };
+		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		05B237ED0FEDB20900A6A2E6 /* MGTwitterEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTwitterEngine.h; path = "vendor/mg-twitter-engine/MGTwitterEngine.h"; sourceTree = "<group>"; };
 		05B237EE0FEDB20900A6A2E6 /* MGTwitterEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTwitterEngine.m; path = "vendor/mg-twitter-engine/MGTwitterEngine.m"; sourceTree = "<group>"; };
 		05B237EF0FEDB20900A6A2E6 /* MGTwitterEngineDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTwitterEngineDelegate.h; path = "vendor/mg-twitter-engine/MGTwitterEngineDelegate.h"; sourceTree = "<group>"; };
@@ -475,6 +477,7 @@
 				05B239440FEDD0E400A6A2E6 /* nibs */,
 				05B239450FEDD0F800A6A2E6 /* strings */,
 				8D1107310486CEB800E47090 /* twitch-Info.plist */,
+				05977A3B0FEF0C9700E37B9C /* Icon.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 				916BD7DD0FEEB839007143A9 /* House.png in Resources */,
 				916BD7EF0FEEB958007143A9 /* NoDataView.xib in Resources */,
 				916BD8040FEEBD56007143A9 /* TimelineView.xib in Resources */,
+				05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
