@@ -1,5 +1,12 @@
+<% if @devices.length == 0 -%>
 <p>
-There are <%= pluralize(@devices.count, 'iPhone', 'iPhones') -%> registered
+There are no devices in the database.
+</p>
+
+<% else -%>
+
+<p>
+There are <%= pluralize(@devices.length, 'iPhone', 'iPhones') -%> registered
 with the system:
 </p>
 
