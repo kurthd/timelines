@@ -6,6 +6,7 @@
 
 @interface TimelineViewController : UITableViewController
 {
+    IBOutlet UIView * headerView;
 }
 
 @end

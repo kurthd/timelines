@@ -49,6 +49,9 @@
     [searchNetAwareViewController release];
     [accountsNetAwareViewController release];
 
+    [timelineDisplayMgrFactory release];
+    [timelineDisplayMgr release];
+
     [super dealloc];
 }
 
@@ -75,6 +78,9 @@
     // Add the tab bar controller's current view as a subview of the window
     [window addSubview:tabBarController.view];
 
+    timelineDisplayMgrFactory = [[TimelineDisplayMgrFactory alloc] init];
+    [self initHomeTab];
+
     if (self.credentials.count == 0)
         [self.logInDisplayMgr logIn];
 }
@@ -96,7 +102,11 @@
 
 - (void)initHomeTab
 {
-    
+    timelineDisplayMgr =
+        [[timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:
+        homeNetAwareViewController]
+        retain];
 }
 
 #pragma mark -
