@@ -33,6 +33,12 @@
 
 - (void)checkCredentials;
 
+#pragma mark Sending tweets
+
+// is 'tweet' a verb or a noun?
+- (void)sendTweet:(NSString *)tweet;
+- (void)sendTweet:(NSString *)tweet inReplyTo:(NSNumber *)referenceId;
+
 #pragma mark Timeline
 
 - (void)fetchTimelineSinceUpdateId:(NSNumber *)updateId

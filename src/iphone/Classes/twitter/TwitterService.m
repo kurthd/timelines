@@ -63,6 +63,25 @@
     [self request:requestId isHandledBy:processor];
 }
 
+#pragma mark Sending tweets
+
+// is 'tweet' a verb or a noun?
+- (void)sendTweet:(NSString *)tweet
+{
+    ResponseProcessor * processor =
+        [SendTweetResponseProcessor processorWithTweet:tweet
+                                               context:context
+                                              delegate:delegate];
+
+    NSString * requestId = [twitter sendUpdate:tweet];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+- (void)sendTweet:(NSString *)tweet inReplyTo:(NSNumber *)referenceId
+{
+}
+
 #pragma mark Timelines
 
 - (void)fetchTimelineSinceUpdateId:(NSNumber *)updateId

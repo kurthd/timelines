@@ -118,8 +118,6 @@
 - (NSString *)deleteDirectMessage:(int)updateID;          // this user must be the RECIPIENT
 
 // Getting mentions
-- (NSString *)getMentionsSinceID:(int)updateID
-                            page:(int)pageNum
-                           count:(int)count;
+- (NSString *)getMentionsSinceID:(int)updateID page:(int)page count:(int)count;
 
 @end

@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TwitterCredentials.h"
+#import "Tweet.h"
 
 @protocol TwitterServiceDelegate <NSObject>
 
@@ -14,6 +15,13 @@
 - (void)credentialsValidated:(TwitterCredentials *)credentials;
 - (void)failedToValidateCredentials:(TwitterCredentials *)credentials
                               error:(NSError *)error;
+
+#pragma mark Sending tweets
+
+@optional
+
+- (void)tweetSentSuccessfully:(Tweet *)tweet;
+- (void)failedToSendTweet:(Tweet *) error:(NSError *)error;
 
 #pragma mark Timelines
 
