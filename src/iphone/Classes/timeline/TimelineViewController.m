@@ -15,6 +15,8 @@
 
 @implementation TimelineViewController
 
+@synthesize delegate;
+
 - (void)dealloc
 {
     [headerView release];
@@ -77,6 +79,8 @@
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    Tweet * tweet = [tweets objectAtIndex:indexPath.row];
+    [delegate selectedTweet:tweet];
 }
 
 #pragma mark UITableViewDelegate implementation
