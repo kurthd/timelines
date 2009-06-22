@@ -8,3 +8,4 @@
 
 #import "CheckCredentialsResponseProcessor.h"
 #import "FetchTimelineResponseProcessor.h"
+#import "FetchDirectMessagesResponseProcessor.h"

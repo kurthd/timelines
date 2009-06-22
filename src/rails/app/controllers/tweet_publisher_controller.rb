@@ -8,100 +8,104 @@ class TweetPublisherController < ApplicationController
     subscriptions = DeviceSubscription.find(:all)
 
     subscriptions.each do |subscription|
-      iphone =
-        Iphone.find(:first,
-                    :conditions => [ 'id = ?', subscription.iphone_id ])
-      if iphone == nil
-        logger.warn "No iPhone maps to subscription: #{subscription.id}."
-        next
-      end
-
-      twitter_user =
-        TwitterUser.find(:first,
-                         :conditions =>
-                           [ 'id = ?', subscription.twitter_user_id ])
-
-      if twitter_user == nil
-        logger.warn "No Twitter user maps to subscription: #{subscription.id}"
-        next
-      end
-      logger.debug "Checking for new tweets for #{twitter_user}."
-
-      @client =
-        Grackle::Client.new(:auth => { :type =>:basic,
-                                       :username => twitter_user.username,
-                                       :password => twitter_user.password })
-      @client.ssl = true
-
-      status =
-        SubscriberStatus.find(
-          :first, :conditions =>
-                  [ 'device_subscription_id = ?', subscription.id ])
-
-      # TODO: Move this code into the device registration controller
-      if (status == nil)  # this is the first time we've notified this person
-                          # don't send anything; just make note
-        direct_messages = self.all_direct_messages
-        mentions = self.all_mentions
-
-        if (direct_messages.length == 0)
-          last_direct_message = '0'
-        else
-          last_direct_message = direct_messages[0].id
+      begin
+        iphone =
+          Iphone.find(:first,
+                      :conditions => [ 'id = ?', subscription.iphone_id ])
+        if iphone == nil
+          logger.warn "No iPhone maps to subscription: #{subscription.id}."
+          next
         end
 
-        if (mentions.length == 0)
-          last_mention = '0'
-        else
-          last_mention = mentions[0].id
+        twitter_user =
+          TwitterUser.find(:first,
+                           :conditions =>
+        [ 'id = ?', subscription.twitter_user_id ])
+
+        if twitter_user == nil
+          logger.warn "No Twitter user maps to subscription: #{subscription.id}"
+          next
+        end
+        logger.debug "Checking for new tweets for #{twitter_user}."
+
+        @client =
+          Grackle::Client.new(:auth => { :type =>:basic,
+                              :username => twitter_user.username,
+                              :password => twitter_user.password })
+        @client.ssl = true
+
+        status =
+          SubscriberStatus.find(
+            :first, :conditions =>
+        [ 'device_subscription_id = ?', subscription.id ])
+
+        # TODO: Move this code into the device registration controller
+        if (status == nil)  # this is the first time we've notified this person
+          # don't send anything; just make note
+          direct_messages = self.all_direct_messages
+          mentions = self.all_mentions
+
+          if (direct_messages.length == 0)
+            last_direct_message = '0'
+          else
+            last_direct_message = direct_messages[0].id
+          end
+
+          if (mentions.length == 0)
+            last_mention = '0'
+          else
+            last_mention = mentions[0].id
+          end
+
+          status = SubscriberStatus.new(
+            :last_direct_message => last_direct_message,
+            :last_mention => last_mention,
+            :device_subscription_id => subscription.id)
+            status.save!
+
+            next
         end
 
-        status = SubscriberStatus.new(
-          :last_direct_message => last_direct_message,
-          :last_mention => last_mention,
-          :device_subscription_id => subscription.id)
-        status.save!
+        # fetch direct messages and mentions since last time
+        direct_messages =
+          self.direct_messages_since(status.last_direct_message)
+        mentions = self.mentions_since(status.last_mention)
 
-        next
-      end
-
-      # fetch direct messages and mentions since last time
-      direct_messages =
-        self.direct_messages_since(status.last_direct_message)
-      mentions = self.mentions_since(status.last_mention)
-
-      logger.info "#{twitter_user}: #{direct_messages.length} direct " +
+        logger.info "#{twitter_user}: #{direct_messages.length} direct " +
         "messages since #{status.last_direct_message}."
-      logger.info "#{twitter_user}: #{mentions.length} mentions since " +
+        logger.info "#{twitter_user}: #{mentions.length} mentions since " +
         "#{status.last_mention}."
 
-      if (direct_messages.length + mentions.length > 0)
-        logger.info "Notifying phone #{iphone.device_token} of " +
-          "#{direct_messages.length} direct messages and " +
-          "#{mentions.length} mentions."
+        if (direct_messages.length + mentions.length > 0)
+          logger.info "Notifying phone #{iphone.device_token} of " +
+            "#{direct_messages.length} direct messages and " +
+            "#{mentions.length} mentions."
 
-        # update status and save to the database
-        if (direct_messages.length > 0)
-          status.last_direct_message = direct_messages[0].id
+          # update status and save to the database
+          if (direct_messages.length > 0)
+            status.last_direct_message = direct_messages[0].id
+          end
+
+          if (mentions.length > 0)
+            status.last_mention = mentions[0].id
+          end
+
+          notification = self.push_notification_for(
+            iphone.device_token, direct_messages, mentions)
+
+            logger.info "Adding one notification for user: #{twitter_user}: " +
+            "\"#{notification.alert}\"."
+
+            notifications << notification
+            @usernames[twitter_user.username] = notification
+
+            # don't save new status until everything's done
+            status.save
+        else
+          logger.info "#{twitter_user}: no new tweets."
         end
-
-        if (mentions.length > 0)
-          status.last_mention = mentions[0].id
-        end
-
-        notification = self.push_notification_for(
-          iphone.device_token, direct_messages, mentions)
-
-        logger.info "Adding one notification for user: #{twitter_user}: " +
-          "\"#{notification.alert}\"."
-
-        notifications << notification
-        @usernames[twitter_user.username] = notification
-
-        # don't save new status until everything's done
-        status.save
-      else
-        logger.info "#{twitter_user}: no new tweets."
+      rescue
+        logger.warn "Failed to process subscription: #{subscription}. #{$!}."
       end
     end
 

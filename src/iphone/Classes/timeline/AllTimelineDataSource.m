@@ -26,7 +26,7 @@
 
 - (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page;
 {
-    [service fetchTimelineSince:updateId page:page
+    [service fetchTimelineSinceUpdateId:updateId page:page
         count:[NSNumber numberWithInt:0]];
 }
 

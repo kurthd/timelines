@@ -35,8 +35,12 @@
 
 #pragma mark Timeline
 
-- (void)fetchTimelineSince:(NSNumber *)updateId
-                      page:(NSNumber *)page
-                     count:(NSNumber *)count;
+- (void)fetchTimelineSinceUpdateId:(NSNumber *)updateId
+                              page:(NSNumber *)page
+                             count:(NSNumber *)count;
+
+#pragma mark Direct messages
+
+- (void)fetchDirectMessagesSinceId:(NSNumber *)updateId page:(NSNumber *)page;
 
 @end

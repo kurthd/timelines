@@ -3,6 +3,7 @@
 //
 
 #import <CoreData/CoreData.h>
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @class User;
 
@@ -17,9 +18,5 @@
 @property (nonatomic, retain) NSString * source;
 @property (nonatomic, retain) User * user;
 @property (nonatomic, retain) NSNumber * favoritedCount;
-
-+ (id)createInstance:(NSManagedObjectContext *)context;
-+ (id)tweetWithId:(NSString *)anIdentifier
-          context:(NSManagedObjectContext *)context;
 
 @end

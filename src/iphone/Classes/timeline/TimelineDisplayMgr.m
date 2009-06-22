@@ -86,7 +86,7 @@
     NSLog(@"Loading more tweets...");
     [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:!!timeline];
-    if([service credentials])
+    if ([service credentials])
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
         page:[NSNumber numberWithInt:++pagesShown]];
 }
