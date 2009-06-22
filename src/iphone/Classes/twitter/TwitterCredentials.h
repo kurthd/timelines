@@ -8,17 +8,11 @@
 
 #import <CoreData/CoreData.h>
 
-@class Account;
-
 @interface TwitterCredentials :  NSManagedObject  
 {
 }
 
-@property (nonatomic, copy) NSString * username;
-@property (nonatomic, copy) NSString * password;
-@property (nonatomic, retain) Account * account;
+@property (nonatomic, retain) NSString * username;
+@property (nonatomic, retain) NSString * password;
 
 @end
-
-
-

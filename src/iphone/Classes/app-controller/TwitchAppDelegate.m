@@ -9,6 +9,7 @@
 #import "TwitterCredentials.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "InfoPlistConfigReader.h"
+#import "TwitterService.h"
 
 @interface TwitchAppDelegate ()
 
@@ -83,6 +84,15 @@
 
     if (self.credentials.count == 0)
         [self.logInDisplayMgr logIn];
+    else {
+        TwitterCredentials * c = [self.credentials lastObject];
+        TwitterService * service =
+            [[TwitterService alloc]
+            initWithTwitterCredentials:c context:[self managedObjectContext]];
+        [service fetchTimelineSince:[NSNumber numberWithInteger:0]
+                               page:[NSNumber numberWithInteger:0]
+                              count:[NSNumber numberWithInteger:0]];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
