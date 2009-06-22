@@ -61,7 +61,7 @@ class ApplePushNotification < ActiveRecord::Base
 		raise "Error while sending notifications: #{error}"
 	end
 
-	protected
+	#protected
 
 	def to_apple_json
 		logger.debug "Sending #{self.apple_array.to_json}"
