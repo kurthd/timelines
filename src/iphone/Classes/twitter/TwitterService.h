@@ -17,6 +17,8 @@
 
     TwitterCredentials * credentials;
     MGTwitterEngine * twitter;
+
+    NSManagedObjectContext * context;
 }
 
 @property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
@@ -24,7 +26,8 @@
 
 #pragma mark Initialization
 
-- (id)initWithTwitterCredentials:(TwitterCredentials *)someCredentials;
+- (id)initWithTwitterCredentials:(TwitterCredentials *)someCredentials
+                         context:(NSManagedObjectContext *)aContext;
 
 #pragma mark Account
 

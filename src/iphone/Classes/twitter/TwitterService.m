@@ -29,10 +29,13 @@
     [credentials release];
     [twitter release];
 
+    [context release];
+
     [super dealloc];
 }
 
 - (id)initWithTwitterCredentials:(TwitterCredentials *)someCredentials
+                         context:(NSManagedObjectContext *)aContext
 {
     if (self = [super init]) {
         pendingRequests = [[NSMutableDictionary alloc] init];
@@ -41,6 +44,8 @@
         [twitter setUsesSecureConnection:YES];
 
         self.credentials = someCredentials;
+        
+        context = [aContext retain];
     }
 
     return self;
@@ -66,10 +71,10 @@
         [FetchTimelineResponseProcessor processorWithUpdateId:updateId
                                                          page:page
                                                         count:count
+                                                      context:context
                                                      delegate:delegate];
 
     NSString * requestId =
-        //[twitter getUserTimelineFor:credentials.username
         [twitter getFollowedTimelineFor:credentials.username
                                 sinceID:[updateId integerValue]
                          startingAtPage:[page integerValue]
@@ -96,6 +101,7 @@
 {
     NSLog(@"Statuses recieved for request '%@': %@", requestId, statuses);
     [self request:requestId succeededWithResponse:statuses];
+    [self cleanUpRequest:requestId];
 }
 
 - (void)directMessagesReceived:(NSArray *)messages

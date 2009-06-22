@@ -8,12 +8,9 @@
 
 #import "TwitterCredentials.h"
 
-#import "Account.h"
-
 @implementation TwitterCredentials 
 
 @dynamic username;
 @dynamic password;
-@dynamic account;
 
 @end
