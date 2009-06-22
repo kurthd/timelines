@@ -9,20 +9,28 @@
 @interface TimelineViewController : UITableViewController
 {
     NSObject<TimelineViewControllerDelegate> * delegate;
-    
+
     IBOutlet UIView * headerView;
+    IBOutlet UIView * footerView;
     IBOutlet UILabel * fullNameLabel;
     IBOutlet UILabel * usernameLabel;
     IBOutlet UILabel * followingLabel;
-    
+    IBOutlet UILabel * currentPagesLabel;
+
     NSArray * tweets;
     NSMutableDictionary * avatarCache;
+
+    NSArray * sortedTweetCache;
 }
 
 @property (nonatomic, assign)
     NSObject<TimelineViewControllerDelegate> * delegate;
 
+@property (nonatomic, retain) NSArray * sortedTweetCache;
+
 - (void)setUser:(User *)user;
-- (void)setTweets:(NSArray *)tweets;
+- (void)setTweets:(NSArray *)tweets page:(NSUInteger)page;
+
+- (IBAction)loadMoreTweets:(id)sender;
 
 @end

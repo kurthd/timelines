@@ -118,6 +118,10 @@
         createTimelineDisplayMgrWithWrapperController:
         homeNetAwareViewController]
         retain];
+    UIBarButtonItem * refreshButton =
+        homeNetAwareViewController.navigationItem.leftBarButtonItem;
+    refreshButton.target = timelineDisplayMgr;
+    refreshButton.action = @selector(refresh);
 }
 
 #pragma mark -

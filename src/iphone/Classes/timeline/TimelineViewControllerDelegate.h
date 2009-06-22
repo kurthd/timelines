@@ -8,5 +8,6 @@
 @protocol TimelineViewControllerDelegate
 
 - (void)selectedTweet:(Tweet *)tweet;
+- (void)loadMoreTweets;
 
 @end

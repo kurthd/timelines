@@ -22,6 +22,9 @@
     TwitterService * service;
 
     Tweet * selectedTweet;
+    NSMutableDictionary * timeline;
+    NSNumber * updateId;
+    NSUInteger pagesShown;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
@@ -29,6 +32,7 @@
 @property (readonly) TweetDetailsViewController * tweetDetailsController;
 
 @property (nonatomic, retain) Tweet * selectedTweet;
+@property (nonatomic, copy) NSNumber * updateId;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController
@@ -36,5 +40,6 @@
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)replyToTweet;
+- (void)refresh;
 
 @end
