@@ -113,6 +113,15 @@
 								</object>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 							</object>
+							<object class="IBUIImageView" id="1050762929">
+								<reference key="NSNextResponder" ref="558446208"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{3, 0}, {16, 16}}</string>
+								<reference key="NSSuperview" ref="558446208"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+							</object>
 						</object>
 						<string key="NSFrameSize">{300, 89}</string>
 						<reference key="NSSuperview" ref="672885255"/>
@@ -229,6 +238,7 @@
 							<reference ref="140656966"/>
 							<reference ref="798613254"/>
 							<reference ref="454728704"/>
+							<reference ref="1050762929"/>
 						</object>
 						<reference key="parent" ref="1043050296"/>
 					</object>
@@ -258,6 +268,11 @@
 						<reference key="parent" ref="672885255"/>
 						<string key="objectName">Avatar</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">14</int>
+						<reference key="object" ref="1050762929"/>
+						<reference key="parent" ref="672885255"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -265,6 +280,7 @@
 				<object class="NSMutableArray" key="dict.sortedKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>-2.CustomClassName</string>
+					<string>14.IBPluginDependency</string>
 					<string>2.CustomClassName</string>
 					<string>2.IBEditorWindowLastContentRect</string>
 					<string>2.IBPluginDependency</string>
@@ -278,8 +294,9 @@
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>UIResponder</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>TimelineTableViewCell</string>
-					<string>{{835, 453}, {320, 90}}</string>
+					<string>{{404, 453}, {320, 90}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -309,7 +326,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">13</int>
+			<int key="maxID">14</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

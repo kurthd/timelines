@@ -84,6 +84,10 @@
 		916BD9F60FEF46B1007143A9 /* TweetDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916BD9F40FEF46B1007143A9 /* TweetDetailsView.xib */; };
 		916BD9FA0FEF46E4007143A9 /* TweetDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD9F90FEF46E4007143A9 /* TweetDetailsViewController.m */; };
 		916BDA4E0FEF573A007143A9 /* tweet-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 916BDA4D0FEF573A007143A9 /* tweet-style.css */; };
+		91E000430FEF76E800BCE9BC /* Favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000420FEF76E800BCE9BC /* Favorite.png */; };
+		91E0004C0FEF786300BCE9BC /* NotFavorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E0004B0FEF786300BCE9BC /* NotFavorite.png */; };
+		91E000880FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */; };
+		91E000950FEFFCC700BCE9BC /* DropShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000940FEFFCC700BCE9BC /* DropShadow.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -227,6 +231,10 @@
 		916BD9FB0FEF4986007143A9 /* TimelineViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineViewControllerDelegate.h; path = timeline/TimelineViewControllerDelegate.h; sourceTree = "<group>"; };
 		916BDA140FEF4E96007143A9 /* TweetDetailsViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailsViewDelegate.h; path = timeline/TweetDetailsViewDelegate.h; sourceTree = "<group>"; };
 		916BDA4D0FEF573A007143A9 /* tweet-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "tweet-style.css"; sourceTree = "<group>"; };
+		91E000420FEF76E800BCE9BC /* Favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Favorite.png; path = images/Favorite.png; sourceTree = "<group>"; };
+		91E0004B0FEF786300BCE9BC /* NotFavorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NotFavorite.png; path = images/NotFavorite.png; sourceTree = "<group>"; };
+		91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsHeaderGradient.png; path = images/TweetDetailsHeaderGradient.png; sourceTree = "<group>"; };
+		91E000940FEFFCC700BCE9BC /* DropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadow.png; path = images/DropShadow.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -532,6 +540,10 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91E000940FEFFCC700BCE9BC /* DropShadow.png */,
+				91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */,
+				91E0004B0FEF786300BCE9BC /* NotFavorite.png */,
+				91E000420FEF76E800BCE9BC /* Favorite.png */,
 				916BD8A20FEEDFBD007143A9 /* UserHeaderGradient.png */,
 				916BD8940FEEDAD9007143A9 /* Default.png */,
 				916BD8950FEEDAD9007143A9 /* DefaultAvatar.png */,
@@ -647,6 +659,10 @@
 				05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */,
 				916BD9F60FEF46B1007143A9 /* TweetDetailsView.xib in Resources */,
 				916BDA4E0FEF573A007143A9 /* tweet-style.css in Resources */,
+				91E000430FEF76E800BCE9BC /* Favorite.png in Resources */,
+				91E0004C0FEF786300BCE9BC /* NotFavorite.png in Resources */,
+				91E000880FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png in Resources */,
+				91E000950FEFFCC700BCE9BC /* DropShadow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

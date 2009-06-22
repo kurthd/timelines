@@ -74,7 +74,7 @@
 					<object class="IBUIImageView" id="392175655">
 						<reference key="NSNextResponder" ref="123950848"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, 296}, {320, 96}}</string>
+						<string key="NSFrame">{{0, 317}, {320, 75}}</string>
 						<reference key="NSSuperview" ref="123950848"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -192,7 +192,7 @@
 						<reference key="NSSuperview" ref="123950848"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC40OTQ4OTc5NiAwLjQ5NDg5Nzk2IDAuNDk0ODk3OTYAA</bytes>
+							<bytes key="NSRGB">MC42NDc5NTkxNyAwLjY0Nzk1OTE3IDAuNjQ3OTU5MTcAA</bytes>
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 					</object>
@@ -215,7 +215,7 @@
 				<reference key="NSSuperview"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC45MjE1Njg2MyAwLjkyMTU2ODYzIDAuOTIxNTY4NjMAA</bytes>
+					<bytes key="NSRGB">MC45OTIxNTY4NiAwLjk5MjE1Njg2IDAuOTkyMTU2ODYAA</bytes>
 				</object>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 			</object>
@@ -407,7 +407,7 @@
 					<string>RoundedImage</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{756, 338}, {320, 392}}</string>
+					<string>{{380, 284}, {320, 392}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
 			</object>
@@ -478,6 +478,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/timeline/TimelineViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UILabel</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/shared/UILabel+DrawingAdditions.h</string>
 					</object>
 				</object>
 			</object>

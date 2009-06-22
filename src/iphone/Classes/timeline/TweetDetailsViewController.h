@@ -4,6 +4,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TweetDetailsViewDelegate.h"
+#import "RoundedImage.h"
 
 @interface TweetDetailsViewController : UIViewController
 {
@@ -12,6 +13,9 @@
     IBOutlet UIWebView * webView;
     IBOutlet UIButton * favoriteButton;
     IBOutlet UIButton * userTweetsButton;
+    IBOutlet UILabel * nameLabel;
+    IBOutlet UIButton * locationButton;
+    IBOutlet RoundedImage * avatar;
 }
 
 @property (nonatomic, assign) NSObject<TweetDetailsViewDelegate> * delegate;

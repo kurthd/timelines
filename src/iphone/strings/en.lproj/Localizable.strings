@@ -15,4 +15,5 @@ notification.registration.failed.alert.message = "Try restarting the application
 timelineview.userinfo.following = "%d following, %d followers";
 
 /* TweetDetailsViewController */
-tweetdetailsview.title = "Tweet details";
+tweetdetailsview.title = "Tweet Details";
+tweetdetailsview.tweetfooter = "%@ from %@";
