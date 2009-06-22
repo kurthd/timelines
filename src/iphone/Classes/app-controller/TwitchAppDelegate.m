@@ -60,6 +60,9 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
+    // TEMPORARY
+    unregisteredCredentials = [[NSMutableArray alloc] init];
+
     registeredForPushNotifications = NO;
 
     /*
@@ -165,7 +168,7 @@
         return persistentStoreCoordinator;
     }
 	
-    NSURL *storeUrl = [NSURL fileURLWithPath: [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"CoreDataTest.sqlite"]];
+    NSURL *storeUrl = [NSURL fileURLWithPath: [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"Twitch.sqlite"]];
 	
 	NSError *error;
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
