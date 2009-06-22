@@ -33,6 +33,8 @@ class DeviceController < ApplicationController
       subscription.save!
 
       logger.info "Subscribed twitter user #{twitter_user.id}: #{twitter_user.username} to device notifications on device: #{iphone.device_token}."
+    else
+      @devices = Iphone.find(:all)
     end
   end
 
