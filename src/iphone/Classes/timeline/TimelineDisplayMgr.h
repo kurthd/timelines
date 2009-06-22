@@ -5,23 +5,25 @@
 #import <Foundation/Foundation.h>
 #import "NetworkAwareViewController.h"
 #import "TimelineViewController.h"
-#import "TwitterService.h"
-#import "TwitterServiceDelegate.h"
+#import "TimelineDataSource.h"
 #import "TimelineViewControllerDelegate.h"
+#import "TimelineDataSourceDelegate.h"
 #import "TweetDetailsViewController.h"
+#import "TwitterCredentials.h"
 
 @interface TimelineDisplayMgr :
     NSObject
-    <TwitterServiceDelegate, TimelineViewControllerDelegate,
+    <TimelineDataSourceDelegate, TimelineViewControllerDelegate,
     TweetDetailsViewDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
     TweetDetailsViewController * tweetDetailsController;
 
-    TwitterService * service;
+    NSObject<TimelineDataSource> * service;
 
     Tweet * selectedTweet;
+    User * user;
     NSMutableDictionary * timeline;
     NSNumber * updateId;
     NSUInteger pagesShown;
@@ -32,12 +34,15 @@
 @property (readonly) TweetDetailsViewController * tweetDetailsController;
 
 @property (nonatomic, retain) Tweet * selectedTweet;
+@property (nonatomic, retain) User * user;
 @property (nonatomic, copy) NSNumber * updateId;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController
-    service:(TwitterService *)service;
+    service:(NSObject<TimelineDataSource> *)service;
 
+- (void)setService:(NSObject<TimelineDataSource> *)aService
+    tweets:(NSMutableDictionary *)tweets page:(NSUInteger)page;
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)replyToTweet;
 - (void)refresh;

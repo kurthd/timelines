@@ -52,7 +52,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.tableHeaderView = headerView;
     self.tableView.tableFooterView = footerView;
     avatarCache = [[NSMutableDictionary dictionary] retain];
 }
@@ -124,13 +123,20 @@
 
 - (void)setUser:(User *)aUser
 {
-    fullNameLabel.text = aUser.name;
-    usernameLabel.text = aUser.username;
-    NSString * followingFormatString =
-        NSLocalizedString(@"timelineview.userinfo.following", @"");
-    followingLabel.text =
-        [NSString stringWithFormat:followingFormatString, aUser.friendsCount,
-        aUser.followersCount];
+    if (!aUser) {
+        self.tableView.tableHeaderView = nil;
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    } else {
+        self.tableView.contentInset = UIEdgeInsetsMake(-317, 0, 0, 0);
+        self.tableView.tableHeaderView = headerView;
+        fullNameLabel.text = aUser.name;
+        usernameLabel.text = aUser.username;
+        NSString * followingFormatString =
+            NSLocalizedString(@"timelineview.userinfo.following", @"");
+        followingLabel.text =
+            [NSString stringWithFormat:followingFormatString,
+            aUser.friendsCount, aUser.followersCount];
+    }
 }
 
 - (void)setTweets:(NSArray *)someTweets page:(NSUInteger)page

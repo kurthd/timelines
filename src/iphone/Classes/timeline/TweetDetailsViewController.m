@@ -15,7 +15,7 @@
 
 @implementation TweetDetailsViewController
 
-@synthesize delegate;
+@synthesize delegate, selectedTweet;
 
 - (void)dealloc
 {
@@ -30,6 +30,8 @@
 
 - (void)setTweet:(Tweet *)tweet
 {
+    self.selectedTweet = tweet;
+
     NSString * footerFormatString =
         NSLocalizedString(@"tweetdetailsview.tweetfooter", @"");
     NSString * dateDesc = [tweet.timestamp shortDateAndTimeDescription];
@@ -49,6 +51,23 @@
     locationButton.hidden = !locationText || [locationText isEqual:@""];
 
     [locationButton setTitle:locationText forState:UIControlStateNormal];
+}
+
+- (IBAction)showLocationOnMap:(id)sender
+{
+    NSString * locationString = selectedTweet.user.location;
+    NSLog(@"Showing %@ on map", locationString);
+    NSString * locationWithoutCommas =
+        [locationString stringByReplacingOccurrencesOfString:@","
+        withString:@""];
+    NSString * urlString =
+        [[NSString
+        stringWithFormat:@"http://maps.google.com/maps?q=%@",
+        locationWithoutCommas]
+        stringByAddingPercentEscapesUsingEncoding:
+        NSUTF8StringEncoding];
+    NSURL * url = [NSURL URLWithString:urlString];
+    [[UIApplication sharedApplication] openURL:url];
 }
 
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer
