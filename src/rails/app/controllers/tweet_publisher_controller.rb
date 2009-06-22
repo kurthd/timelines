@@ -3,6 +3,7 @@ require 'grackle'
 class TweetPublisherController < ApplicationController
   def check
     notifications = Array.new
+    statuses = Array.new
 
     subscriptions = DeviceSubscription.find(:all)
 
@@ -105,7 +106,9 @@ class TweetPublisherController < ApplicationController
 
         notifications << notification
 
-        status.save!
+        # save all the statuses, and write them to the db after we've
+        # successfully sent the notifications
+        statuses << status
       else
         logger.info "No new tweets for: #{twitter_user.username}."
       end
@@ -113,10 +116,9 @@ class TweetPublisherController < ApplicationController
 
     logger.info "Sending #{notifications.length} push notifications."
 
-    ####
-    # TODO: PUT ME BACK IN TO ACTUALLY SEND SOMETHING!
-    ####
     ApplePushNotification.send_notifications(notifications)
+
+    statuses.each { |status| status.save }
   end
 
   @private
