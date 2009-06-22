@@ -44,6 +44,7 @@
 		05B23C160FEEEFB000A6A2E6 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23C150FEEEFB000A6A2E6 /* User.m */; };
 		05B23C1B0FEEEFC700A6A2E6 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23C1A0FEEEFC700A6A2E6 /* Tweet.m */; };
 		05B23C690FEEF39200A6A2E6 /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23C680FEEF39200A6A2E6 /* TwitterCredentials.m */; };
+		05EC40430FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -160,6 +161,8 @@
 		05B23C1A0FEEEFC700A6A2E6 /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tweet.m; path = tweets/Tweet.m; sourceTree = "<group>"; };
 		05B23C670FEEF39200A6A2E6 /* TwitterCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterCredentials.h; path = twitter/TwitterCredentials.h; sourceTree = "<group>"; };
 		05B23C680FEEF39200A6A2E6 /* TwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterCredentials.m; path = twitter/TwitterCredentials.m; sourceTree = "<group>"; };
+		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
+		05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+TediousCodeAdditions.m"; path = "shared/NSManagedObject+TediousCodeAdditions.m"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Twitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -326,9 +329,9 @@
 		05B238F80FEDC8EE00A6A2E6 /* twitter */ = {
 			isa = PBXGroup;
 			children = (
+				05B23B3C0FEED50E00A6A2E6 /* processors */,
 				05B23C670FEEF39200A6A2E6 /* TwitterCredentials.h */,
 				05B23C680FEEF39200A6A2E6 /* TwitterCredentials.m */,
-				05B23B3C0FEED50E00A6A2E6 /* processors */,
 				05B23B380FEEC6AB00A6A2E6 /* TwitterService.h */,
 				05B23B390FEEC6AB00A6A2E6 /* TwitterService.m */,
 				05B23B3B0FEECECD00A6A2E6 /* TwitterServiceDelegate.h */,
@@ -370,6 +373,8 @@
 				05B23B110FEEC48C00A6A2E6 /* PListUtils.m */,
 				916BD8BD0FEEEE4A007143A9 /* RoundedImage.h */,
 				916BD8BE0FEEEE4A007143A9 /* RoundedImage.m */,
+				05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */,
+				05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -681,6 +686,7 @@
 				05B23C1B0FEEEFC700A6A2E6 /* Tweet.m in Sources */,
 				05B23C690FEEF39200A6A2E6 /* TwitterCredentials.m in Sources */,
 				916BD9D30FEF3D05007143A9 /* UILabel+DrawingAdditions.m in Sources */,
+				05EC40430FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

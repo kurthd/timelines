@@ -20,12 +20,6 @@
 @dynamic name;
 @dynamic tweets;
 
-+ (id)createInstance:(NSManagedObjectContext *)context
-{
-    return [NSEntityDescription insertNewObjectForEntityForName:[self className]
-                                         inManagedObjectContext:context];
-}
-
 + (id)userWithId:(NSString *)targetId
          context:(NSManagedObjectContext *)context
 {
@@ -34,14 +28,14 @@
 
     NSFetchRequest * request = [[NSFetchRequest alloc] init];
     NSEntityDescription * entity =
-        [NSEntityDescription entityForName:[self className]
-                    inManagedObjectContext:context];
+    [NSEntityDescription entityForName:[self className]
+                inManagedObjectContext:context];
     [request setEntity:entity];
     [request setPredicate:predicate];
     [request setSortDescriptors:nil];
 
     NSError * error;
-    NSArray * results = [context executeFetchRequest:request error:&error];
+    NSArray * results = [self findAll:predicate context:context error:&error];
     if (results == nil)
         NSLog(@"Error finding '%@' objects: '%@'.", [self className], error);
 

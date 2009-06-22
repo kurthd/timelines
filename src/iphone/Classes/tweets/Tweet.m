@@ -16,28 +16,14 @@
 @dynamic user;
 @dynamic favoritedCount;
 
-+ (id)createInstance:(NSManagedObjectContext *)context
-{
-    return [NSEntityDescription insertNewObjectForEntityForName:[self className]
-                                         inManagedObjectContext:context];
-}
-
 + (id)tweetWithId:(NSString *)targetId
           context:(NSManagedObjectContext *)context
 {
     NSPredicate * predicate = 
     [NSPredicate predicateWithFormat:@"identifier == %@", targetId];
 
-    NSFetchRequest * request = [[NSFetchRequest alloc] init];
-    NSEntityDescription * entity =
-    [NSEntityDescription entityForName:[self className]
-                inManagedObjectContext:context];
-    [request setEntity:entity];
-    [request setPredicate:predicate];
-    [request setSortDescriptors:nil];
-
     NSError * error;
-    NSArray * results = [context executeFetchRequest:request error:&error];
+    NSArray * results = [self findAll:predicate context:context error:&error];
     if (results == nil)
         NSLog(@"Error finding '%@' objects: '%@'.", [self className], error);
 
@@ -47,8 +33,6 @@
         NSLog(@"Found %d users with ID: '%@', but there should only be 1.",
               results.count, targetId);
     }
-
-    [request release];
 
     return [results lastObject];
 }

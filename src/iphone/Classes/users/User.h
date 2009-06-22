@@ -3,6 +3,7 @@
 //
 
 #import <CoreData/CoreData.h>
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @class Tweet;
 
@@ -22,7 +23,6 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet* tweets;
 
-+ (id)createInstance:(NSManagedObjectContext *)context;
 + (id)userWithId:(NSString *)anIdentifier
          context:(NSManagedObjectContext *)context;
 
