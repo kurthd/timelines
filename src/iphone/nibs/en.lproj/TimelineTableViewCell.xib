@@ -38,7 +38,7 @@
 							<object class="IBUILabel" id="454728704">
 								<reference key="NSNextResponder" ref="558446208"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{65, 5}, {139, 21}}</string>
+								<string key="NSFrame">{{64, 5}, {140, 21}}</string>
 								<reference key="NSSuperview" ref="558446208"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -53,7 +53,10 @@
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MCAwIDAAA</bytes>
 								</object>
-								<nil key="IBUIHighlightedColor"/>
+								<object class="NSColor" key="IBUIHighlightedColor" id="980430449">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MSAxIDEAA</bytes>
+								</object>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<float key="IBUIMinimumFontSize">1.000000e+01</float>
 							</object>
@@ -75,7 +78,7 @@
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MCAwLjQwMzkxNjA5IDAuODAxMDIwMzgAA</bytes>
 								</object>
-								<nil key="IBUIHighlightedColor"/>
+								<reference key="IBUIHighlightedColor" ref="980430449"/>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<float key="IBUIMinimumFontSize">1.000000e+01</float>
 								<int key="IBUITextAlignment">2</int>
@@ -83,7 +86,7 @@
 							<object class="IBUILabel" id="923399608">
 								<reference key="NSNextResponder" ref="558446208"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{65, 28}, {233, 54}}</string>
+								<string key="NSFrame">{{64, 28}, {234, 54}}</string>
 								<reference key="NSSuperview" ref="558446208"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -91,10 +94,10 @@
 								<string key="IBUIText">tweet tweet tweet tweet tweet tweet tweet tweet tweet tweet tweet tweet tweet tweet tweet</string>
 								<reference key="IBUIFont" ref="775630946"/>
 								<reference key="IBUITextColor" ref="252138214"/>
-								<nil key="IBUIHighlightedColor"/>
+								<reference key="IBUIHighlightedColor" ref="980430449"/>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<float key="IBUIMinimumFontSize">1.000000e+01</float>
-								<int key="IBUINumberOfLines">3</int>
+								<int key="IBUINumberOfLines">9999</int>
 							</object>
 							<object class="IBUIView" id="798613254">
 								<reference key="NSNextResponder" ref="558446208"/>
@@ -125,14 +128,12 @@
 				</object>
 				<string key="NSFrameSize">{320, 90}</string>
 				<reference key="NSSuperview"/>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MSAxIDEAA</bytes>
-				</object>
+				<reference key="IBUIBackgroundColor" ref="980430449"/>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 				<int key="IBUISeparatorStyle">1</int>
 				<int key="IBUIAccessoryType">1</int>
 				<reference key="IBUIContentView" ref="558446208"/>
+				<string key="IBUIReuseIdentifier">TimelineTableViewCell</string>
 			</object>
 			<object class="IBUIImageView" id="658001460">
 				<nil key="NSNextResponder"/>
@@ -171,6 +172,30 @@
 						<reference key="destination" ref="798613254"/>
 					</object>
 					<int key="connectionID">9</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">nameLabel</string>
+						<reference key="source" ref="672885255"/>
+						<reference key="destination" ref="454728704"/>
+					</object>
+					<int key="connectionID">11</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">dateLabel</string>
+						<reference key="source" ref="672885255"/>
+						<reference key="destination" ref="140656966"/>
+					</object>
+					<int key="connectionID">12</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">tweetTextLabel</string>
+						<reference key="source" ref="672885255"/>
+						<reference key="destination" ref="923399608"/>
+					</object>
+					<int key="connectionID">13</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -284,7 +309,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">10</int>
+			<int key="maxID">13</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -312,12 +337,32 @@
 					<string key="className">TimelineTableViewCell</string>
 					<string key="superclassName">UITableViewCell</string>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">avatar</string>
-						<string key="NS.object.0">RoundedImage</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSMutableArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>avatar</string>
+							<string>dateLabel</string>
+							<string>nameLabel</string>
+							<string>tweetTextLabel</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>RoundedImage</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/timeline/TimelineTableViewCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UILabel</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/shared/UILabel+DrawingAdditions.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

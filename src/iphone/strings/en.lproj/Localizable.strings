@@ -10,3 +10,6 @@ nodata.noconnection.text = "No Connection";
 /* Push notification registration */
 notification.registration.failed.alert.title = "Failed to Register for Notifications";
 notification.registration.failed.alert.message = "Try restarting the application in a few minutes.";
+
+/* TimelineViewController */
+timelineview.userinfo.following = "%d following, %d followers";

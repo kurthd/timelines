@@ -82,20 +82,15 @@
     // Add the tab bar controller's current view as a subview of the window
     [window addSubview:tabBarController.view];
 
-    timelineDisplayMgrFactory = [[TimelineDisplayMgrFactory alloc] init];
+    timelineDisplayMgrFactory =
+        [[TimelineDisplayMgrFactory alloc]
+        initWithContext:[self managedObjectContext]];
     [self initHomeTab];
 
     if (self.credentials.count == 0)
         [self.logInDisplayMgr logIn];
-    else {
-        TwitterCredentials * c = [self.credentials lastObject];
-        TwitterService * service =
-            [[TwitterService alloc]
-            initWithTwitterCredentials:c context:[self managedObjectContext]];
-        [service fetchTimelineSince:[NSNumber numberWithInteger:0]
-                               page:[NSNumber numberWithInteger:0]
-                              count:[NSNumber numberWithInteger:0]];
-    }
+    else
+        [timelineDisplayMgr setCredentials:[self.credentials objectAtIndex:0]];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

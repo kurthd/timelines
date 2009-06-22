@@ -3,12 +3,28 @@
 //
 
 #import "TimelineViewController.h"
+#import "TimelineTableViewCell.h"
+#import "Tweet.h"
+
+@interface TimelineViewController ()
+
+- (UIImage *)getAvatarForUrl:(NSString *)url;
+- (UIImage *)convertUrlToImage:(NSString *)url;
+
+@end
 
 @implementation TimelineViewController
 
 - (void)dealloc
 {
     [headerView release];
+    [fullNameLabel release];
+    [usernameLabel release];
+    [followingLabel release];
+    
+    [tweets release];
+    [avatarCache release];
+
     [super dealloc];
 }
 
@@ -16,6 +32,7 @@
 {
     [super viewDidLoad];
     self.tableView.tableHeaderView = headerView;
+    avatarCache = [[NSMutableDictionary dictionary] retain];
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -28,7 +45,7 @@
 - (NSInteger)tableView:(UITableView *)tableView
     numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return [tweets count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -36,7 +53,8 @@
 {
     static NSString * cellIdentifier = @"TimelineTableViewCell";
     
-    UITableViewCell * cell =
+    TimelineTableViewCell * cell =
+        (TimelineTableViewCell *)
         [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
         NSArray * nib =
@@ -46,9 +64,15 @@
         cell = [nib objectAtIndex:0];
     }
 
+    Tweet * tweet = [tweets objectAtIndex:indexPath.row];
+    UIImage * avatarImage = [self getAvatarForUrl:tweet.user.profileImageUrl];
+    [cell setAvatarImage:avatarImage];
+    [cell setName:tweet.user.name];
+    [cell setDate:tweet.timestamp];
+    [cell setTweetText:tweet.text];
+
     return cell;
 }
-
 
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -60,8 +84,51 @@
 - (CGFloat)tableView:(UITableView *)aTableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 90;
+    Tweet * tweet = [tweets objectAtIndex:indexPath.row];
+    NSString * tweetText = tweet.text;
+
+    return [TimelineTableViewCell heightForContent:tweetText];
+}
+
+#pragma mark TimelineViewController implementation
+
+- (void)setUser:(User *)aUser
+{
+    fullNameLabel.text = aUser.name;
+    usernameLabel.text = aUser.username;
+    NSString * followingFormatString =
+        NSLocalizedString(@"timelineview.userinfo.following", @"");
+    followingLabel.text =
+        [NSString stringWithFormat:followingFormatString, aUser.following,
+        aUser.followers];
+}
+
+- (void)setTweets:(NSArray *)someTweets
+{
+    NSArray * tempTweets = [someTweets copy];
+    [tweets release];
+    tweets = tempTweets;
+
+    [self.tableView reloadData];
+}
+
+- (UIImage *)getAvatarForUrl:(NSString *)url
+{
+    UIImage * avatarImage = [avatarCache objectForKey:url];
+    if (!avatarImage) {
+        avatarImage = [self convertUrlToImage:url];
+        [avatarCache setObject:avatarImage forKey:url];
+    }
+
+    return avatarImage;
+}
+
+- (UIImage *)convertUrlToImage:(NSString *)url
+{
+    NSURL * avatarUrl = [NSURL URLWithString:url];
+    NSData * avatarData = [NSData dataWithContentsOfURL:avatarUrl];
+
+    return [UIImage imageWithData:avatarData];
 }
 
 @end
-

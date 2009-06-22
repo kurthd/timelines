@@ -6,6 +6,11 @@
 #import "TimelineDisplayMgr.h"
 
 @interface TimelineDisplayMgrFactory : NSObject
+{
+    NSManagedObjectContext * context;
+}
+
+- (id)initWithContext:(NSManagedObjectContext *)context;
 
 - (TimelineDisplayMgr *)
     createTimelineDisplayMgrWithWrapperController:
