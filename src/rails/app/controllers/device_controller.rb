@@ -17,11 +17,12 @@ class DeviceController < ApplicationController
       iphone = Iphone.find(:first, :conditions => [ 'device_token = ?', token ])
       if iphone == nil
         iphone = Iphone.new(:device_token => token)
-        iphone.save!
         logger.debug "Created a new device: #{iphone.id}."
       else
+        iphone.updated_at = Time.now
         logger.debug "Pairing with an existing device: #{iphone.id}."
       end
+      iphone.save!
 
       twitter_user =
         TwitterUser.new(:username => username, :password => password)
@@ -32,7 +33,9 @@ class DeviceController < ApplicationController
                                :iphone_id => iphone.id)
       subscription.save!
 
-      logger.info "Subscribed twitter user #{twitter_user.id}: #{twitter_user.username} to device notifications on device: #{iphone.device_token}."
+      logger.info "Subscribed twitter user #{twitter_user.id}: " +
+        "#{twitter_user.username} to device notifications on device: " +
+        "#{iphone.device_token}."
     else
       @devices = Iphone.find(:all)
     end
