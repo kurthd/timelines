@@ -1,1 +1,19 @@
-<b>Hello, world!</b>
+<p>
+There are <%= pluralize(@devices.count, 'iPhone', 'iPhones') -%> registered
+with the system:
+</p>
+
+<p>
+<% unless @devices.count == 0 -%>
+<table border="1" cellpadding="5" cellspacing="0">
+  <tr>
+    <th>ID</th>
+    <th>Created</th>
+    <th>Updated</th>
+    <th>Device Token</th>
+  </tr>
+  <%= render(:partial => "device_summary", :collection => @devices) %>
+</table>
+<% end -%>
+
+</p>
