@@ -16,10 +16,14 @@
     IBOutlet UILabel * nameLabel;
     IBOutlet UIButton * locationButton;
     IBOutlet RoundedImage * avatar;
+    
+    Tweet * selectedTweet;
 }
 
 @property (nonatomic, assign) NSObject<TweetDetailsViewDelegate> * delegate;
+@property (nonatomic, retain) Tweet * selectedTweet;
 
 - (void)setTweet:(Tweet *)tweet;
+- (IBAction)showLocationOnMap:(id)sender;
 
 @end

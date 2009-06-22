@@ -5,6 +5,8 @@
 #import "TimelineDisplayMgrFactory.h"
 #import "TwitterService.h"
 #import "CredentialsUpdatePublisher.h"
+#import "AllTimelineDataSource.h"
+#import "AllTimelineDataSource.h"
 
 @implementation TimelineDisplayMgrFactory
 
@@ -35,12 +37,16 @@
         [[[TwitterService alloc] initWithTwitterCredentials:nil
         context:context]
         autorelease];
+    AllTimelineDataSource * dataSource =
+        [[[AllTimelineDataSource alloc] initWithTwitterService:service]
+        autorelease];
+    service.delegate = dataSource;
 
     TimelineDisplayMgr * timelineDisplayMgr =
         [[[TimelineDisplayMgr alloc] initWithWrapperController:wrapperController
-        timelineController:timelineController service:service]
+        timelineController:timelineController service:dataSource]
         autorelease];
-    service.delegate = timelineDisplayMgr;
+    dataSource.delegate = timelineDisplayMgr;
     timelineController.delegate = timelineDisplayMgr;
 
     // Don't autorelease

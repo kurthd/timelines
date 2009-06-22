@@ -6,7 +6,8 @@
 
 @implementation TimelineDisplayMgr
 
-@synthesize wrapperController, timelineController, selectedTweet, updateId;
+@synthesize wrapperController, timelineController, selectedTweet, updateId,
+    user;
 
 - (void)dealloc
 {
@@ -17,6 +18,7 @@
     [service release];
 
     [selectedTweet release];
+    [user release];
     [timeline release];
     [updateId release];
         
@@ -25,7 +27,7 @@
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController
-    service:(TwitterService *)aService
+    service:(NSObject<TimelineDataSource> *)aService
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
@@ -40,20 +42,18 @@
         [wrapperController setCachedDataAvailable:NO];
         wrapperController.title = @"Timeline";
 
-        if(service.credentials)
+        if ([service credentials])
             [service fetchTimelineSince:[NSNumber numberWithInt:0]
-            page:[NSNumber numberWithInt:pagesShown]
-            count:[NSNumber numberWithInt:0]];
+            page:[NSNumber numberWithInt:pagesShown]];
     }
 
     return self;
 }
 
-#pragma mark TwitterServiceDelegate implementation
+#pragma mark TimelineDataSourceDelegate implementation
 
 - (void)timeline:(NSArray *)aTimeline
     fetchedSinceUpdateId:(NSNumber *)anUpdateId page:(NSNumber *)page
-    count:(NSNumber *)count
 {
     NSLog(@"Timeline received: %@", aTimeline);
     self.updateId = anUpdateId;
@@ -65,7 +65,7 @@
 }
 
 - (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)updateId
-    page:(NSNumber *)page count:(NSNumber *)count error:(NSError *)error
+    page:(NSNumber *)page error:(NSError *)error
 {
     // TODO: display alert view
 }
@@ -86,17 +86,16 @@
     NSLog(@"Loading more tweets...");
     [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:!!timeline];
-    if(service.credentials)
+    if([service credentials])
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
-        page:[NSNumber numberWithInt:++pagesShown]
-        count:[NSNumber numberWithInt:0]];
+        page:[NSNumber numberWithInt:++pagesShown]];
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
 
-- (void)selectedUser:(User *)user
+- (void)selectedUser:(User *)aUser
 {
-    NSLog(@"Selected user: %@", user);
+    NSLog(@"Selected user: %@", aUser);
 }
 
 - (void)setFavorite:(BOOL)favorite
@@ -115,9 +114,9 @@
     NSLog(@"Refreshing timeline...");
     [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:!!timeline];
-    if(service.credentials)
+    if([service credentials])
         [service fetchTimelineSince:self.updateId
-            page:[NSNumber numberWithInt:0] count:[NSNumber numberWithInt:0]];
+            page:[NSNumber numberWithInt:0]];
 }
 
 #pragma mark Accessors
@@ -148,13 +147,37 @@
     return tweetDetailsController;
 }
 
+- (void)setService:(NSObject<TimelineDataSource> *)aService
+    tweets:(NSMutableDictionary *)tweets page:(NSUInteger)page
+{
+    [aService retain];
+    [service release];
+    service = aService;
+
+    [tweets retain];
+    [timeline release];
+    timeline = tweets;
+
+    pagesShown = page;
+
+    [self refresh];
+}
+
 - (void)setCredentials:(TwitterCredentials *)credentials
 {
     NSLog(@"New credentials set");
-    service.credentials = credentials;
+    [service setCredentials:credentials];
     [service fetchTimelineSince:[NSNumber numberWithInt:0]
-        page:[NSNumber numberWithInt:pagesShown]
-        count:[NSNumber numberWithInt:0]];
+        page:[NSNumber numberWithInt:pagesShown]];
+}
+
+- (void)setUser:(User *)aUser
+{
+    [aUser retain];
+    [user release];
+    user = aUser;
+
+    [self.timelineController setUser:aUser];
 }
 
 @end
