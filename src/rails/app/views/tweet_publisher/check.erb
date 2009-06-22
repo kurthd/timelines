@@ -1,5 +1,27 @@
-client: <%= @client %>
+<p>
+Sent <%= @usernames.length -%> notifications.
+</p>
 
-<br />
+<% if @usernames.length > 0 -%>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+      <th>Username</th>
+      <th>Badge Count</th>
+      <th>Message</th>
+    </tr>
 
-result: <%= @result %>
+    <% @usernames.each do |username, notification| -%>
+    <tr>
+      <td>
+        <%= h(username) -%>
+      </td>
+      <td>
+        <%= h(notification.badge) -%>
+      </td>
+      <td>
+        <%= h(notification.alert) -%>
+      </td>
+    </tr>
+    <% end -%>
+  </table>
+<% end -%>
