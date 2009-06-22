@@ -13,10 +13,11 @@
     TimelineViewController * timelineController =
         [[[TimelineViewController alloc]
         initWithNibName:@"TimelineView" bundle:nil] autorelease];
+    wrapperController.targetViewController = timelineController;
 
     TimelineDisplayMgr * timelineDisplayMgr =
-        [[TimelineDisplayMgr alloc] initWithWrapperController:wrapperController
-        timelineController:timelineController];
+        [[[TimelineDisplayMgr alloc] initWithWrapperController:wrapperController
+        timelineController:timelineController] autorelease];
 
     return timelineDisplayMgr;
 }

@@ -5,6 +5,7 @@
 #import <UIKit/UIKit.h>
 #import "NetworkAwareViewController.h"
 #import "DeviceRegistrarDelegate.h"
+#import "TimelineDisplayMgrFactory.h"
 #import "TwitterServiceDelegate.h"
 
 @class LogInDisplayMgr, DeviceRegistrar;
@@ -38,6 +39,9 @@
     IBOutlet NetworkAwareViewController * trendsNetAwareViewController;
     IBOutlet NetworkAwareViewController * searchNetAwareViewController;
     IBOutlet NetworkAwareViewController * accountsNetAwareViewController;
+    
+    TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
+    TimelineDisplayMgr * timelineDisplayMgr;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;

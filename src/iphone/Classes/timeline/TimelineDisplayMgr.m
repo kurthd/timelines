@@ -21,6 +21,9 @@
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
         timelineController = [aTimelineController retain];
+        
+        [wrapperController setUpdatingState:kConnectedAndNotUpdating];
+        [wrapperController setCachedDataAvailable:YES];
     }
 
     return self;
