@@ -80,6 +80,7 @@
 		916BD8BF0FEEEE4A007143A9 /* RoundedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD8BE0FEEEE4A007143A9 /* RoundedImage.m */; };
 		916BD9120FEEFB07007143A9 /* TimelineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916BD9100FEEFB07007143A9 /* TimelineTableViewCell.xib */; };
 		916BD9150FEEFB24007143A9 /* TimelineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD9140FEEFB24007143A9 /* TimelineTableViewCell.m */; };
+		916BD9D30FEF3D05007143A9 /* UILabel+DrawingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD9D20FEF3D05007143A9 /* UILabel+DrawingAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -215,6 +216,8 @@
 		916BD9110FEEFB07007143A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TimelineTableViewCell.xib; sourceTree = "<group>"; };
 		916BD9130FEEFB24007143A9 /* TimelineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineTableViewCell.h; path = timeline/TimelineTableViewCell.h; sourceTree = "<group>"; };
 		916BD9140FEEFB24007143A9 /* TimelineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineTableViewCell.m; path = timeline/TimelineTableViewCell.m; sourceTree = "<group>"; };
+		916BD9D10FEF3D05007143A9 /* UILabel+DrawingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+DrawingAdditions.h"; path = "shared/UILabel+DrawingAdditions.h"; sourceTree = "<group>"; };
+		916BD9D20FEF3D05007143A9 /* UILabel+DrawingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+DrawingAdditions.m"; path = "shared/UILabel+DrawingAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -336,6 +339,8 @@
 		05B2393C0FEDD05E00A6A2E6 /* shared */ = {
 			isa = PBXGroup;
 			children = (
+				916BD9D10FEF3D05007143A9 /* UILabel+DrawingAdditions.h */,
+				916BD9D20FEF3D05007143A9 /* UILabel+DrawingAdditions.m */,
 				916BD7BC0FEEAF13007143A9 /* NSObject+RuntimeAdditions.h */,
 				916BD7BD0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m */,
 				916BD7B60FEEAED1007143A9 /* NoDataViewController.h */,
@@ -675,6 +680,7 @@
 				05B23C160FEEEFB000A6A2E6 /* User.m in Sources */,
 				05B23C1B0FEEEFC700A6A2E6 /* Tweet.m in Sources */,
 				05B23C690FEEF39200A6A2E6 /* TwitterCredentials.m in Sources */,
+				916BD9D30FEF3D05007143A9 /* UILabel+DrawingAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
