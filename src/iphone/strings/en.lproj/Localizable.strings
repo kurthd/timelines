@@ -13,3 +13,9 @@ notification.registration.failed.alert.message = "Try restarting the application
 
 /* TimelineViewController */
 timelineview.userinfo.following = "%d following, %d followers";
+timelineview.showingmultiplepages = "Showing pages 0 - %d";
+timelineview.showingsinglepage = "Showing page 1";
+
+/* TweetDetailsViewController */
+tweetdetailsview.title = "Tweet Details";
+tweetdetailsview.tweetfooter = "%@ from %@";

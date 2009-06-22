@@ -6,7 +6,7 @@
 
 @implementation RoundedImage
 
-@synthesize imageView, radius;
+@synthesize radius;
 
 - (void)dealloc
 {
@@ -59,6 +59,22 @@
     
     // Drawing the image
     [imageView.image drawInRect:CGRectMake(0, 0, w, h)];
+}
+
+- (UIImageView *)imageView
+{
+    [self setNeedsDisplay];
+
+    return imageView;
+}
+
+- (void)setImageView:(UIImageView *)anImageView
+{
+    [anImageView retain];
+    [imageView release];
+    imageView = anImageView;
+    
+    [self setNeedsDisplay];
 }
 
 @end

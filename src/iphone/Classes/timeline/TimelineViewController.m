@@ -6,24 +6,41 @@
 #import "TimelineTableViewCell.h"
 #import "Tweet.h"
 
+@interface Tweet (Sorting)
+- (NSComparisonResult)compare:(Tweet *)tweet;
+@end
+
+@implementation Tweet (Sorting)
+- (NSComparisonResult)compare:(Tweet *)tweet
+{
+    return [tweet.identifier compare:self.identifier];
+}
+@end
+
 @interface TimelineViewController ()
 
 - (UIImage *)getAvatarForUrl:(NSString *)url;
 - (UIImage *)convertUrlToImage:(NSString *)url;
+- (NSArray *)sortedTweets;
 
 @end
 
 @implementation TimelineViewController
 
+@synthesize delegate, sortedTweetCache;
+
 - (void)dealloc
 {
     [headerView release];
+    [footerView release];
     [fullNameLabel release];
     [usernameLabel release];
     [followingLabel release];
-    
+
     [tweets release];
     [avatarCache release];
+
+    [currentPagesLabel release];
 
     [super dealloc];
 }
@@ -32,6 +49,7 @@
 {
     [super viewDidLoad];
     self.tableView.tableHeaderView = headerView;
+    self.tableView.tableFooterView = footerView;
     avatarCache = [[NSMutableDictionary dictionary] retain];
 }
 
@@ -52,7 +70,7 @@
     cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString * cellIdentifier = @"TimelineTableViewCell";
-    
+
     TimelineTableViewCell * cell =
         (TimelineTableViewCell *)
         [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -64,7 +82,7 @@
         cell = [nib objectAtIndex:0];
     }
 
-    Tweet * tweet = [tweets objectAtIndex:indexPath.row];
+    Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
     UIImage * avatarImage = [self getAvatarForUrl:tweet.user.profileImageUrl];
     [cell setAvatarImage:avatarImage];
     [cell setName:tweet.user.name];
@@ -77,6 +95,8 @@
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
+    [delegate selectedTweet:tweet];
 }
 
 #pragma mark UITableViewDelegate implementation
@@ -84,13 +104,19 @@
 - (CGFloat)tableView:(UITableView *)aTableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Tweet * tweet = [tweets objectAtIndex:indexPath.row];
+    Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
     NSString * tweetText = tweet.text;
 
     return [TimelineTableViewCell heightForContent:tweetText];
 }
 
 #pragma mark TimelineViewController implementation
+
+- (IBAction)loadMoreTweets:(id)sender
+{
+    NSLog(@"Load more tweets selected");
+    [delegate loadMoreTweets];
+}
 
 - (void)setUser:(User *)aUser
 {
@@ -103,11 +129,22 @@
         aUser.followersCount];
 }
 
-- (void)setTweets:(NSArray *)someTweets
+- (void)setTweets:(NSArray *)someTweets page:(NSUInteger)page
 {
+    self.sortedTweetCache = nil;
+
     NSArray * tempTweets = [someTweets copy];
     [tweets release];
     tweets = tempTweets;
+
+    NSString * showingMultPagesFormatString =
+        NSLocalizedString(@"timelineview.showingmultiplepages", @"");
+    NSString * showingSinglePageFormatString =
+        NSLocalizedString(@"timelineview.showingsinglepage", @"");
+    currentPagesLabel.text =
+        page > 1 ?
+        [NSString stringWithFormat:showingMultPagesFormatString, page] :
+        showingSinglePageFormatString;
 
     [self.tableView reloadData];
 }
@@ -129,6 +166,15 @@
     NSData * avatarData = [NSData dataWithContentsOfURL:avatarUrl];
 
     return [UIImage imageWithData:avatarData];
+}
+
+- (NSArray *)sortedTweets
+{
+    if (!self.sortedTweetCache)
+        self.sortedTweetCache =
+            [tweets sortedArrayUsingSelector:@selector(compare:)];
+
+    return sortedTweetCache;
 }
 
 @end

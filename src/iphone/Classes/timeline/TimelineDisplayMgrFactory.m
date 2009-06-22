@@ -41,6 +41,7 @@
         timelineController:timelineController service:service]
         autorelease];
     service.delegate = timelineDisplayMgr;
+    timelineController.delegate = timelineDisplayMgr;
 
     // Don't autorelease
     [[CredentialsUpdatePublisher alloc]

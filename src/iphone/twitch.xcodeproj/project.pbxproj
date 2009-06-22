@@ -88,6 +88,13 @@
 		916BD9120FEEFB07007143A9 /* TimelineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916BD9100FEEFB07007143A9 /* TimelineTableViewCell.xib */; };
 		916BD9150FEEFB24007143A9 /* TimelineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD9140FEEFB24007143A9 /* TimelineTableViewCell.m */; };
 		916BD9D30FEF3D05007143A9 /* UILabel+DrawingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD9D20FEF3D05007143A9 /* UILabel+DrawingAdditions.m */; };
+		916BD9F60FEF46B1007143A9 /* TweetDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916BD9F40FEF46B1007143A9 /* TweetDetailsView.xib */; };
+		916BD9FA0FEF46E4007143A9 /* TweetDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD9F90FEF46E4007143A9 /* TweetDetailsViewController.m */; };
+		916BDA4E0FEF573A007143A9 /* tweet-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 916BDA4D0FEF573A007143A9 /* tweet-style.css */; };
+		91E000430FEF76E800BCE9BC /* Favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000420FEF76E800BCE9BC /* Favorite.png */; };
+		91E0004C0FEF786300BCE9BC /* NotFavorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E0004B0FEF786300BCE9BC /* NotFavorite.png */; };
+		91E000880FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */; };
+		91E000950FEFFCC700BCE9BC /* DropShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000940FEFFCC700BCE9BC /* DropShadow.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -239,6 +246,16 @@
 		916BD9140FEEFB24007143A9 /* TimelineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineTableViewCell.m; path = timeline/TimelineTableViewCell.m; sourceTree = "<group>"; };
 		916BD9D10FEF3D05007143A9 /* UILabel+DrawingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+DrawingAdditions.h"; path = "shared/UILabel+DrawingAdditions.h"; sourceTree = "<group>"; };
 		916BD9D20FEF3D05007143A9 /* UILabel+DrawingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+DrawingAdditions.m"; path = "shared/UILabel+DrawingAdditions.m"; sourceTree = "<group>"; };
+		916BD9F50FEF46B1007143A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TweetDetailsView.xib; sourceTree = "<group>"; };
+		916BD9F80FEF46E4007143A9 /* TweetDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailsViewController.h; path = timeline/TweetDetailsViewController.h; sourceTree = "<group>"; };
+		916BD9F90FEF46E4007143A9 /* TweetDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailsViewController.m; path = timeline/TweetDetailsViewController.m; sourceTree = "<group>"; };
+		916BD9FB0FEF4986007143A9 /* TimelineViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineViewControllerDelegate.h; path = timeline/TimelineViewControllerDelegate.h; sourceTree = "<group>"; };
+		916BDA140FEF4E96007143A9 /* TweetDetailsViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailsViewDelegate.h; path = timeline/TweetDetailsViewDelegate.h; sourceTree = "<group>"; };
+		916BDA4D0FEF573A007143A9 /* tweet-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "tweet-style.css"; sourceTree = "<group>"; };
+		91E000420FEF76E800BCE9BC /* Favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Favorite.png; path = images/Favorite.png; sourceTree = "<group>"; };
+		91E0004B0FEF786300BCE9BC /* NotFavorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NotFavorite.png; path = images/NotFavorite.png; sourceTree = "<group>"; };
+		91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsHeaderGradient.png; path = images/TweetDetailsHeaderGradient.png; sourceTree = "<group>"; };
+		91E000940FEFFCC700BCE9BC /* DropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadow.png; path = images/DropShadow.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -407,6 +424,7 @@
 				05B238880FEDC35400A6A2E6 /* LogInView.xib */,
 				916BD8020FEEBD56007143A9 /* TimelineView.xib */,
 				916BD9100FEEFB07007143A9 /* TimelineTableViewCell.xib */,
+				916BD9F40FEF46B1007143A9 /* TweetDetailsView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -531,6 +549,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				916BDA4C0FEF573A007143A9 /* html */,
 				05B23A040FEEB10B00A6A2E6 /* data-model */,
 				916BD7CB0FEEB112007143A9 /* images */,
 				05B239440FEDD0E400A6A2E6 /* nibs */,
@@ -556,6 +575,10 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91E000940FEFFCC700BCE9BC /* DropShadow.png */,
+				91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */,
+				91E0004B0FEF786300BCE9BC /* NotFavorite.png */,
+				91E000420FEF76E800BCE9BC /* Favorite.png */,
 				916BD8A20FEEDFBD007143A9 /* UserHeaderGradient.png */,
 				916BD8940FEEDAD9007143A9 /* Default.png */,
 				916BD8950FEEDAD9007143A9 /* DefaultAvatar.png */,
@@ -584,8 +607,20 @@
 				916BD81E0FEEC12B007143A9 /* TimelineDisplayMgrFactory.m */,
 				916BD9130FEEFB24007143A9 /* TimelineTableViewCell.h */,
 				916BD9140FEEFB24007143A9 /* TimelineTableViewCell.m */,
+				916BD9F80FEF46E4007143A9 /* TweetDetailsViewController.h */,
+				916BD9F90FEF46E4007143A9 /* TweetDetailsViewController.m */,
+				916BD9FB0FEF4986007143A9 /* TimelineViewControllerDelegate.h */,
+				916BDA140FEF4E96007143A9 /* TweetDetailsViewDelegate.h */,
 			);
 			name = timeline;
+			sourceTree = "<group>";
+		};
+		916BDA4C0FEF573A007143A9 /* html */ = {
+			isa = PBXGroup;
+			children = (
+				916BDA4D0FEF573A007143A9 /* tweet-style.css */,
+			);
+			path = html;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -657,6 +692,12 @@
 				916BD8A30FEEDFBD007143A9 /* UserHeaderGradient.png in Resources */,
 				916BD9120FEEFB07007143A9 /* TimelineTableViewCell.xib in Resources */,
 				05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */,
+				916BD9F60FEF46B1007143A9 /* TweetDetailsView.xib in Resources */,
+				916BDA4E0FEF573A007143A9 /* tweet-style.css in Resources */,
+				91E000430FEF76E800BCE9BC /* Favorite.png in Resources */,
+				91E0004C0FEF786300BCE9BC /* NotFavorite.png in Resources */,
+				91E000880FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png in Resources */,
+				91E000950FEFFCC700BCE9BC /* DropShadow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,6 +764,7 @@
 				05F45A5D0FF01E3F00EBAFC7 /* User.m in Sources */,
 				05F45A6B0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m in Sources */,
 				05F45B410FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m in Sources */,
+				916BD9FA0FEF46E4007143A9 /* TweetDetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -776,6 +818,14 @@
 				916BD9110FEEFB07007143A9 /* en */,
 			);
 			name = TimelineTableViewCell.xib;
+			sourceTree = "<group>";
+		};
+		916BD9F40FEF46B1007143A9 /* TweetDetailsView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				916BD9F50FEF46B1007143A9 /* en */,
+			);
+			name = TweetDetailsView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

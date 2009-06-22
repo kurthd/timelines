@@ -1,0 +1,21 @@
+body {
+    width: 90%;
+    font-family: "Helvetica";
+    padding: 1px;
+    font-size: 12pt;
+}
+
+a {
+    text-decoration: none;
+}
+
+.footer,
+.footer a {
+    font-size: 12pt;
+    color: 909090;
+    font-style: oblique;
+}
+
+.footer a {
+    text-decoration: underline;
+}
