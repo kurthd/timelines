@@ -28,6 +28,17 @@
                                      count:(NSNumber *)count
                                      error:(NSError *)error;
 
+#pragma mark Mentions
+
+- (void)mentions:(NSArray *)mentions
+    fetchedSinceUpdateId:(NSNumber *)updateId
+                    page:(NSNumber *)page
+                   count:(NSNumber *)count;
+- (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)updateId
+                                      page:(NSNumber *)page
+                                     count:(NSNumber *)count
+                                     error:(NSError *)error;
+
 #pragma mark Direct messages
 
 @optional

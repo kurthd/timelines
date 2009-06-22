@@ -13,7 +13,11 @@
 @implementation Tweet (Sorting)
 - (NSComparisonResult)compare:(Tweet *)tweet
 {
-    return [tweet.identifier compare:self.identifier];
+    NSNumber * myId =
+        [NSNumber numberWithLongLong:[self.identifier longLongValue]];
+    NSNumber * theirId =
+        [NSNumber numberWithLongLong:[tweet.identifier longLongValue]];
+    return [theirId compare:myId];
 }
 @end
 

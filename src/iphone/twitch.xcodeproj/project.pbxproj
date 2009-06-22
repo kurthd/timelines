@@ -51,6 +51,7 @@
 		05F45A5D0FF01E3F00EBAFC7 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A5C0FF01E3F00EBAFC7 /* User.m */; };
 		05F45A6B0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A6A0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m */; };
 		05F45B410FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45B400FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m */; };
+		05F45BA20FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45BA10FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -188,6 +189,8 @@
 		05F45A6A0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ResponseProcessor+ParsingHelpers.m"; path = "twitter/processors/ResponseProcessor+ParsingHelpers.m"; sourceTree = "<group>"; };
 		05F45B3F0FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DirectMessage+CoreDataAdditions.h"; path = "tweets/DirectMessage+CoreDataAdditions.h"; sourceTree = "<group>"; };
 		05F45B400FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DirectMessage+CoreDataAdditions.m"; path = "tweets/DirectMessage+CoreDataAdditions.m"; sourceTree = "<group>"; };
+		05F45BA00FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchMentionsResponseProcessor.h; path = twitter/processors/FetchMentionsResponseProcessor.h; sourceTree = "<group>"; };
+		05F45BA10FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchMentionsResponseProcessor.m; path = twitter/processors/FetchMentionsResponseProcessor.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Twitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -476,6 +479,8 @@
 				05B23B480FEED5A000A6A2E6 /* CheckCredentialsResponseProcessor.m */,
 				05B23B4A0FEED5C600A6A2E6 /* FetchTimelineResponseProcessor.h */,
 				05B23B4B0FEED5C600A6A2E6 /* FetchTimelineResponseProcessor.m */,
+				05F45BA00FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.h */,
+				05F45BA10FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m */,
 				05F459ED0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.h */,
 				05F459EE0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m */,
 				05F45A690FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.h */,
@@ -765,6 +770,7 @@
 				05F45A6B0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m in Sources */,
 				05F45B410FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m in Sources */,
 				916BD9FA0FEF46E4007143A9 /* TweetDetailsViewController.m in Sources */,
+				05F45BA20FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

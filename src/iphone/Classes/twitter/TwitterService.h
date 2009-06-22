@@ -39,6 +39,12 @@
                               page:(NSNumber *)page
                              count:(NSNumber *)count;
 
+#pragma mark Mentions
+
+- (void)fetchMentionsSinceUpdateId:(NSNumber *)updateId
+                              page:(NSNumber *)page
+                             count:(NSNumber *)count;
+
 #pragma mark Direct messages
 
 - (void)fetchDirectMessagesSinceId:(NSNumber *)updateId page:(NSNumber *)page;

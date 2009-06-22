@@ -63,6 +63,8 @@
     [self request:requestId isHandledBy:processor];
 }
 
+#pragma mark Timelines
+
 - (void)fetchTimelineSinceUpdateId:(NSNumber *)updateId
                               page:(NSNumber *)page
                              count:(NSNumber *)count
@@ -82,6 +84,29 @@
 
     [self request:requestId isHandledBy:processor];
 }
+
+#pragma mark Mentions
+
+- (void)fetchMentionsSinceUpdateId:(NSNumber *)updateId
+                              page:(NSNumber *)page
+                             count:(NSNumber *)count
+{
+    ResponseProcessor * processor =
+        [FetchMentionsResponseProcessor processorWithUpdateId:updateId
+                                                         page:page
+                                                        count:count
+                                                      context:context
+                                                     delegate:delegate];
+
+    NSString * requestId =
+        [twitter getMentionsSinceID:[updateId integerValue]
+                               page:[page integerValue]
+                              count:[count integerValue]];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+#pragma mark Direct messages
 
 - (void)fetchDirectMessagesSinceId:(NSNumber *)updateId page:(NSNumber *)page
 {
