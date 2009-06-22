@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+url = 'http://sandbox.twitch.highorderbit.com/tweet_publisher/check'
+#url = 'http://megatron.local:3000/tweet_publisher/check'
+
+`curl -O #{url}`

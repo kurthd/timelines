@@ -11,7 +11,7 @@ with the system:
 </p>
 
 <p>
-<% unless @devices.count == 0 -%>
+<% unless @devices.length == 0 -%>
 <table border="1" cellpadding="5" cellspacing="0">
   <tr>
     <th>ID</th>
@@ -21,6 +21,7 @@ with the system:
   </tr>
   <%= render(:partial => "device_summary", :collection => @devices) %>
 </table>
+<% end -%>
 <% end -%>
 
 </p>

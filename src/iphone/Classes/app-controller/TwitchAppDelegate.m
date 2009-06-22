@@ -63,6 +63,9 @@
     // TEMPORARY
     unregisteredCredentials = [[NSMutableArray alloc] init];
 
+    // reset the unread message count to 0
+    application.applicationIconBadgeNumber = 0;
+
     registeredForPushNotifications = NO;
 
     /*

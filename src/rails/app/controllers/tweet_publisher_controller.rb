@@ -3,6 +3,7 @@ require 'grackle'
 class TweetPublisherController < ApplicationController
   def check
     notifications = Array.new
+    @usernames = Hash.new
 
     subscriptions = DeviceSubscription.find(:all)
 
@@ -24,7 +25,7 @@ class TweetPublisherController < ApplicationController
         logger.warn "No Twitter user maps to subscription: #{subscription.id}"
         next
       end
-      logger.debug "Checking for new tweets for #{twitter_user.username}."
+      logger.debug "Checking for new tweets for #{twitter_user}."
 
       @client =
         Grackle::Client.new(:auth => { :type =>:basic,
@@ -40,19 +41,19 @@ class TweetPublisherController < ApplicationController
       # TODO: Move this code into the device registration controller
       if (status == nil)  # this is the first time we've notified this person
                           # don't send anything; just make note
-        direct_messages = self.all_direct_messages.reverse
-        mentions = self.all_mentions.reverse
+        direct_messages = self.all_direct_messages
+        mentions = self.all_mentions
 
         if (direct_messages.length == 0)
           last_direct_message = '0'
         else
-          last_direct_message = direct_messages[-1].id
+          last_direct_message = direct_messages[0].id
         end
 
         if (mentions.length == 0)
           last_mention = '0'
         else
-          last_mention = mentions[-1].id
+          last_mention = mentions[0].id
         end
 
         status = SubscriberStatus.new(
@@ -64,59 +65,50 @@ class TweetPublisherController < ApplicationController
         next
       end
 
-      logger.debug "Successfully created client."
-
-      # fetch direct messages
+      # fetch direct messages and mentions since last time
       direct_messages =
-        self.direct_messages_since(status.last_direct_message).reverse
-      mentions = self.mentions_since(status.last_mention).reverse
+        self.direct_messages_since(status.last_direct_message)
+      mentions = self.mentions_since(status.last_mention)
+
+      logger.info "#{twitter_user}: #{direct_messages.length} direct " +
+        "messages since #{status.last_direct_message}."
+      logger.info "#{twitter_user}: #{mentions.length} mentions since " +
+        "#{status.last_mention}."
 
       if (direct_messages.length + mentions.length > 0)
-        logger.debug "Notifying phone #{iphone.device_token} of " +
-          "#{direct_messages.length} direct messages and "
+        logger.info "Notifying phone #{iphone.device_token} of " +
+          "#{direct_messages.length} direct messages and " +
           "#{mentions.length} mentions."
 
-        message = "You have received "
+        # update status and save to the database
         if (direct_messages.length > 0)
-          message += "#{direct_messages.length} direct " +
-            "message#{direct_messages.length == 1 ? '' : 's'}"
-
-          status.last_direct_message = direct_messages[-1].id
+          status.last_direct_message = direct_messages[0].id
         end
 
         if (mentions.length > 0)
-          if (direct_messages.length > 0)
-            message += " and "
-          end
-
-          message += "#{mentions.length} " +
-            "mention#{mentions.length == 1 ? '' : 's'}"
-
-          status.last_mention = mentions[-1].id
-        else
-          message += "."
+          status.last_mention = mentions[0].id
         end
 
-        notification = ApplePushNotification.new
-        notification.device_token = iphone.device_token
-        notification.badge = direct_messages.length + mentions.length
-        notification.sound = true
-        notification.alert = message
+        notification = self.push_notification_for(
+          iphone.device_token, direct_messages, mentions)
+
+        logger.info "Adding one notification for user: #{twitter_user}: " +
+          "\"#{notification.alert}\"."
 
         notifications << notification
+        @usernames[twitter_user.username] = notification
 
-        status.save!
+        # don't save new status until everything's done
+        status.save
       else
-        logger.info "No new tweets for: #{twitter_user.username}."
+        logger.info "#{twitter_user}: no new tweets."
       end
     end
 
     logger.info "Sending #{notifications.length} push notifications."
-
-    ####
-    # TODO: PUT ME BACK IN TO ACTUALLY SEND SOMETHING!
-    ####
-    ApplePushNotification.send_notifications(notifications)
+    if (notifications.length > 0)
+      ApplePushNotification.send_notifications(notifications)
+    end
   end
 
   @private
@@ -136,4 +128,52 @@ class TweetPublisherController < ApplicationController
   def all_mentions
     @client.statuses.mentions.json?
   end
+
+  def push_notification_for(device_token, dms, mentions)
+    if (dms.length + mentions.length == 1)
+      if (dms.length == 1)
+        message = self.single_direct_message_message(dms[0])
+      else
+        message = self.single_mention_message(mentions[0])
+      end
+    else
+      message = self.many_messages_message(dms, mentions)
+    end
+
+    notification = ApplePushNotification.new
+    notification.device_token = device_token
+    notification.badge = dms.length + mentions.length
+    notification.sound = true
+    notification.alert = message
+
+    notification
+  end
+
+  def single_direct_message_message(dm)
+    "#{dm.sender_screen_name}: #{dm.text}"
+  end
+
+  def single_mention_message(mention)
+    "@#{mention.user.screen_name}: #{mention.text}"
+  end
+
+  def many_messages_message(dms, mentions)
+    message = "You have "
+    if (dms.length > 0)
+      message += "#{dms.length} new direct " +
+        "message#{dms.length == 1 ? '' : 's'}"
+    end
+
+    if (mentions.length > 0)
+      if (dms.length > 0)
+        message += " and "
+      end
+
+      message += "#{mentions.length} " +
+        "new mention#{mentions.length == 1 ? '' : 's'}."
+    else
+      message += "."
+    end
+  end
+
 end
