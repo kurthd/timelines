@@ -5,8 +5,10 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 #import "TimelineViewControllerDelegate.h"
+#import "AsynchronousNetworkFetcherDelegate.h"
 
-@interface TimelineViewController : UITableViewController
+@interface TimelineViewController :
+    UITableViewController <AsynchronousNetworkFetcherDelegate>
 {
     NSObject<TimelineViewControllerDelegate> * delegate;
 
