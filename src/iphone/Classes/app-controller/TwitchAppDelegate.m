@@ -12,7 +12,7 @@
 #import "TwitterService.h"
 #import "ComposeTweetDisplayMgr.h"
 #import "PersonalFeedSelectionMgr.h"
-#import "AllTimelineDataSource.h"
+#import "UserTimelineDataSource.h"
 
 @interface TwitchAppDelegate ()
 
@@ -219,9 +219,14 @@
         [[[TwitterService alloc] initWithTwitterCredentials:nil
         context:[self managedObjectContext]]
         autorelease];
-    AllTimelineDataSource * dataSource =
-        [[[AllTimelineDataSource alloc] initWithTwitterService:twitterService]
+    UserTimelineDataSource * dataSource =
+        [[[UserTimelineDataSource alloc] initWithTwitterService:twitterService]
         autorelease];
+
+    // Don't autorelease
+    [[CredentialsUpdatePublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+
     twitterService.delegate = dataSource;
     [profileTimelineDisplayMgr setService:dataSource tweets:nil page:1
         forceRefresh:NO];
