@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0524BDF70FF16E0500A6099B /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524BDF60FF16E0500A6099B /* AccountsViewController.m */; };
+		0524BDFB0FF16E2200A6099B /* AccountsDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524BDFA0FF16E2200A6099B /* AccountsDisplayMgr.m */; };
 		052C64190FED703200B259D7 /* TwitchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C64180FED703200B259D7 /* TwitchAppDelegate.m */; };
 		05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05977A3B0FEF0C9700E37B9C /* Icon.png */; };
 		05B2380D0FEDB20900A6A2E6 /* MGTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237EE0FEDB20900A6A2E6 /* MGTwitterEngine.m */; };
@@ -109,6 +111,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0524BDF50FF16E0500A6099B /* AccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsViewController.h; path = accounts/AccountsViewController.h; sourceTree = "<group>"; };
+		0524BDF60FF16E0500A6099B /* AccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsViewController.m; path = accounts/AccountsViewController.m; sourceTree = "<group>"; };
+		0524BDF90FF16E2200A6099B /* AccountsDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsDisplayMgr.h; path = accounts/AccountsDisplayMgr.h; sourceTree = "<group>"; };
+		0524BDFA0FF16E2200A6099B /* AccountsDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsDisplayMgr.m; path = accounts/AccountsDisplayMgr.m; sourceTree = "<group>"; };
 		052C64170FED703200B259D7 /* TwitchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchAppDelegate.h; path = "app-controller/TwitchAppDelegate.h"; sourceTree = "<group>"; };
 		052C64180FED703200B259D7 /* TwitchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchAppDelegate.m; path = "app-controller/TwitchAppDelegate.m"; sourceTree = "<group>"; };
 		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -311,6 +317,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0524BDF80FF16E0A00A6099B /* accounts */ = {
+			isa = PBXGroup;
+			children = (
+				0524BDF90FF16E2200A6099B /* AccountsDisplayMgr.h */,
+				0524BDFA0FF16E2200A6099B /* AccountsDisplayMgr.m */,
+				0524BDF50FF16E0500A6099B /* AccountsViewController.h */,
+				0524BDF60FF16E0500A6099B /* AccountsViewController.m */,
+			);
+			name = accounts;
+			sourceTree = "<group>";
+		};
 		052C64150FED700B00B259D7 /* app-controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -556,6 +573,7 @@
 				916BD8130FEEBDF9007143A9 /* timeline */,
 				052C64150FED700B00B259D7 /* app-controller */,
 				05B2387E0FEDC25F00A6A2E6 /* log-in */,
+				0524BDF80FF16E0A00A6099B /* accounts */,
 				05B238F30FEDC85300A6A2E6 /* users */,
 				05B238F80FEDC8EE00A6A2E6 /* twitter */,
 				05B23C0C0FEEEEC000A6A2E6 /* tweets */,
@@ -839,6 +857,8 @@
 				9115A9810FF0874700D6A769 /* MentionsTimelineDataSource.m in Sources */,
 				05F45D300FF05B8200EBAFC7 /* ComposeTweetDisplayMgr.m in Sources */,
 				05F45D330FF05B9400EBAFC7 /* ComposeTweetViewController.m in Sources */,
+				0524BDF70FF16E0500A6099B /* AccountsViewController.m in Sources */,
+				0524BDFB0FF16E2200A6099B /* AccountsDisplayMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,6 +12,7 @@
 #import "TwitterService.h"
 #import "ComposeTweetDisplayMgr.h"
 #import "PersonalFeedSelectionMgr.h"
+#import "AccountsDisplayMgr.h"
 
 @interface TwitchAppDelegate ()
 
@@ -23,6 +24,7 @@
 - (UIBarButtonItem *)sendingTweetProgressView;
 
 - (void)initHomeTab;
+- (void)initAccountsTab;
 
 - (UIBarButtonItem *)newTweetButtonItem;
 
@@ -56,12 +58,13 @@
     [profileNetAwareViewController release];
     [trendsNetAwareViewController release];
     [searchNetAwareViewController release];
-    [accountsNetAwareViewController release];
 
     [timelineDisplayMgrFactory release];
     [timelineDisplayMgr release];
 
     [composeTweetDisplayMgr release];
+
+    [accountsDisplayMgr release];
 
     [sendingTweetProgressView release];
 
@@ -101,6 +104,7 @@
         [[TimelineDisplayMgrFactory alloc]
         initWithContext:[self managedObjectContext]];
     [self initHomeTab];
+    [self initAccountsTab];
 
     if (self.credentials.count == 0)
         [self.logInDisplayMgr logIn];
@@ -195,6 +199,13 @@
     [segmentedControl addTarget:personalFeedSelectionMgr
         action:@selector(tabSelected:)
         forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)initAccountsTab
+{
+    accountsDisplayMgr = [[AccountsDisplayMgr alloc]
+        initWithAccountsViewController:accountsViewController
+                               context:[self managedObjectContext]];
 }
 
 #pragma mark -
@@ -389,7 +400,7 @@
         [request setEntity:entity];
 
         NSSortDescriptor * sortDescriptor =
-            [[NSSortDescriptor alloc] initWithKey:@"username" ascending:NO];
+            [[NSSortDescriptor alloc] initWithKey:@"username" ascending:YES];
         NSArray *sortDescriptors =
             [[NSArray alloc] initWithObjects:sortDescriptor, nil];
         [request setSortDescriptors:sortDescriptors];

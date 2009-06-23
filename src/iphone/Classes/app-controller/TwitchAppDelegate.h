@@ -9,7 +9,8 @@
 #import "TwitterServiceDelegate.h"
 #import "ComposeTweetDisplayMgrDelegate.h"
 
-@class LogInDisplayMgr, ComposeTweetDisplayMgr;
+@class LogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
+@class AccountsViewController;
 @class DeviceRegistrar;
 @class CredentialsUpdatePublisher;
 
@@ -40,12 +41,14 @@
     IBOutlet NetworkAwareViewController * profileNetAwareViewController;
     IBOutlet NetworkAwareViewController * trendsNetAwareViewController;
     IBOutlet NetworkAwareViewController * searchNetAwareViewController;
-    IBOutlet NetworkAwareViewController * accountsNetAwareViewController;
+    IBOutlet AccountsViewController * accountsViewController;
     
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     TimelineDisplayMgr * timelineDisplayMgr;
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
+
+    AccountsDisplayMgr * accountsDisplayMgr;
 
     UIBarButtonItem * sendingTweetProgressView;
 }
