@@ -50,4 +50,6 @@
 - (void)replyToTweet;
 - (void)refresh;
 
+- (void)addTweet:(Tweet *)tweet;
+
 @end

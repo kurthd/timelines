@@ -24,9 +24,11 @@
 
 @synthesize rootViewController, composeTweetViewController;
 @synthesize service, credentialsUpdatePublisher;
+@synthesize delegate;
 
 - (void)dealloc
 {
+    self.delegate = nil;
     self.rootViewController = nil;
     self.composeTweetViewController = nil;
     self.service = nil;
@@ -69,11 +71,15 @@
 
 - (void)userDidCancel
 {
+    [self.delegate userDidCancelComposingTweet];
     [self.rootViewController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)userDidSave:(NSString *)tweet
 {
+    [self.delegate userIsSendingTweet:tweet];
+    [self.rootViewController dismissModalViewControllerAnimated:YES];
+
     [self.service sendTweet:tweet];
 }
 
@@ -81,7 +87,9 @@
 
 - (void)tweetSentSuccessfully:(Tweet *)tweet
 {
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
+    //[self.rootViewController dismissModalViewControllerAnimated:YES];
+
+    [self.delegate userDidSendTweet:tweet];
 }
 
 - (void)failedToSendTweet:(NSString *)tweet error:(NSError *)error
@@ -94,6 +102,8 @@
     [alert show];
 
     [self.composeTweetViewController promptWithText:tweet];
+
+    [self.delegate userFailedToSendTweet:tweet];
 }
 
 #pragma mark Accessors

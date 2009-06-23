@@ -107,6 +107,24 @@
     [delegate loadMoreTweets];
 }
 
+- (void)addTweet:(TweetInfo *)tweet
+{
+    NSMutableArray * newTweets = [tweets mutableCopy];
+    self.sortedTweetCache = nil;
+    [newTweets insertObject:tweet atIndex:0];
+
+    [tweets release];
+    tweets = [NSArray arrayWithArray:newTweets];  // keep it immutable
+
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+        withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView scrollToRowAtIndexPath:
+        [NSIndexPath indexPathForRow:0 inSection:0]
+        atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
 - (void)setUser:(User *)aUser
 {
     if (!aUser) {

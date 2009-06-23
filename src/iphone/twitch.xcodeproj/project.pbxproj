@@ -211,6 +211,7 @@
 		05F45D310FF05B9400EBAFC7 /* ComposeTweetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetViewController.h; path = tweets/ComposeTweetViewController.h; sourceTree = "<group>"; };
 		05F45D320FF05B9400EBAFC7 /* ComposeTweetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComposeTweetViewController.m; path = tweets/ComposeTweetViewController.m; sourceTree = "<group>"; };
 		05F45D830FF06BD100EBAFC7 /* ComposeTweetViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetViewControllerDelegate.h; path = tweets/ComposeTweetViewControllerDelegate.h; sourceTree = "<group>"; };
+		05F45E8A0FF08D9400EBAFC7 /* ComposeTweetDisplayMgrDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetDisplayMgrDelegate.h; path = tweets/ComposeTweetDisplayMgrDelegate.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Twitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -538,6 +539,7 @@
 				05F45B400FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m */,
 				05F45D2E0FF05B8200EBAFC7 /* ComposeTweetDisplayMgr.h */,
 				05F45D2F0FF05B8200EBAFC7 /* ComposeTweetDisplayMgr.m */,
+				05F45E8A0FF08D9400EBAFC7 /* ComposeTweetDisplayMgrDelegate.h */,
 				05F45D310FF05B9400EBAFC7 /* ComposeTweetViewController.h */,
 				05F45D320FF05B9400EBAFC7 /* ComposeTweetViewController.m */,
 				05F45D830FF06BD100EBAFC7 /* ComposeTweetViewControllerDelegate.h */,

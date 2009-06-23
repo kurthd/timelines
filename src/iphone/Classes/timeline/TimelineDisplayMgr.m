@@ -63,7 +63,7 @@
 {
     NSLog(@"Timeline received: %@", aTimeline);
     self.updateId = anUpdateId;
-    for (Tweet * tweet in aTimeline)
+    for (TweetInfo * tweet in aTimeline)
         [timeline setObject:tweet forKey:tweet.identifier];
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
     [wrapperController setCachedDataAvailable:YES];
@@ -123,6 +123,14 @@
     if([service credentials])
         [service fetchTimelineSince:self.updateId
             page:[NSNumber numberWithInt:0]];
+}
+
+- (void)addTweet:(Tweet *)tweet
+{
+    TweetInfo * info = [TweetInfo createFromTweet:tweet];
+    [timeline setObject:info forKey:info.identifier];
+
+    [timelineController addTweet:info];
 }
 
 - (BOOL)cachedDataAvailable

@@ -33,4 +33,6 @@
 
 - (IBAction)loadMoreTweets:(id)sender;
 
+- (void)addTweet:(TweetInfo *)tweet;
+
 @end
