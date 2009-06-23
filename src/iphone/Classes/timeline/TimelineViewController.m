@@ -4,22 +4,8 @@
 
 #import "TimelineViewController.h"
 #import "TimelineTableViewCell.h"
-#import "Tweet.h"
-
-@interface Tweet (Sorting)
-- (NSComparisonResult)compare:(Tweet *)tweet;
-@end
-
-@implementation Tweet (Sorting)
-- (NSComparisonResult)compare:(Tweet *)tweet
-{
-    NSNumber * myId =
-        [NSNumber numberWithLongLong:[self.identifier longLongValue]];
-    NSNumber * theirId =
-        [NSNumber numberWithLongLong:[tweet.identifier longLongValue]];
-    return [theirId compare:myId];
-}
-@end
+#import "TweetInfo.h"
+#import "DirectMessage.h"
 
 @interface TimelineViewController ()
 
@@ -85,7 +71,7 @@
         cell = [nib objectAtIndex:0];
     }
 
-    Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
+    TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
     UIImage * avatarImage = [self getAvatarForUrl:tweet.user.profileImageUrl];
     [cell setAvatarImage:avatarImage];
     [cell setName:tweet.user.name];
@@ -98,7 +84,7 @@
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
+    TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
     [delegate selectedTweet:tweet];
 }
 
@@ -107,7 +93,7 @@
 - (CGFloat)tableView:(UITableView *)aTableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
+    TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
     NSString * tweetText = tweet.text;
 
     return [TimelineTableViewCell heightForContent:tweetText];

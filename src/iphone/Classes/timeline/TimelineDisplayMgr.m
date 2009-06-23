@@ -4,6 +4,12 @@
 
 #import "TimelineDisplayMgr.h"
 
+@interface TimelineDisplayMgr ()
+
+- (BOOL)cachedDataAvailable;
+
+@end
+
 @implementation TimelineDisplayMgr
 
 @synthesize wrapperController, timelineController, selectedTweet, updateId,
@@ -72,7 +78,7 @@
 
 #pragma mark TimelineViewControllerDelegate implementation
 
-- (void)selectedTweet:(Tweet *)tweet
+- (void)selectedTweet:(TweetInfo *)tweet
 {
     NSLog(@"Selected tweet: %@", tweet);
     self.selectedTweet = tweet;
@@ -85,7 +91,7 @@
 {
     NSLog(@"Loading more tweets...");
     [wrapperController setUpdatingState:kConnectedAndUpdating];
-    [wrapperController setCachedDataAvailable:!!timeline];
+    [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
     if ([service credentials])
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
         page:[NSNumber numberWithInt:++pagesShown]];
@@ -113,10 +119,15 @@
 {
     NSLog(@"Refreshing timeline...");
     [wrapperController setUpdatingState:kConnectedAndUpdating];
-    [wrapperController setCachedDataAvailable:!!timeline];
+    [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
     if([service credentials])
         [service fetchTimelineSince:self.updateId
             page:[NSNumber numberWithInt:0]];
+}
+
+- (BOOL)cachedDataAvailable
+{
+    return !!timeline && [timeline count] > 0;
 }
 
 #pragma mark Accessors
@@ -148,24 +159,29 @@
 }
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService
-    tweets:(NSMutableDictionary *)tweets page:(NSUInteger)page
+    tweets:(NSDictionary *)someTweets page:(NSUInteger)page
 {
     [aService retain];
     [service release];
     service = aService;
 
-    [tweets retain];
-    [timeline release];
-    timeline = tweets;
+    [timeline removeAllObjects];
+    [timeline addEntriesFromDictionary:someTweets];
 
     pagesShown = page;
+
+    [aService setCredentials:credentials];
 
     [self refresh];
 }
 
-- (void)setCredentials:(TwitterCredentials *)credentials
+- (void)setCredentials:(TwitterCredentials *)someCredentials
 {
     NSLog(@"New credentials set");
+    [someCredentials retain];
+    [credentials release];
+    credentials = someCredentials;
+
     [service setCredentials:credentials];
     [service fetchTimelineSince:[NSNumber numberWithInt:0]
         page:[NSNumber numberWithInt:pagesShown]];

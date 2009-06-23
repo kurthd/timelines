@@ -3,6 +3,8 @@
 //
 
 #import "MessagesTimelineDataSource.h"
+#import "DirectMessage.h"
+#import "TweetInfo.h"
 
 @implementation MessagesTimelineDataSource
 
@@ -26,20 +28,26 @@
 
 - (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page;
 {
-    [service fetchTimelineSinceUpdateId:updateId page:page
-        count:[NSNumber numberWithInt:0]];
+    NSLog(@"Fetching direct messages...");
+    [service fetchDirectMessagesSinceId:updateId page:page];
 }
 
 #pragma mark TwitterServiceDelegate implementation
 
-- (void)timeline:(NSArray *)timeline fetchedSinceUpdateId:(NSNumber *)updateId
-    page:(NSNumber *)page count:(NSNumber *)count
+- (void)directMessages:(NSArray *)directMessages
+    fetchedSinceUpdateId:(NSNumber *)updateId page:(NSNumber *)page
 {
-    [delegate timeline:timeline fetchedSinceUpdateId:updateId page:page];
+    NSMutableArray * tweetInfos = [NSMutableArray array];
+    for (DirectMessage * directMessage in directMessages) {
+        TweetInfo * tweetInfo =
+            [TweetInfo createFromDirectMessage:directMessage];
+        [tweetInfos addObject:tweetInfo];
+    }
+    [delegate timeline:tweetInfos fetchedSinceUpdateId:updateId page:page];
 }
 
-- (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)updateId
-    page:(NSNumber *)page count:(NSNumber *)count error:(NSError *)error
+- (void)failedToFetchDirectMessagesSinceUpdateId:(NSNumber *)updateId
+    page:(NSNumber *)page error:(NSError *)error
 {
     [delegate failedToFetchTimelineSinceUpdateId:updateId page:page
         error:error];

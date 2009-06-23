@@ -3,11 +3,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Tweet.h"
+#import "TweetInfo.h"
 
 @protocol TimelineViewControllerDelegate
 
-- (void)selectedTweet:(Tweet *)tweet;
+- (void)selectedTweet:(TweetInfo *)tweet;
 - (void)loadMoreTweets;
 
 @end

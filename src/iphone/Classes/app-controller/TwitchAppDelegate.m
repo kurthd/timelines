@@ -11,6 +11,7 @@
 #import "InfoPlistConfigReader.h"
 #import "TwitterService.h"
 #import "ComposeTweetDisplayMgr.h"
+#import "PersonalFeedSelectionMgr.h"
 
 @interface TwitchAppDelegate ()
 
@@ -135,6 +136,21 @@
         homeNetAwareViewController.navigationItem.leftBarButtonItem;
     refreshButton.target = timelineDisplayMgr;
     refreshButton.action = @selector(refresh);
+
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:[self managedObjectContext]]
+        autorelease];
+
+    PersonalFeedSelectionMgr * personalFeedSelectionMgr =
+        [[PersonalFeedSelectionMgr alloc]
+        initWithTimelineDisplayMgr:timelineDisplayMgr service:twitterService];
+    UISegmentedControl * segmentedControl =
+        (UISegmentedControl *)
+        homeNetAwareViewController.navigationItem.titleView;
+    [segmentedControl addTarget:personalFeedSelectionMgr
+        action:@selector(tabSelected:)
+        forControlEvents:UIControlEventValueChanged];
 }
 
 #pragma mark -

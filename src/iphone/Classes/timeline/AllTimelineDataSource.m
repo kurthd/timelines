@@ -3,6 +3,8 @@
 //
 
 #import "AllTimelineDataSource.h"
+#import "Tweet.h"
+#import "TweetInfo.h"
 
 @implementation AllTimelineDataSource
 
@@ -35,7 +37,13 @@
 - (void)timeline:(NSArray *)timeline fetchedSinceUpdateId:(NSNumber *)updateId
     page:(NSNumber *)page count:(NSNumber *)count
 {
-    [delegate timeline:timeline fetchedSinceUpdateId:updateId page:page];
+    NSMutableArray * tweetInfoTimeline = [NSMutableArray array];
+    for (Tweet * tweet in timeline) {
+        TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
+        [tweetInfoTimeline addObject:tweetInfo];
+    }
+    [delegate timeline:tweetInfoTimeline fetchedSinceUpdateId:updateId
+        page:page];
 }
 
 - (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)updateId
