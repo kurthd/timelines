@@ -131,7 +131,8 @@
     [newTweets insertObject:tweet atIndex:0];
 
     [tweets release];
-    tweets = [NSArray arrayWithArray:newTweets];  // keep it immutable
+    tweets = [[NSArray alloc] initWithArray:newTweets];
+    [newTweets release];
 
     NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 
