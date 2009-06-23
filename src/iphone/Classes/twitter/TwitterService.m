@@ -104,6 +104,29 @@
     [self request:requestId isHandledBy:processor];
 }
 
+- (void)fetchTimelineForUser:(NSString *)user
+               sinceUpdateId:(NSNumber *)updateId
+                        page:(NSNumber *)page
+                       count:(NSNumber *)count
+{
+    ResponseProcessor * processor =
+        [FetchTimelineResponseProcessor processorWithUpdateId:updateId
+                                                     username:user
+                                                         page:page
+                                                        count:count
+                                                      context:context
+                                                     delegate:delegate];
+
+    NSString * requestId =
+        [twitter getUserTimelineFor:user
+                            sinceID:[updateId integerValue]
+                     startingAtPage:[page integerValue]
+                              count:[count integerValue]];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+
 #pragma mark Mentions
 
 - (void)fetchMentionsSinceUpdateId:(NSNumber *)updateId

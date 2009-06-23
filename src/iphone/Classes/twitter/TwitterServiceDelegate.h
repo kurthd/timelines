@@ -36,6 +36,17 @@
                                      count:(NSNumber *)count
                                      error:(NSError *)error;
 
+- (void)timeline:(NSArray *)timeline
+  fetchedForUser:(NSString *)user
+   sinceUpdateId:(NSNumber *)updateId
+            page:(NSNumber *)page
+           count:(NSNumber *)count;
+- (void)failedToFetchTimelineForUser:(NSString *)user
+                       sinceUpdateId:(NSNumber *)updateId
+                                page:(NSNumber *)page
+                               count:(NSNumber *)count
+                               error:(NSError *)error;
+
 #pragma mark Mentions
 
 - (void)mentions:(NSArray *)mentions

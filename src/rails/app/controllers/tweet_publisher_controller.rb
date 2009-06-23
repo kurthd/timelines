@@ -2,8 +2,18 @@ require 'grackle'
 
 class TweetPublisherController < ApplicationController
   def check
+    unauth_client = Grackle::Client.new
+
+    @quota_before_check =
+      unauth_client.account.rate_limit_status.json?.remaining_hits
+
+    logger.info "Remaining unauthenticated requests before check: " +
+     "#{@quota_before_check}."
+
     notifications = Array.new
     @usernames = Hash.new
+    @user_before_quotas = Hash.new
+    @user_after_quotas = Hash.new
 
     subscriptions = DeviceSubscription.find(:all)
 
@@ -34,6 +44,12 @@ class TweetPublisherController < ApplicationController
                               :password => twitter_user.password })
         @client.ssl = true
 
+        @user_before_quotas[twitter_user.username] =
+          @client.account.rate_limit_status.json?.remaining_hits
+        logger.info "#{twitter_user} has " +
+          "#{@user_before_quotas[twitter_user.username]} " +
+          "remaining API calls before checking."
+
         status =
           SubscriberStatus.find(
             :first, :conditions =>
@@ -61,9 +77,9 @@ class TweetPublisherController < ApplicationController
             :last_direct_message => last_direct_message,
             :last_mention => last_mention,
             :device_subscription_id => subscription.id)
-            status.save!
+          status.save!
 
-            next
+          next
         end
 
         # fetch direct messages and mentions since last time
@@ -72,9 +88,15 @@ class TweetPublisherController < ApplicationController
         mentions = self.mentions_since(status.last_mention)
 
         logger.info "#{twitter_user}: #{direct_messages.length} direct " +
-        "messages since #{status.last_direct_message}."
+          "messages since #{status.last_direct_message}."
         logger.info "#{twitter_user}: #{mentions.length} mentions since " +
-        "#{status.last_mention}."
+          "#{status.last_mention}."
+
+        @user_after_quotas[twitter_user.username] =
+          @client.account.rate_limit_status.json?.remaining_hits
+        logger.info "#{twitter_user} has " +
+          "#{@user_after_quotas[twitter_user.username]} " +
+          "remaining API calls after checking."
 
         if (direct_messages.length + mentions.length > 0)
           logger.info "Notifying phone #{iphone.device_token} of " +
@@ -105,13 +127,24 @@ class TweetPublisherController < ApplicationController
           logger.info "#{twitter_user}: no new tweets."
         end
       rescue
-        logger.warn "Failed to process subscription: #{subscription}. #{$!}."
+        logger.error "Failed to process subscription: #{subscription}. #{$!}."
       end
     end
 
+    @quota_after_check =
+      unauth_client.account.rate_limit_status.json?.remaining_hits
+
+    logger.info "Remaining unauthenticated requests after check: " +
+      "#{@quota_before_check}."
+
     logger.info "Sending #{notifications.length} push notifications."
     if (notifications.length > 0)
-      ApplePushNotification.send_notifications(notifications)
+      begin
+        ApplePushNotification.send_notifications(notifications)
+      rescue
+        logger.error "Failed to send #{notifications.length} notifications: " +
+          "#{$!}."
+      end
     end
   end
 

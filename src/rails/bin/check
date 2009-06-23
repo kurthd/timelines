@@ -1,4 +1,53 @@
+<h1>Notifications Sent</h1>
+
 <p>
-Sent 0 notifications.
+Sent 1 notifications.
+</p>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+      <th>Username</th>
+      <th>Badge Count</th>
+      <th>Message Length</th>
+    </tr>
+
+        <tr>
+      <td>
+        kurthd      </td>
+      <td>
+        1      </td>
+      <td>
+        30      </td>
+    </tr>
+      </table>
+
+<h1>API Usage</h1>
+
+<p>
+Unauthenticated API calls before check: 99.<br />
+Unauthenticated API calls after check: 99.<br />
 </p>
 
+<table border="1" cellpadding="5" cellspacing="0">
+  <tr>
+    <th>Username</th>
+    <th>Quota Before</th>
+    <th>Quota After</th>
+  </tr>
+
+    <tr>
+    <td>
+      debay    </td>
+    <td>
+      31    </td>
+    <td>
+      29    </td>
+  </tr>
+    <tr>
+    <td>
+      kurthd    </td>
+    <td>
+      80    </td>
+    <td>
+      78    </td>
+  </tr>
+  </table>
