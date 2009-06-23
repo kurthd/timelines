@@ -12,6 +12,7 @@
 #import "TwitterService.h"
 #import "ComposeTweetDisplayMgr.h"
 #import "PersonalFeedSelectionMgr.h"
+#import "AllTimelineDataSource.h"
 
 @interface TwitchAppDelegate ()
 
@@ -23,6 +24,7 @@
 - (UIBarButtonItem *)sendingTweetProgressView;
 
 - (void)initHomeTab;
+- (void)initProfileTab;
 
 - (UIBarButtonItem *)newTweetButtonItem;
 
@@ -60,6 +62,7 @@
 
     [timelineDisplayMgrFactory release];
     [timelineDisplayMgr release];
+    [profileTimelineDisplayMgr release];
 
     [composeTweetDisplayMgr release];
 
@@ -101,12 +104,14 @@
         [[TimelineDisplayMgrFactory alloc]
         initWithContext:[self managedObjectContext]];
     [self initHomeTab];
+    [self initProfileTab];
 
     if (self.credentials.count == 0)
         [self.logInDisplayMgr logIn];
     else {
         TwitterCredentials * c = [self.credentials objectAtIndex:0];
         [timelineDisplayMgr setCredentials:c];
+        [profileTimelineDisplayMgr setCredentials:c];
         [self.composeTweetDisplayMgr setCredentials:c];
     }
 }
@@ -195,6 +200,32 @@
     [segmentedControl addTarget:personalFeedSelectionMgr
         action:@selector(tabSelected:)
         forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)initProfileTab
+{
+    profileTimelineDisplayMgr =
+        [[timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:
+        profileNetAwareViewController]
+        retain];
+    profileTimelineDisplayMgr.displayAsConversation = NO;
+    UIBarButtonItem * refreshButton =
+        profileNetAwareViewController.navigationItem.leftBarButtonItem;
+    refreshButton.target = profileTimelineDisplayMgr;
+    refreshButton.action = @selector(refresh);
+
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:[self managedObjectContext]]
+        autorelease];
+    AllTimelineDataSource * dataSource =
+        [[[AllTimelineDataSource alloc] initWithTwitterService:twitterService]
+        autorelease];
+    twitterService.delegate = dataSource;
+    [profileTimelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO];
+    dataSource.delegate = profileTimelineDisplayMgr;
 }
 
 #pragma mark -

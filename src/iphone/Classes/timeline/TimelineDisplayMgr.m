@@ -47,10 +47,6 @@
         [wrapperController setUpdatingState:kConnectedAndUpdating];
         [wrapperController setCachedDataAvailable:NO];
         wrapperController.title = @"Timeline";
-
-        if ([service credentials])
-            [service fetchTimelineSince:[NSNumber numberWithInt:0]
-            page:[NSNumber numberWithInt:pagesShown]];
     }
 
     return self;
@@ -111,6 +107,19 @@
 - (void)replyToTweet
 {
     NSLog(@"Reply to tweet selected");
+}
+
+#pragma mark NetworkAwareViewControllerDelegate implementation
+
+- (void)networkAwareViewWillAppear
+{
+    if (!hasBeenDisplayed && [service credentials]) {
+        NSLog(@"Timeline view displaying for first time...");
+        [service fetchTimelineSince:[NSNumber numberWithInt:0]
+            page:[NSNumber numberWithInt:pagesShown]];
+    }
+
+    hasBeenDisplayed = YES;
 }
 
 #pragma mark TimelineDisplayMgr implementation
@@ -206,8 +215,9 @@
     }
 
     [service setCredentials:credentials];
-    [service fetchTimelineSince:[NSNumber numberWithInt:0]
-        page:[NSNumber numberWithInt:pagesShown]];
+    if (hasBeenDisplayed)
+        [service fetchTimelineSince:[NSNumber numberWithInt:0]
+            page:[NSNumber numberWithInt:pagesShown]];
 }
 
 - (void)setUser:(User *)aUser

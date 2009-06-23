@@ -48,6 +48,7 @@
         autorelease];
     dataSource.delegate = timelineDisplayMgr;
     timelineController.delegate = timelineDisplayMgr;
+    wrapperController.delegate = timelineDisplayMgr;
 
     // Don't autorelease
     [[CredentialsUpdatePublisher alloc]
