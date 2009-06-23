@@ -107,7 +107,8 @@
     didReceiveData:(NSData *)data fromUrl:(NSURL *)url
 {
     NSLog(@"Received avatar for url: %@", url);
-    [avatarCache setObject:[UIImage imageWithData:data] forKey:url];
+    [avatarCache setObject:[UIImage imageWithData:data]
+        forKey:[url absoluteString]];
     [self.tableView reloadData];
 }
 
