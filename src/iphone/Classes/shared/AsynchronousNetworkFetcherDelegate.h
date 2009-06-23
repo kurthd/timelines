@@ -14,6 +14,5 @@
     didReceiveData:(NSData *)data fromUrl:(NSURL *)url;
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
     failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error;
-    
 
 @end
