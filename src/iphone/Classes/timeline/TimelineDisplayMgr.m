@@ -13,7 +13,7 @@
 @implementation TimelineDisplayMgr
 
 @synthesize wrapperController, timelineController, selectedTweet, updateId,
-    user, timeline, pagesShown;
+    user, timeline, pagesShown, displayAsConversation;
 
 - (void)dealloc
 {
@@ -199,6 +199,12 @@
     [credentials release];
     credentials = someCredentials;
 
+    if (displayAsConversation) {
+        NSArray * invertedCellUsernames =
+            [NSArray arrayWithObject:someCredentials.username];
+        self.timelineController.invertedCellUsernames = invertedCellUsernames;
+    }
+
     [service setCredentials:credentials];
     [service fetchTimelineSince:[NSNumber numberWithInt:0]
         page:[NSNumber numberWithInt:pagesShown]];
@@ -216,6 +222,15 @@
 - (NSMutableDictionary *)timeline
 {
     return [[timeline copy] autorelease];
+}
+
+- (void)setDisplayAsConversation:(BOOL)conversation
+{
+    displayAsConversation = conversation;
+    NSArray * invertedCellUsernames =
+        conversation && !!credentials ?
+        [NSArray arrayWithObject:credentials.username] : [NSArray array];
+    self.timelineController.invertedCellUsernames = invertedCellUsernames;
 }
 
 @end

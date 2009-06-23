@@ -17,6 +17,7 @@
 - (void)setName:(NSString *)name;
 - (void)setDate:(NSDate *)date;
 - (void)setTweetText:(NSString *)tweetText;
+- (void)setInvert:(BOOL)invert;
 
 + (CGFloat)heightForContent:(NSString *)tweetText;
 

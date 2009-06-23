@@ -59,6 +59,33 @@
     tweetTextLabel.text = tweetText;
 }
 
+- (void)setInvert:(BOOL)invert
+{
+    CGRect avatarFrame = avatar.frame;
+    CGRect nameLabelFrame = nameLabel.frame;
+    CGRect dateLabelFrame = dateLabel.frame;
+    CGRect tweetTextLabelFrame = tweetTextLabel.frame;
+
+    if (invert) {
+        avatarFrame.origin.x = 248;
+        nameLabel.hidden = YES;
+        dateLabelFrame.origin.x = 7;
+        dateLabel.textAlignment = UITextAlignmentLeft;
+        tweetTextLabelFrame.origin.x = 7;
+    } else {
+        avatarFrame.origin.x = 7;
+        nameLabel.hidden = NO;
+        dateLabelFrame.origin.x = 212;
+        dateLabel.textAlignment = UITextAlignmentRight;
+        tweetTextLabelFrame.origin.x = 64;
+    }
+
+    avatar.frame = avatarFrame;
+    nameLabel.frame = nameLabelFrame;
+    dateLabel.frame = dateLabelFrame;
+    tweetTextLabel.frame = tweetTextLabelFrame;
+}
+
 + (CGFloat)heightForContent:(NSString *)tweetText
 {
     CGSize maxSize = CGSizeMake(234, 999999.0);

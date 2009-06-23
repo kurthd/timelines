@@ -19,7 +19,7 @@
 
 @implementation TimelineViewController
 
-@synthesize delegate, sortedTweetCache;
+@synthesize delegate, sortedTweetCache, invertedCellUsernames;
 
 - (void)dealloc
 {
@@ -79,6 +79,7 @@
     [cell setName:tweet.user.name];
     [cell setDate:tweet.timestamp];
     [cell setTweetText:tweet.text];
+    [cell setInvert:[invertedCellUsernames containsObject:tweet.user.username]];
 
     return cell;
 }

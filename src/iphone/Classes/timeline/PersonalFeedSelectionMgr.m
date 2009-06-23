@@ -71,6 +71,7 @@
             NSLog(@"Selected all tweets tab");
             service.delegate = allTimelineDataSource;
             allTimelineDataSource.delegate = timelineDisplayMgr;
+            timelineDisplayMgr.displayAsConversation = YES;
             [timelineDisplayMgr setService:allTimelineDataSource
                 tweets:self.allTimelineTweets page:allTimelinePagesShown
                 forceRefresh:allTimelineRefresh];
@@ -79,6 +80,7 @@
             NSLog(@"Selected mentions tab");
             service.delegate = mentionsTimelineDataSource;
             mentionsTimelineDataSource.delegate = timelineDisplayMgr;
+            timelineDisplayMgr.displayAsConversation = NO;
             [timelineDisplayMgr setService:mentionsTimelineDataSource
                 tweets:self.mentionsTimelineTweets
                 page:mentionsTimelinePagesShown
@@ -89,6 +91,7 @@
             NSLog(@"Selected direct messages tab");
             service.delegate = messagesTimelineDataSource;
             messagesTimelineDataSource.delegate = timelineDisplayMgr;
+            timelineDisplayMgr.displayAsConversation = NO;
             [timelineDisplayMgr setService:messagesTimelineDataSource
                 tweets:self.messagesTimelineTweets
                 page:messagesTimelinePagesShown
