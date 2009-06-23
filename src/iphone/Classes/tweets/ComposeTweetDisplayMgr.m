@@ -53,11 +53,16 @@
 
 - (void)composeTweet
 {
+    [self composeTweetWithText:@""];
+}
+
+- (void)composeTweetWithText:(NSString *)tweet
+{
     [self.rootViewController
         presentModalViewController:self.composeTweetViewController
                           animated:YES];
 
-    [self.composeTweetViewController promptWithText:@""];
+    [self.composeTweetViewController promptWithText:tweet];
 }
 
 #pragma mark Credentials notifications

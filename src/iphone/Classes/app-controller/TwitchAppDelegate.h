@@ -46,6 +46,8 @@
     TimelineDisplayMgr * timelineDisplayMgr;
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
+
+    UIBarButtonItem * sendingTweetProgressView;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;

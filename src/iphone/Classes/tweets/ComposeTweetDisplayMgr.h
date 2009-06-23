@@ -30,6 +30,7 @@
                   twitterService:(TwitterService *)aService;
 
 - (void)composeTweet;
+- (void)composeTweetWithText:(NSString *)tweet;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
 

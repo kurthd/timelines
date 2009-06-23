@@ -43,6 +43,7 @@
         connection = [[NSURLConnection alloc] initWithRequest:req
                                                      delegate:self
                                              startImmediately:YES];
+        self.delegate = aDelegate;
     }
 
     return self;
