@@ -63,6 +63,27 @@
     [self request:requestId isHandledBy:processor];
 }
 
+#pragma mark Sending tweets
+
+// is 'tweet' a verb or a noun?
+- (void)sendTweet:(NSString *)tweet
+{
+    ResponseProcessor * processor =
+        [SendTweetResponseProcessor processorWithTweet:tweet
+                                               context:context
+                                              delegate:delegate];
+
+    NSString * requestId = [twitter sendUpdate:tweet];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+- (void)sendTweet:(NSString *)tweet inReplyTo:(NSNumber *)referenceId
+{
+}
+
+#pragma mark Timelines
+
 - (void)fetchTimelineSinceUpdateId:(NSNumber *)updateId
                               page:(NSNumber *)page
                              count:(NSNumber *)count
@@ -82,6 +103,29 @@
 
     [self request:requestId isHandledBy:processor];
 }
+
+#pragma mark Mentions
+
+- (void)fetchMentionsSinceUpdateId:(NSNumber *)updateId
+                              page:(NSNumber *)page
+                             count:(NSNumber *)count
+{
+    ResponseProcessor * processor =
+        [FetchMentionsResponseProcessor processorWithUpdateId:updateId
+                                                         page:page
+                                                        count:count
+                                                      context:context
+                                                     delegate:delegate];
+
+    NSString * requestId =
+        [twitter getMentionsSinceID:[updateId integerValue]
+                               page:[page integerValue]
+                              count:[count integerValue]];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+#pragma mark Direct messages
 
 - (void)fetchDirectMessagesSinceId:(NSNumber *)updateId page:(NSNumber *)page
 {

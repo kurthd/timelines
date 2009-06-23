@@ -117,4 +117,7 @@
 - (NSString *)sendDirectMessage:(NSString *)message to:(NSString *)username;
 - (NSString *)deleteDirectMessage:(int)updateID;          // this user must be the RECIPIENT
 
+// Getting mentions
+- (NSString *)getMentionsSinceID:(int)updateID page:(int)page count:(int)count;
+
 @end

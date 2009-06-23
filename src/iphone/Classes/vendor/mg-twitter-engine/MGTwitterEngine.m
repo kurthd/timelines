@@ -1357,5 +1357,29 @@
                            responseType:MGTwitterGeneric];
 }
 
+// Getting mentions
+- (NSString *)getMentionsSinceID:(int)updateID
+                            page:(int)pageNum
+                           count:(int)count
+{
+    NSString *path = @"statuses/mentions.xml";
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
+    if (updateID > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", updateID] forKey:@"since_id"];
+    }
+    if (pageNum > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];
+    }
+	int tweetCount = DEFAULT_TWEET_COUNT;
+	if (count > 0) {
+		tweetCount = count;
+	}
+	[params setObject:[NSString stringWithFormat:@"%d", tweetCount] forKey:@"count"];
+    
+    return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil 
+                            requestType:MGTwitterStatusesRequest 
+                           responseType:MGTwitterStatuses];
+}
 
 @end

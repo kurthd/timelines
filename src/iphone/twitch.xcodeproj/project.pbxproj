@@ -51,6 +51,9 @@
 		05F45A5D0FF01E3F00EBAFC7 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A5C0FF01E3F00EBAFC7 /* User.m */; };
 		05F45A6B0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A6A0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m */; };
 		05F45B410FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45B400FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m */; };
+		05F45BA20FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45BA10FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m */; };
+		05F45C230FF0482200EBAFC7 /* SendTweetResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45C220FF0482200EBAFC7 /* SendTweetResponseProcessor.m */; };
+		05F45C9B0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45C9A0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -192,6 +195,13 @@
 		05F45A6A0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ResponseProcessor+ParsingHelpers.m"; path = "twitter/processors/ResponseProcessor+ParsingHelpers.m"; sourceTree = "<group>"; };
 		05F45B3F0FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DirectMessage+CoreDataAdditions.h"; path = "tweets/DirectMessage+CoreDataAdditions.h"; sourceTree = "<group>"; };
 		05F45B400FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DirectMessage+CoreDataAdditions.m"; path = "tweets/DirectMessage+CoreDataAdditions.m"; sourceTree = "<group>"; };
+		05F45BA00FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchMentionsResponseProcessor.h; path = twitter/processors/FetchMentionsResponseProcessor.h; sourceTree = "<group>"; };
+		05F45BA10FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchMentionsResponseProcessor.m; path = twitter/processors/FetchMentionsResponseProcessor.m; sourceTree = "<group>"; };
+		05F45C210FF0482200EBAFC7 /* SendTweetResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SendTweetResponseProcessor.h; path = twitter/processors/SendTweetResponseProcessor.h; sourceTree = "<group>"; };
+		05F45C220FF0482200EBAFC7 /* SendTweetResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SendTweetResponseProcessor.m; path = twitter/processors/SendTweetResponseProcessor.m; sourceTree = "<group>"; };
+		05F45C990FF053D400EBAFC7 /* AsynchronousNetworkFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsynchronousNetworkFetcher.h; path = shared/AsynchronousNetworkFetcher.h; sourceTree = "<group>"; };
+		05F45C9A0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsynchronousNetworkFetcher.m; path = shared/AsynchronousNetworkFetcher.m; sourceTree = "<group>"; };
+		05F45CF20FF056DF00EBAFC7 /* AsynchronousNetworkFetcherDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsynchronousNetworkFetcherDelegate.h; path = shared/AsynchronousNetworkFetcherDelegate.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Twitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -426,6 +436,9 @@
 				916BD8BE0FEEEE4A007143A9 /* RoundedImage.m */,
 				05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */,
 				05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */,
+				05F45C990FF053D400EBAFC7 /* AsynchronousNetworkFetcher.h */,
+				05F45C9A0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m */,
+				05F45CF20FF056DF00EBAFC7 /* AsynchronousNetworkFetcherDelegate.h */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -490,10 +503,14 @@
 				05B23B480FEED5A000A6A2E6 /* CheckCredentialsResponseProcessor.m */,
 				05B23B4A0FEED5C600A6A2E6 /* FetchTimelineResponseProcessor.h */,
 				05B23B4B0FEED5C600A6A2E6 /* FetchTimelineResponseProcessor.m */,
+				05F45BA00FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.h */,
+				05F45BA10FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m */,
 				05F459ED0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.h */,
 				05F459EE0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m */,
 				05F45A690FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.h */,
 				05F45A6A0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m */,
+				05F45C210FF0482200EBAFC7 /* SendTweetResponseProcessor.h */,
+				05F45C220FF0482200EBAFC7 /* SendTweetResponseProcessor.m */,
 			);
 			name = processors;
 			sourceTree = "<group>";
@@ -789,10 +806,13 @@
 				05F45A6B0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m in Sources */,
 				05F45B410FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m in Sources */,
 				916BD9FA0FEF46E4007143A9 /* TweetDetailsViewController.m in Sources */,
+				05F45BA20FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m in Sources */,
+				05F45C230FF0482200EBAFC7 /* SendTweetResponseProcessor.m in Sources */,
 				9115A8400FF03C8300D6A769 /* AllTimelineDataSource.m in Sources */,
 				9115A8430FF03C9A00D6A769 /* MessagesTimelineDataSource.m in Sources */,
 				9115A8C70FF0503300D6A769 /* PersonalFeedSelectionMgr.m in Sources */,
 				9115A92E0FF06AA100D6A769 /* TweetInfo.m in Sources */,
+				05F45C9B0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

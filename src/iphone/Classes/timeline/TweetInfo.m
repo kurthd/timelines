@@ -24,7 +24,12 @@
 
 - (NSComparisonResult)compare:(TweetInfo *)tweetInfo
 {
-    return [tweetInfo.identifier compare:self.identifier];
+    NSNumber * myId =
+        [NSNumber numberWithLongLong:[self.identifier longLongValue]];
+    NSNumber * theirId =
+        [NSNumber numberWithLongLong:[tweetInfo.identifier longLongValue]];
+
+    return [theirId compare:myId];
 }
 
 + (TweetInfo *)createFromTweet:(Tweet *)tweet
