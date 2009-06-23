@@ -183,12 +183,16 @@
 
 - (void)fetchAvatarsForTweets
 {
+    NSMutableDictionary * alreadySent = [NSMutableDictionary dictionary];
     for (TweetInfo * tweetInfo in tweets) {
         NSURL * avatarUrl =
             [NSURL URLWithString:tweetInfo.user.profileImageUrl];
-        if (![avatarCache objectForKey:avatarUrl]) {
+        if (![avatarCache objectForKey:avatarUrl] &&
+            ![alreadySent objectForKey:avatarUrl]) {
+
             NSLog(@"Getting avatar for url %@", avatarUrl);
             [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+            [alreadySent setObject:avatarUrl forKey:avatarUrl];
         }
     }
 }
