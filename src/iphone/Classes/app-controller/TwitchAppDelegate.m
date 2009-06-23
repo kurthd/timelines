@@ -12,6 +12,7 @@
 #import "TwitterService.h"
 #import "ComposeTweetDisplayMgr.h"
 #import "PersonalFeedSelectionMgr.h"
+#import "UserTimelineDataSource.h"
 #import "AccountsDisplayMgr.h"
 
 @interface TwitchAppDelegate ()
@@ -24,6 +25,7 @@
 - (UIBarButtonItem *)sendingTweetProgressView;
 
 - (void)initHomeTab;
+- (void)initProfileTab;
 - (void)initAccountsTab;
 
 - (UIBarButtonItem *)newTweetButtonItem;
@@ -61,6 +63,7 @@
 
     [timelineDisplayMgrFactory release];
     [timelineDisplayMgr release];
+    [profileTimelineDisplayMgr release];
 
     [composeTweetDisplayMgr release];
 
@@ -104,6 +107,7 @@
         [[TimelineDisplayMgrFactory alloc]
         initWithContext:[self managedObjectContext]];
     [self initHomeTab];
+    [self initProfileTab];
     [self initAccountsTab];
 
     if (self.credentials.count == 0)
@@ -111,6 +115,7 @@
     else {
         TwitterCredentials * c = [self.credentials objectAtIndex:0];
         [timelineDisplayMgr setCredentials:c];
+        [profileTimelineDisplayMgr setCredentials:c];
         [self.composeTweetDisplayMgr setCredentials:c];
     }
 }
@@ -201,12 +206,43 @@
         forControlEvents:UIControlEventValueChanged];
 }
 
+- (void)initProfileTab
+{
+    profileTimelineDisplayMgr =
+        [[timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:
+        profileNetAwareViewController]
+        retain];
+    profileTimelineDisplayMgr.displayAsConversation = NO;
+    UIBarButtonItem * refreshButton =
+        profileNetAwareViewController.navigationItem.leftBarButtonItem;
+    refreshButton.target = profileTimelineDisplayMgr;
+    refreshButton.action = @selector(refresh);
+
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:[self managedObjectContext]]
+        autorelease];
+    UserTimelineDataSource * dataSource =
+        [[[UserTimelineDataSource alloc] initWithTwitterService:twitterService]
+        autorelease];
+
+    // Don't autorelease
+    [[CredentialsUpdatePublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+
+    twitterService.delegate = dataSource;
+    [profileTimelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO];
+    dataSource.delegate = profileTimelineDisplayMgr;
+}
+
 - (void)initAccountsTab
 {
     accountsDisplayMgr = [[AccountsDisplayMgr alloc]
-        initWithAccountsViewController:accountsViewController
-                               context:[self managedObjectContext]];
-}
+                          initWithAccountsViewController:accountsViewController
+                          context:[self managedObjectContext]];
+}    
 
 #pragma mark -
 #pragma mark Core Data stack

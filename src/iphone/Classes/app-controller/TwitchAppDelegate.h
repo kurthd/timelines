@@ -45,6 +45,7 @@
     
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     TimelineDisplayMgr * timelineDisplayMgr;
+    TimelineDisplayMgr * profileTimelineDisplayMgr;
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 

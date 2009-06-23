@@ -15,7 +15,7 @@
 @interface TimelineDisplayMgr :
     NSObject
     <TimelineDataSourceDelegate, TimelineViewControllerDelegate,
-    TweetDetailsViewDelegate>
+    TweetDetailsViewDelegate, NetworkAwareViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
@@ -32,6 +32,7 @@
     TwitterCredentials * credentials;
 
     BOOL displayAsConversation;
+    BOOL hasBeenDisplayed;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
