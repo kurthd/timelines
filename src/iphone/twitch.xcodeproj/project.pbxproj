@@ -54,6 +54,9 @@
 		05F45BA20FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45BA10FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m */; };
 		05F45C230FF0482200EBAFC7 /* SendTweetResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45C220FF0482200EBAFC7 /* SendTweetResponseProcessor.m */; };
 		05F45C9B0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45C9A0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m */; };
+		05F45D010FF059B400EBAFC7 /* ComposeTweetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05F45CFF0FF059B400EBAFC7 /* ComposeTweetView.xib */; };
+		05F45D300FF05B8200EBAFC7 /* ComposeTweetDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45D2F0FF05B8200EBAFC7 /* ComposeTweetDisplayMgr.m */; };
+		05F45D330FF05B9400EBAFC7 /* ComposeTweetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45D320FF05B9400EBAFC7 /* ComposeTweetViewController.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -203,6 +206,12 @@
 		05F45C990FF053D400EBAFC7 /* AsynchronousNetworkFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsynchronousNetworkFetcher.h; path = shared/AsynchronousNetworkFetcher.h; sourceTree = "<group>"; };
 		05F45C9A0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsynchronousNetworkFetcher.m; path = shared/AsynchronousNetworkFetcher.m; sourceTree = "<group>"; };
 		05F45CF20FF056DF00EBAFC7 /* AsynchronousNetworkFetcherDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsynchronousNetworkFetcherDelegate.h; path = shared/AsynchronousNetworkFetcherDelegate.h; sourceTree = "<group>"; };
+		05F45D000FF059B400EBAFC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/ComposeTweetView.xib; sourceTree = "<group>"; };
+		05F45D2E0FF05B8200EBAFC7 /* ComposeTweetDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetDisplayMgr.h; path = tweets/ComposeTweetDisplayMgr.h; sourceTree = "<group>"; };
+		05F45D2F0FF05B8200EBAFC7 /* ComposeTweetDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComposeTweetDisplayMgr.m; path = tweets/ComposeTweetDisplayMgr.m; sourceTree = "<group>"; };
+		05F45D310FF05B9400EBAFC7 /* ComposeTweetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetViewController.h; path = tweets/ComposeTweetViewController.h; sourceTree = "<group>"; };
+		05F45D320FF05B9400EBAFC7 /* ComposeTweetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComposeTweetViewController.m; path = tweets/ComposeTweetViewController.m; sourceTree = "<group>"; };
+		05F45D830FF06BD100EBAFC7 /* ComposeTweetViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetViewControllerDelegate.h; path = tweets/ComposeTweetViewControllerDelegate.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Twitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -455,6 +464,7 @@
 				916BD8020FEEBD56007143A9 /* TimelineView.xib */,
 				916BD9100FEEFB07007143A9 /* TimelineTableViewCell.xib */,
 				916BD9F40FEF46B1007143A9 /* TweetDetailsView.xib */,
+				05F45CFF0FF059B400EBAFC7 /* ComposeTweetView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -529,6 +539,11 @@
 				05F45A2F0FF0181600EBAFC7 /* DirectMessage.m */,
 				05F45B3F0FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.h */,
 				05F45B400FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m */,
+				05F45D2E0FF05B8200EBAFC7 /* ComposeTweetDisplayMgr.h */,
+				05F45D2F0FF05B8200EBAFC7 /* ComposeTweetDisplayMgr.m */,
+				05F45D310FF05B9400EBAFC7 /* ComposeTweetViewController.h */,
+				05F45D320FF05B9400EBAFC7 /* ComposeTweetViewController.m */,
+				05F45D830FF06BD100EBAFC7 /* ComposeTweetViewControllerDelegate.h */,
 			);
 			name = tweets;
 			sourceTree = "<group>";
@@ -744,6 +759,7 @@
 				91E0004C0FEF786300BCE9BC /* NotFavorite.png in Resources */,
 				91E000880FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png in Resources */,
 				91E000950FEFFCC700BCE9BC /* DropShadow.png in Resources */,
+				05F45D010FF059B400EBAFC7 /* ComposeTweetView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -819,6 +835,8 @@
 				9115A92E0FF06AA100D6A769 /* TweetInfo.m in Sources */,
 				05F45C9B0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m in Sources */,
 				9115A9810FF0874700D6A769 /* MentionsTimelineDataSource.m in Sources */,
+				05F45D300FF05B8200EBAFC7 /* ComposeTweetDisplayMgr.m in Sources */,
+				05F45D330FF05B9400EBAFC7 /* ComposeTweetViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -848,6 +866,14 @@
 			);
 			name = Localizable.strings;
 			path = strings/en.lproj;
+			sourceTree = "<group>";
+		};
+		05F45CFF0FF059B400EBAFC7 /* ComposeTweetView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				05F45D000FF059B400EBAFC7 /* en */,
+			);
+			name = ComposeTweetView.xib;
 			sourceTree = "<group>";
 		};
 		916BD7ED0FEEB958007143A9 /* NoDataView.xib */ = {

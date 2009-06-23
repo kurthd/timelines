@@ -8,7 +8,8 @@
 #import "TimelineDisplayMgrFactory.h"
 #import "TwitterServiceDelegate.h"
 
-@class LogInDisplayMgr, DeviceRegistrar;
+@class LogInDisplayMgr, ComposeTweetDisplayMgr;
+@class DeviceRegistrar;
 @class CredentialsUpdatePublisher;
 
 @interface TwitchAppDelegate : NSObject
@@ -42,6 +43,8 @@
     
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     TimelineDisplayMgr * timelineDisplayMgr;
+
+    ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;
@@ -55,5 +58,9 @@
     persistentStoreCoordinator;
 
 @property (nonatomic, readonly) NSString * applicationDocumentsDirectory;
+
+
+- (IBAction)composeTweet:(id)sender;
+
 
 @end

@@ -141,7 +141,7 @@
         page > 1 ?
         [NSString stringWithFormat:showingMultPagesFormatString, page] :
         showingSinglePageFormatString;
-
+        
     [self.tableView reloadData];
 }
 

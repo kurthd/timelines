@@ -10,11 +10,13 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "InfoPlistConfigReader.h"
 #import "TwitterService.h"
+#import "ComposeTweetDisplayMgr.h"
 #import "PersonalFeedSelectionMgr.h"
 
 @interface TwitchAppDelegate ()
 
 @property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
+@property (nonatomic, retain) ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 @property (nonatomic, retain) DeviceRegistrar * registrar;
 @property (nonatomic, retain) NSMutableArray * credentials;
 
@@ -27,6 +29,7 @@
 @synthesize window;
 @synthesize tabBarController;
 @synthesize logInDisplayMgr;
+@synthesize composeTweetDisplayMgr;
 @synthesize registrar;
 @synthesize credentials;
 
@@ -93,8 +96,11 @@
 
     if (self.credentials.count == 0)
         [self.logInDisplayMgr logIn];
-    else
-        [timelineDisplayMgr setCredentials:[self.credentials objectAtIndex:0]];
+    else {
+        TwitterCredentials * c = [self.credentials objectAtIndex:0];
+        [timelineDisplayMgr setCredentials:c];
+        [self.composeTweetDisplayMgr setCredentials:c];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -108,6 +114,13 @@
 			exit(-1);  // Fail
         }
     }
+}
+
+#pragma mark Composing tweets
+
+- (IBAction)composeTweet:(id)sender
+{
+    [self.composeTweetDisplayMgr composeTweet];
 }
 
 #pragma mark initialization helpers
@@ -350,6 +363,22 @@
     }
 
     return credentials;
+}
+
+- (ComposeTweetDisplayMgr *)composeTweetDisplayMgr
+{
+    if (!composeTweetDisplayMgr) {
+        TwitterService * service =
+            [[TwitterService alloc]
+            initWithTwitterCredentials:nil context:[self managedObjectContext]];
+        composeTweetDisplayMgr =
+            [[ComposeTweetDisplayMgr alloc]
+            initWithRootViewController:self.tabBarController
+                        twitterService:service];
+        [service release];
+    }
+
+    return composeTweetDisplayMgr;
 }
 
 @end

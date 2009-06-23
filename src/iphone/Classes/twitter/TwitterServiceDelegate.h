@@ -21,7 +21,7 @@
 @optional
 
 - (void)tweetSentSuccessfully:(Tweet *)tweet;
-- (void)failedToSendTweet:(Tweet *) error:(NSError *)error;
+- (void)failedToSendTweet:(NSString *)tweet error:(NSError *)error;
 
 #pragma mark Timelines
 
@@ -42,7 +42,7 @@
     fetchedSinceUpdateId:(NSNumber *)updateId
                     page:(NSNumber *)page
                    count:(NSNumber *)count;
-- (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)updateId
+- (void)failedToFetchMentionsSinceUpdateId:(NSNumber *)updateId
                                       page:(NSNumber *)page
                                      count:(NSNumber *)count
                                      error:(NSError *)error;
