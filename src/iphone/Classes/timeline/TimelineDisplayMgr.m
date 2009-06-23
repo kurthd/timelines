@@ -78,13 +78,13 @@
 
 #pragma mark TimelineViewControllerDelegate implementation
 
-- (void)selectedTweet:(TweetInfo *)tweet
+- (void)selectedTweet:(TweetInfo *)tweet avatarImage:(UIImage *)avatarImage
 {
     NSLog(@"Selected tweet: %@", tweet);
     self.selectedTweet = tweet;
     [self.wrapperController.navigationController
         pushViewController:self.tweetDetailsController animated:YES];
-    [self.tweetDetailsController setTweet:tweet];
+    [self.tweetDetailsController setTweet:tweet avatar:avatarImage];
 }
 
 - (void)loadMoreTweets

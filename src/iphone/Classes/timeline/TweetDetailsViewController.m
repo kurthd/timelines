@@ -28,7 +28,7 @@
     [super dealloc];
 }
 
-- (void)setTweet:(TweetInfo *)tweet
+- (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)avatarImage
 {
     self.selectedTweet = tweet;
 
@@ -43,10 +43,14 @@
     nameLabel.text = tweet.user.name;
     [userTweetsButton setTitle:tweet.user.username
         forState:UIControlStateNormal];
-    NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
-    NSData * avatarData = [NSData dataWithContentsOfURL:avatarUrl];
-    avatar.imageView.image = [UIImage imageWithData:avatarData];
     
+    if (!avatarImage) {
+        NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
+        NSData * avatarData = [NSData dataWithContentsOfURL:avatarUrl];
+        avatarImage = [UIImage imageWithData:avatarData];
+    }
+    avatar.imageView.image = avatarImage;
+
     NSString * locationText = tweet.user.location;
     locationButton.hidden = !locationText || [locationText isEqual:@""];
 

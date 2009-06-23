@@ -87,7 +87,8 @@
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
-    [delegate selectedTweet:tweet];
+    [delegate selectedTweet:tweet
+        avatarImage:[avatarCache objectForKey:tweet.user.profileImageUrl]];
 }
 
 #pragma mark UITableViewDelegate implementation

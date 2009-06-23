@@ -24,7 +24,7 @@
 @property (nonatomic, assign) NSObject<TweetDetailsViewDelegate> * delegate;
 @property (nonatomic, retain) TweetInfo * selectedTweet;
 
-- (void)setTweet:(TweetInfo *)tweet;
+- (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar;
 - (IBAction)showLocationOnMap:(id)sender;
 
 @end
