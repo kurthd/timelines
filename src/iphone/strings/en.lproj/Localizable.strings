@@ -19,3 +19,6 @@ timelineview.showingsinglepage = "Showing page 1";
 /* TweetDetailsViewController */
 tweetdetailsview.title = "Tweet Details";
 tweetdetailsview.tweetfooter = "%@ from %@";
+
+/* Sending tweets */
+sendtweet.failed.alert.title = "Failed to Send Tweet";
