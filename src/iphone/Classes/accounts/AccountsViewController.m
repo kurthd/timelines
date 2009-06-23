@@ -22,11 +22,28 @@
     [super dealloc];
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    [self.navigationItem setLeftBarButtonItem:self.editButtonItem animated:NO];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
     self.accounts = [self.delegate accounts];
+}
+
+#pragma mark Button actions
+
+- (IBAction)addAccount:(id)sender
+{
+}
+
+- (IBAction)editAccounts:(id)sender
+{
 }
 
 #pragma mark Table view methods

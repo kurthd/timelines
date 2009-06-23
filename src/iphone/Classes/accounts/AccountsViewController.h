@@ -19,4 +19,7 @@
 
 @property (nonatomic, assign) id<AccountsViewControllerDelegate> delegate;
 
+- (IBAction)addAccount:(id)sender;
+- (IBAction)editAccounts:(id)sender;
+
 @end

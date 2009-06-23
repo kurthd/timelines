@@ -12,19 +12,19 @@ Sent 1 notifications.
 
         <tr>
       <td>
-        kurthd      </td>
+        debay      </td>
       <td>
         1      </td>
       <td>
-        30      </td>
+        33      </td>
     </tr>
       </table>
 
 <h1>API Usage</h1>
 
 <p>
-Unauthenticated API calls before check: 99.<br />
-Unauthenticated API calls after check: 99.<br />
+Unauthenticated API calls before check: 98.<br />
+Unauthenticated API calls after check: 98.<br />
 </p>
 
 <table border="1" cellpadding="5" cellspacing="0">
@@ -38,16 +38,16 @@ Unauthenticated API calls after check: 99.<br />
     <td>
       debay    </td>
     <td>
-      31    </td>
+      43    </td>
     <td>
-      29    </td>
+      41    </td>
   </tr>
     <tr>
     <td>
       kurthd    </td>
     <td>
-      80    </td>
+      100    </td>
     <td>
-      78    </td>
+      98    </td>
   </tr>
   </table>
