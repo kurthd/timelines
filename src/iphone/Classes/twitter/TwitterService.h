@@ -41,9 +41,16 @@
 
 #pragma mark Timeline
 
+// for the user associated with 'credentials'
 - (void)fetchTimelineSinceUpdateId:(NSNumber *)updateId
                               page:(NSNumber *)page
                              count:(NSNumber *)count;
+
+// for an arbitrary user
+- (void)fetchTimelineForUser:(NSString *)user
+               sinceUpdateId:(NSNumber *)updateId
+                        page:(NSNumber *)page
+                       count:(NSNumber *)count;
 
 #pragma mark Mentions
 

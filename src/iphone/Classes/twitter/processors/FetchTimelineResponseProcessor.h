@@ -7,6 +7,7 @@
 
 @interface FetchTimelineResponseProcessor : ResponseProcessor
 {
+    NSString * username;
     NSNumber * updateId;
     NSNumber * page;
     NSNumber * count;
@@ -20,7 +21,20 @@
                       count:(NSNumber *)aCount
                     context:(NSManagedObjectContext *)aContext
                    delegate:(id)aDelegate;
++ (id)processorWithUpdateId:(NSNumber *)anUpdateId
+                   username:(NSString *)ausername
+                       page:(NSNumber *)aPage
+                      count:(NSNumber *)aCount
+                    context:(NSManagedObjectContext *)aContext
+                   delegate:(id)aDelegate;
+
 - (id)initWithUpdateId:(NSNumber *)anUpdateId
+                  page:(NSNumber *)aPage
+                 count:(NSNumber *)aCount
+               context:(NSManagedObjectContext *)aContext
+              delegate:(id)aDelegate;
+- (id)initWithUpdateId:(NSNumber *)anUpdateId
+              username:(NSString *)ausername
                   page:(NSNumber *)aPage
                  count:(NSNumber *)aCount
                context:(NSManagedObjectContext *)aContext
