@@ -209,4 +209,9 @@
     [self.timelineController setUser:aUser];
 }
 
+- (NSMutableDictionary *)timeline
+{
+    return [[timeline copy] autorelease];
+}
+
 @end
