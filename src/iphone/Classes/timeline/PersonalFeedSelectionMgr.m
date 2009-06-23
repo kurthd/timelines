@@ -11,6 +11,7 @@
     [timelineDisplayMgr release];
     [allTimelineDataSource release];
     [messagesTimelineDataSource release];
+    [mentionsTimelineDataSource release];
     [service release];
     [super dealloc];
 }
@@ -26,6 +27,8 @@
             [[AllTimelineDataSource alloc] initWithTwitterService:service];
         messagesTimelineDataSource =
             [[MessagesTimelineDataSource alloc] initWithTwitterService:service];
+        mentionsTimelineDataSource =
+            [[MentionsTimelineDataSource alloc] initWithTwitterService:service];
     }
 
     return self;
@@ -47,6 +50,10 @@
             break;
         case 1:
             NSLog(@"Selected mentions tab");
+            service.delegate = mentionsTimelineDataSource;
+            mentionsTimelineDataSource.delegate = timelineDisplayMgr;
+            [timelineDisplayMgr setService:mentionsTimelineDataSource
+                tweets:nil page:1];
             break;
         case 2:
             NSLog(@"Selected direct messages tab");

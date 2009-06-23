@@ -62,6 +62,7 @@
 		9115A8430FF03C9A00D6A769 /* MessagesTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8420FF03C9A00D6A769 /* MessagesTimelineDataSource.m */; };
 		9115A8C70FF0503300D6A769 /* PersonalFeedSelectionMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */; };
 		9115A92E0FF06AA100D6A769 /* TweetInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A92D0FF06AA100D6A769 /* TweetInfo.m */; };
+		9115A9810FF0874700D6A769 /* MentionsTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */; };
 		916BD7AC0FEEADD7007143A9 /* NetworkAwareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79A0FEEADD7007143A9 /* NetworkAwareViewController.m */; };
 		916BD7AD0FEEADD7007143A9 /* NSArray+IterationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79D0FEEADD7007143A9 /* NSArray+IterationAdditions.m */; };
 		916BD7AE0FEEADD7007143A9 /* NSDate+IsToday.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79F0FEEADD7007143A9 /* NSDate+IsToday.m */; };
@@ -219,6 +220,8 @@
 		9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalFeedSelectionMgr.m; path = timeline/PersonalFeedSelectionMgr.m; sourceTree = "<group>"; };
 		9115A92C0FF06AA100D6A769 /* TweetInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetInfo.h; path = timeline/TweetInfo.h; sourceTree = "<group>"; };
 		9115A92D0FF06AA100D6A769 /* TweetInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetInfo.m; path = timeline/TweetInfo.m; sourceTree = "<group>"; };
+		9115A97F0FF0874700D6A769 /* MentionsTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionsTimelineDataSource.h; path = timeline/MentionsTimelineDataSource.h; sourceTree = "<group>"; };
+		9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionsTimelineDataSource.m; path = timeline/MentionsTimelineDataSource.m; sourceTree = "<group>"; };
 		916BD7990FEEADD7007143A9 /* NetworkAwareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkAwareViewController.h; path = shared/NetworkAwareViewController.h; sourceTree = "<group>"; };
 		916BD79A0FEEADD7007143A9 /* NetworkAwareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkAwareViewController.m; path = shared/NetworkAwareViewController.m; sourceTree = "<group>"; };
 		916BD79B0FEEADD7007143A9 /* NetworkAwareViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkAwareViewControllerDelegate.h; path = shared/NetworkAwareViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -652,6 +655,8 @@
 				9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */,
 				9115A92C0FF06AA100D6A769 /* TweetInfo.h */,
 				9115A92D0FF06AA100D6A769 /* TweetInfo.m */,
+				9115A97F0FF0874700D6A769 /* MentionsTimelineDataSource.h */,
+				9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -813,6 +818,7 @@
 				9115A8C70FF0503300D6A769 /* PersonalFeedSelectionMgr.m in Sources */,
 				9115A92E0FF06AA100D6A769 /* TweetInfo.m in Sources */,
 				05F45C9B0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m in Sources */,
+				9115A9810FF0874700D6A769 /* MentionsTimelineDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
