@@ -13,4 +13,9 @@
 @dynamic username;
 @dynamic password;
 
+- (NSString *)description
+{
+    return self.username;
+}
+
 @end

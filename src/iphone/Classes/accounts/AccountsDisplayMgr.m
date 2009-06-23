@@ -4,25 +4,30 @@
 
 #import "AccountsDisplayMgr.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "CredentialsUpdatePublisher.h"
 
 @interface AccountsDisplayMgr ()
 
 @property (nonatomic, retain) AccountsViewController * accountsViewController;
-@property (nonatomic, copy) NSArray * userAccounts;
 @property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
+@property (nonatomic, copy) NSMutableSet * userAccounts;
+@property (nonatomic, retain) CredentialsUpdatePublisher *
+    credentialsUpdatePublisher;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
 @end
 
 @implementation AccountsDisplayMgr
 
-@synthesize logInDisplayMgr, accountsViewController, userAccounts, context;
+@synthesize logInDisplayMgr, accountsViewController, userAccounts;
+@synthesize context, credentialsUpdatePublisher;
 
 - (void)dealloc
 {
     self.accountsViewController = nil;
-    self.userAccounts = nil;
     self.logInDisplayMgr = nil;
+    self.userAccounts = nil;
+    self.credentialsUpdatePublisher = nil;
     self.context = nil;
 
     [super dealloc];
@@ -38,16 +43,28 @@
         self.logInDisplayMgr = aLogInDisplayMgr;
         self.logInDisplayMgr.allowsCancel = YES;
         self.context = aContext;
+
+        credentialsUpdatePublisher =
+            [[CredentialsUpdatePublisher alloc]
+            initWithListener:self action:@selector(credentialsAdded:)];
     }
 
     return self;
+}
+
+#pragma mark CredentialsUpdatePublisher notification
+
+- (void)credentialsAdded:(TwitterCredentials *)credentials
+{
+    [self.userAccounts addObject:credentials];
+    [self.accountsViewController accountAdded:credentials];
 }
 
 #pragma mark AccountsViewControllerDelegate implementation
 
 - (NSArray *)accounts
 {
-    return self.userAccounts;
+    return [self.userAccounts allObjects];
 }
 
 - (void)userWantsToAddAccount
@@ -57,7 +74,7 @@
 
 #pragma mark Accessors
 
-- (NSArray *)userAccounts
+- (NSMutableSet *)userAccounts
 {
     if (!userAccounts) {
         NSFetchRequest * request = [[NSFetchRequest alloc] init];
@@ -76,10 +93,10 @@
         [sortDescriptor release];
 
         NSError * error;
-        userAccounts =
-            [[context executeFetchRequest:request error:&error] retain];
+        NSArray * accounts =
+            [context executeFetchRequest:request error:&error];
 
-        if (!userAccounts) {
+        if (!accounts) {
             NSString * title = NSLocalizedString(@"accounts.load.failed", @"");
             NSString * message = error.localizedDescription;
 
@@ -87,6 +104,10 @@
                 [UIAlertView simpleAlertViewWithTitle:title
                                               message:message];
             [alert show];
+        } else {
+            userAccounts = [[NSSet setWithArray:accounts] mutableCopy];
+            NSAssert1(userAccounts.count == accounts.count,
+                @"Duplicate accounts have been persisted: '%@'.", accounts);
         }
 
         [request release];

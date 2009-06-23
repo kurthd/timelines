@@ -6,13 +6,16 @@
 #import "AccountsViewController.h"
 #import "LogInDisplayMgr.h"
 
+@class CredentialsUpdatePublisher;
+
 @interface AccountsDisplayMgr : NSObject <AccountsViewControllerDelegate>
 {
     AccountsViewController * accountsViewController;
-
-    NSArray * userAccounts;
-
     LogInDisplayMgr * logInDisplayMgr;
+
+    NSMutableSet * userAccounts;
+
+    CredentialsUpdatePublisher * credentialsUpdatePublisher;
 
     NSManagedObjectContext * context;
 }

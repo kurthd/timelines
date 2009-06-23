@@ -162,7 +162,9 @@ enum CredentialRows
 - (void)promptForLogIn
 {
     [self enableForm];
-    self.logInButton.enabled = NO;
+    self.logInButton.enabled =
+        self.usernameTextField.text.length > 0 &&
+        self.passwordTextField.text.length > 0;
     [self.usernameTextField becomeFirstResponder];
 }
 
@@ -195,7 +197,7 @@ enum CredentialRows
 - (void)enableForm
 {
     self.logInButton.enabled = YES;
-    self.cancelButton.enabled = YES;
+    self.cancelButton.enabled = [delegate userCanCancel];
 
     self.usernameTextField.enabled = YES;
     self.passwordTextField.enabled = YES;
@@ -204,6 +206,7 @@ enum CredentialRows
 - (void)disableForm
 {
     self.logInButton.enabled = NO;
+    self.cancelButton.enabled = NO;
 
     self.usernameTextField.enabled = NO;
     self.passwordTextField.enabled = NO;

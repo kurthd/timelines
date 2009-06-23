@@ -5,6 +5,13 @@
 #import "AccountsViewController.h"
 #import "TwitterCredentials.h"
 
+NSInteger usernameSort(TwitterCredentials * user1,
+                       TwitterCredentials * user2,
+                       void * context)
+{
+    return [user1.username compare:user2.username];
+}
+
 @interface AccountsViewController ()
 
 @property (nonatomic, copy) NSArray * accounts;
@@ -33,18 +40,45 @@
 {
     [super viewWillAppear:animated];
 
-    self.accounts = [self.delegate accounts];
+    self.accounts = [[self.delegate accounts]
+        sortedArrayUsingFunction:usernameSort context:NULL];
 }
 
 #pragma mark Button actions
 
-- (IBAction)addAccount:(id)sender
+- (IBAction)userWantsToAddAccount:(id)sender
 {
     [self.delegate userWantsToAddAccount];
 }
 
 - (IBAction)editAccounts:(id)sender
 {
+}
+
+#pragma mark Updating the table view data
+
+- (void)accountAdded:(TwitterCredentials *)account
+{
+    NSArray * newAccounts = [[self.delegate accounts]
+        sortedArrayUsingFunction:usernameSort context:NULL];
+
+    NSInteger where = 0;
+    for (NSInteger count = self.accounts.count; where < count; ++where) {
+        TwitterCredentials * oldC = [self.accounts objectAtIndex:where];
+        TwitterCredentials * newC = [newAccounts objectAtIndex:where];
+
+        if (![oldC.username isEqualToString:newC.username])
+            break;
+    }
+
+    self.accounts = newAccounts;
+
+    NSIndexPath * indexPath =
+    [NSIndexPath indexPathForRow:where inSection:0];
+
+    [self.tableView
+        insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+              withRowAnimation:UITableViewRowAnimationFade];
 }
 
 #pragma mark Table view methods

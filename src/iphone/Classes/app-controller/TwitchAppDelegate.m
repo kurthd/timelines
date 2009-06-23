@@ -240,10 +240,17 @@
 
 - (void)initAccountsTab
 {
+    LogInDisplayMgr * displayMgr =
+        [[LogInDisplayMgr alloc]
+         initWithRootViewController:tabBarController
+                managedObjectContext:[self managedObjectContext]];
+
     accountsDisplayMgr = [[AccountsDisplayMgr alloc]
         initWithAccountsViewController:accountsViewController
-                       logInDisplayMgr:self.logInDisplayMgr
+                       logInDisplayMgr:displayMgr
                                context:[self managedObjectContext]];
+
+    [displayMgr release];
 }    
 
 #pragma mark -

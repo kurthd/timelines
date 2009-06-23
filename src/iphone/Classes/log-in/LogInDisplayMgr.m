@@ -75,6 +75,7 @@
 
     [self.twitter setUsername:self.username password:self.password];
     self.logInRequestId = [self.twitter checkUserCredentials];
+
     NSLog(@"Attempting log in %@: '%@'.",
         [self.twitter usesSecureConnection] ? @"securely" : @"insecurely",
         self.logInRequestId);
@@ -149,6 +150,8 @@
 {
     NSLog(@"Image received for request '%@': %@", identifier, image);
 }
+
+#pragma mark Notify the system of new accounts
 
 - (void)broadcastSuccessfulLogInNotification:(TwitterCredentials *)credentials
 {

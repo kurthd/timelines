@@ -3,6 +3,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TwitterCredentials.h"
 
 @protocol AccountsViewControllerDelegate
 
@@ -21,7 +22,9 @@
 
 @property (nonatomic, assign) id<AccountsViewControllerDelegate> delegate;
 
-- (IBAction)addAccount:(id)sender;
+- (IBAction)userWantsToAddAccount:(id)sender;
 - (IBAction)editAccounts:(id)sender;
+
+- (void)accountAdded:(TwitterCredentials *)credentials;
 
 @end
