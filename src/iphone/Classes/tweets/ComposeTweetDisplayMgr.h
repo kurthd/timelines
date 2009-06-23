@@ -3,6 +3,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ComposeTweetDisplayMgrDelegate.h"
 #import "ComposeTweetViewControllerDelegate.h"
 #import "TwitterService.h"
 #import "TwitterCredentials.h"
@@ -13,6 +14,8 @@
 @interface ComposeTweetDisplayMgr :
     NSObject <ComposeTweetViewControllerDelegate, TwitterServiceDelegate>
 {
+    id<ComposeTweetDisplayMgrDelegate> delegate;
+
     UIViewController * rootViewController;
     ComposeTweetViewController * composeTweetViewController;
 
@@ -20,6 +23,8 @@
 
     CredentialsUpdatePublisher * credentialsUpdatePublisher;
 }
+
+@property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;
 
 - (id)initWithRootViewController:(UIViewController *)aRootViewController
                   twitterService:(TwitterService *)aService;

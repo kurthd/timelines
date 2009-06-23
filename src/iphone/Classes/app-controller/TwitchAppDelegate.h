@@ -7,6 +7,7 @@
 #import "DeviceRegistrarDelegate.h"
 #import "TimelineDisplayMgrFactory.h"
 #import "TwitterServiceDelegate.h"
+#import "ComposeTweetDisplayMgrDelegate.h"
 
 @class LogInDisplayMgr, ComposeTweetDisplayMgr;
 @class DeviceRegistrar;
@@ -14,7 +15,7 @@
 
 @interface TwitchAppDelegate : NSObject
     <UIApplicationDelegate, UITabBarControllerDelegate, DeviceRegistrarDelegate,
-    TwitterServiceDelegate>
+    TwitterServiceDelegate, ComposeTweetDisplayMgrDelegate>
 {
     UIWindow *window;
     UITabBarController *tabBarController;

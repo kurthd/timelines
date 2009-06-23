@@ -123,6 +123,25 @@
     [self.composeTweetDisplayMgr composeTweet];
 }
 
+#pragma mark ComposeTweetDisplayMgrDelegate implementation
+
+- (void)userDidCancelComposingTweet
+{
+}
+
+- (void)userIsSendingTweet:(NSString *)tweet
+{
+}
+
+- (void)userDidSendTweet:(Tweet *)tweet
+{
+    [timelineDisplayMgr addTweet:tweet];
+}
+
+- (void)userFailedToSendTweet:(NSString *)tweet
+{
+}
+
 #pragma mark initialization helpers
 
 - (void)initHomeTab
@@ -376,6 +395,8 @@
             initWithRootViewController:self.tabBarController
                         twitterService:service];
         [service release];
+
+        composeTweetDisplayMgr.delegate = self;
     }
 
     return composeTweetDisplayMgr;
