@@ -146,7 +146,12 @@
 
 - (void)userDidSendTweet:(Tweet *)tweet
 {
-    [timelineDisplayMgr addTweet:tweet];
+    UISegmentedControl * control = (UISegmentedControl *)
+        homeNetAwareViewController.navigationItem.titleView;
+    BOOL displayImmediately = control.selectedSegmentIndex == 0;
+    NSLog(@"Displaying immediately? %d", displayImmediately);
+    [timelineDisplayMgr addTweet:tweet displayImmediately:displayImmediately];
+
     [homeNetAwareViewController.navigationItem
         setRightBarButtonItem:[self newTweetButtonItem]
                      animated:YES];
