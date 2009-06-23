@@ -13,7 +13,7 @@
 @implementation TimelineDisplayMgr
 
 @synthesize wrapperController, timelineController, selectedTweet, updateId,
-    user, timeline, pagesShown;
+    user, timeline, pagesShown, displayAsConversation;
 
 - (void)dealloc
 {
@@ -78,13 +78,13 @@
 
 #pragma mark TimelineViewControllerDelegate implementation
 
-- (void)selectedTweet:(TweetInfo *)tweet
+- (void)selectedTweet:(TweetInfo *)tweet avatarImage:(UIImage *)avatarImage
 {
     NSLog(@"Selected tweet: %@", tweet);
     self.selectedTweet = tweet;
     [self.wrapperController.navigationController
         pushViewController:self.tweetDetailsController animated:YES];
-    [self.tweetDetailsController setTweet:tweet];
+    [self.tweetDetailsController setTweet:tweet avatar:avatarImage];
 }
 
 - (void)loadMoreTweets
@@ -118,11 +118,11 @@
 - (void)refresh
 {
     NSLog(@"Refreshing timeline...");
-    [wrapperController setUpdatingState:kConnectedAndUpdating];
-    [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
     if([service credentials])
         [service fetchTimelineSince:self.updateId
             page:[NSNumber numberWithInt:0]];
+    [wrapperController setUpdatingState:kConnectedAndUpdating];
+    [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 
 - (void)addTweet:(Tweet *)tweet displayImmediately:(BOOL)displayImmediately
@@ -169,6 +169,7 @@
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page
+    forceRefresh:(BOOL)refresh
 {
     [aService retain];
     [service release];
@@ -185,7 +186,10 @@
         scrollRectToVisible:self.timelineController.tableView.frame
         animated:NO];
 
-    [self refresh];
+    [timelineController setTweets:[timeline allValues] page:pagesShown];
+
+    if (refresh)
+        [self refresh];
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
@@ -194,6 +198,12 @@
     [someCredentials retain];
     [credentials release];
     credentials = someCredentials;
+
+    if (displayAsConversation) {
+        NSArray * invertedCellUsernames =
+            [NSArray arrayWithObject:someCredentials.username];
+        self.timelineController.invertedCellUsernames = invertedCellUsernames;
+    }
 
     [service setCredentials:credentials];
     [service fetchTimelineSince:[NSNumber numberWithInt:0]
@@ -212,6 +222,15 @@
 - (NSMutableDictionary *)timeline
 {
     return [[timeline copy] autorelease];
+}
+
+- (void)setDisplayAsConversation:(BOOL)conversation
+{
+    displayAsConversation = conversation;
+    NSArray * invertedCellUsernames =
+        conversation && !!credentials ?
+        [NSArray arrayWithObject:credentials.username] : [NSArray array];
+    self.timelineController.invertedCellUsernames = invertedCellUsernames;
 }
 
 @end

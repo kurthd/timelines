@@ -18,9 +18,12 @@
     IBOutlet UILabel * usernameLabel;
     IBOutlet UILabel * followingLabel;
     IBOutlet UILabel * currentPagesLabel;
+    IBOutlet UIButton * loadMoreButton;
+    IBOutlet UILabel * noMorePagesLabel;
 
     NSArray * tweets;
     NSMutableDictionary * avatarCache;
+    NSArray * invertedCellUsernames;
 
     NSArray * sortedTweetCache;
 }
@@ -29,6 +32,7 @@
     NSObject<TimelineViewControllerDelegate> * delegate;
 
 @property (nonatomic, retain) NSArray * sortedTweetCache;
+@property (nonatomic, copy) NSArray * invertedCellUsernames;
 
 - (void)setUser:(User *)user;
 - (void)setTweets:(NSArray *)tweets page:(NSUInteger)page;

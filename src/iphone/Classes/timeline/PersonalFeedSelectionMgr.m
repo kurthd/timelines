@@ -38,6 +38,8 @@
             [[MentionsTimelineDataSource alloc] initWithTwitterService:service];
 
         previousTab = 0;
+        mentionsTimelineRefresh = YES;
+        messagesTimelineRefresh = YES;
     }
 
     return self;
@@ -69,24 +71,32 @@
             NSLog(@"Selected all tweets tab");
             service.delegate = allTimelineDataSource;
             allTimelineDataSource.delegate = timelineDisplayMgr;
+            timelineDisplayMgr.displayAsConversation = YES;
             [timelineDisplayMgr setService:allTimelineDataSource
-                tweets:self.allTimelineTweets page:allTimelinePagesShown];
+                tweets:self.allTimelineTweets page:allTimelinePagesShown
+                forceRefresh:allTimelineRefresh];
             break;
         case 1:
             NSLog(@"Selected mentions tab");
             service.delegate = mentionsTimelineDataSource;
             mentionsTimelineDataSource.delegate = timelineDisplayMgr;
+            timelineDisplayMgr.displayAsConversation = NO;
             [timelineDisplayMgr setService:mentionsTimelineDataSource
                 tweets:self.mentionsTimelineTweets
-                page:mentionsTimelinePagesShown];
+                page:mentionsTimelinePagesShown
+                forceRefresh:mentionsTimelineRefresh];
+            mentionsTimelineRefresh = NO;
             break;
         case 2:
             NSLog(@"Selected direct messages tab");
             service.delegate = messagesTimelineDataSource;
             messagesTimelineDataSource.delegate = timelineDisplayMgr;
+            timelineDisplayMgr.displayAsConversation = NO;
             [timelineDisplayMgr setService:messagesTimelineDataSource
                 tweets:self.messagesTimelineTweets
-                page:messagesTimelinePagesShown];
+                page:messagesTimelinePagesShown
+                forceRefresh:messagesTimelineRefresh];
+            messagesTimelineRefresh = NO;
             break;
     }
 

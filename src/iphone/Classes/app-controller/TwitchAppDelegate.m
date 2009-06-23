@@ -175,6 +175,7 @@
         createTimelineDisplayMgrWithWrapperController:
         homeNetAwareViewController]
         retain];
+    timelineDisplayMgr.displayAsConversation = YES;
     UIBarButtonItem * refreshButton =
         homeNetAwareViewController.navigationItem.leftBarButtonItem;
     refreshButton.target = timelineDisplayMgr;

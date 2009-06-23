@@ -7,6 +7,7 @@
 #import "TweetInfo.h"
 #import "DirectMessage.h"
 #import "AsynchronousNetworkFetcher.h"
+#import "UIColor+TwitchColors.h"
 
 @interface TimelineViewController ()
 
@@ -19,7 +20,7 @@
 
 @implementation TimelineViewController
 
-@synthesize delegate, sortedTweetCache;
+@synthesize delegate, sortedTweetCache, invertedCellUsernames;
 
 - (void)dealloc
 {
@@ -32,6 +33,8 @@
     [tweets release];
     [avatarCache release];
 
+    [loadMoreButton release];
+    [noMorePagesLabel release];
     [currentPagesLabel release];
 
     [super dealloc];
@@ -79,6 +82,7 @@
     [cell setName:tweet.user.name];
     [cell setDate:tweet.timestamp];
     [cell setTweetText:tweet.text];
+    [cell setInvert:[invertedCellUsernames containsObject:tweet.user.username]];
 
     return cell;
 }
@@ -87,7 +91,8 @@
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
-    [delegate selectedTweet:tweet];
+    [delegate selectedTweet:tweet
+        avatarImage:[avatarCache objectForKey:tweet.user.profileImageUrl]];
 }
 
 #pragma mark UITableViewDelegate implementation
@@ -122,6 +127,9 @@
 {
     NSLog(@"Load more tweets selected");
     [delegate loadMoreTweets];
+    [loadMoreButton setTitleColor:[UIColor grayColor]
+        forState:UIControlStateNormal];
+    loadMoreButton.enabled = NO;
 }
 
 - (void)addTweet:(TweetInfo *)tweet
@@ -184,20 +192,25 @@
     [self.tableView reloadData];
 
     [self fetchAvatarsForTweets];
+
+    [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
+        forState:UIControlStateNormal];
+    loadMoreButton.enabled = YES;
 }
 
 - (void)fetchAvatarsForTweets
 {
     NSMutableDictionary * alreadySent = [NSMutableDictionary dictionary];
     for (TweetInfo * tweetInfo in tweets) {
-        NSURL * avatarUrl =
-            [NSURL URLWithString:tweetInfo.user.profileImageUrl];
-        if (![avatarCache objectForKey:avatarUrl] &&
-            ![alreadySent objectForKey:avatarUrl]) {
+        NSString * avatarUrlAsString = tweetInfo.user.profileImageUrl;
+        if (![avatarCache objectForKey:avatarUrlAsString] &&
+            ![alreadySent objectForKey:avatarUrlAsString]) {
 
-            NSLog(@"Getting avatar for url %@", avatarUrl);
+            NSLog(@"Getting avatar for url %@", avatarUrlAsString);
+            NSURL * avatarUrl =
+                [NSURL URLWithString:avatarUrlAsString];
             [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
-            [alreadySent setObject:avatarUrl forKey:avatarUrl];
+            [alreadySent setObject:avatarUrlAsString forKey:avatarUrlAsString];
         }
     }
 }

@@ -28,8 +28,10 @@
     NSMutableDictionary * timeline;
     NSNumber * updateId;
     NSUInteger pagesShown;
-    
+
     TwitterCredentials * credentials;
+
+    BOOL displayAsConversation;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
@@ -43,12 +45,15 @@
 @property (nonatomic, readonly) NSMutableDictionary * timeline;
 @property (nonatomic, readonly) NSUInteger pagesShown;
 
+@property (nonatomic, assign) BOOL displayAsConversation;
+
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController
     service:(NSObject<TimelineDataSource> *)service;
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService
-    tweets:(NSDictionary *)tweets page:(NSUInteger)page;
+    tweets:(NSDictionary *)someTweets page:(NSUInteger)page
+      forceRefresh:(BOOL)refresh;
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)replyToTweet;
 - (void)refresh;
