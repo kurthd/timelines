@@ -9,29 +9,34 @@
 
 @property (nonatomic, retain) AccountsViewController * accountsViewController;
 @property (nonatomic, copy) NSArray * userAccounts;
+@property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
 @end
 
 @implementation AccountsDisplayMgr
 
-@synthesize accountsViewController, userAccounts, context;
+@synthesize logInDisplayMgr, accountsViewController, userAccounts, context;
 
 - (void)dealloc
 {
     self.accountsViewController = nil;
     self.userAccounts = nil;
+    self.logInDisplayMgr = nil;
     self.context = nil;
 
     [super dealloc];
 }
 
 - (id)initWithAccountsViewController:(AccountsViewController *)aViewController
+                     logInDisplayMgr:(LogInDisplayMgr *)aLogInDisplayMgr
                              context:(NSManagedObjectContext *)aContext
 {
     if (self = [super init]) {
         self.accountsViewController = aViewController;
         self.accountsViewController.delegate = self;
+        self.logInDisplayMgr = aLogInDisplayMgr;
+        self.logInDisplayMgr.allowsCancel = YES;
         self.context = aContext;
     }
 
@@ -43,6 +48,11 @@
 - (NSArray *)accounts
 {
     return self.userAccounts;
+}
+
+- (void)userWantsToAddAccount
+{
+    [self.logInDisplayMgr logIn];
 }
 
 #pragma mark Accessors

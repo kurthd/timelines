@@ -21,7 +21,11 @@
 
     NSString * username;
     NSString * password;
+
+    BOOL allowsCancel;
 }
+
+@property (nonatomic, assign) BOOL allowsCancel;
 
 - (id)initWithRootViewController:(UIViewController *)aRootViewController
             managedObjectContext:(NSManagedObjectContext *)aContext;

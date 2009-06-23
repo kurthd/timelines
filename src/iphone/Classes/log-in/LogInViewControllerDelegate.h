@@ -8,7 +8,8 @@
 
 - (void)userDidProvideUsername:(NSString *)username
                       password:(NSString *)password;
-
 - (void)userDidCancel;
+
+- (BOOL)userCanCancel;
 
 @end

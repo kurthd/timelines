@@ -110,9 +110,10 @@
     [self initProfileTab];
     [self initAccountsTab];
 
-    if (self.credentials.count == 0)
+    if (self.credentials.count == 0) {
+        self.logInDisplayMgr.allowsCancel = NO;
         [self.logInDisplayMgr logIn];
-    else {
+    } else {
         TwitterCredentials * c = [self.credentials objectAtIndex:0];
         [timelineDisplayMgr setCredentials:c];
         [profileTimelineDisplayMgr setCredentials:c];
@@ -240,8 +241,9 @@
 - (void)initAccountsTab
 {
     accountsDisplayMgr = [[AccountsDisplayMgr alloc]
-                          initWithAccountsViewController:accountsViewController
-                          context:[self managedObjectContext]];
+        initWithAccountsViewController:accountsViewController
+                       logInDisplayMgr:self.logInDisplayMgr
+                               context:[self managedObjectContext]];
 }    
 
 #pragma mark -

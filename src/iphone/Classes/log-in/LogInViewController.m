@@ -22,15 +22,13 @@ enum CredentialRows
 @property (nonatomic, retain) UITableView * tableView;
 
 @property (nonatomic, retain) UIBarButtonItem * logInButton;
+@property (nonatomic, retain) UIBarButtonItem * cancelButton;
 
 @property (nonatomic, retain) UITableViewCell * usernameCell;
 @property (nonatomic, retain) UITableViewCell * passwordCell;
 
 @property (nonatomic, retain) UITextField * usernameTextField;
 @property (nonatomic, retain) UITextField * passwordTextField;
-
-- (void)userDidSave;
-- (void)userDidCancel;
 
 - (void)resetForm;
 - (void)enableForm;
@@ -41,7 +39,7 @@ enum CredentialRows
 @implementation LogInViewController
 
 @synthesize delegate, tableView;
-@synthesize logInButton;
+@synthesize logInButton, cancelButton;
 @synthesize usernameCell, passwordCell;
 @synthesize usernameTextField, passwordTextField;
 
@@ -52,6 +50,7 @@ enum CredentialRows
     self.tableView = nil;
 
     self.logInButton = nil;
+    self.cancelButton = nil;
 
     self.usernameCell = nil;
     self.passwordCell = nil;
@@ -66,8 +65,6 @@ enum CredentialRows
 {
     [super viewDidLoad];
 
-    self.logInButton.target = self;
-    self.logInButton.action = @selector(userDidSave);
     self.logInButton.enabled = NO;
 }
 
@@ -76,6 +73,7 @@ enum CredentialRows
     [super viewWillAppear:animated];
 
     [self resetForm];
+    self.cancelButton.enabled = [delegate userCanCancel];
 }
 
 #pragma mark UITableViewDelegate implementation
@@ -153,7 +151,7 @@ enum CredentialRows
         NSString * password = self.passwordTextField.text;
 
         if (username.length && password.length) {
-            [self userDidSave];
+            [self userDidSave:self];
             return YES;
         }
     }
@@ -170,7 +168,7 @@ enum CredentialRows
 
 #pragma mark Handling user actions
 
-- (void)userDidSave
+- (IBAction)userDidSave:(id)sender
 {
     [self.usernameTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
@@ -181,7 +179,7 @@ enum CredentialRows
                             password:self.passwordTextField.text];
 }
 
-- (void)userDidCancel
+- (IBAction)userDidCancel:(id)sender
 {
     [delegate userDidCancel];
 }
@@ -197,6 +195,7 @@ enum CredentialRows
 - (void)enableForm
 {
     self.logInButton.enabled = YES;
+    self.cancelButton.enabled = YES;
 
     self.usernameTextField.enabled = YES;
     self.passwordTextField.enabled = YES;

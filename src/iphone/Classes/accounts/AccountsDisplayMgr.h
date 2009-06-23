@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AccountsViewController.h"
+#import "LogInDisplayMgr.h"
 
 @interface AccountsDisplayMgr : NSObject <AccountsViewControllerDelegate>
 {
@@ -11,10 +12,13 @@
 
     NSArray * userAccounts;
 
+    LogInDisplayMgr * logInDisplayMgr;
+
     NSManagedObjectContext * context;
 }
 
 - (id)initWithAccountsViewController:(AccountsViewController *)aViewController
+                     logInDisplayMgr:(LogInDisplayMgr *)aLogInDisplayMgr
                              context:(NSManagedObjectContext *)aContext;
 
 @end

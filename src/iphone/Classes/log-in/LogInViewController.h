@@ -12,6 +12,7 @@
     IBOutlet UITableView * tableView;
 
     IBOutlet UIBarButtonItem * logInButton;
+    IBOutlet UIBarButtonItem * cancelButton;
 
     IBOutlet UITableViewCell * usernameCell;
     IBOutlet UITableViewCell * passwordCell;
@@ -26,5 +27,8 @@
 @property (nonatomic, assign) id<LogInViewControllerDelegate> delegate;
 
 - (void)promptForLogIn;
+
+- (IBAction)userDidSave:(id)sender;
+- (IBAction)userDidCancel:(id)sender;
 
 @end

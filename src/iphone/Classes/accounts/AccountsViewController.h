@@ -8,6 +8,8 @@
 
 - (NSArray *)accounts;
 
+- (void)userWantsToAddAccount;
+
 @end
 
 @interface AccountsViewController : UITableViewController

@@ -40,6 +40,7 @@
 
 - (IBAction)addAccount:(id)sender
 {
+    [self.delegate userWantsToAddAccount];
 }
 
 - (IBAction)editAccounts:(id)sender

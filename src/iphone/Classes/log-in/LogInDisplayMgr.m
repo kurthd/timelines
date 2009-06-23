@@ -29,6 +29,7 @@
 @synthesize rootViewController, logInViewController;
 @synthesize twitter, logInRequestId;
 @synthesize username, password;
+@synthesize allowsCancel;
 
 - (void)dealloc
 {
@@ -81,7 +82,13 @@
 
 - (void)userDidCancel
 {
-    NSLog(@"User cancelled log in.");
+    NSAssert(self.allowsCancel, @"User cancelled even though it's forbidden.");
+    [self.rootViewController dismissModalViewControllerAnimated:YES];
+}
+
+- (BOOL)userCanCancel
+{
+    return self.allowsCancel;
 }
 
 #pragma mark MGTwitterEngineDelegate implementation
