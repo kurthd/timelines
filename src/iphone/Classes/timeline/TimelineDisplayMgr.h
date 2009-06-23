@@ -53,6 +53,6 @@
 - (void)replyToTweet;
 - (void)refresh;
 
-- (void)addTweet:(Tweet *)tweet;
+- (void)addTweet:(Tweet *)tweet displayImmediately:(BOOL)displayImmediately;
 
 @end

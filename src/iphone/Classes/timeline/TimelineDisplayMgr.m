@@ -125,12 +125,13 @@
             page:[NSNumber numberWithInt:0]];
 }
 
-- (void)addTweet:(Tweet *)tweet
+- (void)addTweet:(Tweet *)tweet displayImmediately:(BOOL)displayImmediately
 {
     TweetInfo * info = [TweetInfo createFromTweet:tweet];
     [timeline setObject:info forKey:info.identifier];
 
-    [timelineController addTweet:info];
+    if (displayImmediately)
+        [timelineController addTweet:info];
 }
 
 - (BOOL)cachedDataAvailable

@@ -44,6 +44,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     cancelButton.enabled = YES;
 
     textView.text = text;
+
+    characterCount.text = [NSString stringWithFormat:@"%d",
+        MAX_TWEET_LENGTH - text.length];
 }
 
 - (void)didReceiveMemoryWarning
