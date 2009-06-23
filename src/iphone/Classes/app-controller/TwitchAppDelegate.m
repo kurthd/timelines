@@ -20,7 +20,11 @@
 @property (nonatomic, retain) DeviceRegistrar * registrar;
 @property (nonatomic, retain) NSMutableArray * credentials;
 
+- (UIBarButtonItem *)sendingTweetProgressView;
+
 - (void)initHomeTab;
+
+- (UIBarButtonItem *)newTweetButtonItem;
 
 @end
 
@@ -56,6 +60,10 @@
 
     [timelineDisplayMgrFactory release];
     [timelineDisplayMgr release];
+
+    [composeTweetDisplayMgr release];
+
+    [sendingTweetProgressView release];
 
     [super dealloc];
 }
@@ -131,15 +139,26 @@
 
 - (void)userIsSendingTweet:(NSString *)tweet
 {
+    [homeNetAwareViewController.navigationItem
+        setRightBarButtonItem:[self sendingTweetProgressView]
+                     animated:YES];
 }
 
 - (void)userDidSendTweet:(Tweet *)tweet
 {
     [timelineDisplayMgr addTweet:tweet];
+    [homeNetAwareViewController.navigationItem
+        setRightBarButtonItem:[self newTweetButtonItem]
+                     animated:YES];
 }
 
 - (void)userFailedToSendTweet:(NSString *)tweet
 {
+    [homeNetAwareViewController.navigationItem
+        setRightBarButtonItem:[self sendingTweetProgressView]
+                     animated:YES];
+
+    [self.composeTweetDisplayMgr composeTweetWithText:tweet];
 }
 
 #pragma mark initialization helpers
@@ -400,6 +419,35 @@
     }
 
     return composeTweetDisplayMgr;
+}
+
+- (UIBarButtonItem *)sendingTweetProgressView
+{
+    if (!sendingTweetProgressView) {
+        UIActivityIndicatorView * view =
+            [[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+
+        sendingTweetProgressView =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [view startAnimating];
+
+        [view release];
+    }
+
+    return sendingTweetProgressView;
+}
+
+- (UIBarButtonItem *)newTweetButtonItem
+{
+    UIBarButtonItem * button =
+        [[UIBarButtonItem alloc]
+        initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                             target:self
+                             action:@selector(composeTweet:)];
+
+    return [button autorelease];
 }
 
 @end
