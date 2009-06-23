@@ -7,6 +7,7 @@
 #import "TweetInfo.h"
 #import "DirectMessage.h"
 #import "AsynchronousNetworkFetcher.h"
+#import "UIColor+TwitchColors.h"
 
 @interface TimelineViewController ()
 
@@ -32,6 +33,8 @@
     [tweets release];
     [avatarCache release];
 
+    [loadMoreButton release];
+    [noMorePagesLabel release];
     [currentPagesLabel release];
 
     [super dealloc];
@@ -124,6 +127,9 @@
 {
     NSLog(@"Load more tweets selected");
     [delegate loadMoreTweets];
+    [loadMoreButton setTitleColor:[UIColor grayColor]
+        forState:UIControlStateNormal];
+    loadMoreButton.enabled = NO;
 }
 
 - (void)addTweet:(TweetInfo *)tweet
@@ -186,6 +192,10 @@
     [self.tableView reloadData];
 
     [self fetchAvatarsForTweets];
+
+    [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
+        forState:UIControlStateNormal];
+    loadMoreButton.enabled = YES;
 }
 
 - (void)fetchAvatarsForTweets

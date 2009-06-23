@@ -18,6 +18,8 @@
     IBOutlet UILabel * usernameLabel;
     IBOutlet UILabel * followingLabel;
     IBOutlet UILabel * currentPagesLabel;
+    IBOutlet UIButton * loadMoreButton;
+    IBOutlet UILabel * noMorePagesLabel;
 
     NSArray * tweets;
     NSMutableDictionary * avatarCache;

@@ -32,6 +32,12 @@
     return [theirId compare:myId];
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"{%@, %@, %@}", self.user.username,
+        self.text, self.timestamp];
+}
+
 + (TweetInfo *)createFromTweet:(Tweet *)tweet
 {
     TweetInfo * tweetInfo =

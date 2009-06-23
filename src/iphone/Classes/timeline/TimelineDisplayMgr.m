@@ -118,11 +118,11 @@
 - (void)refresh
 {
     NSLog(@"Refreshing timeline...");
-    [wrapperController setUpdatingState:kConnectedAndUpdating];
-    [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
     if([service credentials])
         [service fetchTimelineSince:self.updateId
             page:[NSNumber numberWithInt:0]];
+    [wrapperController setUpdatingState:kConnectedAndUpdating];
+    [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 
 - (void)addTweet:(Tweet *)tweet displayImmediately:(BOOL)displayImmediately

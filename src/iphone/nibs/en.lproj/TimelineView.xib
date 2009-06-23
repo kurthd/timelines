@@ -8,8 +8,8 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="28"/>
 			<integer value="6"/>
+			<integer value="28"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -229,7 +229,7 @@
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<object class="NSFont" key="IBUIFont">
+						<object class="NSFont" key="IBUIFont" id="395074364">
 							<string key="NSName">Helvetica-Bold</string>
 							<double key="NSSize">2.000000e+01</double>
 							<int key="NSfFlags">16</int>
@@ -245,7 +245,7 @@
 					<object class="IBUILabel" id="130301706">
 						<reference key="NSNextResponder" ref="693405201"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 34}, {280, 21}}</string>
+						<string key="NSFrame">{{20, 35}, {280, 21}}</string>
 						<reference key="NSSuperview" ref="693405201"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -255,6 +255,24 @@
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC40MDAwMDAwMSAwLjQwMDAwMDAxIDAuNDAwMDAwMDEAA</bytes>
+						</object>
+						<nil key="IBUIHighlightedColor"/>
+						<int key="IBUIBaselineAdjustment">1</int>
+						<float key="IBUIMinimumFontSize">1.000000e+01</float>
+					</object>
+					<object class="IBUILabel" id="1050419128">
+						<reference key="NSNextResponder" ref="693405201"/>
+						<int key="NSvFlags">-2147483356</int>
+						<string key="NSFrame">{{20, 14}, {280, 24}}</string>
+						<reference key="NSSuperview" ref="693405201"/>
+						<bool key="IBUIOpaque">NO</bool>
+						<bool key="IBUIClipsSubviews">YES</bool>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="IBUIText">All pages loaded</string>
+						<reference key="IBUIFont" ref="395074364"/>
+						<object class="NSColor" key="IBUITextColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MCAwIDAAA</bytes>
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -363,6 +381,22 @@
 					</object>
 					<int key="connectionID">34</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">loadMoreButton</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="496461998"/>
+					</object>
+					<int key="connectionID">35</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">noMorePagesLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="1050419128"/>
+					</object>
+					<int key="connectionID">37</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -455,6 +489,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="130301706"/>
 							<reference ref="496461998"/>
+							<reference ref="1050419128"/>
 						</object>
 						<reference key="parent" ref="188939961"/>
 						<string key="objectName">Footer view</string>
@@ -467,6 +502,11 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">31</int>
 						<reference key="object" ref="496461998"/>
+						<reference key="parent" ref="693405201"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">36</int>
+						<reference key="object" ref="1050419128"/>
 						<reference key="parent" ref="693405201"/>
 					</object>
 				</object>
@@ -491,6 +531,7 @@
 					<string>28.IBPluginDependency</string>
 					<string>30.IBPluginDependency</string>
 					<string>31.IBPluginDependency</string>
+					<string>36.IBPluginDependency</string>
 					<string>6.IBEditorWindowLastContentRect</string>
 					<string>6.IBPluginDependency</string>
 				</object>
@@ -509,6 +550,7 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{574, 454}, {320, 70}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -536,7 +578,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">34</int>
+			<int key="maxID">37</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -576,6 +618,8 @@
 							<string>footerView</string>
 							<string>fullNameLabel</string>
 							<string>headerView</string>
+							<string>loadMoreButton</string>
+							<string>noMorePagesLabel</string>
 							<string>usernameLabel</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -585,6 +629,8 @@
 							<string>UIView</string>
 							<string>UILabel</string>
 							<string>UIView</string>
+							<string>UIButton</string>
+							<string>UILabel</string>
 							<string>UILabel</string>
 						</object>
 					</object>
