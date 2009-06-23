@@ -28,7 +28,7 @@
     [super dealloc];
 }
 
-- (void)setTweet:(Tweet *)tweet
+- (void)setTweet:(TweetInfo *)tweet
 {
     self.selectedTweet = tweet;
 

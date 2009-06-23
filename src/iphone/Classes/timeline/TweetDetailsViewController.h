@@ -5,6 +5,7 @@
 #import <UIKit/UIKit.h>
 #import "TweetDetailsViewDelegate.h"
 #import "RoundedImage.h"
+#import "TweetInfo.h"
 
 @interface TweetDetailsViewController : UIViewController
 {
@@ -17,13 +18,13 @@
     IBOutlet UIButton * locationButton;
     IBOutlet RoundedImage * avatar;
     
-    Tweet * selectedTweet;
+    TweetInfo * selectedTweet;
 }
 
 @property (nonatomic, assign) NSObject<TweetDetailsViewDelegate> * delegate;
-@property (nonatomic, retain) Tweet * selectedTweet;
+@property (nonatomic, retain) TweetInfo * selectedTweet;
 
-- (void)setTweet:(Tweet *)tweet;
+- (void)setTweet:(TweetInfo *)tweet;
 - (IBAction)showLocationOnMap:(id)sender;
 
 @end
