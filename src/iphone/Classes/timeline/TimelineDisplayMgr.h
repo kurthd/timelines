@@ -48,7 +48,8 @@
     service:(NSObject<TimelineDataSource> *)service;
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService
-    tweets:(NSDictionary *)tweets page:(NSUInteger)page;
+    tweets:(NSDictionary *)someTweets page:(NSUInteger)page
+      forceRefresh:(BOOL)refresh;
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)replyToTweet;
 - (void)refresh;

@@ -169,6 +169,7 @@
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page
+    forceRefresh:(BOOL)refresh
 {
     [aService retain];
     [service release];
@@ -185,7 +186,10 @@
         scrollRectToVisible:self.timelineController.tableView.frame
         animated:NO];
 
-    [self refresh];
+    [timelineController setTweets:[timeline allValues] page:pagesShown];
+
+    if (refresh)
+        [self refresh];
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
