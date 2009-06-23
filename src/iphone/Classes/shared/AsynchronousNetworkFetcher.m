@@ -38,6 +38,7 @@
 {
     if (self = [super init]) {
         url = [aUrl retain];
+        data = [[NSMutableData alloc] init];
         NSURLRequest * req = [NSURLRequest requestWithURL:url];
         connection = [[NSURLConnection alloc] initWithRequest:req
                                                      delegate:self

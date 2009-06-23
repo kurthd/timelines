@@ -13,7 +13,7 @@
 @implementation TimelineDisplayMgr
 
 @synthesize wrapperController, timelineController, selectedTweet, updateId,
-    user;
+    user, timeline, pagesShown;
 
 - (void)dealloc
 {
@@ -67,7 +67,7 @@
         [timeline setObject:tweet forKey:tweet.identifier];
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
     [wrapperController setCachedDataAvailable:YES];
-    [timelineController setTweets:[timeline allValues] page:[page intValue]];
+    [timelineController setTweets:[timeline allValues] page:pagesShown];
 }
 
 - (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)updateId
@@ -179,6 +179,10 @@
     pagesShown = page;
 
     [aService setCredentials:credentials];
+
+    [self.timelineController.tableView
+        scrollRectToVisible:self.timelineController.tableView.frame
+        animated:NO];
 
     [self refresh];
 }

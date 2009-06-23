@@ -6,12 +6,14 @@
 #import "TimelineTableViewCell.h"
 #import "TweetInfo.h"
 #import "DirectMessage.h"
+#import "AsynchronousNetworkFetcher.h"
 
 @interface TimelineViewController ()
 
 - (UIImage *)getAvatarForUrl:(NSString *)url;
 - (UIImage *)convertUrlToImage:(NSString *)url;
 - (NSArray *)sortedTweets;
+- (void)fetchAvatarsForTweets;
 
 @end
 
@@ -99,6 +101,20 @@
     return [TimelineTableViewCell heightForContent:tweetText];
 }
 
+#pragma mark AsynchronousNetworkFetcherDelegate implementation
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    didReceiveData:(NSData *)data fromUrl:(NSURL *)url
+{
+    NSLog(@"Received avatar for url: %@", url);
+    [avatarCache setObject:[UIImage imageWithData:data] forKey:url];
+    [self.tableView reloadData];
+}
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
+{}
+
 #pragma mark TimelineViewController implementation
 
 - (IBAction)loadMoreTweets:(id)sender
@@ -161,15 +177,27 @@
         showingSinglePageFormatString;
 
     [self.tableView reloadData];
+
+    [self fetchAvatarsForTweets];
+}
+
+- (void)fetchAvatarsForTweets
+{
+    for (TweetInfo * tweetInfo in tweets) {
+        NSURL * avatarUrl =
+            [NSURL URLWithString:tweetInfo.user.profileImageUrl];
+        if (![avatarCache objectForKey:avatarUrl]) {
+            NSLog(@"Getting avatar for url %@", avatarUrl);
+            [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+        }
+    }
 }
 
 - (UIImage *)getAvatarForUrl:(NSString *)url
 {
     UIImage * avatarImage = [avatarCache objectForKey:url];
-    if (!avatarImage) {
-        avatarImage = [self convertUrlToImage:url];
-        [avatarCache setObject:avatarImage forKey:url];
-    }
+    if (!avatarImage)
+        avatarImage = [UIImage imageNamed:@"DefaultAvatar.png"];
 
     return avatarImage;
 }
