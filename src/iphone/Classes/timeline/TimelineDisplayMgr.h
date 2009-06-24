@@ -14,6 +14,7 @@
 #import "UserInfoViewController.h"
 #import "UserInfoViewControllerDelegate.h"
 #import "CredentialsActivatedPublisher.h"
+#import "UserListTableViewControllerDelegate.h"
 
 @class TimelineDisplayMgrFactory;
 
@@ -21,7 +22,7 @@
     NSObject
     <TimelineDataSourceDelegate, TimelineViewControllerDelegate,
     TweetDetailsViewDelegate, NetworkAwareViewControllerDelegate,
-    UserInfoViewControllerDelegate>
+    UserInfoViewControllerDelegate, UserListTableViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;

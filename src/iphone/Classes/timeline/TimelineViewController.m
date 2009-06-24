@@ -14,7 +14,6 @@
 - (UIImage *)getAvatarForUrl:(NSString *)url;
 - (UIImage *)convertUrlToImage:(NSString *)url;
 - (NSArray *)sortedTweets;
-- (void)fetchAvatarsForTweets;
 
 @end
 
@@ -34,6 +33,7 @@
 
     [tweets release];
     [avatarCache release];
+    [alreadySent release];
     [user release];
 
     [loadMoreButton release];
@@ -48,6 +48,7 @@
     [super viewDidLoad];
     self.tableView.tableFooterView = footerView;
     avatarCache = [[NSMutableDictionary dictionary] retain];
+    alreadySent = [[NSMutableDictionary dictionary] retain];
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -227,35 +228,22 @@
 
     [self.tableView reloadData];
 
-    [self fetchAvatarsForTweets];
-
     [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
         forState:UIControlStateNormal];
     loadMoreButton.enabled = YES;
 }
 
-- (void)fetchAvatarsForTweets
-{
-    NSMutableDictionary * alreadySent = [NSMutableDictionary dictionary];
-    for (TweetInfo * tweetInfo in tweets) {
-        NSString * avatarUrlAsString = tweetInfo.user.profileImageUrl;
-        if (![avatarCache objectForKey:avatarUrlAsString] &&
-            ![alreadySent objectForKey:avatarUrlAsString]) {
-
-            NSLog(@"Getting avatar for url %@", avatarUrlAsString);
-            NSURL * avatarUrl =
-                [NSURL URLWithString:avatarUrlAsString];
-            [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
-            [alreadySent setObject:avatarUrlAsString forKey:avatarUrlAsString];
-        }
-    }
-}
-
 - (UIImage *)getAvatarForUrl:(NSString *)url
 {
     UIImage * avatarImage = [avatarCache objectForKey:url];
-    if (!avatarImage)
+    if (!avatarImage) {
         avatarImage = [UIImage imageNamed:@"DefaultAvatar.png"];
+        if (![alreadySent objectForKey:url]) {
+            NSURL * avatarUrl = [NSURL URLWithString:url];
+            [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+            [alreadySent setObject:url forKey:url];
+        }
+    }
 
     return avatarImage;
 }

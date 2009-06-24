@@ -25,6 +25,7 @@
 
     NSArray * tweets;
     NSMutableDictionary * avatarCache;
+    NSMutableDictionary * alreadySent;
     NSArray * invertedCellUsernames;
     BOOL showWithoutAvatars;
     User * user;
