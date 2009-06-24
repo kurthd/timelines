@@ -50,7 +50,7 @@
 @property (nonatomic, retain) User * user;
 @property (nonatomic, copy) NSNumber * updateId;
 
-@property (nonatomic, readonly) NSMutableDictionary * timeline;
+@property (nonatomic, copy) NSMutableDictionary * timeline;
 @property (nonatomic, readonly) NSUInteger pagesShown;
 
 @property (nonatomic, assign) BOOL displayAsConversation;
