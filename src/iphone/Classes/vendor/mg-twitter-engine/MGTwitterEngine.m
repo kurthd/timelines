@@ -1236,6 +1236,22 @@
                            responseType:MGTwitterUsers];
 }
 
+- (NSString *)getFollowersFor:(NSString *)username startingAtPage:(int)pageNum
+{
+    NSString *path = @"statuses/followers.xml";
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
+    if (username) {
+        [params setObject:username forKey:@"screen_name"];
+    }
+    if (pageNum > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];
+    }
+
+    return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil 
+                            requestType:MGTwitterUserInfoRequest 
+                           responseType:MGTwitterUsers];
+}
 
 - (NSString *)getFollowersIncludingCurrentStatus:(BOOL)flag
 {

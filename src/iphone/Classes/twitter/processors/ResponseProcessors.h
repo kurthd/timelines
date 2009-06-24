@@ -12,5 +12,6 @@
 #import "FetchDirectMessagesResponseProcessor.h"
 #import "FetchUserInfoResponseProcessor.h"
 #import "FetchFriendsForUserResponseProcessor.h"
+#import "FetchFollowersForUserResponseProcessor.h"
 
 #import "SendTweetResponseProcessor.h"

@@ -87,4 +87,10 @@
                                    page:(NSNumber *)page
                                   error:(NSError *)error;
 
+- (void)followers:(NSArray *)friends fetchedForUsername:(NSString *)username
+             page:(NSNumber *)page;
+- (void)failedToFetchFollowersForUsername:(NSString *)username
+                                     page:(NSNumber *)page
+                                    error:(NSError *)error;
+
 @end

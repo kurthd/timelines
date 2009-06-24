@@ -126,21 +126,6 @@
     [self request:requestId isHandledBy:processor];
 }
 
-- (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page
-{
-    ResponseProcessor * processor =
-        [FetchFriendsForUserResponseProcessor processorWithUsername:user
-                                                               page:page
-                                                            context:context
-                                                           delegate:delegate];
-
-    NSString * requestId =
-        [twitter getRecentlyUpdatedFriendsFor:user
-                               startingAtPage:[page integerValue]];
-
-    [self request:requestId isHandledBy:processor];
-}
-
 #pragma mark Mentions
 
 - (void)fetchMentionsSinceUpdateId:(NSNumber *)updateId
@@ -189,6 +174,37 @@
                                                      delegate:delegate];
 
     NSString * requestId = [twitter getUserInformationFor:username];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+#pragma mark Social graph
+
+- (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page
+{
+    ResponseProcessor * processor =
+        [FetchFriendsForUserResponseProcessor processorWithUsername:user
+                                                               page:page
+                                                            context:context
+                                                           delegate:delegate];
+
+    NSString * requestId =
+        [twitter getRecentlyUpdatedFriendsFor:user
+                               startingAtPage:[page integerValue]];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+- (void)fetchFollowersForUser:(NSString *)user page:(NSNumber *)page
+{
+    ResponseProcessor * processor =
+        [FetchFollowersForUserResponseProcessor processorWithUsername:user
+                                                                 page:page
+                                                              context:context
+                                                             delegate:delegate];
+
+    NSString * requestId =
+        [twitter getFollowersFor:user startingAtPage:[page integerValue]];
 
     [self request:requestId isHandledBy:processor];
 }
