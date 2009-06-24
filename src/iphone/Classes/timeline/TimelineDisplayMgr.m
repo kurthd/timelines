@@ -70,15 +70,27 @@
             TweetInfo * firstTweet = [aTimeline objectAtIndex:0];
             [timelineController setUser:firstTweet.user];
             self.user = firstTweet.user;
-        } else {
-            // TODO: fetch user from credentials username
-        }
+        } else if (credentials)
+            [service fetchUserInfoForUsername:credentials.username];
     }
     [timelineController setTweets:[timeline allValues] page:pagesShown];
 }
 
 - (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)updateId
     page:(NSNumber *)page error:(NSError *)error
+{
+    // TODO: display alert view
+}
+
+- (void)userInfo:(User *)aUser fetchedForUsername:(NSString *)username
+{
+    NSLog(@"Received user info for %@", username);
+    [timelineController setUser:aUser];
+    self.user = aUser;
+}
+
+- (void)failedToFetchUserInfoForUsername:(NSString *)username
+    error:(NSError *)error
 {
     // TODO: display alert view
 }

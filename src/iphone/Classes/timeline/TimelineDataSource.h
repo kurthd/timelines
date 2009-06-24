@@ -10,5 +10,6 @@
 - (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page;
 - (TwitterCredentials *)credentials;
 - (void)setCredentials:(TwitterCredentials *)credentials;
+- (void)fetchUserInfoForUsername:(NSString *)username;
 
 @end
