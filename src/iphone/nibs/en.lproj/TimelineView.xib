@@ -224,7 +224,7 @@
 					<object class="IBUIButton" id="496461998">
 						<reference key="NSNextResponder" ref="693405201"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 13}, {280, 24}}</string>
+						<string key="NSFrame">{{20, 0}, {280, 50}}</string>
 						<reference key="NSSuperview" ref="693405201"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -566,7 +566,7 @@
 					<string>RoundedImage</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{574, 454}, {320, 70}}</string>
+					<string>{{666, 443}, {320, 70}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
