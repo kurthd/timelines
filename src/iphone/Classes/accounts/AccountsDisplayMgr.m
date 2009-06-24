@@ -72,6 +72,28 @@
     [self.logInDisplayMgr logIn];
 }
 
+- (BOOL)userDeletedAccount:(TwitterCredentials *)credentials
+{
+    [context deleteObject:credentials];
+
+    NSError * error;
+    if (![context save:&error]) {
+        NSString * title = [NSString stringWithFormat:
+            NSLocalizedString(@"account.deletion.failed.alert.title", @""),
+            credentials.username];
+        NSString * message = error.localizedDescription;
+
+        UIAlertView * alert = [UIAlertView simpleAlertViewWithTitle:title
+                                                            message:message];
+
+        [alert show];
+
+        return NO;
+    }
+
+    return YES;
+}
+
 #pragma mark Accessors
 
 - (NSMutableSet *)userAccounts

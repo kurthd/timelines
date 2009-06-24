@@ -48,6 +48,9 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
 - (IBAction)userWantsToAddAccount:(id)sender
 {
+    if (self.tableView.editing)
+        self.tableView.editing = NO;
+
     [self.delegate userWantsToAddAccount];
 }
 
@@ -59,6 +62,9 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
 - (void)accountAdded:(TwitterCredentials *)account
 {
+    if (self.tableView.editing)
+        self.tableView.editing = NO;
+
     NSArray * newAccounts = [[self.delegate accounts]
         sortedArrayUsingFunction:usernameSort context:NULL];
 
@@ -136,24 +142,25 @@ NSInteger usernameSort(TwitterCredentials * user1,
 }
 */
 
-/*
 // Override to support editing the table view.
-- (void)     tableView:(UITableView *)tv
+- (void)tableView:(UITableView *)tv
     commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
      forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView
-         deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-               withRowAnimation:YES];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the
-        // array, and add a new row to the table view
+        TwitterCredentials * c = [self.accounts objectAtIndex:indexPath.row];
+        if ([delegate userDeletedAccount:c]) {
+            NSMutableArray * mc = [self.accounts mutableCopy];
+            [mc removeObjectAtIndex:indexPath.row];
+            self.accounts = mc;
+
+            // Delete the row from the data source
+            [self.tableView
+             deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                   withRowAnimation:YES];
+        }
     }   
 }
-*/
 
 /*
 // Override to support rearranging the table view.

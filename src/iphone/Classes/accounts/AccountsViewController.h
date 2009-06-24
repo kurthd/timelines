@@ -10,6 +10,7 @@
 - (NSArray *)accounts;
 
 - (void)userWantsToAddAccount;
+- (BOOL)userDeletedAccount:(TwitterCredentials *)credentials;
 
 @end
 
