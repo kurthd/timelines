@@ -130,7 +130,8 @@ enum CredentialRows
         password = [password stringByReplacingCharactersInRange:range
                                                      withString:string];
 
-    logInButton.enabled = username.length && password.length;
+    logInButton.enabled = [self.delegate isUsernameValid:username] &&
+        username.length && password.length;
 
     return YES;
 }

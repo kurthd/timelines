@@ -42,8 +42,11 @@
     if (self = [super init]) {
         self.accountsViewController = aViewController;
         self.accountsViewController.delegate = self;
+
         self.logInDisplayMgr = aLogInDisplayMgr;
         self.logInDisplayMgr.allowsCancel = YES;
+        self.logInDisplayMgr.delegate = self;
+
         self.context = aContext;
 
         credentialsSetChangedPublisher =
@@ -124,6 +127,16 @@
 - (TwitterCredentials *)currentActiveAccount
 {
     return [[ActiveTwitterCredentials findFirst:context] credentials];
+}
+
+#pragma mark LogInDisplayMgrDelegate implementation
+
+- (BOOL)isUsernameValid:(NSString *)username
+{
+    for (TwitterCredentials * c in self.userAccounts)
+        if ([c.username isEqualToString:username])
+            return NO;
+    return YES;
 }
 
 #pragma mark Accessors

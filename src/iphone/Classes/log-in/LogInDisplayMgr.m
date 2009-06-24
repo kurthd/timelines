@@ -25,6 +25,7 @@
 
 @implementation LogInDisplayMgr
 
+@synthesize delegate;
 @synthesize context;
 @synthesize rootViewController, logInViewController;
 @synthesize twitter, logInRequestId;
@@ -33,6 +34,8 @@
 
 - (void)dealloc
 {
+    self.delegate = nil;
+
     self.context = nil;
 
     self.rootViewController = nil;
@@ -90,6 +93,17 @@
 - (BOOL)userCanCancel
 {
     return self.allowsCancel;
+}
+
+#pragma mark LogInDisplayMgrDelegate implementation
+
+- (BOOL)isUsernameValid:(NSString *)aUsername
+{
+    SEL sel = @selector(isUsernameValid:);
+    if (self.delegate && [self.delegate respondsToSelector:sel])
+        return [self.delegate isUsernameValid:aUsername];
+    else
+        return YES;
 }
 
 #pragma mark MGTwitterEngineDelegate implementation

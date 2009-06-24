@@ -9,7 +9,8 @@
 
 @class CredentialsSetChangedPublisher;
 
-@interface AccountsDisplayMgr : NSObject <AccountsViewControllerDelegate>
+@interface AccountsDisplayMgr :
+    NSObject <AccountsViewControllerDelegate, LogInDisplayMgrDelegate>
 {
     AccountsViewController * accountsViewController;
     LogInDisplayMgr * logInDisplayMgr;
