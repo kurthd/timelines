@@ -10,5 +10,6 @@
 #import "FetchTimelineResponseProcessor.h"
 #import "FetchMentionsResponseProcessor.h"
 #import "FetchDirectMessagesResponseProcessor.h"
+#import "FetchUserInfoResponseProcessor.h"
 
 #import "SendTweetResponseProcessor.h"

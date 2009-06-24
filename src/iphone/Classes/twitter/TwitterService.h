@@ -62,4 +62,8 @@
 
 - (void)fetchDirectMessagesSinceId:(NSNumber *)updateId page:(NSNumber *)page;
 
+#pragma mark User info
+
+- (void)fetchUserInfoForUsername:(NSString *)username;
+
 @end
