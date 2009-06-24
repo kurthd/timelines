@@ -41,7 +41,8 @@
         loadHTMLStringRelativeToMainBundle:
         [[self class] htmlForContent:tweet.text footer:footer]];
     nameLabel.text = tweet.user.name;
-    [userTweetsButton setTitle:tweet.user.username
+    [userTweetsButton
+        setTitle:[NSString stringWithFormat:@"@%@", tweet.user.username]
         forState:UIControlStateNormal];
     
     if (!avatarImage) {

@@ -6,6 +6,7 @@
 #import "User.h"
 #import "TimelineViewControllerDelegate.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
+#import "RoundedImage.h"
 
 @interface TimelineViewController :
     UITableViewController <AsynchronousNetworkFetcherDelegate>
@@ -14,6 +15,7 @@
 
     IBOutlet UIView * headerView;
     IBOutlet UIView * footerView;
+    IBOutlet RoundedImage * avatarView;
     IBOutlet UILabel * fullNameLabel;
     IBOutlet UILabel * usernameLabel;
     IBOutlet UILabel * followingLabel;
@@ -24,6 +26,8 @@
     NSArray * tweets;
     NSMutableDictionary * avatarCache;
     NSArray * invertedCellUsernames;
+    BOOL showWithoutAvatars;
+    User * user;
 
     NSArray * sortedTweetCache;
 }
@@ -33,11 +37,13 @@
 
 @property (nonatomic, retain) NSArray * sortedTweetCache;
 @property (nonatomic, copy) NSArray * invertedCellUsernames;
+@property (nonatomic, assign) BOOL showWithoutAvatars;
 
 - (void)setUser:(User *)user;
 - (void)setTweets:(NSArray *)tweets page:(NSUInteger)page;
 
 - (IBAction)loadMoreTweets:(id)sender;
+- (IBAction)showUserInfo:(id)sender;
 
 - (void)addTweet:(TweetInfo *)tweet;
 

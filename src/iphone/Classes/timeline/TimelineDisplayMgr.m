@@ -12,8 +12,9 @@
 
 @implementation TimelineDisplayMgr
 
-@synthesize wrapperController, timelineController, selectedTweet, updateId,
-    user, timeline, pagesShown, displayAsConversation;
+@synthesize wrapperController, timelineController, userInfoController,
+    selectedTweet, updateId, user, timeline, pagesShown, displayAsConversation,
+    setUserToFirstTweeter;
 
 - (void)dealloc
 {
@@ -33,7 +34,7 @@
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController
-    service:(NSObject<TimelineDataSource> *)aService
+    service:(NSObject<TimelineDataSource> *)aService title:(NSString *)title
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
@@ -46,7 +47,7 @@
 
         [wrapperController setUpdatingState:kConnectedAndUpdating];
         [wrapperController setCachedDataAvailable:NO];
-        wrapperController.title = @"Timeline";
+        wrapperController.title = title;
     }
 
     return self;
@@ -63,6 +64,16 @@
         [timeline setObject:tweet forKey:tweet.identifier];
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
     [wrapperController setCachedDataAvailable:YES];
+    if (setUserToFirstTweeter) {
+        timelineController.showWithoutAvatars = YES;
+        if ([aTimeline count] > 0) {
+            TweetInfo * firstTweet = [aTimeline objectAtIndex:0];
+            [timelineController setUser:firstTweet.user];
+            self.user = firstTweet.user;
+        } else {
+            // TODO: fetch user from credentials username
+        }
+    }
     [timelineController setTweets:[timeline allValues] page:pagesShown];
 }
 
@@ -91,6 +102,14 @@
     if ([service credentials])
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
         page:[NSNumber numberWithInt:++pagesShown]];
+}
+
+- (void)showUserInfoWithAvatar:(UIImage *)avatar
+{
+    NSLog(@"Showing user info for %@", user);
+    [self.wrapperController.navigationController
+        pushViewController:self.userInfoController animated:YES];
+    [self.userInfoController setUser:user avatarImage:avatar];
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
@@ -148,6 +167,38 @@
     return !!timeline && [timeline count] > 0;
 }
 
+#pragma mark UserInfoViewControllerDelegate implementation
+
+- (void)showLocationOnMap:(NSString *)location
+{
+    NSLog(@"Showing %@ on map", location);
+}
+
+- (void)visitWebpage:(NSString *)webpageUrl
+{
+    NSLog(@"Visiting webpage: %@", webpageUrl);
+}
+
+- (void)displayFollowingForUser:(NSString *)username
+{
+    NSLog(@"Displaying 'following' list for %@", username);
+}
+
+- (void)displayFollowersForUser:(NSString *)username
+{
+    NSLog(@"Displaying 'followers' set for %@", username);
+}
+
+- (void)startFollowingUser:(NSString *)username
+{
+    NSLog(@"Sending 'follow user' request for %@", username);
+}
+
+- (void)stopFollowingUser:(NSString *)username
+{
+    NSLog(@"Sending 'stop following' request for %@", username);
+}
+
 #pragma mark Accessors
 
 - (TweetDetailsViewController *)tweetDetailsController
@@ -174,6 +225,22 @@
     }
 
     return tweetDetailsController;
+}
+
+- (UserInfoViewController *)userInfoController
+{
+    if (!userInfoController) {
+        userInfoController =
+            [[UserInfoViewController alloc]
+            initWithNibName:@"UserInfoView" bundle:nil];
+
+        NSString * title = NSLocalizedString(@"userinfoview.title", @"");
+        userInfoController.navigationItem.title = title;
+
+        userInfoController.delegate = self;
+    }
+
+    return userInfoController;
 }
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService

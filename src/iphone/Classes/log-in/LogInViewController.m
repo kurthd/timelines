@@ -3,6 +3,7 @@
 //
 
 #import "LogInViewController.h"
+#import "UIColor+TwitchColors.h"
 
 static const int NUM_SECTIONS = 1;
 enum Sections
@@ -65,6 +66,8 @@ enum CredentialRows
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.tableView.backgroundColor = [UIColor twitchBackgroundColor];
 
     self.logInButton.target = self;
     self.logInButton.action = @selector(userDidSave);

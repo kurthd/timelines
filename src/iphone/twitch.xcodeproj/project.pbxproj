@@ -105,6 +105,10 @@
 		916BD9FA0FEF46E4007143A9 /* TweetDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD9F90FEF46E4007143A9 /* TweetDetailsViewController.m */; };
 		916BDA4E0FEF573A007143A9 /* tweet-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 916BDA4D0FEF573A007143A9 /* tweet-style.css */; };
 		918E891C0FF16EE30042BBEE /* UserTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 918E891B0FF16EE30042BBEE /* UserTimelineDataSource.m */; };
+		918E89500FF183070042BBEE /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 918E894F0FF183070042BBEE /* UserInfoViewController.m */; };
+		918E895A0FF1863C0042BBEE /* UserInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E89580FF1863C0042BBEE /* UserInfoView.xib */; };
+		918E8A5F0FF1C5560042BBEE /* UserInfoLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */; };
+		918E8AA40FF1C69D0042BBEE /* UserInfoLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 918E8AA30FF1C69D0042BBEE /* UserInfoLabelCell.m */; };
 		91E000430FEF76E800BCE9BC /* Favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000420FEF76E800BCE9BC /* Favorite.png */; };
 		91E0004C0FEF786300BCE9BC /* NotFavorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E0004B0FEF786300BCE9BC /* NotFavorite.png */; };
 		91E000880FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */; };
@@ -298,6 +302,13 @@
 		916BDA4D0FEF573A007143A9 /* tweet-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "tweet-style.css"; sourceTree = "<group>"; };
 		918E891A0FF16EE30042BBEE /* UserTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTimelineDataSource.h; path = timeline/UserTimelineDataSource.h; sourceTree = "<group>"; };
 		918E891B0FF16EE30042BBEE /* UserTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTimelineDataSource.m; path = timeline/UserTimelineDataSource.m; sourceTree = "<group>"; };
+		918E894E0FF183070042BBEE /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoViewController.h; path = "user-info/UserInfoViewController.h"; sourceTree = "<group>"; };
+		918E894F0FF183070042BBEE /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoViewController.m; path = "user-info/UserInfoViewController.m"; sourceTree = "<group>"; };
+		918E89590FF1863C0042BBEE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/UserInfoView.xib; sourceTree = "<group>"; };
+		918E89E90FF1B2D50042BBEE /* UserInfoViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoViewControllerDelegate.h; path = "user-info/UserInfoViewControllerDelegate.h"; sourceTree = "<group>"; };
+		918E8A5E0FF1C5560042BBEE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/UserInfoLabelCell.xib; sourceTree = "<group>"; };
+		918E8AA20FF1C69D0042BBEE /* UserInfoLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoLabelCell.h; path = "user-info/UserInfoLabelCell.h"; sourceTree = "<group>"; };
+		918E8AA30FF1C69D0042BBEE /* UserInfoLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoLabelCell.m; path = "user-info/UserInfoLabelCell.m"; sourceTree = "<group>"; };
 		91E000420FEF76E800BCE9BC /* Favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Favorite.png; path = images/Favorite.png; sourceTree = "<group>"; };
 		91E0004B0FEF786300BCE9BC /* NotFavorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NotFavorite.png; path = images/NotFavorite.png; sourceTree = "<group>"; };
 		91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsHeaderGradient.png; path = images/TweetDetailsHeaderGradient.png; sourceTree = "<group>"; };
@@ -486,6 +497,8 @@
 				916BD9100FEEFB07007143A9 /* TimelineTableViewCell.xib */,
 				916BD9F40FEF46B1007143A9 /* TweetDetailsView.xib */,
 				05F45CFF0FF059B400EBAFC7 /* ComposeTweetView.xib */,
+				918E89580FF1863C0042BBEE /* UserInfoView.xib */,
+				918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -573,6 +586,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				918E894C0FF182E20042BBEE /* user-info */,
 				916BD8130FEEBDF9007143A9 /* timeline */,
 				052C64150FED700B00B259D7 /* app-controller */,
 				05B2387E0FEDC25F00A6A2E6 /* log-in */,
@@ -709,6 +723,18 @@
 			path = html;
 			sourceTree = "<group>";
 		};
+		918E894C0FF182E20042BBEE /* user-info */ = {
+			isa = PBXGroup;
+			children = (
+				918E894E0FF183070042BBEE /* UserInfoViewController.h */,
+				918E894F0FF183070042BBEE /* UserInfoViewController.m */,
+				918E89E90FF1B2D50042BBEE /* UserInfoViewControllerDelegate.h */,
+				918E8AA20FF1C69D0042BBEE /* UserInfoLabelCell.h */,
+				918E8AA30FF1C69D0042BBEE /* UserInfoLabelCell.m */,
+			);
+			name = "user-info";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -785,6 +811,8 @@
 				91E000880FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png in Resources */,
 				91E000950FEFFCC700BCE9BC /* DropShadow.png in Resources */,
 				05F45D010FF059B400EBAFC7 /* ComposeTweetView.xib in Resources */,
+				918E895A0FF1863C0042BBEE /* UserInfoView.xib in Resources */,
+				918E8A5F0FF1C5560042BBEE /* UserInfoLabelCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -865,6 +893,8 @@
 				0524BDF70FF16E0500A6099B /* AccountsViewController.m in Sources */,
 				0524BDFB0FF16E2200A6099B /* AccountsDisplayMgr.m in Sources */,
 				918E891C0FF16EE30042BBEE /* UserTimelineDataSource.m in Sources */,
+				918E89500FF183070042BBEE /* UserInfoViewController.m in Sources */,
+				918E8AA40FF1C69D0042BBEE /* UserInfoLabelCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -934,6 +964,22 @@
 				916BD9F50FEF46B1007143A9 /* en */,
 			);
 			name = TweetDetailsView.xib;
+			sourceTree = "<group>";
+		};
+		918E89580FF1863C0042BBEE /* UserInfoView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				918E89590FF1863C0042BBEE /* en */,
+			);
+			name = UserInfoView.xib;
+			sourceTree = "<group>";
+		};
+		918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				918E8A5E0FF1C5560042BBEE /* en */,
+			);
+			name = UserInfoLabelCell.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

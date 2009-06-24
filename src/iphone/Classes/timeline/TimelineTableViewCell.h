@@ -5,20 +5,29 @@
 #import <UIKit/UIKit.h>
 #import "RoundedImage.h";
 
+typedef enum {
+    kTimelineTableViewCellTypeNormal,
+    kTimelineTableViewCellTypeInverted,
+    kTimelineTableViewCellTypeNoAvatar
+} TimelineTableViewCellType;
+
 @interface TimelineTableViewCell : UITableViewCell
 {
     IBOutlet RoundedImage * avatar;
     IBOutlet UILabel * nameLabel;
     IBOutlet UILabel * dateLabel;
     IBOutlet UILabel * tweetTextLabel;
+    
+    TimelineTableViewCellType displayType;
 }
 
 - (void)setAvatarImage:(UIImage *)image;
 - (void)setName:(NSString *)name;
 - (void)setDate:(NSDate *)date;
 - (void)setTweetText:(NSString *)tweetText;
-- (void)setInvert:(BOOL)invert;
+- (void)setDisplayType:(TimelineTableViewCellType)displayType;
 
-+ (CGFloat)heightForContent:(NSString *)tweetText;
++ (CGFloat)heightForContent:(NSString *)tweetText
+    displayType:(TimelineTableViewCellType)displayType;
 
 @end

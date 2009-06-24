@@ -1,0 +1,32 @@
+//
+//  Copyright 2009 High Order Bit, Inc. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "RoundedImage.h"
+#import "User.h"
+#import "UserInfoViewControllerDelegate.h"
+
+@interface UserInfoViewController : UITableViewController
+{
+    NSObject<UserInfoViewControllerDelegate> * delegate;
+
+    IBOutlet UIView * headerView;
+    IBOutlet UIView * footerView;
+    IBOutlet RoundedImage * avatarView;
+    IBOutlet UILabel * nameLabel;
+    IBOutlet UILabel * usernameLabel;
+    IBOutlet UILabel * bioLabel;
+    IBOutlet UILabel * followingLabel;
+    IBOutlet UIButton * followButton;
+
+    User * user;
+}
+
+@property (nonatomic, assign)
+    NSObject<UserInfoViewControllerDelegate> * delegate;
+
+- (void)setUser:(User *)user avatarImage:(UIImage *)avatarImage;
+- (IBAction)toggleFollowing:(id)sender;
+
+@end
