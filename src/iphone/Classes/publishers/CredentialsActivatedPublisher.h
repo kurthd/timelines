@@ -5,7 +5,7 @@
 #import <Foundation/Foundation.h>
 #import "AbstractUpdatePublisher.h"
 
-@interface CredentialsUpdatePublisher : AbstractUpdatePublisher
+@interface CredentialsActivatedPublisher : AbstractUpdatePublisher
 {
     id listener;
     SEL action;

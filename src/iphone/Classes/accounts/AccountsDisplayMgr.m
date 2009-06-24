@@ -4,14 +4,14 @@
 
 #import "AccountsDisplayMgr.h"
 #import "UIAlertView+InstantiationAdditions.h"
-#import "CredentialsUpdatePublisher.h"
+#import "CredentialsActivatedPublisher.h"
 
 @interface AccountsDisplayMgr ()
 
 @property (nonatomic, retain) AccountsViewController * accountsViewController;
 @property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
 @property (nonatomic, copy) NSMutableSet * userAccounts;
-@property (nonatomic, retain) CredentialsUpdatePublisher *
+@property (nonatomic, retain) CredentialsActivatedPublisher *
     credentialsUpdatePublisher;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
@@ -45,7 +45,7 @@
         self.context = aContext;
 
         credentialsUpdatePublisher =
-            [[CredentialsUpdatePublisher alloc]
+            [[CredentialsActivatedPublisher alloc]
             initWithListener:self action:@selector(credentialsAdded:)];
     }
 

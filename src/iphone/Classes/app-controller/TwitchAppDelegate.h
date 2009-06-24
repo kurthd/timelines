@@ -12,7 +12,7 @@
 @class LogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class AccountsViewController;
 @class DeviceRegistrar;
-@class CredentialsUpdatePublisher;
+@class CredentialsActivatedPublisher;
 
 @interface TwitchAppDelegate : NSObject
     <UIApplicationDelegate, UITabBarControllerDelegate, DeviceRegistrarDelegate,
@@ -29,7 +29,7 @@
     NSMutableArray * credentials;
     NSMutableArray * unregisteredCredentials;
 
-    CredentialsUpdatePublisher * credentialsUpdatePublisher;
+    CredentialsActivatedPublisher * credentialsUpdatePublisher;
 
     // Core Data classes
     NSManagedObjectModel * managedObjectModel;

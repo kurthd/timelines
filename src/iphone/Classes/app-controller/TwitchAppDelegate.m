@@ -5,7 +5,7 @@
 #import "TwitchAppDelegate.h"
 #import "DeviceRegistrar.h"
 #import "LogInDisplayMgr.h"
-#import "CredentialsUpdatePublisher.h"
+#import "CredentialsActivatedPublisher.h"
 #import "TwitterCredentials.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "InfoPlistConfigReader.h"
@@ -97,7 +97,7 @@
      */
 
     credentialsUpdatePublisher =
-        [[CredentialsUpdatePublisher alloc]
+        [[CredentialsActivatedPublisher alloc]
         initWithListener:self action:@selector(credentialsChanged:)];
 
     // Add the tab bar controller's current view as a subview of the window
@@ -229,7 +229,7 @@
         autorelease];
 
     // Don't autorelease
-    [[CredentialsUpdatePublisher alloc]
+    [[CredentialsActivatedPublisher alloc]
         initWithListener:dataSource action:@selector(setCredentials:)];
 
     twitterService.delegate = dataSource;

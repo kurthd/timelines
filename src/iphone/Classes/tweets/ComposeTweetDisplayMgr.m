@@ -5,7 +5,7 @@
 #import "ComposeTweetDisplayMgr.h"
 #import "ComposeTweetViewController.h"
 #import "UIAlertView+InstantiationAdditions.h"
-#import "CredentialsUpdatePublisher.h"
+#import "CredentialsActivatedPublisher.h"
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -15,7 +15,7 @@
 
 @property (nonatomic, retain) TwitterService * service;
 
-@property (nonatomic, retain) CredentialsUpdatePublisher *
+@property (nonatomic, retain) CredentialsActivatedPublisher *
     credentialsUpdatePublisher;
 
 @end
@@ -44,7 +44,7 @@
         self.service = aService;
         self.service.delegate = self;
 
-        credentialsUpdatePublisher = [[CredentialsUpdatePublisher alloc]
+        credentialsUpdatePublisher = [[CredentialsActivatedPublisher alloc]
             initWithListener:self action:@selector(setCredentials:)];
     }
 

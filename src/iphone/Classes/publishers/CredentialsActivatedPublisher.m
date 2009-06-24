@@ -2,16 +2,16 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import "CredentialsUpdatePublisher.h"
+#import "CredentialsActivatedPublisher.h"
 
-@interface CredentialsUpdatePublisher ()
+@interface CredentialsActivatedPublisher ()
 
 @property (nonatomic, assign) id listener;
 @property (nonatomic, assign) SEL action;
 
 @end
 
-@implementation CredentialsUpdatePublisher
+@implementation CredentialsActivatedPublisher
 
 @synthesize listener, action;
 
