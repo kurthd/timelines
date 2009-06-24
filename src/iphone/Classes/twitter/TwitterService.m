@@ -165,6 +165,20 @@
     [self request:requestId isHandledBy:processor];
 }
 
+#pragma mark User info
+
+- (void)fetchUserInfoForUsername:(NSString *)username
+{
+    ResponseProcessor * processor =
+        [FetchUserInfoResponseProcessor processorWithUsername:username
+                                                      context:context
+                                                     delegate:delegate];
+
+    NSString * requestId = [twitter getUserInformationFor:username];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark MGTwitterEngineDelegate implementation
 
 - (void)requestSucceeded:(NSString *)requestId
@@ -191,13 +205,15 @@
 {
     NSLog(@"Direct messages recieved for request '%@': %@", requestId,
         messages);
-    [self request:requestId succeededWithResponse: messages];
+    [self request:requestId succeededWithResponse:messages];
     [self cleanUpRequest:requestId];
 }
 
-- (void)userInfoReceived:(NSArray *)userInfo forRequest:(NSString *)identifier
+- (void)userInfoReceived:(NSArray *)userInfo forRequest:(NSString *)requestId
 {
-    NSLog(@"User info received for request '%@': %@", identifier, userInfo);
+    NSLog(@"User info received for request '%@': %@", requestId, userInfo);
+    [self request:requestId succeededWithResponse:userInfo];
+    [self cleanUpRequest:requestId];
 }
 
 - (void)miscInfoReceived:(NSArray *)miscInfo forRequest:(NSString *)identifier

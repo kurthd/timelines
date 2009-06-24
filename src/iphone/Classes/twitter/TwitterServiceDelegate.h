@@ -69,4 +69,12 @@
                                             page:(NSNumber *)page
                                            error:(NSError *)error;
 
+#pragma mark User info
+
+@optional
+
+- (void)userInfo:(User *) fetchedForUsername:(NSString *)username;
+- (void)failedToFetchUserInfoForUsername:(NSString *)username
+                                   error:(NSError *)error;
+
 @end
