@@ -24,11 +24,10 @@
 
     LogInDisplayMgr * logInDisplayMgr;
 
-    BOOL registeredForPushNotifications;
+    BOOL deviceNeedsRegistration;
     DeviceRegistrar * registrar;
 
     NSMutableArray * credentials;
-    NSMutableArray * unregisteredCredentials;
     ActiveTwitterCredentials * activeCredentials;
 
     CredentialsActivatedPublisher * credentialsActivatedPublisher;

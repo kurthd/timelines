@@ -26,15 +26,17 @@
 @property (nonatomic, retain) ActiveTwitterCredentials *
     activeCredentials;
 
-- (UIBarButtonItem *)sendingTweetProgressView;
-
 - (void)initHomeTab;
 - (void)initProfileTab;
 - (void)initAccountsTab;
 
 - (UIBarButtonItem *)newTweetButtonItem;
+- (UIBarButtonItem *)sendingTweetProgressView;
 
 - (void)broadcastActivatedCredentialsChanged:(TwitterCredentials *)tc;
+
+- (void)registerDeviceForPushNotifications;
+- (NSDictionary *)deviceRegistrationArgsForCredentials:(NSArray *)credentials;
 
 - (BOOL)saveContext;
 
@@ -59,7 +61,6 @@
     [logInDisplayMgr release];
 
     [credentials release];
-    [unregisteredCredentials release];
     [activeCredentials release];
 
     [credentialsActivatedPublisher release];
@@ -91,23 +92,11 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
-    // TEMPORARY
-    unregisteredCredentials = [[NSMutableArray alloc] init];
+    deviceNeedsRegistration = YES;
+    [self registerDeviceForPushNotifications];
 
     // reset the unread message count to 0
     application.applicationIconBadgeNumber = 0;
-
-    registeredForPushNotifications = NO;
-
-    /*
-    UIRemoteNotificationType notificationTypes =
-        (UIRemoteNotificationTypeBadge |
-         UIRemoteNotificationTypeSound |
-         UIRemoteNotificationTypeAlert);
-
-    [[UIApplication sharedApplication]
-        registerForRemoteNotificationTypes:notificationTypes];
-     */
 
     credentialsActivatedPublisher =
         [[CredentialsActivatedPublisher alloc]
@@ -135,6 +124,7 @@
     } else {
         NSAssert(self.activeCredentials.credentials, @"Credentials exist, but "
             "no active account has been set.");
+
         TwitterCredentials * c = self.activeCredentials.credentials;
         NSLog(@"Active credentials: '%@'.", c);
 
@@ -147,10 +137,13 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     if (tabBarController.selectedViewController ==
-        accountsViewController.navigationController) {        
+        accountsViewController.navigationController) {
+        // make sure account changes get saved
         TwitterCredentials * activeAccount =
             [accountsDisplayMgr selectedAccount];
         self.activeCredentials.credentials = activeAccount;
+
+        [self registerDeviceForPushNotifications];
     }
 
     if (managedObjectContext != nil)
@@ -291,6 +284,8 @@
         return YES;
 
     if (viewController != accountsViewController.navigationController) {
+        // switching away from the accounts tab
+
         TwitterCredentials * activeAccount =
             [accountsDisplayMgr selectedAccount];
 
@@ -380,30 +375,30 @@
 #pragma mark Push notification delegate methods
 
 - (void)application:(UIApplication *)app
-    didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
+    didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    NSLog(@"Device token: %@.", devToken);
+    NSLog(@"Application did register for remote notifications.");
 
-    for (TwitterCredentials * c in unregisteredCredentials) {
-        NSDictionary * args = [NSDictionary dictionaryWithObjectsAndKeys:
-            c.username, @"username",
-            c.password, @"password",
-            nil];
-        [self.registrar sendProviderDeviceToken:devToken args:args];
-    }
-
-    [credentials addObjectsFromArray:unregisteredCredentials];
-    [unregisteredCredentials removeAllObjects];
-
-    //const void * devTokenBytes = [devToken bytes];
-    //self.registered = YES;
-    //[self sendProviderDeviceToken:devTokenBytes]; // custom method
+    NSDictionary * args =
+        [self deviceRegistrationArgsForCredentials:credentials];
+    [self.registrar sendProviderDeviceToken:deviceToken args:args];
 }
- 
+
 - (void)application:(UIApplication *)app
-    didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
+    didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    NSLog(@"Error in registration. Error: %@", err);
+    NSLog(@"Application did fail to register for push notificaitons. Error: %@",
+        error);
+
+#if !TARGET_IPHONE_SIMULATOR  // don't shot this error in the simulator
+
+    NSString * title =
+        NSLocalizedString(@"notification.registration.failed.alert.title", @"");
+    NSString * message = error.localizedDescription;
+    [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
+
+#endif
+
 }
 
 - (void)application:(UIApplication *)application
@@ -413,12 +408,31 @@
         "%@.", userInfo);
 }
 
+- (NSDictionary *)deviceRegistrationArgsForCredentials:(NSArray *)allCredentials
+{
+    NSMutableDictionary * args =
+        [NSMutableDictionary dictionaryWithCapacity:allCredentials.count];
+    for (NSInteger i = 0, count = allCredentials.count; i < count; ++i) {
+        TwitterCredentials * c = [allCredentials objectAtIndex:i];
+
+        NSString * usernameKey = [NSString stringWithFormat:@"username%d", i];
+        NSString * passwordKey = [NSString stringWithFormat:@"password%d", i];
+
+        [args setObject:c.username forKey:usernameKey];
+        [args setObject:c.password forKey:passwordKey];
+    }
+
+    return args;
+}
+
 #pragma mark DeviceRegistrarDelegate implementation
 
 - (void)registeredDeviceWithToken:(NSData *)token
 {
     NSLog(@"Successfully registered the device for push notifications: '%@'.",
         token);
+
+    deviceNeedsRegistration = NO;
 }
 
 - (void)failedToRegisterDeviceWithToken:(NSData *)token error:(NSError *)error
@@ -441,13 +455,13 @@
 
 #pragma mark Push notification helpers
 
-- (void)registerForPushNotifications
+- (void)registerDeviceForPushNotifications
 {
     UIRemoteNotificationType notificationTypes =
     (UIRemoteNotificationTypeBadge |
      UIRemoteNotificationTypeSound |
      UIRemoteNotificationTypeAlert);
-    
+
     [[UIApplication sharedApplication]
         registerForRemoteNotificationTypes:notificationTypes];
 }
@@ -469,15 +483,14 @@
                        added:(NSNumber *)added
 {
     if ([added integerValue]) {
-        [unregisteredCredentials addObject:changedCredentials];
-        [self registerForPushNotifications];
-
-        if (self.credentials.count == 0) {  // first credentials -- active them
-            [self.credentials addObject:changedCredentials];
+        if (self.credentials.count == 0)  // first credentials -- active them
             [self broadcastActivatedCredentialsChanged:changedCredentials];
-        }
+        [self.credentials addObject:changedCredentials];
     } else
         [self.credentials removeObject:changedCredentials];
+
+    deviceNeedsRegistration = YES;
+    [self registerDeviceForPushNotifications];
 
     NSLog(@"Active credentials: '%@'.", self.activeCredentials.credentials);
     [self saveContext];
