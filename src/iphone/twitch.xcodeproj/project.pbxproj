@@ -13,6 +13,8 @@
 		0524C07C0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C07B0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m */; };
 		0524C1F20FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */; };
 		0524C2560FF1ED1700A6099B /* FetchUserInfoResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C2550FF1ED1700A6099B /* FetchUserInfoResponseProcessor.m */; };
+		0524C3BC0FF2A7D400A6099B /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C3BB0FF2A7D400A6099B /* SFHFKeychainUtils.m */; };
+		0524C4520FF2AEEE00A6099B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0524C4510FF2AEEE00A6099B /* Security.framework */; };
 		052C64190FED703200B259D7 /* TwitchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C64180FED703200B259D7 /* TwitchAppDelegate.m */; };
 		05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05977A3B0FEF0C9700E37B9C /* Icon.png */; };
 		05B2380D0FEDB20900A6A2E6 /* MGTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237EE0FEDB20900A6A2E6 /* MGTwitterEngine.m */; };
@@ -133,6 +135,9 @@
 		0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+NetworkActivityIndicatorAdditions.m"; path = "shared/UIApplication+NetworkActivityIndicatorAdditions.m"; sourceTree = "<group>"; };
 		0524C2540FF1ED1700A6099B /* FetchUserInfoResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchUserInfoResponseProcessor.h; path = twitter/processors/FetchUserInfoResponseProcessor.h; sourceTree = "<group>"; };
 		0524C2550FF1ED1700A6099B /* FetchUserInfoResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchUserInfoResponseProcessor.m; path = twitter/processors/FetchUserInfoResponseProcessor.m; sourceTree = "<group>"; };
+		0524C3BA0FF2A7D400A6099B /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
+		0524C3BB0FF2A7D400A6099B /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
+		0524C4510FF2AEEE00A6099B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		052C64170FED703200B259D7 /* TwitchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchAppDelegate.h; path = "app-controller/TwitchAppDelegate.h"; sourceTree = "<group>"; };
 		052C64180FED703200B259D7 /* TwitchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchAppDelegate.m; path = "app-controller/TwitchAppDelegate.m"; sourceTree = "<group>"; };
 		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -340,6 +345,7 @@
 				288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */,
 				05B238320FEDBA6600A6A2E6 /* libxml2.dylib in Frameworks */,
 				05B23A320FEEB29D00A6A2E6 /* CoreData.framework in Frameworks */,
+				0524C4520FF2AEEE00A6099B /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +361,16 @@
 				0524BDF60FF16E0500A6099B /* AccountsViewController.m */,
 			);
 			name = accounts;
+			sourceTree = "<group>";
+		};
+		0524C3B90FF2A7D400A6099B /* sfh-keychain-utils */ = {
+			isa = PBXGroup;
+			children = (
+				0524C3BA0FF2A7D400A6099B /* SFHFKeychainUtils.h */,
+				0524C3BB0FF2A7D400A6099B /* SFHFKeychainUtils.m */,
+			);
+			name = "sfh-keychain-utils";
+			path = "vendor/sfh-keychain-utils";
 			sourceTree = "<group>";
 		};
 		052C64150FED700B00B259D7 /* app-controller */ = {
@@ -380,6 +396,7 @@
 			isa = PBXGroup;
 			children = (
 				05B237EB0FEDB1FA00A6A2E6 /* mg-twitter-engine */,
+				0524C3B90FF2A7D400A6099B /* sfh-keychain-utils */,
 			);
 			name = vendor;
 			sourceTree = "<group>";
@@ -672,6 +689,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0524C4510FF2AEEE00A6099B /* Security.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765070DF74369002DB57D /* CoreGraphics.framework */,
@@ -925,6 +943,7 @@
 				0524C1F20FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m in Sources */,
 				0524C2560FF1ED1700A6099B /* FetchUserInfoResponseProcessor.m in Sources */,
 				910BE1870FF2A755005342EE /* ArbUserTimelineDataSource.m in Sources */,
+				0524C3BC0FF2A7D400A6099B /* SFHFKeychainUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1132,6 +1151,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = iphoneos3.0;
 			};

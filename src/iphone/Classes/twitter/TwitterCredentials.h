@@ -13,6 +13,9 @@
 }
 
 @property (nonatomic, retain) NSString * username;
-@property (nonatomic, retain) NSString * password;
+
+- (NSString *)password;
+- (void)setPassword:(NSString *)password;
++ (void)deletePasswordForUsername:(NSString *)username;
 
 @end
