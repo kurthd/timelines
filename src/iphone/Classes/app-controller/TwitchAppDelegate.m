@@ -202,7 +202,8 @@
     timelineDisplayMgr =
         [[timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
-        homeNetAwareViewController title:homeTabTitle]
+        homeNetAwareViewController title:homeTabTitle
+        managedObjectContext:[self managedObjectContext]]
         retain];
     timelineDisplayMgr.displayAsConversation = YES;
     UIBarButtonItem * refreshButton =
@@ -233,7 +234,8 @@
     profileTimelineDisplayMgr =
         [[timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
-        profileNetAwareViewController title:profileTabTitle]
+        profileNetAwareViewController title:profileTabTitle
+        managedObjectContext:[self managedObjectContext]]
         retain];
     profileTimelineDisplayMgr.displayAsConversation = NO;
     profileTimelineDisplayMgr.setUserToFirstTweeter = YES;

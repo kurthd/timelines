@@ -7,8 +7,9 @@
 
 @protocol TweetDetailsViewDelegate
 
-- (void)selectedUser:(User *)user;
+- (void)showTweetsForUser:(NSString *)username;
 - (void)setFavorite:(BOOL)favorite;
 - (void)showLocationOnMap:(NSString *)location;
+- (void)showingTweetDetails;
 
 @end

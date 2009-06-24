@@ -29,6 +29,12 @@
     [super dealloc];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [delegate showingTweetDetails];
+}
+
 - (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)avatarImage
 {
     self.selectedTweet = tweet;
@@ -62,6 +68,11 @@
 - (IBAction)showLocationOnMap:(id)sender
 {
     [delegate showLocationOnMap:selectedTweet.user.location];
+}
+
+- (IBAction)showUserTweets:(id)sender
+{
+    [delegate showTweetsForUser:selectedTweet.user.username];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation

@@ -68,8 +68,6 @@
 
 @property (nonatomic, readonly) NSString * applicationDocumentsDirectory;
 
-
 - (IBAction)composeTweet:(id)sender;
-
 
 @end

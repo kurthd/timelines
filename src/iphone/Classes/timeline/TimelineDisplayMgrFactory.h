@@ -14,6 +14,7 @@
 
 - (TimelineDisplayMgr *)
     createTimelineDisplayMgrWithWrapperController:
-    (NetworkAwareViewController *)wrapperController title:(NSString *)title;
-
+    (NetworkAwareViewController *)wrapperController title:(NSString *)title
+    managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+    
 @end

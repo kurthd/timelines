@@ -3,6 +3,9 @@
 //
 
 #import "TimelineDisplayMgr.h"
+#import "TimelineDisplayMgrFactory.h"
+#import "TwitterService.h"
+#import "ArbUserTimelineDataSource.h"
 
 @interface TimelineDisplayMgr ()
 
@@ -14,7 +17,8 @@
 
 @synthesize wrapperController, timelineController, userInfoController,
     selectedTweet, updateId, user, timeline, pagesShown, displayAsConversation,
-    setUserToFirstTweeter;
+    setUserToFirstTweeter, tweetDetailsTimelineDisplayMgr,
+    tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher;
 
 - (void)dealloc
 {
@@ -28,18 +32,27 @@
     [user release];
     [timeline release];
     [updateId release];
-        
+
+    [timelineDisplayMgrFactory release];
+    [tweetDetailsTimelineDisplayMgr release];
+    [tweetDetailsNetAwareViewController release];
+    [managedObjectContext release];
+
     [super dealloc];
 }
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController
     service:(NSObject<TimelineDataSource> *)aService title:(NSString *)title
+    factory:(TimelineDisplayMgrFactory *)factory
+    managedObjectContext:(NSManagedObjectContext* )aManagedObjectContext
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
         timelineController = [aTimelineController retain];
         service = [aService retain];
+        timelineDisplayMgrFactory = [factory retain];
+        managedObjectContext = [aManagedObjectContext retain];
 
         timeline = [[NSMutableDictionary dictionary] retain];
 
@@ -126,9 +139,52 @@
 
 #pragma mark TweetDetailsViewDelegate implementation
 
-- (void)selectedUser:(User *)aUser
+- (void)showTweetsForUser:(NSString *)username;
 {
-    NSLog(@"Selected user: %@", aUser);
+    NSLog(@"Showing tweets for %@", username);
+    // create a tweetDetailsTimelineDisplayMgr
+    // push corresponding view controller for tweet details timeline display mgr
+    NSString * title =
+        NSLocalizedString(@"timelineview.usertweets.title", @"");
+    self.tweetDetailsNetAwareViewController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+    self.tweetDetailsTimelineDisplayMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:
+        tweetDetailsNetAwareViewController
+        title:title managedObjectContext:managedObjectContext];
+    self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
+    self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = YES;
+    [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
+
+    self.tweetDetailsNetAwareViewController.delegate =
+        self.tweetDetailsTimelineDisplayMgr;
+
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:managedObjectContext]
+        autorelease];
+
+    ArbUserTimelineDataSource * dataSource =
+        [[[ArbUserTimelineDataSource alloc]
+        initWithTwitterService:twitterService
+        username:username]
+        autorelease];
+
+    self.tweetDetailsCredentialsPublisher =
+        [[CredentialsActivatedPublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+
+    twitterService.delegate = dataSource;
+    [self.tweetDetailsTimelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO];
+    dataSource.delegate = self.tweetDetailsTimelineDisplayMgr;
+
+    [dataSource setCredentials:credentials];
+    [self.wrapperController.navigationController
+        pushViewController:self.tweetDetailsNetAwareViewController
+        animated:YES];
 }
 
 - (void)setFavorite:(BOOL)favorite
@@ -140,10 +196,19 @@
     NSLog(@"Reply to tweet selected");
 }
 
+- (void)showingTweetDetails
+{
+    NSLog(@"Showing tweet details...");
+    self.tweetDetailsCredentialsPublisher = nil;
+    self.tweetDetailsTimelineDisplayMgr = nil;
+    self.tweetDetailsNetAwareViewController = nil;
+}
+
 #pragma mark NetworkAwareViewControllerDelegate implementation
 
 - (void)networkAwareViewWillAppear
 {
+    NSLog(@"Showing timeline view...");
     if ((!hasBeenDisplayed && [service credentials]) || needsRefresh) {
         NSLog(@"Fetching new timeline on display...");
         [service fetchTimelineSince:[NSNumber numberWithInt:0]

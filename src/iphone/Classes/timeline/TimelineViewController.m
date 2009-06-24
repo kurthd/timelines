@@ -196,7 +196,7 @@
         self.tableView.contentInset = UIEdgeInsetsMake(-317, 0, 0, 0);
         self.tableView.tableHeaderView = headerView;
         fullNameLabel.text = aUser.name;
-        usernameLabel.text = aUser.username;
+        usernameLabel.text = [NSString stringWithFormat:@"@%@", aUser.username];
         NSString * followingFormatString =
             NSLocalizedString(@"timelineview.userinfo.following", @"");
         followingLabel.text =

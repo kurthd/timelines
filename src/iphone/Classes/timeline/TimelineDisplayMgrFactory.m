@@ -27,6 +27,7 @@
 - (TimelineDisplayMgr *)
     createTimelineDisplayMgrWithWrapperController:
     (NetworkAwareViewController *)wrapperController title:(NSString *)title
+    managedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
     TimelineViewController * timelineController =
         [[[TimelineViewController alloc]
@@ -44,7 +45,8 @@
 
     TimelineDisplayMgr * timelineDisplayMgr =
         [[[TimelineDisplayMgr alloc] initWithWrapperController:wrapperController
-        timelineController:timelineController service:dataSource title:title]
+        timelineController:timelineController service:dataSource title:title
+        factory:self managedObjectContext:managedObjectContext]
         autorelease];
     dataSource.delegate = timelineDisplayMgr;
     timelineController.delegate = timelineDisplayMgr;
