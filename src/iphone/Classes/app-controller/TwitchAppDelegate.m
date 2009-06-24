@@ -289,7 +289,8 @@
         TwitterCredentials * activeAccount =
             [accountsDisplayMgr selectedAccount];
 
-        if (activeAccount != self.activeCredentials.credentials) {
+        if (activeAccount &&
+            activeAccount != self.activeCredentials.credentials) {
             NSLog(@"Switching account to: '%@'.", activeAccount);
             [self broadcastActivatedCredentialsChanged:activeAccount];
         }
