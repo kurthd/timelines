@@ -108,6 +108,16 @@
         [self.logInDisplayMgr logIn];
     }
 
+    NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+        credentials, @"credentials",
+        [NSNumber numberWithInteger:0], @"added",
+        nil];
+
+    NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:@"CredentialsSetChangedNotification"
+                      object:self
+                    userInfo:userInfo];
+
     return YES;
 }
 

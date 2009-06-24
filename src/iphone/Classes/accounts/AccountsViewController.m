@@ -172,6 +172,23 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
             if (self.accounts.count == 0)
                 self.tableView.editing = NO;
+
+            if (c == self.selectedAccount) {
+                if (self.accounts.count == 0)
+                    self.selectedAccount = nil;
+                else {
+                    NSInteger index =
+                        indexPath.row == 0 ? 0 : indexPath.row - 1;
+                    self.selectedAccount = [self.accounts objectAtIndex:index];
+
+                    NSIndexPath * newIndexPath =
+                        [NSIndexPath indexPathForRow:index inSection:0];
+                    UITableViewCell * cell =
+                        [self.tableView cellForRowAtIndexPath:newIndexPath];
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    cell.textLabel.textColor = [UIColor twitchCheckedColor];
+                }
+            }
         }
     }   
 }

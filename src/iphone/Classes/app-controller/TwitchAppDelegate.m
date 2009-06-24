@@ -34,6 +34,10 @@
 
 - (UIBarButtonItem *)newTweetButtonItem;
 
+- (void)broadcastActivatedCredentialsChanged:(TwitterCredentials *)tc;
+
+- (BOOL)saveContext;
+
 @end
 
 @implementation TwitchAppDelegate
@@ -123,13 +127,14 @@
     [self initAccountsTab];
 
     if (self.credentials.count == 0) {
-        NSAssert1(!self.activeCredentials, @"No credentials exist, but an "
-            "active account has been set: '%@'.", self.activeCredentials);
+        NSAssert1(!self.activeCredentials.credentials, @"No credentials exist, "
+            "but an active account has been set: '%@'.",
+            self.activeCredentials.credentials);
         self.logInDisplayMgr.allowsCancel = NO;
         [self.logInDisplayMgr logIn];
     } else {
-        NSAssert(self.activeCredentials, @"Credentials exist, but no active "
-            "account has been set.");
+        NSAssert(self.activeCredentials.credentials, @"Credentials exist, but "
+            "no active account has been set.");
         TwitterCredentials * c = self.activeCredentials.credentials;
         NSLog(@"Active credentials: '%@'.", c);
 
@@ -141,15 +146,16 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    NSError *error;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] &&
-            ![managedObjectContext save:&error]) {
-			// Handle error
-			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-			exit(-1);  // Fail
-        }
+    if (tabBarController.selectedViewController ==
+        accountsViewController.navigationController) {        
+        TwitterCredentials * activeAccount =
+            [accountsDisplayMgr selectedAccount];
+        self.activeCredentials.credentials = activeAccount;
     }
+
+    if (managedObjectContext != nil)
+        if (![self saveContext])
+            exit(-1);  // fail
 }
 
 #pragma mark Composing tweets
@@ -284,16 +290,8 @@
             [accountsDisplayMgr selectedAccount];
 
         if (activeAccount != self.activeCredentials.credentials) {
-            NSLog(@"Selected account has changed to: '%@'.", activeAccount);
-
-            NSDictionary * userInfo =
-                [NSDictionary dictionaryWithObjectsAndKeys:
-                activeAccount, @"credentials", nil];
-
-            NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
-            [nc postNotificationName:@"ActiveCredentialsChangedNotification"
-                              object:self
-                            userInfo:userInfo];
+            NSLog(@"Switching account to: '%@'.", activeAccount);
+            [self broadcastActivatedCredentialsChanged:activeAccount];
         }
     }
 
@@ -458,6 +456,7 @@
             createInstance:[self managedObjectContext]] retain];
 
     self.activeCredentials.credentials = activatedCredentials;
+    [self saveContext];
 }
 
 - (void)credentialSetChanged:(TwitterCredentials *)changedCredentials
@@ -466,7 +465,43 @@
     if ([added integerValue]) {
         [unregisteredCredentials addObject:changedCredentials];
         [self registerForPushNotifications];
+
+        if (self.credentials.count == 0) {  // first credentials -- active them
+            [self.credentials addObject:changedCredentials];
+            [self broadcastActivatedCredentialsChanged:changedCredentials];
+        }
+    } else
+        [self.credentials removeObject:changedCredentials];
+
+    NSLog(@"Active credentials: '%@'.", self.activeCredentials.credentials);
+    [self saveContext];
+}
+
+- (void)broadcastActivatedCredentialsChanged:(TwitterCredentials *)tc
+{
+    NSDictionary * userInfo =
+        [NSDictionary dictionaryWithObjectsAndKeys:
+        tc, @"credentials", nil];
+    
+    NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:@"ActiveCredentialsChangedNotification"
+                      object:self
+                    userInfo:userInfo];
+}
+
+#pragma mark Persistence helpers
+
+- (BOOL)saveContext
+{
+    NSError * error;
+    if ([managedObjectContext hasChanges] &&
+        ![managedObjectContext save:&error]) {
+        // Handle error
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        return NO;
     }
+
+    return YES;
 }
 
 #pragma mark Accessors
