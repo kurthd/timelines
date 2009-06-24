@@ -58,6 +58,7 @@
 {
     [self.userAccounts addObject:credentials];
     [self.accountsViewController accountAdded:credentials];
+    self.logInDisplayMgr.allowsCancel = YES;
 }
 
 #pragma mark AccountsViewControllerDelegate implementation
@@ -89,6 +90,12 @@
         [alert show];
 
         return NO;
+    }
+
+    [self.userAccounts removeObject:credentials];
+    if (self.userAccounts.count == 0) {
+        self.logInDisplayMgr.allowsCancel = NO;
+        [self.logInDisplayMgr logIn];
     }
 
     return YES;

@@ -158,6 +158,9 @@ NSInteger usernameSort(TwitterCredentials * user1,
             [self.tableView
              deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                    withRowAnimation:YES];
+
+            if (self.accounts.count == 0)
+                self.tableView.editing = NO;
         }
     }   
 }
