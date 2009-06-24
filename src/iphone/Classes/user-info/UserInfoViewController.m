@@ -38,6 +38,7 @@ enum {
     [bioLabel release];
     [followingLabel release];
     [followButton release];
+    [sendMessageButton release];
 
     [user release];
 
@@ -178,6 +179,7 @@ enum {
     if (!avatarImage) {
         NSURL * avatarUrl = [NSURL URLWithString:user.profileImageUrl];
         [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+        avatarView.imageView.image = [UIImage imageNamed:@"DefaultAvatar.png"];
     } else
         avatarView.imageView.image = avatarImage;
     nameLabel.text = aUser.name;
@@ -204,6 +206,10 @@ enum {
 - (IBAction)toggleFollowing:(id)sender
 {
     [delegate startFollowingUser:user.username];
+}
+
+- (IBAction)sendMessage:(id)sender
+{
 }
 
 @end

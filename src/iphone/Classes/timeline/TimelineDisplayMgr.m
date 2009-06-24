@@ -173,7 +173,7 @@
 {
     NSLog(@"Showing %@ on map", locationString);
     NSString * locationWithoutCommas =
-        [locationString stringByReplacingOccurrencesOfString:@","
+        [locationString stringByReplacingOccurrencesOfString:@"iPhone:"
         withString:@""];
     NSString * urlString =
         [[NSString
