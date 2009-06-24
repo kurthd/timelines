@@ -108,7 +108,7 @@
         [tweets addObject:tweet];
     }
 
-    SEL sel = @selector(favorites:fetchedForUser::page:);
+    SEL sel = @selector(favorites:fetchedForUser:page:);
     [self invokeSelector:sel withTarget:delegate args:tweets, username, page,
         nil];
 
