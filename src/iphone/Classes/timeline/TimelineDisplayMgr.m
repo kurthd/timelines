@@ -70,15 +70,27 @@
             TweetInfo * firstTweet = [aTimeline objectAtIndex:0];
             [timelineController setUser:firstTweet.user];
             self.user = firstTweet.user;
-        } else {
-            // TODO: fetch user from credentials username
-        }
+        } else if (credentials)
+            [service fetchUserInfoForUsername:credentials.username];
     }
     [timelineController setTweets:[timeline allValues] page:pagesShown];
 }
 
 - (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)updateId
     page:(NSNumber *)page error:(NSError *)error
+{
+    // TODO: display alert view
+}
+
+- (void)userInfo:(User *)aUser fetchedForUsername:(NSString *)username
+{
+    NSLog(@"Received user info for %@", username);
+    [timelineController setUser:aUser];
+    self.user = aUser;
+}
+
+- (void)failedToFetchUserInfoForUsername:(NSString *)username
+    error:(NSError *)error
 {
     // TODO: display alert view
 }
@@ -132,13 +144,14 @@
 
 - (void)networkAwareViewWillAppear
 {
-    if (!hasBeenDisplayed && [service credentials]) {
-        NSLog(@"Timeline view displaying for first time...");
+    if ((!hasBeenDisplayed && [service credentials]) || needsRefresh) {
+        NSLog(@"Fetching new timeline on display...");
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
     }
 
     hasBeenDisplayed = YES;
+    needsRefresh = NO;
 }
 
 #pragma mark TimelineDisplayMgr implementation
@@ -173,7 +186,7 @@
 {
     NSLog(@"Showing %@ on map", locationString);
     NSString * locationWithoutCommas =
-        [locationString stringByReplacingOccurrencesOfString:@","
+        [locationString stringByReplacingOccurrencesOfString:@"iPhone:"
         withString:@""];
     NSString * urlString =
         [[NSString
@@ -281,9 +294,12 @@
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
-    NSLog(@"New credentials set");
+    NSLog(@"Setting new credentials on timeline display manager...");
+
+    TwitterCredentials * oldCredentials = credentials;
+
     [someCredentials retain];
-    [credentials release];
+    [credentials autorelease];
     credentials = someCredentials;
 
     if (displayAsConversation) {
@@ -293,7 +309,17 @@
     }
 
     [service setCredentials:credentials];
-    if (hasBeenDisplayed)
+
+    if (oldCredentials &&
+        ![oldCredentials.username isEqual:credentials.username]) {
+        // Changed accounts (as opposed to setting it for the first time)
+
+        [timeline removeAllObjects];
+        needsRefresh = YES;
+        pagesShown = 1;
+        [self.wrapperController setCachedDataAvailable:NO];
+        [self.wrapperController setUpdatingState:kConnectedAndUpdating];
+    } else if (hasBeenDisplayed) // set for first time and persisted data shown
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
 }

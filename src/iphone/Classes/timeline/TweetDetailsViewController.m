@@ -49,6 +49,7 @@
     if (!avatarImage) {
         NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
         [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+        avatar.imageView.image = [UIImage imageNamed:@"DefaultAvatar.png"];
     } else
         avatar.imageView.image = avatarImage;
 
@@ -60,7 +61,7 @@
 
 - (IBAction)showLocationOnMap:(id)sender
 {
-    [delegate showLocationOnMap];
+    [delegate showLocationOnMap:selectedTweet.user.location];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation

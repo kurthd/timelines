@@ -32,6 +32,11 @@
     [service fetchDirectMessagesSinceId:updateId page:page];
 }
 
+- (void)fetchUserInfoForUsername:(NSString *)username
+{
+    [service fetchUserInfoForUsername:username];
+}
+
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)directMessages:(NSArray *)directMessages
@@ -51,6 +56,17 @@
 {
     [delegate failedToFetchTimelineSinceUpdateId:updateId page:page
         error:error];
+}
+
+- (void)userInfo:(User *)aUser fetchedForUsername:(NSString *)username
+{
+    [delegate userInfo:aUser fetchedForUsername:username];
+}
+
+- (void)failedToFetchUserInfoForUsername:(NSString *)username
+                                   error:(NSError *)error
+{
+    [delegate failedToFetchUserInfoForUsername:username error:error];
 }
 
 - (TwitterCredentials *)credentials

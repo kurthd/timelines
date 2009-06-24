@@ -21,6 +21,7 @@
     IBOutlet UILabel * bioLabel;
     IBOutlet UILabel * followingLabel;
     IBOutlet UIButton * followButton;
+    IBOutlet UIButton * sendMessageButton;
 
     User * user;
 }
@@ -30,5 +31,6 @@
 
 - (void)setUser:(User *)user avatarImage:(UIImage *)avatarImage;
 - (IBAction)toggleFollowing:(id)sender;
+- (IBAction)sendMessage:(id)sender;
 
 @end

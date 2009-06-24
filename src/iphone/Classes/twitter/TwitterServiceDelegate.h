@@ -73,7 +73,7 @@
 
 @optional
 
-- (void)userInfo:(User *) fetchedForUsername:(NSString *)username;
+- (void)userInfo:(User *)user fetchedForUsername:(NSString *)username;
 - (void)failedToFetchUserInfoForUsername:(NSString *)username
                                    error:(NSError *)error;
 
