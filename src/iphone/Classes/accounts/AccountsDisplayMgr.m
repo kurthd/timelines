@@ -88,6 +88,25 @@
 
 - (BOOL)userDeletedAccount:(TwitterCredentials *)credentials
 {
+    [self.userAccounts removeObject:credentials];
+    if (self.userAccounts.count == 0) {
+        self.logInDisplayMgr.allowsCancel = NO;
+        [self.logInDisplayMgr logIn];
+    }
+
+    NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+        credentials, @"credentials",
+        [NSNumber numberWithInteger:0], @"added",
+        nil];
+
+    NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:@"CredentialsSetChangedNotification"
+                      object:self
+                    userInfo:userInfo];
+
+    // Delete the credentials after the notification has been sent to allow
+    // receivers to query the credentials object before it becomes invalid.
+
     [context deleteObject:credentials];
 
     NSError * error;
@@ -104,22 +123,6 @@
 
         return NO;
     }
-
-    [self.userAccounts removeObject:credentials];
-    if (self.userAccounts.count == 0) {
-        self.logInDisplayMgr.allowsCancel = NO;
-        [self.logInDisplayMgr logIn];
-    }
-
-    NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-        credentials, @"credentials",
-        [NSNumber numberWithInteger:0], @"added",
-        nil];
-
-    NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
-    [nc postNotificationName:@"CredentialsSetChangedNotification"
-                      object:self
-                    userInfo:userInfo];
 
     return YES;
 }
