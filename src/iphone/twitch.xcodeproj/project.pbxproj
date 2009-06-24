@@ -67,6 +67,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
+		910BE1870FF2A755005342EE /* ArbUserTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE1860FF2A755005342EE /* ArbUserTimelineDataSource.m */; };
 		9115A8400FF03C8300D6A769 /* AllTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */; };
 		9115A8430FF03C9A00D6A769 /* MessagesTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8420FF03C9A00D6A769 /* MessagesTimelineDataSource.m */; };
 		9115A8C70FF0503300D6A769 /* PersonalFeedSelectionMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */; };
@@ -243,6 +244,8 @@
 		28A0AB4B0D9B1048005BE974 /* twitch_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twitch_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* twitch-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "twitch-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		910BE1850FF2A755005342EE /* ArbUserTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArbUserTimelineDataSource.h; path = timeline/ArbUserTimelineDataSource.h; sourceTree = "<group>"; };
+		910BE1860FF2A755005342EE /* ArbUserTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArbUserTimelineDataSource.m; path = timeline/ArbUserTimelineDataSource.m; sourceTree = "<group>"; };
 		9115A8380FF03A6100D6A769 /* TimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDataSource.h; path = timeline/TimelineDataSource.h; sourceTree = "<group>"; };
 		9115A83B0FF03BA900D6A769 /* TimelineDataSourceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDataSourceDelegate.h; path = timeline/TimelineDataSourceDelegate.h; sourceTree = "<group>"; };
 		9115A83E0FF03C8300D6A769 /* AllTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllTimelineDataSource.h; path = timeline/AllTimelineDataSource.h; sourceTree = "<group>"; };
@@ -731,6 +734,8 @@
 				9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */,
 				918E891A0FF16EE30042BBEE /* UserTimelineDataSource.h */,
 				918E891B0FF16EE30042BBEE /* UserTimelineDataSource.m */,
+				910BE1850FF2A755005342EE /* ArbUserTimelineDataSource.h */,
+				910BE1860FF2A755005342EE /* ArbUserTimelineDataSource.m */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -919,6 +924,7 @@
 				0524C07C0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m in Sources */,
 				0524C1F20FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m in Sources */,
 				0524C2560FF1ED1700A6099B /* FetchUserInfoResponseProcessor.m in Sources */,
+				910BE1870FF2A755005342EE /* ArbUserTimelineDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

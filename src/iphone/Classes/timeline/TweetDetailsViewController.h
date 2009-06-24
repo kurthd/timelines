@@ -28,5 +28,6 @@
 
 - (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar;
 - (IBAction)showLocationOnMap:(id)sender;
+- (IBAction)showUserTweets:(id)sender;
 
 @end
