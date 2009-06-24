@@ -139,7 +139,7 @@
 
 #pragma mark TweetDetailsViewDelegate implementation
 
-- (void)showTweetsForUser:(NSString *)username;
+- (void)showTweetsForUser:(NSString *)username
 {
     NSLog(@"Showing tweets for %@", username);
     // create a tweetDetailsTimelineDisplayMgr
@@ -286,6 +286,13 @@
 - (void)stopFollowingUser:(NSString *)username
 {
     NSLog(@"Sending 'stop following' request for %@", username);
+}
+
+#pragma mark UserListTableViewControllerDelegate implementation
+
+- (void)loadMoreUsers
+{
+    NSLog(@"Loading more users...");
 }
 
 #pragma mark Accessors

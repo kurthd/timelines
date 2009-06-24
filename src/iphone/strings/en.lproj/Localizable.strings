@@ -37,3 +37,6 @@ userinfoview.title = "User Info";
 
 /* AccountsViewController */
 account.deletion.failed.alert.title = "Failed to Remove %@";
+
+/* UserListTableViewController */
+userlisttableview.following = "%@ following, %@ followers";
