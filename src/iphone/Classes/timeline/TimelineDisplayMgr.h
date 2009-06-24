@@ -37,6 +37,7 @@
 
     BOOL displayAsConversation;
     BOOL hasBeenDisplayed;
+    BOOL needsRefresh;
     BOOL setUserToFirstTweeter;
 }
 

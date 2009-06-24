@@ -132,13 +132,14 @@
 
 - (void)networkAwareViewWillAppear
 {
-    if (!hasBeenDisplayed && [service credentials]) {
-        NSLog(@"Timeline view displaying for first time...");
+    if ((!hasBeenDisplayed && [service credentials]) || needsRefresh) {
+        NSLog(@"Fetching new timeline on display...");
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
     }
 
     hasBeenDisplayed = YES;
+    needsRefresh = NO;
 }
 
 #pragma mark TimelineDisplayMgr implementation
@@ -281,9 +282,12 @@
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
-    NSLog(@"New credentials set");
+    NSLog(@"Setting new credentials on timeline display manager...");
+
+    TwitterCredentials * oldCredentials = credentials;
+
     [someCredentials retain];
-    [credentials release];
+    [credentials autorelease];
     credentials = someCredentials;
 
     if (displayAsConversation) {
@@ -293,7 +297,17 @@
     }
 
     [service setCredentials:credentials];
-    if (hasBeenDisplayed)
+
+    if (oldCredentials &&
+        ![oldCredentials.username isEqual:credentials.username]) {
+        // Changed accounts (as opposed to setting it for the first time)
+
+        [timeline removeAllObjects];
+        needsRefresh = YES;
+        pagesShown = 1;
+        [self.wrapperController setCachedDataAvailable:NO];
+        [self.wrapperController setUpdatingState:kConnectedAndUpdating];
+    } else if (hasBeenDisplayed) // set for first time and persisted data shown
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
 }
