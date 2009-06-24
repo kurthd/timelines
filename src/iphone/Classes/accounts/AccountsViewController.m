@@ -4,6 +4,7 @@
 
 #import "AccountsViewController.h"
 #import "TwitterCredentials.h"
+#import "UIColor+TwitchColors.h"
 
 NSInteger usernameSort(TwitterCredentials * user1,
                        TwitterCredentials * user2,
@@ -20,7 +21,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
 @implementation AccountsViewController
 
-@synthesize delegate, accounts;
+@synthesize delegate, selectedAccount, accounts;
 
 - (void)dealloc
 {
@@ -42,6 +43,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
     self.accounts = [[self.delegate accounts]
         sortedArrayUsingFunction:usernameSort context:NULL];
+    self.selectedAccount = [self.delegate currentActiveAccount];
 }
 
 #pragma mark Button actions
@@ -52,10 +54,6 @@ NSInteger usernameSort(TwitterCredentials * user1,
         self.tableView.editing = NO;
 
     [self.delegate userWantsToAddAccount];
-}
-
-- (IBAction)editAccounts:(id)sender
-{
 }
 
 #pragma mark Updating the table view data
@@ -118,29 +116,42 @@ NSInteger usernameSort(TwitterCredentials * user1,
     TwitterCredentials * account = [self.accounts objectAtIndex:indexPath.row];
     cell.textLabel.text = account.username;
 
+    if ([account.username isEqualToString:self.selectedAccount.username]) {
+        cell.textLabel.textColor = [UIColor twitchCheckedColor];
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.textLabel.textColor = [UIColor blackColor];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+
     return cell;
 }
 
-- (void)          tableView:(UITableView *)tv
+- (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    // AnotherViewController *anotherViewController =
-    //     [[AnotherViewController alloc]
-    //      initWithNibName:@"AnotherView" bundle:nil];
-    // [self.navigationController pushViewController:anotherViewController];
-    // [anotherViewController release];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSInteger accountIndex = [self.accounts indexOfObject:self.selectedAccount];
+    if (accountIndex == indexPath.row)
+        return;
+    NSIndexPath * oldIndexPath =
+        [NSIndexPath indexPathForRow:accountIndex inSection:0];
+ 
+    UITableViewCell * newCell =
+        [self.tableView cellForRowAtIndexPath:indexPath];
+    if (newCell.accessoryType == UITableViewCellAccessoryNone) {
+        newCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        self.selectedAccount = [self.accounts objectAtIndex:indexPath.row];
+        newCell.textLabel.textColor = [UIColor twitchCheckedColor];
+    }
+ 
+    UITableViewCell * oldCell =
+        [self.tableView cellForRowAtIndexPath:oldIndexPath];
+    if (oldCell.accessoryType == UITableViewCellAccessoryCheckmark) {
+        oldCell.accessoryType = UITableViewCellAccessoryNone;
+        oldCell.textLabel.textColor = [UIColor blackColor];
+    }
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)        tableView:(UITableView *)tv
-    canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tv

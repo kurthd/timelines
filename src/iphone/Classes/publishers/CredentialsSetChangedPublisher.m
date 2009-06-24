@@ -2,16 +2,16 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import "CredentialsActivatedPublisher.h"
+#import "CredentialsSetChangedPublisher.h"
 
-@interface CredentialsActivatedPublisher ()
+@interface CredentialsSetChangedPublisher ()
 
 @property (nonatomic, assign) id listener;
 @property (nonatomic, assign) SEL action;
 
 @end
 
-@implementation CredentialsActivatedPublisher
+@implementation CredentialsSetChangedPublisher
 
 @synthesize listener, action;
 
@@ -47,14 +47,18 @@
     // Don't use super class implementation as credentials may be nil in the
     // case of a log out.
     id credentials = [info objectForKey:@"credentials"];
-    [self.listener performSelector:self.action withObject:credentials];
+    id added = [info objectForKey:@"added"];
+
+    [self.listener performSelector:self.action
+                        withObject:credentials
+                        withObject:added];
 }
 
 #pragma mark Subscribing for notifications
 
 - (NSString *)notificationName
 {
-    return @"ActiveCredentialsChangedNotification";
+    return @"CredentialsSetChangedNotification";
 }
 
 @end

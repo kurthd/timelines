@@ -157,10 +157,11 @@
 {
     NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
         credentials, @"credentials",
+        [NSNumber numberWithInteger:1], @"added",
         nil];
 
     NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
-    [nc postNotificationName:@"CredentialsChangedNotification"
+    [nc postNotificationName:@"CredentialsSetChangedNotification"
                       object:self
                     userInfo:userInfo];
 }

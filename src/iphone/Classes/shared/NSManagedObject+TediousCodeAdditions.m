@@ -13,6 +13,11 @@
                                          inManagedObjectContext:context];
 }
 
++ (id)findFirst:(NSManagedObjectContext *)context
+{
+    return [self findFirst:nil context:context];
+}
+
 + (id)findFirst:(NSPredicate *)predicate
         context:(NSManagedObjectContext *)context
 {
@@ -27,7 +32,15 @@
     NSArray * results =
         [self findAll:predicate context:context error:error];
 
+    if (results.count == 0)
+        return nil;
+
     return [results objectAtIndex:0];
+}
+
++ (id)findAll:(NSManagedObjectContext *)context
+{
+    return [self findAll:nil context:context];
 }
 
 + (id)findAll:(NSPredicate *)predicate

@@ -12,6 +12,8 @@
 - (void)userWantsToAddAccount;
 - (BOOL)userDeletedAccount:(TwitterCredentials *)credentials;
 
+- (TwitterCredentials *)currentActiveAccount;
+
 @end
 
 @interface AccountsViewController : UITableViewController
@@ -19,12 +21,13 @@
     id<AccountsViewControllerDelegate> delegate;
 
     NSArray * accounts;
+    TwitterCredentials * selectedAccount;
 }
 
 @property (nonatomic, assign) id<AccountsViewControllerDelegate> delegate;
+@property (nonatomic, retain) TwitterCredentials * selectedAccount;
 
 - (IBAction)userWantsToAddAccount:(id)sender;
-- (IBAction)editAccounts:(id)sender;
 
 - (void)accountAdded:(TwitterCredentials *)credentials;
 

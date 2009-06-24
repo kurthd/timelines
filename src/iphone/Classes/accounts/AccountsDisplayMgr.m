@@ -4,15 +4,17 @@
 
 #import "AccountsDisplayMgr.h"
 #import "UIAlertView+InstantiationAdditions.h"
-#import "CredentialsActivatedPublisher.h"
+#import "CredentialsSetChangedPublisher.h"
+#import "ActiveTwitterCredentials.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @interface AccountsDisplayMgr ()
 
 @property (nonatomic, retain) AccountsViewController * accountsViewController;
 @property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
 @property (nonatomic, copy) NSMutableSet * userAccounts;
-@property (nonatomic, retain) CredentialsActivatedPublisher *
-    credentialsUpdatePublisher;
+@property (nonatomic, retain) CredentialsSetChangedPublisher *
+    credentialsSetChangedPublisher;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
 @end
@@ -20,14 +22,14 @@
 @implementation AccountsDisplayMgr
 
 @synthesize logInDisplayMgr, accountsViewController, userAccounts;
-@synthesize context, credentialsUpdatePublisher;
+@synthesize context, credentialsSetChangedPublisher;
 
 - (void)dealloc
 {
     self.accountsViewController = nil;
     self.logInDisplayMgr = nil;
     self.userAccounts = nil;
-    self.credentialsUpdatePublisher = nil;
+    self.credentialsSetChangedPublisher = nil;
     self.context = nil;
 
     [super dealloc];
@@ -44,21 +46,29 @@
         self.logInDisplayMgr.allowsCancel = YES;
         self.context = aContext;
 
-        credentialsUpdatePublisher =
-            [[CredentialsActivatedPublisher alloc]
-            initWithListener:self action:@selector(credentialsAdded:)];
+        credentialsSetChangedPublisher =
+            [[CredentialsSetChangedPublisher alloc]
+            initWithListener:self action:@selector(credentialsChanged:added:)];
     }
 
     return self;
 }
 
-#pragma mark CredentialsUpdatePublisher notification
-
-- (void)credentialsAdded:(TwitterCredentials *)credentials
+- (TwitterCredentials *)selectedAccount
 {
-    [self.userAccounts addObject:credentials];
-    [self.accountsViewController accountAdded:credentials];
-    self.logInDisplayMgr.allowsCancel = YES;
+    return self.accountsViewController.selectedAccount;
+}
+
+#pragma mark CredentialsActivatedPublisher notification
+
+- (void)credentialsChanged:(TwitterCredentials *)credentials
+                     added:(NSNumber *)added
+{
+    if ([added integerValue]) {
+        [self.userAccounts addObject:credentials];
+        [self.accountsViewController accountAdded:credentials];
+        self.logInDisplayMgr.allowsCancel = YES;
+    }
 }
 
 #pragma mark AccountsViewControllerDelegate implementation
@@ -99,6 +109,11 @@
     }
 
     return YES;
+}
+
+- (TwitterCredentials *)currentActiveAccount
+{
+    return [[ActiveTwitterCredentials findFirst:context] credentials];
 }
 
 #pragma mark Accessors

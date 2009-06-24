@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0524BDF70FF16E0500A6099B /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524BDF60FF16E0500A6099B /* AccountsViewController.m */; };
 		0524BDFB0FF16E2200A6099B /* AccountsDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524BDFA0FF16E2200A6099B /* AccountsDisplayMgr.m */; };
+		0524C02F0FF1B1E300A6099B /* ActiveTwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C02E0FF1B1E300A6099B /* ActiveTwitterCredentials.m */; };
+		0524C07C0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C07B0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m */; };
 		052C64190FED703200B259D7 /* TwitchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C64180FED703200B259D7 /* TwitchAppDelegate.m */; };
 		05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05977A3B0FEF0C9700E37B9C /* Icon.png */; };
 		05B2380D0FEDB20900A6A2E6 /* MGTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237EE0FEDB20900A6A2E6 /* MGTwitterEngine.m */; };
@@ -116,6 +118,10 @@
 		0524BDF60FF16E0500A6099B /* AccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsViewController.m; path = accounts/AccountsViewController.m; sourceTree = "<group>"; };
 		0524BDF90FF16E2200A6099B /* AccountsDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsDisplayMgr.h; path = accounts/AccountsDisplayMgr.h; sourceTree = "<group>"; };
 		0524BDFA0FF16E2200A6099B /* AccountsDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsDisplayMgr.m; path = accounts/AccountsDisplayMgr.m; sourceTree = "<group>"; };
+		0524C02D0FF1B1E300A6099B /* ActiveTwitterCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActiveTwitterCredentials.h; path = twitter/ActiveTwitterCredentials.h; sourceTree = "<group>"; };
+		0524C02E0FF1B1E300A6099B /* ActiveTwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActiveTwitterCredentials.m; path = twitter/ActiveTwitterCredentials.m; sourceTree = "<group>"; };
+		0524C07A0FF1BB4600A6099B /* CredentialsSetChangedPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialsSetChangedPublisher.h; path = publishers/CredentialsSetChangedPublisher.h; sourceTree = "<group>"; };
+		0524C07B0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CredentialsSetChangedPublisher.m; path = publishers/CredentialsSetChangedPublisher.m; sourceTree = "<group>"; };
 		052C64170FED703200B259D7 /* TwitchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchAppDelegate.h; path = "app-controller/TwitchAppDelegate.h"; sourceTree = "<group>"; };
 		052C64180FED703200B259D7 /* TwitchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchAppDelegate.m; path = "app-controller/TwitchAppDelegate.m"; sourceTree = "<group>"; };
 		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -426,6 +432,8 @@
 				05B23B3C0FEED50E00A6A2E6 /* processors */,
 				05B23C670FEEF39200A6A2E6 /* TwitterCredentials.h */,
 				05B23C680FEEF39200A6A2E6 /* TwitterCredentials.m */,
+				0524C02D0FF1B1E300A6099B /* ActiveTwitterCredentials.h */,
+				0524C02E0FF1B1E300A6099B /* ActiveTwitterCredentials.m */,
 				05B23B380FEEC6AB00A6A2E6 /* TwitterService.h */,
 				05B23B390FEEC6AB00A6A2E6 /* TwitterService.m */,
 				05B23B3B0FEECECD00A6A2E6 /* TwitterServiceDelegate.h */,
@@ -505,6 +513,8 @@
 				05B239660FEDD1E500A6A2E6 /* AbstractUpdatePublisher.m */,
 				05B2396A0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.h */,
 				05B2396B0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.m */,
+				0524C07A0FF1BB4600A6099B /* CredentialsSetChangedPublisher.h */,
+				0524C07B0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m */,
 			);
 			name = publishers;
 			sourceTree = "<group>";
@@ -865,6 +875,8 @@
 				0524BDF70FF16E0500A6099B /* AccountsViewController.m in Sources */,
 				0524BDFB0FF16E2200A6099B /* AccountsDisplayMgr.m in Sources */,
 				918E891C0FF16EE30042BBEE /* UserTimelineDataSource.m in Sources */,
+				0524C02F0FF1B1E300A6099B /* ActiveTwitterCredentials.m in Sources */,
+				0524C07C0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

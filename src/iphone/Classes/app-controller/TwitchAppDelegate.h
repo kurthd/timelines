@@ -12,7 +12,8 @@
 @class LogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class AccountsViewController;
 @class DeviceRegistrar;
-@class CredentialsActivatedPublisher;
+@class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
+@class ActiveTwitterCredentials;
 
 @interface TwitchAppDelegate : NSObject
     <UIApplicationDelegate, UITabBarControllerDelegate, DeviceRegistrarDelegate,
@@ -28,8 +29,10 @@
 
     NSMutableArray * credentials;
     NSMutableArray * unregisteredCredentials;
+    ActiveTwitterCredentials * activeCredentials;
 
-    CredentialsActivatedPublisher * credentialsUpdatePublisher;
+    CredentialsActivatedPublisher * credentialsActivatedPublisher;
+    CredentialsSetChangedPublisher * credentialsSetChangedPublisher;
 
     // Core Data classes
     NSManagedObjectModel * managedObjectModel;
