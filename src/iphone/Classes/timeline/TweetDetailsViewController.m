@@ -6,6 +6,7 @@
 #import "Tweet.h"
 #import "UIWebView+FileLoadingAdditions.h"
 #import "NSDate+StringHelpers.h"
+#import "AsynchronousNetworkFetcher.h"
 
 @interface TweetDetailsViewController ()
 
@@ -44,13 +45,12 @@
     [userTweetsButton
         setTitle:[NSString stringWithFormat:@"@%@", tweet.user.username]
         forState:UIControlStateNormal];
-    
+
     if (!avatarImage) {
         NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
-        NSData * avatarData = [NSData dataWithContentsOfURL:avatarUrl];
-        avatarImage = [UIImage imageWithData:avatarData];
-    }
-    avatar.imageView.image = avatarImage;
+        [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+    } else
+        avatar.imageView.image = avatarImage;
 
     NSString * locationText = tweet.user.location;
     locationButton.hidden = !locationText || [locationText isEqual:@""];
@@ -60,20 +60,24 @@
 
 - (IBAction)showLocationOnMap:(id)sender
 {
-    NSString * locationString = selectedTweet.user.location;
-    NSLog(@"Showing %@ on map", locationString);
-    NSString * locationWithoutCommas =
-        [locationString stringByReplacingOccurrencesOfString:@","
-        withString:@""];
-    NSString * urlString =
-        [[NSString
-        stringWithFormat:@"http://maps.google.com/maps?q=%@",
-        locationWithoutCommas]
-        stringByAddingPercentEscapesUsingEncoding:
-        NSUTF8StringEncoding];
-    NSURL * url = [NSURL URLWithString:urlString];
-    [[UIApplication sharedApplication] openURL:url];
+    [delegate showLocationOnMap];
 }
+
+#pragma mark AsynchronousNetworkFetcherDelegate implementation
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    didReceiveData:(NSData *)data fromUrl:(NSURL *)url
+{
+    NSLog(@"Received avatar for url: %@", url);
+    UIImage * avatarImage = [UIImage imageWithData:data];
+    avatar.imageView.image = avatarImage;
+}
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
+{}
+
+#pragma mark static helper methods
 
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer
 {

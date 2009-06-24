@@ -6,6 +6,7 @@
 #import "UILabel+DrawingAdditions.h"
 #import "UIColor+TwitchColors.h"
 #import "UserInfoLabelCell.h"
+#import "AsynchronousNetworkFetcher.h"
 
 enum {
     kUserInfoSectionDetails,
@@ -152,6 +153,20 @@ enum {
     }
 }
 
+#pragma mark AsynchronousNetworkFetcherDelegate implementation
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    didReceiveData:(NSData *)data fromUrl:(NSURL *)url
+{
+    NSLog(@"Received avatar for url: %@", url);
+    UIImage * avatarImage = [UIImage imageWithData:data];
+    avatarView.imageView.image = avatarImage;
+}
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
+{}
+
 #pragma mark UserInfoViewController implementation
 
 - (void)setUser:(User *)aUser avatarImage:(UIImage *)avatarImage
@@ -161,11 +176,10 @@ enum {
     user = aUser;
 
     if (!avatarImage) {
-        NSURL * avatarUrl = [NSURL URLWithString:aUser.profileImageUrl];
-        NSData * avatarData = [NSData dataWithContentsOfURL:avatarUrl];
-        avatarImage = [UIImage imageWithData:avatarData];
-    }
-    avatarView.imageView.image = avatarImage;
+        NSURL * avatarUrl = [NSURL URLWithString:user.profileImageUrl];
+        [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+    } else
+        avatarView.imageView.image = avatarImage;
     nameLabel.text = aUser.name;
     usernameLabel.text = [NSString stringWithFormat:@"@%@", aUser.username];
     bioLabel.text = aUser.bio;

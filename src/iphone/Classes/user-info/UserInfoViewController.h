@@ -6,8 +6,10 @@
 #import "RoundedImage.h"
 #import "User.h"
 #import "UserInfoViewControllerDelegate.h"
+#import "AsynchronousNetworkFetcherDelegate.h"
 
-@interface UserInfoViewController : UITableViewController
+@interface UserInfoViewController :
+    UITableViewController <AsynchronousNetworkFetcherDelegate>
 {
     NSObject<UserInfoViewControllerDelegate> * delegate;
 

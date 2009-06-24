@@ -4,17 +4,28 @@
 
 #import <Foundation/Foundation.h>
 #import "AccountsViewController.h"
+#import "LogInDisplayMgr.h"
+#import "TwitterCredentials.h"
 
-@interface AccountsDisplayMgr : NSObject <AccountsViewControllerDelegate>
+@class CredentialsSetChangedPublisher;
+
+@interface AccountsDisplayMgr :
+    NSObject <AccountsViewControllerDelegate, LogInDisplayMgrDelegate>
 {
     AccountsViewController * accountsViewController;
+    LogInDisplayMgr * logInDisplayMgr;
 
-    NSArray * userAccounts;
+    NSMutableSet * userAccounts;
+
+    CredentialsSetChangedPublisher * credentialsSetChangedPublisher;
 
     NSManagedObjectContext * context;
 }
 
 - (id)initWithAccountsViewController:(AccountsViewController *)aViewController
+                     logInDisplayMgr:(LogInDisplayMgr *)aLogInDisplayMgr
                              context:(NSManagedObjectContext *)aContext;
+
+- (TwitterCredentials *)selectedAccount;
 
 @end

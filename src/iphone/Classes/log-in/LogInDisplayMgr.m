@@ -5,8 +5,9 @@
 #import "LogInDisplayMgr.h"
 #import "LogInViewController.h"
 #import "MGTwitterEngine.h"
-#import "UIAlertView+InstantiationAdditions.h"
 #import "TwitterCredentials.h"
+#import "UIAlertView+InstantiationAdditions.h"
+#import "UIApplication+NetworkActivityIndicatorAdditions.h"
 
 @interface LogInDisplayMgr ()
 
@@ -25,13 +26,17 @@
 
 @implementation LogInDisplayMgr
 
+@synthesize delegate;
 @synthesize context;
 @synthesize rootViewController, logInViewController;
 @synthesize twitter, logInRequestId;
 @synthesize username, password;
+@synthesize allowsCancel;
 
 - (void)dealloc
 {
+    self.delegate = nil;
+
     self.context = nil;
 
     self.rootViewController = nil;
@@ -74,6 +79,9 @@
 
     [self.twitter setUsername:self.username password:self.password];
     self.logInRequestId = [self.twitter checkUserCredentials];
+
+    [[UIApplication sharedApplication] networkActivityIsStarting];
+
     NSLog(@"Attempting log in %@: '%@'.",
         [self.twitter usesSecureConnection] ? @"securely" : @"insecurely",
         self.logInRequestId);
@@ -81,7 +89,24 @@
 
 - (void)userDidCancel
 {
-    NSLog(@"User cancelled log in.");
+    NSAssert(self.allowsCancel, @"User cancelled even though it's forbidden.");
+    [self.rootViewController dismissModalViewControllerAnimated:YES];
+}
+
+- (BOOL)userCanCancel
+{
+    return self.allowsCancel;
+}
+
+#pragma mark LogInDisplayMgrDelegate implementation
+
+- (BOOL)isUsernameValid:(NSString *)aUsername
+{
+    SEL sel = @selector(isUsernameValid:);
+    if (self.delegate && [self.delegate respondsToSelector:sel])
+        return [self.delegate isUsernameValid:aUsername];
+    else
+        return YES;
 }
 
 #pragma mark MGTwitterEngineDelegate implementation
@@ -106,6 +131,8 @@
         [self displayErrorWithMessage:error.localizedDescription];
         [self.logInViewController promptForLogIn];
     }
+
+    [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 - (void)requestFailed:(NSString *)requestIdentifier withError:(NSError *)error
@@ -114,6 +141,8 @@
 
     [self displayErrorWithMessage:error.localizedDescription];
     [self.logInViewController promptForLogIn];
+
+    [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 - (void)statusesReceived:(NSArray *)statuses forRequest:(NSString *)identifier
@@ -143,14 +172,17 @@
     NSLog(@"Image received for request '%@': %@", identifier, image);
 }
 
+#pragma mark Notify the system of new accounts
+
 - (void)broadcastSuccessfulLogInNotification:(TwitterCredentials *)credentials
 {
     NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
         credentials, @"credentials",
+        [NSNumber numberWithInteger:1], @"added",
         nil];
 
     NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
-    [nc postNotificationName:@"CredentialsChangedNotification"
+    [nc postNotificationName:@"CredentialsSetChangedNotification"
                       object:self
                     userInfo:userInfo];
 }

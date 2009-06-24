@@ -9,7 +9,7 @@
 #import "TwitterCredentials.h"
 
 @class ComposeTweetViewController;
-@class CredentialsUpdatePublisher;
+@class CredentialsActivatedPublisher;
 
 @interface ComposeTweetDisplayMgr :
     NSObject <ComposeTweetViewControllerDelegate, TwitterServiceDelegate>
@@ -21,7 +21,7 @@
 
     TwitterService * service;
 
-    CredentialsUpdatePublisher * credentialsUpdatePublisher;
+    CredentialsActivatedPublisher * credentialsUpdatePublisher;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;

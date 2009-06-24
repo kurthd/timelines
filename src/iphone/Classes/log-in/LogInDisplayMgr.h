@@ -8,9 +8,19 @@
 
 @class MGTwitterEngine, LogInViewController;
 
+@protocol LogInDisplayMgrDelegate <NSObject>
+
+@optional
+
+- (BOOL)isUsernameValid:(NSString *)username;
+
+@end
+
 @interface LogInDisplayMgr :
     NSObject <LogInViewControllerDelegate, MGTwitterEngineDelegate>
 {
+    id<LogInDisplayMgrDelegate> delegate;
+
     NSManagedObjectContext * context;
 
     UIViewController * rootViewController;
@@ -21,7 +31,12 @@
 
     NSString * username;
     NSString * password;
+
+    BOOL allowsCancel;
 }
+
+@property (nonatomic, assign) id<LogInDisplayMgrDelegate> delegate;
+@property (nonatomic, assign) BOOL allowsCancel;
 
 - (id)initWithRootViewController:(UIViewController *)aRootViewController
             managedObjectContext:(NSManagedObjectContext *)aContext;

@@ -98,10 +98,10 @@
     return self;
 }
 
-- (void)processResponse:(NSArray *)statuses
+- (BOOL)processResponse:(NSArray *)statuses
 {
     if (!statuses)
-        return;
+        return NO;
 
     NSMutableArray * tweets = [NSMutableArray arrayWithCapacity:statuses.count];
     NSMutableSet * uniqueUsers = [NSMutableSet set];
@@ -161,9 +161,11 @@
         [self invokeSelector:sel withTarget:delegate args:tweets, updateId,
             page, count, nil];
     }
+
+    return YES;
 }
 
-- (void)processErrorResponse:(NSError *)error
+- (BOOL)processErrorResponse:(NSError *)error
 {
     if (self.username) {
         SEL sel = @selector(failedToFetchTimelineForUser:sinceUpdateId:page:\
@@ -176,6 +178,8 @@
         [self invokeSelector:sel withTarget:delegate args:updateId, page, count,
             error, nil];
     }
+
+    return YES;
 }
 
 @end

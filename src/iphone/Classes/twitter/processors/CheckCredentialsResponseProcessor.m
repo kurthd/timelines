@@ -41,16 +41,20 @@
     return self;
 }
 
-- (void)processResponse:(id)response
+- (BOOL)processResponse:(id)response
 {
     SEL sel = @selector(credentialsValidated:);
     [self invokeSelector:sel withTarget:delegate args:credentials, nil];
+
+    return YES;
 }
 
-- (void)processErrorResponse:(NSError *)error
+- (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToValidateCredentials:error:);
     [self invokeSelector:sel withTarget:delegate args:credentials, error, nil];
+
+    return YES;
 }
 
 @end

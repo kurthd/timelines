@@ -5,7 +5,8 @@
 #import "TwitchAppDelegate.h"
 #import "DeviceRegistrar.h"
 #import "LogInDisplayMgr.h"
-#import "CredentialsUpdatePublisher.h"
+#import "CredentialsActivatedPublisher.h"
+#import "CredentialsSetChangedPublisher.h"
 #import "TwitterCredentials.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "InfoPlistConfigReader.h"
@@ -14,6 +15,7 @@
 #import "PersonalFeedSelectionMgr.h"
 #import "UserTimelineDataSource.h"
 #import "AccountsDisplayMgr.h"
+#import "ActiveTwitterCredentials.h"
 
 @interface TwitchAppDelegate ()
 
@@ -21,6 +23,8 @@
 @property (nonatomic, retain) ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 @property (nonatomic, retain) DeviceRegistrar * registrar;
 @property (nonatomic, retain) NSMutableArray * credentials;
+@property (nonatomic, retain) ActiveTwitterCredentials *
+    activeCredentials;
 
 - (UIBarButtonItem *)sendingTweetProgressView;
 
@@ -29,6 +33,10 @@
 - (void)initAccountsTab;
 
 - (UIBarButtonItem *)newTweetButtonItem;
+
+- (void)broadcastActivatedCredentialsChanged:(TwitterCredentials *)tc;
+
+- (BOOL)saveContext;
 
 @end
 
@@ -40,6 +48,7 @@
 @synthesize composeTweetDisplayMgr;
 @synthesize registrar;
 @synthesize credentials;
+@synthesize activeCredentials;
 
 - (void)dealloc
 {
@@ -51,6 +60,10 @@
 
     [credentials release];
     [unregisteredCredentials release];
+    [activeCredentials release];
+
+    [credentialsActivatedPublisher release];
+    [credentialsSetChangedPublisher release];
 
     [managedObjectContext release];
     [managedObjectModel release];
@@ -96,9 +109,12 @@
         registerForRemoteNotificationTypes:notificationTypes];
      */
 
-    credentialsUpdatePublisher =
-        [[CredentialsUpdatePublisher alloc]
-        initWithListener:self action:@selector(credentialsChanged:)];
+    credentialsActivatedPublisher =
+        [[CredentialsActivatedPublisher alloc]
+        initWithListener:self action:@selector(credentialsActivated:)];
+    credentialsSetChangedPublisher =
+        [[CredentialsSetChangedPublisher alloc]
+         initWithListener:self action:@selector(credentialSetChanged:added:)];
 
     // Add the tab bar controller's current view as a subview of the window
     [window addSubview:tabBarController.view];
@@ -110,10 +126,18 @@
     [self initProfileTab];
     [self initAccountsTab];
 
-    if (self.credentials.count == 0)
+    if (self.credentials.count == 0) {
+        NSAssert1(!self.activeCredentials.credentials, @"No credentials exist, "
+            "but an active account has been set: '%@'.",
+            self.activeCredentials.credentials);
+        self.logInDisplayMgr.allowsCancel = NO;
         [self.logInDisplayMgr logIn];
-    else {
-        TwitterCredentials * c = [self.credentials objectAtIndex:0];
+    } else {
+        NSAssert(self.activeCredentials.credentials, @"Credentials exist, but "
+            "no active account has been set.");
+        TwitterCredentials * c = self.activeCredentials.credentials;
+        NSLog(@"Active credentials: '%@'.", c);
+
         [timelineDisplayMgr setCredentials:c];
         [profileTimelineDisplayMgr setCredentials:c];
         [self.composeTweetDisplayMgr setCredentials:c];
@@ -122,15 +146,16 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    NSError *error;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] &&
-            ![managedObjectContext save:&error]) {
-			// Handle error
-			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-			exit(-1);  // Fail
-        }
+    if (tabBarController.selectedViewController ==
+        accountsViewController.navigationController) {        
+        TwitterCredentials * activeAccount =
+            [accountsDisplayMgr selectedAccount];
+        self.activeCredentials.credentials = activeAccount;
     }
+
+    if (managedObjectContext != nil)
+        if (![self saveContext])
+            exit(-1);  // fail
 }
 
 #pragma mark Composing tweets
@@ -233,7 +258,7 @@
         autorelease];
 
     // Don't autorelease
-    [[CredentialsUpdatePublisher alloc]
+    [[CredentialsActivatedPublisher alloc]
         initWithListener:dataSource action:@selector(setCredentials:)];
 
     twitterService.delegate = dataSource;
@@ -244,10 +269,39 @@
 
 - (void)initAccountsTab
 {
+    LogInDisplayMgr * displayMgr =
+        [[LogInDisplayMgr alloc]
+         initWithRootViewController:tabBarController
+                managedObjectContext:[self managedObjectContext]];
+
     accountsDisplayMgr = [[AccountsDisplayMgr alloc]
-                          initWithAccountsViewController:accountsViewController
-                          context:[self managedObjectContext]];
-}    
+        initWithAccountsViewController:accountsViewController
+                       logInDisplayMgr:displayMgr
+                               context:[self managedObjectContext]];
+
+    [displayMgr release];
+}
+
+#pragma mark UITabBarControllerDelegate implementation
+
+- (BOOL)tabBarController:(UITabBarController *)tbc
+    shouldSelectViewController:(UIViewController *)viewController
+{
+    if (viewController == tbc.selectedViewController)  // not switching tabs
+        return YES;
+
+    if (viewController != accountsViewController.navigationController) {
+        TwitterCredentials * activeAccount =
+            [accountsDisplayMgr selectedAccount];
+
+        if (activeAccount != self.activeCredentials.credentials) {
+            NSLog(@"Switching account to: '%@'.", activeAccount);
+            [self broadcastActivatedCredentialsChanged:activeAccount];
+        }
+    }
+
+    return YES;
+}
 
 #pragma mark -
 #pragma mark Core Data stack
@@ -399,10 +453,60 @@
 
 #pragma mark Application notifications
 
-- (void)credentialsChanged:(TwitterCredentials *)newCredentials
+- (void)credentialsActivated:(TwitterCredentials *)activatedCredentials
 {
-    [unregisteredCredentials addObject:newCredentials];
-    [self registerForPushNotifications];
+    if (!self.activeCredentials)  // first account has been created
+        activeCredentials =
+            [[ActiveTwitterCredentials
+            createInstance:[self managedObjectContext]] retain];
+
+    self.activeCredentials.credentials = activatedCredentials;
+    [self saveContext];
+}
+
+- (void)credentialSetChanged:(TwitterCredentials *)changedCredentials
+                       added:(NSNumber *)added
+{
+    if ([added integerValue]) {
+        [unregisteredCredentials addObject:changedCredentials];
+        [self registerForPushNotifications];
+
+        if (self.credentials.count == 0) {  // first credentials -- active them
+            [self.credentials addObject:changedCredentials];
+            [self broadcastActivatedCredentialsChanged:changedCredentials];
+        }
+    } else
+        [self.credentials removeObject:changedCredentials];
+
+    NSLog(@"Active credentials: '%@'.", self.activeCredentials.credentials);
+    [self saveContext];
+}
+
+- (void)broadcastActivatedCredentialsChanged:(TwitterCredentials *)tc
+{
+    NSDictionary * userInfo =
+        [NSDictionary dictionaryWithObjectsAndKeys:
+        tc, @"credentials", nil];
+    
+    NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:@"ActiveCredentialsChangedNotification"
+                      object:self
+                    userInfo:userInfo];
+}
+
+#pragma mark Persistence helpers
+
+- (BOOL)saveContext
+{
+    NSError * error;
+    if ([managedObjectContext hasChanges] &&
+        ![managedObjectContext save:&error]) {
+        // Handle error
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        return NO;
+    }
+
+    return YES;
 }
 
 #pragma mark Accessors
@@ -459,6 +563,16 @@
     }
 
     return credentials;
+}
+
+- (ActiveTwitterCredentials *)activeCredentials
+{
+    if (!activeCredentials)
+        activeCredentials =
+            [[ActiveTwitterCredentials
+            findFirst:[self managedObjectContext]] retain];
+
+    return activeCredentials;
 }
 
 - (ComposeTweetDisplayMgr *)composeTweetDisplayMgr

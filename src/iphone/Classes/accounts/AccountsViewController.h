@@ -3,10 +3,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TwitterCredentials.h"
 
 @protocol AccountsViewControllerDelegate
 
 - (NSArray *)accounts;
+
+- (void)userWantsToAddAccount;
+- (BOOL)userDeletedAccount:(TwitterCredentials *)credentials;
+
+- (TwitterCredentials *)currentActiveAccount;
 
 @end
 
@@ -15,8 +21,14 @@
     id<AccountsViewControllerDelegate> delegate;
 
     NSArray * accounts;
+    TwitterCredentials * selectedAccount;
 }
 
 @property (nonatomic, assign) id<AccountsViewControllerDelegate> delegate;
+@property (nonatomic, retain) TwitterCredentials * selectedAccount;
+
+- (IBAction)userWantsToAddAccount:(id)sender;
+
+- (void)accountAdded:(TwitterCredentials *)credentials;
 
 @end

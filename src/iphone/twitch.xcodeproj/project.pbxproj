@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0524BDF70FF16E0500A6099B /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524BDF60FF16E0500A6099B /* AccountsViewController.m */; };
 		0524BDFB0FF16E2200A6099B /* AccountsDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524BDFA0FF16E2200A6099B /* AccountsDisplayMgr.m */; };
+		0524C02F0FF1B1E300A6099B /* ActiveTwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C02E0FF1B1E300A6099B /* ActiveTwitterCredentials.m */; };
+		0524C07C0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C07B0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m */; };
+		0524C1F20FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */; };
 		052C64190FED703200B259D7 /* TwitchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C64180FED703200B259D7 /* TwitchAppDelegate.m */; };
 		05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05977A3B0FEF0C9700E37B9C /* Icon.png */; };
 		05B2380D0FEDB20900A6A2E6 /* MGTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237EE0FEDB20900A6A2E6 /* MGTwitterEngine.m */; };
@@ -34,7 +37,7 @@
 		05B2393F0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B2393E0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.m */; };
 		05B239490FEDD10900A6A2E6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 05B239470FEDD10900A6A2E6 /* Localizable.strings */; };
 		05B239670FEDD1E500A6A2E6 /* AbstractUpdatePublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B239660FEDD1E500A6A2E6 /* AbstractUpdatePublisher.m */; };
-		05B2396C0FEDD21B00A6A2E6 /* CredentialsUpdatePublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B2396B0FEDD21B00A6A2E6 /* CredentialsUpdatePublisher.m */; };
+		05B2396C0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B2396B0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.m */; };
 		05B239F10FEEABBB00A6A2E6 /* twitch.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 05B239F00FEEABBB00A6A2E6 /* twitch.xcdatamodel */; };
 		05B23A320FEEB29D00A6A2E6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B23A310FEEB29D00A6A2E6 /* CoreData.framework */; };
 		05B23ACB0FEEC2AE00A6A2E6 /* InfoPlistConfigReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23ACA0FEEC2AE00A6A2E6 /* InfoPlistConfigReader.m */; };
@@ -120,6 +123,12 @@
 		0524BDF60FF16E0500A6099B /* AccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsViewController.m; path = accounts/AccountsViewController.m; sourceTree = "<group>"; };
 		0524BDF90FF16E2200A6099B /* AccountsDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsDisplayMgr.h; path = accounts/AccountsDisplayMgr.h; sourceTree = "<group>"; };
 		0524BDFA0FF16E2200A6099B /* AccountsDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsDisplayMgr.m; path = accounts/AccountsDisplayMgr.m; sourceTree = "<group>"; };
+		0524C02D0FF1B1E300A6099B /* ActiveTwitterCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActiveTwitterCredentials.h; path = twitter/ActiveTwitterCredentials.h; sourceTree = "<group>"; };
+		0524C02E0FF1B1E300A6099B /* ActiveTwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActiveTwitterCredentials.m; path = twitter/ActiveTwitterCredentials.m; sourceTree = "<group>"; };
+		0524C07A0FF1BB4600A6099B /* CredentialsSetChangedPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialsSetChangedPublisher.h; path = publishers/CredentialsSetChangedPublisher.h; sourceTree = "<group>"; };
+		0524C07B0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CredentialsSetChangedPublisher.m; path = publishers/CredentialsSetChangedPublisher.m; sourceTree = "<group>"; };
+		0524C1F00FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIApplication+NetworkActivityIndicatorAdditions.h"; path = "shared/UIApplication+NetworkActivityIndicatorAdditions.h"; sourceTree = "<group>"; };
+		0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+NetworkActivityIndicatorAdditions.m"; path = "shared/UIApplication+NetworkActivityIndicatorAdditions.m"; sourceTree = "<group>"; };
 		052C64170FED703200B259D7 /* TwitchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchAppDelegate.h; path = "app-controller/TwitchAppDelegate.h"; sourceTree = "<group>"; };
 		052C64180FED703200B259D7 /* TwitchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchAppDelegate.m; path = "app-controller/TwitchAppDelegate.m"; sourceTree = "<group>"; };
 		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -170,8 +179,8 @@
 		05B239480FEDD10900A6A2E6 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		05B239650FEDD1E500A6A2E6 /* AbstractUpdatePublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractUpdatePublisher.h; path = publishers/AbstractUpdatePublisher.h; sourceTree = "<group>"; };
 		05B239660FEDD1E500A6A2E6 /* AbstractUpdatePublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AbstractUpdatePublisher.m; path = publishers/AbstractUpdatePublisher.m; sourceTree = "<group>"; };
-		05B2396A0FEDD21B00A6A2E6 /* CredentialsUpdatePublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialsUpdatePublisher.h; path = publishers/CredentialsUpdatePublisher.h; sourceTree = "<group>"; };
-		05B2396B0FEDD21B00A6A2E6 /* CredentialsUpdatePublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CredentialsUpdatePublisher.m; path = publishers/CredentialsUpdatePublisher.m; sourceTree = "<group>"; };
+		05B2396A0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialsActivatedPublisher.h; path = publishers/CredentialsActivatedPublisher.h; sourceTree = "<group>"; };
+		05B2396B0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CredentialsActivatedPublisher.m; path = publishers/CredentialsActivatedPublisher.m; sourceTree = "<group>"; };
 		05B239F00FEEABBB00A6A2E6 /* twitch.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; name = twitch.xcdatamodel; path = "data-model/twitch.xcdatamodel"; sourceTree = "<group>"; };
 		05B23A310FEEB29D00A6A2E6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		05B23AC20FEEC09800A6A2E6 /* DeviceRegistrarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceRegistrarDelegate.h; path = "push-notifications/DeviceRegistrarDelegate.h"; sourceTree = "<group>"; };
@@ -437,6 +446,8 @@
 				05B23B3C0FEED50E00A6A2E6 /* processors */,
 				05B23C670FEEF39200A6A2E6 /* TwitterCredentials.h */,
 				05B23C680FEEF39200A6A2E6 /* TwitterCredentials.m */,
+				0524C02D0FF1B1E300A6099B /* ActiveTwitterCredentials.h */,
+				0524C02E0FF1B1E300A6099B /* ActiveTwitterCredentials.m */,
 				05B23B380FEEC6AB00A6A2E6 /* TwitterService.h */,
 				05B23B390FEEC6AB00A6A2E6 /* TwitterService.m */,
 				05B23B3B0FEECECD00A6A2E6 /* TwitterServiceDelegate.h */,
@@ -483,6 +494,8 @@
 				05F45C990FF053D400EBAFC7 /* AsynchronousNetworkFetcher.h */,
 				05F45C9A0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m */,
 				05F45CF20FF056DF00EBAFC7 /* AsynchronousNetworkFetcherDelegate.h */,
+				0524C1F00FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.h */,
+				0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -516,8 +529,10 @@
 			children = (
 				05B239650FEDD1E500A6A2E6 /* AbstractUpdatePublisher.h */,
 				05B239660FEDD1E500A6A2E6 /* AbstractUpdatePublisher.m */,
-				05B2396A0FEDD21B00A6A2E6 /* CredentialsUpdatePublisher.h */,
-				05B2396B0FEDD21B00A6A2E6 /* CredentialsUpdatePublisher.m */,
+				05B2396A0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.h */,
+				05B2396B0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.m */,
+				0524C07A0FF1BB4600A6099B /* CredentialsSetChangedPublisher.h */,
+				0524C07B0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m */,
 			);
 			name = publishers;
 			sourceTree = "<group>";
@@ -844,7 +859,7 @@
 				05B238E20FEDC4F700A6A2E6 /* LogInViewController.m in Sources */,
 				05B2393F0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.m in Sources */,
 				05B239670FEDD1E500A6A2E6 /* AbstractUpdatePublisher.m in Sources */,
-				05B2396C0FEDD21B00A6A2E6 /* CredentialsUpdatePublisher.m in Sources */,
+				05B2396C0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.m in Sources */,
 				05B239F10FEEABBB00A6A2E6 /* twitch.xcdatamodel in Sources */,
 				916BD7AC0FEEADD7007143A9 /* NetworkAwareViewController.m in Sources */,
 				916BD7AD0FEEADD7007143A9 /* NSArray+IterationAdditions.m in Sources */,
@@ -895,6 +910,9 @@
 				918E891C0FF16EE30042BBEE /* UserTimelineDataSource.m in Sources */,
 				918E89500FF183070042BBEE /* UserInfoViewController.m in Sources */,
 				918E8AA40FF1C69D0042BBEE /* UserInfoLabelCell.m in Sources */,
+				0524C02F0FF1B1E300A6099B /* ActiveTwitterCredentials.m in Sources */,
+				0524C07C0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m in Sources */,
+				0524C1F20FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

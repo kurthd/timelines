@@ -52,10 +52,10 @@
     return self;
 }
 
-- (void)processResponse:(NSArray *)statuses
+- (BOOL)processResponse:(NSArray *)statuses
 {
     if (!statuses)
-        return;
+        return NO;
 
     NSAssert1(statuses.count == 1, @"Expected 1 status in response; received "
         "%d.", statuses.count);
@@ -102,12 +102,16 @@
 
     SEL sel = @selector(tweetSentSuccessfully:);
     [self invokeSelector:sel withTarget:delegate args:tweet, nil];
+
+    return YES;
 }
 
-- (void)processErrorResponse:(NSError *)error
+- (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToSendTweet:error:);
     [self invokeSelector:sel withTarget:delegate args:text, error, nil];
+
+    return YES;
 }
 
 @end

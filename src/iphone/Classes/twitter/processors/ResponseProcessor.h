@@ -19,8 +19,8 @@
 
 #pragma mark Protected interface implemented by subclasses
 
-- (void)processResponse:(id)response;
-- (void)processErrorResponse:(NSError *)error;
+- (BOOL)processResponse:(id)response;
+- (BOOL)processErrorResponse:(NSError *)error;
 
 #pragma mark Helper methods provided to subclasses
 

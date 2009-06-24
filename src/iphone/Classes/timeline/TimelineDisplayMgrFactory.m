@@ -4,7 +4,7 @@
 
 #import "TimelineDisplayMgrFactory.h"
 #import "TwitterService.h"
-#import "CredentialsUpdatePublisher.h"
+#import "CredentialsActivatedPublisher.h"
 #import "AllTimelineDataSource.h"
 #import "AllTimelineDataSource.h"
 
@@ -51,7 +51,7 @@
     wrapperController.delegate = timelineDisplayMgr;
 
     // Don't autorelease
-    [[CredentialsUpdatePublisher alloc]
+    [[CredentialsActivatedPublisher alloc]
         initWithListener:timelineDisplayMgr action:@selector(setCredentials:)];
 
     return timelineDisplayMgr;

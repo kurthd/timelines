@@ -169,9 +169,20 @@
 
 #pragma mark UserInfoViewControllerDelegate implementation
 
-- (void)showLocationOnMap:(NSString *)location
+- (void)showLocationOnMap:(NSString *)locationString
 {
-    NSLog(@"Showing %@ on map", location);
+    NSLog(@"Showing %@ on map", locationString);
+    NSString * locationWithoutCommas =
+        [locationString stringByReplacingOccurrencesOfString:@","
+        withString:@""];
+    NSString * urlString =
+        [[NSString
+        stringWithFormat:@"http://maps.google.com/maps?q=%@",
+        locationWithoutCommas]
+        stringByAddingPercentEscapesUsingEncoding:
+        NSUTF8StringEncoding];
+    NSURL * url = [NSURL URLWithString:urlString];
+    [[UIApplication sharedApplication] openURL:url];
 }
 
 - (void)visitWebpage:(NSString *)webpageUrl

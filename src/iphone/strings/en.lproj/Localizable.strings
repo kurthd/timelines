@@ -33,3 +33,6 @@ userinfoview.following = "%@ following";
 userinfoview.webpage = "webpage";
 userinfoview.location = "location";
 userinfoview.title = "User Info";
+
+/* AccountsViewController */
+account.deletion.failed.alert.title = "Failed to Remove %@";
