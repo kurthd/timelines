@@ -80,6 +80,11 @@
                                  page:(NSNumber *)page
                                 error:(NSError *)error;
 
+- (void)tweet:(Tweet *)tweet markedAsFavorite:(BOOL)favorite;
+- (void)failedToMarkTweet:(NSString *)tweetId
+               asFavorite:(BOOL)favorite
+                    error:(NSError *)error;
+
 #pragma mark User info
 
 @optional
@@ -87,6 +92,12 @@
 - (void)userInfo:(User *)user fetchedForUsername:(NSString *)username;
 - (void)failedToFetchUserInfoForUsername:(NSString *)username
                                    error:(NSError *)error;
+
+- (void)startedFollowingUsername:(NSString *)username;
+- (void)failedToStartFollowingUsername:(NSString *)username;
+
+- (void)stoppedFollowingUsername:(NSString *)username;
+- (void)failedToStopFollowingUsername:(NSString *)username;
 
 #pragma mark Social graph
 

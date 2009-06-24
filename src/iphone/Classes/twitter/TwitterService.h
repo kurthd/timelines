@@ -70,6 +70,8 @@
 #pragma mark User info
 
 - (void)fetchUserInfoForUsername:(NSString *)username;
+- (void)followUser:(NSString *)username;
+- (void)stopFollowingUser:(NSString *)username;
 
 #pragma mark Social graph
 

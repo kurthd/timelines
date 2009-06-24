@@ -87,6 +87,10 @@
         tweet = [Tweet createInstance:context];
 
     [self populateTweet:tweet fromData:tweetData];
+
+    // mark the tweet as a favorite or not manually; twitter caches this
+    // information, so the received data will be stale
+    tweet.favorited = [NSNumber numberWithInteger:favorite ? 1 : 0];
     tweet.user = user;
 
     NSError * error;
@@ -101,7 +105,7 @@
 
 - (BOOL)processErrorResponse:(NSError *)error
 {
-    SEL sel = @selector(failedToMarkTweetAsFavorite:favorite:error:);
+    SEL sel = @selector(failedToMarkTweet:asFavorite:error:);
     [self invokeSelector:sel withTarget:delegate args:tweetId, favorite, error,
         nil];
 

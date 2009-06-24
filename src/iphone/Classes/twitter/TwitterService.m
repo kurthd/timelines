@@ -205,6 +205,32 @@
     [self request:requestId isHandledBy:processor];
 }
 
+- (void)followUser:(NSString *)username
+{
+    ResponseProcessor * processor =
+        [FollowUserResponseProcessor processorWithUsername:username
+                                                 following:YES
+                                                   context:context
+                                                  delegate:delegate];
+
+    NSString * requestId = [twitter enableUpdatesFor:username];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+- (void)stopFollowingUser:(NSString *)username
+{
+    ResponseProcessor * processor =
+        [FollowUserResponseProcessor processorWithUsername:username
+                                                 following:NO
+                                                   context:context
+                                                  delegate:delegate];
+
+    NSString * requestId = [twitter disableUpdatesFor:username];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark Social graph
 
 - (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page
