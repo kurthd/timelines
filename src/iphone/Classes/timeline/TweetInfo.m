@@ -7,7 +7,7 @@
 @implementation TweetInfo
 
 @synthesize timestamp, truncated, identifier, text, source, user, recipient,
-    favoritedCount;
+    favorited;
 
 - (void)dealloc
 {
@@ -18,7 +18,7 @@
     [source release];
     [user release];
     [recipient release];
-    [favoritedCount release];
+    [favorited release];
     [super dealloc];
 }
 
@@ -50,7 +50,7 @@
     tweetInfo.source = tweet.source;
     tweetInfo.user = tweet.user;
     tweetInfo.recipient = nil;
-    tweetInfo.favoritedCount = tweet.favoritedCount;
+    tweetInfo.favorited = tweet.favorited;
 
     return tweetInfo;
 }
@@ -67,7 +67,7 @@
     tweetInfo.source = nil;
     tweetInfo.user = message.sender;
     tweetInfo.recipient = message.recipient;
-    tweetInfo.favoritedCount = nil;
+    tweetInfo.favorited = nil;
 
     return tweetInfo;
 }

@@ -45,7 +45,7 @@
     id favorited = [data objectForKey:@"favorited"];
     if (!favorited)
         favorited = [NSNumber numberWithInteger:0];
-    [tweet setValue:favorited forKey:@"favoritedCount"];
+    [tweet setValue:favorited forKey:@"favorited"];
 }
 
 @end

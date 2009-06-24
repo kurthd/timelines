@@ -17,6 +17,6 @@
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) NSString * source;
 @property (nonatomic, retain) User * user;
-@property (nonatomic, retain) NSNumber * favoritedCount;
+@property (nonatomic, retain) NSNumber * favorited;
 
 @end
