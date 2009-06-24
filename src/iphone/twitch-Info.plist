@@ -28,9 +28,9 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
-	<key>DeviceRegistrationUrlSandbox</key>
-	<string>http://sandbox.twitch.highorderbit.com/device/register</string>
 	<key>DeviceRegistrationUrl</key>
+	<string>http://sandbox.twitch.highorderbit.com/device/register</string>
+	<key>DeviceRegistrationUrlLocal</key>
 	<string>http://megatron.local:3000/device/register</string>
 </dict>
 </plist>

@@ -69,6 +69,17 @@
                                             page:(NSNumber *)page
                                            error:(NSError *)error;
 
+#pragma mark Favorites
+
+@optional
+
+- (void)favorites:(NSArray *)favorites
+   fetchedForUser:(NSString *)username
+             page:(NSNumber *)page;
+- (void)failedToFetchFavoritesForUser:(NSString *)user
+                                 page:(NSNumber *)page
+                                error:(NSError *)error;
+
 #pragma mark User info
 
 @optional
@@ -76,5 +87,21 @@
 - (void)userInfo:(User *)user fetchedForUsername:(NSString *)username;
 - (void)failedToFetchUserInfoForUsername:(NSString *)username
                                    error:(NSError *)error;
+
+#pragma mark Social graph
+
+@optional
+
+- (void)friends:(NSArray *)friends fetchedForUsername:(NSString *)username
+           page:(NSNumber *)page;
+- (void)failedToFetchFriendsForUsername:(NSString *)username
+                                   page:(NSNumber *)page
+                                  error:(NSError *)error;
+
+- (void)followers:(NSArray *)friends fetchedForUsername:(NSString *)username
+             page:(NSNumber *)page;
+- (void)failedToFetchFollowersForUsername:(NSString *)username
+                                     page:(NSNumber *)page
+                                    error:(NSError *)error;
 
 @end
