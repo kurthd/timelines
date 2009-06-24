@@ -66,4 +66,8 @@
 
 - (void)fetchUserInfoForUsername:(NSString *)username;
 
+#pragma mark Social graph
+
+- (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page;
+
 @end

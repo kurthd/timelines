@@ -77,4 +77,14 @@
 - (void)failedToFetchUserInfoForUsername:(NSString *)username
                                    error:(NSError *)error;
 
+#pragma mark Social graph
+
+@optional
+
+- (void)friends:(NSArray *)friends fetchedForUsername:(NSString *)username
+           page:(NSNumber *)page;
+- (void)failedToFetchFriendsForUsername:(NSString *)username
+                                   page:(NSNumber *)page
+                                  error:(NSError *)error;
+
 @end
