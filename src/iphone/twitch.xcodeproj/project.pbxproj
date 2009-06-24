@@ -621,8 +621,6 @@
 				05F45C220FF0482200EBAFC7 /* SendTweetResponseProcessor.m */,
 				0524C2540FF1ED1700A6099B /* FetchUserInfoResponseProcessor.h */,
 				0524C2550FF1ED1700A6099B /* FetchUserInfoResponseProcessor.m */,
-				05F45A690FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.h */,
-				05F45A6A0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m */,
 				0524C4B60FF2B51600A6099B /* FetchFriendsForUserResponseProcessor.h */,
 				0524C4B70FF2B51600A6099B /* FetchFriendsForUserResponseProcessor.m */,
 				0524C53E0FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.h */,
@@ -631,6 +629,8 @@
 				05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */,
 				05AE71190FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.h */,
 				05AE711A0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m */,
+				05F45A690FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.h */,
+				05F45A6A0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m */,
 			);
 			name = processors;
 			sourceTree = "<group>";

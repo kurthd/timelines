@@ -216,7 +216,6 @@ connectionIdentifier:(NSString *)theIdentifier requestType:(MGTwitterRequestType
 			}
 			else if (xmlStrEqual(name, BAD_CAST "truncated") || xmlStrEqual(name, BAD_CAST "favorited"))
 			{
-                NSString *string = [self _nodeValueAsString];
 				// process element as a boolean
 				NSNumber *number = [self _nodeValueAsBool];
 				if (number)

@@ -30,4 +30,22 @@
     user.profileImageUrl = [data objectForKey:@"profile_image_url"];
 }
 
+- (void)populateTweet:(Tweet *)tweet fromData:(NSDictionary *)data
+{
+    tweet.identifier = [[data objectForKey:@"id"] description];
+    tweet.text = [data objectForKey:@"text"];
+    tweet.source = [data objectForKey:@"source"];
+
+    // already an NSDate instance
+    tweet.timestamp = [data objectForKey:@"created_at"];
+
+    [tweet setValue:[data objectForKey:@"truncated"]
+             forKey:@"truncated"];
+
+    id favorited = [data objectForKey:@"favorited"];
+    if (!favorited)
+        favorited = [NSNumber numberWithInteger:0];
+    [tweet setValue:favorited forKey:@"favoritedCount"];
+}
+
 @end

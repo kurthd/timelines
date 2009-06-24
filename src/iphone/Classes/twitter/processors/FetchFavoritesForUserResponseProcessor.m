@@ -85,25 +85,11 @@
         NSString * tweetId = [[tweetData objectForKey:@"id"] description];
         Tweet * tweet = [Tweet tweetWithId:tweetId context:context];
 
-        // everything but the favorited count for tweets doesn't change
-        if (!tweet) {
+        if (!tweet)
             tweet = [Tweet createInstance:context];
 
-            tweet.identifier = tweetId;
-            tweet.text = [tweetData objectForKey:@"text"];
-            tweet.source = [tweetData objectForKey:@"source"];
-
-            // already an NSDate instance
-            tweet.timestamp = [tweetData objectForKey:@"created_at"];
-
-            [tweet setValue:[tweetData objectForKey:@"truncated"]
-                     forKey:@"truncated"];
-            tweet.user = tweetAuthor;
-        }
-
-        // favorited count can change for a given tweet
-        [tweet setValue:[tweetData objectForKey:@"favorited"]
-                 forKey:@"favoritedCount"];
+        [self populateTweet:tweet fromData:tweetData];
+        tweet.user = tweetAuthor;
 
         [tweets addObject:tweet];
     }
