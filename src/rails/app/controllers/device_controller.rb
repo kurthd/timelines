@@ -77,7 +77,7 @@ class DeviceController < ApplicationController
       DeviceSubscription.find(:all,
         :conditions => [ 'iphone_id = ?', iphone.id ])
 
-    if subscription == nil || subscription.count == 0
+    if subscription == nil || subscription.length == 0
       # this iphone is no longer subscribed for any notifications
       iphone.delete
     end

@@ -164,6 +164,20 @@
     [self request:requestId isHandledBy:processor];
 }
 
+- (void)fetchFavoritesForUser:(NSString *)user page:(NSNumber *)page
+{
+    ResponseProcessor * processor =
+        [FetchFavoritesForUserResponseProcessor processorWithUsername:user
+                                                                 page:page
+                                                              context:context
+                                                             delegate:delegate];
+
+    NSString * requestId =
+        [twitter getFavoriteUpdatesFor:user startingAtPage:[page integerValue]];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark User info
 
 - (void)fetchUserInfoForUsername:(NSString *)username
