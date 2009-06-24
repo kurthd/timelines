@@ -64,10 +64,10 @@
     return self;
 }
 
-- (void)processResponse:(NSArray *)statuses
+- (BOOL)processResponse:(NSArray *)statuses
 {
     if (!statuses)
-        return;
+        return NO;
 
     NSMutableArray * tweets = [NSMutableArray arrayWithCapacity:statuses.count];
     NSMutableSet * uniqueUsers = [NSMutableSet set];
@@ -121,13 +121,17 @@
     SEL sel = @selector(mentions:fetchedSinceUpdateId:page:count:);
     [self invokeSelector:sel withTarget:delegate args:tweets, updateId, page,
         count, nil];
+
+    return YES;
 }
 
-- (void)processErrorResponse:(NSError *)error
+- (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToFetchMentionsSinceUpdateId:page:count:error:);
     [self invokeSelector:sel withTarget:delegate args:updateId, page, count,
         error, nil];
+
+    return YES;
 }
 
 @end

@@ -3,6 +3,7 @@
 //
 
 #import "AsynchronousNetworkFetcher.h"
+#import "UIApplication+NetworkActivityIndicatorAdditions.h"
 
 @implementation AsynchronousNetworkFetcher
 
@@ -44,6 +45,9 @@
                                                      delegate:self
                                              startImmediately:YES];
         self.delegate = aDelegate;
+
+        // HACK
+        [[UIApplication sharedApplication] networkActivityIsStarting];
     }
 
     return self;
@@ -62,6 +66,9 @@
     SEL sel = @selector(fetcher:didReceiveData:fromUrl:);
     if ([delegate respondsToSelector:sel])
         [delegate fetcher:self didReceiveData:data fromUrl:url];
+
+    // HACK
+    [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 - (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error
@@ -69,6 +76,9 @@
     SEL sel = @selector(fetcher:failedToReceiveDataFromUrl:error:);
     if ([delegate respondsToSelector:sel])
         [delegate fetcher:self failedToReceiveDataFromUrl:url error:error];
+
+    // HACK
+    [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 @end

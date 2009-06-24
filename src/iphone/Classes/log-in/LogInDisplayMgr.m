@@ -5,8 +5,9 @@
 #import "LogInDisplayMgr.h"
 #import "LogInViewController.h"
 #import "MGTwitterEngine.h"
-#import "UIAlertView+InstantiationAdditions.h"
 #import "TwitterCredentials.h"
+#import "UIAlertView+InstantiationAdditions.h"
+#import "UIApplication+NetworkActivityIndicatorAdditions.h"
 
 @interface LogInDisplayMgr ()
 
@@ -79,6 +80,8 @@
     [self.twitter setUsername:self.username password:self.password];
     self.logInRequestId = [self.twitter checkUserCredentials];
 
+    [[UIApplication sharedApplication] networkActivityIsStarting];
+
     NSLog(@"Attempting log in %@: '%@'.",
         [self.twitter usesSecureConnection] ? @"securely" : @"insecurely",
         self.logInRequestId);
@@ -128,6 +131,8 @@
         [self displayErrorWithMessage:error.localizedDescription];
         [self.logInViewController promptForLogIn];
     }
+
+    [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 - (void)requestFailed:(NSString *)requestIdentifier withError:(NSError *)error
@@ -136,6 +141,8 @@
 
     [self displayErrorWithMessage:error.localizedDescription];
     [self.logInViewController promptForLogIn];
+
+    [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 - (void)statusesReceived:(NSArray *)statuses forRequest:(NSString *)identifier

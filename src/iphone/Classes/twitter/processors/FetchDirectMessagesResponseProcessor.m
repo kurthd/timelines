@@ -61,10 +61,10 @@
     return self;
 }
 
-- (void)processResponse:(NSArray *)data
+- (BOOL)processResponse:(NSArray *)data
 {
     if (!data)
-        return;
+        return NO;
 
     NSLog(@"Received direct messages: %@", data);
 
@@ -110,13 +110,17 @@
     SEL sel = @selector(directMessages:fetchedSinceUpdateId:page:);
     [self invokeSelector:sel withTarget:delegate args:dms, updateId, page,
         nil];
+
+    return YES;
 }
 
-- (void)processErrorResponse:(NSError *)error
+- (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToFetchDirectMessagesSinceUpdateId:page:error:);
     [self invokeSelector:sel withTarget:delegate args:updateId, page, error,
         nil];
+
+    return YES;
 }
 
 #pragma mark Helper methods

@@ -4,6 +4,7 @@
 
 #import "ResponseProcessor.h"
 #import "NSError+InstantiationAdditions.h"
+#import "UIApplication+NetworkActivityIndicatorAdditions.h"
 
 @implementation ResponseProcessor
 
@@ -16,31 +17,38 @@
 
 - (id)init
 {
-    return (self = [super init]);
+    if (self = [super init])
+        [[UIApplication sharedApplication] networkActivityIsStarting];
+
+    return self;
 }
 
 #pragma mark Processing responses
 
 - (void)process:(id)response
 {
-    [self processResponse:response];
+    if ([self processResponse:response])
+        [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 - (void)processError:(NSError *)error
 {
-    [self processErrorResponse:error];
+    if ([self processErrorResponse:error])
+        [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 #pragma mark Protected interface implemented by subclasses
 
-- (void)processResponse:(id)response
+- (BOOL)processResponse:(id)response
 {
     NSAssert(NO, @"This method must be implemented by subclasses.");
+    return YES;
 }
 
-- (void)processErrorResponse:(NSError *)error
+- (BOOL)processErrorResponse:(NSError *)error
 {
     NSAssert(NO, @"This method must be implemented by subclasses.");
+    return YES;
 }
 
 #pragma mark Helper methods provided to subclasses

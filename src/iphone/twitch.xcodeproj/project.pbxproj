@@ -11,6 +11,7 @@
 		0524BDFB0FF16E2200A6099B /* AccountsDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524BDFA0FF16E2200A6099B /* AccountsDisplayMgr.m */; };
 		0524C02F0FF1B1E300A6099B /* ActiveTwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C02E0FF1B1E300A6099B /* ActiveTwitterCredentials.m */; };
 		0524C07C0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C07B0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m */; };
+		0524C1F20FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */; };
 		052C64190FED703200B259D7 /* TwitchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C64180FED703200B259D7 /* TwitchAppDelegate.m */; };
 		05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05977A3B0FEF0C9700E37B9C /* Icon.png */; };
 		05B2380D0FEDB20900A6A2E6 /* MGTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237EE0FEDB20900A6A2E6 /* MGTwitterEngine.m */; };
@@ -122,6 +123,8 @@
 		0524C02E0FF1B1E300A6099B /* ActiveTwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActiveTwitterCredentials.m; path = twitter/ActiveTwitterCredentials.m; sourceTree = "<group>"; };
 		0524C07A0FF1BB4600A6099B /* CredentialsSetChangedPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialsSetChangedPublisher.h; path = publishers/CredentialsSetChangedPublisher.h; sourceTree = "<group>"; };
 		0524C07B0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CredentialsSetChangedPublisher.m; path = publishers/CredentialsSetChangedPublisher.m; sourceTree = "<group>"; };
+		0524C1F00FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIApplication+NetworkActivityIndicatorAdditions.h"; path = "shared/UIApplication+NetworkActivityIndicatorAdditions.h"; sourceTree = "<group>"; };
+		0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+NetworkActivityIndicatorAdditions.m"; path = "shared/UIApplication+NetworkActivityIndicatorAdditions.m"; sourceTree = "<group>"; };
 		052C64170FED703200B259D7 /* TwitchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchAppDelegate.h; path = "app-controller/TwitchAppDelegate.h"; sourceTree = "<group>"; };
 		052C64180FED703200B259D7 /* TwitchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchAppDelegate.m; path = "app-controller/TwitchAppDelegate.m"; sourceTree = "<group>"; };
 		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -480,6 +483,8 @@
 				05F45C990FF053D400EBAFC7 /* AsynchronousNetworkFetcher.h */,
 				05F45C9A0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m */,
 				05F45CF20FF056DF00EBAFC7 /* AsynchronousNetworkFetcherDelegate.h */,
+				0524C1F00FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.h */,
+				0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -877,6 +882,7 @@
 				918E891C0FF16EE30042BBEE /* UserTimelineDataSource.m in Sources */,
 				0524C02F0FF1B1E300A6099B /* ActiveTwitterCredentials.m in Sources */,
 				0524C07C0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m in Sources */,
+				0524C1F20FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
