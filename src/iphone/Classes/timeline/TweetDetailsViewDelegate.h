@@ -9,5 +9,6 @@
 
 - (void)selectedUser:(User *)user;
 - (void)setFavorite:(BOOL)favorite;
+- (void)showLocationOnMap:(NSString *)location;
 
 @end

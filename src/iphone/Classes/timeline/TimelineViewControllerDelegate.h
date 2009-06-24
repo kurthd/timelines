@@ -9,5 +9,6 @@
 
 - (void)selectedTweet:(TweetInfo *)tweet avatarImage:(UIImage *)avatarImage;
 - (void)loadMoreTweets;
+- (void)showUserInfoWithAvatar:(UIImage *)avatar;
 
 @end

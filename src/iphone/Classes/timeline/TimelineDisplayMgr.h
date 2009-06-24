@@ -11,15 +11,19 @@
 #import "TweetDetailsViewController.h"
 #import "TwitterCredentials.h"
 #import "TweetInfo.h"
+#import "UserInfoViewController.h"
+#import "UserInfoViewControllerDelegate.h"
 
 @interface TimelineDisplayMgr :
     NSObject
     <TimelineDataSourceDelegate, TimelineViewControllerDelegate,
-    TweetDetailsViewDelegate, NetworkAwareViewControllerDelegate>
+    TweetDetailsViewDelegate, NetworkAwareViewControllerDelegate,
+    UserInfoViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
     TweetDetailsViewController * tweetDetailsController;
+    UserInfoViewController * userInfoController;
 
     NSObject<TimelineDataSource> * service;
 
@@ -33,11 +37,13 @@
 
     BOOL displayAsConversation;
     BOOL hasBeenDisplayed;
+    BOOL setUserToFirstTweeter;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
 @property (readonly) TimelineViewController * timelineController;
 @property (readonly) TweetDetailsViewController * tweetDetailsController;
+@property (readonly) UserInfoViewController * userInfoController;
 
 @property (nonatomic, retain) TweetInfo * selectedTweet;
 @property (nonatomic, retain) User * user;
@@ -47,10 +53,11 @@
 @property (nonatomic, readonly) NSUInteger pagesShown;
 
 @property (nonatomic, assign) BOOL displayAsConversation;
+@property (nonatomic, assign) BOOL setUserToFirstTweeter;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController
-    service:(NSObject<TimelineDataSource> *)service;
+    service:(NSObject<TimelineDataSource> *)service title:(NSString *)title;
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page

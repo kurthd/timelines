@@ -204,10 +204,12 @@
 
 - (void)initHomeTab
 {
+    NSString * homeTabTitle =
+        NSLocalizedString(@"appdelegate.hometabtitle", @"");
     timelineDisplayMgr =
         [[timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
-        homeNetAwareViewController]
+        homeNetAwareViewController title:homeTabTitle]
         retain];
     timelineDisplayMgr.displayAsConversation = YES;
     UIBarButtonItem * refreshButton =
@@ -233,12 +235,15 @@
 
 - (void)initProfileTab
 {
+    NSString * profileTabTitle =
+        NSLocalizedString(@"appdelegate.profiletabtitle", @"");
     profileTimelineDisplayMgr =
         [[timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
-        profileNetAwareViewController]
+        profileNetAwareViewController title:profileTabTitle]
         retain];
     profileTimelineDisplayMgr.displayAsConversation = NO;
+    profileTimelineDisplayMgr.setUserToFirstTweeter = YES;
     UIBarButtonItem * refreshButton =
         profileNetAwareViewController.navigationItem.leftBarButtonItem;
     refreshButton.target = profileTimelineDisplayMgr;

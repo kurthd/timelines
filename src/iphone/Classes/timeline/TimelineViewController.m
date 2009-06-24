@@ -20,18 +20,21 @@
 
 @implementation TimelineViewController
 
-@synthesize delegate, sortedTweetCache, invertedCellUsernames;
+@synthesize delegate, sortedTweetCache, invertedCellUsernames,
+    showWithoutAvatars;
 
 - (void)dealloc
 {
     [headerView release];
     [footerView release];
+    [avatarView release];
     [fullNameLabel release];
     [usernameLabel release];
     [followingLabel release];
 
     [tweets release];
     [avatarCache release];
+    [user release];
 
     [loadMoreButton release];
     [noMorePagesLabel release];
@@ -82,7 +85,16 @@
     [cell setName:tweet.user.name];
     [cell setDate:tweet.timestamp];
     [cell setTweetText:tweet.text];
-    [cell setInvert:[invertedCellUsernames containsObject:tweet.user.username]];
+    
+    TimelineTableViewCellType displayType;
+    if (showWithoutAvatars)
+        displayType = kTimelineTableViewCellTypeNoAvatar;
+    else if ([invertedCellUsernames containsObject:tweet.user.username])
+        displayType = kTimelineTableViewCellTypeInverted;
+    else
+        displayType = kTimelineTableViewCellTypeNormal;
+
+    [cell setDisplayType:displayType];
 
     return cell;
 }
@@ -102,8 +114,13 @@
 {
     TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
     NSString * tweetText = tweet.text;
+    TimelineTableViewCellType displayType =
+        showWithoutAvatars ?
+        kTimelineTableViewCellTypeNoAvatar :
+        kTimelineTableViewCellTypeNormal;
 
-    return [TimelineTableViewCell heightForContent:tweetText];
+    return [TimelineTableViewCell heightForContent:tweetText
+        displayType:displayType];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -112,9 +129,13 @@
     didReceiveData:(NSData *)data fromUrl:(NSURL *)url
 {
     NSLog(@"Received avatar for url: %@", url);
-    [avatarCache setObject:[UIImage imageWithData:data]
-        forKey:[url absoluteString]];
+    NSString * urlAsString = [url absoluteString];
+    UIImage * avatarImage = [UIImage imageWithData:data];
+    [avatarCache setObject:avatarImage forKey:urlAsString];
     [self.tableView reloadData];
+    
+    if ([urlAsString isEqual:user.profileImageUrl])
+        avatarView.imageView.image = avatarImage;
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
@@ -125,11 +146,19 @@
 
 - (IBAction)loadMoreTweets:(id)sender
 {
-    NSLog(@"Load more tweets selected");
+    NSLog(@"'Load more tweets' selected");
     [delegate loadMoreTweets];
     [loadMoreButton setTitleColor:[UIColor grayColor]
         forState:UIControlStateNormal];
     loadMoreButton.enabled = NO;
+}
+
+- (IBAction)showUserInfo:(id)sender
+{
+    NSLog(@"'Show user info' selected");
+    UIImage * avatar =
+        user ? [avatarCache objectForKey:user.profileImageUrl] : nil;
+    [delegate showUserInfoWithAvatar:avatar];
 }
 
 - (void)addTweet:(TweetInfo *)tweet
@@ -156,6 +185,10 @@
 
 - (void)setUser:(User *)aUser
 {
+    [aUser retain];
+    [user release];
+    user = aUser;
+
     if (!aUser) {
         self.tableView.tableHeaderView = nil;
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -169,6 +202,9 @@
         followingLabel.text =
             [NSString stringWithFormat:followingFormatString,
             aUser.friendsCount, aUser.followersCount];
+        UIImage * avatarImage =
+            [self getAvatarForUrl:aUser.profileImageUrl];
+        avatarView.imageView.image = avatarImage;
     }
 }
 

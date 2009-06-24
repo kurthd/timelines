@@ -6,8 +6,10 @@
 #import "TweetDetailsViewDelegate.h"
 #import "RoundedImage.h"
 #import "TweetInfo.h"
+#import "AsynchronousNetworkFetcherDelegate.h"
 
-@interface TweetDetailsViewController : UIViewController
+@interface TweetDetailsViewController :
+    UIViewController <AsynchronousNetworkFetcherDelegate>
 {
     NSObject<TweetDetailsViewDelegate> * delegate;
 

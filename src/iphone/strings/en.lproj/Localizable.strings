@@ -2,6 +2,10 @@ alert.dismiss = "Dismiss";
 
 login.failed.alert.title = "Log In Failed";
 
+/* TwitchAppDelegate */
+appdelegate.hometabtitle = "Home";
+appdelegate.profiletabtitle = "Profile";
+
 /* NetworkAwareViewController */
 nodata.updating.text = "Updating...";
 nodata.loading.text = "Loading...";
@@ -12,7 +16,7 @@ notification.registration.failed.alert.title = "Failed to Register for Notificat
 notification.registration.failed.alert.message = "Try restarting the application in a few minutes.";
 
 /* TimelineViewController */
-timelineview.userinfo.following = "%d following, %d followers";
+timelineview.userinfo.following = "%@ following, %@ followers";
 timelineview.showingmultiplepages = "Showing pages 1 - %d";
 timelineview.showingsinglepage = "Showing page 1";
 
@@ -22,6 +26,13 @@ tweetdetailsview.tweetfooter = "%@ from %@";
 
 /* Sending tweets */
 sendtweet.failed.alert.title = "Failed to Send Tweet";
+
+/* UserInfoViewController */
+userinfoview.followers = "%@ followers";
+userinfoview.following = "%@ following";
+userinfoview.webpage = "webpage";
+userinfoview.location = "location";
+userinfoview.title = "User Info";
 
 /* AccountsViewController */
 account.deletion.failed.alert.title = "Failed to Remove %@";

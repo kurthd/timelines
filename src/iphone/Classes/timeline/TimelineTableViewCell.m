@@ -59,25 +59,43 @@
     tweetTextLabel.text = tweetText;
 }
 
-- (void)setInvert:(BOOL)invert
+- (void)setDisplayType:(TimelineTableViewCellType)aDisplayType
 {
+    displayType = aDisplayType;
+
     CGRect avatarFrame = avatar.frame;
     CGRect nameLabelFrame = nameLabel.frame;
     CGRect dateLabelFrame = dateLabel.frame;
     CGRect tweetTextLabelFrame = tweetTextLabel.frame;
 
-    if (invert) {
-        avatarFrame.origin.x = 248;
-        nameLabel.hidden = YES;
-        dateLabelFrame.origin.x = 7;
-        dateLabel.textAlignment = UITextAlignmentLeft;
-        tweetTextLabelFrame.origin.x = 7;
-    } else {
-        avatarFrame.origin.x = 7;
-        nameLabel.hidden = NO;
-        dateLabelFrame.origin.x = 212;
-        dateLabel.textAlignment = UITextAlignmentRight;
-        tweetTextLabelFrame.origin.x = 64;
+    switch (displayType) {
+        case kTimelineTableViewCellTypeInverted:
+            avatar.hidden = NO;
+            avatarFrame.origin.x = 248;
+            nameLabel.hidden = YES;
+            dateLabelFrame.origin.x = 7;
+            dateLabel.textAlignment = UITextAlignmentLeft;
+            tweetTextLabelFrame.origin.x = 7;
+            tweetTextLabelFrame.size.width = 234;
+            break;
+        case kTimelineTableViewCellTypeNormal:
+            avatar.hidden = NO;
+            avatarFrame.origin.x = 7;
+            nameLabel.hidden = NO;
+            nameLabelFrame.origin.x = 64;
+            dateLabelFrame.origin.x = 212;
+            dateLabel.textAlignment = UITextAlignmentRight;
+            tweetTextLabelFrame.origin.x = 64;
+            tweetTextLabelFrame.size.width = 234;
+            break;
+        case kTimelineTableViewCellTypeNoAvatar:
+            nameLabel.hidden = YES;
+            dateLabelFrame.origin.x = 7;
+            dateLabel.textAlignment = UITextAlignmentLeft;
+            tweetTextLabelFrame.origin.x = 7;
+            avatar.hidden = YES;
+            tweetTextLabelFrame.size.width = 291;
+            break;
     }
 
     avatar.frame = avatarFrame;
@@ -87,8 +105,12 @@
 }
 
 + (CGFloat)heightForContent:(NSString *)tweetText
+    displayType:(TimelineTableViewCellType)displayType
 {
-    CGSize maxSize = CGSizeMake(234, 999999.0);
+    NSInteger tweetTextLabelWidth =
+        displayType == kTimelineTableViewCellTypeNoAvatar ?
+        291 : 234;
+    CGSize maxSize = CGSizeMake(tweetTextLabelWidth, 999999.0);
     UIFont * font = [UIFont systemFontOfSize:14.0];
     UILineBreakMode mode = UILineBreakModeWordWrap;
 
@@ -96,9 +118,11 @@
         [tweetText sizeWithFont:font constrainedToSize:maxSize
         lineBreakMode:mode];
 
-    static const NSUInteger MIN_HEIGHT = 64;
+    NSInteger minHeight =
+        displayType == kTimelineTableViewCellTypeNoAvatar ?
+        0 : 64;
     NSUInteger height = 34.0 + size.height;
-    height = height > MIN_HEIGHT ? height : MIN_HEIGHT;
+    height = height > minHeight ? height : minHeight;
 
     return height;
 }
