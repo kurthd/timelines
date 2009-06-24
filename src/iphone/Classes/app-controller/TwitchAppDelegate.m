@@ -486,8 +486,11 @@
         if (self.credentials.count == 0)  // first credentials -- active them
             [self broadcastActivatedCredentialsChanged:changedCredentials];
         [self.credentials addObject:changedCredentials];
-    } else
+    } else {
+        [TwitterCredentials
+            deletePasswordForUsername:changedCredentials.username];
         [self.credentials removeObject:changedCredentials];
+    }
 
     deviceNeedsRegistration = YES;
     [self registerDeviceForPushNotifications];
