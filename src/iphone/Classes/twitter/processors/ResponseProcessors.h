@@ -14,5 +14,6 @@
 #import "FetchFriendsForUserResponseProcessor.h"
 #import "FetchFollowersForUserResponseProcessor.h"
 #import "FetchFavoritesForUserResponseProcessor.h"
+#import "MarkFavoriteResponseProcessor.h"
 
 #import "SendTweetResponseProcessor.h"

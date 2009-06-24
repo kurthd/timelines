@@ -65,6 +65,7 @@
 #pragma mark Favorites
 
 - (void)fetchFavoritesForUser:(NSString *)user page:(NSNumber *)page;
+- (void)markTweet:(NSString *)tweetId asFavorite:(BOOL)favorite;
 
 #pragma mark User info
 

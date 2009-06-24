@@ -1324,9 +1324,9 @@
 }
 
 
-- (NSString *)markUpdate:(int)updateID asFavorite:(BOOL)flag
+- (NSString *)markUpdate:(NSString *)updateID asFavorite:(BOOL)flag
 {
-    NSString *path = [NSString stringWithFormat:@"favorites/%@/%d.xml", 
+    NSString *path = [NSString stringWithFormat:@"favorites/%@/%@.xml", 
                       (flag) ? @"create" : @"destroy" ,
                       updateID];
     
