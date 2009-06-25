@@ -26,6 +26,9 @@
     TwitterService * service;
     TwitPicImageSender * imageSender;
 
+    BOOL composingDirectMessage;
+    NSString * recipient;
+
     CredentialsActivatedPublisher * credentialsUpdatePublisher;
 }
 
@@ -37,6 +40,9 @@
 
 - (void)composeTweet;
 - (void)composeTweetWithText:(NSString *)tweet;
+
+- (void)composeDirectMessageTo:(NSString *)username;
+- (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)tweet;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
 

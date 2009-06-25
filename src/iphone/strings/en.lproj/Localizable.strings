@@ -28,6 +28,9 @@ tweetdetailsview.tweetfooter = "%@ from %@";
 
 /* Sending tweets */
 sendtweet.failed.alert.title = "Failed to Send Tweet";
+composetweet.view.title = "New Tweet";
+directmessage.failed.alert.title = "Failed to Send Direct Message";
+composedirectmessage.view.title = "DM to @%@";
 imagepicker.choose.cancel = "Cancel";
 imagepicker.choose.camera = "Take Photo";
 imagepicker.choose.photos = "Choose Existing Photo";

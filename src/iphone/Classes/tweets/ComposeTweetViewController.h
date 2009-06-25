@@ -11,6 +11,7 @@
 
     IBOutlet UITextView * textView;
 
+    IBOutlet UINavigationBar * navigationBar;
     IBOutlet UIBarButtonItem * sendButton;
     IBOutlet UIBarButtonItem * cancelButton;
 
@@ -22,6 +23,7 @@
 
 @property (nonatomic, assign) id<ComposeTweetViewControllerDelegate> delegate;
 
+- (void)setTitle:(NSString *)title;
 - (void)setUsername:(NSString *)username;
 - (void)promptWithText:(NSString *)text;
 - (void)addTextToMessage:(NSString *)text;

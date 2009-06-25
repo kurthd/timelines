@@ -42,6 +42,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)dealloc
 {
     [textView release];
+    [navigationBar release];
     [cancelButton release];
     [sendButton release];
     [characterCount release];
@@ -60,6 +61,12 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [super viewWillAppear:animated];
 
     [textView becomeFirstResponder];
+}
+
+- (void)setTitle:(NSString *)title
+{
+    NSLog(@"My navigation item is: '%@'", self.navigationItem);
+    navigationBar.topItem.title = title;
 }
 
 - (void)setUsername:(NSString *)username
