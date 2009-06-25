@@ -42,6 +42,7 @@
 
 - (void)setUser:(User *)user;
 - (void)setTweets:(NSArray *)tweets page:(NSUInteger)page;
+- (void)setAllPagesLoaded:(BOOL)allLoaded;
 
 - (IBAction)loadMoreTweets:(id)sender;
 - (IBAction)showUserInfo:(id)sender;

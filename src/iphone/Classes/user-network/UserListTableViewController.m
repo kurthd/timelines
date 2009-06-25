@@ -40,6 +40,7 @@
     [footerView release];
     [currentPagesLabel release];
     [loadMoreButton release];
+    [noMorePagesLabel release];
 
     [users release];
     [avatarCache release];
@@ -165,6 +166,13 @@
     loadMoreButton.enabled = YES;
     
     [self.tableView reloadData];
+}
+
+- (void)setAllPagesLoaded:(BOOL)allLoaded
+{
+    loadMoreButton.hidden = allLoaded;
+    currentPagesLabel.hidden = allLoaded;
+    noMorePagesLabel.hidden = !allLoaded;
 }
 
 - (UIImage *)getAvatarForUrl:(NSString *)url

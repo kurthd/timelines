@@ -86,7 +86,7 @@
     [cell setName:tweet.user.name];
     [cell setDate:tweet.timestamp];
     [cell setTweetText:tweet.text];
-    
+
     TimelineTableViewCellType displayType;
     if (showWithoutAvatars)
         displayType = kTimelineTableViewCellTypeNoAvatar;
@@ -233,6 +233,13 @@
     [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
         forState:UIControlStateNormal];
     loadMoreButton.enabled = YES;
+}
+
+- (void)setAllPagesLoaded:(BOOL)allLoaded
+{
+    loadMoreButton.hidden = allLoaded;
+    currentPagesLabel.hidden = allLoaded;
+    noMorePagesLabel.hidden = !allLoaded;
 }
 
 - (UIImage *)getAvatarForUrl:(NSString *)url
