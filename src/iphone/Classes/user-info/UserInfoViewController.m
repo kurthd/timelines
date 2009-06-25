@@ -129,15 +129,41 @@ enum {
                         NSLocalizedString(@"userinfoview.favorites", @"");
                 else {
                     if (indexPath.row == kUserInfoFollowersRow) {
+                        if ([user.followersCount
+                            isEqual:[NSNumber numberWithInt:0]]) {
+                            cell.textLabel.textColor = [UIColor grayColor];
+                            cell.accessoryType = UITableViewCellAccessoryNone;
+                            cell.selectionStyle =
+                                UITableViewCellSelectionStyleNone;
+                        } else {
+                            cell.textLabel.textColor = [UIColor blackColor];
+                            cell.accessoryType =
+                                UITableViewCellAccessoryDisclosureIndicator;
+                            cell.selectionStyle =
+                                UITableViewCellSelectionStyleBlue;
+                        }
                         formatString =
                             NSLocalizedString(@"userinfoview.followers", @"");
                         count = user.followersCount;
                     } else {
+                        if ([user.friendsCount
+                            isEqual:[NSNumber numberWithInt:0]]) {
+                            cell.textLabel.textColor = [UIColor grayColor];
+                            cell.accessoryType = UITableViewCellAccessoryNone;
+                            cell.selectionStyle =
+                                UITableViewCellSelectionStyleNone;
+                        } else {
+                            cell.textLabel.textColor = [UIColor blackColor];
+                            cell.accessoryType =
+                                UITableViewCellAccessoryDisclosureIndicator;
+                            cell.selectionStyle =
+                                UITableViewCellSelectionStyleBlue;
+                        }
                         formatString =
                             NSLocalizedString(@"userinfoview.following", @"");
                         count = user.friendsCount;
-                    } 
-                    
+                    }
+
                     cell.textLabel.text =
                         [NSString stringWithFormat:formatString, count];
                 }
@@ -167,6 +193,19 @@ enum {
                 [delegate displayFavoritesForUser:user.username];
             break;
     }
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView
+    willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == kUserInfoFollowingRow &&
+        [user.friendsCount isEqual:[NSNumber numberWithInt:0]])
+        return nil;
+    if (indexPath.row == kUserInfoFollowersRow &&
+        [user.followersCount isEqual:[NSNumber numberWithInt:0]])
+        return nil;
+
+    return indexPath;
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
