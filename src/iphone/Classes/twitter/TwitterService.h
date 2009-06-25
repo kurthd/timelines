@@ -61,6 +61,8 @@
 #pragma mark Direct messages
 
 - (void)fetchDirectMessagesSinceId:(NSNumber *)updateId page:(NSNumber *)page;
+- (void)fetchSentDirectMessagesSinceId:(NSNumber *)updateId
+                                  page:(NSNumber *)page;
 - (void)sendDirectMessage:(NSString *)message to:(NSString *)username;
 
 #pragma mark Favorites
@@ -78,5 +80,6 @@
 
 - (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page;
 - (void)fetchFollowersForUser:(NSString *)user page:(NSNumber *)page;
+- (void)isUser:(NSString *)user following:(NSString *)followee;
 
 @end

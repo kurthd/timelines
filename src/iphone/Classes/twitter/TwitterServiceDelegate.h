@@ -71,6 +71,13 @@
                                             page:(NSNumber *)page
                                            error:(NSError *)error;
 
+- (void)sentDirectMessages:(NSArray *)directMessages
+      fetchedSinceUpdateId:(NSNumber *)updateId
+                      page:(NSNumber *)page;
+- (void)failedToFetchSentDirectMessagesSinceUpdateId:(NSNumber *)updateId
+                                                page:(NSNumber *)page
+                                               error:(NSError *)error;
+
 - (void)directMessage:(DirectMessage *)dm sentToUser:(NSString *)username;
 - (void)failedToSendDirectMessage:(NSString *)text
                            toUser:(NSString *)username
@@ -121,5 +128,11 @@
 - (void)failedToFetchFollowersForUsername:(NSString *)username
                                      page:(NSNumber *)page
                                     error:(NSError *)error;
+
+- (void)user:(NSString *)username isFollowing:(NSString *)followee;
+- (void)user:(NSString *)username isNotFollowing:(NSString *)followee;
+- (void)failedToQueryIfUser:(NSString *)username
+                isFollowing:(NSString *)followee
+                      error:(NSError *)error;
 
 @end

@@ -20,6 +20,8 @@
 @property (nonatomic, retain) CredentialsActivatedPublisher *
     credentialsUpdatePublisher;
 
+@property (nonatomic, copy) NSString * recipient;
+
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source;
 
 @end
@@ -29,6 +31,7 @@
 @synthesize rootViewController, composeTweetViewController;
 @synthesize service, imageSender, credentialsUpdatePublisher;
 @synthesize delegate;
+@synthesize recipient;
 
 - (void)dealloc
 {
@@ -38,6 +41,7 @@
     self.service = nil;
     self.imageSender = nil;
     self.credentialsUpdatePublisher = nil;
+    self.recipient = nil;
     [super dealloc];
 }
 
@@ -71,8 +75,34 @@
         presentModalViewController:self.composeTweetViewController
                           animated:YES];
 
+    [self.composeTweetViewController
+        setTitle:NSLocalizedString(@"composetweet.view.title", @"")];
     [self.composeTweetViewController setUsername:service.credentials.username];
     [self.composeTweetViewController promptWithText:tweet];
+
+    composingDirectMessage = NO;
+    self.recipient = nil;
+}
+
+- (void)composeDirectMessageTo:(NSString *)username
+{
+    [self composeDirectMessageTo:username withText:@""];
+}
+
+- (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)tweet
+{
+    [self.rootViewController
+        presentModalViewController:self.composeTweetViewController
+                          animated:YES];
+
+    [self.composeTweetViewController setUsername:service.credentials.username];
+    [self.composeTweetViewController promptWithText:tweet];
+    [self.composeTweetViewController setTitle:
+        [NSString stringWithFormat:
+        NSLocalizedString(@"composedirectmessage.view.title", @""), username]];
+
+    composingDirectMessage = YES;
+    self.recipient = username;
 }
 
 #pragma mark Credentials notifications
@@ -92,10 +122,15 @@
 
 - (void)userDidSave:(NSString *)tweet
 {
-    [self.delegate userIsSendingTweet:tweet];
     [self.rootViewController dismissModalViewControllerAnimated:YES];
 
-    [self.service sendTweet:tweet];
+    if (composingDirectMessage) {
+        [self.delegate userIsSendingDirectMessage:tweet to:self.recipient];
+        [self.service sendDirectMessage:tweet to:self.recipient];
+    } else {
+        [self.delegate userIsSendingTweet:tweet];
+        [self.service sendTweet:tweet];
+    }
 }
 
 - (void)userWantsToSelectPhoto
@@ -155,9 +190,27 @@
                                                         message:message];
     [alert show];
 
-    [self.composeTweetViewController promptWithText:tweet];
-
     [self.delegate userFailedToSendTweet:tweet];
+}
+
+- (void)directMessage:(DirectMessage *)dm sentToUser:(NSString *)username
+{
+    [self.delegate userDidSendDirectMessage:dm];
+}
+
+- (void)failedToSendDirectMessage:(NSString *)text
+                           toUser:(NSString *)username
+                            error:(NSError *)error
+{
+    NSString * title =
+        NSLocalizedString(@"directmessage.failed.alert.title", @"");
+    NSString * message = error.localizedDescription;
+
+    UIAlertView * alert = [UIAlertView simpleAlertViewWithTitle:title
+                                                        message:message];
+    [alert show];
+
+    [self.delegate userFailedToSendDirectMessage:text to:username];
 }
 
 #pragma mark TwitPicImageSenderDelegate implementation

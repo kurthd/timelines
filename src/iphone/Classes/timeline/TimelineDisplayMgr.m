@@ -284,7 +284,7 @@
 
 - (void)sendDirectMessageToUser:(NSString *)username
 {
-    [composeTweetDisplayMgr composeTweet];
+    [composeTweetDisplayMgr composeDirectMessageTo:username];
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation

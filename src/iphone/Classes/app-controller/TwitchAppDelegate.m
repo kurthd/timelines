@@ -194,10 +194,23 @@
 - (void)userFailedToSendTweet:(NSString *)tweet
 {
     [homeNetAwareViewController.navigationItem
-        setRightBarButtonItem:[self sendingTweetProgressView]
+        setRightBarButtonItem:[self newTweetButtonItem]
                      animated:YES];
 
     [self.composeTweetDisplayMgr composeTweetWithText:tweet];
+}
+
+- (void)userIsSendingDirectMessage:(NSString *)dm to:(NSString *)username
+{
+}
+
+- (void)userDidSendDirectMessage:(DirectMessage *)dm
+{
+}
+
+- (void)userFailedToSendDirectMessage:(NSString *)dm to:(NSString *)username
+{
+    [self.composeTweetDisplayMgr composeDirectMessageTo:username withText:dm];
 }
 
 #pragma mark initialization helpers

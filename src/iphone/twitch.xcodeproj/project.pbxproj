@@ -20,6 +20,7 @@
 		052C64190FED703200B259D7 /* TwitchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C64180FED703200B259D7 /* TwitchAppDelegate.m */; };
 		057E800E0FF314830074A91B /* TwitPicResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E800D0FF314830074A91B /* TwitPicResponseParser.m */; };
 		057E82420FF345CA0074A91B /* SendDirectMessageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E82410FF345CA0074A91B /* SendDirectMessageResponseProcessor.m */; };
+		057E82DF0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E82DE0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m */; };
 		05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05977A3B0FEF0C9700E37B9C /* Icon.png */; };
 		05AE708E0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */; };
 		05AE711B0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE711A0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m */; };
@@ -163,6 +164,8 @@
 		057E800D0FF314830074A91B /* TwitPicResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitPicResponseParser.m; path = twitpic/TwitPicResponseParser.m; sourceTree = "<group>"; };
 		057E82400FF345CA0074A91B /* SendDirectMessageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SendDirectMessageResponseProcessor.h; path = twitter/processors/SendDirectMessageResponseProcessor.h; sourceTree = "<group>"; };
 		057E82410FF345CA0074A91B /* SendDirectMessageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SendDirectMessageResponseProcessor.m; path = twitter/processors/SendDirectMessageResponseProcessor.m; sourceTree = "<group>"; };
+		057E82DD0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QueryIsFollowingResponseProcessor.h; path = twitter/processors/QueryIsFollowingResponseProcessor.h; sourceTree = "<group>"; };
+		057E82DE0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QueryIsFollowingResponseProcessor.m; path = twitter/processors/QueryIsFollowingResponseProcessor.m; sourceTree = "<group>"; };
 		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		05AE708C0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFavoritesForUserResponseProcessor.h; path = twitter/processors/FetchFavoritesForUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFavoritesForUserResponseProcessor.m; path = twitter/processors/FetchFavoritesForUserResponseProcessor.m; sourceTree = "<group>"; };
@@ -669,6 +672,8 @@
 				05AE711A0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m */,
 				05F45A690FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.h */,
 				05F45A6A0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m */,
+				057E82DD0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.h */,
+				057E82DE0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m */,
 			);
 			name = processors;
 			sourceTree = "<group>";
@@ -1058,6 +1063,7 @@
 				910BE36A0FF32059005342EE /* UIState.m in Sources */,
 				910BE36D0FF32137005342EE /* UIStatePersistenceStore.m in Sources */,
 				057E82420FF345CA0074A91B /* SendDirectMessageResponseProcessor.m in Sources */,
+				057E82DF0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
