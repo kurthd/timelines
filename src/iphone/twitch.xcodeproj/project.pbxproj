@@ -80,6 +80,8 @@
 		910BE2040FF2BA17005342EE /* UserListTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910BE2020FF2BA17005342EE /* UserListTableView.xib */; };
 		910BE2070FF2BA3F005342EE /* UserSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910BE2050FF2BA3F005342EE /* UserSummaryTableViewCell.xib */; };
 		910BE31B0FF30296005342EE /* FavoritesTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE31A0FF30296005342EE /* FavoritesTimelineDataSource.m */; };
+		910BE36A0FF32059005342EE /* UIState.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE3690FF32059005342EE /* UIState.m */; };
+		910BE36D0FF32137005342EE /* UIStatePersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE36C0FF32137005342EE /* UIStatePersistenceStore.m */; };
 		9115A8400FF03C8300D6A769 /* AllTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */; };
 		9115A8430FF03C9A00D6A769 /* MessagesTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8420FF03C9A00D6A769 /* MessagesTimelineDataSource.m */; };
 		9115A8C70FF0503300D6A769 /* PersonalFeedSelectionMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */; };
@@ -280,6 +282,10 @@
 		910BE2090FF2BD7B005342EE /* UserListTableViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserListTableViewControllerDelegate.h; path = "user-network/UserListTableViewControllerDelegate.h"; sourceTree = "<group>"; };
 		910BE3190FF30296005342EE /* FavoritesTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoritesTimelineDataSource.h; path = timeline/FavoritesTimelineDataSource.h; sourceTree = "<group>"; };
 		910BE31A0FF30296005342EE /* FavoritesTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoritesTimelineDataSource.m; path = timeline/FavoritesTimelineDataSource.m; sourceTree = "<group>"; };
+		910BE3680FF32059005342EE /* UIState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIState.h; path = persistence/UIState.h; sourceTree = "<group>"; };
+		910BE3690FF32059005342EE /* UIState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIState.m; path = persistence/UIState.m; sourceTree = "<group>"; };
+		910BE36B0FF32137005342EE /* UIStatePersistenceStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIStatePersistenceStore.h; path = persistence/UIStatePersistenceStore.h; sourceTree = "<group>"; };
+		910BE36C0FF32137005342EE /* UIStatePersistenceStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIStatePersistenceStore.m; path = persistence/UIStatePersistenceStore.m; sourceTree = "<group>"; };
 		9115A8380FF03A6100D6A769 /* TimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDataSource.h; path = timeline/TimelineDataSource.h; sourceTree = "<group>"; };
 		9115A83B0FF03BA900D6A769 /* TimelineDataSourceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDataSourceDelegate.h; path = timeline/TimelineDataSourceDelegate.h; sourceTree = "<group>"; };
 		9115A83E0FF03C8300D6A769 /* AllTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllTimelineDataSource.h; path = timeline/AllTimelineDataSource.h; sourceTree = "<group>"; };
@@ -667,6 +673,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				910BE3670FF32040005342EE /* persistence */,
 				910BE1FA0FF2B8E4005342EE /* user-network */,
 				918E894C0FF182E20042BBEE /* user-info */,
 				916BD8130FEEBDF9007143A9 /* timeline */,
@@ -751,6 +758,17 @@
 				910BE2090FF2BD7B005342EE /* UserListTableViewControllerDelegate.h */,
 			);
 			name = "user-network";
+			sourceTree = "<group>";
+		};
+		910BE3670FF32040005342EE /* persistence */ = {
+			isa = PBXGroup;
+			children = (
+				910BE3680FF32059005342EE /* UIState.h */,
+				910BE3690FF32059005342EE /* UIState.m */,
+				910BE36B0FF32137005342EE /* UIStatePersistenceStore.h */,
+				910BE36C0FF32137005342EE /* UIStatePersistenceStore.m */,
+			);
+			name = persistence;
 			sourceTree = "<group>";
 		};
 		916BD7CB0FEEB112007143A9 /* images */ = {
@@ -1010,6 +1028,8 @@
 				05AE711B0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m in Sources */,
 				05AE71C40FF2E5F40037D1D6 /* FollowUserResponseProcessor.m in Sources */,
 				910BE31B0FF30296005342EE /* FavoritesTimelineDataSource.m in Sources */,
+				910BE36A0FF32059005342EE /* UIState.m in Sources */,
+				910BE36D0FF32137005342EE /* UIStatePersistenceStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
