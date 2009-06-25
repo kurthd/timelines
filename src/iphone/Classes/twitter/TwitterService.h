@@ -78,5 +78,6 @@
 
 - (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page;
 - (void)fetchFollowersForUser:(NSString *)user page:(NSNumber *)page;
+- (void)isUser:(NSString *)user following:(NSString *)followee;
 
 @end

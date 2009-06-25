@@ -122,4 +122,10 @@
                                      page:(NSNumber *)page
                                     error:(NSError *)error;
 
+- (void)user:(NSString *)username isFollowing:(NSString *)followee;
+- (void)user:(NSString *)username isNotFollowing:(NSString *)followee;
+- (void)failedToQueryIfUser:(NSString *)username
+                isFollowing:(NSString *)followee
+                      error:(NSError *)error;
+
 @end

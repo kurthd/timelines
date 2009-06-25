@@ -277,6 +277,19 @@
     [self request:requestId isHandledBy:processor];
 }
 
+- (void)isUser:(NSString *)user following:(NSString *)followee
+{
+    ResponseProcessor * processor =
+        [QueryIsFollowingResponseProcessor processorWithUsername:user
+                                                        followee:followee
+                                                         context:context
+                                                        delegate:delegate];
+
+    NSString * requestId = [twitter isUser:user receivingUpdatesFor:followee];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark MGTwitterEngineDelegate implementation
 
 - (void)requestSucceeded:(NSString *)requestId
@@ -314,9 +327,11 @@
     [self cleanUpRequest:requestId];
 }
 
-- (void)miscInfoReceived:(NSArray *)miscInfo forRequest:(NSString *)identifier
+- (void)miscInfoReceived:(NSArray *)miscInfo forRequest:(NSString *)requestId
 {
-    NSLog(@"Misc. info received for request '%@': %@", identifier, miscInfo);
+    NSLog(@"Misc. info received for request '%@': %@", requestId, miscInfo);
+    [self request:requestId succeededWithResponse:miscInfo];
+    [self cleanUpRequest:requestId];
 }
 
 - (void)imageReceived:(UIImage *)image forRequest:(NSString *)identifier
