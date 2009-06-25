@@ -52,6 +52,7 @@
     BOOL hasBeenDisplayed;
     BOOL needsRefresh;
     BOOL setUserToFirstTweeter;
+    BOOL refreshingTweets;
 
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     TimelineDisplayMgr * tweetDetailsTimelineDisplayMgr;

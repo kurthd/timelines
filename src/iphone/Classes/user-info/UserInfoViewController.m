@@ -241,6 +241,7 @@ enum {
     bioLabel.text = aUser.bio;
 
     [self layoutViews];
+    [self.tableView reloadData];
 }
 
 - (void)layoutViews

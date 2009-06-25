@@ -14,6 +14,7 @@
     IBOutlet UIView * footerView;
     IBOutlet UILabel * currentPagesLabel;
     IBOutlet UIButton * loadMoreButton;
+    IBOutlet UILabel * noMorePagesLabel;
 
     NSArray * users;
     NSMutableDictionary * avatarCache;
@@ -28,6 +29,7 @@
 @property (nonatomic, copy) NSArray * sortedUserCache;
 
 - (void)setUsers:(NSArray *)users page:(NSUInteger)page;
+- (void)setAllPagesLoaded:(BOOL)allLoaded;
 
 - (IBAction)loadMoreUsers:(id)sender;
 

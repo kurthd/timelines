@@ -93,10 +93,16 @@
 {
     NSLog(@"Timeline received: %@", aTimeline);
     self.updateId = anUpdateId;
+    NSInteger oldTimelineCount = [[timeline allKeys] count];
     for (TweetInfo * tweet in aTimeline)
         [timeline setObject:tweet forKey:tweet.identifier];
+    NSInteger newTimelineCount = [[timeline allKeys] count];
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
     [wrapperController setCachedDataAvailable:YES];
+    BOOL allLoaded =
+        (!refreshingTweets && oldTimelineCount == newTimelineCount) ||
+        newTimelineCount == 0;
+    [timelineController setAllPagesLoaded:allLoaded];
     if (setUserToFirstTweeter) {
         timelineController.showWithoutAvatars = YES;
         if ([aTimeline count] > 0) {
@@ -107,6 +113,7 @@
             [service fetchUserInfoForUsername:credentials.username];
     }
     [timelineController setTweets:[timeline allValues] page:pagesShown];
+    refreshingTweets = NO;
 }
 
 - (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)updateId
@@ -162,8 +169,12 @@
     [self.userListNetAwareViewController setCachedDataAvailable:YES];
     [self.userListNetAwareViewController
         setUpdatingState:kConnectedAndNotUpdating];
+    NSInteger oldCacheSize = [[cache allKeys] count];
     for (User * friend in users)
         [cache setObject:friend forKey:friend.username];
+    NSInteger newCacheSize = [[cache allKeys] count];
+    BOOL allLoaded = oldCacheSize == newCacheSize;
+    [self.userListController setAllPagesLoaded:allLoaded];
     [self.userListController setUsers:[cache allValues] page:[page intValue]];
 }
 
@@ -185,7 +196,7 @@
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
     if ([service credentials])
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
-        page:[NSNumber numberWithInt:++pagesShown]];
+            page:[NSNumber numberWithInt:++pagesShown]];
 }
 
 - (void)showUserInfoWithAvatar:(UIImage *)avatar
@@ -461,9 +472,11 @@
 - (void)refresh
 {
     NSLog(@"Refreshing timeline...");
-    if([service credentials])
+    if([service credentials]) {
+        refreshingTweets = YES;
         [service fetchTimelineSince:self.updateId
             page:[NSNumber numberWithInt:0]];
+    }
     [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
@@ -604,6 +617,11 @@
         // Changed accounts (as opposed to setting it for the first time)
 
         [timeline removeAllObjects];
+        if (user)
+            [service fetchUserInfoForUsername:credentials.username];
+        [wrapperController.navigationController
+            popToRootViewControllerAnimated:NO];
+        
         needsRefresh = YES;
         pagesShown = 1;
         [self.wrapperController setCachedDataAvailable:NO];
