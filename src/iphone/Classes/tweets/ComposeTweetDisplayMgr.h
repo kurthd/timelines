@@ -6,13 +6,17 @@
 #import "ComposeTweetDisplayMgrDelegate.h"
 #import "ComposeTweetViewControllerDelegate.h"
 #import "TwitterService.h"
+#import "TwitPicImageSender.h"
 #import "TwitterCredentials.h"
 
 @class ComposeTweetViewController;
 @class CredentialsActivatedPublisher;
 
 @interface ComposeTweetDisplayMgr :
-    NSObject <ComposeTweetViewControllerDelegate, TwitterServiceDelegate>
+    NSObject
+    <ComposeTweetViewControllerDelegate, TwitterServiceDelegate,
+    TwitPicImageSenderDelegate, UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate, UIActionSheetDelegate>
 {
     id<ComposeTweetDisplayMgrDelegate> delegate;
 
@@ -20,6 +24,7 @@
     ComposeTweetViewController * composeTweetViewController;
 
     TwitterService * service;
+    TwitPicImageSender * imageSender;
 
     CredentialsActivatedPublisher * credentialsUpdatePublisher;
 }
@@ -27,7 +32,8 @@
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;
 
 - (id)initWithRootViewController:(UIViewController *)aRootViewController
-                  twitterService:(TwitterService *)aService;
+                  twitterService:(TwitterService *)aService
+                     imageSender:(TwitPicImageSender *)anImageSender;
 
 - (void)composeTweet;
 - (void)composeTweetWithText:(NSString *)tweet;

@@ -18,10 +18,12 @@
 		0524C4B80FF2B51600A6099B /* FetchFriendsForUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C4B70FF2B51600A6099B /* FetchFriendsForUserResponseProcessor.m */; };
 		0524C5400FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C53F0FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.m */; };
 		052C64190FED703200B259D7 /* TwitchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C64180FED703200B259D7 /* TwitchAppDelegate.m */; };
+		057E800E0FF314830074A91B /* TwitPicResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E800D0FF314830074A91B /* TwitPicResponseParser.m */; };
 		05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05977A3B0FEF0C9700E37B9C /* Icon.png */; };
 		05AE708E0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */; };
 		05AE711B0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE711A0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m */; };
 		05AE71C40FF2E5F40037D1D6 /* FollowUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE71C30FF2E5F40037D1D6 /* FollowUserResponseProcessor.m */; };
+		05AE71FF0FF2EEB40037D1D6 /* TwitPicImageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE71FE0FF2EEB40037D1D6 /* TwitPicImageSender.m */; };
 		05B2380D0FEDB20900A6A2E6 /* MGTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237EE0FEDB20900A6A2E6 /* MGTwitterEngine.m */; };
 		05B2380E0FEDB20900A6A2E6 /* MGTwitterHTTPURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237F20FEDB20900A6A2E6 /* MGTwitterHTTPURLConnection.m */; };
 		05B2380F0FEDB20900A6A2E6 /* MGTwitterLibXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237F40FEDB20900A6A2E6 /* MGTwitterLibXMLParser.m */; };
@@ -156,6 +158,8 @@
 		0524C53F0FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFollowersForUserResponseProcessor.m; path = twitter/processors/FetchFollowersForUserResponseProcessor.m; sourceTree = "<group>"; };
 		052C64170FED703200B259D7 /* TwitchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchAppDelegate.h; path = "app-controller/TwitchAppDelegate.h"; sourceTree = "<group>"; };
 		052C64180FED703200B259D7 /* TwitchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchAppDelegate.m; path = "app-controller/TwitchAppDelegate.m"; sourceTree = "<group>"; };
+		057E800C0FF314830074A91B /* TwitPicResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitPicResponseParser.h; path = twitpic/TwitPicResponseParser.h; sourceTree = "<group>"; };
+		057E800D0FF314830074A91B /* TwitPicResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitPicResponseParser.m; path = twitpic/TwitPicResponseParser.m; sourceTree = "<group>"; };
 		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		05AE708C0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFavoritesForUserResponseProcessor.h; path = twitter/processors/FetchFavoritesForUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFavoritesForUserResponseProcessor.m; path = twitter/processors/FetchFavoritesForUserResponseProcessor.m; sourceTree = "<group>"; };
@@ -163,6 +167,9 @@
 		05AE711A0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkFavoriteResponseProcessor.m; path = twitter/processors/MarkFavoriteResponseProcessor.m; sourceTree = "<group>"; };
 		05AE71C20FF2E5F40037D1D6 /* FollowUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FollowUserResponseProcessor.h; path = twitter/processors/FollowUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE71C30FF2E5F40037D1D6 /* FollowUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FollowUserResponseProcessor.m; path = twitter/processors/FollowUserResponseProcessor.m; sourceTree = "<group>"; };
+		05AE71FD0FF2EEB40037D1D6 /* TwitPicImageSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitPicImageSender.h; path = twitpic/TwitPicImageSender.h; sourceTree = "<group>"; };
+		05AE71FE0FF2EEB40037D1D6 /* TwitPicImageSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitPicImageSender.m; path = twitpic/TwitPicImageSender.m; sourceTree = "<group>"; };
+		05AE720C0FF2F29E0037D1D6 /* TwitPicImageSenderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitPicImageSenderDelegate.h; path = twitpic/TwitPicImageSenderDelegate.h; sourceTree = "<group>"; };
 		05B237ED0FEDB20900A6A2E6 /* MGTwitterEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTwitterEngine.h; path = "vendor/mg-twitter-engine/MGTwitterEngine.h"; sourceTree = "<group>"; };
 		05B237EE0FEDB20900A6A2E6 /* MGTwitterEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTwitterEngine.m; path = "vendor/mg-twitter-engine/MGTwitterEngine.m"; sourceTree = "<group>"; };
 		05B237EF0FEDB20900A6A2E6 /* MGTwitterEngineDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTwitterEngineDelegate.h; path = "vendor/mg-twitter-engine/MGTwitterEngineDelegate.h"; sourceTree = "<group>"; };
@@ -436,6 +443,18 @@
 			name = vendor;
 			sourceTree = "<group>";
 		};
+		05AE72000FF2EEB90037D1D6 /* twitpic */ = {
+			isa = PBXGroup;
+			children = (
+				05AE71FD0FF2EEB40037D1D6 /* TwitPicImageSender.h */,
+				05AE71FE0FF2EEB40037D1D6 /* TwitPicImageSender.m */,
+				05AE720C0FF2F29E0037D1D6 /* TwitPicImageSenderDelegate.h */,
+				057E800C0FF314830074A91B /* TwitPicResponseParser.h */,
+				057E800D0FF314830074A91B /* TwitPicResponseParser.m */,
+			);
+			name = twitpic;
+			sourceTree = "<group>";
+		};
 		05B237EB0FEDB1FA00A6A2E6 /* mg-twitter-engine */ = {
 			isa = PBXGroup;
 			children = (
@@ -681,8 +700,9 @@
 				05B2387E0FEDC25F00A6A2E6 /* log-in */,
 				0524BDF80FF16E0A00A6099B /* accounts */,
 				05B238F30FEDC85300A6A2E6 /* users */,
-				05B238F80FEDC8EE00A6A2E6 /* twitter */,
 				05B23C0C0FEEEEC000A6A2E6 /* tweets */,
+				05B238F80FEDC8EE00A6A2E6 /* twitter */,
+				05AE72000FF2EEB90037D1D6 /* twitpic */,
 				05B239620FEDD1A400A6A2E6 /* publishers */,
 				055B78280FED7D31008859F7 /* push-notifications */,
 				05B23AC70FEEC29D00A6A2E6 /* configuration */,
@@ -1027,6 +1047,8 @@
 				05AE708E0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m in Sources */,
 				05AE711B0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m in Sources */,
 				05AE71C40FF2E5F40037D1D6 /* FollowUserResponseProcessor.m in Sources */,
+				05AE71FF0FF2EEB40037D1D6 /* TwitPicImageSender.m in Sources */,
+				057E800E0FF314830074A91B /* TwitPicResponseParser.m in Sources */,
 				910BE31B0FF30296005342EE /* FavoritesTimelineDataSource.m in Sources */,
 				910BE36A0FF32059005342EE /* UIState.m in Sources */,
 				910BE36D0FF32137005342EE /* UIStatePersistenceStore.m in Sources */,

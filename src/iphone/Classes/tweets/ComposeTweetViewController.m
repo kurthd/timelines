@@ -6,6 +6,28 @@
 
 static const NSInteger MAX_TWEET_LENGTH = 140;
 
+@interface UIApplication (KeyboardView)
+
+- (UIView *)keyboardView;
+
+@end
+
+@implementation UIApplication (KeyboardView)
+
+- (UIView *)keyboardView
+{
+    NSArray * windows = [self windows];
+    for (UIWindow *window in [windows reverseObjectEnumerator])
+        for (UIView *view in [window subviews])
+            if (!strcmp(object_getClassName(view), "UIKeyboard"))
+                return view;
+    
+    return nil;
+}
+
+@end
+
+
 @interface ComposeTweetViewController ()
 
 - (void)disableForm;
@@ -23,6 +45,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [cancelButton release];
     [sendButton release];
     [characterCount release];
+    [activityView release];
     [super dealloc];
 }
 
@@ -49,23 +72,51 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         MAX_TWEET_LENGTH - text.length];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)addTextToMessage:(NSString *)text
 {
-    [super didReceiveMemoryWarning];  // Releases the view if it doesn't have a
-                                      // superview
-
-    // Release anything that's not essential, such as cached data
+    NSString * current = textView.text;
+    textView.text = [current stringByAppendingFormat:@" %@", text];
+    characterCount.text =
+        [NSString stringWithFormat:@"%d",
+        MAX_TWEET_LENGTH - textView.text.length];
+    sendButton.enabled =
+        textView.text.length > 0 && textView.text.length <= MAX_TWEET_LENGTH;
 }
 
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)interfaceOrientation
+
+- (void)displayActivityView
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    activityView.alpha = 0.0;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone
+                           forView:activityView
+                             cache:YES];
+
+    activityView.alpha = 0.75;
+    [[[UIApplication sharedApplication] keyboardView].superview
+        addSubview:activityView];
+    [[UIApplication sharedApplication]
+        setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
+
+    [UIView commitAnimations];
 }
-*/
+
+- (void)hideActivityView
+{
+    activityView.alpha = 0.75;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone
+                           forView:activityView
+                             cache:YES];
+
+    activityView.alpha = 0.0;
+    [[UIApplication sharedApplication]
+        setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+
+    [UIView commitAnimations];
+}
+
+#pragma mark UITextViewDelegate implementation
 
 - (BOOL)textView:(UITextView *)aTextView
     shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -73,8 +124,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     NSString * s = [textView.text stringByReplacingCharactersInRange:range
                                                           withString:text];
 
-    characterCount.text = [NSString stringWithFormat:@"%d",
-        MAX_TWEET_LENGTH - s.length];
+    characterCount.text =
+        [NSString stringWithFormat:@"%d", MAX_TWEET_LENGTH - s.length];
     sendButton.enabled = s.length > 0 && s.length <= MAX_TWEET_LENGTH;
 
     return YES;
@@ -91,6 +142,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (IBAction)userDidCancel
 {
     [delegate userDidCancel];
+}
+
+- (IBAction)choosePhoto
+{
+    [delegate userWantsToSelectPhoto];
 }
 
 #pragma mark Helpers

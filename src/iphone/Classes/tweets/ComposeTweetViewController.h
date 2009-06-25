@@ -15,13 +15,20 @@
     IBOutlet UIBarButtonItem * cancelButton;
 
     IBOutlet UILabel * characterCount;
+
+    IBOutlet UIView * activityView;
 }
 
 @property (nonatomic, assign) id<ComposeTweetViewControllerDelegate> delegate;
 
 - (void)promptWithText:(NSString *)text;
+- (void)addTextToMessage:(NSString *)text;
+
+- (void)displayActivityView;
+- (void)hideActivityView;
 
 - (IBAction)userDidSave;
 - (IBAction)userDidCancel;
+- (IBAction)choosePhoto;
 
 @end

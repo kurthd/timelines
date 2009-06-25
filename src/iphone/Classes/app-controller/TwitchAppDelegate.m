@@ -11,6 +11,7 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "InfoPlistConfigReader.h"
 #import "TwitterService.h"
+#import "TwitPicImageSender.h"
 #import "ComposeTweetDisplayMgr.h"
 #import "PersonalFeedSelectionMgr.h"
 #import "UserTimelineDataSource.h"
@@ -630,11 +631,19 @@
         TwitterService * service =
             [[TwitterService alloc]
             initWithTwitterCredentials:nil context:[self managedObjectContext]];
+
+        NSString * twitPicUrl =
+            [[InfoPlistConfigReader reader] valueForKey:@"TwitPicPostUrl"];
+        TwitPicImageSender * imageSender =
+            [[TwitPicImageSender alloc] initWithUrl:twitPicUrl];
+
         composeTweetDisplayMgr =
             [[ComposeTweetDisplayMgr alloc]
             initWithRootViewController:self.tabBarController
-                        twitterService:service];
+                        twitterService:service
+                           imageSender:imageSender];
         [service release];
+        [imageSender release];
 
         composeTweetDisplayMgr.delegate = self;
     }

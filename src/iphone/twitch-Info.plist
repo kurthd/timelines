@@ -32,5 +32,7 @@
 	<string>http://sandbox.twitch.highorderbit.com/device/register</string>
 	<key>DeviceRegistrationUrlLocal</key>
 	<string>http://megatron.local:3000/device/register</string>
+	<key>TwitPicPostUrl</key>
+	<string>https://twitpic.com/api/upload</string>
 </dict>
 </plist>
