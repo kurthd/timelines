@@ -45,6 +45,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [cancelButton release];
     [sendButton release];
     [characterCount release];
+    [accountLabel release];
     [activityView release];
     [super dealloc];
 }
@@ -59,6 +60,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [super viewWillAppear:animated];
 
     [textView becomeFirstResponder];
+}
+
+- (void)setUsername:(NSString *)username
+{
+    accountLabel.text = [NSString stringWithFormat:@"@%@", username];
 }
 
 - (void)promptWithText:(NSString *)text

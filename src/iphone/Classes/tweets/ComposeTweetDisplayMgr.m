@@ -71,6 +71,7 @@
         presentModalViewController:self.composeTweetViewController
                           animated:YES];
 
+    [self.composeTweetViewController setUsername:service.credentials.username];
     [self.composeTweetViewController promptWithText:tweet];
 }
 
