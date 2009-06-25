@@ -244,6 +244,12 @@
 
 - (void)setFavorite:(BOOL)favorite
 {
+    if (favorite)
+        NSLog(@"Setting selected tweet to 'favorite'");
+    else
+        NSLog(@"Setting selected tweet to 'not favorite'");
+
+    [service markTweet:selectedTweet.identifier asFavorite:favorite];
 }
 
 - (void)replyToTweet

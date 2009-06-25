@@ -21,6 +21,7 @@
     IBOutlet RoundedImage * avatar;
     
     TweetInfo * selectedTweet;
+    BOOL favorite;
 }
 
 @property (nonatomic, assign) NSObject<TweetDetailsViewDelegate> * delegate;
@@ -29,5 +30,6 @@
 - (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar;
 - (IBAction)showLocationOnMap:(id)sender;
 - (IBAction)showUserTweets:(id)sender;
+- (IBAction)toggleFavoriteValue:(id)sender;
 
 @end
