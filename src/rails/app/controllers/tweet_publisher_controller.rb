@@ -3,6 +3,8 @@ require 'grackle'
 class TweetPublisherController < ApplicationController
   def check
     unauth_client = Grackle::Client.new
+    @client = Grackle::Client.new
+    @client.ssl = true
 
     @quota_before_check =
       unauth_client.account.rate_limit_status.json?.remaining_hits
@@ -38,11 +40,13 @@ class TweetPublisherController < ApplicationController
         end
         logger.debug "Checking for new tweets for #{twitter_user}."
 
-        @client =
-          Grackle::Client.new(:auth => { :type =>:basic,
-                              :username => twitter_user.username,
-                              :password => twitter_user.password })
-        @client.ssl = true
+        @client.auth = { :type => :basic,
+                         :username => twitter_user.username,
+                         :password => twitter_user.password }
+        #@client =
+          #Grackle::Client.new(:auth => { :type =>:basic,
+                              #:username => twitter_user.username,
+                              #:password => twitter_user.password })
 
         @user_before_quotas[twitter_user.username] =
           @client.account.rate_limit_status.json?.remaining_hits
