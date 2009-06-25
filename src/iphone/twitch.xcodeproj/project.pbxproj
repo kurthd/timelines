@@ -81,6 +81,7 @@
 		910BE2000FF2B948005342EE /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE1FF0FF2B948005342EE /* UserListTableViewController.m */; };
 		910BE2040FF2BA17005342EE /* UserListTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910BE2020FF2BA17005342EE /* UserListTableView.xib */; };
 		910BE2070FF2BA3F005342EE /* UserSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910BE2050FF2BA3F005342EE /* UserSummaryTableViewCell.xib */; };
+		910BE31B0FF30296005342EE /* FavoritesTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE31A0FF30296005342EE /* FavoritesTimelineDataSource.m */; };
 		9115A8400FF03C8300D6A769 /* AllTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */; };
 		9115A8430FF03C9A00D6A769 /* MessagesTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8420FF03C9A00D6A769 /* MessagesTimelineDataSource.m */; };
 		9115A8C70FF0503300D6A769 /* PersonalFeedSelectionMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */; };
@@ -284,6 +285,8 @@
 		910BE2030FF2BA17005342EE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/UserListTableView.xib; sourceTree = "<group>"; };
 		910BE2060FF2BA3F005342EE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/UserSummaryTableViewCell.xib; sourceTree = "<group>"; };
 		910BE2090FF2BD7B005342EE /* UserListTableViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserListTableViewControllerDelegate.h; path = "user-network/UserListTableViewControllerDelegate.h"; sourceTree = "<group>"; };
+		910BE3190FF30296005342EE /* FavoritesTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoritesTimelineDataSource.h; path = timeline/FavoritesTimelineDataSource.h; sourceTree = "<group>"; };
+		910BE31A0FF30296005342EE /* FavoritesTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoritesTimelineDataSource.m; path = timeline/FavoritesTimelineDataSource.m; sourceTree = "<group>"; };
 		9115A8380FF03A6100D6A769 /* TimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDataSource.h; path = timeline/TimelineDataSource.h; sourceTree = "<group>"; };
 		9115A83B0FF03BA900D6A769 /* TimelineDataSourceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDataSourceDelegate.h; path = timeline/TimelineDataSourceDelegate.h; sourceTree = "<group>"; };
 		9115A83E0FF03C8300D6A769 /* AllTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllTimelineDataSource.h; path = timeline/AllTimelineDataSource.h; sourceTree = "<group>"; };
@@ -825,6 +828,8 @@
 				918E891B0FF16EE30042BBEE /* UserTimelineDataSource.m */,
 				910BE1850FF2A755005342EE /* ArbUserTimelineDataSource.h */,
 				910BE1860FF2A755005342EE /* ArbUserTimelineDataSource.m */,
+				910BE3190FF30296005342EE /* FavoritesTimelineDataSource.h */,
+				910BE31A0FF30296005342EE /* FavoritesTimelineDataSource.m */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -1026,6 +1031,7 @@
 				05AE71C40FF2E5F40037D1D6 /* FollowUserResponseProcessor.m in Sources */,
 				05AE71FF0FF2EEB40037D1D6 /* TwitPicImageSender.m in Sources */,
 				057E800E0FF314830074A91B /* TwitPicResponseParser.m in Sources */,
+				910BE31B0FF30296005342EE /* FavoritesTimelineDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

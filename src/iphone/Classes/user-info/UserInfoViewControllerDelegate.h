@@ -10,7 +10,9 @@
 - (void)visitWebpage:(NSString *)webpageUrl;
 - (void)displayFollowingForUser:(NSString *)username;
 - (void)displayFollowersForUser:(NSString *)username;
+- (void)displayFavoritesForUser:(NSString *)username;
 - (void)startFollowingUser:(NSString *)username;
 - (void)stopFollowingUser:(NSString *)username;
+- (void)showingUserInfoView;
 
 @end

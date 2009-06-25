@@ -7,15 +7,18 @@ body {
 
 a {
     text-decoration: none;
+    color: #0067CC;
+    font-weight: bold;
 }
 
 .footer,
 .footer a {
-    font-size: 12pt;
-    color: 909090;
+    font-size: 11pt;
+    color: #909090;
     font-style: oblique;
 }
 
 .footer a {
     text-decoration: underline;
+    font-weight: normal;
 }
