@@ -4,7 +4,9 @@
 
 #import <Foundation/Foundation.h>
 #import "TwitterCredentials.h"
+#import "User.h"
 #import "Tweet.h"
+#import "DirectMessage.h"
 
 @protocol TwitterServiceDelegate <NSObject>
 
@@ -68,6 +70,11 @@
 - (void)failedToFetchDirectMessagesSinceUpdateId:(NSNumber *)updateId
                                             page:(NSNumber *)page
                                            error:(NSError *)error;
+
+- (void)directMessage:(DirectMessage *)dm sentToUser:(NSString *)username;
+- (void)failedToSendDirectMessage:(NSString *)text
+                           toUser:(NSString *)username
+                            error:(NSError *)error;
 
 #pragma mark Favorites
 

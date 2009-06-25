@@ -48,4 +48,15 @@
     [tweet setValue:favorited forKey:@"favorited"];
 }
 
+- (void)populateDirectMessage:(DirectMessage *)dm fromData:(NSDictionary *)data
+{
+    dm.identifier = [[data objectForKey:@"id"] description];
+    dm.text = [data objectForKey:@"text"];
+    dm.sourceApiRequestType =
+        [[data objectForKey:@"source_api_request_type"] description];
+
+    // already an NSData instance
+    dm.created = [data objectForKey:@"created_at"];
+}
+
 @end
