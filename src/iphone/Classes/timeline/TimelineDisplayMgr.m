@@ -6,12 +6,14 @@
 #import "TimelineDisplayMgrFactory.h"
 #import "TwitterService.h"
 #import "ArbUserTimelineDataSource.h"
+#import "FavoritesTimelineDataSource.h"
 
 @interface TimelineDisplayMgr ()
 
 - (BOOL)cachedDataAvailable;
 - (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page
     cache:(NSMutableDictionary *)cache;
+- (void)deallocateTweetDetailsNode;
 
 @end
 
@@ -252,9 +254,7 @@
 - (void)showingTweetDetails
 {
     NSLog(@"Showing tweet details...");
-    self.tweetDetailsCredentialsPublisher = nil;
-    self.tweetDetailsTimelineDisplayMgr = nil;
-    self.tweetDetailsNetAwareViewController = nil;
+    [self deallocateTweetDetailsNode];
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation
@@ -270,32 +270,6 @@
 
     hasBeenDisplayed = YES;
     needsRefresh = NO;
-}
-
-#pragma mark TimelineDisplayMgr implementation
-
-- (void)refresh
-{
-    NSLog(@"Refreshing timeline...");
-    if([service credentials])
-        [service fetchTimelineSince:self.updateId
-            page:[NSNumber numberWithInt:0]];
-    [wrapperController setUpdatingState:kConnectedAndUpdating];
-    [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
-}
-
-- (void)addTweet:(Tweet *)tweet displayImmediately:(BOOL)displayImmediately
-{
-    TweetInfo * info = [TweetInfo createFromTweet:tweet];
-    [timeline setObject:info forKey:info.identifier];
-
-    if (displayImmediately)
-        [timelineController addTweet:info];
-}
-
-- (BOOL)cachedDataAvailable
-{
-    return !!timeline && [timeline count] > 0;
 }
 
 #pragma mark UserInfoViewControllerDelegate implementation
@@ -377,6 +351,54 @@
     showingFollowing = NO;
 }
 
+- (void)displayFavoritesForUser:(NSString *)username
+{
+    NSLog(@"Displaying favorites for user %@", username);
+    // create a tweetDetailsTimelineDisplayMgr
+    // push corresponding view controller for tweet details timeline display mgr
+    NSString * title =
+        NSLocalizedString(@"timelineview.favorites.title", @"");
+    self.tweetDetailsNetAwareViewController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+    self.tweetDetailsTimelineDisplayMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:
+        tweetDetailsNetAwareViewController
+        title:title managedObjectContext:managedObjectContext];
+    self.tweetDetailsTimelineDisplayMgr.displayAsConversation = YES;
+    self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = NO;
+    [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
+
+    self.tweetDetailsNetAwareViewController.delegate =
+        self.tweetDetailsTimelineDisplayMgr;
+
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:managedObjectContext]
+        autorelease];
+
+    FavoritesTimelineDataSource * dataSource =
+        [[[FavoritesTimelineDataSource alloc]
+        initWithTwitterService:twitterService
+        username:username]
+        autorelease];
+
+    self.tweetDetailsCredentialsPublisher =
+        [[CredentialsActivatedPublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+
+    twitterService.delegate = dataSource;
+    [self.tweetDetailsTimelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO];
+    dataSource.delegate = self.tweetDetailsTimelineDisplayMgr;
+
+    [dataSource setCredentials:credentials];
+    [self.wrapperController.navigationController
+        pushViewController:self.tweetDetailsNetAwareViewController
+        animated:YES];
+}
+
 - (void)startFollowingUser:(NSString *)username
 {
     NSLog(@"Sending 'follow user' request for %@", username);
@@ -385,6 +407,12 @@
 - (void)stopFollowingUser:(NSString *)username
 {
     NSLog(@"Sending 'stop following' request for %@", username);
+}
+
+- (void)showingUserInfoView
+{
+    NSLog(@"Showing user info view");
+    [self deallocateTweetDetailsNode];
 }
 
 #pragma mark UserListTableViewControllerDelegate implementation
@@ -405,6 +433,37 @@
 - (void)userListViewWillAppear
 {
     NSLog(@"User list view will appear...");
+    [self deallocateTweetDetailsNode];
+}
+
+#pragma mark TimelineDisplayMgr implementation
+
+- (void)refresh
+{
+    NSLog(@"Refreshing timeline...");
+    if([service credentials])
+        [service fetchTimelineSince:self.updateId
+            page:[NSNumber numberWithInt:0]];
+    [wrapperController setUpdatingState:kConnectedAndUpdating];
+    [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
+}
+
+- (void)addTweet:(Tweet *)tweet displayImmediately:(BOOL)displayImmediately
+{
+    TweetInfo * info = [TweetInfo createFromTweet:tweet];
+    [timeline setObject:info forKey:info.identifier];
+
+    if (displayImmediately)
+        [timelineController addTweet:info];
+}
+
+- (BOOL)cachedDataAvailable
+{
+    return !!timeline && [timeline count] > 0;
+}
+
+- (void)deallocateTweetDetailsNode
+{
     self.tweetDetailsCredentialsPublisher = nil;
     self.tweetDetailsTimelineDisplayMgr = nil;
     self.tweetDetailsNetAwareViewController = nil;

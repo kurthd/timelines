@@ -15,7 +15,8 @@ enum {
 
 enum {
     kUserInfoFollowingRow,
-    kUserInfoFollowersRow
+    kUserInfoFollowersRow,
+    kUserInfoFavoritesRow
 };
 
 @interface UserInfoViewController ()
@@ -57,6 +58,12 @@ enum {
     [self layoutViews];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [delegate showingUserInfoView];
+}
+
 #pragma mark UITableViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -75,7 +82,7 @@ enum {
         if (user.webpage && ![user.webpage isEqual:@""])
             numRows++;
     } else
-        numRows = 2;
+        numRows = 3;
 
     return numRows;
 }
@@ -117,17 +124,23 @@ enum {
                 cell.accessoryType =
                     UITableViewCellAccessoryDisclosureIndicator;
 
-                if (indexPath.row == kUserInfoFollowersRow) {
-                    formatString =
-                        NSLocalizedString(@"userinfoview.followers", @"");
-                    count = user.followersCount;
-                } else {
-                    formatString =
-                        NSLocalizedString(@"userinfoview.following", @"");
-                    count = user.friendsCount;
+                if (indexPath.row == kUserInfoFavoritesRow)
+                    cell.textLabel.text =
+                        NSLocalizedString(@"userinfoview.favorites", @"");
+                else {
+                    if (indexPath.row == kUserInfoFollowersRow) {
+                        formatString =
+                            NSLocalizedString(@"userinfoview.followers", @"");
+                        count = user.followersCount;
+                    } else {
+                        formatString =
+                            NSLocalizedString(@"userinfoview.following", @"");
+                        count = user.friendsCount;
+                    } 
+                    
+                    cell.textLabel.text =
+                        [NSString stringWithFormat:formatString, count];
                 }
-                cell.textLabel.text =
-                    [NSString stringWithFormat:formatString, count];
             break;
     }
 
@@ -146,10 +159,12 @@ enum {
                 [delegate visitWebpage:user.webpage];
             break;
         case kUserInfoSectionNetwork:
-            if (indexPath.row == 0)
+            if (indexPath.row == kUserInfoFollowingRow)
                 [delegate displayFollowingForUser:user.username];
-            else
+            else if (indexPath.row == kUserInfoFollowersRow)
                 [delegate displayFollowersForUser:user.username];
+            else
+                [delegate displayFavoritesForUser:user.username];
             break;
     }
 }
