@@ -16,7 +16,7 @@
     NSString * source;
     User * user;
     User * recipient;
-    NSNumber * favoritedCount;
+    NSNumber * favorited;
 }
 
 @property (nonatomic, retain) NSDate * timestamp;
@@ -26,7 +26,7 @@
 @property (nonatomic, retain) NSString * source;
 @property (nonatomic, retain) User * user;
 @property (nonatomic, retain) User * recipient;
-@property (nonatomic, retain) NSNumber * favoritedCount;
+@property (nonatomic, retain) NSNumber * favorited;
 
 - (NSComparisonResult)compare:(TweetInfo *)tweetInfo;
 

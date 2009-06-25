@@ -11,8 +11,10 @@
 #import "FetchMentionsResponseProcessor.h"
 #import "FetchDirectMessagesResponseProcessor.h"
 #import "FetchUserInfoResponseProcessor.h"
+#import "FollowUserResponseProcessor.h"
 #import "FetchFriendsForUserResponseProcessor.h"
 #import "FetchFollowersForUserResponseProcessor.h"
 #import "FetchFavoritesForUserResponseProcessor.h"
+#import "MarkFavoriteResponseProcessor.h"
 
 #import "SendTweetResponseProcessor.h"

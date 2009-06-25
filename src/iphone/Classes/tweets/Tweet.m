@@ -13,6 +13,6 @@
 @dynamic text;
 @dynamic source;
 @dynamic user;
-@dynamic favoritedCount;
+@dynamic favorited;
 
 @end

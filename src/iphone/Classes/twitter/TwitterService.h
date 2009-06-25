@@ -65,10 +65,13 @@
 #pragma mark Favorites
 
 - (void)fetchFavoritesForUser:(NSString *)user page:(NSNumber *)page;
+- (void)markTweet:(NSString *)tweetId asFavorite:(BOOL)favorite;
 
 #pragma mark User info
 
 - (void)fetchUserInfoForUsername:(NSString *)username;
+- (void)followUser:(NSString *)username;
+- (void)stopFollowingUser:(NSString *)username;
 
 #pragma mark Social graph
 

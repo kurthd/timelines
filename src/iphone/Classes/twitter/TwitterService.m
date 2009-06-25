@@ -178,6 +178,19 @@
     [self request:requestId isHandledBy:processor];
 }
 
+- (void)markTweet:(NSString *)tweetId asFavorite:(BOOL)favorite
+{
+    ResponseProcessor * processor =
+        [MarkFavoriteResponseProcessor processorWithTweetId:tweetId
+                                                   favorite:favorite
+                                                    context:context
+                                                   delegate:delegate];
+
+    NSString * requestId = [twitter markUpdate:tweetId asFavorite:favorite];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark User info
 
 - (void)fetchUserInfoForUsername:(NSString *)username
@@ -188,6 +201,32 @@
                                                      delegate:delegate];
 
     NSString * requestId = [twitter getUserInformationFor:username];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+- (void)followUser:(NSString *)username
+{
+    ResponseProcessor * processor =
+        [FollowUserResponseProcessor processorWithUsername:username
+                                                 following:YES
+                                                   context:context
+                                                  delegate:delegate];
+
+    NSString * requestId = [twitter enableUpdatesFor:username];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+- (void)stopFollowingUser:(NSString *)username
+{
+    ResponseProcessor * processor =
+        [FollowUserResponseProcessor processorWithUsername:username
+                                                 following:NO
+                                                   context:context
+                                                  delegate:delegate];
+
+    NSString * requestId = [twitter disableUpdatesFor:username];
 
     [self request:requestId isHandledBy:processor];
 }
