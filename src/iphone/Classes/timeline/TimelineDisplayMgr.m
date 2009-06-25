@@ -617,6 +617,11 @@
         // Changed accounts (as opposed to setting it for the first time)
 
         [timeline removeAllObjects];
+        if (user)
+            [service fetchUserInfoForUsername:credentials.username];
+        [wrapperController.navigationController
+            popToRootViewControllerAnimated:NO];
+        
         needsRefresh = YES;
         pagesShown = 1;
         [self.wrapperController setCachedDataAvailable:NO];
