@@ -47,6 +47,11 @@
     [service fetchFollowersForUser:user page:page];
 }
 
+- (void)markTweet:(NSString *)tweetId asFavorite:(BOOL)favorite
+{
+    [service markTweet:tweetId asFavorite:favorite];
+}
+
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)timeline:(NSArray *)timeline fetchedSinceUpdateId:(NSNumber *)updateId
@@ -74,7 +79,7 @@
 }
 
 - (void)failedToFetchUserInfoForUsername:(NSString *)username
-                                   error:(NSError *)error
+    error:(NSError *)error
 {
     [delegate failedToFetchUserInfoForUsername:username error:error];
 }

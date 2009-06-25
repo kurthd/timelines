@@ -63,6 +63,13 @@
     locationButton.hidden = !locationText || [locationText isEqual:@""];
 
     [locationButton setTitle:locationText forState:UIControlStateNormal];
+    
+    if (favorite = [tweet.favorited isEqual:[NSNumber numberWithInt:1]])
+        [favoriteButton setImage:[UIImage imageNamed:@"Favorite.png"]
+            forState:UIControlStateNormal];
+    else
+        [favoriteButton setImage:[UIImage imageNamed:@"NotFavorite.png"]
+            forState:UIControlStateNormal];
 }
 
 - (IBAction)showLocationOnMap:(id)sender
@@ -73,6 +80,20 @@
 - (IBAction)showUserTweets:(id)sender
 {
     [delegate showTweetsForUser:selectedTweet.user.username];
+}
+
+- (IBAction)toggleFavoriteValue:(id)sender
+{
+    favorite = !favorite;
+    [delegate setFavorite:favorite];
+    selectedTweet.favorited = [NSNumber numberWithBool:favorite];
+
+    if (favorite)
+        [favoriteButton setImage:[UIImage imageNamed:@"Favorite.png"]
+            forState:UIControlStateNormal];
+    else
+        [favoriteButton setImage:[UIImage imageNamed:@"NotFavorite.png"]
+            forState:UIControlStateNormal];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation

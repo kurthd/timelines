@@ -50,6 +50,11 @@
     [service fetchFollowersForUser:user page:page];
 }
 
+- (void)markTweet:(NSString *)tweetId asFavorite:(BOOL)favorite
+{
+    [service markTweet:tweetId asFavorite:favorite];
+}
+
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)favorites:(NSArray *)timeline fetchedForUser:(NSString *)aUsername

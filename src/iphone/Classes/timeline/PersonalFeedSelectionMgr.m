@@ -37,7 +37,8 @@
         mentionsTimelineDataSource =
             [[MentionsTimelineDataSource alloc] initWithTwitterService:service];
 
-        previousTab = 0;
+        previousTab = -1;
+        allTimelineRefresh = YES;
         mentionsTimelineRefresh = YES;
         messagesTimelineRefresh = YES;
     }
@@ -75,6 +76,7 @@
             [timelineDisplayMgr setService:allTimelineDataSource
                 tweets:self.allTimelineTweets page:allTimelinePagesShown
                 forceRefresh:allTimelineRefresh];
+            allTimelineRefresh = NO;
             break;
         case 1:
             NSLog(@"Selected mentions tab");

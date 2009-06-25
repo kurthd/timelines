@@ -17,6 +17,8 @@
 #import "UserTimelineDataSource.h"
 #import "AccountsDisplayMgr.h"
 #import "ActiveTwitterCredentials.h"
+#import "UIStatePersistenceStore.h"
+#import "UIState.h"
 
 @interface TwitchAppDelegate ()
 
@@ -40,6 +42,8 @@
 - (NSDictionary *)deviceRegistrationArgsForCredentials:(NSArray *)credentials;
 
 - (BOOL)saveContext;
+- (void)setUIStateFromPersistence;
+- (void)persistUIState;
 
 @end
 
@@ -115,6 +119,7 @@
     [self initHomeTab];
     [self initProfileTab];
     [self initAccountsTab];
+    [self setUIStateFromPersistence];
 
     if (self.credentials.count == 0) {
         NSAssert1(!self.activeCredentials.credentials, @"No credentials exist, "
@@ -150,6 +155,8 @@
     if (managedObjectContext != nil)
         if (![self saveContext])
             exit(-1);  // fail
+    
+    [self persistUIState];
 }
 
 #pragma mark Composing tweets
@@ -527,6 +534,29 @@
     }
 
     return YES;
+}
+
+- (void)setUIStateFromPersistence
+{
+    UIStatePersistenceStore * uiStatePersistenceStore =
+        [[[UIStatePersistenceStore alloc] init] autorelease];
+    UIState * uiState = [uiStatePersistenceStore load];
+    tabBarController.selectedIndex = uiState.selectedTab;
+    UISegmentedControl * control = (UISegmentedControl *)
+        homeNetAwareViewController.navigationItem.titleView;
+    control.selectedSegmentIndex = uiState.selectedTimelineFeed;
+}
+
+- (void)persistUIState
+{
+    UIStatePersistenceStore * uiStatePersistenceStore =
+        [[[UIStatePersistenceStore alloc] init] autorelease];
+    UIState * uiState = [[[UIState alloc] init] autorelease];
+    uiState.selectedTab = tabBarController.selectedIndex;
+    UISegmentedControl * control = (UISegmentedControl *)
+        homeNetAwareViewController.navigationItem.titleView;
+    uiState.selectedTimelineFeed = control.selectedSegmentIndex;
+    [uiStatePersistenceStore save:uiState];
 }
 
 #pragma mark Accessors
