@@ -151,11 +151,19 @@ class TweetPublisherController < ApplicationController
   @private
 
   def direct_messages_since(id)
-    @client.direct_messages.json? :since_id => id
+    if (id == "0")
+      @client.direct_messages.json?
+    else
+      @client.direct_messages.json? :since_id => id
+    end
   end
 
   def mentions_since(id)
-    @client.statuses.mentions.json? :since_id => id
+    if (id == "0")
+      @client.statuses.mentions.json?
+    else
+      @client.statuses.mentions.json? :since_id => id
+    end
   end
 
   def all_direct_messages
