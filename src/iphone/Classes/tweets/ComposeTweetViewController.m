@@ -49,23 +49,16 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         MAX_TWEET_LENGTH - text.length];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)addTextToMessage:(NSString *)text
 {
-    [super didReceiveMemoryWarning];  // Releases the view if it doesn't have a
-                                      // superview
-
-    // Release anything that's not essential, such as cached data
+    NSString * current = textView.text;
+    textView.text = [current stringByAppendingFormat:@" %@", text];
+    characterCount.text =
+        [NSString stringWithFormat:@"%d",
+        MAX_TWEET_LENGTH - textView.text.length];
+    sendButton.enabled =
+        textView.text.length > 0 && textView.text.length <= MAX_TWEET_LENGTH;
 }
-
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
 
 - (BOOL)textView:(UITextView *)aTextView
     shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -73,8 +66,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     NSString * s = [textView.text stringByReplacingCharactersInRange:range
                                                           withString:text];
 
-    characterCount.text = [NSString stringWithFormat:@"%d",
-        MAX_TWEET_LENGTH - s.length];
+    characterCount.text =
+        [NSString stringWithFormat:@"%d", MAX_TWEET_LENGTH - s.length];
     sendButton.enabled = s.length > 0 && s.length <= MAX_TWEET_LENGTH;
 
     return YES;
@@ -91,6 +84,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (IBAction)userDidCancel
 {
     [delegate userDidCancel];
+}
+
+- (IBAction)choosePhoto
+{
+    [delegate userWantsToSelectPhoto];
 }
 
 #pragma mark Helpers

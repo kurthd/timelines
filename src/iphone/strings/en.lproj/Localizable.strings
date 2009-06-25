@@ -27,6 +27,10 @@ tweetdetailsview.tweetfooter = "%@ from %@";
 
 /* Sending tweets */
 sendtweet.failed.alert.title = "Failed to Send Tweet";
+imagepicker.choose.cancel = "Cancel";
+imagepicker.choose.camera = "Take Photo";
+imagepicker.choose.photos = "Choose Existing Photo";
+imageupload.failed.title = "Failed to Upload Photo";
 
 /* UserInfoViewController */
 userinfoview.followers = "%@ followers";

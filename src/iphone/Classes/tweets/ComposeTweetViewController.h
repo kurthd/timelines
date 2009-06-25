@@ -20,8 +20,10 @@
 @property (nonatomic, assign) id<ComposeTweetViewControllerDelegate> delegate;
 
 - (void)promptWithText:(NSString *)text;
+- (void)addTextToMessage:(NSString *)text;
 
 - (IBAction)userDidSave;
 - (IBAction)userDidCancel;
+- (IBAction)choosePhoto;
 
 @end

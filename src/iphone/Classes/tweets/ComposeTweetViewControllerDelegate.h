@@ -9,4 +9,6 @@
 - (void)userDidSave:(NSString *)text;
 - (void)userDidCancel;
 
+- (void)userWantsToSelectPhoto;
+
 @end
