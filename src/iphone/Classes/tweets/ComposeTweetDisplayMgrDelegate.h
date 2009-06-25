@@ -14,6 +14,16 @@
 - (void)userDidSendTweet:(Tweet *)tweet;
 - (void)userFailedToSendTweet:(NSString *)tweet;
 
+- (void)userIsReplyingToTweet:(NSString *)origTweetId
+                     fromUser:(NSString *)origUsername
+                     withText:(NSString *)text;
+- (void)userDidReplyToTweet:(NSString *)origTweetId
+                   fromUser:(NSString *)origUsername
+                  withTweet:(Tweet *)reply;
+- (void)userFailedToReplyToTweet:(NSString *)origTweetId
+                        fromUser:(NSString *)origUsername
+                        withText:(NSString *)text;
+
 - (void)userIsSendingDirectMessage:(NSString *)dm to:(NSString *)username;
 - (void)userDidSendDirectMessage:(DirectMessage *)dm;
 - (void)userFailedToSendDirectMessage:(NSString *)dm to:(NSString *)username;

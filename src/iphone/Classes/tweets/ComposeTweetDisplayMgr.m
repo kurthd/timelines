@@ -21,6 +21,8 @@
     credentialsUpdatePublisher;
 
 @property (nonatomic, copy) NSString * recipient;
+@property (nonatomic, copy) NSString * origUsername;
+@property (nonatomic, copy) NSString * origTweetId;
 
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source;
 
@@ -31,7 +33,7 @@
 @synthesize rootViewController, composeTweetViewController;
 @synthesize service, imageSender, credentialsUpdatePublisher;
 @synthesize delegate;
-@synthesize recipient;
+@synthesize recipient, origUsername, origTweetId;
 
 - (void)dealloc
 {
@@ -42,6 +44,8 @@
     self.imageSender = nil;
     self.credentialsUpdatePublisher = nil;
     self.recipient = nil;
+    self.origUsername = nil;
+    self.origTweetId = nil;
     [super dealloc];
 }
 
@@ -80,8 +84,29 @@
     [self.composeTweetViewController setUsername:service.credentials.username];
     [self.composeTweetViewController promptWithText:tweet];
 
-    composingDirectMessage = NO;
     self.recipient = nil;
+    self.origTweetId = nil;
+    self.origUsername = nil;
+}
+
+- (void)composeReplyToTweet:(NSString *)tweetId
+                   fromUser:(NSString *)user
+{
+    [self composeReplyToTweet:tweetId
+                     fromUser:user
+                     withText:[NSString stringWithFormat:@"@%@ ", user]];
+}
+
+- (void)composeReplyToTweet:(NSString *)tweetId
+                   fromUser:(NSString *)user
+                   withText:(NSString *)text
+{
+    [self composeTweetWithText:text];
+    self.origTweetId = tweetId;
+    self.origUsername = user;
+
+    [self.composeTweetViewController
+        setTitle:[NSString stringWithFormat:@"@%@", user]];
 }
 
 - (void)composeDirectMessageTo:(NSString *)username
@@ -101,8 +126,9 @@
         [NSString stringWithFormat:
         NSLocalizedString(@"composedirectmessage.view.title", @""), username]];
 
-    composingDirectMessage = YES;
     self.recipient = username;
+    self.origTweetId = nil;
+    self.origUsername = nil;
 }
 
 #pragma mark Credentials notifications
@@ -124,12 +150,19 @@
 {
     [self.rootViewController dismissModalViewControllerAnimated:YES];
 
-    if (composingDirectMessage) {
+    if (recipient) {
         [self.delegate userIsSendingDirectMessage:tweet to:self.recipient];
         [self.service sendDirectMessage:tweet to:self.recipient];
     } else {
-        [self.delegate userIsSendingTweet:tweet];
-        [self.service sendTweet:tweet];
+        if (self.origTweetId) {  // sending a public reply
+            [self.delegate userIsReplyingToTweet:self.origTweetId
+                                        fromUser:self.origUsername
+                                        withText:tweet];
+            [self.service sendTweet:tweet inReplyTo:self.origTweetId];
+        } else {
+            [self.delegate userIsSendingTweet:tweet];
+            [self.service sendTweet:tweet];
+        }
     }
 }
 
@@ -191,6 +224,29 @@
     [alert show];
 
     [self.delegate userFailedToSendTweet:tweet];
+}
+
+- (void)tweet:(Tweet *)tweet sentInReplyTo:(NSString *)tweetId
+{
+    [self.delegate userDidReplyToTweet:self.origTweetId
+                              fromUser:self.origUsername
+                             withTweet:tweet];
+}
+
+- (void)failedToReplyToTweet:(NSString *)tweetId
+                    withText:(NSString *)text
+                       error:(NSError *)error
+{
+    NSString * title = NSLocalizedString(@"sendtweet.failed.alert.title", @"");
+    NSString * message = error.localizedDescription;
+
+    UIAlertView * alert = [UIAlertView simpleAlertViewWithTitle:title
+                                                        message:message];
+    [alert show];
+
+    [self.delegate userFailedToReplyToTweet:self.origTweetId
+                                   fromUser:self.origUsername
+                                   withText:text];
 }
 
 - (void)directMessage:(DirectMessage *)dm sentToUser:(NSString *)username

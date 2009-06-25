@@ -37,7 +37,7 @@
 
 // is 'tweet' a verb or a noun?
 - (void)sendTweet:(NSString *)tweet;
-- (void)sendTweet:(NSString *)tweet inReplyTo:(NSNumber *)referenceId;
+- (void)sendTweet:(NSString *)tweet inReplyTo:(NSString *)referenceId;
 
 #pragma mark Timeline
 

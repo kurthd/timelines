@@ -25,6 +25,11 @@
 - (void)tweetSentSuccessfully:(Tweet *)tweet;
 - (void)failedToSendTweet:(NSString *)tweet error:(NSError *)error;
 
+- (void)tweet:(Tweet *)tweet sentInReplyTo:(NSString *)tweetId;
+- (void)failedToReplyToTweet:(NSString *)tweetId
+                    withText:(NSString *)text
+                       error:(NSError *)error;
+
 #pragma mark Timelines
 
 @optional

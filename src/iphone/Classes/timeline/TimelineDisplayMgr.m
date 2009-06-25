@@ -271,9 +271,9 @@
 - (void)replyToTweet
 {
     NSLog(@"Reply to tweet selected");
-    NSString * publicReplyString =
-        [NSString stringWithFormat:@"@%@ ", selectedTweet.user.username];
-    [composeTweetDisplayMgr composeTweetWithText:publicReplyString];
+    [composeTweetDisplayMgr
+        composeReplyToTweet:selectedTweet.identifier
+        fromUser:selectedTweet.user.username];
 }
 
 - (void)showingTweetDetails

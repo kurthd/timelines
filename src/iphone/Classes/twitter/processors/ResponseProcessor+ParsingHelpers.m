@@ -46,6 +46,13 @@
     if (!favorited)
         favorited = [NSNumber numberWithInteger:0];
     [tweet setValue:favorited forKey:@"favorited"];
+
+    tweet.inReplyToTwitterUsername =
+       [data objectForKey:@"in_reply_to_screen_name"];
+    tweet.inReplyToTwitterTweetId =
+        [[data objectForKey:@"in_reply_to_status_id"] description];
+    tweet.inReplyToTwitterUserId =
+        [[data objectForKey:@"in_reply_to_user_id"] description];
 }
 
 - (void)populateDirectMessage:(DirectMessage *)dm fromData:(NSDictionary *)data

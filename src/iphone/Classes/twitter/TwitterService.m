@@ -70,6 +70,7 @@
 {
     ResponseProcessor * processor =
         [SendTweetResponseProcessor processorWithTweet:tweet
+                                           referenceId:nil
                                                context:context
                                               delegate:delegate];
 
@@ -78,8 +79,17 @@
     [self request:requestId isHandledBy:processor];
 }
 
-- (void)sendTweet:(NSString *)tweet inReplyTo:(NSNumber *)referenceId
+- (void)sendTweet:(NSString *)tweet inReplyTo:(NSString *)referenceId
 {
+    ResponseProcessor * processor =
+        [SendTweetResponseProcessor processorWithTweet:tweet
+                                           referenceId:referenceId
+                                               context:context
+                                              delegate:delegate];
+
+    NSString * requestId = [twitter sendUpdate:tweet inReplyTo:referenceId];
+
+    [self request:requestId isHandledBy:processor];
 }
 
 #pragma mark Timelines

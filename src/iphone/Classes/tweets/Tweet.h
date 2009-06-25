@@ -18,5 +18,8 @@
 @property (nonatomic, retain) NSString * source;
 @property (nonatomic, retain) User * user;
 @property (nonatomic, retain) NSNumber * favorited;
+@property (nonatomic, retain) NSString * inReplyToTwitterUsername;
+@property (nonatomic, retain) NSString * inReplyToTwitterTweetId;
+@property (nonatomic, retain) NSString * inReplyToTwitterUserId;
 
 @end

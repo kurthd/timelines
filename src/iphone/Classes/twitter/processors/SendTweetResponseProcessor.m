@@ -12,6 +12,7 @@
 @interface SendTweetResponseProcessor ()
 
 @property (nonatomic, copy) NSString * text;
+@property (nonatomic, copy) NSString * referenceId;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, assign) id delegate;
 
@@ -19,13 +20,15 @@
 
 @implementation SendTweetResponseProcessor
 
-@synthesize text, context, delegate;
+@synthesize text, referenceId, context, delegate;
 
 + (id)processorWithTweet:(NSString *)someText
+             referenceId:(NSString *)aReferenceId
                  context:(NSManagedObjectContext *)aContext
                 delegate:(id)aDelegate
 {
     id obj = [[[self class] alloc] initWithTweet:someText
+                                     referenceId:aReferenceId
                                          context:aContext
                                         delegate:aDelegate];
     return [obj autorelease];
@@ -34,17 +37,20 @@
 - (void)dealloc
 {
     self.text = nil;
+    self.referenceId = nil;
     self.context = nil;
     self.delegate = nil;
     [super dealloc];
 }
 
 - (id)initWithTweet:(NSString *)someText
+        referenceId:(NSString *)aReferenceId
             context:(NSManagedObjectContext *)aContext
            delegate:(id)aDelegate
 {
     if (self = [super init]) {
         self.text = someText;
+        self.referenceId = aReferenceId;
         self.context = aContext;
         self.delegate = aDelegate;
     }
@@ -85,16 +91,28 @@
     if (![context save:&error])
         NSLog(@"Failed to save tweets and users: '%@'", error);
 
-    SEL sel = @selector(tweetSentSuccessfully:);
-    [self invokeSelector:sel withTarget:delegate args:tweet, nil];
+    if (referenceId) {
+        SEL sel = @selector(tweet:sentInReplyTo:);
+        [self invokeSelector:sel withTarget:delegate args:tweet, referenceId,
+            nil];
+    } else {
+        SEL sel = @selector(tweetSentSuccessfully:);
+        [self invokeSelector:sel withTarget:delegate args:tweet, nil];
+    }
 
     return YES;
 }
 
 - (BOOL)processErrorResponse:(NSError *)error
 {
-    SEL sel = @selector(failedToSendTweet:error:);
-    [self invokeSelector:sel withTarget:delegate args:text, error, nil];
+    if (referenceId) {
+        SEL sel = @selector(failedToReplyToTweet:withText:error:);
+        [self invokeSelector:sel withTarget:delegate args:referenceId, text,
+            error, nil];
+    } else {
+        SEL sel = @selector(failedToSendTweet:error:);
+        [self invokeSelector:sel withTarget:delegate args:text, error, nil];
+    }
 
     return YES;
 }

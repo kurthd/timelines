@@ -26,8 +26,10 @@
     TwitterService * service;
     TwitPicImageSender * imageSender;
 
-    BOOL composingDirectMessage;
-    NSString * recipient;
+    NSString * recipient;  // non-nil if composing a direct message
+
+    NSString * origTweetId;  // non-nil if composing a reply
+    NSString * origUsername;
 
     CredentialsActivatedPublisher * credentialsUpdatePublisher;
 }
@@ -40,6 +42,12 @@
 
 - (void)composeTweet;
 - (void)composeTweetWithText:(NSString *)tweet;
+
+- (void)composeReplyToTweet:(NSString *)tweetId
+                   fromUser:(NSString *)user;
+- (void)composeReplyToTweet:(NSString *)tweetId
+                   fromUser:(NSString *)user
+                   withText:(NSString *)text;
 
 - (void)composeDirectMessageTo:(NSString *)username;
 - (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)tweet;
