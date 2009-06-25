@@ -136,6 +136,7 @@
 }
 
 - (void)failedToStartFollowingUsername:(NSString *)aUsername
+    error:(NSError *)error
 {
     [delegate failedToStartFollowingUsername:aUsername];
 }
@@ -146,6 +147,7 @@
 }
 
 - (void)failedToStopFollowingUsername:(NSString *)aUsername
+    error:(NSError *)error
 {
     [delegate failedToStopFollowingUsername:aUsername];
 }

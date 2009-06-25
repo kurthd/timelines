@@ -113,10 +113,12 @@
                                    error:(NSError *)error;
 
 - (void)startedFollowingUsername:(NSString *)username;
-- (void)failedToStartFollowingUsername:(NSString *)username;
+- (void)failedToStartFollowingUsername:(NSString *)username
+                                 error:(NSError *)error;
 
 - (void)stoppedFollowingUsername:(NSString *)username;
-- (void)failedToStopFollowingUsername:(NSString *)username;
+- (void)failedToStopFollowingUsername:(NSString *)username
+                                error:(NSError *)error;
 
 #pragma mark Social graph
 
