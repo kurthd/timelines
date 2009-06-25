@@ -18,12 +18,16 @@
     NSArray * users;
     NSMutableDictionary * avatarCache;
     NSMutableDictionary * alreadySent;
+    
+    NSArray * sortedUserCache;
 }
 
 @property (nonatomic, assign)
     NSObject<UserListTableViewControllerDelegate> * delegate;
 
-- (void)setUsers:(NSArray *)users;
+@property (nonatomic, copy) NSArray * sortedUserCache;
+
+- (void)setUsers:(NSArray *)users page:(NSUInteger)page;
 
 - (IBAction)loadMoreUsers:(id)sender;
 

@@ -8,5 +8,6 @@
 
 - (void)showTweetsForUser:(NSString *)username;
 - (void)loadMoreUsers;
+- (void)userListViewWillAppear;
 
 @end

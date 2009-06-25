@@ -15,6 +15,7 @@
 #import "UserInfoViewControllerDelegate.h"
 #import "CredentialsActivatedPublisher.h"
 #import "UserListTableViewControllerDelegate.h"
+#import "UserListTableViewController.h"
 
 @class TimelineDisplayMgrFactory;
 
@@ -37,6 +38,13 @@
     NSNumber * updateId;
     NSUInteger pagesShown;
 
+    NSMutableDictionary * followingUsers;
+    NSUInteger followingUsersPagesShown;
+    NSMutableDictionary * followers;
+    NSUInteger followersPagesShown;
+    BOOL showingFollowing;
+    NSString * lastFollowingUsername;
+
     TwitterCredentials * credentials;
 
     BOOL displayAsConversation;
@@ -49,6 +57,9 @@
     NetworkAwareViewController * tweetDetailsNetAwareViewController;
     CredentialsActivatedPublisher * tweetDetailsCredentialsPublisher;
     NSManagedObjectContext * managedObjectContext;
+
+    NetworkAwareViewController * userListNetAwareViewController;
+    UserListTableViewController * userListController;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
@@ -62,6 +73,7 @@
 
 @property (nonatomic, copy) NSMutableDictionary * timeline;
 @property (nonatomic, readonly) NSUInteger pagesShown;
+@property (nonatomic, copy) NSString * lastFollowingUsername;
 
 @property (nonatomic, assign) BOOL displayAsConversation;
 @property (nonatomic, assign) BOOL setUserToFirstTweeter;
@@ -72,6 +84,11 @@
     NetworkAwareViewController * tweetDetailsNetAwareViewController;
 @property (nonatomic, retain)
     CredentialsActivatedPublisher * tweetDetailsCredentialsPublisher;
+    
+@property (nonatomic, readonly)
+    NetworkAwareViewController * userListNetAwareViewController;
+@property (nonatomic, readonly)
+    UserListTableViewController * userListController;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController

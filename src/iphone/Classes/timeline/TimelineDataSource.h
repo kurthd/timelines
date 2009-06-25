@@ -11,5 +11,7 @@
 - (TwitterCredentials *)credentials;
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)fetchUserInfoForUsername:(NSString *)username;
+- (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page;
+- (void)fetchFollowersForUser:(NSString *)user page:(NSNumber *)page;
 
 @end

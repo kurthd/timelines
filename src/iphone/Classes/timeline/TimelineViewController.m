@@ -132,11 +132,13 @@
     NSLog(@"Received avatar for url: %@", url);
     NSString * urlAsString = [url absoluteString];
     UIImage * avatarImage = [UIImage imageWithData:data];
-    [avatarCache setObject:avatarImage forKey:urlAsString];
-    [self.tableView reloadData];
-    
-    if ([urlAsString isEqual:user.profileImageUrl])
-        avatarView.imageView.image = avatarImage;
+    if (avatarImage) {
+        [avatarCache setObject:avatarImage forKey:urlAsString];
+        [self.tableView reloadData];
+
+        if ([urlAsString isEqual:user.profileImageUrl])
+            avatarView.imageView.image = avatarImage;
+    }
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher

@@ -15,4 +15,17 @@
 - (void)userInfo:(User *)user fetchedForUsername:(NSString *)username;
 - (void)failedToFetchUserInfoForUsername:(NSString *)username
                                    error:(NSError *)error;
+
+- (void)friends:(NSArray *)friends fetchedForUsername:(NSString *)username
+          page:(NSNumber *)page;
+
+- (void)failedToFetchFriendsForUsername:(NSString *)username
+                                  page:(NSNumber *)page
+                                 error:(NSError *)error;
+
+- (void)followers:(NSArray *)friends fetchedForUsername:(NSString *)username
+            page:(NSNumber *)page;
+- (void)failedToFetchFollowersForUsername:(NSString *)username
+                                    page:(NSNumber *)page
+                                   error:(NSError *)error;
 @end

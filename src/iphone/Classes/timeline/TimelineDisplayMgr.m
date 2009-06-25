@@ -10,6 +10,8 @@
 @interface TimelineDisplayMgr ()
 
 - (BOOL)cachedDataAvailable;
+- (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page
+    cache:(NSMutableDictionary *)cache;
 
 @end
 
@@ -18,7 +20,8 @@
 @synthesize wrapperController, timelineController, userInfoController,
     selectedTweet, updateId, user, timeline, pagesShown, displayAsConversation,
     setUserToFirstTweeter, tweetDetailsTimelineDisplayMgr,
-    tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher;
+    tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher,
+    lastFollowingUsername;
 
 - (void)dealloc
 {
@@ -33,10 +36,17 @@
     [timeline release];
     [updateId release];
 
+    [followingUsers release];
+    [followers release];
+    [lastFollowingUsername release];
+
     [timelineDisplayMgrFactory release];
     [tweetDetailsTimelineDisplayMgr release];
     [tweetDetailsNetAwareViewController release];
     [managedObjectContext release];
+
+    [userListNetAwareViewController release];
+    [userListController release];
 
     [super dealloc];
 }
@@ -55,8 +65,12 @@
         managedObjectContext = [aManagedObjectContext retain];
 
         timeline = [[NSMutableDictionary dictionary] retain];
+        followingUsers = [[NSMutableDictionary dictionary] retain];
+        followers = [[NSMutableDictionary dictionary] retain];
 
         pagesShown = 1;
+        followingUsersPagesShown = 1;
+        followersPagesShown = 1;
 
         [wrapperController setUpdatingState:kConnectedAndUpdating];
         [wrapperController setCachedDataAvailable:NO];
@@ -106,6 +120,45 @@
     error:(NSError *)error
 {
     // TODO: display alert view
+}
+
+- (void)friends:(NSArray *)friends fetchedForUsername:(NSString *)username
+    page:(NSNumber *)page
+{
+    if (showingFollowing)
+        [self updateUserListViewWithUsers:friends page:page
+            cache:followingUsers];
+}
+
+- (void)failedToFetchFriendsForUsername:(NSString *)username
+    page:(NSNumber *)page error:(NSError *)error
+{
+    // TODO: display alert view
+}
+
+- (void)followers:(NSArray *)friends fetchedForUsername:(NSString *)username
+    page:(NSNumber *)page
+{
+    if (!showingFollowing)
+        [self updateUserListViewWithUsers:friends page:page cache:followers];
+}
+
+- (void)failedToFetchFollowersForUsername:(NSString *)username
+    page:(NSNumber *)page error:(NSError *)error
+{
+    // TODO: display alert view
+}
+
+- (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page
+    cache:(NSMutableDictionary *)cache
+{
+    NSLog(@"Received list of users");
+    [self.userListNetAwareViewController setCachedDataAvailable:YES];
+    [self.userListNetAwareViewController
+        setUpdatingState:kConnectedAndNotUpdating];
+    for (User * friend in users)
+        [cache setObject:friend forKey:friend.username];
+    [self.userListController setUsers:[cache allValues] page:[page intValue]];
 }
 
 #pragma mark TimelineViewControllerDelegate implementation
@@ -271,11 +324,57 @@
 - (void)displayFollowingForUser:(NSString *)username
 {
     NSLog(@"Displaying 'following' list for %@", username);
+
+    [self.wrapperController.navigationController
+        pushViewController:self.userListNetAwareViewController animated:YES];
+    [self.userListController.tableView
+        scrollRectToVisible:self.userListController.tableView.frame
+        animated:NO];
+    NSString * title =
+        NSLocalizedString(@"userlisttableview.following.title", @"");
+    self.userListNetAwareViewController.navigationItem.title = title;
+    
+    if (![username isEqual:lastFollowingUsername] || !showingFollowing) {
+        [followingUsers removeAllObjects];
+        followingUsersPagesShown = 1;
+
+        [self.userListNetAwareViewController setCachedDataAvailable:NO];
+        [self.userListNetAwareViewController
+            setUpdatingState:kConnectedAndUpdating];
+        [service fetchFriendsForUser:username
+            page:[NSNumber numberWithInt:followingUsersPagesShown]];
+    }
+
+    self.lastFollowingUsername = username;
+    showingFollowing = YES;
 }
 
 - (void)displayFollowersForUser:(NSString *)username
 {
-    NSLog(@"Displaying 'followers' set for %@", username);
+    NSLog(@"Displaying 'followers' list for %@", username);
+
+    [self.wrapperController.navigationController
+        pushViewController:self.userListNetAwareViewController animated:YES];
+    [self.userListController.tableView
+        scrollRectToVisible:self.userListController.tableView.frame
+        animated:NO];
+    NSString * title =
+        NSLocalizedString(@"userlisttableview.followers.title", @"");
+    self.userListNetAwareViewController.navigationItem.title = title;
+    
+    if (![username isEqual:lastFollowingUsername] || showingFollowing) {
+        [followers removeAllObjects];
+        followersPagesShown = 1;
+
+        [self.userListNetAwareViewController setCachedDataAvailable:NO];
+        [self.userListNetAwareViewController
+            setUpdatingState:kConnectedAndUpdating];
+        [service fetchFollowersForUser:username
+            page:[NSNumber numberWithInt:followersPagesShown]];
+    }
+
+    self.lastFollowingUsername = username;
+    showingFollowing = NO;
 }
 
 - (void)startFollowingUser:(NSString *)username
@@ -293,6 +392,22 @@
 - (void)loadMoreUsers
 {
     NSLog(@"Loading more users...");
+    [self.userListNetAwareViewController
+        setUpdatingState:kConnectedAndUpdating];
+    if (showingFollowing)
+        [service fetchFriendsForUser:user.username
+            page:[NSNumber numberWithInt:++followingUsersPagesShown]];
+    else
+        [service fetchFollowersForUser:user.username
+            page:[NSNumber numberWithInt:++followersPagesShown]];
+}
+
+- (void)userListViewWillAppear
+{
+    NSLog(@"User list view will appear...");
+    self.tweetDetailsCredentialsPublisher = nil;
+    self.tweetDetailsTimelineDisplayMgr = nil;
+    self.tweetDetailsNetAwareViewController = nil;
 }
 
 #pragma mark Accessors
@@ -337,6 +452,29 @@
     }
 
     return userInfoController;
+}
+
+- (NetworkAwareViewController *)userListNetAwareViewController
+{
+    if (!userListNetAwareViewController) {
+        userListNetAwareViewController =
+            [[NetworkAwareViewController alloc]
+            initWithTargetViewController:self.userListController];
+    }
+
+    return userListNetAwareViewController;
+}
+
+- (UserListTableViewController *)userListController
+{
+    if (!userListController) {
+        userListController =
+            [[UserListTableViewController alloc]
+            initWithNibName:@"UserListTableView" bundle:nil];
+        userListController.delegate = self;
+    }
+
+    return userListController;
 }
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService

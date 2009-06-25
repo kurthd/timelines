@@ -8,15 +8,32 @@
 #import "AsynchronousNetworkFetcher.h"
 #import "UIColor+TwitchColors.h"
 
+@interface User (Sorting)
+- (NSComparisonResult)compare:(User *)user;
+@end
+
+@implementation User (Sorting)
+- (NSComparisonResult)compare:(User *)user
+{
+    NSNumber * myId =
+        [NSNumber numberWithLongLong:[self.identifier longLongValue]];
+    NSNumber * theirId =
+        [NSNumber numberWithLongLong:[user.identifier longLongValue]];
+
+    return [theirId compare:myId];
+}
+@end
+
 @interface UserListTableViewController ()
 
 - (UIImage *)getAvatarForUrl:(NSString *)url;
+- (NSArray *)sortedUsers;
 
 @end
 
 @implementation UserListTableViewController
 
-@synthesize delegate;
+@synthesize delegate, sortedUserCache;
 
 - (void)dealloc
 {
@@ -28,14 +45,25 @@
     [avatarCache release];
     [alreadySent release];
 
+    [sortedUserCache release];
+
     [super dealloc];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.tableView.tableFooterView = footerView;
+
     avatarCache = [[NSMutableDictionary dictionary] retain];
     alreadySent = [[NSMutableDictionary dictionary] retain];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [delegate userListViewWillAppear];
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -67,12 +95,16 @@
         cell = [nib objectAtIndex:0];
     }
 
-    User * user = [users objectAtIndex:indexPath.row];
+    User * user = [[self sortedUsers] objectAtIndex:indexPath.row];
     [cell setAvatar:[self getAvatarForUrl:user.profileImageUrl]];
     [cell setName:user.name];
-    [cell setUsername:user.username];
-    NSString * followingText =
+    NSString * username = [NSString stringWithFormat:@"@%@", user.username];
+    [cell setUsername:username];
+    NSString * followingFormatString =
         NSLocalizedString(@"userlisttableview.following", @"");
+    NSString * followingText =
+        [NSString stringWithFormat:followingFormatString, user.friendsCount,
+        user.followersCount];
     [cell setFollowingText:followingText];
 
     return cell;
@@ -81,8 +113,14 @@
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    User * user = [users objectAtIndex:indexPath.row];
+    User * user = [[self sortedUsers] objectAtIndex:indexPath.row];
     [delegate showTweetsForUser:user.username];
+}
+
+- (CGFloat)tableView:(UITableView *)aTableView
+    heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 72;
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -93,8 +131,10 @@
     NSLog(@"Received avatar for url: %@", url);
     NSString * urlAsString = [url absoluteString];
     UIImage * avatarImage = [UIImage imageWithData:data];
-    [avatarCache setObject:avatarImage forKey:urlAsString];
-    [self.tableView reloadData];
+    if (avatarImage) {
+        [avatarCache setObject:avatarImage forKey:urlAsString];
+        [self.tableView reloadData];
+    }
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
@@ -103,12 +143,23 @@
 
 #pragma mark UserListTableViewController implementation
 
-- (void)setUsers:(NSArray *)someUsers
+- (void)setUsers:(NSArray *)someUsers page:(NSUInteger)page
 {
+    self.sortedUserCache = nil;
+    
     NSArray * tempUsers = [someUsers copy];
     [users release];
     users = tempUsers;
-    
+
+    NSString * showingMultPagesFormatString =
+        NSLocalizedString(@"timelineview.showingmultiplepages", @"");
+    NSString * showingSinglePageFormatString =
+        NSLocalizedString(@"timelineview.showingsinglepage", @"");
+    currentPagesLabel.text =
+        page > 1 ?
+        [NSString stringWithFormat:showingMultPagesFormatString, page] :
+        showingSinglePageFormatString;
+
     [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
         forState:UIControlStateNormal];
     loadMoreButton.enabled = YES;
@@ -138,6 +189,15 @@
     [loadMoreButton setTitleColor:[UIColor grayColor]
         forState:UIControlStateNormal];
     loadMoreButton.enabled = NO;
+}
+
+- (NSArray *)sortedUsers
+{
+    if (!self.sortedUserCache)
+        self.sortedUserCache =
+            [users sortedArrayUsingSelector:@selector(compare:)];
+
+    return sortedUserCache;
 }
 
 @end

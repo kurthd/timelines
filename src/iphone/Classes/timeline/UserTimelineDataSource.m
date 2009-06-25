@@ -38,6 +38,16 @@
     [service fetchUserInfoForUsername:username];
 }
 
+- (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page
+{
+    [service fetchFriendsForUser:user page:page];
+}
+
+- (void)fetchFollowersForUser:(NSString *)user page:(NSNumber *)page
+{
+    [service fetchFollowersForUser:user page:page];
+}
+
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)timeline:(NSArray *)timeline fetchedForUser:(NSString *)user
@@ -70,6 +80,31 @@
                                    error:(NSError *)error
 {
     [delegate failedToFetchUserInfoForUsername:username error:error];
+}
+
+- (void)friends:(NSArray *)friends fetchedForUsername:(NSString *)aUsername
+    page:(NSNumber *)page
+{
+    [delegate friends:friends fetchedForUsername:aUsername page:page];
+}
+
+- (void)failedToFetchFriendsForUsername:(NSString *)aUsername
+    page:(NSNumber *)page error:(NSError *)error
+{
+    [delegate failedToFetchFriendsForUsername:aUsername page:page error:error];
+}
+
+- (void)followers:(NSArray *)friends fetchedForUsername:(NSString *)aUsername
+            page:(NSNumber *)page
+{
+    [delegate followers:friends fetchedForUsername:aUsername page:page];
+}
+
+- (void)failedToFetchFollowersForUsername:(NSString *)aUsername
+    page:(NSNumber *)page error:(NSError *)error
+{
+    [delegate failedToFetchFollowersForUsername:aUsername page:page
+        error:error];
 }
 
 - (TwitterCredentials *)credentials

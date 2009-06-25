@@ -147,9 +147,9 @@ enum {
             break;
         case kUserInfoSectionNetwork:
             if (indexPath.row == 0)
-                [delegate displayFollowersForUser:user.username];
-            else
                 [delegate displayFollowingForUser:user.username];
+            else
+                [delegate displayFollowersForUser:user.username];
             break;
     }
 }
