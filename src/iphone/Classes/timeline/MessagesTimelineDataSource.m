@@ -6,6 +6,13 @@
 #import "DirectMessage.h"
 #import "TweetInfo.h"
 
+@interface MessagesTimelineDataSource ()
+
+- (void)sendFetchTimelineResponseWithUpdateId:(NSNumber *)updateId
+    page:(NSNumber *)page;
+
+@end
+    
 @implementation MessagesTimelineDataSource
 
 @synthesize delegate;
@@ -13,13 +20,16 @@
 - (void)dealloc
 {
     [service release];
+    [messages release];
     [super dealloc];
 }
 
 - (id)initWithTwitterService:(TwitterService *)aService
 {
-    if (self = [super init])
+    if (self = [super init]) {
         service = [aService retain];
+        messages = [[NSMutableArray array] retain];
+    }
 
     return self;
 }
@@ -29,7 +39,9 @@
 - (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page;
 {
     NSLog(@"Fetching direct messages...");
+    outstandingRequests = 2;
     [service fetchDirectMessagesSinceId:updateId page:page];
+    [service fetchSentDirectMessagesSinceId:updateId page:page];
 }
 
 - (void)fetchUserInfoForUsername:(NSString *)username
@@ -63,10 +75,42 @@
             [TweetInfo createFromDirectMessage:directMessage];
         [tweetInfos addObject:tweetInfo];
     }
-    [delegate timeline:tweetInfos fetchedSinceUpdateId:updateId page:page];
+    
+    outstandingRequests--;
+    [messages addObjectsFromArray:tweetInfos];
 }
 
+- (void)sentDirectMessages:(NSArray *)directMessages
+    fetchedSinceUpdateId:(NSNumber *)updateId page:(NSNumber *)page
+{
+    NSMutableArray * tweetInfos = [NSMutableArray array];
+    for (DirectMessage * directMessage in directMessages) {
+        TweetInfo * tweetInfo =
+            [TweetInfo createFromDirectMessage:directMessage];
+        [tweetInfos addObject:tweetInfo];
+    }
+    
+    outstandingRequests--;
+    [messages addObjectsFromArray:tweetInfos];
+    if (outstandingRequests == 0)
+        [self sendFetchTimelineResponseWithUpdateId:updateId page:page];
+}
+
+- (void)sendFetchTimelineResponseWithUpdateId:(NSNumber *)updateId
+    page:(NSNumber *)page
+{
+    [delegate timeline:messages fetchedSinceUpdateId:updateId page:page];
+    [messages removeAllObjects];
+}
+             
 - (void)failedToFetchDirectMessagesSinceUpdateId:(NSNumber *)updateId
+    page:(NSNumber *)page error:(NSError *)error
+{
+    [delegate failedToFetchTimelineSinceUpdateId:updateId page:page
+        error:error];
+}
+
+- (void)failedToFetchSentDirectMessagesSinceUpdateId:(NSNumber *)updateId
     page:(NSNumber *)page error:(NSError *)error
 {
     [delegate failedToFetchTimelineSinceUpdateId:updateId page:page

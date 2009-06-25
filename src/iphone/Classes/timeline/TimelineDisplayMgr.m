@@ -654,4 +654,17 @@
     self.timelineController.invertedCellUsernames = invertedCellUsernames;
 }
 
+- (void)setShowInboxOutbox:(BOOL)show
+{
+    if (show) {
+        NSLog(@"Showing as inbox/outbox; username: %@", credentials.username);
+        [self.timelineController
+            setSegregateTweetsFromUser:credentials.username];
+    } else {
+        NSLog(@"Not showing as inbox/outbox; username: %@",
+            credentials.username);
+        [self.timelineController setSegregateTweetsFromUser:nil];
+    }
+}
+
 @end

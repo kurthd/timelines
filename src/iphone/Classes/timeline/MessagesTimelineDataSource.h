@@ -14,6 +14,9 @@
 {
     NSObject<TimelineDataSourceDelegate> * delegate;
     TwitterService * service;
+    
+    NSMutableArray * messages;
+    NSInteger outstandingRequests;
 }
 
 @property (nonatomic, assign) NSObject<TimelineDataSourceDelegate> * delegate;

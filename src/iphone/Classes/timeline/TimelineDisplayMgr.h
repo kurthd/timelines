@@ -53,6 +53,7 @@
     BOOL needsRefresh;
     BOOL setUserToFirstTweeter;
     BOOL refreshingTweets;
+    BOOL showInboxOutbox;
 
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     TimelineDisplayMgr * tweetDetailsTimelineDisplayMgr;
@@ -109,5 +110,7 @@
 - (void)refresh;
 
 - (void)addTweet:(Tweet *)tweet displayImmediately:(BOOL)displayImmediately;
+
+- (void)setShowInboxOutbox:(BOOL)show;
 
 @end

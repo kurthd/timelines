@@ -119,7 +119,6 @@
     [self initHomeTab];
     [self initProfileTab];
     [self initAccountsTab];
-    [self setUIStateFromPersistence];
 
     if (self.credentials.count == 0) {
         NSAssert1(!self.activeCredentials.credentials, @"No credentials exist, "
@@ -138,6 +137,8 @@
         [profileTimelineDisplayMgr setCredentials:c];
         [self.composeTweetDisplayMgr setCredentials:c];
     }
+
+    [self setUIStateFromPersistence];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

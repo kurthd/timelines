@@ -26,8 +26,8 @@
     IBOutlet UISegmentedControl * inboxOutboxControl;
 
     NSArray * tweets;
-    NSArray * outgoingTweets;
-    NSArray * incomingTweets;
+    NSMutableArray * outgoingTweets;
+    NSMutableArray * incomingTweets;
     NSMutableDictionary * avatarCache;
     NSMutableDictionary * alreadySent;
     NSArray * invertedCellUsernames;
@@ -56,7 +56,6 @@
 - (void)setTweets:(NSArray *)tweets page:(NSUInteger)page;
 - (void)setAllPagesLoaded:(BOOL)allLoaded;
 - (void)setSegregateTweetsFromUser:(NSString *)username;
-- (void)clearInboxOutboxTweets;
 
 - (IBAction)loadMoreTweets:(id)sender;
 - (IBAction)showUserInfo:(id)sender;

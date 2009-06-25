@@ -290,16 +290,16 @@
 				</object>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 			</object>
-			<object class="IBUIView" id="311197313">
+			<object class="IBUIView" id="925065391">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="IBUISegmentedControl" id="489957498">
-						<reference key="NSNextResponder" ref="311197313"/>
+					<object class="IBUISegmentedControl" id="516945847">
+						<reference key="NSNextResponder" ref="925065391"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{56, 328}, {207, 44}}</string>
-						<reference key="NSSuperview" ref="311197313"/>
+						<string key="NSFrame">{{59, 20}, {207, 44}}</string>
+						<reference key="NSSuperview" ref="925065391"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<int key="IBNumberOfSegments">2</int>
@@ -331,7 +331,7 @@
 						</object>
 					</object>
 				</object>
-				<string key="NSFrameSize">{320, 387}</string>
+				<string key="NSFrameSize">{320, 83}</string>
 				<reference key="NSSuperview"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -469,7 +469,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">setInboxOutbox:</string>
-						<reference key="source" ref="489957498"/>
+						<reference key="source" ref="516945847"/>
 						<reference key="destination" ref="841351856"/>
 						<int key="IBEventType">13</int>
 					</object>
@@ -479,7 +479,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">inboxOutboxControl</string>
 						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="489957498"/>
+						<reference key="destination" ref="516945847"/>
 					</object>
 					<int key="connectionID">45</int>
 				</object>
@@ -487,7 +487,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">inboxOutboxView</string>
 						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="311197313"/>
+						<reference key="destination" ref="925065391"/>
 					</object>
 					<int key="connectionID">46</int>
 				</object>
@@ -605,18 +605,18 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">40</int>
-						<reference key="object" ref="311197313"/>
+						<reference key="object" ref="925065391"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="489957498"/>
+							<reference ref="516945847"/>
 						</object>
 						<reference key="parent" ref="188939961"/>
 						<string key="objectName">Inbox/Sent Toggle</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">41</int>
-						<reference key="object" ref="489957498"/>
-						<reference key="parent" ref="311197313"/>
+						<reference key="object" ref="516945847"/>
+						<reference key="parent" ref="925065391"/>
 					</object>
 				</object>
 			</object>
@@ -668,7 +668,7 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{530, 422}, {320, 387}}</string>
+					<string>{{530, 726}, {320, 83}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{651, 172}, {320, 392}}</string>

@@ -48,6 +48,7 @@
 
 - (void)tabSelected:(id)sender
 {
+    NSLog(@"Tab selected");
     switch (previousTab) {
         case 0:
             self.allTimelineTweets = timelineDisplayMgr.timeline;
@@ -73,6 +74,7 @@
             service.delegate = allTimelineDataSource;
             allTimelineDataSource.delegate = timelineDisplayMgr;
             timelineDisplayMgr.displayAsConversation = YES;
+            [timelineDisplayMgr setShowInboxOutbox:NO];
             [timelineDisplayMgr setService:allTimelineDataSource
                 tweets:self.allTimelineTweets page:allTimelinePagesShown
                 forceRefresh:allTimelineRefresh];
@@ -83,6 +85,7 @@
             service.delegate = mentionsTimelineDataSource;
             mentionsTimelineDataSource.delegate = timelineDisplayMgr;
             timelineDisplayMgr.displayAsConversation = NO;
+            [timelineDisplayMgr setShowInboxOutbox:NO];
             [timelineDisplayMgr setService:mentionsTimelineDataSource
                 tweets:self.mentionsTimelineTweets
                 page:mentionsTimelinePagesShown
@@ -94,6 +97,7 @@
             service.delegate = messagesTimelineDataSource;
             messagesTimelineDataSource.delegate = timelineDisplayMgr;
             timelineDisplayMgr.displayAsConversation = NO;
+            [timelineDisplayMgr setShowInboxOutbox:YES];
             [timelineDisplayMgr setService:messagesTimelineDataSource
                 tweets:self.messagesTimelineTweets
                 page:messagesTimelinePagesShown
