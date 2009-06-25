@@ -15,12 +15,14 @@
     IBOutlet UIBarButtonItem * cancelButton;
 
     IBOutlet UILabel * characterCount;
+    IBOutlet UILabel * accountLabel;
 
     IBOutlet UIView * activityView;
 }
 
 @property (nonatomic, assign) id<ComposeTweetViewControllerDelegate> delegate;
 
+- (void)setUsername:(NSString *)username;
 - (void)promptWithText:(NSString *)text;
 - (void)addTextToMessage:(NSString *)text;
 
