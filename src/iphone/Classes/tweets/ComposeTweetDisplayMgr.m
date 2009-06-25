@@ -165,9 +165,8 @@
 {
     NSLog(@"Successfully posted image to URL: '%@'.", url);
 
-    [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
+    [self.composeTweetViewController hideActivityView];
     [self.composeTweetViewController addTextToMessage:url];
-
 }
 
 - (void)sender:(TwitPicImageSender *)sender failedToPostImage:(NSError *)error
@@ -176,10 +175,10 @@
 
     NSString * title = NSLocalizedString(@"imageupload.failed.title", @"");
 
-    [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
-
     [[UIAlertView simpleAlertViewWithTitle:title
                                    message:error.localizedDescription] show];
+
+    [self.composeTweetViewController hideActivityView];
 }
 
 #pragma mark UIImagePickerControllerDelegate implementation
@@ -192,6 +191,8 @@
          image = [info valueForKey:UIImagePickerControllerOriginalImage];
 
     [imageSender sendImage:image withCredentials:service.credentials];
+    [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
+    [self.composeTweetViewController displayActivityView];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
