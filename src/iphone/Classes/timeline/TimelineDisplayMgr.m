@@ -178,6 +178,42 @@
     [self.userListController setUsers:[cache allValues] page:[page intValue]];
 }
 
+- (void)startedFollowingUsername:(NSString *)username
+{
+    NSLog(@"Started following %@", username);
+}
+
+- (void)failedToStartFollowingUsername:(NSString *)username
+{
+    NSLog(@"Failed to start following %@", username);    
+}
+
+- (void)stoppedFollowingUsername:(NSString *)username
+{
+    NSLog(@"Stopped following %@", username);
+}
+
+- (void)failedToStopFollowingUsername:(NSString *)username
+{
+    NSLog(@"Failed to stop following %@", username);
+}
+
+- (void)user:(NSString *)username isFollowing:(NSString *)followee
+{
+    [self.userInfoController setFollowing:YES];
+}
+
+- (void)user:(NSString *)username isNotFollowing:(NSString *)followee
+{
+    [self.userInfoController setFollowing:NO];
+}
+
+- (void)failedToQueryIfUser:(NSString *)username
+    isFollowing:(NSString *)followee error:(NSError *)error
+{
+    
+}
+
 #pragma mark TimelineViewControllerDelegate implementation
 
 - (void)selectedTweet:(TweetInfo *)tweet avatarImage:(UIImage *)avatarImage
@@ -204,7 +240,11 @@
     NSLog(@"Showing user info for %@", user);
     [self.wrapperController.navigationController
         pushViewController:self.userInfoController animated:YES];
+    self.userInfoController.followingEnabled =
+        ![credentials.username isEqual:user.username];
     [self.userInfoController setUser:user avatarImage:avatar];
+    if (self.userInfoController.followingEnabled)
+        [service isUser:credentials.username following:user.username];
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
@@ -433,11 +473,13 @@
 - (void)startFollowingUser:(NSString *)username
 {
     NSLog(@"Sending 'follow user' request for %@", username);
+    [service followUser:username];
 }
 
 - (void)stopFollowingUser:(NSString *)username
 {
     NSLog(@"Sending 'stop following' request for %@", username);
+    [service stopFollowingUser:username];
 }
 
 - (void)showingUserInfoView

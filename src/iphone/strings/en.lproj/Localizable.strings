@@ -43,6 +43,10 @@ userinfoview.favorites = "Favorites";
 userinfoview.webpage = "webpage";
 userinfoview.location = "location";
 userinfoview.title = "User Info";
+userinfoview.startfollowing = "Start following";
+userinfoview.stopfollowing = "Stop following";
+userinfoview.followinglabel.following = "Following";
+userinfoview.followinglabel.notfollowing = "Not following";
 
 /* AccountsViewController */
 account.deletion.failed.alert.title = "Failed to Remove %@";

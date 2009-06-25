@@ -13,6 +13,9 @@
 - (void)fetchUserInfoForUsername:(NSString *)username;
 - (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page;
 - (void)fetchFollowersForUser:(NSString *)user page:(NSNumber *)page;
+- (void)isUser:(NSString *)user following:(NSString *)followee;
+- (void)followUser:(NSString *)username;
+- (void)stopFollowingUser:(NSString *)username;
 - (void)markTweet:(NSString *)tweetId asFavorite:(BOOL)favorite;
 
 @end

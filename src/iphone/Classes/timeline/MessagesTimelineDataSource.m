@@ -64,6 +64,21 @@
     [service markTweet:tweetId asFavorite:favorite];
 }
 
+- (void)isUser:(NSString *)user following:(NSString *)followee
+{
+    [service isUser:user following:followee];
+}
+
+- (void)followUser:(NSString *)aUsername
+{
+    [service followUser:aUsername];
+}
+
+- (void)stopFollowingUser:(NSString *)aUsername
+{
+    [service stopFollowingUser:aUsername];
+}
+
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)directMessages:(NSArray *)directMessages
@@ -151,6 +166,44 @@
 {
     [delegate failedToFetchFollowersForUsername:aUsername page:page
         error:error];
+}
+
+- (void)startedFollowingUsername:(NSString *)aUsername
+{
+    [delegate startedFollowingUsername:aUsername];
+}
+
+- (void)failedToStartFollowingUsername:(NSString *)aUsername
+    error:(NSError *)error
+{
+    [delegate failedToStartFollowingUsername:aUsername];
+}
+
+- (void)stoppedFollowingUsername:(NSString *)aUsername
+{
+    [delegate stoppedFollowingUsername:aUsername];
+}
+
+- (void)failedToStopFollowingUsername:(NSString *)aUsername
+    error:(NSError *)error
+{
+    [delegate failedToStopFollowingUsername:aUsername];
+}
+
+- (void)user:(NSString *)aUsername isFollowing:(NSString *)followee
+{
+    [delegate user:aUsername isFollowing:followee];
+}
+
+- (void)user:(NSString *)aUsername isNotFollowing:(NSString *)followee
+{
+    [delegate user:aUsername isNotFollowing:followee];
+}
+
+- (void)failedToQueryIfUser:(NSString *)aUsername
+    isFollowing:(NSString *)followee error:(NSError *)error
+{
+    [delegate failedToQueryIfUser:aUsername isFollowing:followee error:error];
 }
 
 - (TwitterCredentials *)credentials
