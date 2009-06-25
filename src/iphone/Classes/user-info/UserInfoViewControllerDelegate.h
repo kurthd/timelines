@@ -14,5 +14,6 @@
 - (void)startFollowingUser:(NSString *)username;
 - (void)stopFollowingUser:(NSString *)username;
 - (void)showingUserInfoView;
+- (void)sendDirectMessageToUser:(NSString *)username;
 
 @end

@@ -263,6 +263,11 @@
     [self deallocateTweetDetailsNode];
 }
 
+- (void)sendDirectMessageToUser:(NSString *)username
+{
+    
+}
+
 #pragma mark NetworkAwareViewControllerDelegate implementation
 
 - (void)networkAwareViewWillAppear

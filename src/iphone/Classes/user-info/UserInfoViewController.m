@@ -264,6 +264,8 @@ enum {
 
 - (IBAction)sendMessage:(id)sender
 {
+    NSLog(@"'Send message' selected");
+    [delegate sendDirectMessageToUser:user.username];
 }
 
 @end
