@@ -211,7 +211,7 @@ enum {
     bioLabel.frame = bioLabelFrame;
 
     CGRect headerViewFrame = headerView.frame;
-    headerViewFrame.size.height = bioLabelFrame.size.height + 78.0;
+    headerViewFrame.size.height = bioLabelFrame.size.height + 390.0;
     headerView.frame = headerViewFrame;
 
     // force the header view to redraw
