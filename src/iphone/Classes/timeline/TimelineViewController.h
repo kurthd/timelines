@@ -22,8 +22,12 @@
     IBOutlet UILabel * currentPagesLabel;
     IBOutlet UIButton * loadMoreButton;
     IBOutlet UILabel * noMorePagesLabel;
+    IBOutlet UIView * inboxOutboxView;
+    IBOutlet UISegmentedControl * inboxOutboxControl;
 
     NSArray * tweets;
+    NSArray * outgoingTweets;
+    NSArray * incomingTweets;
     NSMutableDictionary * avatarCache;
     NSMutableDictionary * alreadySent;
     NSArray * invertedCellUsernames;
@@ -31,21 +35,32 @@
     User * user;
 
     NSArray * sortedTweetCache;
+    NSArray * outgoingSortedTweetCache;
+    NSArray * incomingSortedTweetCache;
+
+    NSString * segregatedSenderUsername;
+    BOOL showInbox;
 }
 
 @property (nonatomic, assign)
     NSObject<TimelineViewControllerDelegate> * delegate;
 
 @property (nonatomic, retain) NSArray * sortedTweetCache;
+@property (nonatomic, retain) NSArray * outgoingSortedTweetCache;
+@property (nonatomic, retain) NSArray * incomingSortedTweetCache;
+
 @property (nonatomic, copy) NSArray * invertedCellUsernames;
 @property (nonatomic, assign) BOOL showWithoutAvatars;
 
 - (void)setUser:(User *)user;
 - (void)setTweets:(NSArray *)tweets page:(NSUInteger)page;
 - (void)setAllPagesLoaded:(BOOL)allLoaded;
+- (void)setSegregateTweetsFromUser:(NSString *)username;
+- (void)clearInboxOutboxTweets;
 
 - (IBAction)loadMoreTweets:(id)sender;
 - (IBAction)showUserInfo:(id)sender;
+- (IBAction)setInboxOutbox:(id)sender;
 
 - (void)addTweet:(TweetInfo *)tweet;
 

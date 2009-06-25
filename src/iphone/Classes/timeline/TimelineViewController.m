@@ -20,7 +20,7 @@
 @implementation TimelineViewController
 
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
-    showWithoutAvatars;
+    showWithoutAvatars, outgoingSortedTweetCache, incomingSortedTweetCache;
 
 - (void)dealloc
 {
@@ -30,15 +30,25 @@
     [fullNameLabel release];
     [usernameLabel release];
     [followingLabel release];
+    [inboxOutboxControl release];
+    [inboxOutboxView release];
 
     [tweets release];
+    [outgoingTweets release];
+    [incomingTweets release];
     [avatarCache release];
     [alreadySent release];
     [user release];
 
+    [sortedTweetCache release];
+    [outgoingSortedTweetCache release];
+    [incomingSortedTweetCache release];
+
     [loadMoreButton release];
     [noMorePagesLabel release];
     [currentPagesLabel release];
+
+    [segregatedSenderUsername release];
 
     [super dealloc];
 }
@@ -213,11 +223,28 @@
 
 - (void)setTweets:(NSArray *)someTweets page:(NSUInteger)page
 {
-    self.sortedTweetCache = nil;
-
-    NSArray * tempTweets = [someTweets copy];
-    [tweets release];
-    tweets = tempTweets;
+    if (!segregatedSenderUsername) {
+        self.sortedTweetCache = nil;
+        NSArray * tempTweets = [someTweets copy];
+        [tweets release];
+        tweets = tempTweets;
+    } else {
+        TweetInfo * firstTweet =
+            [someTweets count] > 0 ? [someTweets objectAtIndex:0] : nil;
+        if (firstTweet) {
+            if ([firstTweet.user.username isEqual:segregatedSenderUsername]) {
+                self.outgoingSortedTweetCache = nil;
+                NSArray * tempTweets = [someTweets copy];
+                [outgoingTweets release];
+                outgoingTweets = tempTweets;
+            } else {
+                self.incomingSortedTweetCache = nil;
+                NSArray * tempTweets = [someTweets copy];
+                [incomingTweets release];
+                incomingTweets = tempTweets;
+            }
+        }
+    }
 
     NSString * showingMultPagesFormatString =
         NSLocalizedString(@"timelineview.showingmultiplepages", @"");
@@ -233,6 +260,16 @@
     [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
         forState:UIControlStateNormal];
     loadMoreButton.enabled = YES;
+}
+
+- (void)clearInboxOutboxTweets
+{
+    [outgoingTweets release];
+    outgoingTweets = [[NSArray array] retain];
+    self.outgoingSortedTweetCache = nil;
+    [incomingTweets release];
+    incomingTweets = [[NSArray array] retain];
+    self.incomingSortedTweetCache = nil;
 }
 
 - (void)setAllPagesLoaded:(BOOL)allLoaded
@@ -267,11 +304,42 @@
 
 - (NSArray *)sortedTweets
 {
-    if (!self.sortedTweetCache)
-        self.sortedTweetCache =
-            [tweets sortedArrayUsingSelector:@selector(compare:)];
+    NSArray * returnVal;
+    if (!segregatedSenderUsername) {
+        if (!self.sortedTweetCache)
+            self.sortedTweetCache =
+                [tweets sortedArrayUsingSelector:@selector(compare:)];
+        returnVal = self.sortedTweetCache;
+    } else if (showInbox) {
+        if (!self.incomingSortedTweetCache)
+            self.incomingSortedTweetCache =
+                [tweets sortedArrayUsingSelector:@selector(compare:)];
+        returnVal = self.incomingSortedTweetCache;
+    } else {
+        if (!self.outgoingSortedTweetCache)
+            self.outgoingSortedTweetCache =
+                [tweets sortedArrayUsingSelector:@selector(compare:)];
+        returnVal = self.outgoingSortedTweetCache;
+    }
 
-    return sortedTweetCache;
+    return returnVal;
+}
+
+- (void)setSegregateTweetsFromUser:(NSString *)username
+{
+    NSString * tempUsername = [username copy];
+    [segregatedSenderUsername release];
+    segregatedSenderUsername = tempUsername;
+    
+    if (username)
+        self.tableView.tableHeaderView = inboxOutboxView;
+    else
+        self.tableView.tableHeaderView = headerView;
+}
+
+- (IBAction)setInboxOutbox:(id)sender
+{
+    showInbox = inboxOutboxControl.selectedSegmentIndex == 0;
 }
 
 @end
