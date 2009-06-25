@@ -18,3 +18,4 @@
 #import "MarkFavoriteResponseProcessor.h"
 
 #import "SendTweetResponseProcessor.h"
+#import "SendDirectMessageResponseProcessor.h"

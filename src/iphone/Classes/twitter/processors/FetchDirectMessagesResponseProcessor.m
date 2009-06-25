@@ -88,13 +88,7 @@
         if (!dm) {
             dm = [DirectMessage createInstance:context];
 
-            dm.identifier = dmId;
-            dm.text = [dmData objectForKey:@"text"];
-            dm.sourceApiRequestType =
-                [[dmData objectForKey:@"source_api_request_type"] description];
-
-            // already an NSData instance
-            dm.created = [dmData objectForKey:@"created_at"];
+            [self populateDirectMessage:dm fromData:dmData];
 
             dm.recipient = recipient;
             dm.sender = sender;

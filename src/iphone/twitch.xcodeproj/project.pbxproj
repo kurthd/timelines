@@ -19,6 +19,7 @@
 		0524C5400FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C53F0FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.m */; };
 		052C64190FED703200B259D7 /* TwitchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C64180FED703200B259D7 /* TwitchAppDelegate.m */; };
 		057E800E0FF314830074A91B /* TwitPicResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E800D0FF314830074A91B /* TwitPicResponseParser.m */; };
+		057E82420FF345CA0074A91B /* SendDirectMessageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E82410FF345CA0074A91B /* SendDirectMessageResponseProcessor.m */; };
 		05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05977A3B0FEF0C9700E37B9C /* Icon.png */; };
 		05AE708E0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */; };
 		05AE711B0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE711A0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m */; };
@@ -160,6 +161,8 @@
 		052C64180FED703200B259D7 /* TwitchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchAppDelegate.m; path = "app-controller/TwitchAppDelegate.m"; sourceTree = "<group>"; };
 		057E800C0FF314830074A91B /* TwitPicResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitPicResponseParser.h; path = twitpic/TwitPicResponseParser.h; sourceTree = "<group>"; };
 		057E800D0FF314830074A91B /* TwitPicResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitPicResponseParser.m; path = twitpic/TwitPicResponseParser.m; sourceTree = "<group>"; };
+		057E82400FF345CA0074A91B /* SendDirectMessageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SendDirectMessageResponseProcessor.h; path = twitter/processors/SendDirectMessageResponseProcessor.h; sourceTree = "<group>"; };
+		057E82410FF345CA0074A91B /* SendDirectMessageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SendDirectMessageResponseProcessor.m; path = twitter/processors/SendDirectMessageResponseProcessor.m; sourceTree = "<group>"; };
 		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		05AE708C0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFavoritesForUserResponseProcessor.h; path = twitter/processors/FetchFavoritesForUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFavoritesForUserResponseProcessor.m; path = twitter/processors/FetchFavoritesForUserResponseProcessor.m; sourceTree = "<group>"; };
@@ -648,6 +651,8 @@
 				05F45BA10FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m */,
 				05F459ED0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.h */,
 				05F459EE0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m */,
+				057E82400FF345CA0074A91B /* SendDirectMessageResponseProcessor.h */,
+				057E82410FF345CA0074A91B /* SendDirectMessageResponseProcessor.m */,
 				05F45C210FF0482200EBAFC7 /* SendTweetResponseProcessor.h */,
 				05F45C220FF0482200EBAFC7 /* SendTweetResponseProcessor.m */,
 				0524C2540FF1ED1700A6099B /* FetchUserInfoResponseProcessor.h */,
@@ -1052,6 +1057,7 @@
 				910BE31B0FF30296005342EE /* FavoritesTimelineDataSource.m in Sources */,
 				910BE36A0FF32059005342EE /* UIState.m in Sources */,
 				910BE36D0FF32137005342EE /* UIStatePersistenceStore.m in Sources */,
+				057E82420FF345CA0074A91B /* SendDirectMessageResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

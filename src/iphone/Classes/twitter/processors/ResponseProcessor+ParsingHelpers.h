@@ -6,10 +6,12 @@
 #import "ResponseProcessor.h"
 #import "User.h"
 #import "Tweet.h"
+#import "DirectMessage.h"
 
 @interface ResponseProcessor (ParsingHelpers)
 
 - (void)populateUser:(User *)user fromData:(NSDictionary *)data;
 - (void)populateTweet:(Tweet *)tweet fromData:(NSDictionary *)data;
+- (void)populateDirectMessage:(DirectMessage *)dm fromData:(NSDictionary *)data;
 
 @end

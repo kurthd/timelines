@@ -164,6 +164,21 @@
     [self request:requestId isHandledBy:processor];
 }
 
+- (void)sendDirectMessage:(NSString *)message to:(NSString *)username
+{
+    ResponseProcessor * processor =
+        [SendDirectMessageResponseProcessor processorWithTweet:message
+                                                      username:username
+                                                       context:context
+                                                      delegate:delegate];
+
+    NSString * requestId = [twitter sendDirectMessage:message to:username];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+#pragma mark Favorites
+
 - (void)fetchFavoritesForUser:(NSString *)user page:(NSNumber *)page
 {
     ResponseProcessor * processor =
