@@ -260,6 +260,9 @@
 - (void)replyToTweet
 {
     NSLog(@"Reply to tweet selected");
+    NSString * publicReplyString =
+        [NSString stringWithFormat:@"@%@ ", selectedTweet.user.username];
+    [composeTweetDisplayMgr composeTweetWithText:publicReplyString];
 }
 
 - (void)showingTweetDetails
@@ -270,7 +273,7 @@
 
 - (void)sendDirectMessageToUser:(NSString *)username
 {
-    
+    [composeTweetDisplayMgr composeTweet];
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation

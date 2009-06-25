@@ -71,7 +71,7 @@
     switch (displayType) {
         case kTimelineTableViewCellTypeInverted:
             avatar.hidden = NO;
-            avatarFrame.origin.x = 248;
+            avatarFrame.origin.x = 245;
             nameLabel.hidden = YES;
             dateLabelFrame.origin.x = 7;
             dateLabel.textAlignment = UITextAlignmentLeft;
