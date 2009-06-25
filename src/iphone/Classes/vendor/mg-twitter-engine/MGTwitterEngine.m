@@ -769,7 +769,7 @@
     if (!username) {
         return nil;
     }
-    NSString *path = [NSString stringWithFormat:@"friendships/destroy.xml.xml?screen_name=%@", username];
+    NSString *path = [NSString stringWithFormat:@"friendships/destroy.xml?screen_name=%@", username];
     
     return [self _sendRequestWithMethod:HTTP_POST_METHOD path:path queryParameters:nil body:nil 
                             requestType:MGTwitterAccountRequest 

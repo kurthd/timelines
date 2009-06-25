@@ -89,9 +89,9 @@
 {
     SEL sel;
     if (following)
-        sel = @selector(failedToStartFollowingUsername:);
+        sel = @selector(failedToStartFollowingUsername:error:);
     else
-        sel = @selector(failedToStopFollowingUsername:);
+        sel = @selector(failedToStopFollowingUsername:error:);
 
     [self invokeSelector:sel withTarget:delegate args:username, error, nil];
 
