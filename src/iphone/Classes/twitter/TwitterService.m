@@ -322,19 +322,18 @@
 
 - (void)requestSucceeded:(NSString *)requestId
 {
-    NSLog(@"Request '%@' succeeded.", requestId);
     [self request:requestId succeededWithResponse:nil];
 }
 
 - (void)requestFailed:(NSString *)requestId withError:(NSError *)error
 {
-    NSLog(@"Request '%@' failed; error: '%@'.", requestId, error);
+    NSLog(@"Request '%@' failed; error: '%@'", requestId, error);
     [self request:requestId failed:error];
 }
 
 - (void)statusesReceived:(NSArray *)statuses forRequest:(NSString *)requestId
 {
-    NSLog(@"Statuses recieved for request '%@': %@", requestId, statuses);
+    NSLog(@"Recieved %d statuses for request '%@'", statuses.count, requestId);
     [self request:requestId succeededWithResponse:statuses];
     [self cleanUpRequest:requestId];
 }
@@ -342,22 +341,24 @@
 - (void)directMessagesReceived:(NSArray *)messages
                     forRequest:(NSString *)requestId
 {
-    NSLog(@"Direct messages recieved for request '%@': %@", requestId,
-        messages);
+    NSLog(@"Received %d direct messages recieved for request '%@'",
+        messages.count, requestId);
     [self request:requestId succeededWithResponse:messages];
     [self cleanUpRequest:requestId];
 }
 
 - (void)userInfoReceived:(NSArray *)userInfo forRequest:(NSString *)requestId
 {
-    NSLog(@"User info received for request '%@': %@", requestId, userInfo);
+    NSLog(@"Received %d user infos for request '%@'", userInfo.count,
+        requestId);
     [self request:requestId succeededWithResponse:userInfo];
     [self cleanUpRequest:requestId];
 }
 
 - (void)miscInfoReceived:(NSArray *)miscInfo forRequest:(NSString *)requestId
 {
-    NSLog(@"Misc. info received for request '%@': %@", requestId, miscInfo);
+    NSLog(@"Received %d misc. infos for request '%@'", miscInfo.count,
+        requestId);
     [self request:requestId succeededWithResponse:miscInfo];
     [self cleanUpRequest:requestId];
 }
