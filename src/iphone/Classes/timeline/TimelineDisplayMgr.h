@@ -16,6 +16,7 @@
 #import "CredentialsActivatedPublisher.h"
 #import "UserListTableViewControllerDelegate.h"
 #import "UserListTableViewController.h"
+#import "ComposeTweetDisplayMgr.h"
 
 @class TimelineDisplayMgrFactory;
 
@@ -60,6 +61,8 @@
 
     NetworkAwareViewController * userListNetAwareViewController;
     UserListTableViewController * userListController;
+
+    ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
@@ -94,7 +97,8 @@
     timelineController:(TimelineViewController *)aTimelineController
     service:(NSObject<TimelineDataSource> *)service title:(NSString *)title
     factory:(TimelineDisplayMgrFactory *)factory
-    managedObjectContext:(NSManagedObjectContext* )managedObjectContext;
+    managedObjectContext:(NSManagedObjectContext* )managedObjectContext
+    composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr;
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page

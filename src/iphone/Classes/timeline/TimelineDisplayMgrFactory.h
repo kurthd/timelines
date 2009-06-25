@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TimelineDisplayMgr.h"
+#import "ComposeTweetDisplayMgr.h"
 
 @interface TimelineDisplayMgrFactory : NSObject
 {
@@ -15,6 +16,7 @@
 - (TimelineDisplayMgr *)
     createTimelineDisplayMgrWithWrapperController:
     (NetworkAwareViewController *)wrapperController title:(NSString *)title
-    managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+    managedObjectContext:(NSManagedObjectContext *)managedObjectContext
+    composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr;
     
 @end

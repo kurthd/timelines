@@ -50,6 +50,8 @@
     [userListNetAwareViewController release];
     [userListController release];
 
+    [composeTweetDisplayMgr release];
+
     [super dealloc];
 }
 
@@ -58,6 +60,7 @@
     service:(NSObject<TimelineDataSource> *)aService title:(NSString *)title
     factory:(TimelineDisplayMgrFactory *)factory
     managedObjectContext:(NSManagedObjectContext* )aManagedObjectContext
+    composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)aComposeTweetDisplayMgr
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
@@ -65,6 +68,7 @@
         service = [aService retain];
         timelineDisplayMgrFactory = [factory retain];
         managedObjectContext = [aManagedObjectContext retain];
+        composeTweetDisplayMgr = [aComposeTweetDisplayMgr retain];
 
         timeline = [[NSMutableDictionary dictionary] retain];
         followingUsers = [[NSMutableDictionary dictionary] retain];
@@ -208,7 +212,8 @@
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         tweetDetailsNetAwareViewController
-        title:title managedObjectContext:managedObjectContext];
+        title:title managedObjectContext:managedObjectContext
+        composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
     self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = YES;
     [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
@@ -371,7 +376,8 @@
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         tweetDetailsNetAwareViewController
-        title:title managedObjectContext:managedObjectContext];
+        title:title managedObjectContext:managedObjectContext
+        composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.tweetDetailsTimelineDisplayMgr.displayAsConversation = YES;
     self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = NO;
     [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
