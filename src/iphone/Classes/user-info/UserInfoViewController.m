@@ -22,12 +22,13 @@ enum {
 @interface UserInfoViewController ()
 
 - (void)layoutViews;
+- (void)updateDisplayForFollwoing:(BOOL)following;
 
 @end
 
 @implementation UserInfoViewController
 
-@synthesize delegate;
+@synthesize delegate, followingEnabled;
 
 - (void)dealloc
 {
@@ -37,7 +38,12 @@ enum {
     [nameLabel release];
     [usernameLabel release];
     [bioLabel release];
+
     [followingLabel release];
+    [followingCheckMark release];
+    [followingActivityIndicator release];
+    [followingLoadingLabel release];
+
     [followButton release];
     [sendMessageButton release];
 
@@ -230,6 +236,31 @@ enum {
     [user release];
     user = aUser;
 
+    if (followingEnabled) {
+        followingLabel.hidden = YES;
+        followingCheckMark.hidden = YES;
+        followingActivityIndicator.hidden = NO;
+        followingLoadingLabel.hidden = NO;
+        followButton.enabled = NO;
+        [followButton setTitleColor:[UIColor grayColor]
+            forState:UIControlStateNormal];
+        NSString * startFollowingText =
+            NSLocalizedString(@"userinfoview.startfollowing", @"");
+        [followButton setTitle:startFollowingText
+            forState:UIControlStateNormal];
+    } else {
+        followingLabel.hidden = YES;
+        followingCheckMark.hidden = YES;
+        followingActivityIndicator.hidden = YES;
+        followingLoadingLabel.hidden = YES;
+        followButton.enabled = NO;
+        [followButton setTitleColor:[UIColor grayColor]
+            forState:UIControlStateNormal];
+        NSString * followingBtnText =
+            NSLocalizedString(@"userinfoview.startfollowing", @"");
+        [followButton setTitle:followingBtnText forState:UIControlStateNormal];
+    }
+
     if (!avatarImage) {
         NSURL * avatarUrl = [NSURL URLWithString:user.profileImageUrl];
         [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
@@ -242,6 +273,26 @@ enum {
 
     [self layoutViews];
     [self.tableView reloadData];
+}
+
+- (void)setFollowing:(BOOL)following
+{
+    currentlyFollowing = following;
+
+    if (followingEnabled)
+        [self updateDisplayForFollwoing:following];
+    else {
+        followingLabel.hidden = YES;
+        followingCheckMark.hidden = YES;
+        followingActivityIndicator.hidden = YES;
+        followingLoadingLabel.hidden = YES;
+        followButton.enabled = NO;
+        [followButton setTitleColor:[UIColor grayColor]
+            forState:UIControlStateNormal];
+        NSString * followingBtnText =
+            NSLocalizedString(@"userinfoview.startfollowing", @"");
+        [followButton setTitle:followingBtnText forState:UIControlStateNormal];
+    }
 }
 
 - (void)layoutViews
@@ -259,8 +310,13 @@ enum {
 }
 
 - (IBAction)toggleFollowing:(id)sender
-{
-    [delegate startFollowingUser:user.username];
+{   
+    currentlyFollowing = !currentlyFollowing;
+    if (currentlyFollowing)
+        [delegate startFollowingUser:user.username];
+    else
+        [delegate stopFollowingUser:user.username];
+    [self updateDisplayForFollwoing:currentlyFollowing];
 }
 
 - (IBAction)sendMessage:(id)sender
@@ -269,5 +325,24 @@ enum {
     [delegate sendDirectMessageToUser:user.username];
 }
 
-@end
+- (void)updateDisplayForFollwoing:(BOOL)following
+{
+    followingLabel.hidden = NO;
+    followingLabel.text =
+        following ?
+        NSLocalizedString(@"userinfoview.followinglabel.following", @"") :
+        NSLocalizedString(@"userinfoview.followinglabel.notfollowing", @"");
+    followingCheckMark.hidden = !following;
+    followingActivityIndicator.hidden = YES;
+    followingLoadingLabel.hidden = YES;
+    followButton.enabled = YES;
+    [followButton setTitleColor:[UIColor twitchCheckedColor]
+        forState:UIControlStateNormal];
+    NSString * followingBtnText =
+        following ?
+        NSLocalizedString(@"userinfoview.stopfollowing", @"") :
+        NSLocalizedString(@"userinfoview.startfollowing", @"");
+    [followButton setTitle:followingBtnText forState:UIControlStateNormal];
+}
 
+@end

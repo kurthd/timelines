@@ -20,16 +20,24 @@
     IBOutlet UILabel * usernameLabel;
     IBOutlet UILabel * bioLabel;
     IBOutlet UILabel * followingLabel;
+    IBOutlet UILabel * followingCheckMark;
+    IBOutlet UIActivityIndicatorView * followingActivityIndicator;
+    IBOutlet UILabel * followingLoadingLabel;
     IBOutlet UIButton * followButton;
     IBOutlet UIButton * sendMessageButton;
+
+    BOOL currentlyFollowing;
+    BOOL followingEnabled;
 
     User * user;
 }
 
 @property (nonatomic, assign)
     NSObject<UserInfoViewControllerDelegate> * delegate;
+@property (nonatomic, assign) BOOL followingEnabled;
 
 - (void)setUser:(User *)user avatarImage:(UIImage *)avatarImage;
+- (void)setFollowing:(BOOL)enabled;
 - (IBAction)toggleFollowing:(id)sender;
 - (IBAction)sendMessage:(id)sender;
 

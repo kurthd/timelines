@@ -156,7 +156,7 @@
 					<object class="IBUILabel" id="722976235">
 						<reference key="NSNextResponder" ref="521307497"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{91, 347}, {69, 23}}</string>
+						<string key="NSFrame">{{91, 347}, {90, 23}}</string>
 						<reference key="NSSuperview" ref="521307497"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -232,6 +232,40 @@
 							<bytes key="NSRGB">MC45OTIxNTY4NiAwLjk5MjE1Njg2IDAuOTkyMTU2ODYAA</bytes>
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+					</object>
+					<object class="IBUIActivityIndicatorView" id="653947448">
+						<reference key="NSNextResponder" ref="521307497"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{91, 350}, {20, 20}}</string>
+						<reference key="NSSuperview" ref="521307497"/>
+						<bool key="IBUIOpaque">NO</bool>
+						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<bool key="IBUIHidesWhenStopped">NO</bool>
+						<bool key="IBUIAnimating">YES</bool>
+						<int key="IBUIStyle">2</int>
+					</object>
+					<object class="IBUILabel" id="316327267">
+						<reference key="NSNextResponder" ref="521307497"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{119, 348}, {181, 21}}</string>
+						<reference key="NSSuperview" ref="521307497"/>
+						<bool key="IBUIOpaque">NO</bool>
+						<bool key="IBUIClipsSubviews">YES</bool>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string type="base64-UTF8" key="IBUIText">TG9hZGluZyAnZm9sbG93aW5nJyBzdGF0dXMuLi4</string>
+						<object class="NSFont" key="IBUIFont">
+							<string key="NSName">Helvetica</string>
+							<double key="NSSize">1.400000e+01</double>
+							<int key="NSfFlags">16</int>
+						</object>
+						<object class="NSColor" key="IBUITextColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC40MDAwMDAwMSAwLjQwMDAwMDAxIDAuNDAwMDAwMDEAA</bytes>
+						</object>
+						<nil key="IBUIHighlightedColor"/>
+						<int key="IBUIBaselineAdjustment">1</int>
+						<float key="IBUIMinimumFontSize">1.000000e+01</float>
 					</object>
 				</object>
 				<string key="NSFrameSize">{320, 420}</string>
@@ -427,6 +461,30 @@
 					</object>
 					<int key="connectionID">37</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">followingCheckMark</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="402040798"/>
+					</object>
+					<int key="connectionID">43</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">followingActivityIndicator</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="653947448"/>
+					</object>
+					<int key="connectionID">44</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">followingLoadingLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="316327267"/>
+					</object>
+					<int key="connectionID">45</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -469,6 +527,8 @@
 							<reference ref="899521730"/>
 							<reference ref="722976235"/>
 							<reference ref="402040798"/>
+							<reference ref="653947448"/>
+							<reference ref="316327267"/>
 						</object>
 						<reference key="parent" ref="1011628238"/>
 						<string key="objectName">Header View</string>
@@ -544,6 +604,16 @@
 						<reference key="object" ref="221748051"/>
 						<reference key="parent" ref="521307497"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">41</int>
+						<reference key="object" ref="653947448"/>
+						<reference key="parent" ref="521307497"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">42</int>
+						<reference key="object" ref="316327267"/>
+						<reference key="parent" ref="521307497"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -565,6 +635,8 @@
 					<string>4.IBEditorWindowLastContentRect</string>
 					<string>4.IBPluginDependency</string>
 					<string>40.IBPluginDependency</string>
+					<string>41.IBPluginDependency</string>
+					<string>42.IBPluginDependency</string>
 					<string>5.IBEditorWindowLastContentRect</string>
 					<string>5.IBPluginDependency</string>
 					<string>8.IBPluginDependency</string>
@@ -586,6 +658,8 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{715, 259}, {320, 420}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{577, 789}, {320, 68}}</string>
@@ -615,7 +689,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">40</int>
+			<int key="maxID">45</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -669,7 +743,10 @@
 							<string>avatarView</string>
 							<string>bioLabel</string>
 							<string>followButton</string>
+							<string>followingActivityIndicator</string>
+							<string>followingCheckMark</string>
 							<string>followingLabel</string>
+							<string>followingLoadingLabel</string>
 							<string>footerView</string>
 							<string>headerView</string>
 							<string>nameLabel</string>
@@ -681,6 +758,9 @@
 							<string>RoundedImage</string>
 							<string>UILabel</string>
 							<string>UIButton</string>
+							<string>UIActivityIndicatorView</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UIView</string>
 							<string>UIView</string>

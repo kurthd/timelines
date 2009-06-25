@@ -26,6 +26,17 @@
 - (void)followers:(NSArray *)friends fetchedForUsername:(NSString *)username
             page:(NSNumber *)page;
 - (void)failedToFetchFollowersForUsername:(NSString *)username
-                                    page:(NSNumber *)page
-                                   error:(NSError *)error;
+    page:(NSNumber *)page error:(NSError *)error;
+
+- (void)startedFollowingUsername:(NSString *)username;
+- (void)failedToStartFollowingUsername:(NSString *)username;
+
+- (void)stoppedFollowingUsername:(NSString *)username;
+- (void)failedToStopFollowingUsername:(NSString *)username;
+
+- (void)user:(NSString *)username isFollowing:(NSString *)followee;
+- (void)user:(NSString *)username isNotFollowing:(NSString *)followee;
+- (void)failedToQueryIfUser:(NSString *)username
+    isFollowing:(NSString *)followee error:(NSError *)error;
+   
 @end
