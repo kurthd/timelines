@@ -108,9 +108,9 @@
 
     SEL sel;
     if (sent)
-        sel = @selector(directMessages:fetchedSinceUpdateId:page:);
-    else
         sel = @selector(sentDirectMessages:fetchedSinceUpdateId:page:);
+    else
+        sel = @selector(directMessages:fetchedSinceUpdateId:page:);
 
     [self invokeSelector:sel withTarget:delegate args:dms, updateId, page,
         nil];
@@ -122,10 +122,10 @@
 {
     SEL sel;
     if (sent)
-        sel = @selector(failedToFetchDirectMessagesSinceUpdateId:page:error:);
-    else
         sel =
             @selector(failedToFetchSentDirectMessagesSinceUpdateId:page:error:);
+    else
+        sel = @selector(failedToFetchDirectMessagesSinceUpdateId:page:error:);
         
     [self invokeSelector:sel withTarget:delegate args:updateId, page, error,
         nil];

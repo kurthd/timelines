@@ -183,7 +183,9 @@
 {
     UISegmentedControl * control = (UISegmentedControl *)
         homeNetAwareViewController.navigationItem.titleView;
-    BOOL displayImmediately = control.selectedSegmentIndex == 0;
+    BOOL displayImmediately =
+        control.selectedSegmentIndex == 0 ||
+        control.selectedSegmentIndex == 1;
     [timelineDisplayMgr addTweet:tweet displayImmediately:displayImmediately];
 
     [homeNetAwareViewController.navigationItem
@@ -200,12 +202,40 @@
     [self.composeTweetDisplayMgr composeTweetWithText:tweet];
 }
 
+- (void)userIsReplyingToTweet:(NSString *)origTweetId
+                     fromUser:(NSString *)origUsername
+                     withText:(NSString *)text
+{
+}
+
+- (void)userDidReplyToTweet:(NSString *)origTweetId
+                   fromUser:(NSString *)origUsername
+                  withTweet:(Tweet *)reply
+{
+    UISegmentedControl * control = (UISegmentedControl *)
+        homeNetAwareViewController.navigationItem.titleView;
+    BOOL displayImmediately =
+        control.selectedSegmentIndex == 0 ||
+        control.selectedSegmentIndex == 1;
+    [timelineDisplayMgr addTweet:reply displayImmediately:displayImmediately];
+}
+
+- (void)userFailedToReplyToTweet:(NSString *)origTweetId
+                        fromUser:(NSString *)origUsername
+                        withText:(NSString *)text
+{
+    [self.composeTweetDisplayMgr composeReplyToTweet:origTweetId
+                                            fromUser:origUsername
+                                            withText:text];
+}
+
 - (void)userIsSendingDirectMessage:(NSString *)dm to:(NSString *)username
 {
 }
 
 - (void)userDidSendDirectMessage:(DirectMessage *)dm
 {
+    // should the dm be added to the timeline display mgr?
 }
 
 - (void)userFailedToSendDirectMessage:(NSString *)dm to:(NSString *)username

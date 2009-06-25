@@ -8,15 +8,18 @@
 @interface SendTweetResponseProcessor : ResponseProcessor
 {
     NSString * text;
+    NSString * referenceId;
     id delegate;
 
     NSManagedObjectContext * context;
 }
 
 + (id)processorWithTweet:(NSString *)someText
+             referenceId:(NSString *)aReferenceId
                  context:(NSManagedObjectContext *)aContext
                 delegate:(id)aDelegate;
 - (id)initWithTweet:(NSString *)someText
+        referenceId:(NSString *)aReferenceId
             context:(NSManagedObjectContext *)aContext
            delegate:(id)aDelegate;
 

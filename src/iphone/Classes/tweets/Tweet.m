@@ -14,5 +14,8 @@
 @dynamic source;
 @dynamic user;
 @dynamic favorited;
+@dynamic inReplyToTwitterUsername;
+@dynamic inReplyToTwitterTweetId;
+@dynamic inReplyToTwitterUserId;
 
 @end
