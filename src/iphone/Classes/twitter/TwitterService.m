@@ -154,12 +154,30 @@
     ResponseProcessor * processor =
         [FetchDirectMessagesResponseProcessor processorWithUpdateId:updateId
                                                                page:page
+                                                               sent:NO
                                                             context:context
                                                            delegate:delegate];
 
     NSString * requestId =
         [twitter getDirectMessagesSinceID:[updateId integerValue]
                            startingAtPage:[page integerValue]];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+- (void)fetchSentDirectMessagesSinceId:(NSNumber *)updateId
+                                  page:(NSNumber *)page
+{
+    ResponseProcessor * processor =
+        [FetchDirectMessagesResponseProcessor processorWithUpdateId:updateId
+                                                               page:page
+                                                               sent:YES
+                                                            context:context
+                                                           delegate:delegate];
+
+    NSString * requestId =
+        [twitter getSentDirectMessagesSinceID:[updateId integerValue]
+                               startingAtPage:[page integerValue]];
 
     [self request:requestId isHandledBy:processor];
 }

@@ -9,6 +9,7 @@
 {
     NSNumber * updateId;
     NSNumber * page;
+    BOOL sent;
     NSNumber * count;
     id delegate;
 
@@ -17,10 +18,12 @@
 
 + (id)processorWithUpdateId:(NSNumber *)anUpdateId
                        page:(NSNumber *)aPage
+                       sent:(BOOL)isSent
                     context:(NSManagedObjectContext *)aContext
                    delegate:(id)aDelegate;
 - (id)initWithUpdateId:(NSNumber *)anUpdateId
                   page:(NSNumber *)aPage
+                  sent:(BOOL)isSent
                context:(NSManagedObjectContext *)aContext
               delegate:(id)aDelegate;
 

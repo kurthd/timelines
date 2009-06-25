@@ -16,6 +16,7 @@
 
 @property (nonatomic, copy) NSNumber * updateId;
 @property (nonatomic, copy) NSNumber * page;
+@property (nonatomic, assign) BOOL sent;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, assign) id delegate;
 
@@ -23,15 +24,17 @@
 
 @implementation FetchDirectMessagesResponseProcessor
 
-@synthesize updateId, page, delegate, context;
+@synthesize updateId, page, sent, delegate, context;
 
 + (id)processorWithUpdateId:(NSNumber *)anUpdateId
                        page:(NSNumber *)aPage
+                       sent:(BOOL)isSent
                     context:(NSManagedObjectContext *)aContext
                    delegate:(id)aDelegate
 {
     id obj = [[[self class] alloc] initWithUpdateId:anUpdateId
                                                page:aPage
+                                               sent:isSent
                                             context:aContext
                                            delegate:aDelegate];
     return [obj autorelease];
@@ -48,12 +51,14 @@
 
 - (id)initWithUpdateId:(NSNumber *)anUpdateId
                   page:(NSNumber *)aPage
+                  sent:(BOOL)isSent
                context:(NSManagedObjectContext *)aContext
               delegate:(id)aDelegate
 {
     if (self = [super init]) {
         self.updateId = anUpdateId;
         self.page = aPage;
+        self.sent = isSent;
         self.context = aContext;
         self.delegate = aDelegate;
     }
@@ -101,7 +106,12 @@
     if (![context save:&error])
         NSLog(@"Failed to save tweets and users: '%@'", error);
 
-    SEL sel = @selector(directMessages:fetchedSinceUpdateId:page:);
+    SEL sel;
+    if (sent)
+        sel = @selector(directMessages:fetchedSinceUpdateId:page:);
+    else
+        sel = @selector(sentDirectMessages:fetchedSinceUpdateId:page:);
+
     [self invokeSelector:sel withTarget:delegate args:dms, updateId, page,
         nil];
 
@@ -110,7 +120,13 @@
 
 - (BOOL)processErrorResponse:(NSError *)error
 {
-    SEL sel = @selector(failedToFetchDirectMessagesSinceUpdateId:page:error:);
+    SEL sel;
+    if (sent)
+        sel = @selector(failedToFetchDirectMessagesSinceUpdateId:page:error:);
+    else
+        sel =
+            @selector(failedToFetchSentDirectMessagesSinceUpdateId:page:error:);
+        
     [self invokeSelector:sel withTarget:delegate args:updateId, page, error,
         nil];
 

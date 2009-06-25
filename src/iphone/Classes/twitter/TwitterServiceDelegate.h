@@ -71,6 +71,13 @@
                                             page:(NSNumber *)page
                                            error:(NSError *)error;
 
+- (void)sentDirectMessages:(NSArray *)directMessages
+      fetchedSinceUpdateId:(NSNumber *)updateId
+                      page:(NSNumber *)page;
+- (void)failedToFetchSentDirectMessagesSinceUpdateId:(NSNumber *)updateId
+                                                page:(NSNumber *)page
+                                               error:(NSError *)error;
+
 - (void)directMessage:(DirectMessage *)dm sentToUser:(NSString *)username;
 - (void)failedToSendDirectMessage:(NSString *)text
                            toUser:(NSString *)username
