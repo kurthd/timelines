@@ -82,4 +82,10 @@
 - (void)fetchFollowersForUser:(NSString *)user page:(NSNumber *)page;
 - (void)isUser:(NSString *)user following:(NSString *)followee;
 
+#pragma mark Trends
+
+- (void)fetchCurrentTrends;
+- (void)fetchDailyTrends;
+- (void)fetchWeeklyTrends;
+
 @end

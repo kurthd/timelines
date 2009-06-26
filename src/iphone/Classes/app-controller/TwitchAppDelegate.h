@@ -10,6 +10,7 @@
 #import "ComposeTweetDisplayMgrDelegate.h"
 
 @class LogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
+@class TrendsDisplayMgr;
 @class AccountsViewController;
 @class DeviceRegistrar;
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
@@ -49,8 +50,10 @@
     TimelineDisplayMgr * timelineDisplayMgr;
     TimelineDisplayMgr * profileTimelineDisplayMgr;
 
+
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 
+    TrendsDisplayMgr * trendsDisplayMgr;
     AccountsDisplayMgr * accountsDisplayMgr;
 
     UIBarButtonItem * sendingTweetProgressView;

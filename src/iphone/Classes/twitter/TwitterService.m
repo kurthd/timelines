@@ -318,6 +318,20 @@
     [self request:requestId isHandledBy:processor];
 }
 
+#pragma mark Trends
+
+- (void)fetchCurrentTrends
+{
+}
+
+- (void)fetchDailyTrends
+{
+}
+
+- (void)fetchWeeklyTrends
+{
+}
+
 #pragma mark MGTwitterEngineDelegate implementation
 
 - (void)requestSucceeded:(NSString *)requestId

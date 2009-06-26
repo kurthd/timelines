@@ -96,7 +96,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         textView.text.length > 0 && textView.text.length <= MAX_TWEET_LENGTH;
 }
 
-
 - (void)displayActivityView
 {
     activityView.alpha = 0.0;

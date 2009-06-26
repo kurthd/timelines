@@ -55,3 +55,6 @@ account.deletion.failed.alert.title = "Failed to Remove %@";
 userlisttableview.following = "%@ following, %@ followers";
 userlisttableview.followers.title = "Followers";
 userlisttableview.following.title = "Following";
+
+/* Trends */
+trends.fetch.failed = "Failed to Load Trends";
