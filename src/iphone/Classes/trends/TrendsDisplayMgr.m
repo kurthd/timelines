@@ -92,7 +92,7 @@ typedef enum
         // Don't autorelease
         [[CredentialsActivatedPublisher alloc]
             initWithListener:searchDisplayMgr action:@selector(setCredentials:)];
-        
+
         [self.timelineDisplayMgr setService:searchDisplayMgr
                                      tweets:nil
                                        page:0

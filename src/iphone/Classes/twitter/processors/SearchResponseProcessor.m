@@ -79,7 +79,7 @@
 
     NSMutableArray * tweets = [NSMutableArray arrayWithCapacity:results.count];
     for (NSDictionary * result in results) {
-        if ([result objectForKey:@"next_page"])
+        if ([result objectForKey:@"refresh_url"])
             continue;  // metadata, not a search result
     
         NSDictionary * userData = result;
@@ -109,7 +109,11 @@
         tweet.identifier = tweetId;
         tweet.text = [tweetData safeObjectForKey:@"text"];
         tweet.source = [tweetData safeObjectForKey:@"source"];
-        tweet.timestamp = [tweetData safeObjectForKey:@"created_at"];
+        
+        // timestamp is in the 'created_at' field, but is always set to
+        // 1969-12-31; fix once twitter results are fixed -- could be mg
+        // twitter engine or twitter itself
+        tweet.timestamp = nil;
 
         tweet.user = tweetAuthor;
 

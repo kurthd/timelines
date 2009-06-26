@@ -15,6 +15,7 @@
 #import "ComposeTweetDisplayMgr.h"
 #import "UserTimelineDataSource.h"
 #import "TrendsDisplayMgr.h"
+#import "SearchBarDisplayMgr.h"
 #import "AccountsDisplayMgr.h"
 #import "ActiveTwitterCredentials.h"
 #import "UIStatePersistenceStore.h"
@@ -33,6 +34,7 @@
 - (void)initProfileTab;
 - (void)initTrendsTab;
 - (void)initAccountsTab;
+- (void)initSearchTab;
 
 - (UIBarButtonItem *)newTweetButtonItem;
 - (UIBarButtonItem *)sendingTweetProgressView;
@@ -122,6 +124,7 @@
     [self initHomeTab];
     [self initProfileTab];
     [self initTrendsTab];
+    [self initSearchTab];
     [self initAccountsTab];
 
     if (self.credentials.count == 0) {
@@ -140,6 +143,7 @@
         [timelineDisplayMgr setCredentials:c];
         [profileTimelineDisplayMgr setCredentials:c];
         [trendsDisplayMgr setCredentials:c];
+        [searchBarDisplayMgr setCredentials:c];
         [self.composeTweetDisplayMgr setCredentials:c];
     }
 
@@ -345,7 +349,7 @@
     TimelineDisplayMgr * displayMgr =
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:navc
-        title:@"My Title"
+        title:@"Trends"  // set programmatically later
         managedObjectContext:[self managedObjectContext]
         composeTweetDisplayMgr:self.composeTweetDisplayMgr];
     navc.delegate = displayMgr;
@@ -354,6 +358,29 @@
         [[TrendsDisplayMgr alloc]
         initWithTwitterService:trendsService
             netAwareController:trendsNetAwareViewController
+            timelineDisplayMgr:displayMgr];
+}
+
+- (void)initSearchTab
+{
+    TwitterService * searchService =
+        [[[TwitterService alloc]
+        initWithTwitterCredentials:nil
+                           context:[self managedObjectContext]] autorelease];
+
+    TimelineDisplayMgr * displayMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:
+        searchNetAwareViewController
+        title:@"Search"  // set programmatically later
+        managedObjectContext:[self managedObjectContext]
+        composeTweetDisplayMgr:self.composeTweetDisplayMgr];
+    searchNetAwareViewController.delegate = displayMgr;
+
+    searchBarDisplayMgr =
+        [[SearchBarDisplayMgr alloc]
+        initWithTwitterService:searchService
+            netAwareController:searchNetAwareViewController
             timelineDisplayMgr:displayMgr];
 }
 
