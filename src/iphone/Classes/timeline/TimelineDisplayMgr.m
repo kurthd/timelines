@@ -17,6 +17,7 @@
 - (void)deallocateTweetDetailsNode;
 - (void)displayErrorWithTitle:(NSString *)title;
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
+- (void)replyToTweetWithMessage;
 
 @end
 
@@ -275,6 +276,9 @@
     
     self.tweetDetailsController.navigationItem.rightBarButtonItem.enabled =
         ![tweet.user.username isEqual:credentials.username];
+    self.tweetDetailsController.navigationItem.rightBarButtonItem.action =
+        tweet.recipient ? @selector(replyToTweetWithMessage) :
+        @selector(replyToTweet);
     
     [self.wrapperController.navigationController
         pushViewController:self.tweetDetailsController animated:YES];
@@ -638,6 +642,12 @@
     UIAlertView * alertView =
         [UIAlertView simpleAlertViewWithTitle:title message:nil];
     [alertView show];
+}
+
+- (void)replyToTweetWithMessage
+{
+    NSLog(@"Timeline display manager: replying to tweet with direct message");
+    [composeTweetDisplayMgr composeDirectMessageTo:selectedTweet.user.username];
 }
 
 #pragma mark Accessors
