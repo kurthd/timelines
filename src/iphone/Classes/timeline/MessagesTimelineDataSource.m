@@ -117,7 +117,7 @@
             [TweetInfo createFromDirectMessage:directMessage];
         [tweetInfos addObject:tweetInfo];
     }
-    
+
     outstandingOutgoingMessages--;
     self.outgoingMessages = tweetInfos;
     if (outstandingOutgoingMessages == 0 && outstandingIncomingMessages == 0)

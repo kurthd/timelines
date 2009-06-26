@@ -101,8 +101,6 @@
     for (TweetInfo * tweet in aTimeline)
         [timeline setObject:tweet forKey:tweet.identifier];
     NSInteger newTimelineCount = [[timeline allKeys] count];
-    [wrapperController setUpdatingState:kConnectedAndNotUpdating];
-    [wrapperController setCachedDataAvailable:YES];
     BOOL allLoaded =
         (!refreshingTweets && oldTimelineCount == newTimelineCount) ||
         newTimelineCount == 0;
@@ -117,6 +115,8 @@
             [service fetchUserInfoForUsername:credentials.username];
     }
     [timelineController setTweets:[timeline allValues] page:pagesShown];
+    [wrapperController setUpdatingState:kConnectedAndNotUpdating];
+    [wrapperController setCachedDataAvailable:YES];
     refreshingTweets = NO;
     failedState = NO;
 }
@@ -197,9 +197,6 @@
 {
     NSLog(@"Timeline display manager received user list of size %d",
         [users count]);
-    [self.userListNetAwareViewController setCachedDataAvailable:YES];
-    [self.userListNetAwareViewController
-        setUpdatingState:kConnectedAndNotUpdating];
     NSInteger oldCacheSize = [[cache allKeys] count];
     for (User * friend in users)
         [cache setObject:friend forKey:friend.username];
@@ -207,6 +204,9 @@
     BOOL allLoaded = oldCacheSize == newCacheSize;
     [self.userListController setAllPagesLoaded:allLoaded];
     [self.userListController setUsers:[cache allValues] page:[page intValue]];
+    [self.userListNetAwareViewController setCachedDataAvailable:YES];
+    [self.userListNetAwareViewController
+        setUpdatingState:kConnectedAndNotUpdating];
     failedState = NO;
 }
 
@@ -280,11 +280,11 @@
 - (void)loadMoreTweets
 {
     NSLog(@"Timeline display manager: loading more tweets...");
-    [wrapperController setUpdatingState:kConnectedAndUpdating];
-    [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
     if ([service credentials])
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:++pagesShown]];
+    [wrapperController setUpdatingState:kConnectedAndUpdating];
+    [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 
 - (void)showUserInfoWithAvatar:(UIImage *)avatar
@@ -436,11 +436,11 @@
         [followingUsers removeAllObjects];
         followingUsersPagesShown = 1;
 
+        [service fetchFriendsForUser:username
+            page:[NSNumber numberWithInt:followingUsersPagesShown]];
         [self.userListNetAwareViewController setCachedDataAvailable:NO];
         [self.userListNetAwareViewController
             setUpdatingState:kConnectedAndUpdating];
-        [service fetchFriendsForUser:username
-            page:[NSNumber numberWithInt:followingUsersPagesShown]];
     }
 
     self.lastFollowingUsername = username;
@@ -551,14 +551,14 @@
 - (void)loadMoreUsers
 {
     NSLog(@"Timeline display manager: loading more users...");
-    [self.userListNetAwareViewController
-        setUpdatingState:kConnectedAndUpdating];
     if (showingFollowing)
         [service fetchFriendsForUser:user.username
             page:[NSNumber numberWithInt:++followingUsersPagesShown]];
     else
         [service fetchFollowersForUser:user.username
             page:[NSNumber numberWithInt:++followersPagesShown]];
+    [self.userListNetAwareViewController
+        setUpdatingState:kConnectedAndUpdating];
 }
 
 - (void)userListViewWillAppear
@@ -726,6 +726,9 @@
 
     if (refresh || [[someTweets allKeys] count] == 0)
         [self refreshWithCurrentPages];
+
+    [self.wrapperController
+        setCachedDataAvailable:[[someTweets allKeys] count] > 0];
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
