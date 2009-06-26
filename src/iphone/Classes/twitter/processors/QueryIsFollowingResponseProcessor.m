@@ -62,7 +62,7 @@
         "following query but received '%d'.", infos.count);
 
     id value = [[infos objectAtIndex:0] objectForKey:@"friends"];
-    BOOL following = value && [value isEqualToString:@"true"];
+    BOOL following = [value boolValue];
 
     SEL sel = following ? @selector(user:isFollowing:) :
                           @selector(user:isNotFollowing:);
