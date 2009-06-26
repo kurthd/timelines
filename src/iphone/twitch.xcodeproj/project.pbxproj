@@ -61,7 +61,6 @@
 		05B23C1B0FEEEFC700A6A2E6 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23C1A0FEEEFC700A6A2E6 /* Tweet.m */; };
 		05B23C690FEEF39200A6A2E6 /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23C680FEEF39200A6A2E6 /* TwitterCredentials.m */; };
 		05C35E430FF5436E00F91448 /* SearchBarDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */; };
-		05C35E4E0FF545B100F91448 /* SearchBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C35E4D0FF545B100F91448 /* SearchBarViewController.m */; };
 		05C35E790FF5474800F91448 /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C35E770FF5474800F91448 /* SearchBarView.xib */; };
 		05C5E6640FF434360073E7F2 /* TrendsDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E6630FF434360073E7F2 /* TrendsDisplayMgr.m */; };
 		05C5E6670FF434730073E7F2 /* TrendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E6660FF434730073E7F2 /* TrendsViewController.m */; };
@@ -272,9 +271,6 @@
 		05B23C680FEEF39200A6A2E6 /* TwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterCredentials.m; path = twitter/TwitterCredentials.m; sourceTree = "<group>"; };
 		05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarDisplayMgr.h; path = search/SearchBarDisplayMgr.h; sourceTree = "<group>"; };
 		05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBarDisplayMgr.m; path = search/SearchBarDisplayMgr.m; sourceTree = "<group>"; };
-		05C35E4C0FF545B100F91448 /* SearchBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarViewController.h; path = search/SearchBarViewController.h; sourceTree = "<group>"; };
-		05C35E4D0FF545B100F91448 /* SearchBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBarViewController.m; path = search/SearchBarViewController.m; sourceTree = "<group>"; };
-		05C35E4F0FF545C400F91448 /* SearchBarViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarViewControllerDelegate.h; path = search/SearchBarViewControllerDelegate.h; sourceTree = "<group>"; };
 		05C35E780FF5474800F91448 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/SearchBarView.xib; sourceTree = "<group>"; };
 		05C5E6620FF434360073E7F2 /* TrendsDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendsDisplayMgr.h; path = trends/TrendsDisplayMgr.h; sourceTree = "<group>"; };
 		05C5E6630FF434360073E7F2 /* TrendsDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrendsDisplayMgr.m; path = trends/TrendsDisplayMgr.m; sourceTree = "<group>"; };
@@ -336,7 +332,7 @@
 		05F45D830FF06BD100EBAFC7 /* ComposeTweetViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetViewControllerDelegate.h; path = tweets/ComposeTweetViewControllerDelegate.h; sourceTree = "<group>"; };
 		05F45E8A0FF08D9400EBAFC7 /* ComposeTweetDisplayMgrDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetDisplayMgrDelegate.h; path = tweets/ComposeTweetDisplayMgrDelegate.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D6058910D05DD3D006BFB54 /* Twitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Twittle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twittle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AB4B0D9B1048005BE974 /* twitch_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twitch_Prefix.pch; sourceTree = "<group>"; };
@@ -816,9 +812,6 @@
 				05C5E9B10FF48BA70073E7F2 /* SearchDisplayMgr.m */,
 				05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */,
 				05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */,
-				05C35E4C0FF545B100F91448 /* SearchBarViewController.h */,
-				05C35E4D0FF545B100F91448 /* SearchBarViewController.m */,
-				05C35E4F0FF545C400F91448 /* SearchBarViewControllerDelegate.h */,
 			);
 			name = search;
 			sourceTree = "<group>";
@@ -851,7 +844,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* Twitch.app */,
+				1D6058910D05DD3D006BFB54 /* Twittle.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1032,7 +1025,7 @@
 			);
 			name = twitch;
 			productName = twitch;
-			productReference = 1D6058910D05DD3D006BFB54 /* Twitch.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Twittle.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1218,7 +1211,6 @@
 				05C5E9C40FF494390073E7F2 /* SearchResponseProcessor.m in Sources */,
 				91CD821E0FF54066004D04D5 /* TwitchBrowserViewController.m in Sources */,
 				05C35E430FF5436E00F91448 /* SearchBarDisplayMgr.m in Sources */,
-				05C35E4E0FF545B100F91448 /* SearchBarViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1376,7 +1368,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twitch;
+				PRODUCT_NAME = Twittle;
 			};
 			name = Distribution;
 		};
@@ -1411,7 +1403,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twitch;
+				PRODUCT_NAME = Twittle;
 			};
 			name = "Release - Doug";
 		};
@@ -1448,7 +1440,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twitch;
+				PRODUCT_NAME = Twittle;
 			};
 			name = "Debug - Doug";
 		};
@@ -1466,7 +1458,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twitch;
+				PRODUCT_NAME = Twittle;
 			};
 			name = "Debug - John";
 		};
@@ -1482,7 +1474,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twitch;
+				PRODUCT_NAME = Twittle;
 			};
 			name = "Release - John";
 		};

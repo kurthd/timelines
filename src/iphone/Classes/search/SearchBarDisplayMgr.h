@@ -4,15 +4,13 @@
 
 #import <Foundation/Foundation.h>
 #import "TwitterService.h"
-#import "SearchBarViewController.h"
 #import "NetworkAwareViewController.h"
 #import "SearchDisplayMgr.h"
 #import "TimelineDisplayMgr.h"
 #import "CredentialsActivatedPublisher.h"
 
 @interface SearchBarDisplayMgr : NSObject
-    <TwitterServiceDelegate, /*NetworkAwareViewControllerDelegate,*/
-    SearchBarViewControllerDelegate, UISearchBarDelegate>
+    <TwitterServiceDelegate, UISearchBarDelegate>
 {
     TwitterService * service;
 
