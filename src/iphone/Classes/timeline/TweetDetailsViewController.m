@@ -45,7 +45,8 @@
         NSLocalizedString(@"tweetdetailsview.tweetfooter", @"");
     NSString * dateDesc = [tweet.timestamp shortDateAndTimeDescription];
     NSString * footer = tweet.source ?
-        [NSString stringWithFormat:footerFormatString, dateDesc, tweet.source] :
+        [NSString stringWithFormat:footerFormatString,
+        dateDesc ? dateDesc : @"", tweet.source] :
         dateDesc;
     if (tweet.recipient) {
         NSString * headerFormatString =
