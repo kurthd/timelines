@@ -42,8 +42,9 @@
     NSString * footerFormatString =
         NSLocalizedString(@"tweetdetailsview.tweetfooter", @"");
     NSString * dateDesc = [tweet.timestamp shortDateAndTimeDescription];
-    NSString * footer =
-        [NSString stringWithFormat:footerFormatString, dateDesc, tweet.source];
+    NSString * footer = tweet.source ?
+        [NSString stringWithFormat:footerFormatString, dateDesc, tweet.source] :
+        dateDesc;
     [webView
         loadHTMLStringRelativeToMainBundle:
         [[self class] htmlForContent:tweet.text footer:footer]];
