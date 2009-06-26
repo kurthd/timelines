@@ -113,7 +113,7 @@ connectionIdentifier:(NSString *)theIdentifier requestType:(MGTwitterRequestType
         // Change date-string into an NSDate.
         NSLog(@"*****************************");
         NSLog(@"*****************************");
-        NSLog(@"Interpreting an NSDate with natural language!.");
+        NSLog(@"Interpreting an NSDate with natural language! '%@' = '%@'", elementName, [currentNode objectForKey:elementName]);
         NSLog(@"*****************************");
         NSLog(@"*****************************");
         NSDate *creationDate = nil; //[NSDate dateWithNaturalLanguageString:[currentNode objectForKey:elementName]];

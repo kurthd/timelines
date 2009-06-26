@@ -20,3 +20,5 @@
 
 #import "SendTweetResponseProcessor.h"
 #import "SendDirectMessageResponseProcessor.h"
+
+#import "FetchTrendsResponseProcessor.h"

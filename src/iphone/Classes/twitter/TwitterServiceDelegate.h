@@ -142,4 +142,13 @@
                 isFollowing:(NSString *)followee
                       error:(NSError *)error;
 
+#pragma mark Trends
+
+- (void)fetchedCurrentTrends:(NSArray *)trends;
+- (void)failedToFetchCurrentTrends:(NSError *)error;
+- (void)fetchedDailyTrends:(NSArray *)trends;
+- (void)failedToFetchDailyTrends:(NSError *)error;
+- (void)fetchedWeeklyTrends:(NSArray *)trends;
+- (void)failedToFetchWeeklyTrends:(NSError *)error;
+
 @end

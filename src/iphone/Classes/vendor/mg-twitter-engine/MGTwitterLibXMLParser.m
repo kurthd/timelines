@@ -160,7 +160,7 @@ connectionIdentifier:(NSString *)theIdentifier requestType:(MGTwitterRequestType
 
 	NSString *intString = [NSString stringWithUTF8String:(const char *)nodeValue];
 	xmlFree(nodeValue);
-	return [NSNumber numberWithLongLong:[intString longLongValue]];
+	return [NSNumber numberWithInt:[intString intValue]];
 }
 
 - (NSNumber *)_nodeValueAsBool

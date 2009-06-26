@@ -14,6 +14,7 @@
 #import "TwitPicImageSender.h"
 #import "ComposeTweetDisplayMgr.h"
 #import "UserTimelineDataSource.h"
+#import "TrendsDisplayMgr.h"
 #import "AccountsDisplayMgr.h"
 #import "ActiveTwitterCredentials.h"
 #import "UIStatePersistenceStore.h"
@@ -30,6 +31,7 @@
 
 - (void)initHomeTab;
 - (void)initProfileTab;
+- (void)initTrendsTab;
 - (void)initAccountsTab;
 
 - (UIBarButtonItem *)newTweetButtonItem;
@@ -86,6 +88,7 @@
 
     [composeTweetDisplayMgr release];
 
+    [trendsDisplayMgr release];
     [accountsDisplayMgr release];
 
     [sendingTweetProgressView release];
@@ -118,6 +121,7 @@
         initWithContext:[self managedObjectContext]];
     [self initHomeTab];
     [self initProfileTab];
+    [self initTrendsTab];
     [self initAccountsTab];
 
     if (self.credentials.count == 0) {
@@ -324,6 +328,19 @@
     [profileTimelineDisplayMgr setService:dataSource tweets:nil page:1
         forceRefresh:NO];
     dataSource.delegate = profileTimelineDisplayMgr;
+}
+
+- (void)initTrendsTab
+{
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:[self managedObjectContext]]
+        autorelease];
+
+    trendsDisplayMgr =
+        [[TrendsDisplayMgr alloc]
+        initWithTwitterService:twitterService
+            netAwareController:trendsNetAwareViewController];
 }
 
 - (void)initAccountsTab

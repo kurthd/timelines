@@ -318,6 +318,47 @@
     [self request:requestId isHandledBy:processor];
 }
 
+#pragma mark Trends
+
+- (void)fetchCurrentTrends
+{
+    ResponseProcessor * processor =
+        [FetchTrendsResponseProcessor
+        processorWithTrendFetchType:kFetchCurrentTrends
+                            context:context
+                           delegate:delegate];
+
+    NSString * requestId = [twitter getCurrentTrends];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+- (void)fetchDailyTrends
+{
+    ResponseProcessor * processor =
+        [FetchTrendsResponseProcessor
+        processorWithTrendFetchType:kFetchDailyTrends
+                            context:context
+                           delegate:delegate];
+
+    NSString * requestId = [twitter getDailyTrends];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+- (void)fetchWeeklyTrends
+{
+    ResponseProcessor * processor =
+        [FetchTrendsResponseProcessor
+        processorWithTrendFetchType:kFetchWeeklyTrends
+                            context:context
+                           delegate:delegate];
+
+    NSString * requestId = [twitter getWeeklyTrends];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark MGTwitterEngineDelegate implementation
 
 - (void)requestSucceeded:(NSString *)requestId
@@ -331,6 +372,10 @@
     [self request:requestId failed:error];
 }
 
+- (void)connectionFinished
+{
+}
+
 - (void)statusesReceived:(NSArray *)statuses forRequest:(NSString *)requestId
 {
     NSLog(@"Recieved %d statuses for request '%@'", statuses.count, requestId);
@@ -341,7 +386,7 @@
 - (void)directMessagesReceived:(NSArray *)messages
                     forRequest:(NSString *)requestId
 {
-    NSLog(@"Received %d direct messages recieved for request '%@'",
+    NSLog(@"Received %d direct messages for request '%@'",
         messages.count, requestId);
     [self request:requestId succeededWithResponse:messages];
     [self cleanUpRequest:requestId];
@@ -366,6 +411,22 @@
 - (void)imageReceived:(UIImage *)image forRequest:(NSString *)identifier
 {
     NSLog(@"Image received for request '%@': %@", identifier, image);
+}
+
+- (void)searchResultsReceived:(NSArray *)searchResults
+                   forRequest:(NSString *)requestId
+{
+    NSLog(@"Received %d search results for request: '%@'.",
+        searchResults.count, requestId);
+    [self request:requestId succeededWithResponse:searchResults];
+    [self cleanUpRequest:requestId];
+}
+
+- (void)receivedObject:(NSDictionary *)dictionary
+            forRequest:(NSString *)connectionIdentifier
+{
+    NSLog(@"Received object: '%@' for request: '%@'.", dictionary,
+        connectionIdentifier);
 }
 
 #pragma mark Request processing helpers
