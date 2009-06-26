@@ -6,4 +6,6 @@
 
 @protocol TrendsViewControllerDelegate
 
+- (void)userDidSelectTrend:(id)trend;
+
 @end

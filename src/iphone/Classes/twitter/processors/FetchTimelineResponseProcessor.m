@@ -110,6 +110,9 @@
         NSString * userId = [[userData objectForKey:@"id"] description];
         User * tweetAuthor = [User userWithId:userId context:context];
 
+        if ([[userData objectForKey:@"screen_name"] isEqualToString:@"debay"])
+            NSLog(@"Found one.");
+
         if (!tweetAuthor)
             tweetAuthor = [User createInstance:context];
 

@@ -17,10 +17,12 @@
 
 + (NSDate *)dateWithTweetString:(NSString *)s
 {
-    // Example string: 2009-06-21 16:00:26 -0600
-    static NSString * FORMAT_STRING = @"yyyy-MM-dd HH:mm:SS ZZZ";
+    return [self dateWithTwitterUserString:s];
 
-    return [NSDate dateFromString:s format:FORMAT_STRING];
+    // Example string: 2009-06-21 16:00:26 -0600
+    //static NSString * FORMAT_STRING = @"yyyy-MM-dd HH:mm:SS ZZZ";
+
+    //return [NSDate dateFromString:s format:FORMAT_STRING];
 }
 
 @end

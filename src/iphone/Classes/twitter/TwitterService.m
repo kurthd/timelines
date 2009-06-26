@@ -345,6 +345,11 @@
     [self request:requestId failed:error];
 }
 
+- (void)connectionFinished
+{
+    NSLog(@"CONNECTION IS FINISHED.");
+}
+
 - (void)statusesReceived:(NSArray *)statuses forRequest:(NSString *)requestId
 {
     NSLog(@"Recieved %d statuses for request '%@'", statuses.count, requestId);

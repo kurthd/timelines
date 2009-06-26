@@ -15,10 +15,15 @@
     user.location = [data objectForKey:@"location"];
 
     // use key-value coding to convert strings to nsnumbers
-    [user setValue:[data objectForKey:@"friends_count"]
-            forKey:@"friendsCount"];
-    [user setValue:[data objectForKey:@"followers_count"]
-            forKey:@"followersCount"];
+    NSNumber * friendsCount =
+        [NSNumber numberWithLongLong:
+        [[data objectForKey:@"friends_count"] longLongValue]];
+    user.friendsCount = friendsCount;
+
+    NSNumber * followersCount =
+        [NSNumber numberWithLongLong:
+        [[data objectForKey:@"followers_count"] longLongValue]];
+    user.followersCount = followersCount;
 
     NSDate * createdAt =
         [NSDate dateWithTwitterUserString:
@@ -36,16 +41,19 @@
     tweet.text = [data objectForKey:@"text"];
     tweet.source = [data objectForKey:@"source"];
 
-    // already an NSDate instance
-    tweet.timestamp = [data objectForKey:@"created_at"];
+    tweet.timestamp =
+        [NSDate dateWithTweetString:[data objectForKey:@"created_at"]];
 
     [tweet setValue:[data objectForKey:@"truncated"]
              forKey:@"truncated"];
 
-    id favorited = [data objectForKey:@"favorited"];
-    if (!favorited)
+    NSNumber * favorited = nil;
+    NSString * rawfavorited = [data objectForKey:@"favorited"];
+    if (!rawfavorited)
         favorited = [NSNumber numberWithInteger:0];
-    [tweet setValue:favorited forKey:@"favorited"];
+    else
+        favorited = [NSNumber numberWithInteger:[rawfavorited integerValue]];
+    tweet.favorited = favorited;
 
     tweet.inReplyToTwitterUsername =
        [data objectForKey:@"in_reply_to_screen_name"];
@@ -62,8 +70,8 @@
     dm.sourceApiRequestType =
         [[data objectForKey:@"source_api_request_type"] description];
 
-    // already an NSData instance
-    dm.created = [data objectForKey:@"created_at"];
+    dm.created =
+        [NSDate dateWithTweetString:[data objectForKey:@"created_at"]];
 }
 
 @end

@@ -145,6 +145,11 @@
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
+- (void)connectionFinished
+{
+    NSLog(@"CONNECTION IS FINISHED.");
+}
+
 - (void)statusesReceived:(NSArray *)statuses forRequest:(NSString *)identifier
 {
     NSLog(@"Statuses recieved for request '%@': %@", identifier, statuses);
