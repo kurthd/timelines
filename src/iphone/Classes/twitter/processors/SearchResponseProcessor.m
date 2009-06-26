@@ -9,6 +9,58 @@
 #import "Tweet+CoreDataAdditions.h"
 #import "ResponseProcessor+ParsingHelpers.h"
 
+@interface NSString (HTMLEntityDecodingAdditions)
++ (NSString *)decodeHTMLEntities:(NSString *)source;
+@end
+
+@implementation NSString (HTMLEntityDecodingAdditions)
+
++ (NSString *)decodeHTMLEntities:(NSString *)source
+{ 
+  if(!source) return nil;
+  else if([source rangeOfString: @"&"].location == NSNotFound) return source;
+  else
+  {
+
+    NSMutableString *escaped = [NSMutableString stringWithString: source];
+
+
+    NSArray *entities = [NSArray arrayWithObjects: 
+                      @"&amp;", @"&lt;", @"&gt;", @"&quot;",
+                       nil];
+    
+    NSArray *characters = [NSArray arrayWithObjects:@"&", @"<", @">", @"\"", nil];
+    
+    int i, count = [entities count], characterCount = [characters count];
+    
+    // Html
+    for(i = 0; i < count; i++)
+    {
+      NSRange range = [source rangeOfString: [entities objectAtIndex:i]];
+      if(range.location != NSNotFound)
+      {
+        if (i < characterCount)
+        {
+          [escaped replaceOccurrencesOfString:[entities objectAtIndex: i] 
+                                   withString:[characters objectAtIndex:i] 
+                                      options:NSLiteralSearch 
+                                        range:NSMakeRange(0, [escaped length])];
+        }
+        else
+        {
+          [escaped replaceOccurrencesOfString:[entities objectAtIndex: i] 
+                                   withString:[NSString stringWithFormat: @"%C", (160-characterCount) + i] 
+                                      options:NSLiteralSearch 
+                                        range:NSMakeRange(0, [escaped length])];
+        }
+      }
+    }
+
+    return escaped;    // Note this is autoreleased
+  }
+}
+@end
+
 @interface NSDictionary (CopyAndPastedParsingHelpers)
 - (id)safeObjectForKey:(id)key;
 @end
@@ -108,8 +160,10 @@
 
         tweet.identifier = tweetId;
         tweet.text = [tweetData safeObjectForKey:@"text"];
-        tweet.source = [tweetData safeObjectForKey:@"source"];
-        
+        tweet.source =
+            [NSString
+            decodeHTMLEntities:[tweetData safeObjectForKey:@"source"]];
+
         // timestamp is in the 'created_at' field, but is always set to
         // 1969-12-31; fix once twitter results are fixed -- could be mg
         // twitter engine or twitter itself
