@@ -9,7 +9,7 @@
 #import "AsynchronousNetworkFetcherDelegate.h"
 
 @interface TweetDetailsViewController :
-    UIViewController <AsynchronousNetworkFetcherDelegate>
+    UIViewController <AsynchronousNetworkFetcherDelegate, UIWebViewDelegate>
 {
     NSObject<TweetDetailsViewDelegate> * delegate;
 

@@ -434,6 +434,9 @@
 - (void)visitWebpage:(NSString *)webpageUrl
 {
     NSLog(@"Timeline display manager: visiting webpage: %@", webpageUrl);
+    [self.wrapperController presentModalViewController:self.browserController
+        animated:YES];
+    [self.browserController setUrl:webpageUrl];
 }
 
 - (void)displayFollowingForUser:(NSString *)username
@@ -726,6 +729,17 @@
     }
 
     return userListController;
+}
+
+- (TwitchBrowserViewController *)browserController
+{
+    if (!browserController) {
+        browserController =
+            [[TwitchBrowserViewController alloc]
+            initWithNibName:@"TwitchBrowserView" bundle:nil];
+    }
+
+    return browserController;
 }
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService

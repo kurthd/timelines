@@ -17,6 +17,7 @@
 #import "UserListTableViewControllerDelegate.h"
 #import "UserListTableViewController.h"
 #import "ComposeTweetDisplayMgr.h"
+#import "TwitchBrowserViewController.h"
 
 @class TimelineDisplayMgrFactory;
 
@@ -30,6 +31,7 @@
     TimelineViewController * timelineController;
     TweetDetailsViewController * tweetDetailsController;
     UserInfoViewController * userInfoController;
+    TwitchBrowserViewController * browserController;
 
     NSObject<TimelineDataSource> * service;
 
@@ -73,6 +75,7 @@
 @property (readonly) TimelineViewController * timelineController;
 @property (readonly) TweetDetailsViewController * tweetDetailsController;
 @property (readonly) UserInfoViewController * userInfoController;
+@property (readonly) TwitchBrowserViewController * browserController;
 
 @property (nonatomic, retain) TweetInfo * selectedTweet;
 @property (nonatomic, retain) User * user;

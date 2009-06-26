@@ -147,6 +147,12 @@
 		918E895A0FF1863C0042BBEE /* UserInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E89580FF1863C0042BBEE /* UserInfoView.xib */; };
 		918E8A5F0FF1C5560042BBEE /* UserInfoLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */; };
 		918E8AA40FF1C69D0042BBEE /* UserInfoLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 918E8AA30FF1C69D0042BBEE /* UserInfoLabelCell.m */; };
+		91CD821B0FF5403F004D04D5 /* TwitchBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */; };
+		91CD821E0FF54066004D04D5 /* TwitchBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */; };
+		91CD82A50FF5543E004D04D5 /* ForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82A40FF5543E004D04D5 /* ForwardButton.png */; };
+		91CD82AB0FF55536004D04D5 /* BackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82AA0FF55536004D04D5 /* BackButton.png */; };
+		91CD82AD0FF55751004D04D5 /* StopLoading.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82AC0FF55751004D04D5 /* StopLoading.png */; };
+		91CD82B70FF558FE004D04D5 /* Refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82B60FF558FE004D04D5 /* Refresh.png */; };
 		91E000430FEF76E800BCE9BC /* Favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000420FEF76E800BCE9BC /* Favorite.png */; };
 		91E0004C0FEF786300BCE9BC /* NotFavorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E0004B0FEF786300BCE9BC /* NotFavorite.png */; };
 		91E000880FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */; };
@@ -424,6 +430,13 @@
 		918E8A5E0FF1C5560042BBEE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/UserInfoLabelCell.xib; sourceTree = "<group>"; };
 		918E8AA20FF1C69D0042BBEE /* UserInfoLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoLabelCell.h; path = "user-info/UserInfoLabelCell.h"; sourceTree = "<group>"; };
 		918E8AA30FF1C69D0042BBEE /* UserInfoLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoLabelCell.m; path = "user-info/UserInfoLabelCell.m"; sourceTree = "<group>"; };
+		91CD821A0FF5403F004D04D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TwitchBrowserView.xib; sourceTree = "<group>"; };
+		91CD821C0FF54066004D04D5 /* TwitchBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchBrowserViewController.h; path = timeline/TwitchBrowserViewController.h; sourceTree = "<group>"; };
+		91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchBrowserViewController.m; path = timeline/TwitchBrowserViewController.m; sourceTree = "<group>"; };
+		91CD82A40FF5543E004D04D5 /* ForwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ForwardButton.png; path = images/ForwardButton.png; sourceTree = "<group>"; };
+		91CD82AA0FF55536004D04D5 /* BackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BackButton.png; path = images/BackButton.png; sourceTree = "<group>"; };
+		91CD82AC0FF55751004D04D5 /* StopLoading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StopLoading.png; path = images/StopLoading.png; sourceTree = "<group>"; };
+		91CD82B60FF558FE004D04D5 /* Refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Refresh.png; path = images/Refresh.png; sourceTree = "<group>"; };
 		91E000420FEF76E800BCE9BC /* Favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Favorite.png; path = images/Favorite.png; sourceTree = "<group>"; };
 		91E0004B0FEF786300BCE9BC /* NotFavorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NotFavorite.png; path = images/NotFavorite.png; sourceTree = "<group>"; };
 		91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsHeaderGradient.png; path = images/TweetDetailsHeaderGradient.png; sourceTree = "<group>"; };
@@ -659,6 +672,7 @@
 				910BE2020FF2BA17005342EE /* UserListTableView.xib */,
 				910BE2050FF2BA3F005342EE /* UserSummaryTableViewCell.xib */,
 				05C5E6A70FF43CC10073E7F2 /* TrendsView.xib */,
+				91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -909,6 +923,10 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91CD82B60FF558FE004D04D5 /* Refresh.png */,
+				91CD82AC0FF55751004D04D5 /* StopLoading.png */,
+				91CD82AA0FF55536004D04D5 /* BackButton.png */,
+				91CD82A40FF5543E004D04D5 /* ForwardButton.png */,
 				91E000940FEFFCC700BCE9BC /* DropShadow.png */,
 				91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */,
 				91E0004B0FEF786300BCE9BC /* NotFavorite.png */,
@@ -963,6 +981,8 @@
 				910BE1860FF2A755005342EE /* ArbUserTimelineDataSource.m */,
 				910BE3190FF30296005342EE /* FavoritesTimelineDataSource.h */,
 				910BE31A0FF30296005342EE /* FavoritesTimelineDataSource.m */,
+				91CD821C0FF54066004D04D5 /* TwitchBrowserViewController.h */,
+				91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -1068,6 +1088,11 @@
 				910BE2040FF2BA17005342EE /* UserListTableView.xib in Resources */,
 				910BE2070FF2BA3F005342EE /* UserSummaryTableViewCell.xib in Resources */,
 				05C5E6A90FF43CC10073E7F2 /* TrendsView.xib in Resources */,
+				91CD821B0FF5403F004D04D5 /* TwitchBrowserView.xib in Resources */,
+				91CD82A50FF5543E004D04D5 /* ForwardButton.png in Resources */,
+				91CD82AB0FF55536004D04D5 /* BackButton.png in Resources */,
+				91CD82AD0FF55751004D04D5 /* StopLoading.png in Resources */,
+				91CD82B70FF558FE004D04D5 /* Refresh.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1183,6 +1208,7 @@
 				05C5E9B20FF48BA70073E7F2 /* SearchDisplayMgr.m in Sources */,
 				05C5E9B50FF48BB30073E7F2 /* SearchViewController.m in Sources */,
 				05C5E9C40FF494390073E7F2 /* SearchResponseProcessor.m in Sources */,
+				91CD821E0FF54066004D04D5 /* TwitchBrowserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1292,6 +1318,14 @@
 				918E8A5E0FF1C5560042BBEE /* en */,
 			);
 			name = UserInfoLabelCell.xib;
+			sourceTree = "<group>";
+		};
+		91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91CD821A0FF5403F004D04D5 /* en */,
+			);
+			name = TwitchBrowserView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

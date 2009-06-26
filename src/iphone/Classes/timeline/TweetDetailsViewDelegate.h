@@ -10,6 +10,7 @@
 - (void)showTweetsForUser:(NSString *)username;
 - (void)setFavorite:(BOOL)favorite;
 - (void)showLocationOnMap:(NSString *)location;
+- (void)visitWebpage:(NSString *)webpageUrl;
 - (void)showingTweetDetails;
 
 @end

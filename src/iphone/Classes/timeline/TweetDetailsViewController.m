@@ -123,6 +123,18 @@
     failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
 {}
 
+#pragma mark UIWebViewDelegate implementation
+
+- (BOOL)webView:(UIWebView *)webView
+    shouldStartLoadWithRequest:(NSURLRequest *)request
+    navigationType:(UIWebViewNavigationType)navigationType
+{
+    if (navigationType == UIWebViewNavigationTypeLinkClicked)
+        [delegate visitWebpage:[[request URL] absoluteString]];
+
+    return navigationType != UIWebViewNavigationTypeLinkClicked;
+}
+
 #pragma mark static helper methods
 
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer
