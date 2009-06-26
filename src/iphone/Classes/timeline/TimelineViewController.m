@@ -103,7 +103,7 @@
             [NSString stringWithFormat:formatString, tweet.recipient.name];
         [cell setName:nameString];
     } else
-        [cell setName:tweet.user.name];
+        [cell setName:tweet.user.name ? tweet.user.name : tweet.user.username];
     [cell setDate:tweet.timestamp];
     [cell setTweetText:tweet.text];
 

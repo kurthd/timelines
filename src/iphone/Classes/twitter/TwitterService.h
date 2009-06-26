@@ -29,6 +29,8 @@
 - (id)initWithTwitterCredentials:(TwitterCredentials *)someCredentials
                          context:(NSManagedObjectContext *)aContext;
 
+- (id)clone;
+
 #pragma mark Account
 
 - (void)checkCredentials;
@@ -87,5 +89,9 @@
 - (void)fetchCurrentTrends;
 - (void)fetchDailyTrends;
 - (void)fetchWeeklyTrends;
+
+#pragma mark Search
+
+- (void)searchFor:(NSString *)queryString page:(NSNumber *)page;
 
 @end

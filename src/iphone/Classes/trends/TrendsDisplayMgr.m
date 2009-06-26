@@ -22,6 +22,9 @@ typedef enum
 @property (nonatomic, retain) TrendsViewController * trendsViewController;
 @property (nonatomic, retain) UISegmentedControl * segmentedControl;
 
+@property (nonatomic, retain) TimelineDisplayMgr * timelineDisplayMgr;
+@property (nonatomic, retain) SearchDisplayMgr * searchDisplayMgr;
+
 @property (nonatomic, retain) NSMutableArray * allTrends;
 
 - (void)fetchTrends:(TrendType)trendType;
@@ -35,6 +38,7 @@ typedef enum
 
 @synthesize service, networkAwareViewController, trendsViewController;
 @synthesize segmentedControl, allTrends;
+@synthesize timelineDisplayMgr, searchDisplayMgr;
 
 #pragma mark Initialization
 
@@ -44,12 +48,15 @@ typedef enum
     self.networkAwareViewController = nil;
     self.trendsViewController = nil;
     self.segmentedControl = nil;
+    self.timelineDisplayMgr = nil;
+    self.searchDisplayMgr = nil;
     self.allTrends = nil;
     [super dealloc];
 }
 
 - (id)initWithTwitterService:(TwitterService *)aService
           netAwareController:(NetworkAwareViewController *)navc
+          timelineDisplayMgr:(TimelineDisplayMgr *)aTimelineDisplayMgr
 {
     if (self = [super init]) {
         self.service = aService;
@@ -59,6 +66,8 @@ typedef enum
         self.networkAwareViewController.delegate = self;
         self.networkAwareViewController.targetViewController =
             self.trendsViewController;
+        self.networkAwareViewController.navigationItem.title =
+            NSLocalizedString(@"trends.view.title", @"");
 
         self.segmentedControl = (UISegmentedControl *)
             self.networkAwareViewController.navigationItem.titleView;
@@ -74,9 +83,30 @@ typedef enum
             self.networkAwareViewController.navigationItem.leftBarButtonItem;
         refreshButton.target = self;
         refreshButton.action = @selector(refresh);
+
+        self.timelineDisplayMgr = aTimelineDisplayMgr;
+        searchDisplayMgr =
+            [[SearchDisplayMgr alloc]
+             initWithTwitterService:[self.service clone]];
+        
+        // Don't autorelease
+        [[CredentialsActivatedPublisher alloc]
+            initWithListener:searchDisplayMgr action:@selector(setCredentials:)];
+        
+        [self.timelineDisplayMgr setService:searchDisplayMgr
+                                     tweets:nil
+                                       page:0
+                               forceRefresh:NO];
+        self.searchDisplayMgr.dataSourceDelegate = self.timelineDisplayMgr;
     }
 
     return self;
+}
+
+- (void)setCredentials:(TwitterCredentials *)credentials
+{
+    [self.service setCredentials:credentials];
+    [self.searchDisplayMgr setCredentials:credentials];
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation
@@ -129,8 +159,12 @@ typedef enum
 
 - (void)userDidSelectTrend:(Trend *)trend
 {
-    //NSString * searchTerms = trend.searchTerms;
-    //[self.searchDisplayMgr displaySearchResults:trend];
+    timelineDisplayMgr.wrapperController.navigationItem.title = trend.name;
+    [self.searchDisplayMgr displaySearchResults:trend.query
+                                      withTitle:trend.name];
+    [self.networkAwareViewController.navigationController
+        pushViewController:timelineDisplayMgr.wrapperController
+                  animated:YES];
 }
 
 #pragma mark Fetch trends

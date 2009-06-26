@@ -69,4 +69,5 @@ userlisttableview.followers.title = "Followers";
 userlisttableview.following.title = "Following";
 
 /* Trends */
+trends.view.title = "Trends";
 trends.fetch.failed = "Failed to Load Trends";

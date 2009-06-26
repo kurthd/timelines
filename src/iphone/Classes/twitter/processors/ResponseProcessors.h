@@ -22,3 +22,5 @@
 #import "SendDirectMessageResponseProcessor.h"
 
 #import "FetchTrendsResponseProcessor.h"
+
+#import "SearchResponseProcessor.h"

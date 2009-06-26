@@ -139,6 +139,7 @@
 
         [timelineDisplayMgr setCredentials:c];
         [profileTimelineDisplayMgr setCredentials:c];
+        [trendsDisplayMgr setCredentials:c];
         [self.composeTweetDisplayMgr setCredentials:c];
     }
 
@@ -332,15 +333,28 @@
 
 - (void)initTrendsTab
 {
-    TwitterService * twitterService =
+    TwitterService * trendsService =
         [[[TwitterService alloc] initWithTwitterCredentials:nil
         context:[self managedObjectContext]]
         autorelease];
 
+    NetworkAwareViewController * navc =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    TimelineDisplayMgr * displayMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:navc
+        title:@"My Title"
+        managedObjectContext:[self managedObjectContext]
+        composeTweetDisplayMgr:self.composeTweetDisplayMgr];
+    navc.delegate = displayMgr;
+
     trendsDisplayMgr =
         [[TrendsDisplayMgr alloc]
-        initWithTwitterService:twitterService
-            netAwareController:trendsNetAwareViewController];
+        initWithTwitterService:trendsService
+            netAwareController:trendsNetAwareViewController
+            timelineDisplayMgr:displayMgr];
 }
 
 - (void)initAccountsTab
