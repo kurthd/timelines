@@ -96,7 +96,7 @@
     TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
     UIImage * avatarImage = [self getAvatarForUrl:tweet.user.profileImageUrl];
     [cell setAvatarImage:avatarImage];
-    [cell setName:tweet.user.name];
+    [cell setName:tweet.user.name ? tweet.user.name : tweet.user.username];
     [cell setDate:tweet.timestamp];
     [cell setTweetText:tweet.text];
 

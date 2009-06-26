@@ -151,4 +151,13 @@
 - (void)fetchedWeeklyTrends:(NSArray *)trends;
 - (void)failedToFetchWeeklyTrends:(NSError *)error;
 
+#pragma mark Search results
+
+- (void)searchResultsReceived:(NSArray *)newSearchResults
+                     forQuery:(NSString *)query
+                         page:(NSNumber *)page;
+- (void)failedToFetchSearchResultsForQuery:(NSString *)query
+                                      page:(NSNumber *)page
+                                     error:(NSError *)error;
+
 @end

@@ -8,38 +8,32 @@
 @interface FetchTrendsResponseProcessor ()
 
 @property (nonatomic, assign) TrendFetchType trendType;
-@property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, assign) id delegate;
 
 @end
 
 @implementation FetchTrendsResponseProcessor
 
-@synthesize trendType, context, delegate;
+@synthesize trendType, delegate;
 
 + (id)processorWithTrendFetchType:(TrendFetchType)aTrendFetchType
-                          context:(NSManagedObjectContext *)aContext
                          delegate:(id)aDelegate
 {
     return [[[[self class] alloc] initWithTrendFetchType:aTrendFetchType
-                                            context:aContext
                                            delegate:aDelegate] autorelease];
 }
 
 - (void)dealloc
 {
-    self.context = nil;
     self.delegate = nil;
     [super dealloc];
 }
 
 - (id)initWithTrendFetchType:(TrendFetchType)aTrendFetchType
-                     context:(NSManagedObjectContext *)aContext
                     delegate:(id)aDelegate
 {
     if (self = [super init]) {
         self.trendType = aTrendFetchType;
-        self.context = aContext;
         self.delegate = aDelegate;
     }
 
@@ -99,6 +93,5 @@
 
     return YES;
 }
-
 
 @end

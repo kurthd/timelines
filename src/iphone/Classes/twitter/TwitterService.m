@@ -51,6 +51,13 @@
     return self;
 }
 
+- (id)clone
+{
+    id obj = [[[self class] alloc] initWithTwitterCredentials:credentials
+                                                      context:context];
+    return [obj autorelease];
+}
+
 - (void)checkCredentials
 {
     ResponseProcessor * processor =
@@ -325,7 +332,6 @@
     ResponseProcessor * processor =
         [FetchTrendsResponseProcessor
         processorWithTrendFetchType:kFetchCurrentTrends
-                            context:context
                            delegate:delegate];
 
     NSString * requestId = [twitter getCurrentTrends];
@@ -338,7 +344,6 @@
     ResponseProcessor * processor =
         [FetchTrendsResponseProcessor
         processorWithTrendFetchType:kFetchDailyTrends
-                            context:context
                            delegate:delegate];
 
     NSString * requestId = [twitter getDailyTrends];
@@ -351,10 +356,28 @@
     ResponseProcessor * processor =
         [FetchTrendsResponseProcessor
         processorWithTrendFetchType:kFetchWeeklyTrends
-                            context:context
                            delegate:delegate];
 
     NSString * requestId = [twitter getWeeklyTrends];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+#pragma mark Search
+
+- (void)searchFor:(NSString *)queryString page:(NSNumber *)page
+{
+    ResponseProcessor * processor =
+        [SearchResponseProcessor processorWithQuery:queryString
+                                               page:page
+                                            context:context
+                                           delegate:delegate];
+
+    NSString * requestId =
+        [twitter getSearchResultsForQuery:queryString
+                                  sinceID:0
+                           startingAtPage:[page integerValue]
+                                    count:0];
 
     [self request:requestId isHandledBy:processor];
 }

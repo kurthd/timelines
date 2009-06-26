@@ -6,6 +6,8 @@
 #import "TwitterService.h"
 #import "TrendsViewController.h"
 #import "NetworkAwareViewController.h"
+#import "SearchDisplayMgr.h"
+#import "TimelineDisplayMgr.h"
 
 @interface TrendsDisplayMgr : NSObject
     <TwitterServiceDelegate, NetworkAwareViewControllerDelegate,
@@ -17,10 +19,16 @@
     TrendsViewController * trendsViewController;
     UISegmentedControl * segmentedControl;
 
+    TimelineDisplayMgr * timelineDisplayMgr;
+    SearchDisplayMgr * searchDisplayMgr;
+
     NSMutableArray * allTrends;
 }
 
 - (id)initWithTwitterService:(TwitterService *)aService
-          netAwareController:(NetworkAwareViewController *)navc;
+          netAwareController:(NetworkAwareViewController *)navc
+          timelineDisplayMgr:(TimelineDisplayMgr *)aTimelineDisplayMgr;
+
+- (void)setCredentials:(TwitterCredentials *)credentials;
 
 @end

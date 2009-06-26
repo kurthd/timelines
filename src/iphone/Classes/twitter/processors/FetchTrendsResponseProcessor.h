@@ -15,15 +15,12 @@ typedef enum
 @interface FetchTrendsResponseProcessor : ResponseProcessor
 {
     TrendFetchType trendType;
-    NSManagedObjectContext * context;
     id delegate;
 }
 
 + (id)processorWithTrendFetchType:(TrendFetchType)aTrendFetchType
-                          context:(NSManagedObjectContext *)aContext
                          delegate:(id)aDelegate;
 
 - (id)initWithTrendFetchType:(TrendFetchType)aTrendFetchType
-                     context:(NSManagedObjectContext *)aContext
                     delegate:(id)aDelegate;
 @end
