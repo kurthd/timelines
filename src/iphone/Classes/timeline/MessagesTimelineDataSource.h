@@ -15,11 +15,17 @@
     NSObject<TimelineDataSourceDelegate> * delegate;
     TwitterService * service;
     
-    NSMutableArray * messages;
-    NSInteger outstandingRequests;
+    NSArray * incomingMessages;
+    NSInteger outstandingIncomingMessages;
+
+    NSArray * outgoingMessages;
+    NSInteger outstandingOutgoingMessages;
 }
 
 @property (nonatomic, assign) NSObject<TimelineDataSourceDelegate> * delegate;
+
+@property (nonatomic, copy) NSArray * incomingMessages;
+@property (nonatomic, copy) NSArray * outgoingMessages;
 
 - (id)initWithTwitterService:(TwitterService *)service;
 

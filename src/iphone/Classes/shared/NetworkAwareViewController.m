@@ -104,12 +104,18 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 
 - (void)setCachedDataAvailable:(BOOL)available
 {
-    BOOL transitioningToAvailable =
-        !cachedDataAvailable && available && ![[self updatingView] superview];
+    // Not sure why, but setting the following seems to fix a bug where the
+    // 'updating' view won't reappear as expected
+    // Leaving the code structure in place for now in case it needs to be
+    // reversed
+    BOOL transitioningToAvailable = YES;
+//        !cachedDataAvailable && available && ![[self updatingView] superview];
     cachedDataAvailable = available;
     [self updateView];
-    if (transitioningToAvailable && visible)
+    if (transitioningToAvailable && visible) {
+        NSLog(@"Showing updating view");
         [targetViewController.view.superview addSubview:[self updatingView]];
+    }
 }
 
 - (void)setUpdatingText:(NSString *)text

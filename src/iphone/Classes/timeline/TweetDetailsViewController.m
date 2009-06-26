@@ -11,6 +11,8 @@
 @interface TweetDetailsViewController ()
 
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer;
++ (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer
+    header:(NSString *)header;
 
 @end
 
@@ -42,11 +44,22 @@
     NSString * footerFormatString =
         NSLocalizedString(@"tweetdetailsview.tweetfooter", @"");
     NSString * dateDesc = [tweet.timestamp shortDateAndTimeDescription];
-    NSString * footer =
-        [NSString stringWithFormat:footerFormatString, dateDesc, tweet.source];
-    [webView
-        loadHTMLStringRelativeToMainBundle:
-        [[self class] htmlForContent:tweet.text footer:footer]];
+    NSString * footer = tweet.source ?
+        [NSString stringWithFormat:footerFormatString, dateDesc, tweet.source] :
+        dateDesc;
+    if (tweet.recipient) {
+        NSString * headerFormatString =
+            NSLocalizedString(@"tweetdetailsview.tweetheader", @"");
+        NSString * header = [NSString stringWithFormat:headerFormatString,
+            tweet.recipient.name];
+        [webView
+            loadHTMLStringRelativeToMainBundle:
+            [[self class] htmlForContent:tweet.text footer:footer
+            header:header]];
+    } else
+        [webView
+            loadHTMLStringRelativeToMainBundle:
+            [[self class] htmlForContent:tweet.text footer:footer]];
     nameLabel.text = tweet.user.name;
     [userTweetsButton
         setTitle:[NSString stringWithFormat:@"@%@", tweet.user.username]
@@ -127,6 +140,24 @@
          "  </body>"
          "</html>",
         content, footer];
+}
+
++ (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer
+    header:(NSString *)header
+{
+    return
+        [NSString stringWithFormat:
+        @"<html>"
+         "  <head>"
+         "   <style media=\"screen\" type=\"text/css\" rel=\"stylesheet\">"
+         "     @import url(tweet-style.css);"
+         "   </style>"
+         "  </head>"
+         "  <body>"
+         "    <p class=\"header\">%@</p><p>%@</p><p class=\"footer\">%@</p>"
+         "  </body>"
+         "</html>",
+        header, content, footer];
 }
 
 @end
