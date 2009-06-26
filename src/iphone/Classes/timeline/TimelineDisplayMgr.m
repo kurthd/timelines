@@ -7,6 +7,7 @@
 #import "TwitterService.h"
 #import "ArbUserTimelineDataSource.h"
 #import "FavoritesTimelineDataSource.h"
+#import "UIAlertView+InstantiationAdditions.h"
 
 @interface TimelineDisplayMgr ()
 
@@ -14,6 +15,8 @@
 - (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page
     cache:(NSMutableDictionary *)cache;
 - (void)deallocateTweetDetailsNode;
+- (void)displayErrorWithTitle:(NSString *)title;
+- (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
 
 @end
 
@@ -115,6 +118,7 @@
     }
     [timelineController setTweets:[timeline allValues] page:pagesShown];
     refreshingTweets = NO;
+    failedState = NO;
 }
 
 - (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)anUpdateId
@@ -123,7 +127,9 @@
     NSLog(@"Timeline display manager: failed to fetch timeline since %@",
         anUpdateId);
     NSLog(@"Error: %@", error);
-    // TODO: display alert view
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchtimeline", @"");
+    [self displayErrorWithTitle:errorMessage error:error];
 }
 
 - (void)userInfo:(User *)aUser fetchedForUsername:(NSString *)username
@@ -131,6 +137,7 @@
     NSLog(@"Timeline display manager received user info for %@", username);
     [timelineController setUser:aUser];
     self.user = aUser;
+    failedState = NO;
 }
 
 - (void)failedToFetchUserInfoForUsername:(NSString *)username
@@ -139,7 +146,9 @@
     NSLog(@"Timeline display manager: failed to fetch user info for %@",
         username);
     NSLog(@"Error: %@", error);
-    // TODO: display alert view
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchuserinfo", @"");
+    [self displayErrorWithTitle:errorMessage error:error];
 }
 
 - (void)friends:(NSArray *)friends fetchedForUsername:(NSString *)username
@@ -158,7 +167,9 @@
     NSLog(@"Timeline display manager: failed to fetch friends for %@",
         username);
     NSLog(@"Error: %@", error);
-    // TODO: display alert view
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchfriends", @"");
+    [self displayErrorWithTitle:errorMessage error:error];
 }
 
 - (void)followers:(NSArray *)friends fetchedForUsername:(NSString *)username
@@ -176,7 +187,9 @@
     NSLog(@"Timeline display manager: failed to fetch followers for %@",
         username);
     NSLog(@"Error: %@", error);
-    // TODO: display alert view
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchfollowers", @"");
+    [self displayErrorWithTitle:errorMessage error:error];
 }
 
 - (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page
@@ -194,6 +207,7 @@
     BOOL allLoaded = oldCacheSize == newCacheSize;
     [self.userListController setAllPagesLoaded:allLoaded];
     [self.userListController setUsers:[cache allValues] page:[page intValue]];
+    failedState = NO;
 }
 
 - (void)startedFollowingUsername:(NSString *)username
@@ -203,7 +217,12 @@
 
 - (void)failedToStartFollowingUsername:(NSString *)username
 {
-    NSLog(@"Timeline display manager: failed to start following %@", username);    
+    NSLog(@"Timeline display manager: failed to start following %@", username);
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.startfollowing", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, username];
+    [self displayErrorWithTitle:errorMessage];
 }
 
 - (void)stoppedFollowingUsername:(NSString *)username
@@ -214,6 +233,11 @@
 - (void)failedToStopFollowingUsername:(NSString *)username
 {
     NSLog(@"Timeline display manager: failed to stop following %@", username);
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.stopfollowing", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, username];
+    [self displayErrorWithTitle:errorMessage];
 }
 
 - (void)user:(NSString *)username isFollowing:(NSString *)followee
@@ -235,6 +259,11 @@
     NSLog(@"Timeline display manager: failed to query if %@ is following %@",
         username, followee);
     NSLog(@"Error: %@", error);
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.userquery", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, username];
+    [self displayErrorWithTitle:errorMessage];
 }
 
 #pragma mark TimelineViewControllerDelegate implementation
@@ -571,6 +600,29 @@
     self.tweetDetailsCredentialsPublisher = nil;
     self.tweetDetailsTimelineDisplayMgr = nil;
     self.tweetDetailsNetAwareViewController = nil;
+}
+
+- (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error
+{
+    NSLog(@"Timeline display manager: displaying error: %@", error);
+    if (!failedState) {
+        NSString * message = error.localizedDescription;
+        UIAlertView * alertView =
+            [UIAlertView simpleAlertViewWithTitle:title message:message];
+        [alertView show];
+
+        failedState = YES;
+    }
+    [self.wrapperController setUpdatingState:kDisconnected];
+}
+
+- (void)displayErrorWithTitle:(NSString *)title
+{
+    NSLog(@"Timeline display manager: displaying error with title: %@", title);
+
+    UIAlertView * alertView =
+        [UIAlertView simpleAlertViewWithTitle:title message:nil];
+    [alertView show];
 }
 
 #pragma mark Accessors

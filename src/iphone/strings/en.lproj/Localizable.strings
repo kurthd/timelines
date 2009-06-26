@@ -22,6 +22,15 @@ timelineview.showingsinglepage = "Showing page 1";
 timelineview.usertweets.title = "User Tweets";
 timelineview.favorites.title = "Favorites";
 
+/* TimelineDisplayMgr */
+timelinedisplaymgr.error.fetchtimeline = "Failed to update timeline";
+timelinedisplaymgr.error.fetchuserinfo = "Failed to fetch user info";
+timelinedisplaymgr.error.fetchfriends = "Failed to fetch friends list";
+timelinedisplaymgr.error.fetchfollowers = "Failed to fetch followers";
+timelinedisplaymgr.error.startfollowing = "Failed to start following '%@'";
+timelinedisplaymgr.error.stopfollowing = "Failed to stop following '%@'";
+timelinedisplaymgr.error.userquery = "Failed to receive user info";
+
 /* TweetDetailsViewController */
 tweetdetailsview.title = "Tweet Details";
 tweetdetailsview.tweetfooter = "%@ from %@";
