@@ -23,7 +23,11 @@
 @property (nonatomic, retain) CredentialsActivatedPublisher *
     credentialsActivatedPublisher;
 
+@property (nonatomic, retain) UIView * darkTransparentView;
+
 - (void)showError:(NSError *)error;
+- (void)showDarkTransparentView;
+- (void)hideDarkTransparentView;
 
 @end
 
@@ -34,6 +38,7 @@
 @synthesize timelineDisplayMgr, searchDisplayMgr;
 @synthesize searchResults, searchQuery, searchPage;
 @synthesize dataSourceDelegate, credentialsActivatedPublisher;
+@synthesize darkTransparentView;
 
 #pragma mark Initialization
 
@@ -49,6 +54,7 @@
     self.searchPage = nil;
     self.dataSourceDelegate = nil;
     self.credentialsActivatedPublisher = nil;
+    self.darkTransparentView = nil;
     [super dealloc];
 }
 
@@ -74,7 +80,8 @@
         CGFloat barHeight = navItem.titleView.superview.bounds.size.height;
         CGRect searchBarRect =
             CGRectMake(0.0, 0.0,
-            self.networkAwareViewController.view.bounds.size.width, barHeight);
+            self.networkAwareViewController.view.bounds.size.width - 10.0,
+            barHeight);
         searchBar.bounds = searchBarRect;
 
         self.timelineDisplayMgr = aTimelineDisplayMgr;
@@ -105,10 +112,26 @@
     [self.timelineDisplayMgr setCredentials:credentials];
 }
 
+- (void)searchBarViewWillAppear:(BOOL)promptUser
+{
+    if (!self.searchQuery) {
+        [self.networkAwareViewController setUpdatingState:kDisconnected];
+        [self.networkAwareViewController setCachedDataAvailable:NO];
+        [self.networkAwareViewController setNoConnectionText:@""];
+
+        if (promptUser) {
+            [self.searchBar becomeFirstResponder];
+            [self showDarkTransparentView];
+        }
+    }
+}
+
 #pragma mark UISearchBarDelegate implementation
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)aSarchBar
 {
+    [self hideDarkTransparentView];
+
     [self.searchBar resignFirstResponder];
     [self.searchBar setShowsCancelButton:NO animated:YES];
 
@@ -136,11 +159,19 @@
 {
     [self.searchBar resignFirstResponder];
     [self.searchBar setShowsCancelButton:NO animated:YES];
+    [self hideDarkTransparentView];
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)aSearchBar
 {
+    [self showDarkTransparentView];
     [self.searchBar setShowsCancelButton:YES animated:YES];
+    return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
+{
+    [self.searchBar setShowsCancelButton:NO animated:YES];
     return YES;
 }
 
@@ -153,6 +184,50 @@
 
     [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
     
+}
+
+- (void)showDarkTransparentView
+{
+    self.darkTransparentView.alpha = 0.0;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone
+                           forView:self.darkTransparentView
+                             cache:YES];
+
+    self.darkTransparentView.alpha = 0.8;
+    
+    [UIView commitAnimations];
+}
+
+- (void)hideDarkTransparentView
+{
+    self.darkTransparentView.alpha = 0.8;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone
+                           forView:self.darkTransparentView
+                             cache:YES];
+
+    self.darkTransparentView.alpha = 0.0;
+
+    [UIView commitAnimations];
+}
+
+#pragma mark Accessors
+
+- (UIView *)darkTransparentView
+{
+    if (!darkTransparentView) {
+        CGRect darkTransparentViewFrame = CGRectMake(0, 0, 320, 480);
+        darkTransparentView =
+            [[UIView alloc] initWithFrame:darkTransparentViewFrame];
+        darkTransparentView.backgroundColor = [UIColor blackColor];
+        darkTransparentView.alpha = 0.0;
+
+        [self.networkAwareViewController.view.superview.superview
+            addSubview:self.darkTransparentView];
+    }
+    
+    return darkTransparentView;
 }
 
 @end

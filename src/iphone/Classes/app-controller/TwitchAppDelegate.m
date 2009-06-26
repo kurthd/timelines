@@ -420,6 +420,9 @@
         }
     }
 
+    if (viewController == searchNetAwareViewController.navigationController)
+        [searchBarDisplayMgr searchBarViewWillAppear:YES];
+
     return YES;
 }
 
@@ -665,6 +668,10 @@
     // is the default
     if (uiState.selectedTimelineFeed == 0)
         [personalFeedSelectionMgr tabSelected:control];
+
+    // HACK: Let the search view do some custom drawing when it appears
+    if (uiState.selectedTab == 3)
+        [searchBarDisplayMgr searchBarViewWillAppear:NO];
 }
 
 - (void)persistUIState

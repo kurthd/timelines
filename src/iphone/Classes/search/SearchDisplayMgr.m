@@ -11,7 +11,6 @@
 
 @property (nonatomic, retain) NetworkAwareViewController *
     networkAwareViewController;
-@property (nonatomic, retain) SearchViewController * searchViewController;
 
 @property (nonatomic, retain) TwitterService * service;
 
@@ -24,7 +23,7 @@
 
 @implementation SearchDisplayMgr
 
-@synthesize networkAwareViewController, searchViewController;
+@synthesize networkAwareViewController;
 @synthesize service;
 @synthesize searchResults, queryString, queryTitle, updateId;
 @synthesize dataSourceDelegate;
@@ -44,7 +43,6 @@
 - (void)dealloc
 {
     self.networkAwareViewController = nil;
-    self.searchViewController = nil;
     self.service = nil;
     self.searchResults = nil;
     self.queryString = nil;
@@ -258,18 +256,4 @@
                                      isFollowing:followee error:error];
 }
  
-#pragma mark Accessors
-
-- (SearchViewController *)searchViewController
-{
-    if (!searchViewController) {
-        searchViewController =
-            [[SearchViewController alloc]
-            initWithNibName:@"SearchView" bundle:nil];
-        searchViewController.delegate = self;
-    }
-
-    return searchViewController;
-}
-
 @end

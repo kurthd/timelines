@@ -4,17 +4,14 @@
 
 #import <Foundation/Foundation.h>
 #import "NetworkAwareViewController.h"
-#import "SearchViewController.h"
 #import "TwitterService.h"
 #import "TimelineDataSource.h"
 #import "TimelineDataSourceDelegate.h"
 
 @interface SearchDisplayMgr :
-    NSObject <SearchViewControllerDelegate, TwitterServiceDelegate,
-    TimelineDataSource>
+    NSObject <TwitterServiceDelegate, TimelineDataSource>
 {
     NetworkAwareViewController * networkAwareViewController;
-    SearchViewController * searchViewController;
 
     TwitterService * service;
 

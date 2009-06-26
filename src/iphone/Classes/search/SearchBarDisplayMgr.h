@@ -29,6 +29,8 @@
     id<TimelineDataSourceDelegate> dataSourceDelegate;
 
     CredentialsActivatedPublisher * credentialsActivatedPublisher;
+
+    UIView * darkTransparentView;
 }
 
 @property (nonatomic, assign) id<TimelineDataSourceDelegate> dataSourceDelegate;
@@ -38,5 +40,7 @@
           timelineDisplayMgr:(TimelineDisplayMgr *)aTimelineDisplayMgr;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
+
+- (void)searchBarViewWillAppear:(BOOL)promptUser;
 
 @end
