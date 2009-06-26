@@ -15,21 +15,20 @@
     
 @implementation MessagesTimelineDataSource
 
-@synthesize delegate;
+@synthesize delegate, incomingMessages, outgoingMessages;
 
 - (void)dealloc
 {
     [service release];
-    [messages release];
+    [incomingMessages release];
+    [outgoingMessages release];
     [super dealloc];
 }
 
 - (id)initWithTwitterService:(TwitterService *)aService
 {
-    if (self = [super init]) {
+    if (self = [super init])
         service = [aService retain];
-        messages = [[NSMutableArray array] retain];
-    }
 
     return self;
 }
@@ -39,7 +38,8 @@
 - (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page;
 {
     NSLog(@"'Direct messages' data source: fetching timeline");
-    outstandingRequests = 2;
+    outstandingIncomingMessages++;
+    outstandingOutgoingMessages++;
     [service fetchDirectMessagesSinceId:updateId page:page];
     [service fetchSentDirectMessagesSinceId:updateId page:page];
 }
@@ -100,9 +100,9 @@
         [tweetInfos addObject:tweetInfo];
     }
 
-    outstandingRequests--;
-    [messages addObjectsFromArray:tweetInfos];
-    if (outstandingRequests == 0)
+    outstandingIncomingMessages--;
+    self.incomingMessages = tweetInfos;
+    if (outstandingOutgoingMessages == 0 && outstandingIncomingMessages == 0)
         [self sendFetchTimelineResponseWithUpdateId:updateId page:page];
 }
 
@@ -118,25 +118,27 @@
         [tweetInfos addObject:tweetInfo];
     }
     
-    outstandingRequests--;
-    [messages addObjectsFromArray:tweetInfos];
-    if (outstandingRequests == 0)
+    outstandingOutgoingMessages--;
+    self.outgoingMessages = tweetInfos;
+    if (outstandingOutgoingMessages == 0 && outstandingIncomingMessages == 0)
         [self sendFetchTimelineResponseWithUpdateId:updateId page:page];
 }
 
 - (void)sendFetchTimelineResponseWithUpdateId:(NSNumber *)updateId
     page:(NSNumber *)page
 {
+    NSMutableArray * messages = [NSMutableArray array];
+    [messages addObjectsFromArray:self.incomingMessages];
+    [messages addObjectsFromArray:self.outgoingMessages];
     NSLog(@"'Messages' data source: forwarding batched timeline of size %d",
         [messages count]);
     [delegate timeline:messages fetchedSinceUpdateId:updateId page:page];
-    [messages removeAllObjects];
 }
              
 - (void)failedToFetchDirectMessagesSinceUpdateId:(NSNumber *)updateId
     page:(NSNumber *)page error:(NSError *)error
 {
-    NSLog(@"'Messages' data source: failed to retrieve incoming direct messages");
+    NSLog(@"'Messages' data source: failed to retrieve incoming messages");
     [delegate failedToFetchTimelineSinceUpdateId:updateId page:page
         error:error];
 }
@@ -144,7 +146,7 @@
 - (void)failedToFetchSentDirectMessagesSinceUpdateId:(NSNumber *)updateId
     page:(NSNumber *)page error:(NSError *)error
 {
-    NSLog(@"'Messages' data source: failed to retrieve sent direct messages");
+    NSLog(@"'Messages' data source: failed to retrieve sent messages");
     [delegate failedToFetchTimelineSinceUpdateId:updateId page:page
         error:error];
 }
