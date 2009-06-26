@@ -272,6 +272,10 @@
 {
     NSLog(@"Timeline display manager: selected tweet: %@", tweet);
     self.selectedTweet = tweet;
+    
+    self.tweetDetailsController.navigationItem.rightBarButtonItem.enabled =
+        ![tweet.user.username isEqual:credentials.username];
+    
     [self.wrapperController.navigationController
         pushViewController:self.tweetDetailsController animated:YES];
     [self.tweetDetailsController setTweet:tweet avatar:avatarImage];
