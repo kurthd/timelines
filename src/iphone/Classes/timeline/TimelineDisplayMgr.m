@@ -46,6 +46,8 @@
     [followers release];
     [lastFollowingUsername release];
 
+    [credentials release];
+
     [timelineDisplayMgrFactory release];
     [tweetDetailsTimelineDisplayMgr release];
     [tweetDetailsNetAwareViewController release];
@@ -747,6 +749,8 @@
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
+    if (someCredentials == nil)
+        NSLog(@"NIL CREDENTIALS");
     NSLog(@"Timeline display manager: setting new credentials to: %@",
         someCredentials);
 
