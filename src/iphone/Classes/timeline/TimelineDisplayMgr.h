@@ -65,6 +65,8 @@
     UserListTableViewController * userListController;
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
+    
+    BOOL failedState;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
@@ -94,7 +96,7 @@
     NetworkAwareViewController * userListNetAwareViewController;
 @property (nonatomic, readonly)
     UserListTableViewController * userListController;
-
+    
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController
     service:(NSObject<TimelineDataSource> *)service title:(NSString *)title
@@ -107,7 +109,8 @@
     forceRefresh:(BOOL)refresh;
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)replyToTweet;
-- (void)refresh;
+- (void)refreshWithLatest;
+- (void)refreshWithCurrentPages;
 
 - (void)addTweet:(Tweet *)tweet displayImmediately:(BOOL)displayImmediately;
 

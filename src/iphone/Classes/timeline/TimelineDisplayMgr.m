@@ -7,6 +7,7 @@
 #import "TwitterService.h"
 #import "ArbUserTimelineDataSource.h"
 #import "FavoritesTimelineDataSource.h"
+#import "UIAlertView+InstantiationAdditions.h"
 
 @interface TimelineDisplayMgr ()
 
@@ -14,6 +15,8 @@
 - (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page
     cache:(NSMutableDictionary *)cache;
 - (void)deallocateTweetDetailsNode;
+- (void)displayErrorWithTitle:(NSString *)title;
+- (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
 
 @end
 
@@ -91,7 +94,8 @@
 - (void)timeline:(NSArray *)aTimeline
     fetchedSinceUpdateId:(NSNumber *)anUpdateId page:(NSNumber *)page
 {
-    NSLog(@"Timeline received: %@", aTimeline);
+    NSLog(@"Timeline display manager received timeline of size %d", 
+        [aTimeline count]);
     self.updateId = anUpdateId;
     NSInteger oldTimelineCount = [[timeline allKeys] count];
     for (TweetInfo * tweet in aTimeline)
@@ -114,30 +118,44 @@
     }
     [timelineController setTweets:[timeline allValues] page:pagesShown];
     refreshingTweets = NO;
+    failedState = NO;
 }
 
-- (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)updateId
+- (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)anUpdateId
     page:(NSNumber *)page error:(NSError *)error
 {
-    // TODO: display alert view
+    NSLog(@"Timeline display manager: failed to fetch timeline since %@",
+        anUpdateId);
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchtimeline", @"");
+    [self displayErrorWithTitle:errorMessage error:error];
 }
 
 - (void)userInfo:(User *)aUser fetchedForUsername:(NSString *)username
 {
-    NSLog(@"Received user info for %@", username);
+    NSLog(@"Timeline display manager received user info for %@", username);
     [timelineController setUser:aUser];
     self.user = aUser;
+    failedState = NO;
 }
 
 - (void)failedToFetchUserInfoForUsername:(NSString *)username
     error:(NSError *)error
 {
-    // TODO: display alert view
+    NSLog(@"Timeline display manager: failed to fetch user info for %@",
+        username);
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchuserinfo", @"");
+    [self displayErrorWithTitle:errorMessage error:error];
 }
 
 - (void)friends:(NSArray *)friends fetchedForUsername:(NSString *)username
     page:(NSNumber *)page
 {
+    NSLog(@"Timeline display manager received friends list of size %d",
+        [friends count]);
     if (showingFollowing)
         [self updateUserListViewWithUsers:friends page:page
             cache:followingUsers];
@@ -146,12 +164,19 @@
 - (void)failedToFetchFriendsForUsername:(NSString *)username
     page:(NSNumber *)page error:(NSError *)error
 {
-    // TODO: display alert view
+    NSLog(@"Timeline display manager: failed to fetch friends for %@",
+        username);
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchfriends", @"");
+    [self displayErrorWithTitle:errorMessage error:error];
 }
 
 - (void)followers:(NSArray *)friends fetchedForUsername:(NSString *)username
     page:(NSNumber *)page
 {
+    NSLog(@"Timeline display manager received followers list of size %d",
+        [friends count]);
     if (!showingFollowing)
         [self updateUserListViewWithUsers:friends page:page cache:followers];
 }
@@ -159,13 +184,19 @@
 - (void)failedToFetchFollowersForUsername:(NSString *)username
     page:(NSNumber *)page error:(NSError *)error
 {
-    // TODO: display alert view
+    NSLog(@"Timeline display manager: failed to fetch followers for %@",
+        username);
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchfollowers", @"");
+    [self displayErrorWithTitle:errorMessage error:error];
 }
 
 - (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page
     cache:(NSMutableDictionary *)cache
 {
-    NSLog(@"Received list of users");
+    NSLog(@"Timeline display manager received user list of size %d",
+        [users count]);
     [self.userListNetAwareViewController setCachedDataAvailable:YES];
     [self.userListNetAwareViewController
         setUpdatingState:kConnectedAndNotUpdating];
@@ -176,49 +207,70 @@
     BOOL allLoaded = oldCacheSize == newCacheSize;
     [self.userListController setAllPagesLoaded:allLoaded];
     [self.userListController setUsers:[cache allValues] page:[page intValue]];
+    failedState = NO;
 }
 
 - (void)startedFollowingUsername:(NSString *)username
 {
-    NSLog(@"Started following %@", username);
+    NSLog(@"Timeline display manager: started following %@", username);
 }
 
 - (void)failedToStartFollowingUsername:(NSString *)username
 {
-    NSLog(@"Failed to start following %@", username);    
+    NSLog(@"Timeline display manager: failed to start following %@", username);
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.startfollowing", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, username];
+    [self displayErrorWithTitle:errorMessage];
 }
 
 - (void)stoppedFollowingUsername:(NSString *)username
 {
-    NSLog(@"Stopped following %@", username);
+    NSLog(@"Timeline display manager: stopped following %@", username);
 }
 
 - (void)failedToStopFollowingUsername:(NSString *)username
 {
-    NSLog(@"Failed to stop following %@", username);
+    NSLog(@"Timeline display manager: failed to stop following %@", username);
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.stopfollowing", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, username];
+    [self displayErrorWithTitle:errorMessage];
 }
 
 - (void)user:(NSString *)username isFollowing:(NSString *)followee
 {
+    NSLog(@"Timeline display manager: %@ is following %@", username, followee);
     [self.userInfoController setFollowing:YES];
 }
 
 - (void)user:(NSString *)username isNotFollowing:(NSString *)followee
 {
+    NSLog(@"Timeline display manager: %@ is not following %@", username,
+        followee);
     [self.userInfoController setFollowing:NO];
 }
 
 - (void)failedToQueryIfUser:(NSString *)username
     isFollowing:(NSString *)followee error:(NSError *)error
 {
-    
+    NSLog(@"Timeline display manager: failed to query if %@ is following %@",
+        username, followee);
+    NSLog(@"Error: %@", error);
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.userquery", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, username];
+    [self displayErrorWithTitle:errorMessage];
 }
 
 #pragma mark TimelineViewControllerDelegate implementation
 
 - (void)selectedTweet:(TweetInfo *)tweet avatarImage:(UIImage *)avatarImage
 {
-    NSLog(@"Selected tweet: %@", tweet);
+    NSLog(@"Timeline display manager: selected tweet: %@", tweet);
     self.selectedTweet = tweet;
     [self.wrapperController.navigationController
         pushViewController:self.tweetDetailsController animated:YES];
@@ -227,7 +279,7 @@
 
 - (void)loadMoreTweets
 {
-    NSLog(@"Loading more tweets...");
+    NSLog(@"Timeline display manager: loading more tweets...");
     [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
     if ([service credentials])
@@ -237,7 +289,7 @@
 
 - (void)showUserInfoWithAvatar:(UIImage *)avatar
 {
-    NSLog(@"Showing user info for %@", user);
+    NSLog(@"Timeline display manager: showing user info for %@", user);
     [self.wrapperController.navigationController
         pushViewController:self.userInfoController animated:YES];
     self.userInfoController.followingEnabled =
@@ -251,7 +303,7 @@
 
 - (void)showTweetsForUser:(NSString *)username
 {
-    NSLog(@"Showing tweets for %@", username);
+    NSLog(@"Timeline display manager: showing tweets for %@", username);
     // create a tweetDetailsTimelineDisplayMgr
     // push corresponding view controller for tweet details timeline display mgr
     NSString * title =
@@ -301,16 +353,16 @@
 - (void)setFavorite:(BOOL)favorite
 {
     if (favorite)
-        NSLog(@"Setting selected tweet to 'favorite'");
+        NSLog(@"Timeline display manager: setting tweet to 'favorite'");
     else
-        NSLog(@"Setting selected tweet to 'not favorite'");
+        NSLog(@"Timeline display manager: setting tweet to 'not favorite'");
 
     [service markTweet:selectedTweet.identifier asFavorite:favorite];
 }
 
 - (void)replyToTweet
 {
-    NSLog(@"Reply to tweet selected");
+    NSLog(@"Timeline display manager: reply to tweet selected");
     [composeTweetDisplayMgr
         composeReplyToTweet:selectedTweet.identifier
         fromUser:selectedTweet.user.username];
@@ -318,12 +370,13 @@
 
 - (void)showingTweetDetails
 {
-    NSLog(@"Showing tweet details...");
+    NSLog(@"Timeline display manager: showing tweet details...");
     [self deallocateTweetDetailsNode];
 }
 
 - (void)sendDirectMessageToUser:(NSString *)username
 {
+    NSLog(@"Timeline display manager: showing tweet details...");
     [composeTweetDisplayMgr composeDirectMessageTo:username];
 }
 
@@ -331,7 +384,7 @@
 
 - (void)networkAwareViewWillAppear
 {
-    NSLog(@"Showing timeline view...");
+    NSLog(@"Timeline display manager: showing timeline view...");
     if ((!hasBeenDisplayed && [service credentials]) || needsRefresh) {
         NSLog(@"Fetching new timeline on display...");
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
@@ -346,7 +399,7 @@
 
 - (void)showLocationOnMap:(NSString *)locationString
 {
-    NSLog(@"Showing %@ on map", locationString);
+    NSLog(@"Timeline display manager: showing %@ on map", locationString);
     NSString * locationWithoutCommas =
         [locationString stringByReplacingOccurrencesOfString:@"iPhone:"
         withString:@""];
@@ -362,12 +415,13 @@
 
 - (void)visitWebpage:(NSString *)webpageUrl
 {
-    NSLog(@"Visiting webpage: %@", webpageUrl);
+    NSLog(@"Timeline display manager: visiting webpage: %@", webpageUrl);
 }
 
 - (void)displayFollowingForUser:(NSString *)username
 {
-    NSLog(@"Displaying 'following' list for %@", username);
+    NSLog(@"Timeline display manager: displaying 'following' list for %@",
+        username);
 
     [self.wrapperController.navigationController
         pushViewController:self.userListNetAwareViewController animated:YES];
@@ -395,7 +449,8 @@
 
 - (void)displayFollowersForUser:(NSString *)username
 {
-    NSLog(@"Displaying 'followers' list for %@", username);
+    NSLog(@"Timeline display manager: displaying 'followers' list for %@",
+        username);
 
     [self.wrapperController.navigationController
         pushViewController:self.userListNetAwareViewController animated:YES];
@@ -423,7 +478,8 @@
 
 - (void)displayFavoritesForUser:(NSString *)username
 {
-    NSLog(@"Displaying favorites for user %@", username);
+    NSLog(@"Timeline display manager: displaying favorites for user %@",
+        username);
     // create a tweetDetailsTimelineDisplayMgr
     // push corresponding view controller for tweet details timeline display mgr
     NSString * title =
@@ -472,19 +528,21 @@
 
 - (void)startFollowingUser:(NSString *)username
 {
-    NSLog(@"Sending 'follow user' request for %@", username);
+    NSLog(@"Timeline display manager: sending 'follow user' request for %@",
+        username);
     [service followUser:username];
 }
 
 - (void)stopFollowingUser:(NSString *)username
 {
-    NSLog(@"Sending 'stop following' request for %@", username);
+    NSLog(@"Timeline display manager: sending 'stop following' request for %@",
+        username);
     [service stopFollowingUser:username];
 }
 
 - (void)showingUserInfoView
 {
-    NSLog(@"Showing user info view");
+    NSLog(@"Timeline display manager: showing user info view");
     [self deallocateTweetDetailsNode];
 }
 
@@ -492,7 +550,7 @@
 
 - (void)loadMoreUsers
 {
-    NSLog(@"Loading more users...");
+    NSLog(@"Timeline display manager: loading more users...");
     [self.userListNetAwareViewController
         setUpdatingState:kConnectedAndUpdating];
     if (showingFollowing)
@@ -505,19 +563,30 @@
 
 - (void)userListViewWillAppear
 {
-    NSLog(@"User list view will appear...");
+    NSLog(@"Timeline display manager: user list view will appear...");
     [self deallocateTweetDetailsNode];
 }
 
 #pragma mark TimelineDisplayMgr implementation
 
-- (void)refresh
+- (void)refreshWithLatest
 {
-    NSLog(@"Refreshing timeline...");
+    NSLog(@"Timeline display manager: refreshing timeline with latest...");
     if([service credentials]) {
         refreshingTweets = YES;
         [service fetchTimelineSince:self.updateId
             page:[NSNumber numberWithInt:0]];
+    }
+    [wrapperController setUpdatingState:kConnectedAndUpdating];
+    [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
+}
+
+- (void)refreshWithCurrentPages
+{
+    if([service credentials]) {
+        refreshingTweets = YES;
+        [service fetchTimelineSince:[NSNumber numberWithInt:0] page:
+        [NSNumber numberWithInt:pagesShown]];
     }
     [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
@@ -542,6 +611,29 @@
     self.tweetDetailsCredentialsPublisher = nil;
     self.tweetDetailsTimelineDisplayMgr = nil;
     self.tweetDetailsNetAwareViewController = nil;
+}
+
+- (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error
+{
+    NSLog(@"Timeline display manager: displaying error: %@", error);
+    if (!failedState) {
+        NSString * message = error.localizedDescription;
+        UIAlertView * alertView =
+            [UIAlertView simpleAlertViewWithTitle:title message:message];
+        [alertView show];
+
+        failedState = YES;
+    }
+    [self.wrapperController setUpdatingState:kDisconnected];
+}
+
+- (void)displayErrorWithTitle:(NSString *)title
+{
+    NSLog(@"Timeline display manager: displaying error with title: %@", title);
+
+    UIAlertView * alertView =
+        [UIAlertView simpleAlertViewWithTitle:title message:nil];
+    [alertView show];
 }
 
 #pragma mark Accessors
@@ -632,13 +724,14 @@
 
     [timelineController setTweets:[timeline allValues] page:pagesShown];
 
-    if (refresh)
-        [self refresh];
+    if (refresh || [[someTweets allKeys] count] == 0)
+        [self refreshWithCurrentPages];
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
-    NSLog(@"Setting new credentials on timeline display manager...");
+    NSLog(@"Timeline display manager: setting new credentials to: %@",
+        someCredentials);
 
     TwitterCredentials * oldCredentials = credentials;
 
@@ -675,6 +768,9 @@
 
 - (void)setUser:(User *)aUser
 {
+    NSLog(@"Timeline display manager: setting display user to: %@",
+        aUser.username);
+
     [aUser retain];
     [user release];
     user = aUser;
@@ -689,6 +785,11 @@
 
 - (void)setDisplayAsConversation:(BOOL)conversation
 {
+    if (conversation)
+        NSLog(@"Timeline display manager: displaying as conversation");
+    else
+        NSLog(@"Timeline display manager: not displaying as conversation");
+
     displayAsConversation = conversation;
     NSArray * invertedCellUsernames =
         conversation && !!credentials ?

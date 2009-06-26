@@ -15,7 +15,6 @@
     AllTimelineDataSource * allTimelineDataSource;
     MessagesTimelineDataSource * messagesTimelineDataSource;
     MentionsTimelineDataSource * mentionsTimelineDataSource;
-    TwitterService * service;
 
     NSDictionary * allTimelineTweets;
     NSUInteger allTimelinePagesShown;
@@ -24,7 +23,7 @@
     NSDictionary * messagesTimelineTweets;
     NSUInteger messagesTimelinePagesShown;
     BOOL messagesTimelineRefresh;
-    
+
     NSDictionary * mentionsTimelineTweets;
     NSUInteger mentionsTimelinePagesShown;
     BOOL mentionsTimelineRefresh;
@@ -37,7 +36,9 @@
 @property (nonatomic, copy) NSDictionary * messagesTimelineTweets;
 
 - (id)initWithTimelineDisplayMgr:(TimelineDisplayMgr *)timelineDisplayMgr
-    service:(TwitterService *)service;
+    allService:(TwitterService *)allService
+    mentionsService:(TwitterService *)mentionsService
+    messagesService:(TwitterService *)messagesService;
 
 - (void)tabSelected:(id)sender;
 

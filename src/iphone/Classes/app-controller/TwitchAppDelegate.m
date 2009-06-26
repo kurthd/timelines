@@ -13,7 +13,6 @@
 #import "TwitterService.h"
 #import "TwitPicImageSender.h"
 #import "ComposeTweetDisplayMgr.h"
-#import "PersonalFeedSelectionMgr.h"
 #import "UserTimelineDataSource.h"
 #import "TrendsDisplayMgr.h"
 #import "AccountsDisplayMgr.h"
@@ -85,6 +84,7 @@
     [timelineDisplayMgrFactory release];
     [timelineDisplayMgr release];
     [profileTimelineDisplayMgr release];
+    [personalFeedSelectionMgr release];
 
     [composeTweetDisplayMgr release];
 
@@ -265,16 +265,27 @@
     UIBarButtonItem * refreshButton =
         homeNetAwareViewController.navigationItem.leftBarButtonItem;
     refreshButton.target = timelineDisplayMgr;
-    refreshButton.action = @selector(refresh);
+    refreshButton.action = @selector(refreshWithLatest);
 
-    TwitterService * twitterService =
+    TwitterService * allService =
         [[[TwitterService alloc] initWithTwitterCredentials:nil
         context:[self managedObjectContext]]
         autorelease];
 
-    PersonalFeedSelectionMgr * personalFeedSelectionMgr =
+    TwitterService * mentionsService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:[self managedObjectContext]]
+        autorelease];
+
+    TwitterService * messagesService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:[self managedObjectContext]]
+        autorelease];
+
+    personalFeedSelectionMgr =
         [[PersonalFeedSelectionMgr alloc]
-        initWithTimelineDisplayMgr:timelineDisplayMgr service:twitterService];
+        initWithTimelineDisplayMgr:timelineDisplayMgr allService:allService
+        mentionsService:mentionsService messagesService:messagesService];
     UISegmentedControl * segmentedControl =
         (UISegmentedControl *)
         homeNetAwareViewController.navigationItem.titleView;
@@ -299,7 +310,7 @@
     UIBarButtonItem * refreshButton =
         profileNetAwareViewController.navigationItem.leftBarButtonItem;
     refreshButton.target = profileTimelineDisplayMgr;
-    refreshButton.action = @selector(refresh);
+    refreshButton.action = @selector(refreshWithLatest);
 
     TwitterService * twitterService =
         [[[TwitterService alloc] initWithTwitterCredentials:nil
@@ -606,7 +617,13 @@
     tabBarController.selectedIndex = uiState.selectedTab;
     UISegmentedControl * control = (UISegmentedControl *)
         homeNetAwareViewController.navigationItem.titleView;
+    NSLog(@"Setting segmented control index");
     control.selectedSegmentIndex = uiState.selectedTimelineFeed;
+    
+    // HACK: Force tab selected to be called when selected index is zero, which
+    // is the default
+    if (uiState.selectedTimelineFeed == 0)
+        [personalFeedSelectionMgr tabSelected:control];
 }
 
 - (void)persistUIState
