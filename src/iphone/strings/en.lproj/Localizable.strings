@@ -33,7 +33,8 @@ timelinedisplaymgr.error.stopfollowing = "Failed to stop following '%@'";
 timelinedisplaymgr.error.userquery = "Failed to receive user info";
 
 /* TweetDetailsViewController */
-tweetdetailsview.title = "Tweet Details";
+tweetdetailsview.title = "Tweet";
+tweetdetailsview.title.directmessage = "Direct Message";
 tweetdetailsview.tweetfooter = "%@ from %@";
 tweetdetailsview.tweetheader = "To: %@";
 

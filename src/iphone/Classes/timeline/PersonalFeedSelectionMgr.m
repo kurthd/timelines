@@ -46,6 +46,10 @@
         allTimelineRefresh = YES;
         mentionsTimelineRefresh = YES;
         messagesTimelineRefresh = YES;
+        
+        allTimelinePagesShown = 1;
+        mentionsTimelinePagesShown = 1;
+        messagesTimelinePagesShown = 1;
     }
 
     return self;

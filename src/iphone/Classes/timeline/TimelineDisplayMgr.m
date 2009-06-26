@@ -273,12 +273,20 @@
 {
     NSLog(@"Timeline display manager: selected tweet: %@", tweet);
     self.selectedTweet = tweet;
-    
+
     self.tweetDetailsController.navigationItem.rightBarButtonItem.enabled =
         ![tweet.user.username isEqual:credentials.username];
-    self.tweetDetailsController.navigationItem.rightBarButtonItem.action =
-        tweet.recipient ? @selector(replyToTweetWithMessage) :
-        @selector(replyToTweet);
+    if (tweet.recipient) {
+        self.tweetDetailsController.navigationItem.rightBarButtonItem.action =
+            @selector(replyToTweetWithMessage);
+        self.tweetDetailsController.navigationItem.title =
+            NSLocalizedString(@"tweetdetailsview.title.directmessage", @"");
+    } else {
+        self.tweetDetailsController.navigationItem.rightBarButtonItem.action =
+            @selector(replyToTweet);
+        self.tweetDetailsController.navigationItem.title =
+            NSLocalizedString(@"tweetdetailsview.title", @"");
+    }
     
     [self.wrapperController.navigationController
         pushViewController:self.tweetDetailsController animated:YES];
@@ -394,7 +402,7 @@
 {
     NSLog(@"Timeline display manager: showing timeline view...");
     if ((!hasBeenDisplayed && [service credentials]) || needsRefresh) {
-        NSLog(@"Fetching new timeline on display...");
+        NSLog(@"Timeline display manager: fetching new timeline when shown...");
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
     }
@@ -593,6 +601,7 @@
 {
     if([service credentials]) {
         refreshingTweets = YES;
+        hasBeenDisplayed = YES;
         [service fetchTimelineSince:[NSNumber numberWithInt:0] page:
         [NSNumber numberWithInt:pagesShown]];
     }
@@ -768,6 +777,9 @@
         ![oldCredentials.username isEqual:credentials.username]) {
         // Changed accounts (as opposed to setting it for the first time)
 
+        NSLog(@"Timeline displaying manager: changing accounts (%@)",
+            credentials.username);
+
         [timeline removeAllObjects];
         if (user)
             [service fetchUserInfoForUsername:credentials.username];
@@ -778,9 +790,11 @@
         pagesShown = 1;
         [self.wrapperController setCachedDataAvailable:NO];
         [self.wrapperController setUpdatingState:kConnectedAndUpdating];
-    } else if (hasBeenDisplayed) // set for first time and persisted data shown
+    } else if (hasBeenDisplayed) {// set for first time and persisted data shown
+        NSLog(@"Timeline display manager: setting account for first time");
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
+    }
 }
 
 - (void)setUser:(User *)aUser
@@ -803,9 +817,9 @@
 - (void)setDisplayAsConversation:(BOOL)conversation
 {
     if (conversation)
-        NSLog(@"Timeline display manager: displaying as conversation");
+        NSLog(@"Timeline display manager init: displaying as conversation");
     else
-        NSLog(@"Timeline display manager: not displaying as conversation");
+        NSLog(@"Timeline display manager init: not displaying as conversation");
 
     displayAsConversation = conversation;
     NSArray * invertedCellUsernames =
