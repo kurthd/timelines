@@ -107,6 +107,7 @@ typedef enum
 {
     [self.service setCredentials:credentials];
     [self.searchDisplayMgr setCredentials:credentials];
+    [self.timelineDisplayMgr setCredentials:credentials];
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation

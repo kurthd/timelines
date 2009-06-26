@@ -46,6 +46,8 @@
     [followers release];
     [lastFollowingUsername release];
 
+    [credentials release];
+
     [timelineDisplayMgrFactory release];
     [tweetDetailsTimelineDisplayMgr release];
     [tweetDetailsNetAwareViewController release];
