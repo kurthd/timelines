@@ -38,7 +38,7 @@
 
 - (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page;
 {
-    NSLog(@"Fetching direct messages...");
+    NSLog(@"'Direct messages' data source: fetching timeline");
     outstandingRequests = 2;
     [service fetchDirectMessagesSinceId:updateId page:page];
     [service fetchSentDirectMessagesSinceId:updateId page:page];
@@ -46,36 +46,43 @@
 
 - (void)fetchUserInfoForUsername:(NSString *)username
 {
+    NSLog(@"'Direct messages' data source: fetching user info");
     [service fetchUserInfoForUsername:username];
 }
 
 - (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page
 {
+    NSLog(@"'Direct messages' data source: fetching friends");
     [service fetchFriendsForUser:user page:page];
 }
 
 - (void)fetchFollowersForUser:(NSString *)user page:(NSNumber *)page
 {
+    NSLog(@"'Direct messages' data source: fetching followers");
     [service fetchFollowersForUser:user page:page];
 }
 
 - (void)markTweet:(NSString *)tweetId asFavorite:(BOOL)favorite
 {
+    NSLog(@"'Direct messages' data source: setting tweet favorite state");
     [service markTweet:tweetId asFavorite:favorite];
 }
 
 - (void)isUser:(NSString *)user following:(NSString *)followee
 {
+    NSLog(@"'Direct messages' data source: querying for 'following' state");
     [service isUser:user following:followee];
 }
 
 - (void)followUser:(NSString *)aUsername
 {
+    NSLog(@"'Direct messages' data source: sending 'follow user' request");
     [service followUser:aUsername];
 }
 
 - (void)stopFollowingUser:(NSString *)aUsername
 {
+    NSLog(@"'Direct messages' data source: sending 'stop following' request");
     [service stopFollowingUser:aUsername];
 }
 
@@ -84,13 +91,15 @@
 - (void)directMessages:(NSArray *)directMessages
     fetchedSinceUpdateId:(NSNumber *)updateId page:(NSNumber *)page
 {
+    NSLog(@"'Messages' data source: received timeline of size %d",
+        [directMessages count]);
     NSMutableArray * tweetInfos = [NSMutableArray array];
     for (DirectMessage * directMessage in directMessages) {
         TweetInfo * tweetInfo =
             [TweetInfo createFromDirectMessage:directMessage];
         [tweetInfos addObject:tweetInfo];
     }
-    
+
     outstandingRequests--;
     [messages addObjectsFromArray:tweetInfos];
 }
@@ -114,6 +123,8 @@
 - (void)sendFetchTimelineResponseWithUpdateId:(NSNumber *)updateId
     page:(NSNumber *)page
 {
+    NSLog(@"'Messages' data source: forwarding batched timeline of size %d",
+        [messages count]);
     [delegate timeline:messages fetchedSinceUpdateId:updateId page:page];
     [messages removeAllObjects];
 }
@@ -121,6 +132,7 @@
 - (void)failedToFetchDirectMessagesSinceUpdateId:(NSNumber *)updateId
     page:(NSNumber *)page error:(NSError *)error
 {
+    NSLog(@"'Messages' data source: failed to retrieve incoming direct messages");
     [delegate failedToFetchTimelineSinceUpdateId:updateId page:page
         error:error];
 }
@@ -128,6 +140,7 @@
 - (void)failedToFetchSentDirectMessagesSinceUpdateId:(NSNumber *)updateId
     page:(NSNumber *)page error:(NSError *)error
 {
+    NSLog(@"'Messages' data source: failed to retrieve sent direct messages");
     [delegate failedToFetchTimelineSinceUpdateId:updateId page:page
         error:error];
 }

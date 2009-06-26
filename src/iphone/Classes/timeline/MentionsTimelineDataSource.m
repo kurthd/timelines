@@ -28,42 +28,50 @@
 
 - (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page;
 {
+    NSLog(@"'Mentions' data source: fetching timeline");
     [service fetchMentionsSinceUpdateId:updateId page:page
         count:[NSNumber numberWithInt:0]];
 }
 
 - (void)fetchUserInfoForUsername:(NSString *)username
 {
+    NSLog(@"'Mentions' data source: fetching user info");
     [service fetchUserInfoForUsername:username];
 }
 
 - (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page
 {
+    NSLog(@"'Mentions' data source: fetching friends");
     [service fetchFriendsForUser:user page:page];
 }
 
 - (void)fetchFollowersForUser:(NSString *)user page:(NSNumber *)page
 {
+    NSLog(@"'Mentions' data source: fetching followers");
     [service fetchFollowersForUser:user page:page];
 }
 
 - (void)markTweet:(NSString *)tweetId asFavorite:(BOOL)favorite
 {
+    NSLog(@"'Mentions' data source: setting tweet favorite state");
     [service markTweet:tweetId asFavorite:favorite];
 }
 
 - (void)isUser:(NSString *)user following:(NSString *)followee
 {
+    NSLog(@"'Mentions' data source: querying 'following' state");
     [service isUser:user following:followee];
 }
 
 - (void)followUser:(NSString *)aUsername
 {
+    NSLog(@"'Mentions' data source: sending 'follow user' request");
     [service followUser:aUsername];
 }
 
 - (void)stopFollowingUser:(NSString *)aUsername
 {
+    NSLog(@"'Mentions' data source: sending 'stop following user' request");
     [service stopFollowingUser:aUsername];
 }
 
@@ -72,6 +80,8 @@
 - (void)mentions:(NSArray *)mentions fetchedSinceUpdateId:(NSNumber *)updateId
     page:(NSNumber *)page count:(NSNumber *)count;
 {
+    NSLog(@"'Mentions' data source: received timeline of size %d",
+        [mentions count]);
     NSMutableArray * tweetInfoTimeline = [NSMutableArray array];
     for (Tweet * tweet in mentions) {
         TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
@@ -84,6 +94,7 @@
 - (void)failedToFetchMentionsSinceUpdateId:(NSNumber *)updateId
     page:(NSNumber *)page count:(NSNumber *)count error:(NSError *)error
 {
+    NSLog(@"'All' data source: failed to retrieve timeline");
     [delegate failedToFetchTimelineSinceUpdateId:updateId page:page
         error:error];
 }
