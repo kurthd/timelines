@@ -96,7 +96,14 @@
     TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
     UIImage * avatarImage = [self getAvatarForUrl:tweet.user.profileImageUrl];
     [cell setAvatarImage:avatarImage];
-    [cell setName:tweet.user.name];
+    if (tweet.recipient && ![tweet.recipient isEqual:@""] && !showInbox) {
+        NSString * formatString =
+            NSLocalizedString(@"timelineview.directmessage.name", @"");
+        NSString * nameString =
+            [NSString stringWithFormat:formatString, tweet.recipient.name];
+        [cell setName:nameString];
+    } else
+        [cell setName:tweet.user.name];
     [cell setDate:tweet.timestamp];
     [cell setTweetText:tweet.text];
 
