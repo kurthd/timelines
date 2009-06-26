@@ -3,11 +3,7 @@
 //
 
 #import "FetchTrendsResponseProcessor.h"
-#import "User.h"
-#import "User+CoreDataAdditions.h"
-#import "Tweet.h"
-#import "Tweet+CoreDataAdditions.h"
-#import "ResponseProcessor+ParsingHelpers.h"
+#import "Trend.h"
 
 @interface FetchTrendsResponseProcessor ()
 
@@ -50,39 +46,22 @@
     return self;
 }
 
-- (BOOL)processResponse:(NSArray *)statuses
+- (BOOL)processResponse:(NSArray *)results
 {
-    if (!statuses)
+    if (!results)
         return NO;
 
-    NSMutableArray * tweets = [NSMutableArray arrayWithCapacity:statuses.count];
-    NSMutableSet * uniqueUsers = [NSMutableSet set];
-    for (id status in statuses) {
-        NSDictionary * userData = [status objectForKey:@"user"];
-        NSString * userId = [[userData objectForKey:@"id"] description];
-        User * tweetAuthor = [User userWithId:userId context:context];
+    NSMutableArray * trends = [NSMutableArray arrayWithCapacity:results.count];
+    for (NSDictionary * result in results) {
+        Trend * trend = [[Trend alloc] init];
 
-        if (!tweetAuthor)
-            tweetAuthor = [User createInstance:context];
+        trend.name = [result objectForKey:@"name"];
+        trend.query = [result objectForKey:@"query"];
 
-        // only set user data the first time we see it, so we are saving
-        // the freshest data
-        if (![uniqueUsers containsObject:userId]) {
-            [self populateUser:tweetAuthor fromData:userData];
-            [uniqueUsers addObject:userId];
-        }
+        if (trend.name && trend.query)
+            [trends addObject:trend];
 
-        NSDictionary * tweetData = status;
-
-        NSString * tweetId = [[tweetData objectForKey:@"id"] description];
-        Tweet * tweet = [Tweet tweetWithId:tweetId context:context];
-        if (!tweet)
-            tweet = [Tweet createInstance:context];
-
-        [self populateTweet:tweet fromData:tweetData];
-        tweet.user = tweetAuthor;
-
-        [tweets addObject:tweet];
+        [trend release];
     }
 
     SEL sel;
@@ -97,7 +76,7 @@
             sel = @selector(fetchedWeeklyTrends:);
             break;
     }
-    [self invokeSelector:sel withTarget:delegate args:tweets, nil];
+    [self invokeSelector:sel withTarget:delegate args:trends, nil];
 
     return YES;
 }

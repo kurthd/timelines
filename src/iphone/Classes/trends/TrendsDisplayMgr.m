@@ -4,6 +4,7 @@
 
 #import "TrendsDisplayMgr.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "Trend.h"
 
 typedef enum
 {
@@ -24,6 +25,8 @@ typedef enum
 @property (nonatomic, retain) NSMutableArray * allTrends;
 
 - (void)fetchTrends:(TrendType)trendType;
+
+- (void)showTrends:(NSArray *)trends;
 - (void)showError:(NSError *)error;
 
 @end
@@ -54,6 +57,8 @@ typedef enum
 
         self.networkAwareViewController = navc;
         self.networkAwareViewController.delegate = self;
+        self.networkAwareViewController.targetViewController =
+            self.trendsViewController;
 
         self.segmentedControl = (UISegmentedControl *)
             self.networkAwareViewController.navigationItem.titleView;
@@ -62,7 +67,7 @@ typedef enum
                         forControlEvents:UIControlEventValueChanged];
         
 
-        self.allTrends = [NSArray arrayWithObjects:
+        self.allTrends = [NSMutableArray arrayWithObjects:
             [NSNull null], [NSNull null], [NSNull null], nil];
 
         UIBarButtonItem * refreshButton =
@@ -122,7 +127,7 @@ typedef enum
 
 #pragma mark TrendsViewControllerDelegate implementation
 
-- (void)userDidSelectTrend:(id)trend
+- (void)userDidSelectTrend:(Trend *)trend
 {
     //NSString * searchTerms = trend.searchTerms;
     //[self.searchDisplayMgr displaySearchResults:trend];
@@ -153,37 +158,57 @@ typedef enum
 - (void)fetchedCurrentTrends:(NSArray *)trends
 {
     [self.allTrends replaceObjectAtIndex:kCurrentTrends withObject:trends];
+    if (kCurrentTrends == self.segmentedControl.selectedSegmentIndex)
+        [self showTrends:trends];
 }
 
 - (void)failedToFetchCurrentTrends:(NSError *)error
 {
     [self showError:error];
     [self.networkAwareViewController setUpdatingState:kConnectedAndNotUpdating];
+    [self.networkAwareViewController setCachedDataAvailable:
+        ![[self.allTrends objectAtIndex:kCurrentTrends] isEqual:[NSNull null]]];
 }
 
 - (void)fetchedDailyTrends:(NSArray *)trends
 {
     [self.allTrends replaceObjectAtIndex:kDailyTrends withObject:trends];
+    if (kDailyTrends == self.segmentedControl.selectedSegmentIndex)
+        [self showTrends:trends];
 }
 
 - (void)failedToFetchDailyTrends:(NSError *)error
 {
     [self showError:error];
     [self.networkAwareViewController setUpdatingState:kConnectedAndNotUpdating];
+    [self.networkAwareViewController setCachedDataAvailable:
+        ![[self.allTrends objectAtIndex:kDailyTrends] isEqual:[NSNull null]]];
 }
 
 - (void)fetchedWeeklyTrends:(NSArray *)trends
 {
     [self.allTrends replaceObjectAtIndex:kWeeklyTrends withObject:trends];
+    if (kWeeklyTrends == self.segmentedControl.selectedSegmentIndex)
+        [self showTrends:trends];
 }
 
 - (void)failedToFetchWeeklyTrends:(NSError *)error
 {
     [self showError:error];
     [self.networkAwareViewController setUpdatingState:kConnectedAndNotUpdating];
+    [self.networkAwareViewController setCachedDataAvailable:
+        ![[self.allTrends objectAtIndex:kWeeklyTrends] isEqual:[NSNull null]]];
 }
 
 #pragma mark UI helpers
+
+- (void)showTrends:(NSArray *)trends
+{
+    [self.trendsViewController updateWithTrends:trends];
+    [self.networkAwareViewController setUpdatingState:kConnectedAndNotUpdating];
+    [self.networkAwareViewController setCachedDataAvailable:YES];
+    
+}
 
 - (void)showError:(NSError *)error
 {

@@ -3,9 +3,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Trend.h"
 
 @protocol TrendsViewControllerDelegate
 
-- (void)userDidSelectTrend:(id)trend;
+- (void)userDidSelectTrend:(Trend *)trend;
 
 @end

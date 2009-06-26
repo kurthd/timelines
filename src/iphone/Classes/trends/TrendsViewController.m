@@ -3,6 +3,7 @@
 //
 
 #import "TrendsViewController.h"
+#import "Trend.h"
 
 @interface TrendsViewController ()
 
@@ -35,24 +36,22 @@
     return self.trends.count;
 }
 
-// Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * CellIdentifier = @"Cell";
+    static NSString * CellIdentifier = @"TrendsTableViewCell";
 
     UITableViewCell * cell =
         [tv dequeueReusableCellWithIdentifier:CellIdentifier];
 
-    if (cell == nil) {
+    if (cell == nil)
         cell =
             [[[UITableViewCell alloc]
               initWithFrame:CGRectZero reuseIdentifier:CellIdentifier]
              autorelease];
-    }
 
-    cell.textLabel.text =
-        [[self.trends objectAtIndex:indexPath.row] description];
+    Trend * trend = [self.trends objectAtIndex:indexPath.row];
+    cell.textLabel.text = trend.name;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     return cell;
@@ -61,7 +60,7 @@
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id trend = [self.trends objectAtIndex:indexPath.row];
+    Trend * trend = [self.trends objectAtIndex:indexPath.row];
     [self.delegate userDidSelectTrend:trend];
 }
 

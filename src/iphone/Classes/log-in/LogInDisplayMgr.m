@@ -147,7 +147,6 @@
 
 - (void)connectionFinished
 {
-    NSLog(@"CONNECTION IS FINISHED.");
 }
 
 - (void)statusesReceived:(NSArray *)statuses forRequest:(NSString *)identifier

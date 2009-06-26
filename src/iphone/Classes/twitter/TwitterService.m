@@ -374,7 +374,6 @@
 
 - (void)connectionFinished
 {
-    NSLog(@"CONNECTION IS FINISHED.");
 }
 
 - (void)statusesReceived:(NSArray *)statuses forRequest:(NSString *)requestId
@@ -387,7 +386,7 @@
 - (void)directMessagesReceived:(NSArray *)messages
                     forRequest:(NSString *)requestId
 {
-    NSLog(@"Received %d direct messages recieved for request '%@'",
+    NSLog(@"Received %d direct messages for request '%@'",
         messages.count, requestId);
     [self request:requestId succeededWithResponse:messages];
     [self cleanUpRequest:requestId];
@@ -415,8 +414,12 @@
 }
 
 - (void)searchResultsReceived:(NSArray *)searchResults
-                   forRequest:(NSString *)connectionIdentifier
+                   forRequest:(NSString *)requestId
 {
+    NSLog(@"Received %d search results for request: '%@'.",
+        searchResults.count, requestId);
+    [self request:requestId succeededWithResponse:searchResults];
+    [self cleanUpRequest:requestId];
 }
 
 - (void)receivedObject:(NSDictionary *)dictionary
