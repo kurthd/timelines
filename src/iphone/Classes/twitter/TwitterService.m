@@ -322,14 +322,41 @@
 
 - (void)fetchCurrentTrends
 {
+    ResponseProcessor * processor =
+        [FetchTrendsResponseProcessor
+        processorWithTrendFetchType:kFetchCurrentTrends
+                            context:context
+                           delegate:delegate];
+
+    NSString * requestId = [twitter getCurrentTrends];
+
+    [self request:requestId isHandledBy:processor];
 }
 
 - (void)fetchDailyTrends
 {
+    ResponseProcessor * processor =
+        [FetchTrendsResponseProcessor
+        processorWithTrendFetchType:kFetchDailyTrends
+                            context:context
+                           delegate:delegate];
+
+    NSString * requestId = [twitter getDailyTrends];
+
+    [self request:requestId isHandledBy:processor];
 }
 
 - (void)fetchWeeklyTrends
 {
+    ResponseProcessor * processor =
+        [FetchTrendsResponseProcessor
+        processorWithTrendFetchType:kFetchWeeklyTrends
+                            context:context
+                           delegate:delegate];
+
+    NSString * requestId = [twitter getWeeklyTrends];
+
+    [self request:requestId isHandledBy:processor];
 }
 
 #pragma mark MGTwitterEngineDelegate implementation
@@ -385,6 +412,18 @@
 - (void)imageReceived:(UIImage *)image forRequest:(NSString *)identifier
 {
     NSLog(@"Image received for request '%@': %@", identifier, image);
+}
+
+- (void)searchResultsReceived:(NSArray *)searchResults
+                   forRequest:(NSString *)connectionIdentifier
+{
+}
+
+- (void)receivedObject:(NSDictionary *)dictionary
+            forRequest:(NSString *)connectionIdentifier
+{
+    NSLog(@"Received object: '%@' for request: '%@'.", dictionary,
+        connectionIdentifier);
 }
 
 #pragma mark Request processing helpers

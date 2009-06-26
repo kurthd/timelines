@@ -1537,7 +1537,7 @@
                             page:(int)pageNum
                            count:(int)count
 {
-    NSString *path = @"statuses/mentions.xml";
+    NSString *path = [NSString stringWithFormat:@"statuses/mentions.%@", API_FORMAT];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
     if (updateID > 0) {
@@ -1647,6 +1647,33 @@
 - (NSString *)getTrends
 {
     NSString *path = [NSString stringWithFormat:@"trends.%@", API_FORMAT];
+    
+    return [self _sendRequestWithMethod:nil path:path queryParameters:nil body:nil 
+                            requestType:MGTwitterSearchRequest 
+                           responseType:MGTwitterSearchResults];
+}
+
+- (NSString *)getCurrentTrends
+{
+    NSString *path = [NSString stringWithFormat:@"trends/current.%@", API_FORMAT];
+    
+    return [self _sendRequestWithMethod:nil path:path queryParameters:nil body:nil 
+                            requestType:MGTwitterSearchRequest 
+                           responseType:MGTwitterSearchResults];
+}
+
+- (NSString *)getDailyTrends
+{
+    NSString *path = [NSString stringWithFormat:@"trends/daily.%@", API_FORMAT];
+    
+    return [self _sendRequestWithMethod:nil path:path queryParameters:nil body:nil 
+                            requestType:MGTwitterSearchRequest 
+                           responseType:MGTwitterSearchResults];
+}
+
+- (NSString *)getWeeklyTrends
+{
+    NSString *path = [NSString stringWithFormat:@"trends/weekly.%@", API_FORMAT];
     
     return [self _sendRequestWithMethod:nil path:path queryParameters:nil body:nil 
                             requestType:MGTwitterSearchRequest 

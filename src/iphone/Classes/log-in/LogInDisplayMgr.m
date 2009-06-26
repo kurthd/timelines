@@ -177,6 +177,16 @@
     NSLog(@"Image received for request '%@': %@", identifier, image);
 }
 
+- (void)searchResultsReceived:(NSArray *)searchResults
+                   forRequest:(NSString *)connectionIdentifier
+{
+}
+
+- (void)receivedObject:(NSDictionary *)dictionary
+            forRequest:(NSString *)connectionIdentifier
+{
+}
+
 #pragma mark Notify the system of new accounts
 
 - (void)broadcastSuccessfulLogInNotification:(TwitterCredentials *)credentials

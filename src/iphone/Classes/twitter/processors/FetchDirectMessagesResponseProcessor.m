@@ -71,8 +71,6 @@
     if (!data)
         return NO;
 
-    NSLog(@"Received direct messages: %@", data);
-
     NSMutableArray * dms = [NSMutableArray arrayWithCapacity:data.count];
     for (NSDictionary * datum in data) {
         NSDictionary * senderData = [datum objectForKey:@"sender"];
@@ -80,9 +78,6 @@
 
         User * sender = [self userFromData:senderData];
         User * recipient = [self userFromData:recipientData];
-
-        NSLog(@"Have sender: '%@'.", sender);
-        NSLog(@"Have recipient: '%@'.", recipient);
 
         NSDictionary * dmData = datum;
 

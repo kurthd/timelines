@@ -150,7 +150,7 @@ typedef enum
 
 #pragma mark TwitterServiceDelegate implementation
 
-- (void)fetchCurrentTrends:(NSArray *)trends
+- (void)fetchedCurrentTrends:(NSArray *)trends
 {
     [self.allTrends replaceObjectAtIndex:kCurrentTrends withObject:trends];
 }

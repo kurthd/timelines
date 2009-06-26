@@ -203,6 +203,9 @@
 // Trends method - http://apiwiki.twitter.com/Search+API+Documentation#Trends
 
 - (NSString *)getTrends; // trends
+- (NSString *)getCurrentTrends;
+- (NSString *)getDailyTrends;
+- (NSString *)getWeeklyTrends;
 
 #endif
 
