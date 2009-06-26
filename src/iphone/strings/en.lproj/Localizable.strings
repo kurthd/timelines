@@ -35,6 +35,7 @@ timelinedisplaymgr.error.userquery = "Failed to receive user info";
 /* TweetDetailsViewController */
 tweetdetailsview.title = "Tweet Details";
 tweetdetailsview.tweetfooter = "%@ from %@";
+tweetdetailsview.tweetheader = "To: %@";
 
 /* Sending tweets */
 sendtweet.failed.alert.title = "Failed to Send Tweet";
