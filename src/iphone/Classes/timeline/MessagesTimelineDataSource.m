@@ -102,11 +102,15 @@
 
     outstandingRequests--;
     [messages addObjectsFromArray:tweetInfos];
+    if (outstandingRequests == 0)
+        [self sendFetchTimelineResponseWithUpdateId:updateId page:page];
 }
 
 - (void)sentDirectMessages:(NSArray *)directMessages
     fetchedSinceUpdateId:(NSNumber *)updateId page:(NSNumber *)page
 {
+    NSLog(@"'Messages' data source: received timeline of size %d",
+        [directMessages count]);
     NSMutableArray * tweetInfos = [NSMutableArray array];
     for (DirectMessage * directMessage in directMessages) {
         TweetInfo * tweetInfo =

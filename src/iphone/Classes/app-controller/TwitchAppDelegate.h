@@ -8,6 +8,7 @@
 #import "TimelineDisplayMgrFactory.h"
 #import "TwitterServiceDelegate.h"
 #import "ComposeTweetDisplayMgrDelegate.h"
+#import "PersonalFeedSelectionMgr.h"
 
 @class LogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class AccountsViewController;
@@ -48,6 +49,7 @@
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     TimelineDisplayMgr * timelineDisplayMgr;
     TimelineDisplayMgr * profileTimelineDisplayMgr;
+    PersonalFeedSelectionMgr * personalFeedSelectionMgr;
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 

@@ -109,7 +109,8 @@
     forceRefresh:(BOOL)refresh;
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)replyToTweet;
-- (void)refresh;
+- (void)refreshWithLatest;
+- (void)refreshWithCurrentPages;
 
 - (void)addTweet:(Tweet *)tweet displayImmediately:(BOOL)displayImmediately;
 

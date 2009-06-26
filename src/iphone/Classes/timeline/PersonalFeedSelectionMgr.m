@@ -14,7 +14,6 @@
     [allTimelineDataSource release];
     [messagesTimelineDataSource release];
     [mentionsTimelineDataSource release];
-    [service release];
 
     [allTimelineTweets release];
     [mentionsTimelineTweets release];
@@ -24,18 +23,24 @@
 }
 
 - (id)initWithTimelineDisplayMgr:(TimelineDisplayMgr *)aTimelineDisplayMgr
-    service:(TwitterService *)aService
+    allService:(TwitterService *)allService
+    mentionsService:(TwitterService *)mentionsService
+    messagesService:(TwitterService *)messagesService
 {
     if (self = [super init]) {
         timelineDisplayMgr = [aTimelineDisplayMgr retain];
-        service = [aService retain];
 
         allTimelineDataSource =
-            [[AllTimelineDataSource alloc] initWithTwitterService:service];
+            [[AllTimelineDataSource alloc] initWithTwitterService:allService];
+        allService.delegate = allTimelineDataSource;
         messagesTimelineDataSource =
-            [[MessagesTimelineDataSource alloc] initWithTwitterService:service];
+            [[MessagesTimelineDataSource alloc]
+            initWithTwitterService:messagesService];
+        messagesService.delegate = messagesTimelineDataSource;
         mentionsTimelineDataSource =
-            [[MentionsTimelineDataSource alloc] initWithTwitterService:service];
+            [[MentionsTimelineDataSource alloc]
+            initWithTwitterService:mentionsService];
+        mentionsService.delegate = mentionsTimelineDataSource;
 
         previousTab = -1;
         allTimelineRefresh = YES;
@@ -70,8 +75,8 @@
 
     switch (segmentedControl.selectedSegmentIndex) {
         case 0:
-            NSLog(@"Selected all tweets tab");
-            service.delegate = allTimelineDataSource;
+            NSLog(@"Selected all tweets tab; forcing refresh: %d",
+                allTimelineRefresh);
             allTimelineDataSource.delegate = timelineDisplayMgr;
             timelineDisplayMgr.displayAsConversation = YES;
             [timelineDisplayMgr setShowInboxOutbox:NO];
@@ -82,7 +87,6 @@
             break;
         case 1:
             NSLog(@"Selected mentions tab");
-            service.delegate = mentionsTimelineDataSource;
             mentionsTimelineDataSource.delegate = timelineDisplayMgr;
             timelineDisplayMgr.displayAsConversation = NO;
             [timelineDisplayMgr setShowInboxOutbox:NO];
@@ -94,7 +98,6 @@
             break;
         case 2:
             NSLog(@"Selected direct messages tab");
-            service.delegate = messagesTimelineDataSource;
             messagesTimelineDataSource.delegate = timelineDisplayMgr;
             timelineDisplayMgr.displayAsConversation = NO;
             [timelineDisplayMgr setShowInboxOutbox:YES];

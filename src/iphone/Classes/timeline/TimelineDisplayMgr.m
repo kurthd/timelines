@@ -569,13 +569,24 @@
 
 #pragma mark TimelineDisplayMgr implementation
 
-- (void)refresh
+- (void)refreshWithLatest
 {
-    NSLog(@"Timeline display manager: refreshing timeline...");
+    NSLog(@"Timeline display manager: refreshing timeline with latest...");
     if([service credentials]) {
         refreshingTweets = YES;
         [service fetchTimelineSince:self.updateId
             page:[NSNumber numberWithInt:0]];
+    }
+    [wrapperController setUpdatingState:kConnectedAndUpdating];
+    [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
+}
+
+- (void)refreshWithCurrentPages
+{
+    if([service credentials]) {
+        refreshingTweets = YES;
+        [service fetchTimelineSince:[NSNumber numberWithInt:0] page:
+        [NSNumber numberWithInt:pagesShown]];
     }
     [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
@@ -713,8 +724,8 @@
 
     [timelineController setTweets:[timeline allValues] page:pagesShown];
 
-    if (refresh)
-        [self refresh];
+    if (refresh || [[someTweets allKeys] count] == 0)
+        [self refreshWithCurrentPages];
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
