@@ -60,6 +60,9 @@
 		05B23B4C0FEED5C600A6A2E6 /* FetchTimelineResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23B4B0FEED5C600A6A2E6 /* FetchTimelineResponseProcessor.m */; };
 		05B23C1B0FEEEFC700A6A2E6 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23C1A0FEEEFC700A6A2E6 /* Tweet.m */; };
 		05B23C690FEEF39200A6A2E6 /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23C680FEEF39200A6A2E6 /* TwitterCredentials.m */; };
+		05C35E430FF5436E00F91448 /* SearchBarDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */; };
+		05C35E4E0FF545B100F91448 /* SearchBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C35E4D0FF545B100F91448 /* SearchBarViewController.m */; };
+		05C35E790FF5474800F91448 /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C35E770FF5474800F91448 /* SearchBarView.xib */; };
 		05C5E6640FF434360073E7F2 /* TrendsDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E6630FF434360073E7F2 /* TrendsDisplayMgr.m */; };
 		05C5E6670FF434730073E7F2 /* TrendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E6660FF434730073E7F2 /* TrendsViewController.m */; };
 		05C5E6A90FF43CC10073E7F2 /* TrendsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C5E6A70FF43CC10073E7F2 /* TrendsView.xib */; };
@@ -73,7 +76,6 @@
 		05C5E80F0FF469B40073E7F2 /* MGTwitterYAJLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E80E0FF469B40073E7F2 /* MGTwitterYAJLParser.m */; };
 		05C5E8CE0FF473020073E7F2 /* Trend.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E8CD0FF473020073E7F2 /* Trend.m */; };
 		05C5E9B20FF48BA70073E7F2 /* SearchDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E9B10FF48BA70073E7F2 /* SearchDisplayMgr.m */; };
-		05C5E9B50FF48BB30073E7F2 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E9B40FF48BB30073E7F2 /* SearchViewController.m */; };
 		05C5E9C40FF494390073E7F2 /* SearchResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E9C30FF494390073E7F2 /* SearchResponseProcessor.m */; };
 		05EC40430FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */; };
 		05F459EF0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F459EE0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m */; };
@@ -268,6 +270,12 @@
 		05B23C1A0FEEEFC700A6A2E6 /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tweet.m; path = tweets/Tweet.m; sourceTree = "<group>"; };
 		05B23C670FEEF39200A6A2E6 /* TwitterCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterCredentials.h; path = twitter/TwitterCredentials.h; sourceTree = "<group>"; };
 		05B23C680FEEF39200A6A2E6 /* TwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterCredentials.m; path = twitter/TwitterCredentials.m; sourceTree = "<group>"; };
+		05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarDisplayMgr.h; path = search/SearchBarDisplayMgr.h; sourceTree = "<group>"; };
+		05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBarDisplayMgr.m; path = search/SearchBarDisplayMgr.m; sourceTree = "<group>"; };
+		05C35E4C0FF545B100F91448 /* SearchBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarViewController.h; path = search/SearchBarViewController.h; sourceTree = "<group>"; };
+		05C35E4D0FF545B100F91448 /* SearchBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBarViewController.m; path = search/SearchBarViewController.m; sourceTree = "<group>"; };
+		05C35E4F0FF545C400F91448 /* SearchBarViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarViewControllerDelegate.h; path = search/SearchBarViewControllerDelegate.h; sourceTree = "<group>"; };
+		05C35E780FF5474800F91448 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/SearchBarView.xib; sourceTree = "<group>"; };
 		05C5E6620FF434360073E7F2 /* TrendsDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendsDisplayMgr.h; path = trends/TrendsDisplayMgr.h; sourceTree = "<group>"; };
 		05C5E6630FF434360073E7F2 /* TrendsDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrendsDisplayMgr.m; path = trends/TrendsDisplayMgr.m; sourceTree = "<group>"; };
 		05C5E6650FF434730073E7F2 /* TrendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendsViewController.h; path = trends/TrendsViewController.h; sourceTree = "<group>"; };
@@ -295,9 +303,6 @@
 		05C5E8CD0FF473020073E7F2 /* Trend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trend.m; path = trends/Trend.m; sourceTree = "<group>"; };
 		05C5E9B00FF48BA70073E7F2 /* SearchDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchDisplayMgr.h; path = search/SearchDisplayMgr.h; sourceTree = "<group>"; };
 		05C5E9B10FF48BA70073E7F2 /* SearchDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchDisplayMgr.m; path = search/SearchDisplayMgr.m; sourceTree = "<group>"; };
-		05C5E9B30FF48BB30073E7F2 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchViewController.h; path = search/SearchViewController.h; sourceTree = "<group>"; };
-		05C5E9B40FF48BB30073E7F2 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchViewController.m; path = search/SearchViewController.m; sourceTree = "<group>"; };
-		05C5E9B60FF48BC90073E7F2 /* SearchViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchViewControllerDelegate.h; path = search/SearchViewControllerDelegate.h; sourceTree = "<group>"; };
 		05C5E9C20FF494390073E7F2 /* SearchResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchResponseProcessor.h; path = twitter/processors/SearchResponseProcessor.h; sourceTree = "<group>"; };
 		05C5E9C30FF494390073E7F2 /* SearchResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchResponseProcessor.m; path = twitter/processors/SearchResponseProcessor.m; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
@@ -673,6 +678,7 @@
 				910BE2050FF2BA3F005342EE /* UserSummaryTableViewCell.xib */,
 				05C5E6A70FF43CC10073E7F2 /* TrendsView.xib */,
 				91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */,
+				05C35E770FF5474800F91448 /* SearchBarView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -808,9 +814,11 @@
 			children = (
 				05C5E9B00FF48BA70073E7F2 /* SearchDisplayMgr.h */,
 				05C5E9B10FF48BA70073E7F2 /* SearchDisplayMgr.m */,
-				05C5E9B30FF48BB30073E7F2 /* SearchViewController.h */,
-				05C5E9B40FF48BB30073E7F2 /* SearchViewController.m */,
-				05C5E9B60FF48BC90073E7F2 /* SearchViewControllerDelegate.h */,
+				05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */,
+				05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */,
+				05C35E4C0FF545B100F91448 /* SearchBarViewController.h */,
+				05C35E4D0FF545B100F91448 /* SearchBarViewController.m */,
+				05C35E4F0FF545C400F91448 /* SearchBarViewControllerDelegate.h */,
 			);
 			name = search;
 			sourceTree = "<group>";
@@ -1093,6 +1101,7 @@
 				91CD82AB0FF55536004D04D5 /* BackButton.png in Resources */,
 				91CD82AD0FF55751004D04D5 /* StopLoading.png in Resources */,
 				91CD82B70FF558FE004D04D5 /* Refresh.png in Resources */,
+				05C35E790FF5474800F91448 /* SearchBarView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1206,9 +1215,10 @@
 				05C5E80F0FF469B40073E7F2 /* MGTwitterYAJLParser.m in Sources */,
 				05C5E8CE0FF473020073E7F2 /* Trend.m in Sources */,
 				05C5E9B20FF48BA70073E7F2 /* SearchDisplayMgr.m in Sources */,
-				05C5E9B50FF48BB30073E7F2 /* SearchViewController.m in Sources */,
 				05C5E9C40FF494390073E7F2 /* SearchResponseProcessor.m in Sources */,
 				91CD821E0FF54066004D04D5 /* TwitchBrowserViewController.m in Sources */,
+				05C35E430FF5436E00F91448 /* SearchBarDisplayMgr.m in Sources */,
+				05C35E4E0FF545B100F91448 /* SearchBarViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1238,6 +1248,14 @@
 			);
 			name = Localizable.strings;
 			path = strings/en.lproj;
+			sourceTree = "<group>";
+		};
+		05C35E770FF5474800F91448 /* SearchBarView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				05C35E780FF5474800F91448 /* en */,
+			);
+			name = SearchBarView.xib;
 			sourceTree = "<group>";
 		};
 		05C5E6A70FF43CC10073E7F2 /* TrendsView.xib */ = {

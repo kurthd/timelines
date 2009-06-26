@@ -71,3 +71,7 @@ userlisttableview.following.title = "Following";
 /* Trends */
 trends.view.title = "Trends";
 trends.fetch.failed = "Failed to Load Trends";
+
+/* Search */
+search.view.title = "Search";
+search.fetch.failed = "Search Failed";

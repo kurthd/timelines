@@ -92,7 +92,7 @@ typedef enum
         // Don't autorelease
         [[CredentialsActivatedPublisher alloc]
             initWithListener:searchDisplayMgr action:@selector(setCredentials:)];
-        
+
         [self.timelineDisplayMgr setService:searchDisplayMgr
                                      tweets:nil
                                        page:0
@@ -163,6 +163,10 @@ typedef enum
     timelineDisplayMgr.wrapperController.navigationItem.title = trend.name;
     [self.searchDisplayMgr displaySearchResults:trend.query
                                       withTitle:trend.name];
+    [self.timelineDisplayMgr setService:self.searchDisplayMgr
+                                 tweets:nil
+                                   page:0
+                           forceRefresh:YES];
     [self.networkAwareViewController.navigationController
         pushViewController:timelineDisplayMgr.wrapperController
                   animated:YES];

@@ -4,8 +4,6 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol SearchViewControllerDelegate
-
-- (void)userDidSelectSearchResult:(id)searchResult;
+@protocol SearchBarViewControllerDelegate
 
 @end

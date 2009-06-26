@@ -11,7 +11,7 @@
 #import "PersonalFeedSelectionMgr.h"
 
 @class LogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
-@class TrendsDisplayMgr;
+@class TrendsDisplayMgr, SearchBarDisplayMgr;
 @class AccountsViewController;
 @class DeviceRegistrar;
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
@@ -52,10 +52,10 @@
     TimelineDisplayMgr * profileTimelineDisplayMgr;
     PersonalFeedSelectionMgr * personalFeedSelectionMgr;
 
-
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 
     TrendsDisplayMgr * trendsDisplayMgr;
+    SearchBarDisplayMgr * searchBarDisplayMgr;
     AccountsDisplayMgr * accountsDisplayMgr;
 
     UIBarButtonItem * sendingTweetProgressView;
