@@ -1,4 +1,6 @@
 class DeviceController < ApplicationController
+  @@encryption_secret_file = File.join(RAILS_ROOT, 'config', 'garbage')
+
   protect_from_forgery :except => [ :register ]
 
   def register
@@ -45,6 +47,8 @@ class DeviceController < ApplicationController
       @devices = Iphone.find(:all)
     end
   end
+
+  @private
 
   def register_accounts(iphone, accounts)
     accounts.each do |username, password|
@@ -134,5 +138,12 @@ class DeviceController < ApplicationController
     end
 
     twitter_user
+  end
+
+  def private_key_passwd
+    f = File.new(@@encryption_secret_file)
+    pass = f.read.chomp
+    f.close
+    pass
   end
 end

@@ -1,7 +1,11 @@
 require 'grackle'
 
 class TweetPublisherController < ApplicationController
+  @@encryption_secret_file = File.join(RAILS_ROOT, 'config', 'garbage')
+
   def check
+    private_key_pass = self.private_key_passwd
+
     unauth_client = Grackle::Client.new
     @client = Grackle::Client.new
     @client.ssl = true
@@ -40,9 +44,12 @@ class TweetPublisherController < ApplicationController
         end
         logger.debug "Checking for new tweets for #{twitter_user}."
 
-        @client.auth = { :type => :basic,
-                         :username => twitter_user.username,
-                         :password => twitter_user.password }
+        @client.auth =
+          {
+            :type => :basic,
+            :username => twitter_user.username,
+            :password => twitter_user.decrypt_sensitive(private_key_pass)
+          }
         #@client =
           #Grackle::Client.new(:auth => { :type =>:basic,
                               #:username => twitter_user.username,
@@ -223,6 +230,13 @@ class TweetPublisherController < ApplicationController
     else
       message += "."
     end
+  end
+
+  def private_key_passwd
+    f = File.new(@@encryption_secret_file)
+    pass = f.read.chomp
+    f.close
+    pass
   end
 
 end
