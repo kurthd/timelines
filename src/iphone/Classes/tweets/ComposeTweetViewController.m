@@ -153,12 +153,47 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (IBAction)userDidCancel
 {
-    [delegate userDidCancel];
+    if (textView.text.length == 0)
+        [delegate userDidCancel];
+    else {
+        NSString * cancelTitle =
+            NSLocalizedString(@"composetweet.cancel.confirm.cancel", @"");
+        NSString * saveTitle =
+            NSLocalizedString(@"composetweet.cancel.confirm.save", @"");
+        NSString * dontSaveTitle =
+            NSLocalizedString(@"composetweet.cancel.confirm.dontsave", @"");
+
+        UIActionSheet * sheet =
+            [[UIActionSheet alloc] initWithTitle:nil
+                                        delegate:self
+                               cancelButtonTitle:cancelTitle
+                          destructiveButtonTitle:nil
+                               otherButtonTitles:saveTitle, dontSaveTitle, nil];
+
+        [sheet showInView:self.view.superview];
+    }
 }
 
 - (IBAction)choosePhoto
 {
     [delegate userWantsToSelectPhoto];
+}
+
+#pragma mark UIActionSheetDelegate implementation
+
+- (void)actionSheet:(UIActionSheet *)actionSheet
+    clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:  // save as draft
+            [delegate userDidSaveAsDraft:textView.text];
+            break;
+        case 1:  // user confirmed the cancel
+            [delegate userDidCancel];
+            break;
+    }
+
+    [actionSheet autorelease];
 }
 
 #pragma mark Helpers

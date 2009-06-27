@@ -41,6 +41,10 @@ tweetdetailsview.tweetheader = "To: %@";
 /* Sending tweets */
 sendtweet.failed.alert.title = "Failed to Send Tweet";
 composetweet.view.title = "New Tweet";
+composetweet.cancel.confirm.title = "Are you sure you want to cancel?";
+composetweet.cancel.confirm.dontsave = "Discard Changes";
+composetweet.cancel.confirm.save = "Save Draft";
+composetweet.cancel.confirm.cancel = "Cancel";
 directmessage.failed.alert.title = "Failed to Send Direct Message";
 composedirectmessage.view.title = "DM to @%@";
 imagepicker.choose.cancel = "Cancel";

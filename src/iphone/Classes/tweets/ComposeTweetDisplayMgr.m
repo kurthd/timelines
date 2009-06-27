@@ -24,6 +24,9 @@
 @property (nonatomic, copy) NSString * origUsername;
 @property (nonatomic, copy) NSString * origTweetId;
 
+@property (nonatomic, copy) NSString * tweetDraft;
+@property (nonatomic, copy) NSString * dmDraft;
+
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source;
 
 @end
@@ -34,6 +37,7 @@
 @synthesize service, imageSender, credentialsUpdatePublisher;
 @synthesize delegate;
 @synthesize recipient, origUsername, origTweetId;
+@synthesize tweetDraft, dmDraft;
 
 - (void)dealloc
 {
@@ -46,6 +50,8 @@
     self.recipient = nil;
     self.origUsername = nil;
     self.origTweetId = nil;
+    self.tweetDraft = nil;
+    self.dmDraft = nil;
     [super dealloc];
 }
 
@@ -70,7 +76,9 @@
 
 - (void)composeTweet
 {
-    [self composeTweetWithText:@""];
+    NSString * text = self.tweetDraft ? self.tweetDraft : @"";
+    [self composeTweetWithText:text];
+    self.tweetDraft = nil;
 }
 
 - (void)composeTweetWithText:(NSString *)tweet
@@ -111,7 +119,9 @@
 
 - (void)composeDirectMessageTo:(NSString *)username
 {
-    [self composeDirectMessageTo:username withText:@""];
+    NSString * text = self.dmDraft ? self.dmDraft : @"";
+    [self composeDirectMessageTo:username withText:text];
+    self.dmDraft = nil;
 }
 
 - (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)tweet
@@ -140,11 +150,6 @@
 
 #pragma mark ComposeTweetViewControllerDelegate implementation
 
-- (void)userDidCancel
-{
-    [self.delegate userDidCancelComposingTweet];
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
-}
 
 - (void)userDidSave:(NSString *)tweet
 {
@@ -164,6 +169,22 @@
             [self.service sendTweet:tweet];
         }
     }
+}
+
+- (void)userDidSaveAsDraft:(NSString *)draft
+{
+    if (recipient)  // was a direct message
+        self.dmDraft = draft;
+    else
+        self.tweetDraft = draft;
+
+    [self userDidCancel];
+}
+
+- (void)userDidCancel
+{
+    [self.delegate userDidCancelComposingTweet];
+    [self.rootViewController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)userWantsToSelectPhoto

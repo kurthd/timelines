@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 #import "ComposeTweetViewControllerDelegate.h"
 
-@interface ComposeTweetViewController : UIViewController
+@interface ComposeTweetViewController : UIViewController <UIActionSheetDelegate>
 {
     id<ComposeTweetViewControllerDelegate> delegate;
 

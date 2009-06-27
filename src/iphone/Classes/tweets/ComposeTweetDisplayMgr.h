@@ -31,6 +31,9 @@
     NSString * origTweetId;  // non-nil if composing a reply
     NSString * origUsername;
 
+    NSString * tweetDraft;
+    NSString * dmDraft;
+
     CredentialsActivatedPublisher * credentialsUpdatePublisher;
 }
 

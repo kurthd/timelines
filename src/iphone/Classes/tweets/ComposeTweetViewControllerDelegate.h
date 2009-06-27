@@ -7,6 +7,7 @@
 @protocol ComposeTweetViewControllerDelegate
 
 - (void)userDidSave:(NSString *)text;
+- (void)userDidSaveAsDraft:(NSString *)draft;
 - (void)userDidCancel;
 
 - (void)userWantsToSelectPhoto;
