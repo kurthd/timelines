@@ -332,7 +332,7 @@
 		05F45D830FF06BD100EBAFC7 /* ComposeTweetViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetViewControllerDelegate.h; path = tweets/ComposeTweetViewControllerDelegate.h; sourceTree = "<group>"; };
 		05F45E8A0FF08D9400EBAFC7 /* ComposeTweetDisplayMgrDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetDisplayMgrDelegate.h; path = tweets/ComposeTweetDisplayMgrDelegate.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D6058910D05DD3D006BFB54 /* Twittle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twittle.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Twitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AB4B0D9B1048005BE974 /* twitch_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twitch_Prefix.pch; sourceTree = "<group>"; };
@@ -844,7 +844,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* Twittle.app */,
+				1D6058910D05DD3D006BFB54 /* Twitch.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1025,7 +1025,7 @@
 			);
 			name = twitch;
 			productName = twitch;
-			productReference = 1D6058910D05DD3D006BFB54 /* Twittle.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Twitch.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1368,7 +1368,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twittle;
+				PRODUCT_NAME = Twitch;
 			};
 			name = Distribution;
 		};
@@ -1403,7 +1403,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twittle;
+				PRODUCT_NAME = Twitch;
 			};
 			name = "Release - Doug";
 		};
@@ -1440,7 +1440,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twittle;
+				PRODUCT_NAME = Twitch;
 			};
 			name = "Debug - Doug";
 		};
@@ -1458,7 +1458,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twittle;
+				PRODUCT_NAME = Twitch;
 			};
 			name = "Debug - John";
 		};
@@ -1474,7 +1474,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twittle;
+				PRODUCT_NAME = Twitch;
 			};
 			name = "Release - John";
 		};
@@ -1492,7 +1492,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "89ECD939-9126-4B5E-A55F-F49DA5EFA7B7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7CBDEF8F-8A13-4C1E-9F98-87652D2CBECF";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Debug - John";
@@ -1511,7 +1511,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "89ECD939-9126-4B5E-A55F-F49DA5EFA7B7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7CBDEF8F-8A13-4C1E-9F98-87652D2CBECF";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Release - John";
