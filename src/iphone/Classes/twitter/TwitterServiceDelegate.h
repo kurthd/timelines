@@ -30,6 +30,12 @@
                     withText:(NSString *)text
                        error:(NSError *)error;
 
+#pragma mark Fetching individual tweets
+
+
+- (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId;
+- (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error;
+
 #pragma mark Timelines
 
 @optional
