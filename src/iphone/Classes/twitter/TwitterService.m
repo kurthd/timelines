@@ -5,6 +5,7 @@
 #import "TwitterService.h"
 #import "MGTwitterEngine.h"
 #import "ResponseProcessors.h"
+#import "TwitterCredentials+KeychainAdditions.h"
 
 @interface TwitterService ()
 
@@ -78,6 +79,7 @@
     ResponseProcessor * processor =
         [SendTweetResponseProcessor processorWithTweet:tweet
                                            referenceId:nil
+                                           credentials:credentials
                                                context:context
                                               delegate:delegate];
 
@@ -91,6 +93,7 @@
     ResponseProcessor * processor =
         [SendTweetResponseProcessor processorWithTweet:tweet
                                            referenceId:referenceId
+                                           credentials:credentials
                                                context:context
                                               delegate:delegate];
 
@@ -109,6 +112,7 @@
         [FetchTimelineResponseProcessor processorWithUpdateId:updateId
                                                          page:page
                                                         count:count
+                                                  credentials:credentials
                                                       context:context
                                                      delegate:delegate];
 
@@ -131,6 +135,7 @@
                                                      username:user
                                                          page:page
                                                         count:count
+                                                  credentials:credentials
                                                       context:context
                                                      delegate:delegate];
 
@@ -153,6 +158,7 @@
         [FetchMentionsResponseProcessor processorWithUpdateId:updateId
                                                          page:page
                                                         count:count
+                                                  credentials:credentials
                                                       context:context
                                                      delegate:delegate];
 
@@ -172,6 +178,7 @@
         [FetchDirectMessagesResponseProcessor processorWithUpdateId:updateId
                                                                page:page
                                                                sent:NO
+                                                        credentials:credentials
                                                             context:context
                                                            delegate:delegate];
 
@@ -189,6 +196,7 @@
         [FetchDirectMessagesResponseProcessor processorWithUpdateId:updateId
                                                                page:page
                                                                sent:YES
+                                                        credentials:credentials
                                                             context:context
                                                            delegate:delegate];
 
@@ -204,6 +212,7 @@
     ResponseProcessor * processor =
         [SendDirectMessageResponseProcessor processorWithTweet:message
                                                       username:username
+                                                   credentials:credentials
                                                        context:context
                                                       delegate:delegate];
 

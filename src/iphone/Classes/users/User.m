@@ -23,4 +23,9 @@
 @dynamic receivedDirectMessages;
 @dynamic sentDirectMessages;
 
+- (NSString *)description
+{
+    return self.username;
+}
+
 @end

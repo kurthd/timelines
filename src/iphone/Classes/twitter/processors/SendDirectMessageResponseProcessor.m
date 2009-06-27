@@ -8,11 +8,13 @@
 #import "DirectMessage.h"
 #import "DirectMessage+CoreDataAdditions.h"
 #import "ResponseProcessor+ParsingHelpers.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @interface SendDirectMessageResponseProcessor ()
 
 @property (nonatomic, copy) NSString * text;
 @property (nonatomic, copy) NSString * username;
+@property (nonatomic, retain) TwitterCredentials * credentials;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, assign) id delegate;
 
@@ -22,15 +24,17 @@
 
 @implementation SendDirectMessageResponseProcessor
 
-@synthesize text, username, context, delegate;
+@synthesize text, username, context, credentials, delegate;
 
 + (id)processorWithTweet:(NSString *)someText
                 username:(NSString *)aUsername
+             credentials:(TwitterCredentials *)someCredentials
                  context:(NSManagedObjectContext *)aContext
                 delegate:(id)aDelegate
 {
     id obj = [[[self class] alloc] initWithTweet:someText
                                         username:aUsername
+                                     credentials:someCredentials
                                          context:aContext
                                         delegate:aDelegate];
     return [obj autorelease];
@@ -40,6 +44,7 @@
 {
     self.text = nil;
     self.username = nil;
+    self.credentials = nil;
     self.context = nil;
     self.delegate = nil;
     [super dealloc];
@@ -47,12 +52,14 @@
 
 - (id)initWithTweet:(NSString *)someText
            username:(NSString *)aUsername
+        credentials:(TwitterCredentials *)someCredentials
             context:(NSManagedObjectContext *)aContext
            delegate:(id)aDelegate
 {
     if (self = [super init]) {
         self.text = someText;
         self.username = aUsername;
+        self.credentials = someCredentials;
         self.context = aContext;
         self.delegate = aDelegate;
     }

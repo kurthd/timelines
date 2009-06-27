@@ -4,6 +4,7 @@
 
 #import "Tweet+CoreDataAdditions.h"
 #import "NSObject+RuntimeAdditions.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @implementation Tweet (CoreDataAdditions)
 

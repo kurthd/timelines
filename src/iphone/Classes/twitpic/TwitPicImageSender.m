@@ -6,6 +6,8 @@
 #import "TwitPicResponseParser.h"
 #import "UIApplication+NetworkActivityIndicatorAdditions.h"
 #import "NSError+InstantiationAdditions.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
+#import "TwitterCredentials+KeychainAdditions.h"
 
 @interface TwitPicImageSender ()
 

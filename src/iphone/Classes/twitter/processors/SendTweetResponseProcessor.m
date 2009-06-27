@@ -5,14 +5,16 @@
 #import "SendTweetResponseProcessor.h"
 #import "User.h"
 #import "User+CoreDataAdditions.h"
-#import "Tweet.h"
+#import "UserTweet.h"
 #import "Tweet+CoreDataAdditions.h"
 #import "ResponseProcessor+ParsingHelpers.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @interface SendTweetResponseProcessor ()
 
 @property (nonatomic, copy) NSString * text;
 @property (nonatomic, copy) NSString * referenceId;
+@property (nonatomic, retain) TwitterCredentials * credentials;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, assign) id delegate;
 
@@ -20,15 +22,17 @@
 
 @implementation SendTweetResponseProcessor
 
-@synthesize text, referenceId, context, delegate;
+@synthesize text, referenceId, credentials, context, delegate;
 
 + (id)processorWithTweet:(NSString *)someText
              referenceId:(NSString *)aReferenceId
+             credentials:(TwitterCredentials *)someCredentials
                  context:(NSManagedObjectContext *)aContext
                 delegate:(id)aDelegate
 {
     id obj = [[[self class] alloc] initWithTweet:someText
                                      referenceId:aReferenceId
+                                     credentials:someCredentials
                                          context:aContext
                                         delegate:aDelegate];
     return [obj autorelease];
@@ -38,6 +42,7 @@
 {
     self.text = nil;
     self.referenceId = nil;
+    self.credentials = nil;
     self.context = nil;
     self.delegate = nil;
     [super dealloc];
@@ -45,12 +50,14 @@
 
 - (id)initWithTweet:(NSString *)someText
         referenceId:(NSString *)aReferenceId
+        credentials:(TwitterCredentials *)someCredentials
             context:(NSManagedObjectContext *)aContext
            delegate:(id)aDelegate
 {
     if (self = [super init]) {
         self.text = someText;
         self.referenceId = aReferenceId;
+        self.credentials = someCredentials;
         self.context = aContext;
         self.delegate = aDelegate;
     }
@@ -80,12 +87,13 @@
     NSDictionary * tweetData = status;
 
     NSString * tweetId = [[tweetData objectForKey:@"id"] description];
-    Tweet * tweet = [Tweet tweetWithId:tweetId context:context];
+    UserTweet * tweet = [UserTweet tweetWithId:tweetId context:context];
     if (!tweet)
-        tweet = [Tweet createInstance:context];
+        tweet = [UserTweet createInstance:context];
 
     [self populateTweet:tweet fromData:tweetData];
     tweet.user = user;
+    tweet.credentials = self.credentials;
 
     NSError * error;
     if (![context save:&error])

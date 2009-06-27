@@ -17,6 +17,7 @@
 @property (nonatomic, copy) NSNumber * updateId;
 @property (nonatomic, copy) NSNumber * page;
 @property (nonatomic, assign) BOOL sent;
+@property (nonatomic, retain) TwitterCredentials * credentials;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, assign) id delegate;
 
@@ -24,17 +25,19 @@
 
 @implementation FetchDirectMessagesResponseProcessor
 
-@synthesize updateId, page, sent, delegate, context;
+@synthesize updateId, page, sent, credentials, delegate, context;
 
 + (id)processorWithUpdateId:(NSNumber *)anUpdateId
                        page:(NSNumber *)aPage
                        sent:(BOOL)isSent
+                credentials:(TwitterCredentials *)someCredentials
                     context:(NSManagedObjectContext *)aContext
                    delegate:(id)aDelegate
 {
     id obj = [[[self class] alloc] initWithUpdateId:anUpdateId
                                                page:aPage
                                                sent:isSent
+                                        credentials:someCredentials
                                             context:aContext
                                            delegate:aDelegate];
     return [obj autorelease];
@@ -44,6 +47,7 @@
 {
     self.updateId = nil;
     self.page = nil;
+    self.credentials = nil;
     self.context = nil;
     self.delegate = nil;
     [super dealloc];
@@ -52,6 +56,7 @@
 - (id)initWithUpdateId:(NSNumber *)anUpdateId
                   page:(NSNumber *)aPage
                   sent:(BOOL)isSent
+           credentials:(TwitterCredentials *)someCredentials
                context:(NSManagedObjectContext *)aContext
               delegate:(id)aDelegate
 {
@@ -59,6 +64,7 @@
         self.updateId = anUpdateId;
         self.page = aPage;
         self.sent = isSent;
+        self.credentials = someCredentials;
         self.context = aContext;
         self.delegate = aDelegate;
     }
@@ -92,6 +98,7 @@
 
             dm.recipient = recipient;
             dm.sender = sender;
+            dm.credentials = self.credentials;
         }
 
         [dms addObject:dm];

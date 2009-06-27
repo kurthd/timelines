@@ -7,7 +7,9 @@
 #import "User+CoreDataAdditions.h"
 #import "Tweet.h"
 #import "Tweet+CoreDataAdditions.h"
+#import "UserTweet.h"
 #import "ResponseProcessor+ParsingHelpers.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @interface FetchTimelineResponseProcessor ()
 
@@ -15,6 +17,7 @@
 @property (nonatomic, copy) NSNumber * updateId;
 @property (nonatomic, copy) NSNumber * page;
 @property (nonatomic, copy) NSNumber * count;
+@property (nonatomic, retain) TwitterCredentials * credentials;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, assign) id delegate;
 
@@ -22,17 +25,19 @@
 
 @implementation FetchTimelineResponseProcessor
 
-@synthesize username, updateId, page, count, delegate, context;
+@synthesize username, updateId, page, count, credentials, delegate, context;
 
 + (id)processorWithUpdateId:(NSNumber *)anUpdateId
                        page:(NSNumber *)aPage
                       count:(NSNumber *)aCount
+                credentials:(TwitterCredentials *)someCredentials
                     context:(NSManagedObjectContext *)aContext
                    delegate:(id)aDelegate
 {
     id obj = [[[self class] alloc] initWithUpdateId:anUpdateId
                                                page:aPage
                                               count:aCount
+                                        credentials:someCredentials
                                             context:aContext
                                            delegate:aDelegate];
     return [obj autorelease];
@@ -42,6 +47,7 @@
                    username:(NSString *)aUsername
                        page:(NSNumber *)aPage
                       count:(NSNumber *)aCount
+                credentials:(TwitterCredentials *)someCredentials
                     context:(NSManagedObjectContext *)aContext
                    delegate:(id)aDelegate
 {
@@ -49,6 +55,7 @@
                                            username:aUsername
                                                page:aPage
                                               count:aCount
+                                        credentials:someCredentials
                                             context:aContext
                                            delegate:aDelegate];
     return [obj autorelease];
@@ -60,6 +67,7 @@
     self.updateId = nil;
     self.page = nil;
     self.count = nil;
+    self.credentials = nil;
     self.context = nil;
     self.delegate = nil;
     [super dealloc];
@@ -68,6 +76,7 @@
 - (id)initWithUpdateId:(NSNumber *)anUpdateId
                   page:(NSNumber *)aPage
                  count:(NSNumber *)aCount
+           credentials:(TwitterCredentials *)someCredentials
                context:(NSManagedObjectContext *)aContext
               delegate:(id)aDelegate
 {
@@ -75,6 +84,7 @@
                          username:nil
                              page:aPage
                             count:aCount
+                      credentials:someCredentials
                           context:aContext
                          delegate:aDelegate];
 }
@@ -83,6 +93,7 @@
               username:(NSString *)aUsername
                   page:(NSNumber *)aPage
                  count:(NSNumber *)aCount
+           credentials:(TwitterCredentials *)someCredentials
                context:(NSManagedObjectContext *)aContext
               delegate:(id)aDelegate
 {
@@ -91,6 +102,7 @@
         self.updateId = anUpdateId;
         self.page = aPage;
         self.count = aCount;
+        self.credentials = someCredentials;
         self.context = aContext;
         self.delegate = aDelegate;
     }
@@ -124,8 +136,15 @@
 
         NSString * tweetId = [[tweetData objectForKey:@"id"] description];
         Tweet * tweet = [Tweet tweetWithId:tweetId context:context];
-        if (!tweet)
-            tweet = [Tweet createInstance:context];
+        if (!tweet) {
+            if (self.username)
+                tweet = [Tweet createInstance:context];
+            else {
+                UserTweet * userTweet = [UserTweet createInstance:context];
+                userTweet.credentials = self.credentials;
+                tweet = userTweet;
+            }
+        }
 
         [self populateTweet:tweet fromData:tweetData];
         tweet.user = tweetAuthor;

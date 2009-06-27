@@ -8,6 +8,7 @@
 #import "Tweet.h"
 #import "Tweet+CoreDataAdditions.h"
 #import "ResponseProcessor+ParsingHelpers.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @interface MarkFavoriteResponseProcessor ()
 

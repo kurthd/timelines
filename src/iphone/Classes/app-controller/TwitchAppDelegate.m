@@ -8,6 +8,7 @@
 #import "CredentialsActivatedPublisher.h"
 #import "CredentialsSetChangedPublisher.h"
 #import "TwitterCredentials.h"
+#import "TwitterCredentials+KeychainAdditions.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "InfoPlistConfigReader.h"
 #import "TwitterService.h"
@@ -20,6 +21,11 @@
 #import "ActiveTwitterCredentials.h"
 #import "UIStatePersistenceStore.h"
 #import "UIState.h"
+#import "UserTweet.h"
+#import "Mention.h"
+#import "DirectMessage.h"
+#import "NSObject+RuntimeAdditions.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @interface TwitchAppDelegate ()
 
@@ -45,6 +51,8 @@
 - (NSDictionary *)deviceRegistrationArgsForCredentials:(NSArray *)credentials;
 
 - (BOOL)saveContext;
+- (void)prunePersistenceStore;
+- (void)loadHomeDataForAccount:(TwitterCredentials *)account;
 - (void)setUIStateFromPersistence;
 - (void)persistUIState;
 
@@ -145,6 +153,8 @@
         [trendsDisplayMgr setCredentials:c];
         [searchBarDisplayMgr setCredentials:c];
         [self.composeTweetDisplayMgr setCredentials:c];
+
+        [self loadHomeDataForAccount:c];
     }
 
     [self setUIStateFromPersistence];
@@ -162,9 +172,11 @@
         [self registerDeviceForPushNotifications];
     }
 
-    if (managedObjectContext != nil)
+    if (managedObjectContext != nil) {
+        [self prunePersistenceStore];
         if (![self saveContext])
             exit(-1);  // fail
+    }
     
     [self persistUIState];
 }
@@ -651,6 +663,152 @@
     }
 
     return YES;
+}
+
+- (void)prunePersistenceStore
+{
+    //
+    // we only want to keep UserTweets, Mentions, DirectMessages, and the User
+    // instances they point to
+    //
+
+    // important to access the context via the accessor
+    NSManagedObjectContext * context = [self managedObjectContext];
+
+    NSArray * allTweets = [Tweet findAll:context];
+    NSMutableSet * sparedUsers = [NSMutableSet set];
+
+    // delete all 'un-owned' tweets -- everything that's not in the user's
+    // timeline, a mention, or a dm
+    for (Tweet * tweet in allTweets) {
+        BOOL isOwned =
+            [tweet isKindOfClass:[UserTweet class]] ||
+            [tweet isKindOfClass:[Mention class]];
+        if (!isOwned) {
+            NSLog(@"Deleting tweet: '%@': '%@'.", tweet.user.name, tweet.text);
+            [context deleteObject:tweet];
+        }
+    }
+
+    // only keep the last n tweets, mentions, and dms for each account
+    static const NSUInteger NUM_TO_KEEP = 20;
+
+    NSMutableDictionary * living =
+        [NSMutableDictionary dictionaryWithCapacity:self.credentials.count];
+    NSMutableArray * hitList =
+        [NSMutableArray arrayWithCapacity:allTweets.count];
+
+    // won't include deleted tweets
+    allTweets =
+        [[Tweet findAll:context] sortedArrayUsingSelector:@selector(compare:)];
+
+    for (NSInteger i = 0, count = allTweets.count; i < count; ++i) {
+        Tweet * t = [allTweets objectAtIndex:i];
+        NSString * key = nil;
+        TwitterCredentials * c = nil;
+
+        if ([t isKindOfClass:[UserTweet class]]) {
+            c = [((UserTweet *) t) credentials];
+            key = @"user-tweet";
+        } else if ([t isKindOfClass:[Mention class]]) {
+            c = [((Mention *) t) credentials];
+            key = @"mention";
+        } else
+            NSLog(@"Still have a %@ tweet type!", [t class]);
+
+        if (c) {
+            NSMutableDictionary * perCredentials =
+                [living objectForKey:c.username];
+            if (!perCredentials) {
+                perCredentials = [NSMutableDictionary dictionary];
+                [living setObject:perCredentials forKey:c.username];
+            }
+
+            NSMutableArray * perTweetType = [perCredentials objectForKey:key];
+            if (!perTweetType) {
+                perTweetType = [NSMutableArray array];
+                [perCredentials setObject:perTweetType forKey:key];
+            }
+
+            // finally, insert the tweet if it should be saved
+            if (perTweetType.count < NUM_TO_KEEP) {
+                [perTweetType addObject:t];  // it lives
+                [sparedUsers addObject:t.user];
+                NSLog(@"Saved tweets for '%@': '%d'.", c.username, perTweetType.count);
+            } else
+                [hitList addObject:t];  // it dies
+        }
+    }
+
+    // delete all unneeded tweets
+    for (Tweet * tweet in hitList)
+        [context deleteObject:tweet];
+
+    // now do a similar routine for dms
+
+    // all users involved in a direct message must be spared
+    [living removeAllObjects];
+    [hitList removeAllObjects];
+
+    NSArray * allDms = [DirectMessage findAll:context];
+    for (DirectMessage * dm in allDms) {
+        TwitterCredentials * c = dm.credentials;
+
+        NSMutableArray * perCredentials = [living objectForKey:c.username];
+        if (!perCredentials) {
+            perCredentials = [NSMutableArray array];
+            [living setObject:perCredentials forKey:c.username];
+        }
+
+        if (perCredentials.count < NUM_TO_KEEP) {
+            [perCredentials addObject:dm];
+            [sparedUsers addObject:dm.recipient];
+            [sparedUsers addObject:dm.sender];
+        } else
+            [context deleteObject:dm];
+
+    }
+
+    // delete all unneeeded users
+    NSArray * potentialVictims = [User findAll:context];
+    for (User * user in potentialVictims)
+        if (![sparedUsers containsObject:user]) {
+            NSLog(@"Deleting user: '%@'.", user.username);
+            [context deleteObject:user];
+        }
+}
+
+- (void)loadHomeDataForAccount:(TwitterCredentials *)account
+{
+    // important to access the context via the accessor
+    NSManagedObjectContext * context = [self managedObjectContext];
+
+    NSPredicate * predicate = 
+        [NSPredicate predicateWithFormat:@"credentials.username == %@",
+        account.username];
+
+    NSArray * tweets = [UserTweet findAll:nil context:context];
+    NSArray * mentions = [Mention findAll:nil context:context];
+    NSArray * dms = [DirectMessage findAll:nil context:context];
+
+    NSLog(@"Loaded tweets: '%@'.", tweets);
+    NSLog(@"Loaded mentions: '%@'.", mentions);
+    NSLog(@"Loaded direct messages: '%@'.", dms);
+
+    return;
+
+    for (UserTweet * tweet in tweets)
+        NSAssert3([tweet isKindOfClass:[UserTweet class]], @"Found a tweet of "
+            "type '%@' in the persistence store: '%@': '%@'", [tweet className],
+            tweet.user.username, tweet.text);
+
+    for (Mention * mention in mentions)
+        NSLog(@"Mention: '%@': '%@'", mention.user.username, mention.text);
+    for (DirectMessage * dm in dms)
+        NSLog(@"DM: '%@' -> '%@': '%@'", dm.sender.username,
+              dm.recipient.username, dm.text);
+
+    NSLog(@"Loaded %d tweets from persistence.", tweets.count);
 }
 
 - (void)setUIStateFromPersistence

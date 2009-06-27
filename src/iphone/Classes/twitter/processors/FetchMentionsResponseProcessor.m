@@ -5,15 +5,17 @@
 #import "FetchMentionsResponseProcessor.h"
 #import "User.h"
 #import "User+CoreDataAdditions.h"
-#import "Tweet.h"
+#import "Mention.h"
 #import "Tweet+CoreDataAdditions.h"
 #import "ResponseProcessor+ParsingHelpers.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @interface FetchMentionsResponseProcessor ()
 
 @property (nonatomic, copy) NSNumber * updateId;
 @property (nonatomic, copy) NSNumber * page;
 @property (nonatomic, copy) NSNumber * count;
+@property (nonatomic, retain) TwitterCredentials * credentials;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, assign) id delegate;
 
@@ -21,17 +23,19 @@
 
 @implementation FetchMentionsResponseProcessor
 
-@synthesize updateId, page, count, delegate, context;
+@synthesize updateId, page, count, credentials, delegate, context;
 
 + (id)processorWithUpdateId:(NSNumber *)anUpdateId
                        page:(NSNumber *)aPage
                       count:(NSNumber *)aCount
+                credentials:(TwitterCredentials *)someCredentials
                     context:(NSManagedObjectContext *)aContext
                    delegate:(id)aDelegate
 {
     id obj = [[[self class] alloc] initWithUpdateId:anUpdateId
                                                page:aPage
                                               count:aCount
+                                        credentials:someCredentials
                                             context:aContext
                                            delegate:aDelegate];
     return [obj autorelease];
@@ -42,6 +46,7 @@
     self.updateId = nil;
     self.page = nil;
     self.count = nil;
+    self.credentials = nil;
     self.context = nil;
     self.delegate = nil;
     [super dealloc];
@@ -50,6 +55,7 @@
 - (id)initWithUpdateId:(NSNumber *)anUpdateId
                   page:(NSNumber *)aPage
                  count:(NSNumber *)aCount
+           credentials:(TwitterCredentials *)someCredentials
                context:(NSManagedObjectContext *)aContext
               delegate:(id)aDelegate
 {
@@ -57,6 +63,7 @@
         self.updateId = anUpdateId;
         self.page = aPage;
         self.count = aCount;
+        self.credentials = someCredentials;
         self.context = aContext;
         self.delegate = aDelegate;
     }
@@ -89,19 +96,20 @@
         NSDictionary * tweetData = status;
 
         NSString * tweetId = [[tweetData objectForKey:@"id"] description];
-        Tweet * tweet = [Tweet tweetWithId:tweetId context:context];
+        Mention * tweet = [Mention tweetWithId:tweetId context:context];
         if (!tweet)
-            tweet = [Tweet createInstance:context];
+            tweet = [Mention createInstance:context];
 
         [self populateTweet:tweet fromData:tweetData];
         tweet.user = user;
+        tweet.credentials = self.credentials;
 
         [tweets addObject:tweet];
     }
 
     NSError * error;
     if (![context save:&error])
-        NSLog(@"Failed to save tweets and users: '%@'", error);
+        NSLog(@"Failed to save mentions and users: '%@'", error);
 
     SEL sel = @selector(mentions:fetchedSinceUpdateId:page:count:);
     [self invokeSelector:sel withTarget:delegate args:tweets, updateId, page,

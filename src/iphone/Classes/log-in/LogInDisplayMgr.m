@@ -6,6 +6,7 @@
 #import "LogInViewController.h"
 #import "MGTwitterEngine.h"
 #import "TwitterCredentials.h"
+#import "TwitterCredentials+KeychainAdditions.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "UIApplication+NetworkActivityIndicatorAdditions.h"
 
