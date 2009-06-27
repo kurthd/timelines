@@ -7,7 +7,8 @@
 @implementation TweetInfo
 
 @synthesize timestamp, truncated, identifier, text, source, user, recipient,
-    favorited;
+    favorited, inReplyToTwitterUsername, inReplyToTwitterTweetId,
+    inReplyToTwitterUserId;
 
 - (void)dealloc
 {
@@ -19,6 +20,9 @@
     [user release];
     [recipient release];
     [favorited release];
+    [inReplyToTwitterUsername release];
+    [inReplyToTwitterTweetId release];
+    [inReplyToTwitterUserId release];
     [super dealloc];
 }
 
@@ -51,6 +55,9 @@
     tweetInfo.user = tweet.user;
     tweetInfo.recipient = nil;
     tweetInfo.favorited = tweet.favorited;
+    tweetInfo.inReplyToTwitterUsername = tweet.inReplyToTwitterUsername;
+    tweetInfo.inReplyToTwitterTweetId = tweet.inReplyToTwitterTweetId;
+    tweetInfo.inReplyToTwitterUserId = tweet.inReplyToTwitterUserId;
 
     return tweetInfo;
 }
@@ -68,6 +75,9 @@
     tweetInfo.user = message.sender;
     tweetInfo.recipient = message.recipient;
     tweetInfo.favorited = nil;
+    tweetInfo.inReplyToTwitterUsername = nil;
+    tweetInfo.inReplyToTwitterTweetId = nil;
+    tweetInfo.inReplyToTwitterUserId = nil;
 
     return tweetInfo;
 }

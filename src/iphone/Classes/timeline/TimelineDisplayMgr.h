@@ -29,6 +29,7 @@
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
+    NetworkAwareViewController * tweetDetailsWrapperController;
     TweetDetailsViewController * tweetDetailsController;
     UserInfoViewController * userInfoController;
     TwitchBrowserViewController * browserController;
@@ -73,6 +74,7 @@
 
 @property (readonly) NetworkAwareViewController * wrapperController;
 @property (readonly) TimelineViewController * timelineController;
+@property (readonly) NetworkAwareViewController * tweetDetailsWrapperController;
 @property (readonly) TweetDetailsViewController * tweetDetailsController;
 @property (readonly) UserInfoViewController * userInfoController;
 @property (readonly) TwitchBrowserViewController * browserController;

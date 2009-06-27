@@ -37,6 +37,7 @@ tweetdetailsview.title = "Tweet";
 tweetdetailsview.title.directmessage = "Direct Message";
 tweetdetailsview.tweetfooter = "%@ from %@";
 tweetdetailsview.tweetheader = "To: %@";
+tweetdetailsview.replyto = "in reply to";
 
 /* Sending tweets */
 sendtweet.failed.alert.title = "Failed to Send Tweet";

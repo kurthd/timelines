@@ -33,6 +33,7 @@
 {
     [wrapperController release];
     [timelineController release];
+    [tweetDetailsWrapperController release];
     [tweetDetailsController release];
 
     [service release];
@@ -398,6 +399,12 @@
     [composeTweetDisplayMgr composeDirectMessageTo:username];
 }
 
+- (void)loadNewTweetWithId:(NSString *)tweetId
+{
+    NSLog(@"Timeline display manager: showing tweet details for tweet %@",
+        tweetId);
+}
+
 #pragma mark NetworkAwareViewControllerDelegate implementation
 
 - (void)networkAwareViewWillAppear
@@ -665,6 +672,17 @@
 }
 
 #pragma mark Accessors
+
+- (NetworkAwareViewController *)tweetDetailsWrapperController
+{
+    if (!tweetDetailsWrapperController) {
+        tweetDetailsWrapperController =
+            [[NetworkAwareViewController alloc]
+            initWithTargetViewController:self.tweetDetailsController];
+    }
+    
+    return tweetDetailsWrapperController;
+}
 
 - (TweetDetailsViewController *)tweetDetailsController
 {

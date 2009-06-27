@@ -7,14 +7,18 @@
 #import "UIWebView+FileLoadingAdditions.h"
 #import "NSDate+StringHelpers.h"
 #import "AsynchronousNetworkFetcher.h"
+#import "RegexKitLite.h"
 
 @interface TweetDetailsViewController ()
 
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer;
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer
     header:(NSString *)header;
++ (NSString *)bodyWithUserLinks:(NSString *)body;
 
 @end
+
+static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 
 @implementation TweetDetailsViewController
 
@@ -48,6 +52,19 @@
         [NSString stringWithFormat:footerFormatString,
         dateDesc ? dateDesc : @"", tweet.source] :
         dateDesc;
+    NSString * replyToString =
+        NSLocalizedString(@"tweetdetailsview.replyto", @"");
+    NSString * replyToLink =
+        [NSString stringWithFormat:@"<a href=\"#%@\">%@ @%@</a>",
+        tweet.inReplyToTwitterTweetId, replyToString,
+        tweet.inReplyToTwitterUsername];
+    footer =
+        tweet.inReplyToTwitterTweetId &&
+        ![tweet.inReplyToTwitterTweetId isEqual:@""] ?
+        [NSString stringWithFormat:@"%@ %@", footer, replyToLink] :
+        footer;
+
+    NSString * body = [[self class] bodyWithUserLinks:tweet.text];
     if (tweet.recipient) {
         NSString * headerFormatString =
             NSLocalizedString(@"tweetdetailsview.tweetheader", @"");
@@ -55,12 +72,13 @@
             tweet.recipient.name];
         [webView
             loadHTMLStringRelativeToMainBundle:
-            [[self class] htmlForContent:tweet.text footer:footer
+            [[self class] htmlForContent:body footer:footer
             header:header]];
     } else
         [webView
             loadHTMLStringRelativeToMainBundle:
-            [[self class] htmlForContent:tweet.text footer:footer]];
+            [[self class] htmlForContent:body footer:footer]];
+
     nameLabel.text = tweet.user.name;
     [userTweetsButton
         setTitle:[NSString stringWithFormat:@"@%@", tweet.user.username]
@@ -130,8 +148,20 @@
     shouldStartLoadWithRequest:(NSURLRequest *)request
     navigationType:(UIWebViewNavigationType)navigationType
 {
-    if (navigationType == UIWebViewNavigationTypeLinkClicked)
-        [delegate visitWebpage:[[request URL] absoluteString]];
+    NSString * inReplyToString;
+    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+        NSString * webpage = [[request URL] absoluteString];
+        if ([webpage isMatchedByRegex:usernameRegex]) {
+            NSString * username =
+                [[webpage stringByMatching:usernameRegex] substringFromIndex:1];
+            NSLog(@"Showing tweets for user: %@", username);
+            [delegate showTweetsForUser:username];
+        } else if (inReplyToString = [webpage stringByMatching:@"#\\d*"]) {
+            NSString * tweetId = [inReplyToString substringFromIndex:1];
+            [delegate loadNewTweetWithId:tweetId];
+        } else
+            [delegate visitWebpage:webpage];
+    }
 
     return navigationType != UIWebViewNavigationTypeLinkClicked;
 }
@@ -171,6 +201,12 @@
          "  </body>"
          "</html>",
         header, content, footer];
+}
+
++ (NSString *)bodyWithUserLinks:(NSString *)body
+{
+    return [body stringByReplacingOccurrencesOfRegex:usernameRegex
+        withString:@"<a href=\"#$1\">$1</a>"];
 }
 
 @end
