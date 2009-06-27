@@ -76,6 +76,7 @@
 		05C5E8CE0FF473020073E7F2 /* Trend.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E8CD0FF473020073E7F2 /* Trend.m */; };
 		05C5E9B20FF48BA70073E7F2 /* SearchDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E9B10FF48BA70073E7F2 /* SearchDisplayMgr.m */; };
 		05C5E9C40FF494390073E7F2 /* SearchResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E9C30FF494390073E7F2 /* SearchResponseProcessor.m */; };
+		05D1728C0FF67ED900DCB22D /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D1728B0FF67ED900DCB22D /* RegexKitLite.m */; };
 		05EC40430FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */; };
 		05F459EF0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F459EE0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m */; };
 		05F45A300FF0181600EBAFC7 /* DirectMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A2F0FF0181600EBAFC7 /* DirectMessage.m */; };
@@ -301,6 +302,8 @@
 		05C5E9B10FF48BA70073E7F2 /* SearchDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchDisplayMgr.m; path = search/SearchDisplayMgr.m; sourceTree = "<group>"; };
 		05C5E9C20FF494390073E7F2 /* SearchResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchResponseProcessor.h; path = twitter/processors/SearchResponseProcessor.h; sourceTree = "<group>"; };
 		05C5E9C30FF494390073E7F2 /* SearchResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchResponseProcessor.m; path = twitter/processors/SearchResponseProcessor.m; sourceTree = "<group>"; };
+		05D1728A0FF67ED900DCB22D /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		05D1728B0FF67ED900DCB22D /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
 		05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+TediousCodeAdditions.m"; path = "shared/NSManagedObject+TediousCodeAdditions.m"; sourceTree = "<group>"; };
 		05F459ED0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchDirectMessagesResponseProcessor.h; path = twitter/processors/FetchDirectMessagesResponseProcessor.h; sourceTree = "<group>"; };
@@ -505,6 +508,7 @@
 		055B791E0FEDB1B9008859F7 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				05D172890FF67ED900DCB22D /* regexkitlite */,
 				05B237EB0FEDB1FA00A6A2E6 /* mg-twitter-engine */,
 				0524C3B90FF2A7D400A6099B /* sfh-keychain-utils */,
 				05C5E7B70FF45EE10073E7F2 /* yajl */,
@@ -814,6 +818,15 @@
 				05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */,
 			);
 			name = search;
+			sourceTree = "<group>";
+		};
+		05D172890FF67ED900DCB22D /* regexkitlite */ = {
+			isa = PBXGroup;
+			children = (
+				05D1728A0FF67ED900DCB22D /* RegexKitLite.h */,
+				05D1728B0FF67ED900DCB22D /* RegexKitLite.m */,
+			);
+			path = regexkitlite;
 			sourceTree = "<group>";
 		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
@@ -1211,6 +1224,7 @@
 				05C5E9C40FF494390073E7F2 /* SearchResponseProcessor.m in Sources */,
 				91CD821E0FF54066004D04D5 /* TwitchBrowserViewController.m in Sources */,
 				05C35E430FF5436E00F91448 /* SearchBarDisplayMgr.m in Sources */,
+				05D1728C0FF67ED900DCB22D /* RegexKitLite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1350,7 +1364,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
 				SDKROOT = iphoneos3.0;
 			};
@@ -1384,7 +1398,7 @@
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AA7F2B41-6452-442A-ADBF-895609D202AE";
 				SDKROOT = iphoneos3.0;
@@ -1419,7 +1433,7 @@
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AA7F2B41-6452-442A-ADBF-895609D202AE";
 				SDKROOT = iphoneos3.0;
@@ -1490,7 +1504,7 @@
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7CBDEF8F-8A13-4C1E-9F98-87652D2CBECF";
 				SDKROOT = iphoneos3.0;
@@ -1509,7 +1523,7 @@
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7CBDEF8F-8A13-4C1E-9F98-87652D2CBECF";
 				SDKROOT = iphoneos3.0;
