@@ -4,7 +4,7 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
 
-  before_filter :redirect_to_ssl
+  before_filter :redirect_to_ssl unless ENV['RAILS_ENV'] == 'development'
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
