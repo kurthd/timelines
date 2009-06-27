@@ -83,7 +83,7 @@
 
 - (void)userWantsToAddAccount
 {
-    [self.logInDisplayMgr logIn];
+    [self.logInDisplayMgr logIn:YES];
 }
 
 - (BOOL)userDeletedAccount:(TwitterCredentials *)credentials
@@ -91,7 +91,7 @@
     [self.userAccounts removeObject:credentials];
     if (self.userAccounts.count == 0) {
         self.logInDisplayMgr.allowsCancel = NO;
-        [self.logInDisplayMgr logIn];
+        [self.logInDisplayMgr logIn:YES];
     }
 
     NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
