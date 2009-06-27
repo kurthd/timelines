@@ -30,8 +30,6 @@
 	<string>MainWindow</string>
 	<key>DeviceRegistrationDomain</key>
 	<string>sandbox.twitch.highorderbit.com</string>
-	<key>DeviceRegistrationDomainLocal</key>
-	<string>http://megatron.local:3000/device/register</string>
 	<key>TwitPicPostUrl</key>
 	<string>https://twitpic.com/api/upload</string>
 </dict>
