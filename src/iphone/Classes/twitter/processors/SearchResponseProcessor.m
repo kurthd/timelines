@@ -141,6 +141,9 @@
         //   http://code.google.com/p/twitter-api/issues/detail?id=214
         NSString * userId =
             [[userData objectForKey:@"from_user_id"] description];
+        if (!userId)
+            continue;  // something is malformed - be defensive and just move on
+
         User * tweetAuthor = [User userWithId:userId context:context];
 
         if (!tweetAuthor)
