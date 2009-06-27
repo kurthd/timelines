@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090406132059) do
+ActiveRecord::Schema.define(:version => 20090622031130) do
 
   create_table "apple_push_notifications", :force => true do |t|
     t.string   "device_token"
@@ -20,5 +20,35 @@ ActiveRecord::Schema.define(:version => 20090406132059) do
   end
 
   add_index "apple_push_notifications", ["device_token"], :name => "index_apple_push_notifications_on_device_token"
+
+  create_table "device_subscriptions", :force => true do |t|
+    t.integer  "iphone_id"
+    t.integer  "twitter_user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "iphones", :force => true do |t|
+    t.string   "device_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "subscriber_statuses", :force => true do |t|
+    t.text     "last_direct_message"
+    t.text     "last_mention"
+    t.integer  "device_subscription_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "twitter_users", :force => true do |t|
+    t.string   "username"
+    t.text     "encrypted_password"
+    t.text     "encrypted_key"
+    t.text     "encrypted_iv"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
