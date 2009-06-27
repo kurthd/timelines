@@ -18,8 +18,8 @@
 		0524C4B80FF2B51600A6099B /* FetchFriendsForUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C4B70FF2B51600A6099B /* FetchFriendsForUserResponseProcessor.m */; };
 		0524C5400FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C53F0FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.m */; };
 		052C64190FED703200B259D7 /* TwitchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C64180FED703200B259D7 /* TwitchAppDelegate.m */; };
-		05761AFF0FF6ADD600392ADC /* UserTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761AFE0FF6ADD600392ADC /* UserTweet.m */; };
 		0562BE2F0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0562BE2E0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m */; };
+		05761AFF0FF6ADD600392ADC /* UserTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761AFE0FF6ADD600392ADC /* UserTweet.m */; };
 		057E800E0FF314830074A91B /* TwitPicResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E800D0FF314830074A91B /* TwitPicResponseParser.m */; };
 		057E82420FF345CA0074A91B /* SendDirectMessageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E82410FF345CA0074A91B /* SendDirectMessageResponseProcessor.m */; };
 		057E82DF0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E82DE0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m */; };
@@ -187,10 +187,10 @@
 		0524C53F0FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFollowersForUserResponseProcessor.m; path = twitter/processors/FetchFollowersForUserResponseProcessor.m; sourceTree = "<group>"; };
 		052C64170FED703200B259D7 /* TwitchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchAppDelegate.h; path = "app-controller/TwitchAppDelegate.h"; sourceTree = "<group>"; };
 		052C64180FED703200B259D7 /* TwitchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchAppDelegate.m; path = "app-controller/TwitchAppDelegate.m"; sourceTree = "<group>"; };
-		05761AFD0FF6ADD600392ADC /* UserTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTweet.h; path = tweets/UserTweet.h; sourceTree = "<group>"; };
-		05761AFE0FF6ADD600392ADC /* UserTweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTweet.m; path = tweets/UserTweet.m; sourceTree = "<group>"; };
 		0562BE2D0FF6AB6B005DA549 /* FetchTweetResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTweetResponseProcessor.h; path = twitter/processors/FetchTweetResponseProcessor.h; sourceTree = "<group>"; };
 		0562BE2E0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchTweetResponseProcessor.m; path = twitter/processors/FetchTweetResponseProcessor.m; sourceTree = "<group>"; };
+		05761AFD0FF6ADD600392ADC /* UserTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTweet.h; path = tweets/UserTweet.h; sourceTree = "<group>"; };
+		05761AFE0FF6ADD600392ADC /* UserTweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTweet.m; path = tweets/UserTweet.m; sourceTree = "<group>"; };
 		057E800C0FF314830074A91B /* TwitPicResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitPicResponseParser.h; path = twitpic/TwitPicResponseParser.h; sourceTree = "<group>"; };
 		057E800D0FF314830074A91B /* TwitPicResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitPicResponseParser.m; path = twitpic/TwitPicResponseParser.m; sourceTree = "<group>"; };
 		057E82400FF345CA0074A91B /* SendDirectMessageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SendDirectMessageResponseProcessor.h; path = twitter/processors/SendDirectMessageResponseProcessor.h; sourceTree = "<group>"; };
