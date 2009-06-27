@@ -17,5 +17,6 @@
 - (void)followUser:(NSString *)username;
 - (void)stopFollowingUser:(NSString *)username;
 - (void)markTweet:(NSString *)tweetId asFavorite:(BOOL)favorite;
+- (void)fetchTweet:(NSString *)tweetId;
 
 @end

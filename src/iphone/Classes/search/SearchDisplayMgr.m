@@ -121,6 +121,11 @@
     [service markTweet:tweetId asFavorite:favorite];
 }
 
+- (void)fetchTweet:(NSString *)tweetId
+{
+    [service fetchTweet:tweetId];
+}
+
 #pragma mark TwitterServiceDelegate
 
 - (void)searchResultsReceived:(NSArray *)newSearchResults
@@ -254,6 +259,16 @@
 {
     [self.dataSourceDelegate failedToQueryIfUser:aUsername
                                      isFollowing:followee error:error];
+}
+
+- (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
+{
+    [self.dataSourceDelegate fetchedTweet:tweet withId:tweetId];
+}
+
+- (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error
+{
+    [self.dataSourceDelegate failedToFetchTweetWithId:tweetId error:error];
 }
  
 @end

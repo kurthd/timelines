@@ -38,5 +38,8 @@
 - (void)user:(NSString *)username isNotFollowing:(NSString *)followee;
 - (void)failedToQueryIfUser:(NSString *)username
     isFollowing:(NSString *)followee error:(NSError *)error;
-   
+
+- (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId;
+- (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error;
+
 @end

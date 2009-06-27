@@ -32,7 +32,6 @@
 
 #pragma mark Fetching individual tweets
 
-
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId;
 - (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error;
 

@@ -11,6 +11,7 @@
 
 @interface TweetDetailsViewController ()
 
+- (void)setupWebView;
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer;
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer
     header:(NSString *)header;
@@ -39,45 +40,16 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 {
     [super viewWillAppear:animated];
     [delegate showingTweetDetails];
+    if (self.selectedTweet)
+        [self setupWebView];
 }
 
 - (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)avatarImage
 {
+    NSLog(@"Setting tweet");
     self.selectedTweet = tweet;
 
-    NSString * footerFormatString =
-        NSLocalizedString(@"tweetdetailsview.tweetfooter", @"");
-    NSString * dateDesc = [tweet.timestamp shortDateAndTimeDescription];
-    NSString * footer = tweet.source ?
-        [NSString stringWithFormat:footerFormatString,
-        dateDesc ? dateDesc : @"", tweet.source] :
-        dateDesc;
-    NSString * replyToString =
-        NSLocalizedString(@"tweetdetailsview.replyto", @"");
-    NSString * replyToLink =
-        [NSString stringWithFormat:@"<a href=\"#%@\">%@ @%@</a>",
-        tweet.inReplyToTwitterTweetId, replyToString,
-        tweet.inReplyToTwitterUsername];
-    footer =
-        tweet.inReplyToTwitterTweetId &&
-        ![tweet.inReplyToTwitterTweetId isEqual:@""] ?
-        [NSString stringWithFormat:@"%@ %@", footer, replyToLink] :
-        footer;
-
-    NSString * body = [[self class] bodyWithUserLinks:tweet.text];
-    if (tweet.recipient) {
-        NSString * headerFormatString =
-            NSLocalizedString(@"tweetdetailsview.tweetheader", @"");
-        NSString * header = [NSString stringWithFormat:headerFormatString,
-            tweet.recipient.name];
-        [webView
-            loadHTMLStringRelativeToMainBundle:
-            [[self class] htmlForContent:body footer:footer
-            header:header]];
-    } else
-        [webView
-            loadHTMLStringRelativeToMainBundle:
-            [[self class] htmlForContent:body footer:footer]];
+    [self setupWebView];
 
     nameLabel.text = tweet.user.name;
     [userTweetsButton
@@ -102,6 +74,44 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
     else
         [favoriteButton setImage:[UIImage imageNamed:@"NotFavorite.png"]
             forState:UIControlStateNormal];
+}
+
+- (void)setupWebView
+{
+    NSString * footerFormatString =
+        NSLocalizedString(@"tweetdetailsview.tweetfooter", @"");
+    NSString * dateDesc =
+        [self.selectedTweet.timestamp shortDateAndTimeDescription];
+    NSString * footer = self.selectedTweet.source ?
+        [NSString stringWithFormat:footerFormatString,
+        dateDesc ? dateDesc : @"", self.selectedTweet.source] :
+        dateDesc;
+    NSString * replyToString =
+        NSLocalizedString(@"tweetdetailsview.replyto", @"");
+    NSString * replyToLink =
+        [NSString stringWithFormat:@"<a href=\"#%@\">%@ @%@</a>",
+        self.selectedTweet.inReplyToTwitterTweetId, replyToString,
+        self.selectedTweet.inReplyToTwitterUsername];
+    footer =
+        self.selectedTweet.inReplyToTwitterTweetId &&
+        ![self.selectedTweet.inReplyToTwitterTweetId isEqual:@""] ?
+        [NSString stringWithFormat:@"%@ %@", footer, replyToLink] :
+        footer;
+
+    NSString * body = [[self class] bodyWithUserLinks:self.selectedTweet.text];
+    if (self.selectedTweet.recipient) {
+        NSString * headerFormatString =
+            NSLocalizedString(@"tweetdetailsview.tweetheader", @"");
+        NSString * header = [NSString stringWithFormat:headerFormatString,
+            self.selectedTweet.recipient.name];
+        [webView
+            loadHTMLStringRelativeToMainBundle:
+            [[self class] htmlForContent:body footer:footer
+            header:header]];
+    } else
+        [webView
+            loadHTMLStringRelativeToMainBundle:
+            [[self class] htmlForContent:body footer:footer]];
 }
 
 - (IBAction)showLocationOnMap:(id)sender
