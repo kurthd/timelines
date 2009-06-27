@@ -70,7 +70,6 @@
     if (error)
         NSLog(@"Error deleting keychain item for '%@'.: '%@'.", aUsername,
             error);
-        
 }
 
 @end

@@ -789,8 +789,11 @@
 
     [service setCredentials:credentials];
 
-    if (oldCredentials &&
-        ![oldCredentials.username isEqual:credentials.username]) {
+    // check for pointer equality rather than string equality against username
+    // in case 'oldCredentials' has already been physically deleted (e.g. we're
+    // changing accounts b/c the old active acount was deleted and another
+    // account selected)
+    if (oldCredentials && oldCredentials != credentials) {
         // Changed accounts (as opposed to setting it for the first time)
 
         NSLog(@"Timeline displaying manager: changing accounts (%@)",
