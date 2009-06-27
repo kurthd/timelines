@@ -41,6 +41,10 @@
 - (void)sendTweet:(NSString *)tweet;
 - (void)sendTweet:(NSString *)tweet inReplyTo:(NSString *)referenceId;
 
+#pragma mark Fetching individual tweets
+
+- (void)fetchTweet:(NSString *)tweetId;
+
 #pragma mark Timeline
 
 // for the user associated with 'credentials'

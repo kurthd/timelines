@@ -18,6 +18,9 @@
 - (void)displayErrorWithTitle:(NSString *)title;
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
 - (void)replyToTweetWithMessage;
+- (NetworkAwareViewController *)newTweetDetailsWrapperController;
+- (TweetDetailsViewController *)newTweetDetailsController;
+- (void)replyToCurrentTweetDetailsUser;
 
 @end
 
@@ -27,12 +30,15 @@
     selectedTweet, updateId, user, timeline, pagesShown, displayAsConversation,
     setUserToFirstTweeter, tweetDetailsTimelineDisplayMgr,
     tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher,
-    lastFollowingUsername;
+    lastFollowingUsername, lastTweetDetailsWrapperController,
+    lastTweetDetailsController, currentTweetDetailsUser;
 
 - (void)dealloc
 {
     [wrapperController release];
     [timelineController release];
+    [lastTweetDetailsWrapperController release];
+    [lastTweetDetailsController release];
     [tweetDetailsController release];
 
     [service release];
@@ -269,6 +275,28 @@
     [self displayErrorWithTitle:errorMessage];
 }
 
+- (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
+{
+    NSLog(@"Timeline display mgr: fetched tweet %@", tweetId);
+    TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
+    self.currentTweetDetailsUser = tweetInfo.user.username;
+
+    [self.lastTweetDetailsController setTweet:tweetInfo avatar:nil];
+    [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
+    [self.lastTweetDetailsWrapperController
+        setUpdatingState:kConnectedAndNotUpdating];
+}
+
+- (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error
+{
+    NSLog(@"Timeline display manager: failed to fetch tweet %@", tweetId);
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchtweet", @"");
+    [self displayErrorWithTitle:errorMessage];
+    [self.lastTweetDetailsWrapperController setUpdatingState:kDisconnected];
+}
+
 #pragma mark TimelineViewControllerDelegate implementation
 
 - (void)selectedTweet:(TweetInfo *)tweet avatarImage:(UIImage *)avatarImage
@@ -396,6 +424,18 @@
 {
     NSLog(@"Timeline display manager: showing tweet details...");
     [composeTweetDisplayMgr composeDirectMessageTo:username];
+}
+
+- (void)loadNewTweetWithId:(NSString *)tweetId
+{
+    NSLog(@"Timeline display manager: showing tweet details for tweet %@",
+        tweetId);
+    [service fetchTweet:tweetId];
+    [self.wrapperController.navigationController
+        pushViewController:self.newTweetDetailsWrapperController animated:YES];
+    [self.lastTweetDetailsWrapperController setCachedDataAvailable:NO];
+    [self.lastTweetDetailsWrapperController
+        setUpdatingState:kConnectedAndNotUpdating];
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation
@@ -664,7 +704,48 @@
     [composeTweetDisplayMgr composeDirectMessageTo:selectedTweet.user.username];
 }
 
+- (void)replyToCurrentTweetDetailsUser
+{
+    NSLog(@"Timeline display manager: reply to tweet selected");
+    [composeTweetDisplayMgr
+        composeReplyToTweet:selectedTweet.identifier
+        fromUser:self.currentTweetDetailsUser];
+}
+
 #pragma mark Accessors
+
+- (NetworkAwareViewController *)newTweetDetailsWrapperController
+{
+    NetworkAwareViewController * tweetDetailsWrapperController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:self.newTweetDetailsController]
+        autorelease];
+
+    UIBarButtonItem * replyButton =
+        [[[UIBarButtonItem alloc]
+        initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self
+        action:@selector(replyToCurrentTweetDetailsUser)]
+        autorelease];
+    [tweetDetailsWrapperController.navigationItem
+        setRightBarButtonItem:replyButton];
+
+    NSString * title = NSLocalizedString(@"tweetdetailsview.title", @"");
+    tweetDetailsWrapperController.navigationItem.title = title;
+
+    return self.lastTweetDetailsWrapperController =
+        tweetDetailsWrapperController;
+}
+
+- (TweetDetailsViewController *)newTweetDetailsController
+{
+    TweetDetailsViewController * newTweetDetailsController =
+        [[TweetDetailsViewController alloc]
+        initWithNibName:@"TweetDetailsView" bundle:nil];
+
+    newTweetDetailsController.delegate = self;
+
+    return self.lastTweetDetailsController = newTweetDetailsController;
+}
 
 - (TweetDetailsViewController *)tweetDetailsController
 {
@@ -683,9 +764,6 @@
 
         NSString * title = NSLocalizedString(@"tweetdetailsview.title", @"");
         tweetDetailsController.navigationItem.title = title;
-
-        tweetDetailsController.navigationItem.hidesBackButton = NO;
-
         tweetDetailsController.delegate = self;
     }
 

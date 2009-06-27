@@ -30,13 +30,15 @@ timelinedisplaymgr.error.fetchfriends = "Failed to fetch friends list";
 timelinedisplaymgr.error.fetchfollowers = "Failed to fetch followers";
 timelinedisplaymgr.error.startfollowing = "Failed to start following '%@'";
 timelinedisplaymgr.error.stopfollowing = "Failed to stop following '%@'";
-timelinedisplaymgr.error.userquery = "Failed to receive user info";
+timelinedisplaymgr.error.userquery = "Failed to fetch user info for '%@'";
+timelinedisplaymgr.error.fetchtweet = "Failed to fetch tweet";
 
 /* TweetDetailsViewController */
 tweetdetailsview.title = "Tweet";
 tweetdetailsview.title.directmessage = "Direct Message";
 tweetdetailsview.tweetfooter = "%@ from %@";
 tweetdetailsview.tweetheader = "To: %@";
+tweetdetailsview.replyto = "in reply to";
 
 /* Sending tweets */
 sendtweet.failed.alert.title = "Failed to Send Tweet";

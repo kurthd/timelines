@@ -12,5 +12,6 @@
 - (void)showLocationOnMap:(NSString *)location;
 - (void)visitWebpage:(NSString *)webpageUrl;
 - (void)showingTweetDetails;
+- (void)loadNewTweetWithId:(NSString *)tweetId;
 
 @end

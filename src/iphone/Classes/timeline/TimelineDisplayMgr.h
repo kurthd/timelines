@@ -29,6 +29,8 @@
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
+    NetworkAwareViewController * lastTweetDetailsWrapperController;
+    TweetDetailsViewController * lastTweetDetailsController;
     TweetDetailsViewController * tweetDetailsController;
     UserInfoViewController * userInfoController;
     TwitchBrowserViewController * browserController;
@@ -69,10 +71,16 @@
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
     
     BOOL failedState;
+    
+    NSString * currentTweetDetailsUser;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
 @property (readonly) TimelineViewController * timelineController;
+@property (nonatomic, retain)
+    NetworkAwareViewController * lastTweetDetailsWrapperController;
+@property (nonatomic, retain)
+    TweetDetailsViewController * lastTweetDetailsController;
 @property (readonly) TweetDetailsViewController * tweetDetailsController;
 @property (readonly) UserInfoViewController * userInfoController;
 @property (readonly) TwitchBrowserViewController * browserController;
@@ -100,6 +108,8 @@
 @property (nonatomic, readonly)
     UserListTableViewController * userListController;
 
+@property (nonatomic, copy) NSString * currentTweetDetailsUser;
+    
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController
     service:(NSObject<TimelineDataSource> *)service title:(NSString *)title

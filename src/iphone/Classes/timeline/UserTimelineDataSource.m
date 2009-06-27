@@ -68,6 +68,11 @@
     [service stopFollowingUser:aUsername];
 }
 
+- (void)fetchTweet:(NSString *)tweetId
+{
+    [service fetchTweet:tweetId];
+}
+
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)timeline:(NSArray *)timeline fetchedForUser:(NSString *)user
@@ -163,6 +168,16 @@
     isFollowing:(NSString *)followee error:(NSError *)error
 {
     [delegate failedToQueryIfUser:aUsername isFollowing:followee error:error];
+}
+
+- (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
+{
+    [delegate fetchedTweet:tweet withId:tweetId];
+}
+
+- (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error
+{
+    [delegate failedToFetchTweetWithId:tweetId error:error];
 }
 
 - (TwitterCredentials *)credentials

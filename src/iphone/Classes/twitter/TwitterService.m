@@ -102,6 +102,20 @@
     [self request:requestId isHandledBy:processor];
 }
 
+#pragma mark Fetching individual tweets
+
+- (void)fetchTweet:(NSString *)tweetId
+{
+    ResponseProcessor * processor =
+        [FetchTweetResponseProcessor processorWithTweetId:tweetId
+                                                  context:context
+                                                 delegate:delegate];
+
+    NSString * requestId = [twitter getUpdate:tweetId];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark Timelines
 
 - (void)fetchTimelineSinceUpdateId:(NSNumber *)updateId

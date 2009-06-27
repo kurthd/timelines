@@ -17,6 +17,9 @@
     User * user;
     User * recipient;
     NSNumber * favorited;
+    NSString * inReplyToTwitterUsername;
+    NSString * inReplyToTwitterTweetId;
+    NSString * inReplyToTwitterUserId;
 }
 
 @property (nonatomic, retain) NSDate * timestamp;
@@ -27,6 +30,9 @@
 @property (nonatomic, retain) User * user;
 @property (nonatomic, retain) User * recipient;
 @property (nonatomic, retain) NSNumber * favorited;
+@property (nonatomic, retain) NSString * inReplyToTwitterUsername;
+@property (nonatomic, retain) NSString * inReplyToTwitterTweetId;
+@property (nonatomic, retain) NSString * inReplyToTwitterUserId;
 
 - (NSComparisonResult)compare:(TweetInfo *)tweetInfo;
 
