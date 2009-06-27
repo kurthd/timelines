@@ -26,6 +26,7 @@
 #import "DirectMessage.h"
 #import "NSObject+RuntimeAdditions.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
+#import "TweetInfo.h"  // so they can be fed to the personalFeedSelectionMgr
 
 @interface TwitchAppDelegate ()
 
@@ -52,7 +53,7 @@
 
 - (BOOL)saveContext;
 - (void)prunePersistenceStore;
-- (void)loadHomeDataForAccount:(TwitterCredentials *)account;
+- (void)loadHomeViewWithCachedData:(TwitterCredentials *)account;
 - (void)setUIStateFromPersistence;
 - (void)persistUIState;
 
@@ -154,7 +155,7 @@
         [searchBarDisplayMgr setCredentials:c];
         [self.composeTweetDisplayMgr setCredentials:c];
 
-        [self loadHomeDataForAccount:c];
+        [self loadHomeViewWithCachedData:c];
     }
 
     [self setUIStateFromPersistence];
@@ -428,7 +429,9 @@
         if (activeAccount &&
             activeAccount != self.activeCredentials.credentials) {
             NSLog(@"Switching account to: '%@'.", activeAccount);
+
             [self broadcastActivatedCredentialsChanged:activeAccount];
+            [self loadHomeViewWithCachedData:activeAccount];
         }
     }
 
@@ -778,7 +781,7 @@
         }
 }
 
-- (void)loadHomeDataForAccount:(TwitterCredentials *)account
+- (void)loadHomeViewWithCachedData:(TwitterCredentials *)account
 {
     // important to access the context via the accessor
     NSManagedObjectContext * context = [self managedObjectContext];
@@ -787,28 +790,35 @@
         [NSPredicate predicateWithFormat:@"credentials.username == %@",
         account.username];
 
-    NSArray * tweets = [UserTweet findAll:nil context:context];
-    NSArray * mentions = [Mention findAll:nil context:context];
-    NSArray * dms = [DirectMessage findAll:nil context:context];
+    NSArray * allTweets = [UserTweet findAll:predicate context:context];
+    NSArray * allMentions = [Mention findAll:predicate context:context];
+    NSArray * allDms = [DirectMessage findAll:predicate context:context];
 
-    NSLog(@"Loaded tweets: '%@'.", tweets);
-    NSLog(@"Loaded mentions: '%@'.", mentions);
-    NSLog(@"Loaded direct messages: '%@'.", dms);
+    NSLog(@"Loaded tweets: '%@'.", allTweets);
+    NSLog(@"Loaded mentions: '%@'.", allMentions);
+    NSLog(@"Loaded direct messages: '%@'.", allDms);
 
-    return;
+    // convert them all to dictionaries
+    NSMutableDictionary * tweets =
+        [NSMutableDictionary dictionaryWithCapacity:allTweets.count];
+    NSMutableDictionary * mentions =
+        [NSMutableDictionary dictionaryWithCapacity:allMentions.count];
+    NSMutableDictionary * dms =
+        [NSMutableDictionary dictionaryWithCapacity:allDms.count];
+    for (UserTweet * tweet in allTweets)
+        [tweets setObject:[TweetInfo createFromTweet:tweet]
+                   forKey:tweet.identifier];
+    for (Mention * mention in allMentions)
+        [mentions setObject:[TweetInfo createFromTweet:mention]
+                     forKey:mention.identifier];
+    for (DirectMessage * dm in allDms)
+        [dms setObject:[TweetInfo createFromDirectMessage:dm]
+                forKey:dm.identifier];
 
-    for (UserTweet * tweet in tweets)
-        NSAssert3([tweet isKindOfClass:[UserTweet class]], @"Found a tweet of "
-            "type '%@' in the persistence store: '%@': '%@'", [tweet className],
-            tweet.user.username, tweet.text);
-
-    for (Mention * mention in mentions)
-        NSLog(@"Mention: '%@': '%@'", mention.user.username, mention.text);
-    for (DirectMessage * dm in dms)
-        NSLog(@"DM: '%@' -> '%@': '%@'", dm.sender.username,
-              dm.recipient.username, dm.text);
-
-    NSLog(@"Loaded %d tweets from persistence.", tweets.count);
+    
+    personalFeedSelectionMgr.allTimelineTweets = tweets;
+    personalFeedSelectionMgr.mentionsTimelineTweets = mentions;
+    personalFeedSelectionMgr.messagesTimelineTweets = dms;
 }
 
 - (void)setUIStateFromPersistence
