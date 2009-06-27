@@ -17,7 +17,7 @@
 @property (nonatomic, assign) id<DeviceRegistrarDelegate> delegate;
 @property (nonatomic, copy, readonly) NSString * urlString;
 
-- (id)initWithUrl:(NSString *)aUrl;
+- (id)initWithDomain:(NSString *)aDomain;
 
 - (void)sendProviderDeviceToken:(NSData *)devToken args:(NSDictionary *)args;
 

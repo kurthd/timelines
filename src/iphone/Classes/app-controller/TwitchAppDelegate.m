@@ -693,8 +693,8 @@
     if (!registrar) {
         NSString * url =
             [[InfoPlistConfigReader reader]
-            valueForKey:@"DeviceRegistrationUrl"];
-        registrar = [[DeviceRegistrar alloc] initWithUrl:url];
+            valueForKey:@"DeviceRegistrationDomain"];
+        registrar = [[DeviceRegistrar alloc] initWithDomain:url];
         registrar.delegate = self;
     }
 

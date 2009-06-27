@@ -25,10 +25,13 @@
     [super dealloc];
 }
 
-- (id)initWithUrl:(NSString *)aUrl
+- (id)initWithDomain:(NSString *)aDomain
 {
     if (self = [super init])
-        self.urlString = aUrl;
+        // device contacts a url of the form:
+        //  https://sandbox.twitch.highorderbit.com/device/register
+        self.urlString =
+            [NSString stringWithFormat:@"https://%@/device/register", aDomain];
 
     return self;
 }
