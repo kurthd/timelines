@@ -514,10 +514,10 @@
 - (void)application:(UIApplication *)app
     didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    NSLog(@"Application did fail to register for push notificaitons. Error: %@",
+    NSLog(@"Application did fail to register for push notifications. Error: %@",
         error);
 
-#if !TARGET_IPHONE_SIMULATOR  // don't shot this error in the simulator
+#if !TARGET_IPHONE_SIMULATOR  // don't show this error in the simulator
 
     NSString * title =
         NSLocalizedString(@"notification.registration.failed.alert.title", @"");
