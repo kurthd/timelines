@@ -78,8 +78,7 @@
     dm.sourceApiRequestType =
         [[data objectForKey:@"source_api_request_type"] description];
 
-    dm.created =
-        [NSDate dateWithTweetString:[data objectForKey:@"created_at"]];
+    dm.created = [data objectForKey:@"created_at"];
 }
 
 @end
