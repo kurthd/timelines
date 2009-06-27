@@ -95,7 +95,7 @@
 - (NSString *)getUserTimelineFor:(NSString *)username since:(NSDate *)date startingAtPage:(int)pageNum count:(int)numUpdates; // statuses/user_timeline
 - (NSString *)getUserTimelineFor:(NSString *)username sinceID:(int)updateID startingAtPage:(int)pageNum count:(int)numUpdates; // statuses/user_timeline
 
-- (NSString *)getUpdate:(int)updateID; // statuses/show
+- (NSString *)getUpdate:(NSString *)updateID; // statuses/show
 - (NSString *)sendUpdate:(NSString *)status; // statuses/update
 - (NSString *)sendUpdate:(NSString *)status inReplyTo:(NSString *)updateID; // statuses/update
 

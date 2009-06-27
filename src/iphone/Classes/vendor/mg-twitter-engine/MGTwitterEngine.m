@@ -1299,9 +1299,9 @@
 }
 
 
-- (NSString *)getUpdate:(int)updateID
+- (NSString *)getUpdate:(NSString *)updateID
 {
-    NSString *path = [NSString stringWithFormat:@"statuses/show/%d.%@", updateID, API_FORMAT];
+    NSString *path = [NSString stringWithFormat:@"statuses/show/%@.%@", updateID, API_FORMAT];
     
     return [self _sendRequestWithMethod:nil path:path queryParameters:nil body:nil 
                             requestType:MGTwitterStatusesRequest 
