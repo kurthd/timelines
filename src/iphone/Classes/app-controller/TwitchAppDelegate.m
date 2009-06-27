@@ -436,7 +436,7 @@
     }
 
     if (viewController == searchNetAwareViewController.navigationController)
-        [searchBarDisplayMgr searchBarViewWillAppear:YES];
+        [searchBarDisplayMgr searchBarViewWillAppear:NO];
 
     return YES;
 }
