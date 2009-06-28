@@ -322,8 +322,8 @@
          image = [info valueForKey:UIImagePickerControllerOriginalImage];
 
     [imageSender sendImage:image withCredentials:service.credentials];
-    [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
     [self.composeTweetViewController displayActivityView];
+    [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

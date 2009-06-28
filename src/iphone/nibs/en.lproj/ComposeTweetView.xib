@@ -157,7 +157,7 @@
 				<reference key="NSSuperview"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC41MDE5NjA4MTQgMCAwIDAAA</bytes>
+					<bytes key="NSRGB">MC4yMDAwMDAwMDMgMC4yMDAwMDAwMDMgMC4yMDAwMDAwMDMAA</bytes>
 				</object>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 			</object>
@@ -169,7 +169,7 @@
 					<object class="IBUIActivityIndicatorView" id="611406943">
 						<reference key="NSNextResponder" ref="32616184"/>
 						<int key="NSvFlags">288</int>
-						<string key="NSFrame">{{141, 127}, {37, 37}}</string>
+						<string key="NSFrame">{{141, 101}, {37, 37}}</string>
 						<reference key="NSSuperview" ref="32616184"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -181,7 +181,7 @@
 					<object class="IBUILabel" id="66443055">
 						<reference key="NSNextResponder" ref="32616184"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{96, 172}, {138, 21}}</string>
+						<string key="NSFrame">{{90, 146}, {138, 21}}</string>
 						<reference key="NSSuperview" ref="32616184"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
