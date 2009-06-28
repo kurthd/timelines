@@ -66,4 +66,38 @@
               error);
 }
 
++ (void)deleteKeyAndSecretForUsername:(NSString *)username
+{
+    [self deletePasswordForUsername:username];
+}
+
+- (NSString *)key
+{
+    NSString * password = [self password];
+    NSRange where = [password rangeOfString:@" "];
+    if (where.location == NSNotFound && where.length == 0)
+        return nil;
+
+    return [password substringWithRange:NSMakeRange(0, where.location)];
+}
+
+- (NSString *)secret
+{
+    NSString * password = [self password];
+    NSRange where = [password rangeOfString:@" "];
+    if (where.location == NSNotFound && where.length == 0)
+        return nil;
+
+    NSRange secretRange =
+        NSMakeRange(where.location + 1, password.length - (where.location + 1));
+    return [password substringWithRange:secretRange];
+}
+
+- (void)setKey:(NSString *)key andSecret:(NSString *)secret
+{
+    NSString * password = [NSString stringWithFormat:@"%@ %@",
+        key, secret];
+    [self setPassword:password];
+}
+
 @end

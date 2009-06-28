@@ -3,7 +3,9 @@
 //
 
 #import "TwitterService.h"
-#import "MGTwitterEngine.h"
+#import "YHOAuthTwitterEngine.h"
+#import "OAToken.h"
+
 #import "ResponseProcessors.h"
 #import "TwitterCredentials+KeychainAdditions.h"
 
@@ -41,7 +43,7 @@
     if (self = [super init]) {
         pendingRequests = [[NSMutableDictionary alloc] init];
 
-        twitter = [[MGTwitterEngine alloc] initWithDelegate:self];
+        twitter = [[YHOAuthTwitterEngine alloc] initOAuthWithDelegate:self];
         [twitter setUsesSecureConnection:YES];
 
         self.credentials = someCredentials;
@@ -515,8 +517,14 @@
         [credentials release];
         credentials = [someCredentials retain];
 
+        OAToken * token = [[OAToken alloc] initWithKey:credentials.key
+                                                secret:credentials.secret];
+        twitter.accessToken = token;
+        [token release];
+        /*
         [twitter setUsername:credentials.username
                     password:credentials.password];
+         */
     }
 }
 

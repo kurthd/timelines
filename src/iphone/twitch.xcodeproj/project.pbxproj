@@ -37,6 +37,7 @@
 		05761FE40FF72D4600392ADC /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 05761FE00FF72D4600392ADC /* sha1.c */; };
 		057620340FF736D600392ADC /* OauthLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 057620320FF736D600392ADC /* OauthLogInView.xib */; };
 		057620390FF7388400392ADC /* OauthLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 057620380FF7388400392ADC /* OauthLogInViewController.m */; };
+		0576213A0FF7536800392ADC /* YHOAuthTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 057621390FF7536800392ADC /* YHOAuthTwitterEngine.m */; };
 		057E800E0FF314830074A91B /* TwitPicResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E800D0FF314830074A91B /* TwitPicResponseParser.m */; };
 		057E82420FF345CA0074A91B /* SendDirectMessageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E82410FF345CA0074A91B /* SendDirectMessageResponseProcessor.m */; };
 		057E82DF0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E82DE0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m */; };
@@ -243,6 +244,8 @@
 		057620330FF736D600392ADC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/OauthLogInView.xib; sourceTree = "<group>"; };
 		057620370FF7388400392ADC /* OauthLogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OauthLogInViewController.h; path = "log-in/OauthLogInViewController.h"; sourceTree = "<group>"; };
 		057620380FF7388400392ADC /* OauthLogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OauthLogInViewController.m; path = "log-in/OauthLogInViewController.m"; sourceTree = "<group>"; };
+		057621380FF7536800392ADC /* YHOAuthTwitterEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHOAuthTwitterEngine.h; sourceTree = "<group>"; };
+		057621390FF7536800392ADC /* YHOAuthTwitterEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHOAuthTwitterEngine.m; sourceTree = "<group>"; };
 		057E800C0FF314830074A91B /* TwitPicResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitPicResponseParser.h; path = twitpic/TwitPicResponseParser.h; sourceTree = "<group>"; };
 		057E800D0FF314830074A91B /* TwitPicResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitPicResponseParser.m; path = twitpic/TwitPicResponseParser.m; sourceTree = "<group>"; };
 		057E82400FF345CA0074A91B /* SendDirectMessageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SendDirectMessageResponseProcessor.h; path = twitter/processors/SendDirectMessageResponseProcessor.h; sourceTree = "<group>"; };
@@ -573,6 +576,7 @@
 			isa = PBXGroup;
 			children = (
 				05B237EB0FEDB1FA00A6A2E6 /* mg-twitter-engine */,
+				057621370FF7536800392ADC /* oauth-twitter-engine */,
 				05761F5B0FF72C1C00392ADC /* oath-consumer */,
 				05C5E7B70FF45EE10073E7F2 /* yajl */,
 				05D172890FF67ED900DCB22D /* regexkitlite */,
@@ -627,6 +631,16 @@
 				05761FE10FF72D4600392ADC /* sha1.h */,
 			);
 			path = Crypto;
+			sourceTree = "<group>";
+		};
+		057621370FF7536800392ADC /* oauth-twitter-engine */ = {
+			isa = PBXGroup;
+			children = (
+				057621380FF7536800392ADC /* YHOAuthTwitterEngine.h */,
+				057621390FF7536800392ADC /* YHOAuthTwitterEngine.m */,
+			);
+			name = "oauth-twitter-engine";
+			path = "vendor/oauth-twitter-engine";
 			sourceTree = "<group>";
 		};
 		05AE72000FF2EEB90037D1D6 /* twitpic */ = {
@@ -1370,6 +1384,7 @@
 				05761FE30FF72D4600392ADC /* hmac.c in Sources */,
 				05761FE40FF72D4600392ADC /* sha1.c in Sources */,
 				057620390FF7388400392ADC /* OauthLogInViewController.m in Sources */,
+				0576213A0FF7536800392ADC /* YHOAuthTwitterEngine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

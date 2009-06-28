@@ -558,10 +558,12 @@
         TwitterCredentials * c = [allCredentials objectAtIndex:i];
 
         NSString * usernameKey = [NSString stringWithFormat:@"username%d", i];
-        NSString * passwordKey = [NSString stringWithFormat:@"password%d", i];
+        NSString * keyKey = [NSString stringWithFormat:@"key%d", i];
+        NSString * secretKey = [NSString stringWithFormat:@"secret%d", i];
 
         [args setObject:c.username forKey:usernameKey];
-        [args setObject:c.password forKey:passwordKey];
+        [args setObject:c.key forKey:keyKey];
+        [args setObject:c.secret forKey:secretKey];
     }
 
     return args;
@@ -630,7 +632,7 @@
         [self.credentials addObject:changedCredentials];
     } else {
         [TwitterCredentials
-            deletePasswordForUsername:changedCredentials.username];
+            deleteKeyAndSecretForUsername:changedCredentials.username];
         [self.credentials removeObject:changedCredentials];
     }
 

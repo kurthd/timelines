@@ -8,6 +8,7 @@
 #import "OauthLogInViewController.h"
 
 @class MGTwitterEngine, LogInViewController, OAToken;
+@class YHOAuthTwitterEngine;
 
 @protocol LogInDisplayMgrDelegate <NSObject>
 
@@ -28,11 +29,13 @@
     LogInViewController * logInViewController;
     OauthLogInViewController * oauthLogInViewController;
 
-    MGTwitterEngine * twitter;
+    //MGTwitterEngine * twitter;
+    YHOAuthTwitterEngine * twitter;
     NSString * logInRequestId;
 
     OAToken * requestToken;
 
+    // these can be deleted once oauth works
     NSString * username;
     NSString * password;
 

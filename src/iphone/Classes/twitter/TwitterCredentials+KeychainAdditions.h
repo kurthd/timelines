@@ -7,8 +7,10 @@
 
 @interface TwitterCredentials (KeychainAdditions)
 
-- (NSString *)password;
-- (void)setPassword:(NSString *)password;
-+ (void)deletePasswordForUsername:(NSString *)username;
+- (NSString *)key;
+- (NSString *)secret;
+- (void)setKey:(NSString *)key andSecret:(NSString *)secret;
+
++ (void)deleteKeyAndSecretForUsername:(NSString *)username;
 
 @end
