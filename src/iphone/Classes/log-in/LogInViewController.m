@@ -66,8 +66,8 @@ enum CredentialRows
 {
     [super viewDidLoad];
 
-    self.tableView.backgroundColor = [UIColor twitchBackgroundColor];
     self.logInButton.enabled = NO;
+    self.tableView.backgroundColor = [UIColor twitchBackgroundColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
