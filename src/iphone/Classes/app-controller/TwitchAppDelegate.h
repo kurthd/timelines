@@ -10,7 +10,7 @@
 #import "ComposeTweetDisplayMgrDelegate.h"
 #import "PersonalFeedSelectionMgr.h"
 
-@class LogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
+@class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class TrendsDisplayMgr, SearchBarDisplayMgr;
 @class AccountsViewController;
 @class DeviceRegistrar;
@@ -24,7 +24,7 @@
     UIWindow *window;
     UITabBarController *tabBarController;
 
-    LogInDisplayMgr * logInDisplayMgr;
+    OauthLogInDisplayMgr * logInDisplayMgr;
 
     BOOL deviceNeedsRegistration;
     DeviceRegistrar * registrar;

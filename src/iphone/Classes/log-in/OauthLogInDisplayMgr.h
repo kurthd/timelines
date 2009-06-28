@@ -3,14 +3,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LogInViewControllerDelegate.h"
 #import "MGTwitterEngineDelegate.h"
 #import "OauthLogInViewController.h"
 
-@class MGTwitterEngine, LogInViewController, OAToken;
+@class MGTwitterEngine, OAToken;
 @class YHOAuthTwitterEngine;
 
-@protocol LogInDisplayMgrDelegate <NSObject>
+@protocol OathLogInDisplayMgrDelegate <NSObject>
 
 @optional
 
@@ -18,31 +17,22 @@
 
 @end
 
-@interface LogInDisplayMgr :
-    NSObject <MGTwitterEngineDelegate, OauthLogInViewControllerDelegate>
+@interface OauthLogInDisplayMgr : NSObject <OauthLogInViewControllerDelegate>
 {
-    id<LogInDisplayMgrDelegate> delegate;
+    id<OathLogInDisplayMgrDelegate> delegate;
 
     NSManagedObjectContext * context;
 
     UIViewController * rootViewController;
-    LogInViewController * logInViewController;
     OauthLogInViewController * oauthLogInViewController;
 
-    //MGTwitterEngine * twitter;
     YHOAuthTwitterEngine * twitter;
-    NSString * logInRequestId;
-
     OAToken * requestToken;
-
-    // these can be deleted once oauth works
-    NSString * username;
-    NSString * password;
 
     BOOL allowsCancel;
 }
 
-@property (nonatomic, assign) id<LogInDisplayMgrDelegate> delegate;
+@property (nonatomic, assign) id<OathLogInDisplayMgrDelegate> delegate;
 @property (nonatomic, assign) BOOL allowsCancel;
 
 - (id)initWithRootViewController:(UIViewController *)aRootViewController

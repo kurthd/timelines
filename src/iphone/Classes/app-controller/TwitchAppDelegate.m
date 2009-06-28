@@ -4,7 +4,7 @@
 
 #import "TwitchAppDelegate.h"
 #import "DeviceRegistrar.h"
-#import "LogInDisplayMgr.h"
+#import "OauthLogInDisplayMgr.h"
 #import "CredentialsActivatedPublisher.h"
 #import "CredentialsSetChangedPublisher.h"
 #import "TwitterCredentials.h"
@@ -30,7 +30,7 @@
 
 @interface TwitchAppDelegate ()
 
-@property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
+@property (nonatomic, retain) OauthLogInDisplayMgr * logInDisplayMgr;
 @property (nonatomic, retain) ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 @property (nonatomic, retain) DeviceRegistrar * registrar;
 @property (nonatomic, retain) NSMutableArray * credentials;
@@ -399,8 +399,8 @@
 
 - (void)initAccountsTab
 {
-    LogInDisplayMgr * displayMgr =
-        [[LogInDisplayMgr alloc]
+    OauthLogInDisplayMgr * displayMgr =
+        [[OauthLogInDisplayMgr alloc]
          initWithRootViewController:tabBarController
                 managedObjectContext:[self managedObjectContext]];
 
@@ -870,11 +870,11 @@
     return registrar;
 }
 
-- (LogInDisplayMgr *)logInDisplayMgr
+- (OauthLogInDisplayMgr *)logInDisplayMgr
 {
     if (!logInDisplayMgr)
         logInDisplayMgr =
-            [[LogInDisplayMgr alloc]
+            [[OauthLogInDisplayMgr alloc]
             initWithRootViewController:tabBarController
                   managedObjectContext:[self managedObjectContext]];
 
