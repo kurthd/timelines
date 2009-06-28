@@ -59,6 +59,7 @@
 
 - (IBAction)dismissView
 {
+    [webView stopLoading];
     [self dismissModalViewControllerAnimated:YES];
 }
 
