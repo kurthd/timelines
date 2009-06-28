@@ -19,6 +19,7 @@
     IBOutlet UILabel * accountLabel;
 
     IBOutlet UIView * activityView;
+    BOOL displayingActivity;
 }
 
 @property (nonatomic, assign) id<ComposeTweetViewControllerDelegate> delegate;

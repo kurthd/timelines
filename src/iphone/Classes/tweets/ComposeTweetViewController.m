@@ -6,28 +6,6 @@
 
 static const NSInteger MAX_TWEET_LENGTH = 140;
 
-@interface UIApplication (KeyboardView)
-
-- (UIView *)keyboardView;
-
-@end
-
-@implementation UIApplication (KeyboardView)
-
-- (UIView *)keyboardView
-{
-    NSArray * windows = [self windows];
-    for (UIWindow *window in [windows reverseObjectEnumerator])
-        for (UIView *view in [window subviews])
-            if (!strcmp(object_getClassName(view), "UIKeyboard"))
-                return view;
-    
-    return nil;
-}
-
-@end
-
-
 @interface ComposeTweetViewController ()
 
 - (void)disableForm;
@@ -54,13 +32,22 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    displayingActivity = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
-    [textView becomeFirstResponder];
+    if (!displayingActivity)
+        [textView becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [textView resignFirstResponder];
 }
 
 - (void)setTitle:(NSString *)title
@@ -105,12 +92,14 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                              cache:YES];
 
     activityView.alpha = 0.75;
-    [[[UIApplication sharedApplication] keyboardView].superview
-        addSubview:activityView];
+    [self.view addSubview:activityView];
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
 
     [UIView commitAnimations];
+
+    [textView resignFirstResponder];
+    displayingActivity = YES;
 }
 
 - (void)hideActivityView
@@ -126,13 +115,24 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
 
     [UIView commitAnimations];
+
+    displayingActivity = NO;
 }
 
 #pragma mark UITextViewDelegate implementation
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    NSLog(@"Called");
+    return !displayingActivity;
+}
+
 - (BOOL)textView:(UITextView *)aTextView
     shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    if (displayingActivity)
+        return NO;
+
     NSString * s = [textView.text stringByReplacingCharactersInRange:range
                                                           withString:text];
 
