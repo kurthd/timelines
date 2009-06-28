@@ -737,7 +737,6 @@
             if (perTweetType.count < NUM_TO_KEEP) {
                 [perTweetType addObject:t];  // it lives
                 [sparedUsers addObject:t.user];
-                NSLog(@"Saved tweets for '%@': '%d'.", c.username, perTweetType.count);
             } else
                 [hitList addObject:t];  // it dies
         }

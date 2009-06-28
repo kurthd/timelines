@@ -71,6 +71,13 @@
 
 #pragma mark NSURLConnectionDelegate implementation
 
+- (NSURLRequest *)connection:(NSURLConnection *)connection
+             willSendRequest:(NSURLRequest *)request
+            redirectResponse:(NSURLResponse *)redirectResponse
+{
+    return request;
+}
+
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     NSLog(@"Received data: '%@'.",
