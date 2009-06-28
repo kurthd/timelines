@@ -38,6 +38,7 @@
     NSObject<TimelineDataSource> * service;
 
     TweetInfo * selectedTweet;
+    NSString * currentUsername;
     User * user;
     NSMutableDictionary * timeline;
     NSNumber * updateId;
@@ -86,6 +87,7 @@
 @property (readonly) TwitchBrowserViewController * browserController;
 
 @property (nonatomic, retain) TweetInfo * selectedTweet;
+@property (nonatomic, retain) NSString * currentUsername;
 @property (nonatomic, retain) User * user;
 @property (nonatomic, copy) NSNumber * updateId;
 

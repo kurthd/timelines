@@ -31,7 +31,7 @@
     setUserToFirstTweeter, tweetDetailsTimelineDisplayMgr,
     tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher,
     lastFollowingUsername, lastTweetDetailsWrapperController,
-    lastTweetDetailsController, currentTweetDetailsUser;
+    lastTweetDetailsController, currentTweetDetailsUser, currentUsername;
 
 - (void)dealloc
 {
@@ -44,6 +44,7 @@
     [service release];
 
     [selectedTweet release];
+    [currentUsername release];
     [user release];
     [timeline release];
     [updateId release];
@@ -279,7 +280,6 @@
 {
     NSLog(@"Timeline display mgr: fetched tweet %@", tweetId);
     TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
-    self.currentTweetDetailsUser = tweetInfo.user.username;
 
     [self.lastTweetDetailsController setTweet:tweetInfo avatar:nil];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
@@ -357,6 +357,7 @@
     self.tweetDetailsNetAwareViewController =
         [[[NetworkAwareViewController alloc]
         initWithTargetViewController:nil] autorelease];
+
     self.tweetDetailsTimelineDisplayMgr =
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
@@ -365,7 +366,16 @@
         composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
     self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = YES;
+    self.tweetDetailsTimelineDisplayMgr.currentUsername = username;
     [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
+    
+    UIBarButtonItem * sendDMButton =
+        [[UIBarButtonItem alloc] initWithTitle:@"Message"
+        style:UIBarButtonItemStyleBordered
+        target:self.tweetDetailsTimelineDisplayMgr
+        action:@selector(sendDirectMessageToCurrentUser)];
+    self.tweetDetailsNetAwareViewController.navigationItem.rightBarButtonItem =
+        sendDMButton;
 
     self.tweetDetailsNetAwareViewController.delegate =
         self.tweetDetailsTimelineDisplayMgr;
@@ -422,14 +432,25 @@
 
 - (void)sendDirectMessageToUser:(NSString *)username
 {
-    NSLog(@"Timeline display manager: showing tweet details...");
+    NSLog(@"Timeline display manager: sending direct message to %@", username);
     [composeTweetDisplayMgr composeDirectMessageTo:username];
 }
 
+- (void)sendDirectMessageToCurrentUser
+{
+    NSLog(@"Timeline display manager: sending direct message to %@",
+        user.username);
+    [composeTweetDisplayMgr composeDirectMessageTo:self.currentUsername];
+}
+
 - (void)loadNewTweetWithId:(NSString *)tweetId
+    username:(NSString *)replyToUsername
 {
     NSLog(@"Timeline display manager: showing tweet details for tweet %@",
         tweetId);
+
+    self.currentTweetDetailsUser = replyToUsername;
+
     [service fetchTweet:tweetId];
     [self.wrapperController.navigationController
         pushViewController:self.newTweetDetailsWrapperController animated:YES];
@@ -492,7 +513,7 @@
     NSString * title =
         NSLocalizedString(@"userlisttableview.following.title", @"");
     self.userListNetAwareViewController.navigationItem.title = title;
-    
+
     if (![username isEqual:lastFollowingUsername] || !showingFollowing) {
         [followingUsers removeAllObjects];
         followingUsersPagesShown = 1;
@@ -521,7 +542,7 @@
     NSString * title =
         NSLocalizedString(@"userlisttableview.followers.title", @"");
     self.userListNetAwareViewController.navigationItem.title = title;
-    
+
     if (![username isEqual:lastFollowingUsername] || showingFollowing) {
         [followers removeAllObjects];
         followersPagesShown = 1;
@@ -548,6 +569,7 @@
     self.tweetDetailsNetAwareViewController =
         [[[NetworkAwareViewController alloc]
         initWithTargetViewController:nil] autorelease];
+
     self.tweetDetailsTimelineDisplayMgr =
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:

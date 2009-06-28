@@ -40,8 +40,10 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 {
     [super viewWillAppear:animated];
     [delegate showingTweetDetails];
-    if (self.selectedTweet)
+    if (self.selectedTweet) {
+        [delegate setCurrentTweetDetailsUser:self.selectedTweet.user.username];
         [self setupWebView];
+    }
 }
 
 - (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)avatarImage
@@ -168,7 +170,9 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
             [delegate showTweetsForUser:username];
         } else if (inReplyToString = [webpage stringByMatching:@"#\\d*"]) {
             NSString * tweetId = [inReplyToString substringFromIndex:1];
-            [delegate loadNewTweetWithId:tweetId];
+            NSString * replyToUsername =
+                self.selectedTweet.inReplyToTwitterUsername;
+            [delegate loadNewTweetWithId:tweetId username:replyToUsername];
         } else
             [delegate visitWebpage:webpage];
     }
