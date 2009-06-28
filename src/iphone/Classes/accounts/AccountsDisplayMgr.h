@@ -10,7 +10,7 @@
 @class CredentialsSetChangedPublisher;
 
 @interface AccountsDisplayMgr :
-    NSObject <AccountsViewControllerDelegate, LogInDisplayMgrDelegate>
+    NSObject <AccountsViewControllerDelegate, OathLogInDisplayMgrDelegate>
 {
     AccountsViewController * accountsViewController;
     OauthLogInDisplayMgr * logInDisplayMgr;

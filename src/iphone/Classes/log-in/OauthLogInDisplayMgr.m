@@ -151,7 +151,6 @@
 
 - (void)displayErrorWithMessage:(NSString *)message
 {
-
     NSString * title = NSLocalizedString(@"login.failed.alert.title", @"");
 
     UIAlertView * alert = [UIAlertView simpleAlertViewWithTitle:title
