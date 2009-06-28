@@ -122,7 +122,7 @@
             [timelineController setUser:firstTweet.user];
             self.user = firstTweet.user;
         } else if (credentials)
-            [service fetchUserInfoForUsername:credentials.username];
+            [service fetchUserInfoForUsername:self.currentUsername];
     }
     [timelineController setTweets:[timeline allValues] page:pagesShown];
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
@@ -896,7 +896,7 @@
     if (oldCredentials && oldCredentials != credentials) {
         // Changed accounts (as opposed to setting it for the first time)
 
-        NSLog(@"Timeline displaying manager: changing accounts (%@)",
+        NSLog(@"Timeline display manager: changing accounts (%@)",
             credentials.username);
 
         [timeline removeAllObjects];
