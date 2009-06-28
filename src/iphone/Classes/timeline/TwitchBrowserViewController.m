@@ -82,9 +82,8 @@
     if (webView.loading) {
         [self updateViewForNotLoading];
         [webView stopLoading];
-    } else {
+    } else
         [webView reload];
-    }
 }
 
 - (IBAction)openInSafari
