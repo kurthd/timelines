@@ -82,6 +82,11 @@
         NSDictionary * senderData = [datum objectForKey:@"sender"];
         NSDictionary * recipientData = [datum objectForKey:@"recipient"];
 
+        // If the user has an empty timeline, there will be one element and none
+        // of the required data will be available.
+        if (!senderData || !recipientData)
+            continue;
+
         User * sender = [self userFromData:senderData];
         User * recipient = [self userFromData:recipientData];
 

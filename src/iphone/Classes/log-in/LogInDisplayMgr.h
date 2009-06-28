@@ -41,6 +41,6 @@
 - (id)initWithRootViewController:(UIViewController *)aRootViewController
             managedObjectContext:(NSManagedObjectContext *)aContext;
 
-- (void)logIn;
+- (void)logIn:(BOOL)animated;
 
 @end

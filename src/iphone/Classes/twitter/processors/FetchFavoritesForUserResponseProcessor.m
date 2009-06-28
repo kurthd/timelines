@@ -68,6 +68,11 @@
     NSMutableSet * uniqueUsers = [NSMutableSet set];
     for (id status in statuses) {
         NSDictionary * userData = [status objectForKey:@"user"];
+        // If the user has an empty timeline, there will be one element and none
+        // of the required data will be available.
+        if (!userData)
+            continue;
+
         NSString * userId = [[userData objectForKey:@"id"] description];
         User * tweetAuthor = [User userWithId:userId context:context];
 

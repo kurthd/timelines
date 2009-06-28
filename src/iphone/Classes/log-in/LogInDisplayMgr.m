@@ -63,10 +63,10 @@
     return self;
 }
 
-- (void)logIn
+- (void)logIn:(BOOL)animated;
 {
     [self.rootViewController presentModalViewController:self.logInViewController
-                                               animated:YES];
+                                               animated:animated];
     [self.logInViewController promptForLogIn];
 }
 

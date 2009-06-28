@@ -141,7 +141,7 @@
             "but an active account has been set: '%@'.",
             self.activeCredentials.credentials);
         self.logInDisplayMgr.allowsCancel = NO;
-        [self.logInDisplayMgr logIn];
+        [self.logInDisplayMgr logIn:NO];
     } else {
         NSAssert(self.activeCredentials.credentials, @"Credentials exist, but "
             "no active account has been set.");
@@ -436,7 +436,7 @@
     }
 
     if (viewController == searchNetAwareViewController.navigationController)
-        [searchBarDisplayMgr searchBarViewWillAppear:YES];
+        [searchBarDisplayMgr searchBarViewWillAppear:NO];
 
     return YES;
 }
