@@ -4,6 +4,12 @@
 
 #import "TwitchBrowserViewController.h"
 
+@interface TwitchBrowserViewController ()
+
+- (void)updateViewForNotLoading;
+
+@end
+
 @implementation TwitchBrowserViewController
 
 @synthesize currentUrl;
@@ -26,10 +32,8 @@
 {
     backButton.enabled = [webView canGoBack];
     forwardButton.enabled = [webView canGoForward];
-    if (!webView.loading) {
-        haltButton.image = [UIImage imageNamed:@"Refresh.png"];
-        activityIndicator.hidden = YES;
-    }
+    if (!webView.loading)
+        [self updateViewForNotLoading];
 
     NSString * loadedPage = [[webView.request URL] absoluteString];
     titleLabel.text =
@@ -75,16 +79,24 @@
 
 - (IBAction)haltLoading
 {
-    if (webView.loading)
+    if (webView.loading) {
+        [self updateViewForNotLoading];
         [webView stopLoading];
-    else
+    } else {
         [webView reload];
+    }
 }
 
 - (IBAction)openInSafari
 {
     NSURL * url = [NSURL URLWithString:self.currentUrl];
     [[UIApplication sharedApplication] openURL:url];
+}
+
+- (void)updateViewForNotLoading
+{
+    haltButton.image = [UIImage imageNamed:@"Refresh.png"];
+    activityIndicator.hidden = YES;
 }
 
 @end
