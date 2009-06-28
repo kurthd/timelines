@@ -5,8 +5,9 @@
 #import <Foundation/Foundation.h>
 #import "LogInViewControllerDelegate.h"
 #import "MGTwitterEngineDelegate.h"
+#import "OauthLogInViewController.h"
 
-@class MGTwitterEngine, LogInViewController;
+@class MGTwitterEngine, LogInViewController, OAToken;
 
 @protocol LogInDisplayMgrDelegate <NSObject>
 
@@ -17,7 +18,7 @@
 @end
 
 @interface LogInDisplayMgr :
-    NSObject <LogInViewControllerDelegate, MGTwitterEngineDelegate>
+    NSObject <MGTwitterEngineDelegate, OauthLogInViewControllerDelegate>
 {
     id<LogInDisplayMgrDelegate> delegate;
 
@@ -25,9 +26,12 @@
 
     UIViewController * rootViewController;
     LogInViewController * logInViewController;
+    OauthLogInViewController * oauthLogInViewController;
 
     MGTwitterEngine * twitter;
     NSString * logInRequestId;
+
+    OAToken * requestToken;
 
     NSString * username;
     NSString * password;

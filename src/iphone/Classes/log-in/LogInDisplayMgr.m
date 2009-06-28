@@ -10,6 +10,14 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "UIApplication+NetworkActivityIndicatorAdditions.h"
 
+#import "OAConsumer.h"
+#import "OAMutableURLRequest.h"
+#import "OADataFetcher.h"
+#import "OAServiceTicket.h"
+
+static NSString * OATH_KEY = @"YSfdtPCIvkvMkItCrc3OsQ";
+static NSString * OATH_SECRET = @"M2mHASraAGv9kRu1KnyAXYb1snEbmRVrqneuHTCeY";
+
 @interface LogInDisplayMgr ()
 
 - (void)displayErrorWithMessage:(NSString *)message;
@@ -18,8 +26,10 @@
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, retain) UIViewController * rootViewController;
 @property (nonatomic, retain) LogInViewController * logInViewController;
+@property (nonatomic, retain) OauthLogInViewController * oauthLogInViewController;
 @property (nonatomic, retain) MGTwitterEngine * twitter;
 @property (nonatomic, copy) NSString * logInRequestId;
+@property (nonatomic, retain) OAToken * requestToken;
 @property (nonatomic, copy) NSString * username;
 @property (nonatomic, copy) NSString * password;
 
@@ -29,8 +39,9 @@
 
 @synthesize delegate;
 @synthesize context;
-@synthesize rootViewController, logInViewController;
+@synthesize rootViewController, logInViewController, oauthLogInViewController;
 @synthesize twitter, logInRequestId;
+@synthesize requestToken;
 @synthesize username, password;
 @synthesize allowsCancel;
 
@@ -42,9 +53,12 @@
 
     self.rootViewController = nil;
     self.logInViewController = nil;
+    self.oauthLogInViewController = nil;
 
     self.twitter = nil;
     self.logInRequestId = nil;
+
+    self.requestToken = nil;
 
     self.username = nil;
     self.password = nil;
@@ -65,9 +79,63 @@
 
 - (void)logIn:(BOOL)animated;
 {
-    [self.rootViewController presentModalViewController:self.logInViewController
-                                               animated:animated];
-    [self.logInViewController promptForLogIn];
+    //[self.rootViewController presentModalViewController:self.logInViewController
+    //                                           animated:animated];
+    //[self.logInViewController promptForLogIn];
+
+    OAConsumer * consumer = [[OAConsumer alloc] initWithKey:OATH_KEY
+                                                     secret:OATH_SECRET];
+
+    NSURL * url =
+        [NSURL URLWithString:@"http://twitter.com/oauth/request_token"];
+    OAMutableURLRequest * request =
+        [[OAMutableURLRequest alloc] initWithURL:url
+                                        consumer:consumer
+                                           token:nil
+                                           realm:nil
+                               signatureProvider:nil];
+    [request setHTTPMethod:@"POST"];
+
+    OADataFetcher * fetcher = [[OADataFetcher alloc] init];
+
+    SEL didFinishSelector = @selector(requestTokenTicket:didFinishWithData:);
+    SEL didFailSelector = @selector(requestTokenTicket:didFailWithError:);
+    [fetcher fetchDataWithRequest:request
+                         delegate:self
+                didFinishSelector:didFinishSelector
+                  didFailSelector:didFailSelector];
+}
+
+#pragma mark OADataFetcher delegate implementation
+
+- (void)requestTokenTicket:(OAServiceTicket *)ticket
+         didFinishWithData:(NSData *)data
+{
+    if (ticket.didSucceed) {
+        NSString * responseBody =
+            [[NSString alloc] initWithData:data
+                                  encoding:NSUTF8StringEncoding];
+        self.requestToken =
+            [[[OAToken alloc] initWithHTTPResponseBody:responseBody]
+            autorelease];
+        NSLog(@"My token key is: '%@', secret is: '%@'.", requestToken.key,
+            requestToken.secret);
+
+        NSURL * url = [NSURL URLWithString:
+            [NSString stringWithFormat:@"http://twitter.com/oauth/"
+            "authorize?oauth_token=%@&oauth_callback=oob", requestToken.key]];
+        NSURLRequest * req = [NSURLRequest requestWithURL:url];
+        [self.oauthLogInViewController loadRequest:req];
+
+        [self.rootViewController presentModalViewController:self.oauthLogInViewController
+                                                   animated:YES];
+    }
+}
+
+- (void)requestTokenTicket:(OAServiceTicket *)ticket
+          didFailWithError:(NSError *)error
+{
+    [self displayErrorWithMessage:error.localizedDescription];
 }
 
 #pragma mark LogInViewControllerDelegate implementation
@@ -88,6 +156,31 @@
         self.logInRequestId);
 }
 
+- (void)userIsDone:(NSString *)pin
+{
+    OAConsumer * consumer = [[OAConsumer alloc] initWithKey:OATH_KEY
+                                                     secret:OATH_SECRET];
+
+    NSURL * url =
+        [NSURL URLWithString:@"http://twitter.com/oauth/access_token"];
+    OAMutableURLRequest * request =
+        [[OAMutableURLRequest alloc] initWithURL:url
+                                        consumer:consumer
+                                           token:self.requestToken
+                                           realm:nil
+                               signatureProvider:nil];
+    [request setHTTPMethod:@"POST"];
+
+    OADataFetcher * fetcher = [[OADataFetcher alloc] init];
+
+    SEL didFinishSelector = @selector(accessTokenTicket:didFinishWithData:);
+    SEL didFailSelector = @selector(accessTokenTicket:didFailWithError:);
+    [fetcher fetchDataWithRequest:request
+                         delegate:self
+                didFinishSelector:didFinishSelector
+                  didFailSelector:didFailSelector];
+}
+
 - (void)userDidCancel
 {
     NSAssert(self.allowsCancel, @"User cancelled even though it's forbidden.");
@@ -98,6 +191,29 @@
 {
     return self.allowsCancel;
 }
+
+#pragma mark Access token step of OAuth
+
+- (void)accessTokenTicket:(OAServiceTicket *)ticket
+        didFinishWithData:(NSData *)data
+{
+    if (ticket.didSucceed) {
+        NSString * responseBody =
+            [[NSString alloc] initWithData:data
+                                  encoding:NSUTF8StringEncoding];
+        self.requestToken =
+            [[[OAToken alloc] initWithHTTPResponseBody:responseBody]
+            autorelease];
+        NSLog(@"My token key is: '%@', secret is: '%@'.", requestToken.key,
+            requestToken.secret);
+    }
+}
+
+- (void)accessTokenTicket:(OAServiceTicket *)ticket
+         didFailWithError:(NSError *)error
+{
+}
+
 
 #pragma mark LogInDisplayMgrDelegate implementation
 
@@ -220,10 +336,22 @@
         logInViewController =
             [[LogInViewController alloc] initWithNibName:@"LogInView"
                                                   bundle:nil];
-        logInViewController.delegate = self;
+        //logInViewController.delegate = self;
     }
 
     return logInViewController;
+}
+
+- (OauthLogInViewController *)oauthLogInViewController
+{
+    if (!oauthLogInViewController) {
+        oauthLogInViewController =
+            [[OauthLogInViewController alloc]
+            initWithNibName:@"OauthLogInView" bundle:nil];
+        oauthLogInViewController.delegate = self;
+    }
+
+    return oauthLogInViewController;
 }
 
 - (MGTwitterEngine *)twitter
