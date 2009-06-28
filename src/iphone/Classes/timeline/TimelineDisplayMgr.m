@@ -907,9 +907,12 @@
         
         needsRefresh = YES;
         pagesShown = 1;
-        
-        [self.timelineController
-            setSegregateTweetsFromUser:credentials.username];
+
+        // if we're currently displaying direct messages for the current user
+        // set the username to match the new credentials
+        if (self.timelineController.segregatedSenderUsername)
+            [self.timelineController
+                setSegregateTweetsFromUser:credentials.username];
             
         [self.wrapperController setCachedDataAvailable:NO];
         [self.wrapperController setUpdatingState:kConnectedAndUpdating];

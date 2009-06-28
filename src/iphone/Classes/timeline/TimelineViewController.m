@@ -20,7 +20,8 @@
 @implementation TimelineViewController
 
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
-    showWithoutAvatars, outgoingSortedTweetCache, incomingSortedTweetCache;
+    showWithoutAvatars, outgoingSortedTweetCache, incomingSortedTweetCache,
+    segregatedSenderUsername;
 
 - (void)dealloc
 {
@@ -329,9 +330,7 @@
 - (void)setSegregateTweetsFromUser:(NSString *)username
 {
     NSLog(@"Setting inbox username...");
-    NSString * tempUsername = [username copy];
-    [segregatedSenderUsername release];
-    segregatedSenderUsername = tempUsername;
+    self.segregatedSenderUsername = username;
     
     if (username) {
         self.tableView.tableHeaderView = inboxOutboxView;
