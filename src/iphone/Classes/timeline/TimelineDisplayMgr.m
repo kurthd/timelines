@@ -907,6 +907,10 @@
         
         needsRefresh = YES;
         pagesShown = 1;
+        
+        [self.timelineController
+            setSegregateTweetsFromUser:credentials.username];
+            
         [self.wrapperController setCachedDataAvailable:NO];
         [self.wrapperController setUpdatingState:kConnectedAndUpdating];
     } else if (hasBeenDisplayed) {// set for first time and persisted data shown
