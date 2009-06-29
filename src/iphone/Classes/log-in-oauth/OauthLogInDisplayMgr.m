@@ -66,7 +66,12 @@
 
 - (void)logIn:(BOOL)animated;
 {
-    // TODO: Display some kind of animation during the first connection
+    self.oauthLogInViewController.logInCanBeCancelled = self.allowsCancel;
+    [self.rootViewController
+        presentModalViewController:self.oauthLogInViewController
+                          animated:animated];
+
+    [self.oauthLogInViewController showActivityView:animated];
 
     [self.twitter requestRequestToken];
     [[UIApplication sharedApplication] networkActivityIsStarting];
@@ -78,16 +83,16 @@
 {
     NSLog(@"Received request token:: '%@'.", self.twitter.requestToken);
 
+    [self.oauthLogInViewController hideActivityView:YES];
+
     self.requestToken = self.twitter.requestToken;
 
     NSURL * url = [NSURL URLWithString:
         [NSString stringWithFormat:@"http://twitter.com/oauth/"
         "authorize?oauth_token=%@&oauth_callback=oob", requestToken.key]];
     NSURLRequest * req = [NSURLRequest requestWithURL:url];
-    [self.oauthLogInViewController loadRequest:req];
 
-    [self.rootViewController
-        presentModalViewController:self.oauthLogInViewController animated:YES];
+    [self.oauthLogInViewController loadAuthRequest:req];
 
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
@@ -126,6 +131,11 @@
 {
     [self.twitter requestAccessToken:pin];
     [[UIApplication sharedApplication] networkActivityIsStarting];
+}
+
+- (void)userDidStartOver
+{
+    [self logIn:NO];
 }
 
 - (void)userDidCancel
