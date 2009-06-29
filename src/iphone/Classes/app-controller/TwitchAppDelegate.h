@@ -21,8 +21,8 @@
     <UIApplicationDelegate, UITabBarControllerDelegate, DeviceRegistrarDelegate,
     TwitterServiceDelegate, ComposeTweetDisplayMgrDelegate>
 {
-    UIWindow *window;
-    UITabBarController *tabBarController;
+    UIWindow * window;
+    UITabBarController * tabBarController;
 
     OauthLogInDisplayMgr * logInDisplayMgr;
 
