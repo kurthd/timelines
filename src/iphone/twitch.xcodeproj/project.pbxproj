@@ -99,6 +99,8 @@
 		05C7029D0FF83DBE00936E4C /* TwitPicCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7029C0FF83DBE00936E4C /* TwitPicCredentials.m */; };
 		05C702A20FF83DF000936E4C /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C702A10FF83DF000936E4C /* TwitterCredentials.m */; };
 		05C702BD0FF83F7C00936E4C /* TwitPicCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C702BC0FF83F7C00936E4C /* TwitPicCredentials+KeychainAdditions.m */; };
+		05C7051A0FF88C1E00936E4C /* ExplainOauthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C705190FF88C1E00936E4C /* ExplainOauthViewController.m */; };
+		05C7051D0FF88C4100936E4C /* ExplainOauthView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7051B0FF88C4100936E4C /* ExplainOauthView.xib */; };
 		05D1728C0FF67ED900DCB22D /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D1728B0FF67ED900DCB22D /* RegexKitLite.m */; };
 		05D173E30FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D173E20FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m */; };
 		05D174070FF69FC500DCB22D /* Mention.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D174060FF69FC500DCB22D /* Mention.m */; };
@@ -374,6 +376,9 @@
 		05C702A10FF83DF000936E4C /* TwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterCredentials.m; path = twitter/TwitterCredentials.m; sourceTree = "<group>"; };
 		05C702BB0FF83F7C00936E4C /* TwitPicCredentials+KeychainAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TwitPicCredentials+KeychainAdditions.h"; path = "twitpic/TwitPicCredentials+KeychainAdditions.h"; sourceTree = "<group>"; };
 		05C702BC0FF83F7C00936E4C /* TwitPicCredentials+KeychainAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TwitPicCredentials+KeychainAdditions.m"; path = "twitpic/TwitPicCredentials+KeychainAdditions.m"; sourceTree = "<group>"; };
+		05C705180FF88C1E00936E4C /* ExplainOauthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExplainOauthViewController.h; sourceTree = "<group>"; };
+		05C705190FF88C1E00936E4C /* ExplainOauthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExplainOauthViewController.m; sourceTree = "<group>"; };
+		05C7051C0FF88C4100936E4C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/ExplainOauthView.xib; sourceTree = "<group>"; };
 		05D1728A0FF67ED900DCB22D /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		05D1728B0FF67ED900DCB22D /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		05D173E10FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TwitterCredentials+KeychainAdditions.h"; path = "twitter/TwitterCredentials+KeychainAdditions.h"; sourceTree = "<group>"; };
@@ -822,6 +827,7 @@
 				91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */,
 				05C35E770FF5474800F91448 /* SearchBarView.xib */,
 				057620320FF736D600392ADC /* OauthLogInView.xib */,
+				05C7051B0FF88C4100936E4C /* ExplainOauthView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -976,6 +982,8 @@
 				05C702890FF835AE00936E4C /* OauthLogInDisplayMgr.m */,
 				05C7028A0FF835AE00936E4C /* OauthLogInViewController.h */,
 				05C7028B0FF835AE00936E4C /* OauthLogInViewController.m */,
+				05C705180FF88C1E00936E4C /* ExplainOauthViewController.h */,
+				05C705190FF88C1E00936E4C /* ExplainOauthViewController.m */,
 			);
 			path = "log-in-oauth";
 			sourceTree = "<group>";
@@ -1270,6 +1278,7 @@
 				91CD82B70FF558FE004D04D5 /* Refresh.png in Resources */,
 				05C35E790FF5474800F91448 /* SearchBarView.xib in Resources */,
 				057620340FF736D600392ADC /* OauthLogInView.xib in Resources */,
+				05C7051D0FF88C4100936E4C /* ExplainOauthView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1411,6 +1420,7 @@
 				05C7029D0FF83DBE00936E4C /* TwitPicCredentials.m in Sources */,
 				05C702A20FF83DF000936E4C /* TwitterCredentials.m in Sources */,
 				05C702BD0FF83F7C00936E4C /* TwitPicCredentials+KeychainAdditions.m in Sources */,
+				05C7051A0FF88C1E00936E4C /* ExplainOauthViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1464,6 +1474,14 @@
 				05C5E6A80FF43CC10073E7F2 /* en */,
 			);
 			name = TrendsView.xib;
+			sourceTree = "<group>";
+		};
+		05C7051B0FF88C4100936E4C /* ExplainOauthView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				05C7051C0FF88C4100936E4C /* en */,
+			);
+			name = ExplainOauthView.xib;
 			sourceTree = "<group>";
 		};
 		05F45CFF0FF059B400EBAFC7 /* ComposeTweetView.xib */ = {

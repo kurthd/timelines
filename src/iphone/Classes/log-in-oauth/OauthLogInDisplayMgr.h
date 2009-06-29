@@ -5,6 +5,7 @@
 #import <Foundation/Foundation.h>
 #import "MGTwitterEngineDelegate.h"
 #import "OauthLogInViewController.h"
+#import "ExplainOauthViewController.h"
 
 @class MGTwitterEngine, OAToken;
 @class YHOAuthTwitterEngine;
@@ -17,13 +18,16 @@
 
 @end
 
-@interface OauthLogInDisplayMgr : NSObject <OauthLogInViewControllerDelegate>
+@interface OauthLogInDisplayMgr :
+    NSObject
+    <OauthLogInViewControllerDelegate, ExplainOauthViewControllerDelegate>
 {
     id<OathLogInDisplayMgrDelegate> delegate;
 
     NSManagedObjectContext * context;
 
     UIViewController * rootViewController;
+    ExplainOauthViewController * explainOauthViewController;
     OauthLogInViewController * oauthLogInViewController;
 
     YHOAuthTwitterEngine * twitter;

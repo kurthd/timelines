@@ -4,6 +4,9 @@
 
 #import "OauthLogInViewController.h"
 #import "RegexKitLite.h"
+#import "UIApplication+NetworkActivityIndicatorAdditions.h"
+
+static NSInteger loading = 0;
 
 @interface OauthLogInViewController ()
 
@@ -51,6 +54,13 @@
 
     self.webView.scalesPageToFit = YES;
     self.logInCanBeCancelled = NO;
+
+    /*
+    CGRect activityFrame = self.activityView.frame;
+    activityFrame.origin.x = 10.0;
+    activityFrame.origin.y = 44.0;
+    self.activityView.frame = activityFrame;
+    */
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -110,7 +120,7 @@
 
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:animated];
-
+    
     self.activityView.alpha = 1.0;
 
     if (animated)
@@ -128,10 +138,10 @@
                                  cache:NO];
     }
 
-    self.activityView.alpha = 0.0;
-
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleDefault animated:animated];
+
+    self.activityView.alpha = 0.0;
 
     if (animated)
         [UIView commitAnimations];
@@ -152,6 +162,7 @@
         NSString * body = [[[NSString alloc]
             initWithData:[req HTTPBody] encoding:NSUTF8StringEncoding]
             autorelease];
+        NSLog(@"headers: '%@'", [req allHTTPHeaderFields]);
         NSLog(@"body: '%@'", body);
         if ([url.absoluteString isEqual:authUrl]) {
              authState =
@@ -160,12 +171,26 @@
                 kOther :
                 kEnterPin;
 
-            [self configureViewForState:authState];
         }
-    } else
-        [self configureViewForState:authState];
+    }
 
     return YES;
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)view
+{
+    NSLog(@"Started load: %d", ++loading);
+    [[UIApplication sharedApplication] networkActivityIsStarting];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)view
+{
+    NSLog(@"Finished load: %d", --loading);
+    if (authState == kAuthChallenge)
+        [self hideActivityView:YES];
+
+    [self configureViewForState:authState];
+    [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 #pragma mark UI helpers

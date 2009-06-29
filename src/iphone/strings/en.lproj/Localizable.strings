@@ -1,6 +1,11 @@
 alert.dismiss = "Dismiss";
 
+
+/* Log in */
 login.failed.alert.title = "Log In Failed";
+explainoauth.begin = "Authorize with Twitter";
+explainoauth.header = "Twitbit requires your authorization";
+explainoauth.footer = "Authorization is a simple process. You will be provided with a Twitter log in screen and given the option to give Twitbit access to your account.\n\nAfter you log in and see your pin, tap Done.";
 
 /* TwitchAppDelegate */
 appdelegate.hometabtitle = "Home";

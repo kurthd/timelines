@@ -22,6 +22,8 @@
 
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, retain) UIViewController * rootViewController;
+@property (nonatomic, retain) ExplainOauthViewController *
+    explainOauthViewController;
 @property (nonatomic, retain) OauthLogInViewController *
     oauthLogInViewController;
 @property (nonatomic, retain) YHOAuthTwitterEngine * twitter;
@@ -33,7 +35,8 @@
 
 @synthesize delegate;
 @synthesize context;
-@synthesize rootViewController, oauthLogInViewController;
+@synthesize rootViewController;
+@synthesize explainOauthViewController, oauthLogInViewController;
 @synthesize twitter;
 @synthesize requestToken;
 @synthesize allowsCancel;
@@ -46,6 +49,7 @@
 
     self.rootViewController = nil;
     self.oauthLogInViewController = nil;
+    self.explainOauthViewController = nil;
 
     self.twitter = nil;
     self.requestToken = nil;
@@ -66,6 +70,7 @@
 
 - (void)logIn:(BOOL)animated;
 {
+    /*
     self.oauthLogInViewController.logInCanBeCancelled = self.allowsCancel;
     [self.rootViewController
         presentModalViewController:self.oauthLogInViewController
@@ -75,6 +80,11 @@
 
     [self.twitter requestRequestToken];
     [[UIApplication sharedApplication] networkActivityIsStarting];
+    */
+
+    [self.rootViewController
+        presentModalViewController:self.explainOauthViewController
+                          animated:animated];
 }
 
 #pragma mark YHOAuthTwitterEngineDelegate implementation
@@ -82,8 +92,6 @@
 - (void)receivedRequestToken:(id)sender
 {
     NSLog(@"Received request token:: '%@'.", self.twitter.requestToken);
-
-    [self.oauthLogInViewController hideActivityView:YES];
 
     self.requestToken = self.twitter.requestToken;
 
@@ -93,6 +101,10 @@
     NSURLRequest * req = [NSURLRequest requestWithURL:url];
 
     [self.oauthLogInViewController loadAuthRequest:req];
+
+    [self.explainOauthViewController
+        presentModalViewController:self.oauthLogInViewController
+                          animated:YES];
 
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
@@ -123,6 +135,14 @@
     }
 
     [[UIApplication sharedApplication] networkActivityDidFinish];
+}
+
+#pragma mark ExplainOauthViewControllerDelegate
+
+- (void)beginAuthorization
+{
+    [self.twitter requestRequestToken];
+    [self.explainOauthViewController showActivityView];
 }
 
 #pragma mark OauthLogInViewControllerDelegate implementation
@@ -180,6 +200,18 @@
     }
 
     return oauthLogInViewController;
+}
+
+- (ExplainOauthViewController *)explainOauthViewController
+{
+    if (!explainOauthViewController) {
+        explainOauthViewController =
+            [[ExplainOauthViewController alloc]
+            initWithNibName:@"ExplainOauthView" bundle:nil];
+        explainOauthViewController.delegate = self;
+    }
+
+    return explainOauthViewController;
 }
 
 - (YHOAuthTwitterEngine *)twitter
