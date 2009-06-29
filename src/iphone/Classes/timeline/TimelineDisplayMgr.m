@@ -850,6 +850,9 @@
     [service release];
     service = aService;
 
+    // in case in the middle of updating while switched
+    [self.wrapperController setUpdatingState:kConnectedAndNotUpdating];
+
     [timeline removeAllObjects];
     [timeline addEntriesFromDictionary:someTweets];
 
