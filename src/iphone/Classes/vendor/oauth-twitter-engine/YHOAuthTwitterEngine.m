@@ -70,6 +70,7 @@
 @synthesize requestToken =	_requestToken;
 @synthesize accessToken =	_accessToken;
 @synthesize consumer =	_consumer;
+@synthesize fetcher = _fetcher;
 
 
 
@@ -194,8 +195,8 @@
 		return;
 	
     [request setHTTPMethod:@"POST"];
-    OADataFetcher *fetcher = [[[OADataFetcher alloc] init] autorelease];	
-    [fetcher fetchDataWithRequest:request delegate:self didFinishSelector:success didFailSelector:fail];
+    self.fetcher = [[[OADataFetcher alloc] init] autorelease];
+    [self.fetcher fetchDataWithRequest:request delegate:self didFinishSelector:success didFailSelector:fail];
 }
 
 

@@ -13,12 +13,14 @@
 
 @class OAToken;
 @class OAConsumer;
+@class OADataFetcher;
 
 @interface YHOAuthTwitterEngine : MGTwitterEngine {
 	
 	OAConsumer	*_consumer;
 	OAToken		*_requestToken;
 	OAToken		*_accessToken;
+    OADataFetcher     *_fetcher;
 	
 }
 
@@ -31,9 +33,10 @@
 - (void)requestRequestToken;
 - (void)clearAccessToken;
 
-@property (retain)	OAConsumer	*consumer;
-@property (retain)	OAToken		*requestToken;
-@property (retain)	OAToken		*accessToken;
+@property (nonatomic, retain)	OAConsumer	*consumer;
+@property (nonatomic, retain)	OAToken		*requestToken;
+@property (nonatomic, retain)	OAToken		*accessToken;
+@property (nonatomic, retain) OADataFetcher * fetcher;
 
 @end
 

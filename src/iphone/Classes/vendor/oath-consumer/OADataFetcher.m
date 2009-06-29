@@ -63,7 +63,7 @@
     didFinishSelector = finishSelector;
     didFailSelector = failSelector;
     
-    [request prepare];
+    [self.request prepare];
     self.responseData = [NSMutableData data];
 
     self.connection = [NSURLConnection connectionWithRequest:request

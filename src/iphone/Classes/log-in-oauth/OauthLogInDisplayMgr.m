@@ -9,6 +9,7 @@
 #import "TwitterCredentials+KeychainAdditions.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "UIApplication+NetworkActivityIndicatorAdditions.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 #import "OAConsumer.h"
 #import "OAMutableURLRequest.h"
@@ -70,21 +71,10 @@
 
 - (void)logIn:(BOOL)animated;
 {
-    /*
-    self.oauthLogInViewController.logInCanBeCancelled = self.allowsCancel;
-    [self.rootViewController
-        presentModalViewController:self.oauthLogInViewController
-                          animated:animated];
-
-    [self.oauthLogInViewController showActivityView:animated];
-
-    [self.twitter requestRequestToken];
-    [[UIApplication sharedApplication] networkActivityIsStarting];
-    */
-
     [self.rootViewController
         presentModalViewController:self.explainOauthViewController
                           animated:animated];
+    self.explainOauthViewController.allowsCancel = self.allowsCancel;
 }
 
 #pragma mark YHOAuthTwitterEngineDelegate implementation
@@ -97,43 +87,58 @@
 
     NSURL * url = [NSURL URLWithString:
         [NSString stringWithFormat:@"http://twitter.com/oauth/"
-        "authorize?oauth_token=%@&oauth_callback=oob", requestToken.key]];
+        "authorize?oauth_token=%@&oauth_callback=oob", self.requestToken.key]];
     NSURLRequest * req = [NSURLRequest requestWithURL:url];
-
-    [self.oauthLogInViewController loadAuthRequest:req];
 
     [self.explainOauthViewController
         presentModalViewController:self.oauthLogInViewController
                           animated:YES];
+    [self.oauthLogInViewController loadAuthRequest:req];
 
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 - (void)receivedAccessToken:(id)sender
 {
-    NSLog(@"got something: '%@'.", self.twitter.accessToken);
+    NSLog(@"%d: got something: '%@'.", self.twitter.accessToken);
     NSLog(@"Logged in user: '%@'.", self.twitter.username);
 
-    TwitterCredentials * credentials = (TwitterCredentials *)
-        [NSEntityDescription
-        insertNewObjectForEntityForName:@"TwitterCredentials"
-        inManagedObjectContext:context];
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:@"username == %@",
+        self.twitter.username];
 
-    credentials.username = self.twitter.username;
-    [credentials setKey:self.twitter.accessToken.key
-              andSecret:self.twitter.accessToken.secret];
+    TwitterCredentials * credentials =
+        [TwitterCredentials findFirst:predicate
+                              context:context];
+
+    BOOL newAccount = !credentials;
+    if (newAccount) {
+        credentials = (TwitterCredentials *)
+            [NSEntityDescription
+            insertNewObjectForEntityForName:@"TwitterCredentials"
+            inManagedObjectContext:context];
+        credentials.username = self.twitter.username;
+        [credentials setKey:self.twitter.accessToken.key
+                  andSecret:self.twitter.accessToken.secret];
+    } else
+        // save the new key and token
+        [credentials setKey:self.twitter.accessToken.key
+                  andSecret:self.twitter.accessToken.secret];
 
     NSError * error;
     if ([context save:&error]) {
-        [self broadcastSuccessfulLogInNotification:credentials];
-        [self.rootViewController dismissModalViewControllerAnimated:YES];
+        if (newAccount)
+            [self broadcastSuccessfulLogInNotification:credentials];
     } else {  // handle the error
         [self displayErrorWithMessage:error.localizedDescription];
-
+    
         // TODO: Start the login process again on error
         //[self.logInViewController promptForLogIn];
     }
 
+    NSLog(@"my modal view: '%@'.", self.rootViewController.modalViewController);
+    NSLog(@"my explain view: '%@'.", self.explainOauthViewController);
+    [self.rootViewController dismissModalViewControllerAnimated:YES];
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
@@ -145,29 +150,33 @@
     [self.explainOauthViewController showActivityView];
 }
 
+- (void)userDidCancelExplanation
+{
+    [self.rootViewController dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark OauthLogInViewControllerDelegate implementation
 
 - (void)userIsDone:(NSString *)pin
 {
+    [self.explainOauthViewController showAuthorizingView];
+    [self.explainOauthViewController dismissModalViewControllerAnimated:YES];
+
     [self.twitter requestAccessToken:pin];
     [[UIApplication sharedApplication] networkActivityIsStarting];
 }
 
-- (void)userDidStartOver
-{
-    [self logIn:NO];
-}
-
 - (void)userDidCancel
 {
-    NSAssert(self.allowsCancel, @"User cancelled even though it's forbidden.");
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
+    [self.explainOauthViewController showButtonView];
+    [self.explainOauthViewController dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark Notify the system of new accounts
 
 - (void)broadcastSuccessfulLogInNotification:(TwitterCredentials *)credentials
 {
+    return;
     NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
         credentials, @"credentials",
         [NSNumber numberWithInteger:1], @"added",

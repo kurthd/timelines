@@ -147,7 +147,7 @@
             "no active account has been set.");
 
         TwitterCredentials * c = self.activeCredentials.credentials;
-        NSLog(@"Active credentials: '%@'.", c);
+        NSLog(@"Active credentials on startup: '%@'.", c);
 
         [timelineDisplayMgr setCredentials:c];
         [profileTimelineDisplayMgr setCredentials:c];
@@ -639,7 +639,8 @@
     deviceNeedsRegistration = YES;
     [self registerDeviceForPushNotifications];
 
-    NSLog(@"Active credentials: '%@'.", self.activeCredentials.credentials);
+    NSLog(@"Active credentials after account switch: '%@'.",
+        self.activeCredentials.credentials);
     [self saveContext];
 }
 
