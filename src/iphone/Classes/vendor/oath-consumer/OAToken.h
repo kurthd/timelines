@@ -30,8 +30,8 @@
 	NSString *key;
 	NSString *secret;
 }
-@property(retain) NSString *key;
-@property(retain) NSString *secret;
+@property(nonatomic, copy) NSString *key;
+@property(nonatomic, copy) NSString *secret;
 
 - (id)initWithKey:(NSString *)aKey secret:(NSString *)aSecret;
 - (id)initWithUserDefaultsUsingServiceProviderName:(NSString *)provider prefix:(NSString *)prefix;

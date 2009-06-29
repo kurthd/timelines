@@ -74,10 +74,7 @@
     [self.rootViewController
         presentModalViewController:self.explainOauthViewController
                           animated:YES];
-    //self.explainOauthViewController.allowsCancel = self.allowsCancel;
-    //[NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(presentOauth:) userInfo:nil repeats:NO];
-    //[NSTimer scheduledTimerWithTimeInterval:6 target:self selector:@selector(dismissOauth:) userInfo:nil repeats:NO];
-    //[NSTimer scheduledTimerWithTimeInterval:9 target:self selector:@selector(dismissExplain:) userInfo:nil repeats:NO];
+    self.explainOauthViewController.allowsCancel = self.allowsCancel;
 }
 
 - (void)presentOauth:(NSTimer *)timer
@@ -92,6 +89,8 @@
 
 - (void)dismissExplain:(NSTimer *)sender
 {
+    NSLog(@"Dismissing the oauth explanation modal view.");
+    [self.explainOauthViewController showButtonView];
     [self.rootViewController dismissModalViewControllerAnimated:YES];
 }
 
@@ -113,12 +112,18 @@
                           animated:YES];
     [self.oauthLogInViewController loadAuthRequest:req];
 
-    //[[UIApplication sharedApplication] networkActivityDidFinish];
+    [[UIApplication sharedApplication] networkActivityDidFinish];
+}
+
+- (void)failedToReceiveRequestToken:(id)sender error:(NSError *)error
+{
+    [self displayErrorWithMessage:error.localizedDescription];
+    [self.explainOauthViewController showButtonView];
 }
 
 - (void)receivedAccessToken:(id)sender
 {
-    NSLog(@"got something: '%@'.", self.twitter.accessToken);
+    NSLog(@"Received access token: '%@'.", self.twitter.accessToken);
     NSLog(@"Logged in user: '%@'.", self.twitter.username);
 
     NSPredicate * predicate =
@@ -145,23 +150,32 @@
 
     NSError * error;
     if ([context save:&error]) {
-        if (newAccount) {
+        if (newAccount)
             [self broadcastSuccessfulLogInNotification:credentials];
-        }
     } else {  // handle the error
         [self displayErrorWithMessage:error.localizedDescription];
-    
+
         // TODO: Start the login process again on error
         //[self.logInViewController promptForLogIn];
     }
 
-    NSLog(@"my modal view: '%@'.", self.rootViewController.modalViewController);
-    NSLog(@"my explain view: '%@'.", self.explainOauthViewController);
-    NSLog(@"my root view's retain count: %d.", [self.rootViewController retainCount]);
-    NSLog(@"my modal view's retain count: %d.", [self.rootViewController.modalViewController retainCount]);
-    //[self.rootViewController dismissModalViewControllerAnimated:YES];
-    //[[UIApplication sharedApplication] networkActivityDidFinish];
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(dismissExplain:) userInfo:nil repeats:NO];
+    [[UIApplication sharedApplication] networkActivityDidFinish];
+
+    // HACK: Firing this on a timer because doing it here causes the app to
+    // crash in an infinite loop somewhere deep in the UIView code and I have no
+    // idea why. I will revisit in the future. The most likely cause is the
+    // underlying oauth code.
+    [NSTimer scheduledTimerWithTimeInterval:0.5
+                                     target:self
+                                   selector:@selector(dismissExplain:)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+- (void)failedToReceiveAccessToken:(id)sender error:(NSError *)error
+{
+    [self displayErrorWithMessage:error.localizedDescription];
+    [self.explainOauthViewController showButtonView];
 }
 
 #pragma mark ExplainOauthViewControllerDelegate
@@ -169,7 +183,7 @@
 - (void)beginAuthorization
 {
     [self.twitter requestRequestToken];
-    //[self.explainOauthViewController showActivityView];
+    [self.explainOauthViewController showActivityView];
 }
 
 - (void)userDidCancelExplanation
@@ -181,17 +195,16 @@
 
 - (void)userIsDone:(NSString *)pin
 {
-    //[self.explainOauthViewController showAuthorizingView];
+    [self.explainOauthViewController showAuthorizingView];
     [self.explainOauthViewController dismissModalViewControllerAnimated:YES];
-    //[self.rootViewController dismissModalViewControllerAnimated:YES];
 
     [self.twitter requestAccessToken:pin];
-    //[[UIApplication sharedApplication] networkActivityIsStarting];
+    [[UIApplication sharedApplication] networkActivityIsStarting];
 }
 
 - (void)userDidCancel
 {
-    //[self.explainOauthViewController showButtonView];
+    [self.explainOauthViewController showButtonView];
     [self.explainOauthViewController dismissModalViewControllerAnimated:YES];
 }
 

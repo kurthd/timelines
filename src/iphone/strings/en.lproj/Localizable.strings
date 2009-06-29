@@ -6,6 +6,7 @@ login.failed.alert.title = "Log In Failed";
 explainoauth.begin = "Authorize with Twitter";
 explainoauth.header = "Twitbit requires your authorization";
 explainoauth.footer = "Authorization is a simple process. You will be provided with a Twitter log in screen and given the option to give Twitbit access to your account.\n\nAfter you log in and see your pin, tap Done.";
+oauth.requesttokenfetch.failed.message = "Failed to connect to Twitter.";
 
 /* TwitchAppDelegate */
 appdelegate.hometabtitle = "Home";

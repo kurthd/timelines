@@ -151,7 +151,7 @@
 //
 - (void)requestRequestToken
 {
-	[self _requestURL:kYHOAuthTwitterRequestTokenURL token:nil onSuccess:@selector(_setRequestToken:withData:) onFail:@selector(_fail:data:)];
+	[self _requestURL:kYHOAuthTwitterRequestTokenURL token:nil onSuccess:@selector(_setRequestToken:withData:) onFail:@selector(_failedToGetRequestToken:error:)];
 }
 
 
@@ -165,7 +165,7 @@
     NSString * url =
         [NSString stringWithFormat:@"%@?oauth_verifier=%@",
         kYHOAuthTwitterAccessTokenURL, pin];
-    [self _requestURL:url token:self.requestToken onSuccess:@selector(_setAccessToken:withData:) onFail:@selector(_fail:data:)];
+    [self _requestURL:url token:self.requestToken onSuccess:@selector(_setAccessToken:withData:) onFail:@selector(_failedToGetAccessToken:error:)];
 	//[self _requestURL:kYHOAuthTwitterAccessTokenURL token:self.requestToken onSuccess:@selector(_setAccessToken:withData:) onFail:@selector(_fail:data:)];
 }
 
@@ -199,16 +199,24 @@
     [self.fetcher fetchDataWithRequest:request delegate:self didFinishSelector:success didFailSelector:fail];
 }
 
+- (void)_failedToGetRequestToken:(OAServiceTicket *)ticket error:(NSError *)error
+{
+    NSLog(@"failed to get request token: '%@'", error);
+    if ([_delegate respondsToSelector:@selector(failedToReceiveRequestToken:error:)])
+        [_delegate performSelector:@selector(failedToReceiveRequestToken:error:) withObject:self withObject:error];
+}
 
 //
 // if the fetch fails this is what will happen
 // you'll want to add your own error handling here.
 //
-- (void)_fail:(OAServiceTicket *)ticket data:(NSData *)data
+//- (void)_fail:(OAServiceTicket *)ticket data:(NSData *)data
+- (void)_failedToGetAccessToken:(OAServiceTicket *)ticket error:(NSError *)error
 {
-	NSLog(@"fail: '%@'", data);
+    NSLog(@"failed to get access token: '%@'", error);
+    if ([_delegate respondsToSelector:@selector(failedToReceiveAccessToken:error:)])
+		[_delegate performSelector:@selector(failedToReceiveAccessToken:error:) withObject:self withObject:error];
 }
-
 
 //
 // request token callback
@@ -263,7 +271,16 @@
 	self.accessToken = [[[OAToken alloc] initWithHTTPResponseBody:dataString] autorelease];
 	[dataString release];
 	dataString = nil;
-	if ([_delegate respondsToSelector:@selector(receivedAccessToken:)])
+
+    if (self.accessToken.key == nil || self.accessToken.secret == nil) {
+        NSString * localizedDescription = @"Failed to validate PIN.";
+        NSMutableDictionary * userInfo = [NSMutableDictionary dictionaryWithCapacity:2];
+        [userInfo setObject:localizedDescription forKey:NSLocalizedDescriptionKey];
+        NSError * error = [NSError errorWithDomain:@"TwitterOauthErrorDomain"
+                                              code:1
+                                          userInfo:userInfo];
+        [self _failedToGetAccessToken:ticket error:error];
+	} else if ([_delegate respondsToSelector:@selector(receivedAccessToken:)])
 		[_delegate performSelector:@selector(receivedAccessToken:) withObject:self];	
 }
 
