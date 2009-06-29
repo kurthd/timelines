@@ -52,6 +52,8 @@
 @property (nonatomic, copy) NSArray * invertedCellUsernames;
 @property (nonatomic, assign) BOOL showWithoutAvatars;
 
+@property (nonatomic, copy) NSString * segregatedSenderUsername;
+
 - (void)setUser:(User *)user;
 - (void)setTweets:(NSArray *)tweets page:(NSUInteger)page;
 - (void)setAllPagesLoaded:(BOOL)allLoaded;

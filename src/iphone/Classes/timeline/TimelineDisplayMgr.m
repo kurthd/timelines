@@ -122,7 +122,7 @@
             [timelineController setUser:firstTweet.user];
             self.user = firstTweet.user;
         } else if (credentials)
-            [service fetchUserInfoForUsername:credentials.username];
+            [service fetchUserInfoForUsername:self.currentUsername];
     }
     [timelineController setTweets:[timeline allValues] page:pagesShown];
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
@@ -896,7 +896,7 @@
     if (oldCredentials && oldCredentials != credentials) {
         // Changed accounts (as opposed to setting it for the first time)
 
-        NSLog(@"Timeline displaying manager: changing accounts (%@)",
+        NSLog(@"Timeline display manager: changing accounts (%@)",
             credentials.username);
 
         [timeline removeAllObjects];
@@ -907,9 +907,12 @@
         
         needsRefresh = YES;
         pagesShown = 1;
-        
-        [self.timelineController
-            setSegregateTweetsFromUser:credentials.username];
+
+        // if we're currently displaying direct messages for the current user
+        // set the username to match the new credentials
+        if (self.timelineController.segregatedSenderUsername)
+            [self.timelineController
+                setSegregateTweetsFromUser:credentials.username];
             
         [self.wrapperController setCachedDataAvailable:NO];
         [self.wrapperController setUpdatingState:kConnectedAndUpdating];

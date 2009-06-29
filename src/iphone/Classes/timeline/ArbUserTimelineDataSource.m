@@ -21,6 +21,7 @@
     username:(NSString *)aUsername
 {
     if (self = [super init]) {
+        NSLog(@"Arbitrary user data source: initializing with %@", aUsername);
         service = [aService retain];
         username = [aUsername copy];
     }
@@ -32,6 +33,8 @@
 
 - (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page
 {
+    NSLog(@"Arbitraty user data source: fetching timeline for user %@",
+        username);
     [service fetchTimelineForUser:username sinceUpdateId:updateId page:page
         count:[NSNumber numberWithInt:0]];
 }
