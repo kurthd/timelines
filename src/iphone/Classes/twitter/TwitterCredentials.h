@@ -2,7 +2,7 @@
 //  TwitterCredentials.h
 //  twitch
 //
-//  Created by John A. Debay on 6/27/09.
+//  Created by John A. Debay on 6/28/09.
 //  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
@@ -11,6 +11,7 @@
 @class ActiveTwitterCredentials;
 @class DirectMessage;
 @class Mention;
+@class TwitPicCredentials;
 @class UserTweet;
 
 @interface TwitterCredentials :  NSManagedObject  
@@ -22,6 +23,7 @@
 @property (nonatomic, retain) NSSet* userTimeline;
 @property (nonatomic, retain) NSSet* directMessages;
 @property (nonatomic, retain) NSSet* mentions;
+@property (nonatomic, retain) TwitPicCredentials * twitpicCredentials;
 
 @end
 

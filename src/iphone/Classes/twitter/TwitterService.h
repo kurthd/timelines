@@ -7,7 +7,7 @@
 #import "TwitterCredentials.h"
 #import "TwitterServiceDelegate.h"
 
-@class MGTwitterEngine;
+@class YHOAuthTwitterEngine;
 
 @interface TwitterService : NSObject <MGTwitterEngineDelegate>
 {
@@ -16,7 +16,7 @@
     NSMutableDictionary * pendingRequests;
 
     TwitterCredentials * credentials;
-    MGTwitterEngine * twitter;
+    YHOAuthTwitterEngine * twitter;
 
     NSManagedObjectContext * context;
 }

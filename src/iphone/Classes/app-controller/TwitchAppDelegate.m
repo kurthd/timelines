@@ -4,7 +4,7 @@
 
 #import "TwitchAppDelegate.h"
 #import "DeviceRegistrar.h"
-#import "LogInDisplayMgr.h"
+#import "OauthLogInDisplayMgr.h"
 #import "CredentialsActivatedPublisher.h"
 #import "CredentialsSetChangedPublisher.h"
 #import "TwitterCredentials.h"
@@ -30,7 +30,7 @@
 
 @interface TwitchAppDelegate ()
 
-@property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
+@property (nonatomic, retain) OauthLogInDisplayMgr * logInDisplayMgr;
 @property (nonatomic, retain) ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 @property (nonatomic, retain) DeviceRegistrar * registrar;
 @property (nonatomic, retain) NSMutableArray * credentials;
@@ -147,7 +147,7 @@
             "no active account has been set.");
 
         TwitterCredentials * c = self.activeCredentials.credentials;
-        NSLog(@"Active credentials: '%@'.", c);
+        NSLog(@"Active credentials on startup: '%@'.", c);
 
         [timelineDisplayMgr setCredentials:c];
         [profileTimelineDisplayMgr setCredentials:c];
@@ -399,8 +399,8 @@
 
 - (void)initAccountsTab
 {
-    LogInDisplayMgr * displayMgr =
-        [[LogInDisplayMgr alloc]
+    OauthLogInDisplayMgr * displayMgr =
+        [[OauthLogInDisplayMgr alloc]
          initWithRootViewController:tabBarController
                 managedObjectContext:[self managedObjectContext]];
 
@@ -558,10 +558,12 @@
         TwitterCredentials * c = [allCredentials objectAtIndex:i];
 
         NSString * usernameKey = [NSString stringWithFormat:@"username%d", i];
-        NSString * passwordKey = [NSString stringWithFormat:@"password%d", i];
+        NSString * keyKey = [NSString stringWithFormat:@"key%d", i];
+        NSString * secretKey = [NSString stringWithFormat:@"secret%d", i];
 
         [args setObject:c.username forKey:usernameKey];
-        [args setObject:c.password forKey:passwordKey];
+        [args setObject:c.key forKey:keyKey];
+        [args setObject:c.secret forKey:secretKey];
     }
 
     return args;
@@ -630,14 +632,15 @@
         [self.credentials addObject:changedCredentials];
     } else {
         [TwitterCredentials
-            deletePasswordForUsername:changedCredentials.username];
+            deleteKeyAndSecretForUsername:changedCredentials.username];
         [self.credentials removeObject:changedCredentials];
     }
 
     deviceNeedsRegistration = YES;
     [self registerDeviceForPushNotifications];
 
-    NSLog(@"Active credentials: '%@'.", self.activeCredentials.credentials);
+    NSLog(@"Active credentials after account switch: '%@'.",
+        self.activeCredentials.credentials);
     [self saveContext];
 }
 
@@ -868,11 +871,11 @@
     return registrar;
 }
 
-- (LogInDisplayMgr *)logInDisplayMgr
+- (OauthLogInDisplayMgr *)logInDisplayMgr
 {
     if (!logInDisplayMgr)
         logInDisplayMgr =
-            [[LogInDisplayMgr alloc]
+            [[OauthLogInDisplayMgr alloc]
             initWithRootViewController:tabBarController
                   managedObjectContext:[self managedObjectContext]];
 

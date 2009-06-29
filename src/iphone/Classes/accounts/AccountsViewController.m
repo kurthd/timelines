@@ -60,8 +60,8 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
 - (void)accountAdded:(TwitterCredentials *)account
 {
-    if (self.tableView.editing)
-        self.tableView.editing = NO;
+    if (self.editing)
+        self.editing = NO;
 
     NSArray * newAccounts = [[self.delegate accounts]
         sortedArrayUsingFunction:usernameSort context:NULL];
@@ -83,6 +83,13 @@ NSInteger usernameSort(TwitterCredentials * user1,
     [self.tableView
         insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
               withRowAnimation:UITableViewRowAnimationFade];
+
+    if (self.accounts.count == 1) {
+        UITableViewCell * cell =
+            [self.tableView cellForRowAtIndexPath:indexPath];
+        cell.textLabel.textColor = [UIColor twitchCheckedColor];
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
 }
 
 #pragma mark Table view methods
@@ -171,7 +178,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
                    withRowAnimation:YES];
 
             if (self.accounts.count == 0)
-                self.tableView.editing = NO;
+                [self setEditing:NO animated:YES];
 
             if (c == self.selectedAccount) {
                 if (self.accounts.count == 0)

@@ -122,7 +122,7 @@
                  inManagedObjectContext:context];
 
     credentials.username = self.username;
-    credentials.password = self.password;
+    //credentials.password = self.password;
 
     NSError * error;
     if ([context save:&error]) {

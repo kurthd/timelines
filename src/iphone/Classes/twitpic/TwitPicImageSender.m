@@ -67,7 +67,8 @@
         [[self class] requestForPostingImage:self.image
                                        toUrl:url
                                 withUsername:credentials.username
-                                    password:credentials.password];
+                                    // TODO: FIX ME
+                                    password:@""/*credentials.password*/];
 
     self.connection =
         [[[NSURLConnection alloc] initWithRequest:request
