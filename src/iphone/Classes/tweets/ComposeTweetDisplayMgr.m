@@ -339,7 +339,7 @@
         case 1:  // library
             [self displayImagePicker:
                 UIImagePickerControllerSourceTypePhotoLibrary
-                          controller:controlle];
+                          controller:controller];
             break;
     }
 
