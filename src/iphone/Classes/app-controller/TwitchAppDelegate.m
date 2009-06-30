@@ -44,7 +44,8 @@
 - (void)initSearchTab;
 
 - (UIBarButtonItem *)newTweetButtonItem;
-- (UIBarButtonItem *)sendingTweetProgressView;
+- (UIBarButtonItem *)homeSendingTweetProgressView;
+- (UIBarButtonItem *)profileSendingTweetProgressView;
 
 - (void)broadcastActivatedCredentialsChanged:(TwitterCredentials *)tc;
 
@@ -102,7 +103,8 @@
     [trendsDisplayMgr release];
     [accountsDisplayMgr release];
 
-    [sendingTweetProgressView release];
+    [homeSendingTweetProgressView release];
+    [profileSendingTweetProgressView release];
 
     [super dealloc];
 }
@@ -198,10 +200,10 @@
 - (void)userIsSendingTweet:(NSString *)tweet
 {
     [homeNetAwareViewController.navigationItem
-        setRightBarButtonItem:[self sendingTweetProgressView]
+        setRightBarButtonItem:[self homeSendingTweetProgressView]
                      animated:YES];
     [profileNetAwareViewController.navigationItem
-        setRightBarButtonItem:[self sendingTweetProgressView]
+        setRightBarButtonItem:[self profileSendingTweetProgressView]
                      animated:YES];
 }
 
@@ -948,14 +950,14 @@
     return composeTweetDisplayMgr;
 }
 
-- (UIBarButtonItem *)sendingTweetProgressView
+- (UIBarButtonItem *)homeSendingTweetProgressView
 {
-    if (!sendingTweetProgressView) {
+    if (!homeSendingTweetProgressView) {
         UIActivityIndicatorView * view =
             [[UIActivityIndicatorView alloc]
             initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 
-        sendingTweetProgressView =
+        homeSendingTweetProgressView =
             [[UIBarButtonItem alloc] initWithCustomView:view];
 
         [view startAnimating];
@@ -963,7 +965,25 @@
         [view release];
     }
 
-    return sendingTweetProgressView;
+    return homeSendingTweetProgressView;
+}
+
+- (UIBarButtonItem *)profileSendingTweetProgressView
+{
+    if (!profileSendingTweetProgressView) {
+        UIActivityIndicatorView * view =
+            [[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+
+        profileSendingTweetProgressView =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [view startAnimating];
+
+        [view release];
+    }
+
+    return profileSendingTweetProgressView;
 }
 
 - (UIBarButtonItem *)newTweetButtonItem

@@ -58,7 +58,8 @@
     SearchBarDisplayMgr * searchBarDisplayMgr;
     AccountsDisplayMgr * accountsDisplayMgr;
 
-    UIBarButtonItem * sendingTweetProgressView;
+    UIBarButtonItem * homeSendingTweetProgressView;
+    UIBarButtonItem * profileSendingTweetProgressView;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;
