@@ -28,10 +28,8 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
-	<key>DeviceRegistrationDomainSandbox</key>
-	<string>sandbox.twitch.highorderbit.com</string>
 	<key>DeviceRegistrationDomain</key>
-	<string>megatron.local:3000</string>
+	<string>sandbox.twitch.highorderbit.com</string>
 	<key>TwitPicPostUrl</key>
 	<string>https://twitpic.com/api/upload</string>
 </dict>
