@@ -3,10 +3,12 @@
 //
 
 #import "TwitchBrowserViewController.h"
+#import "RegexKitLite.h"
 
 @interface TwitchBrowserViewController ()
 
 - (void)updateViewForNotLoading;
+- (void)updatePageTitle;
 
 @end
 
@@ -34,16 +36,14 @@
     forwardButton.enabled = [webView canGoForward];
     if (!webView.loading)
         [self updateViewForNotLoading];
-
-    NSString * loadedPage = [[webView.request URL] absoluteString];
-    titleLabel.text =
-        loadedPage || [loadedPage isEqual:@""] ? loadedPage : currentUrl;
+    [self updatePageTitle];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)aWebView
 {
     haltButton.image = [UIImage imageNamed:@"StopLoading.png"];
     activityIndicator.hidden = NO;
+    [self updatePageTitle];
 }
 
 #pragma mark TwitchBrowserViewController implementation
@@ -96,6 +96,23 @@
 {
     haltButton.image = [UIImage imageNamed:@"Refresh.png"];
     activityIndicator.hidden = YES;
+}
+
+- (void)updatePageTitle
+{
+    NSString * innerHtml =
+        [webView
+        stringByEvaluatingJavaScriptFromString:
+        @"document.documentElement.outerHTML"];
+    NSString * title =
+        [[innerHtml stringByMatching:@"<\\s*title\\s*>.*<\\s*/\\s*title\\s*>"]
+        stringByReplacingOccurrencesOfRegex:
+        @"<\\s*/?\\s*title\\s*>" withString:@""];
+
+    NSString * loadedPage =
+        title ? title : [[webView.request URL] absoluteString];
+    titleLabel.text =
+        loadedPage && ![loadedPage isEqual:@""] ? loadedPage : self.currentUrl;
 }
 
 @end
