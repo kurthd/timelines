@@ -19,6 +19,8 @@
 
     IBOutlet UITextField * usernameTextField;
     IBOutlet UITextField * passwordTextField;
+    
+    IBOutlet UIView * footerView;
 }
 
 @property (nonatomic, assign) id<LogInViewControllerDelegate> delegate;

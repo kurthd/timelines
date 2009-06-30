@@ -54,12 +54,6 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
     webView.hidden = NO;
 }
 
-// - (void)viewDidAppear:(BOOL)animated
-// {
-//     [super viewDidAppear:animated];
-//     webView.hidden = NO;
-// }
-
 - (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)avatarImage
 {
     NSLog(@"Setting tweet");
