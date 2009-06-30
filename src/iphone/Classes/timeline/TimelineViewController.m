@@ -201,7 +201,7 @@
         withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView scrollToRowAtIndexPath:
         [NSIndexPath indexPathForRow:0 inSection:0]
-        atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        atScrollPosition:UITableViewScrollPositionNone animated:YES];
 
     NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
     [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
