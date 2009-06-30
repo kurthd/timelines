@@ -30,8 +30,9 @@
 
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
-- (void)promptForPhotoSource;
-- (void)displayImagePicker:(UIImagePickerControllerSourceType)source;
+- (void)promptForPhotoSource:(UIViewController *)controller;
+- (void)displayImagePicker:(UIImagePickerControllerSourceType)source
+                controller:(UIViewController *)controller;
 
 @end
 
@@ -160,16 +161,8 @@
 
 - (void)logInCompleted
 {
-    [NSTimer scheduledTimerWithTimeInterval:0.5
-                                     target:self
-                                   selector:@selector(promptForPhotoSource:)
-                                   userInfo:nil
-                                    repeats:NO];
-}
-
-- (void)promptForPhotoSource:(NSTimer *)timer
-{
-    [self promptForPhotoSource];
+    [self promptForPhotoSource:
+        self.composeTweetViewController.modalViewController];
 }
 
 - (void)logInCancelled
@@ -220,7 +213,7 @@
     if (credentials.twitPicCredentials == nil)
         [self.logInDisplayMgr logInForUser:credentials.username animated:YES];
     else
-        [self promptForPhotoSource];
+        [self promptForPhotoSource:self.composeTweetViewController];
 }
 
 #pragma mark TwitterServiceDelegate implementation
@@ -336,11 +329,13 @@
 {
     switch (buttonIndex) {
         case 0:  // camera
-            [self displayImagePicker:UIImagePickerControllerSourceTypeCamera];
+            [self displayImagePicker:UIImagePickerControllerSourceTypeCamera
+                          controller:self.composeTweetViewController];
             break;
         case 1:  // library
             [self displayImagePicker:
-                UIImagePickerControllerSourceTypePhotoLibrary];
+                UIImagePickerControllerSourceTypePhotoLibrary
+                          controller:self.composeTweetViewController];
             break;
     }
 
@@ -349,7 +344,7 @@
 
 #pragma mark UIImagePicker helper methods
 
-- (void)promptForPhotoSource
+- (void)promptForPhotoSource:(UIViewController *)controller
 {
     // to help with readability
     UIImagePickerControllerSourceType photoLibrary =
@@ -379,18 +374,19 @@
                           destructiveButtonTitle:nil
                                otherButtonTitles:cameraButton,
                                                  photosButton, nil];
-        [sheet showInView:self.rootViewController.view];
+        [sheet showInView:controller.view];
     } else {
         if (cameraAvailable)
             source = camera;
         else
             source = photoLibrary;
 
-        [self displayImagePicker:source];
+        [self displayImagePicker:source controller:controller];
     }
 }
 
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source
+                controller:(UIViewController *)controller
 {
     UIImagePickerController * imagePicker =
         [[UIImagePickerController alloc] init];
@@ -399,8 +395,8 @@
     imagePicker.allowsImageEditing = YES;
     imagePicker.sourceType = source;
 
-    [self.composeTweetViewController
-        presentModalViewController:imagePicker animated:YES];
+    //[self.composeTweetViewController
+    [controller presentModalViewController:imagePicker animated:YES];
     [imagePicker release];
 }
 
