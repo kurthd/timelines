@@ -94,6 +94,7 @@
 
         dm.recipient = recipient;
         dm.sender = sender;
+        dm.credentials = self.credentials;
     }
 
     SEL sel = @selector(directMessage:sentToUser:);
