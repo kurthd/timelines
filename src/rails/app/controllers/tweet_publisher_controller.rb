@@ -44,16 +44,18 @@ class TweetPublisherController < ApplicationController
         end
         logger.debug "Checking for new tweets for #{twitter_user}."
 
+        secrets = twitter_user.decrypt_sensitive(private_key_pass)
+        return
         @client.auth =
           {
-            :type => :basic,
+            :type => :oauth,
+            :consumer_key => 'YSfdtPCIvkvMkItCrc3OsQ',
+            :consumer_secret => 'M2mHASraAGv9kRu1KnyAXYb1snEbmRVrqneuHTCeY',
             :username => twitter_user.username,
-            :password => twitter_user.decrypt_sensitive(private_key_pass)
+            :token => secrets[:decrypted_key],
+            :token_secret => secrets[:decrypted_secret]
           }
-        #@client =
-          #Grackle::Client.new(:auth => { :type =>:basic,
-                              #:username => twitter_user.username,
-                              #:password => twitter_user.password })
+        twitter_user.clear_sensitive
 
         @user_before_quotas[twitter_user.username] =
           @client.account.rate_limit_status.json?.remaining_hits

@@ -11,16 +11,6 @@
 
 ActiveRecord::Schema.define(:version => 20090622031130) do
 
-  create_table "apple_push_notifications", :force => true do |t|
-    t.string   "device_token"
-    t.integer  "errors_nb",       :default => 0
-    t.string   "device_language"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "apple_push_notifications", ["device_token"], :name => "index_apple_push_notifications_on_device_token"
-
   create_table "device_subscriptions", :force => true do |t|
     t.integer  "iphone_id"
     t.integer  "twitter_user_id"
@@ -44,9 +34,12 @@ ActiveRecord::Schema.define(:version => 20090622031130) do
 
   create_table "twitter_users", :force => true do |t|
     t.string   "username"
-    t.text     "encrypted_password"
-    t.text     "encrypted_key"
-    t.text     "encrypted_iv"
+    t.binary   "encrypted_key"
+    t.binary   "encrypted_secret"
+    t.text     "key_encrypted_key"
+    t.text     "key_encrypted_iv"
+    t.text     "secret_encrypted_key"
+    t.text     "secret_encrypted_iv"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

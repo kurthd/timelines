@@ -2,9 +2,8 @@ class CreateTwitterUsers < ActiveRecord::Migration
   def self.up
     create_table :twitter_users do |t|
       t.string :username
-      t.text :encrypted_password
-      t.text :encrypted_key
-      t.text :encrypted_iv
+      t.binary :key
+      t.binary :secret
       t.timestamps
     end
   end
