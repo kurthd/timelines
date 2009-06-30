@@ -40,9 +40,9 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 {
     [super viewWillAppear:animated];
     [delegate showingTweetDetails];
+    webView.hidden = YES;
     if (self.selectedTweet) {
         [delegate setCurrentTweetDetailsUser:self.selectedTweet.user.username];
-        webView.hidden = YES;
         [self setupWebView];
     }
 }

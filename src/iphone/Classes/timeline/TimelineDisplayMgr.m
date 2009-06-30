@@ -955,6 +955,10 @@
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
     }
+
+    [self.timelineController.tableView
+        scrollRectToVisible:self.timelineController.tableView.frame
+        animated:NO];
 }
 
 - (void)setUser:(User *)aUser
