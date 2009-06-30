@@ -111,24 +111,30 @@
     NSLog(@"Timeline page: %@", page);
 
     self.updateId = anUpdateId;
-    NSInteger pageAsInt = [page intValue];
-    if (pageAsInt != 0)
-        pagesShown = pageAsInt;
 
     NSInteger oldTimelineCount = [[timeline allKeys] count];
     for (TweetInfo * tweet in aTimeline)
         [timeline setObject:tweet forKey:tweet.identifier];
     NSInteger newTimelineCount = [[timeline allKeys] count];
-    allPagesLoaded =
-        (!refreshingTweets && oldTimelineCount == newTimelineCount) ||
-        newTimelineCount == 0;
-    if (allPagesLoaded) {
-        NSLog(@"Timeline display manager: setting all pages loaded");
-        NSLog(@"Refreshing tweets?: %d", refreshingTweets);
-        NSLog(@"Old timeline count: %d", oldTimelineCount);
-        NSLog(@"New timeline count: %d", newTimelineCount);
+    
+    if (!refreshingTweets) {
+        allPagesLoaded =
+            (oldTimelineCount == newTimelineCount) ||
+            newTimelineCount == 0;
+        if (allPagesLoaded) {
+            NSLog(@"Timeline display manager: setting all pages loaded");
+            NSLog(@"Refreshing tweets?: %d", refreshingTweets);
+            NSLog(@"Old timeline count: %d", oldTimelineCount);
+            NSLog(@"New timeline count: %d", newTimelineCount);
+        } else {
+            NSInteger pageAsInt = [page intValue];
+            if (pageAsInt != 0)
+                pagesShown = pageAsInt;
+        }
+
+        [timelineController setAllPagesLoaded:allPagesLoaded];
     }
-    [timelineController setAllPagesLoaded:allPagesLoaded];
+
     if (setUserToFirstTweeter) {
         timelineController.showWithoutAvatars = YES;
         if ([aTimeline count] > 0) {
