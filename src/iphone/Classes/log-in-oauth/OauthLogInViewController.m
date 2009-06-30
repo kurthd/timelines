@@ -13,20 +13,23 @@
 @property (nonatomic, retain) UINavigationBar * navigationBar;
 @property (nonatomic, retain) UIBarButtonItem * cancelButton;
 @property (nonatomic, retain) UIBarButtonItem * doneButton;
-@property (nonatomic, retain) UIBarButtonItem * savePinButton;
 
-@property (nonatomic, retain) UIView * enterPinView;
+@property (nonatomic, retain) UIBarButtonItem * activityButton;
+@property (nonatomic, retain) UIActivityIndicatorView * activityIndicator;
+
 @property (nonatomic, retain) UITextField * pinTextField;
 
-- (void)displayEnterPinView;
+- (void)showActivity;
+- (void)hideActivity;
 
 @end
 
 @implementation OauthLogInViewController
 
 @synthesize delegate;
-@synthesize navigationBar, cancelButton, doneButton, savePinButton;
-@synthesize webView, enterPinView, pinTextField;
+@synthesize navigationBar, cancelButton, doneButton;
+@synthesize activityButton, activityIndicator;
+@synthesize webView, pinTextField;
 
 - (void)dealloc
 {
@@ -35,17 +38,18 @@
     self.navigationBar = nil;
     self.cancelButton = nil;
     self.doneButton = nil;
-    self.savePinButton = nil;
-    self.enterPinView = nil;
+    self.activityButton = nil;
+    self.activityIndicator = nil;
     self.pinTextField = nil;
     [super dealloc];
 }
 
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
+    [super viewWillAppear:animated];
 
-    self.webView.scalesPageToFit = YES;
+    self.doneButton.enabled = NO;
+    self.pinTextField.text = @"";
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -54,9 +58,11 @@
 
     // reset the view
     [self.webView loadHTMLString:@"<html></html>" baseURL:nil];
+    /*
     [self.enterPinView removeFromSuperview];
     [self.navigationBar.topItem
         setRightBarButtonItem:self.doneButton animated:YES];
+     */
 }
 
 - (IBAction)userDidCancel
@@ -65,13 +71,6 @@
 }
 
 - (IBAction)userIsDone
-{
-    [self displayEnterPinView];
-    [self.navigationBar.topItem
-        setRightBarButtonItem:self.savePinButton animated:YES];
-}
-
-- (IBAction)userDidSavePin
 {
     NSString * pin =
         self.pinTextField.text.length ? self.pinTextField.text : nil;
@@ -83,49 +82,69 @@
     [self.webView loadRequest:request];
 }
 
+#pragma mark UITextFieldDelegate implementation
+
+- (BOOL)textField:(UITextField *)textField
+    shouldChangeCharactersInRange:(NSRange)range
+                replacementString:(NSString *)s
+{
+    NSString * newString =
+        [self.pinTextField.text
+        stringByReplacingCharactersInRange:range withString:s];
+    self.doneButton.enabled = newString.length > 0;
+
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSLog(@"Should text field return??");
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    //[self.pinTextField resignFirstResponder];
+    return YES;
+}
+
 #pragma mark UIWebViewDelegate implementation
 
 - (void)webViewDidStartLoad:(UIWebView *)view
 {
-    [[UIApplication sharedApplication] networkActivityIsStarting];
+    [self showActivity];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)view
 {
+    [self hideActivity];
+}
+
+#pragma mark UI Helpers
+
+- (void)showActivity
+{
+    [self.navigationBar.topItem setRightBarButtonItem:self.activityButton
+                                             animated:YES];
+    [[UIApplication sharedApplication] networkActivityIsStarting];
+}
+
+- (void)hideActivity
+{
+    [self.navigationBar.topItem setRightBarButtonItem:self.doneButton
+                                             animated:YES];
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
-#pragma mark UI helpers
+#pragma mark Accessors
 
-- (void)displayEnterPinView
+- (UIBarButtonItem *)activityButton
 {
-    [self.view addSubview:self.enterPinView];
+    if (activityButton)
+        activityButton =
+            [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
 
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationTransition:UIViewAnimationTransitionNone
-                           forView:self.enterPinView
-                             cache:NO];
-
-    CGRect originatingFrame =
-        CGRectMake(
-            3,
-            480,
-            self.enterPinView.frame.size.width,
-            self.enterPinView.frame.size.height);
-
-    CGRect destinationFrame =
-        CGRectMake(
-            3,
-            480 - self.enterPinView.frame.size.height,
-            self.enterPinView.frame.size.width,
-            self.enterPinView.frame.size.height);
-
-    self.enterPinView.frame = originatingFrame;
-    self.enterPinView.frame = destinationFrame;
-
-    [UIView commitAnimations];
-
-    [self.pinTextField becomeFirstResponder];
+    return activityButton;
 }
 
 @end

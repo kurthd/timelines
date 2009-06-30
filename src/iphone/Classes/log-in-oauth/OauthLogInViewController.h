@@ -11,7 +11,7 @@
 
 @end
 
-@interface OauthLogInViewController : UIViewController
+@interface OauthLogInViewController : UIViewController <UITextFieldDelegate>
 {
     id<OauthLogInViewControllerDelegate> delegate;
 
@@ -20,9 +20,10 @@
     IBOutlet UINavigationBar * navigationBar;
     IBOutlet UIBarButtonItem * cancelButton;
     IBOutlet UIBarButtonItem * doneButton;
-    IBOutlet UIBarButtonItem * savePinButton;
 
-    IBOutlet UIView * enterPinView;
+    IBOutlet UIBarButtonItem * activityButton;
+    IBOutlet UIActivityIndicatorView * activityIndicator;
+
     IBOutlet UITextField * pinTextField;
 }
 
@@ -32,6 +33,5 @@
 
 - (IBAction)userDidCancel;
 - (IBAction)userIsDone;
-- (IBAction)userDidSavePin;
 
 @end
