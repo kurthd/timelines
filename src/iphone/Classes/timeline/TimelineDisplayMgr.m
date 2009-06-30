@@ -111,6 +111,10 @@
     NSLog(@"Timeline page: %@", page);
 
     self.updateId = anUpdateId;
+    NSInteger pageAsInt = [page intValue];
+    if (pageAsInt != 0)
+        pagesShown = pageAsInt;
+
     NSInteger oldTimelineCount = [[timeline allKeys] count];
     for (TweetInfo * tweet in aTimeline)
         [timeline setObject:tweet forKey:tweet.identifier];
@@ -337,10 +341,11 @@
 {
     NSLog(@"Timeline display manager: loading more tweets...");
     if ([service credentials]) {
+        NSInteger nextPage = pagesShown + 1;
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
-            page:[NSNumber numberWithInt:++pagesShown]];
+            page:[NSNumber numberWithInt:nextPage]];
         NSLog(@"Timeline display manager: sent request for page %d",
-            pagesShown);
+            nextPage);
     }
     [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
