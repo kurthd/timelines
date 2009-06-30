@@ -40,6 +40,8 @@
 
     NSString * segregatedSenderUsername;
     BOOL showInbox;
+
+    BOOL delayedRefreshTriggered;
 }
 
 @property (nonatomic, assign)

@@ -6,7 +6,15 @@
 #import "NSDate+StringHelpers.h"
 #import "UILabel+DrawingAdditions.h"
 
+@interface TimelineTableViewCell ()
+
++ (UIImage *)staticBackgroundImage;
+
+@end
+
 @implementation TimelineTableViewCell
+
+static UIImage * backgroundImage;
 
 - (void)dealloc
 {
@@ -19,10 +27,9 @@
 
 - (void)awakeFromNib
 {
-    UIImage * backgroundImage =
-        [UIImage imageNamed:@"TableViewCellGradient.png"];
     self.backgroundView =
-        [[[UIImageView alloc] initWithImage:backgroundImage] autorelease];
+        [[[UIImageView alloc]
+        initWithImage:[[self class] staticBackgroundImage]] autorelease];
     self.backgroundView.contentMode =  UIViewContentModeBottom;
 
     avatar.radius = 4;
@@ -125,6 +132,15 @@
     height = height > minHeight ? height : minHeight;
 
     return height;
+}
+
++ (UIImage *)staticBackgroundImage
+{
+    if (!backgroundImage)
+        backgroundImage =
+            [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
+
+    return backgroundImage;
 }
 
 @end
