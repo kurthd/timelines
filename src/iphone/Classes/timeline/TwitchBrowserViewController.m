@@ -9,6 +9,7 @@
 
 - (void)updateViewForNotLoading;
 - (void)updatePageTitle;
+- (void)animatedActivityIndicators:(BOOL)animating;
 
 @end
 
@@ -42,7 +43,7 @@
 - (void)webViewDidStartLoad:(UIWebView *)aWebView
 {
     haltButton.image = [UIImage imageNamed:@"StopLoading.png"];
-    activityIndicator.hidden = NO;
+    [self animatedActivityIndicators:YES];
     [self updatePageTitle];
 }
 
@@ -65,6 +66,7 @@
 {
     [webView stopLoading];
     [self dismissModalViewControllerAnimated:YES];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 - (IBAction)moveBackAPage
@@ -95,7 +97,7 @@
 - (void)updateViewForNotLoading
 {
     haltButton.image = [UIImage imageNamed:@"Refresh.png"];
-    activityIndicator.hidden = YES;
+    [self animatedActivityIndicators:NO];
 }
 
 - (void)updatePageTitle
@@ -113,6 +115,13 @@
         title ? title : [[webView.request URL] absoluteString];
     titleLabel.text =
         loadedPage && ![loadedPage isEqual:@""] ? loadedPage : self.currentUrl;
+}
+
+- (void)animatedActivityIndicators:(BOOL)animating
+{
+    activityIndicator.hidden = !animating;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible =
+        animating;
 }
 
 @end
