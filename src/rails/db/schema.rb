@@ -44,9 +44,8 @@ ActiveRecord::Schema.define(:version => 20090622031130) do
 
   create_table "twitter_users", :force => true do |t|
     t.string   "username"
-    t.text     "encrypted_password"
-    t.text     "encrypted_key"
-    t.text     "encrypted_iv"
+    t.binary   "key"
+    t.binary   "secret"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

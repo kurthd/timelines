@@ -1,3 +1,5 @@
 public.pem
 private.pem
 garbage
+consumer-token
+consumer-secret

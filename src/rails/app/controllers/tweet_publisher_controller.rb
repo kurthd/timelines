@@ -1,10 +1,12 @@
 require 'grackle'
 
 class TweetPublisherController < ApplicationController
-  @@encryption_secret_file = File.join(RAILS_ROOT, 'config', 'garbage')
+  @@consumer_token_file = File.join(RAILS_ROOT, 'config', 'consumer-token')
+  @@consumer_secret_file = File.join(RAILS_ROOT, 'config', 'consumer-secret')
 
   def check
-    private_key_pass = self.private_key_passwd
+    consumer_token = self.consumer_token
+    consumer_secret = self.consumer_secret
 
     unauth_client = Grackle::Client.new
     @client = Grackle::Client.new
@@ -46,14 +48,13 @@ class TweetPublisherController < ApplicationController
 
         @client.auth =
           {
-            :type => :basic,
+            :type => :oauth,
+            :consumer_key => consumer_token,
+            :consumer_secret => consumer_secret,
             :username => twitter_user.username,
-            :password => twitter_user.decrypt_sensitive(private_key_pass)
+            :token => twitter_user.key,
+            :token_secret => twitter_user.secret
           }
-        #@client =
-          #Grackle::Client.new(:auth => { :type =>:basic,
-                              #:username => twitter_user.username,
-                              #:password => twitter_user.password })
 
         @user_before_quotas[twitter_user.username] =
           @client.account.rate_limit_status.json?.remaining_hits
@@ -232,11 +233,17 @@ class TweetPublisherController < ApplicationController
     end
   end
 
-  def private_key_passwd
-    f = File.new(@@encryption_secret_file)
+  def consumer_token
+    f = File.new(@@consumer_token_file)
     pass = f.read.chomp
     f.close
     pass
   end
 
+  def consumer_secret
+    f = File.new(@@consumer_secret_file)
+    pass = f.read.chomp
+    f.close
+    pass
+  end
 end
