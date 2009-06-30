@@ -376,10 +376,12 @@
     [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
     
     UIBarButtonItem * sendDMButton =
-        [[UIBarButtonItem alloc] initWithTitle:@"Message"
+        [[UIBarButtonItem alloc]
+        initWithImage:[UIImage imageNamed:@"Envelope.png"]
         style:UIBarButtonItemStyleBordered
         target:self.tweetDetailsTimelineDisplayMgr
         action:@selector(sendDirectMessageToCurrentUser)];
+
     self.tweetDetailsNetAwareViewController.navigationItem.rightBarButtonItem =
         sendDMButton;
 
