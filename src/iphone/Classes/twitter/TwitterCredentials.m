@@ -21,6 +21,6 @@
 @dynamic userTimeline;
 @dynamic directMessages;
 @dynamic mentions;
-@dynamic twitpicCredentials;
+@dynamic twitPicCredentials;
 
 @end

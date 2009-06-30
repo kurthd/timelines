@@ -23,7 +23,7 @@
 @property (nonatomic, retain) NSSet* userTimeline;
 @property (nonatomic, retain) NSSet* directMessages;
 @property (nonatomic, retain) NSSet* mentions;
-@property (nonatomic, retain) TwitPicCredentials * twitpicCredentials;
+@property (nonatomic, retain) TwitPicCredentials * twitPicCredentials;
 
 @end
 

@@ -16,6 +16,7 @@
 
 @property (nonatomic, retain) TwitterService * service;
 @property (nonatomic, retain) TwitPicImageSender * imageSender;
+@property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
 
 @property (nonatomic, retain) CredentialsActivatedPublisher *
     credentialsUpdatePublisher;
@@ -27,6 +28,9 @@
 @property (nonatomic, copy) NSString * tweetDraft;
 @property (nonatomic, copy) NSString * dmDraft;
 
+@property (nonatomic, retain) NSManagedObjectContext * context;
+
+- (void)promptForPhotoSource;
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source;
 
 @end
@@ -35,6 +39,7 @@
 
 @synthesize rootViewController, composeTweetViewController;
 @synthesize service, imageSender, credentialsUpdatePublisher;
+@synthesize logInDisplayMgr, context;
 @synthesize delegate;
 @synthesize recipient, origUsername, origTweetId;
 @synthesize tweetDraft, dmDraft;
@@ -58,6 +63,7 @@
 - (id)initWithRootViewController:(UIViewController *)aRootViewController
                   twitterService:(TwitterService *)aService
                      imageSender:(TwitPicImageSender *)anImageSender
+                         context:(NSManagedObjectContext *)aContext
 {
     if (self = [super init]) {
         self.rootViewController = aRootViewController;
@@ -66,6 +72,8 @@
 
         self.imageSender = anImageSender;
         self.imageSender.delegate = self;
+
+        self.context = aContext;
 
         credentialsUpdatePublisher = [[CredentialsActivatedPublisher alloc]
             initWithListener:self action:@selector(setCredentials:)];
@@ -148,8 +156,27 @@
     self.service.credentials = credentials;
 }
 
-#pragma mark ComposeTweetViewControllerDelegate implementation
+#pragma mark LogInDisplayMgrDelegate implementation
 
+- (void)logInCompleted
+{
+    [NSTimer scheduledTimerWithTimeInterval:0.5
+                                     target:self
+                                   selector:@selector(promptForPhotoSource:)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+- (void)promptForPhotoSource:(NSTimer *)timer
+{
+    [self promptForPhotoSource];
+}
+
+- (void)logInCancelled
+{
+}
+
+#pragma mark ComposeTweetViewControllerDelegate implementation
 
 - (void)userDidSave:(NSString *)tweet
 {
@@ -189,43 +216,11 @@
 
 - (void)userWantsToSelectPhoto
 {
-    // to help with readability
-    UIImagePickerControllerSourceType photoLibrary =
-        UIImagePickerControllerSourceTypePhotoLibrary;
-    UIImagePickerControllerSourceType camera =
-        UIImagePickerControllerSourceTypeCamera;
-
-    UIImagePickerControllerSourceType source;
-
-    BOOL libraryAvailable =
-        [UIImagePickerController isSourceTypeAvailable:photoLibrary];
-    BOOL cameraAvailable =
-        [UIImagePickerController isSourceTypeAvailable:camera];
-
-    if (cameraAvailable && libraryAvailable) {
-        NSString * cancelButton =
-            NSLocalizedString(@"imagepicker.choose.cancel", @"");
-        NSString * cameraButton =
-            NSLocalizedString(@"imagepicker.choose.camera", @"");
-        NSString * photosButton =
-            NSLocalizedString(@"imagepicker.choose.photos", @"");
-        
-        UIActionSheet * sheet =
-            [[UIActionSheet alloc] initWithTitle:nil
-                                        delegate:self
-                               cancelButtonTitle:cancelButton
-                          destructiveButtonTitle:nil
-                               otherButtonTitles:cameraButton,
-                                                 photosButton, nil];
-        [sheet showInView:self.rootViewController.view];
-    } else {
-        if (cameraAvailable)
-            source = camera;
-        else
-            source = photoLibrary;
-
-        [self displayImagePicker:source];
-    }
+    TwitterCredentials * credentials = self.service.credentials;
+    if (credentials.twitPicCredentials == nil)
+        [self.logInDisplayMgr logInForUser:credentials.username animated:YES];
+    else
+        [self promptForPhotoSource];
 }
 
 #pragma mark TwitterServiceDelegate implementation
@@ -321,7 +316,10 @@
     if (!image)
          image = [info valueForKey:UIImagePickerControllerOriginalImage];
 
-    [imageSender sendImage:image withCredentials:service.credentials];
+    TwitPicCredentials * c = service.credentials.twitPicCredentials;
+    NSAssert(c, @"Unexpected nil value for TwitPic credentials while uploading "
+        "image.");
+    [imageSender sendImage:image withCredentials:c];
     [self.composeTweetViewController displayActivityView];
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
 }
@@ -351,6 +349,47 @@
 
 #pragma mark UIImagePicker helper methods
 
+- (void)promptForPhotoSource
+{
+    // to help with readability
+    UIImagePickerControllerSourceType photoLibrary =
+        UIImagePickerControllerSourceTypePhotoLibrary;
+    UIImagePickerControllerSourceType camera =
+        UIImagePickerControllerSourceTypeCamera;
+
+    UIImagePickerControllerSourceType source;
+
+    BOOL libraryAvailable =
+        [UIImagePickerController isSourceTypeAvailable:photoLibrary];
+    BOOL cameraAvailable =
+        [UIImagePickerController isSourceTypeAvailable:camera];
+
+    if (cameraAvailable && libraryAvailable) {
+        NSString * cancelButton =
+            NSLocalizedString(@"imagepicker.choose.cancel", @"");
+        NSString * cameraButton =
+            NSLocalizedString(@"imagepicker.choose.camera", @"");
+        NSString * photosButton =
+            NSLocalizedString(@"imagepicker.choose.photos", @"");
+        
+        UIActionSheet * sheet =
+            [[UIActionSheet alloc] initWithTitle:nil
+                                        delegate:self
+                               cancelButtonTitle:cancelButton
+                          destructiveButtonTitle:nil
+                               otherButtonTitles:cameraButton,
+                                                 photosButton, nil];
+        [sheet showInView:self.rootViewController.view];
+    } else {
+        if (cameraAvailable)
+            source = camera;
+        else
+            source = photoLibrary;
+
+        [self displayImagePicker:source];
+    }
+}
+
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source
 {
     UIImagePickerController * imagePicker =
@@ -377,6 +416,19 @@
     }
 
     return composeTweetViewController;
+}
+
+- (LogInDisplayMgr *)logInDisplayMgr
+{
+    if (!logInDisplayMgr) {
+        logInDisplayMgr = [[LogInDisplayMgr alloc]
+            initWithRootViewController:self.composeTweetViewController
+                  managedObjectContext:self.context];
+        logInDisplayMgr.delegate = self;
+        logInDisplayMgr.allowsCancel = YES;
+    }
+
+    return logInDisplayMgr;
 }
 
 @end

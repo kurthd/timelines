@@ -7,14 +7,13 @@
 #import "UIApplication+NetworkActivityIndicatorAdditions.h"
 #import "NSError+InstantiationAdditions.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
-#import "TwitterCredentials+KeychainAdditions.h"
+#import "TwitPicCredentials+KeychainAdditions.h"
 
 @interface TwitPicImageSender ()
 
 @property (nonatomic, copy) NSString * twitPicUrl;
 
 @property (nonatomic, retain) UIImage * image;
-@property (nonatomic, retain) TwitterCredentials * credentials;
 
 @property (nonatomic, retain) NSMutableData * data;
 @property (nonatomic, retain) NSURLConnection * connection;
@@ -32,7 +31,7 @@
 
 @synthesize delegate;
 @synthesize twitPicUrl;
-@synthesize image, credentials;
+@synthesize image;
 @synthesize data, connection;
 @synthesize parser;
 
@@ -41,7 +40,6 @@
     self.delegate = nil;
     self.twitPicUrl = nil;
     self.image = nil;
-    self.credentials = nil;
     self.connection = nil;
     self.data = nil;
     self.parser = nil;
@@ -57,18 +55,16 @@
 }
 
 - (void)sendImage:(UIImage *)anImage
-  withCredentials:(TwitterCredentials *)someCredentials
+  withCredentials:(TwitPicCredentials *)credentials
 {
     self.image = anImage;
-    self.credentials = someCredentials;
 
     NSURL * url = [NSURL URLWithString:self.twitPicUrl];
     NSURLRequest * request =
         [[self class] requestForPostingImage:self.image
                                        toUrl:url
                                 withUsername:credentials.username
-                                    // TODO: FIX ME
-                                    password:@""/*credentials.password*/];
+                                    password:credentials.password];
 
     self.connection =
         [[[NSURLConnection alloc] initWithRequest:request
@@ -187,6 +183,5 @@
 
     return parser;
 }
-
 
 @end

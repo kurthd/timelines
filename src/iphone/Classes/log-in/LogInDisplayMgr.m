@@ -7,6 +7,9 @@
 #import "MGTwitterEngine.h"
 #import "TwitterCredentials.h"
 #import "TwitterCredentials+KeychainAdditions.h"
+#import "TwitPicCredentials.h"
+#import "TwitPicCredentials+KeychainAdditions.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "UIApplication+NetworkActivityIndicatorAdditions.h"
 
@@ -70,6 +73,13 @@
     [self.logInViewController promptForLogIn];
 }
 
+- (void)logInForUser:(NSString *)user animated:(BOOL)animated
+{
+    [self.rootViewController presentModalViewController:self.logInViewController
+                                               animated:animated];
+    [self.logInViewController promptForLoginWithUsername:user editable:NO];
+}
+
 #pragma mark LogInViewControllerDelegate implementation
 
 - (void)userDidProvideUsername:(NSString *)aUsername
@@ -92,6 +102,7 @@
 {
     NSAssert(self.allowsCancel, @"User cancelled even though it's forbidden.");
     [self.rootViewController dismissModalViewControllerAnimated:YES];
+    [self.delegate logInCancelled];
 }
 
 - (BOOL)userCanCancel
@@ -116,21 +127,39 @@
 {
     NSLog(@"Request '%@' succeeded.", requestIdentifier);
 
-    TwitterCredentials * credentials =
-        (TwitterCredentials *) [NSEntityDescription
-        insertNewObjectForEntityForName:@"TwitterCredentials"
-                 inManagedObjectContext:context];
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:@"username == %@",
+        self.twitter.username];
+    TwitterCredentials * twitterCredentials =
+        [TwitterCredentials findFirst:predicate context:context];
 
-    credentials.username = self.username;
-    //credentials.password = self.password;
+    if (twitterCredentials == nil) {
+        NSString * message = @"The Twitter login that matches these TwitPic "
+            "login was not found.";
+        [self displayErrorWithMessage:message];
+        // HACK: Hardcoding the call to the username here
+        [self.logInViewController promptForLoginWithUsername:self.username
+                                                    editable:NO];
+    } else {
+        TwitPicCredentials * twitPicCredentials =
+            (TwitPicCredentials *) [NSEntityDescription
+            insertNewObjectForEntityForName:@"TwitPicCredentials"
+                     inManagedObjectContext:context];
+        twitPicCredentials.username = self.username;
+        twitPicCredentials.password = self.password;
+        twitPicCredentials.twitterCredentials = twitterCredentials;
 
-    NSError * error;
-    if ([context save:&error]) {
-        [self broadcastSuccessfulLogInNotification:credentials];
-        [self.rootViewController dismissModalViewControllerAnimated:YES];
-    } else {  // handle the error
-        [self displayErrorWithMessage:error.localizedDescription];
-        [self.logInViewController promptForLogIn];
+        NSError * error;
+        if ([context save:&error]) {
+            [self.rootViewController dismissModalViewControllerAnimated:YES];
+            [self.delegate logInCompleted];
+        } else {  // handle the error
+            [self displayErrorWithMessage:error.localizedDescription];
+            // HACK: Hardcoding the call to the username here
+            [self.logInViewController
+                promptForLoginWithUsername:self.username
+                                  editable:NO];
+        }
     }
 
     [[UIApplication sharedApplication] networkActivityDidFinish];
@@ -141,7 +170,9 @@
     NSLog(@"Request '%@' failed; error: '%@'.", requestIdentifier, error);
 
     [self displayErrorWithMessage:error.localizedDescription];
-    [self.logInViewController promptForLogIn];
+    // HACK: Hardcoding the call to the username here
+    [self.logInViewController promptForLoginWithUsername:self.username
+                                                editable:NO];
 
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }

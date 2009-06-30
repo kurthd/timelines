@@ -8,6 +8,7 @@
 #import "TwitterService.h"
 #import "TwitPicImageSender.h"
 #import "TwitterCredentials.h"
+#import "LogInDisplayMgr.h"
 
 @class ComposeTweetViewController;
 @class CredentialsActivatedPublisher;
@@ -15,8 +16,9 @@
 @interface ComposeTweetDisplayMgr :
     NSObject
     <ComposeTweetViewControllerDelegate, TwitterServiceDelegate,
-    TwitPicImageSenderDelegate, UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate, UIActionSheetDelegate>
+    TwitPicImageSenderDelegate, LogInDisplayMgrDelegate,
+    UIImagePickerControllerDelegate, UINavigationControllerDelegate,
+    UIActionSheetDelegate>
 {
     id<ComposeTweetDisplayMgrDelegate> delegate;
 
@@ -25,6 +27,7 @@
 
     TwitterService * service;
     TwitPicImageSender * imageSender;
+    LogInDisplayMgr * logInDisplayMgr;
 
     NSString * recipient;  // non-nil if composing a direct message
 
@@ -34,6 +37,8 @@
     NSString * tweetDraft;
     NSString * dmDraft;
 
+    NSManagedObjectContext * context;
+
     CredentialsActivatedPublisher * credentialsUpdatePublisher;
 }
 
@@ -41,7 +46,8 @@
 
 - (id)initWithRootViewController:(UIViewController *)aRootViewController
                   twitterService:(TwitterService *)aService
-                     imageSender:(TwitPicImageSender *)anImageSender;
+                     imageSender:(TwitPicImageSender *)anImageSender
+                         context:(NSManagedObjectContext *)aContext;
 
 - (void)composeTweet;
 - (void)composeTweetWithText:(NSString *)tweet;

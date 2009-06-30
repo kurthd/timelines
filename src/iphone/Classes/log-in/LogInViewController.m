@@ -171,6 +171,17 @@ enum CredentialRows
     [self.usernameTextField becomeFirstResponder];
 }
 
+- (void)promptForLoginWithUsername:(NSString *)username editable:(BOOL)editable
+{
+    [self enableForm];
+    self.logInButton.enabled =
+        self.usernameTextField.text.length > 0 &&
+        self.passwordTextField.text.length > 0;
+    self.usernameTextField.text = username;
+    self.usernameTextField.enabled = editable;
+    [self.passwordTextField becomeFirstResponder];
+}
+
 #pragma mark Handling user actions
 
 - (IBAction)userDidSave:(id)sender

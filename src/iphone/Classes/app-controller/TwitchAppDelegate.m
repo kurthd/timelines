@@ -938,7 +938,8 @@
             [[ComposeTweetDisplayMgr alloc]
             initWithRootViewController:self.tabBarController
                         twitterService:service
-                           imageSender:imageSender];
+                           imageSender:imageSender
+                               context:[self managedObjectContext]];
         [service release];
         [imageSender release];
 

@@ -3,7 +3,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TwitterCredentials.h"
+#import "TwitPicCredentials.h"
 #import "TwitPicImageSenderDelegate.h"
 
 @class TwitPicResponseParser;
@@ -15,7 +15,6 @@
     NSString * twitPicUrl;
 
     UIImage * image;
-    TwitterCredentials * credentials;
 
     NSMutableData * data;
     NSURLConnection * connection;
@@ -25,11 +24,10 @@
 
 @property (nonatomic, assign) id<TwitPicImageSenderDelegate> delegate;
 @property (nonatomic, retain, readonly) UIImage * image;
-@property (nonatomic, retain, readonly) TwitterCredentials * credentials;
 
 - (id)initWithUrl:(NSString *)aUrl;
 
 - (void)sendImage:(UIImage *)image
-  withCredentials:(TwitterCredentials *)credentials;
+  withCredentials:(TwitPicCredentials *)credentials;
 
 @end

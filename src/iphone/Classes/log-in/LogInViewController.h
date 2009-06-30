@@ -19,14 +19,12 @@
 
     IBOutlet UITextField * usernameTextField;
     IBOutlet UITextField * passwordTextField;
-
-    NSString * lighthouseDomain;
-    NSString * lighthouseScheme;
 }
 
 @property (nonatomic, assign) id<LogInViewControllerDelegate> delegate;
 
 - (void)promptForLogIn;
+- (void)promptForLoginWithUsername:(NSString *)username editable:(BOOL)editable;
 
 - (IBAction)userDidSave:(id)sender;
 - (IBAction)userDidCancel:(id)sender;
