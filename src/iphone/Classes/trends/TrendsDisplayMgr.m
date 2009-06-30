@@ -204,7 +204,7 @@ typedef enum
 - (void)failedToFetchCurrentTrends:(NSError *)error
 {
     [self showError:error];
-    [self.networkAwareViewController setUpdatingState:kConnectedAndNotUpdating];
+    [self.networkAwareViewController setUpdatingState:kDisconnected];
     [self.networkAwareViewController setCachedDataAvailable:
         ![[self.allTrends objectAtIndex:kCurrentTrends] isEqual:[NSNull null]]];
 }
@@ -219,7 +219,7 @@ typedef enum
 - (void)failedToFetchDailyTrends:(NSError *)error
 {
     [self showError:error];
-    [self.networkAwareViewController setUpdatingState:kConnectedAndNotUpdating];
+    [self.networkAwareViewController setUpdatingState:kDisconnected];
     [self.networkAwareViewController setCachedDataAvailable:
         ![[self.allTrends objectAtIndex:kDailyTrends] isEqual:[NSNull null]]];
 }
@@ -234,7 +234,7 @@ typedef enum
 - (void)failedToFetchWeeklyTrends:(NSError *)error
 {
     [self showError:error];
-    [self.networkAwareViewController setUpdatingState:kConnectedAndNotUpdating];
+    [self.networkAwareViewController setUpdatingState:kDisconnected];
     [self.networkAwareViewController setCachedDataAvailable:
         ![[self.allTrends objectAtIndex:kWeeklyTrends] isEqual:[NSNull null]]];
 }
