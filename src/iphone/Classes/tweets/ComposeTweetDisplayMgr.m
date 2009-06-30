@@ -161,11 +161,6 @@
 
 - (void)logInCompleted
 {
-    /*
-    [self performSelector:@selector(promptForPhotoSource:)
-               withObject:self.composeTweetViewController.modalViewController
-               afterDelay:
-     */
     [self promptForPhotoSource:
         self.composeTweetViewController.modalViewController];
 }
