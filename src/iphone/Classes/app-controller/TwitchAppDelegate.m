@@ -721,7 +721,7 @@
             c = [((Mention *) t) credentials];
             key = @"mention";
         } else
-            NSLog(@"Still have a %@ tweet type!", [t class]);
+            NSLog(@"Still have a %@ tweet type!", [t className]);
 
         if (c) {
             NSMutableDictionary * perCredentials =
