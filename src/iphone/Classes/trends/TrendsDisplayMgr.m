@@ -96,7 +96,8 @@ typedef enum
         [self.timelineDisplayMgr setService:searchDisplayMgr
                                      tweets:nil
                                        page:0
-                               forceRefresh:NO];
+                               forceRefresh:NO
+                             allPagesLoaded:NO];
         self.searchDisplayMgr.dataSourceDelegate = self.timelineDisplayMgr;
     }
 
@@ -166,7 +167,8 @@ typedef enum
     [self.timelineDisplayMgr setService:self.searchDisplayMgr
                                  tweets:nil
                                    page:0
-                           forceRefresh:YES];
+                           forceRefresh:YES
+                         allPagesLoaded:NO];
     [self.networkAwareViewController.navigationController
         pushViewController:timelineDisplayMgr.wrapperController
                   animated:YES];

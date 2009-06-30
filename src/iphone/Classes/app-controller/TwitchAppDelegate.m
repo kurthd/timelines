@@ -344,7 +344,7 @@
 
     twitterService.delegate = dataSource;
     [profileTimelineDisplayMgr setService:dataSource tweets:nil page:1
-        forceRefresh:NO];
+        forceRefresh:NO allPagesLoaded:NO];
     dataSource.delegate = profileTimelineDisplayMgr;
 }
 

@@ -31,7 +31,8 @@
     setUserToFirstTweeter, tweetDetailsTimelineDisplayMgr,
     tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher,
     lastFollowingUsername, lastTweetDetailsWrapperController,
-    lastTweetDetailsController, currentTweetDetailsUser, currentUsername;
+    lastTweetDetailsController, currentTweetDetailsUser, currentUsername,
+    allPagesLoaded;
 
 - (void)dealloc
 {
@@ -114,10 +115,16 @@
     for (TweetInfo * tweet in aTimeline)
         [timeline setObject:tweet forKey:tweet.identifier];
     NSInteger newTimelineCount = [[timeline allKeys] count];
-    BOOL allLoaded =
+    allPagesLoaded =
         (!refreshingTweets && oldTimelineCount == newTimelineCount) ||
         newTimelineCount == 0;
-    [timelineController setAllPagesLoaded:allLoaded];
+    if (allPagesLoaded) {
+        NSLog(@"Timeline display manager: setting all pages loaded");
+        NSLog(@"Refreshing tweets?: %d", refreshingTweets);
+        NSLog(@"Old timeline count: %d", oldTimelineCount);
+        NSLog(@"New timeline count: %d", newTimelineCount);
+    }
+    [timelineController setAllPagesLoaded:allPagesLoaded];
     if (setUserToFirstTweeter) {
         timelineController.showWithoutAvatars = YES;
         if ([aTimeline count] > 0) {
@@ -405,7 +412,7 @@
 
     twitterService.delegate = dataSource;
     [self.tweetDetailsTimelineDisplayMgr setService:dataSource tweets:nil page:1
-        forceRefresh:NO];
+        forceRefresh:NO allPagesLoaded:NO];
     dataSource.delegate = self.tweetDetailsTimelineDisplayMgr;
 
     [dataSource setCredentials:credentials];
@@ -608,7 +615,7 @@
 
     twitterService.delegate = dataSource;
     [self.tweetDetailsTimelineDisplayMgr setService:dataSource tweets:nil page:1
-        forceRefresh:NO];
+        forceRefresh:NO allPagesLoaded:NO];
     dataSource.delegate = self.tweetDetailsTimelineDisplayMgr;
 
     [dataSource setCredentials:credentials];
@@ -852,7 +859,7 @@
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page
-    forceRefresh:(BOOL)refresh
+    forceRefresh:(BOOL)refresh allPagesLoaded:(BOOL)newAllPagesLoaded
 {
     [aService retain];
     [service release];
@@ -865,6 +872,7 @@
     [timeline addEntriesFromDictionary:someTweets];
 
     pagesShown = page;
+    allPagesLoaded = newAllPagesLoaded;
 
     [aService setCredentials:credentials];
 
@@ -873,6 +881,7 @@
         animated:NO];
 
     [timelineController setTweets:[timeline allValues] page:pagesShown];
+    [timelineController setAllPagesLoaded:allPagesLoaded];
 
     if (refresh || [[someTweets allKeys] count] == 0)
         [self refreshWithCurrentPages];

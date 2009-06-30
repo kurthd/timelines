@@ -98,7 +98,8 @@
         [self.timelineDisplayMgr setService:self.searchDisplayMgr
                                      tweets:nil
                                        page:0
-                               forceRefresh:NO];
+                               forceRefresh:NO
+                             allPagesLoaded:NO];
         self.searchDisplayMgr.dataSourceDelegate = self.timelineDisplayMgr;
     }
 
@@ -148,7 +149,8 @@
     [self.timelineDisplayMgr setService:self.searchDisplayMgr
                                  tweets:nil
                                    page:[self.searchPage integerValue]
-                           forceRefresh:YES];
+                           forceRefresh:YES
+                         allPagesLoaded:NO];
     UITableViewController * tvc = (UITableViewController *)
         self.networkAwareViewController.targetViewController;
     tvc.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
