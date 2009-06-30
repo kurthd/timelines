@@ -43,6 +43,7 @@
     NSMutableDictionary * timeline;
     NSNumber * updateId;
     NSUInteger pagesShown;
+    BOOL allPagesLoaded;
 
     NSMutableDictionary * followingUsers;
     NSUInteger followingUsersPagesShown;
@@ -93,6 +94,7 @@
 
 @property (nonatomic, copy) NSMutableDictionary * timeline;
 @property (nonatomic, readonly) NSUInteger pagesShown;
+@property (nonatomic, readonly) BOOL allPagesLoaded;
 @property (nonatomic, copy) NSString * lastFollowingUsername;
 
 @property (nonatomic, assign) BOOL displayAsConversation;
@@ -121,7 +123,7 @@
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page
-    forceRefresh:(BOOL)refresh;
+    forceRefresh:(BOOL)refresh allPagesLoaded:(BOOL)allPagesLoaded;
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)replyToTweet;
 - (void)refreshWithLatest;

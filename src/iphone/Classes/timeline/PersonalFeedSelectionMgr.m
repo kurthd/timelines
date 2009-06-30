@@ -62,14 +62,17 @@
         case 0:
             self.allTimelineTweets = timelineDisplayMgr.timeline;
             allTimelinePagesShown = timelineDisplayMgr.pagesShown;
+            allTimelineAllPagesLoaded = timelineDisplayMgr.allPagesLoaded;
             break;
         case 1:
             self.mentionsTimelineTweets = timelineDisplayMgr.timeline;
             mentionsTimelinePagesShown = timelineDisplayMgr.pagesShown;
+            mentionsTimelineAllPagesLoaded = timelineDisplayMgr.allPagesLoaded;
             break;
         case 2:
             self.messagesTimelineTweets = timelineDisplayMgr.timeline;
             messagesTimelinePagesShown = timelineDisplayMgr.pagesShown;
+            messagesTimelineAllPagesLoaded = timelineDisplayMgr.allPagesLoaded;
             break;
     }
 
@@ -87,7 +90,8 @@
             [timelineDisplayMgr setShowInboxOutbox:NO];
             [timelineDisplayMgr setService:allTimelineDataSource
                 tweets:self.allTimelineTweets page:allTimelinePagesShown
-                forceRefresh:allTimelineRefresh];
+                forceRefresh:allTimelineRefresh
+                allPagesLoaded:allTimelineAllPagesLoaded];
             allTimelineRefresh = NO;
             break;
         case 1:
@@ -98,7 +102,8 @@
             [timelineDisplayMgr setService:mentionsTimelineDataSource
                 tweets:self.mentionsTimelineTweets
                 page:mentionsTimelinePagesShown
-                forceRefresh:mentionsTimelineRefresh];
+                forceRefresh:mentionsTimelineRefresh
+                allPagesLoaded:mentionsTimelineAllPagesLoaded];
             mentionsTimelineRefresh = NO;
             break;
         case 2:
@@ -109,7 +114,8 @@
             [timelineDisplayMgr setService:messagesTimelineDataSource
                 tweets:self.messagesTimelineTweets
                 page:messagesTimelinePagesShown
-                forceRefresh:messagesTimelineRefresh];
+                forceRefresh:messagesTimelineRefresh
+                allPagesLoaded:messagesTimelineAllPagesLoaded];
             messagesTimelineRefresh = NO;
             break;
     }

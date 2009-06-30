@@ -19,14 +19,17 @@
     NSDictionary * allTimelineTweets;
     NSUInteger allTimelinePagesShown;
     BOOL allTimelineRefresh;
+    BOOL allTimelineAllPagesLoaded;
 
     NSDictionary * messagesTimelineTweets;
     NSUInteger messagesTimelinePagesShown;
     BOOL messagesTimelineRefresh;
+    BOOL messagesTimelineAllPagesLoaded;
 
     NSDictionary * mentionsTimelineTweets;
     NSUInteger mentionsTimelinePagesShown;
     BOOL mentionsTimelineRefresh;
+    BOOL mentionsTimelineAllPagesLoaded;
 
     NSInteger previousTab;
 }
