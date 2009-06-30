@@ -161,6 +161,11 @@
 
 - (void)logInCompleted
 {
+    /*
+    [self performSelector:@selector(promptForPhotoSource:)
+               withObject:self.composeTweetViewController.modalViewController
+               afterDelay:
+     */
     [self promptForPhotoSource:
         self.composeTweetViewController.modalViewController];
 }
@@ -327,15 +332,19 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet
     clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    UIViewController * controller =
+        self.composeTweetViewController.modalViewController ?
+        self.composeTweetViewController.modalViewController :
+        self.composeTweetViewController;
     switch (buttonIndex) {
         case 0:  // camera
             [self displayImagePicker:UIImagePickerControllerSourceTypeCamera
-                          controller:self.composeTweetViewController];
+                          controller:controller];
             break;
         case 1:  // library
             [self displayImagePicker:
                 UIImagePickerControllerSourceTypePhotoLibrary
-                          controller:self.composeTweetViewController];
+                          controller:controller];
             break;
     }
 
