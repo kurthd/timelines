@@ -3,6 +3,7 @@
 //
 
 #import "ExplainOauthViewController.h"
+#import "UIColor+TwitchColors.h"
 
 @interface ExplainOauthViewController ()
 
@@ -40,6 +41,7 @@
 {
     [super viewDidLoad];
     [self showButtonView];
+    self.tableView.backgroundColor = [UIColor twitchBackgroundColor];
 }
 
 - (void)userDidCancel

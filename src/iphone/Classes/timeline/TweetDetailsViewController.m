@@ -42,8 +42,15 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
     [delegate showingTweetDetails];
     if (self.selectedTweet) {
         [delegate setCurrentTweetDetailsUser:self.selectedTweet.user.username];
+        webView.hidden = YES;
         [self setupWebView];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    webView.hidden = NO;
 }
 
 - (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)avatarImage
