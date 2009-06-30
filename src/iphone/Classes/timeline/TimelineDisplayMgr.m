@@ -918,6 +918,9 @@
         self.timelineController.invertedCellUsernames = invertedCellUsernames;
     }
 
+    if (setUserToFirstTweeter)
+        self.currentUsername = credentials.username;
+
     [service setCredentials:credentials];
 
     // check for pointer equality rather than string equality against username

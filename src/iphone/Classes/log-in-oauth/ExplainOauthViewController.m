@@ -8,10 +8,12 @@
 @interface ExplainOauthViewController ()
 
 @property (nonatomic, retain) UITableView * tableView;
-@property (nonatomic, retain) UITableViewCell * authorizationCell;
-@property (nonatomic, retain) UIView * buttonView;
-@property (nonatomic, retain) UIView * activityView;
-@property (nonatomic, retain) UIView * authorizingView;
+
+@property (nonatomic, retain) UITableViewCell * activeCell;
+@property (nonatomic, retain) UITableViewCell * buttonCell;
+@property (nonatomic, retain) UITableViewCell * activityCell;
+@property (nonatomic, retain) UITableViewCell * authorizingCell;
+
 @property (nonatomic, retain) UINavigationBar * navigationBar;
 @property (nonatomic, retain) UIBarButtonItem * cancelButton;
 
@@ -20,7 +22,7 @@
 @implementation ExplainOauthViewController
 
 @synthesize delegate, tableView;
-@synthesize authorizationCell, buttonView, activityView, authorizingView;
+@synthesize activeCell, buttonCell, activityCell, authorizingCell;
 @synthesize navigationBar, cancelButton;
 @synthesize allowsCancel;
 
@@ -28,10 +30,10 @@
 {
     self.delegate = nil;
     self.tableView = nil;
-    self.authorizationCell = nil;
-    self.buttonView = nil;
-    self.activityView = nil;
-    self.authorizingView = nil;
+    self.activeCell = nil;
+    self.buttonCell = nil;
+    self.activityCell = nil;
+    self.authorizingCell = nil;
     self.navigationBar = nil;
     self.cancelButton = nil;
     [super dealloc];
@@ -40,8 +42,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self showButtonView];
     self.tableView.backgroundColor = [UIColor twitchBackgroundColor];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self showButtonView];
 }
 
 - (void)userDidCancel
@@ -51,29 +58,20 @@
 
 - (void)showActivityView
 {
-    [self.buttonView removeFromSuperview];
-    [self.authorizingView removeFromSuperview];
-
-    [self.authorizationCell.contentView addSubview:self.activityView];
-    self.authorizationCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.activeCell = self.activityCell;
+    [self.tableView reloadData];
 }
 
 - (void)showButtonView
 {
-    [self.activityView removeFromSuperview];
-    [self.authorizingView removeFromSuperview];
-
-    [self.authorizationCell.contentView addSubview:self.buttonView];
-    self.authorizationCell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    self.activeCell = self.buttonCell;
+    [self.tableView reloadData];
 }
 
 - (void)showAuthorizingView
 {
-    [self.activityView removeFromSuperview];
-    [self.buttonView removeFromSuperview];
-
-    [self.authorizationCell.contentView addSubview:self.authorizingView];
-    self.authorizationCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.activeCell = self.authorizingCell;
+    [self.tableView reloadData];
 }
 
 #pragma mark Table view methods
@@ -107,32 +105,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return self.authorizationCell;
-
-    static NSString * CellIdentifier = @"Cell";
-
-    UITableViewCell * cell =
-        [tv dequeueReusableCellWithIdentifier:CellIdentifier];
-
-    if (cell == nil) {
-        cell =
-            [[[UITableViewCell alloc]
-              initWithFrame:CGRectZero reuseIdentifier:CellIdentifier]
-             autorelease];
-    }
-
-    cell.textLabel.text = NSLocalizedString(@"explainoauth.begin", @"");
-    cell.textLabel.textAlignment = UITextAlignmentCenter;
-
-    return cell;
+    return self.activeCell;
 }
 
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.delegate beginAuthorization];
-    [[self.tableView cellForRowAtIndexPath:indexPath]
-        setSelected:NO animated:YES];
+    if (self.activeCell.selectionStyle != UITableViewCellSelectionStyleNone) {
+        [self.delegate beginAuthorization];
+        [[self.tableView cellForRowAtIndexPath:indexPath] setSelected:NO
+                                                             animated:YES];
+    }
 }
 
 #pragma mark Accessors

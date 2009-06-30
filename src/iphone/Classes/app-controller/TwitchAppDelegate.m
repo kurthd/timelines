@@ -200,6 +200,9 @@
     [homeNetAwareViewController.navigationItem
         setRightBarButtonItem:[self sendingTweetProgressView]
                      animated:YES];
+    [profileNetAwareViewController.navigationItem
+        setRightBarButtonItem:[self sendingTweetProgressView]
+                     animated:YES];
 }
 
 - (void)userDidSendTweet:(Tweet *)tweet
@@ -210,8 +213,13 @@
         control.selectedSegmentIndex == 0 ||
         control.selectedSegmentIndex == 1;
     [timelineDisplayMgr addTweet:tweet displayImmediately:displayImmediately];
+    [profileTimelineDisplayMgr addTweet:tweet
+                     displayImmediately:displayImmediately];
 
     [homeNetAwareViewController.navigationItem
+        setRightBarButtonItem:[self newTweetButtonItem]
+                     animated:YES];
+    [profileNetAwareViewController.navigationItem
         setRightBarButtonItem:[self newTweetButtonItem]
                      animated:YES];
 }
