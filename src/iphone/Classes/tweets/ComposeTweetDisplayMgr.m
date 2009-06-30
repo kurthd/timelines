@@ -161,11 +161,6 @@
 
 - (void)logInCompleted
 {
-    /*
-    [self performSelector:@selector(promptForPhotoSource:)
-               withObject:self.composeTweetViewController.modalViewController
-               afterDelay:
-     */
     [self promptForPhotoSource:
         self.composeTweetViewController.modalViewController];
 }
@@ -344,7 +339,7 @@
         case 1:  // library
             [self displayImagePicker:
                 UIImagePickerControllerSourceTypePhotoLibrary
-                          controller:controller];
+                          controller:controlle];
             break;
     }
 
