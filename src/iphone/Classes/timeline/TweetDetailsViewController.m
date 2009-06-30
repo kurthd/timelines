@@ -180,6 +180,10 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
             NSString * replyToUsername =
                 self.selectedTweet.inReplyToTwitterUsername;
             [delegate loadNewTweetWithId:tweetId username:replyToUsername];
+        } else if ([webpage isMatchedByRegex:@"^mailto:"]) {
+            NSLog(@"Opening 'Mail' with url: %@", webpage);
+            NSURL * url = [[NSURL alloc] initWithString:webpage];
+            [[UIApplication sharedApplication] openURL:url];
         } else
             [delegate visitWebpage:webpage];
     }
