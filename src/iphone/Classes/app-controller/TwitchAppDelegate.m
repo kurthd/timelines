@@ -333,6 +333,7 @@
         retain];
     profileTimelineDisplayMgr.displayAsConversation = NO;
     profileTimelineDisplayMgr.setUserToFirstTweeter = YES;
+    profileTimelineDisplayMgr.setUserToAuthenticatedUser = YES;
     UIBarButtonItem * refreshButton =
         profileNetAwareViewController.navigationItem.leftBarButtonItem;
     refreshButton.target = profileTimelineDisplayMgr;

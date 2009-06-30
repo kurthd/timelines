@@ -32,7 +32,7 @@
     tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher,
     lastFollowingUsername, lastTweetDetailsWrapperController,
     lastTweetDetailsController, currentTweetDetailsUser, currentUsername,
-    allPagesLoaded;
+    allPagesLoaded, setUserToAuthenticatedUser;
 
 - (void)dealloc
 {
@@ -298,7 +298,7 @@
 
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
 {
-    NSLog(@"Timeline display mgr: fetched tweet %@", tweetId);
+    NSLog(@"Timeline display mgr: fetched tweet: %@", tweet);
     TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
 
     [self.lastTweetDetailsController setTweet:tweetInfo avatar:nil];
@@ -918,7 +918,7 @@
         self.timelineController.invertedCellUsernames = invertedCellUsernames;
     }
 
-    if (setUserToFirstTweeter)
+    if (setUserToAuthenticatedUser)
         self.currentUsername = credentials.username;
 
     [service setCredentials:credentials];

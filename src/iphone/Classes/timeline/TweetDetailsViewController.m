@@ -12,6 +12,7 @@
 @interface TweetDetailsViewController ()
 
 - (void)setupWebView;
+- (void)showWebView;
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer;
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer
     header:(NSString *)header;
@@ -41,17 +42,23 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
     [super viewWillAppear:animated];
     [delegate showingTweetDetails];
     webView.hidden = YES;
+    [self performSelector:@selector(showWebView) withObject:nil afterDelay:0.1];
     if (self.selectedTweet) {
         [delegate setCurrentTweetDetailsUser:self.selectedTweet.user.username];
         [self setupWebView];
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)showWebView
 {
-    [super viewDidAppear:animated];
     webView.hidden = NO;
 }
+
+// - (void)viewDidAppear:(BOOL)animated
+// {
+//     [super viewDidAppear:animated];
+//     webView.hidden = NO;
+// }
 
 - (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)avatarImage
 {
