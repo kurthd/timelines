@@ -75,6 +75,7 @@
 
     UISegmentedControl * segmentedControl = (UISegmentedControl *)sender;
     allTimelineDataSource.delegate = nil;
+    mentionsTimelineDataSource.delegate = nil;
     messagesTimelineDataSource.delegate = nil;
 
     switch (segmentedControl.selectedSegmentIndex) {

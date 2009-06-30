@@ -104,8 +104,11 @@
 - (void)timeline:(NSArray *)aTimeline
     fetchedSinceUpdateId:(NSNumber *)anUpdateId page:(NSNumber *)page
 {
-    NSLog(@"Timeline display manager received timeline of size %d", 
+    NSLog(@"Timeline display manager: received timeline of size %d", 
         [aTimeline count]);
+    NSLog(@"Timeline update id: %@", anUpdateId);
+    NSLog(@"Timeline page: %@", page);
+
     self.updateId = anUpdateId;
     NSInteger oldTimelineCount = [[timeline allKeys] count];
     for (TweetInfo * tweet in aTimeline)
@@ -326,9 +329,12 @@
 - (void)loadMoreTweets
 {
     NSLog(@"Timeline display manager: loading more tweets...");
-    if ([service credentials])
+    if ([service credentials]) {
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:++pagesShown]];
+        NSLog(@"Timeline display manager: sent request for page %d",
+            pagesShown);
+    }
     [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
@@ -370,10 +376,12 @@
     [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
     
     UIBarButtonItem * sendDMButton =
-        [[UIBarButtonItem alloc] initWithTitle:@"Message"
+        [[UIBarButtonItem alloc]
+        initWithImage:[UIImage imageNamed:@"Envelope.png"]
         style:UIBarButtonItemStyleBordered
         target:self.tweetDetailsTimelineDisplayMgr
         action:@selector(sendDirectMessageToCurrentUser)];
+
     self.tweetDetailsNetAwareViewController.navigationItem.rightBarButtonItem =
         sendDMButton;
 
@@ -849,6 +857,9 @@
     [aService retain];
     [service release];
     service = aService;
+
+    // in case in the middle of updating while switched
+    [self.wrapperController setUpdatingState:kConnectedAndNotUpdating];
 
     [timeline removeAllObjects];
     [timeline addEntriesFromDictionary:someTweets];
