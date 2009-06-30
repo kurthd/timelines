@@ -487,7 +487,8 @@
 - (ResponseProcessor *)processorForRequest:(id)rid
 {
     ResponseProcessor * processor = [pendingRequests objectForKey:rid];
-    NSAssert1(processor, @"Failed to find processor for request: '%@'.", rid);
+    if (!processor)
+        NSLog(@"Failed to find processor for request: '%@'.", rid);
 
     return processor;
 }
@@ -500,13 +501,16 @@
 - (void)request:(id)rid succeededWithResponse:(id)response
 {
     [[self processorForRequest:rid] process:response];
-    //[self cleanUpRequest:rid];
 }
 
 - (void)request:(id)rid failed:(NSError *)error
 {
     [[self processorForRequest:rid] processError:error];
-    //[self cleanUpRequest:rid];
+}
+
+- (void)removeAllPendingRequests
+{
+    [pendingRequests removeAllObjects];
 }
 
 #pragma mark Accessors
@@ -521,10 +525,10 @@
                                                 secret:credentials.secret];
         twitter.accessToken = token;
         [token release];
-        /*
-        [twitter setUsername:credentials.username
-                    password:credentials.password];
-         */
+
+        // when the credentials are changed, we don't want to send back any
+        // responses received for the previous credentials
+        [self removeAllPendingRequests];
     }
 }
 
