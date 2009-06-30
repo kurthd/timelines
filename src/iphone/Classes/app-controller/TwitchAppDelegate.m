@@ -756,7 +756,9 @@
     [living removeAllObjects];
     [hitList removeAllObjects];
 
-    NSArray * allDms = [DirectMessage findAll:context];
+    NSArray * allDms =
+        [[DirectMessage findAll:context]
+         sortedArrayUsingSelector:@selector(compare:)];
     for (DirectMessage * dm in allDms) {
         TwitterCredentials * c = dm.credentials;
 

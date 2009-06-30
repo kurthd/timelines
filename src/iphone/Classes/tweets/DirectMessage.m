@@ -28,4 +28,14 @@
         self.recipient.username, self.text];
 }
 
+- (NSComparisonResult)compare:(DirectMessage *)dm
+{
+    NSNumber * myId =
+        [NSNumber numberWithLongLong:[self.identifier longLongValue]];
+    NSNumber * theirId =
+        [NSNumber numberWithLongLong:[dm.identifier longLongValue]];
+    
+    return [theirId compare:myId];
+}
+
 @end
