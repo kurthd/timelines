@@ -61,13 +61,6 @@
     self.queryTitle = aTitle;
 }
 
-#pragma mark SearchViewControllerDelegate implementation
-
-- (void)userDidSelectSearchResult:(id)result
-{
-    NSLog(@"User selected search result: '%@'.", result);
-}
-
 #pragma mark TimelineDataSource implementation
 
 - (void)fetchTimelineSince:(NSNumber *)anUpdateId page:(NSNumber *)page
