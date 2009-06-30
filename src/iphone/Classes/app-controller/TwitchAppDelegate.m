@@ -540,16 +540,6 @@
 {
     NSLog(@"Application did fail to register for push notifications. Error: %@",
         error);
-
-#if !TARGET_IPHONE_SIMULATOR  // don't show this error in the simulator
-
-    NSString * title =
-        NSLocalizedString(@"notification.registration.failed.alert.title", @"");
-    NSString * message = error.localizedDescription;
-    [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
-
-#endif
-
 }
 
 - (void)application:(UIApplication *)application
