@@ -61,6 +61,7 @@
     BOOL refreshingTweets;
     BOOL showInboxOutbox;
     BOOL setUserToAuthenticatedUser;
+    BOOL firstFetchReceived;
 
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     TimelineDisplayMgr * tweetDetailsTimelineDisplayMgr;
@@ -101,6 +102,7 @@
 @property (nonatomic, assign) BOOL displayAsConversation;
 @property (nonatomic, assign) BOOL setUserToFirstTweeter;
 @property (nonatomic, assign) BOOL setUserToAuthenticatedUser;
+@property (nonatomic, assign) BOOL firstFetchReceived;
 
 @property (nonatomic, retain)
     TimelineDisplayMgr * tweetDetailsTimelineDisplayMgr;

@@ -32,7 +32,7 @@
     tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher,
     lastFollowingUsername, lastTweetDetailsWrapperController,
     lastTweetDetailsController, currentTweetDetailsUser, currentUsername,
-    allPagesLoaded, setUserToAuthenticatedUser;
+    allPagesLoaded, setUserToAuthenticatedUser, firstFetchReceived;
 
 - (void)dealloc
 {
@@ -149,6 +149,7 @@
     [wrapperController setCachedDataAvailable:YES];
     refreshingTweets = NO;
     failedState = NO;
+    firstFetchReceived = YES;
 }
 
 - (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)anUpdateId
@@ -902,6 +903,8 @@
 
     [self.wrapperController
         setCachedDataAvailable:[[someTweets allKeys] count] > 0];
+        
+    firstFetchReceived = !refresh;
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
