@@ -73,7 +73,7 @@
 {
     [self.rootViewController
         presentModalViewController:self.explainOauthViewController
-                          animated:YES];
+                          animated:animated];
     self.explainOauthViewController.allowsCancel = self.allowsCancel;
 }
 
