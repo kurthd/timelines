@@ -702,13 +702,14 @@
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 
-- (void)addTweet:(Tweet *)tweet displayImmediately:(BOOL)displayImmediately
+- (void)addTweet:(Tweet *)tweet
 {
+    NSLog(@"Timeline display manager: adding tweet");
     TweetInfo * info = [TweetInfo createFromTweet:tweet];
     [timeline setObject:info forKey:info.identifier];
 
-    if (displayImmediately)
-        [timelineController addTweet:info];
+
+    [timelineController addTweet:info];
 }
 
 - (BOOL)cachedDataAvailable
