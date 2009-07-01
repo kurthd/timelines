@@ -939,7 +939,7 @@
             [service fetchUserInfoForUsername:credentials.username];
         [wrapperController.navigationController
             popToRootViewControllerAnimated:NO];
-        
+
         needsRefresh = YES;
         pagesShown = 1;
 
@@ -948,7 +948,7 @@
         if (self.timelineController.segregatedSenderUsername)
             [self.timelineController
                 setSegregateTweetsFromUser:credentials.username];
-            
+
         [self.wrapperController setCachedDataAvailable:NO];
         [self.wrapperController setUpdatingState:kConnectedAndUpdating];
     } else if (hasBeenDisplayed) {// set for first time and persisted data shown
