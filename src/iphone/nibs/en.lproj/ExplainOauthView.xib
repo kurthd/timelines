@@ -12,9 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="54"/>
-			<integer value="55"/>
 			<integer value="9"/>
+			<integer value="55"/>
+			<integer value="54"/>
 			<integer value="56"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -106,7 +106,7 @@
 							<object class="IBUILabel" id="281968155">
 								<reference key="NSNextResponder" ref="141035256"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{99, 11}, {150, 21}}</string>
+								<string key="NSFrame">{{85, 11}, {150, 21}}</string>
 								<reference key="NSSuperview" ref="141035256"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -129,7 +129,7 @@
 							<object class="IBUIActivityIndicatorView" id="449188227">
 								<reference key="NSNextResponder" ref="141035256"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{71, 12}, {20, 20}}</string>
+								<string key="NSFrame">{{57, 12}, {20, 20}}</string>
 								<reference key="NSSuperview" ref="141035256"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -175,7 +175,7 @@
 							<object class="IBUILabel" id="42744139">
 								<reference key="NSNextResponder" ref="481443938"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{70, 11}, {179, 21}}</string>
+								<string key="NSFrame">{{60, 11}, {179, 21}}</string>
 								<reference key="NSSuperview" ref="481443938"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -218,7 +218,7 @@
 							<object class="IBUILabel" id="827442018">
 								<reference key="NSNextResponder" ref="763191391"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{91, 11}, {166, 21}}</string>
+								<string key="NSFrame">{{77, 11}, {166, 21}}</string>
 								<reference key="NSSuperview" ref="763191391"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -234,7 +234,7 @@
 							<object class="IBUIActivityIndicatorView" id="218803136">
 								<reference key="NSNextResponder" ref="763191391"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{63, 12}, {20, 20}}</string>
+								<string key="NSFrame">{{49, 12}, {20, 20}}</string>
 								<reference key="NSSuperview" ref="763191391"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -409,8 +409,8 @@
 						<reference key="object" ref="739605303"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="449188227"/>
 							<reference ref="281968155"/>
+							<reference ref="449188227"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Activity Cell</string>
@@ -430,8 +430,8 @@
 						<reference key="object" ref="784552024"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="218803136"/>
 							<reference ref="827442018"/>
+							<reference ref="218803136"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Authorizing Cell</string>
