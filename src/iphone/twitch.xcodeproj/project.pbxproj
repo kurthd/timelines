@@ -284,7 +284,6 @@
 		05EF41860FFADF95007B59F1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B23A310FEEB29D00A6A2E6 /* CoreData.framework */; };
 		05EF41870FFADF95007B59F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0524C4510FF2AEEE00A6099B /* Security.framework */; };
 		05EF41880FFADF95007B59F1 /* libYAJLIPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */; };
-		05EF41980FFAE449007B59F1 /* twitbit-push-info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 05EF41970FFAE449007B59F1 /* twitbit-push-info.plist */; };
 		05F459EF0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F459EE0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m */; };
 		05F45A300FF0181600EBAFC7 /* DirectMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A2F0FF0181600EBAFC7 /* DirectMessage.m */; };
 		05F45A510FF01D5E00EBAFC7 /* User+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A500FF01D5E00EBAFC7 /* User+CoreDataAdditions.m */; };
@@ -1542,7 +1541,6 @@
 				05C35E790FF5474800F91448 /* SearchBarView.xib in Resources */,
 				057620340FF736D600392ADC /* OauthLogInView.xib in Resources */,
 				05C7051D0FF88C4100936E4C /* ExplainOauthView.xib in Resources */,
-				05EF41980FFAE449007B59F1 /* twitbit-push-info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2095,7 +2093,7 @@
 				INFOPLIST_FILE = "twitbit-push-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
+					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
 				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
@@ -2117,7 +2115,7 @@
 				INFOPLIST_FILE = "twitbit-push-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
+					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
 				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
@@ -2157,7 +2155,7 @@
 				INFOPLIST_FILE = "twitbit-push-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
+					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
 				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
@@ -2176,7 +2174,7 @@
 				INFOPLIST_FILE = "twitbit-push-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
+					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
 				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
