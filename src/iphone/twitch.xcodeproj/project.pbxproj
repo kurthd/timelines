@@ -2025,7 +2025,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Douglas Kurth";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
@@ -2035,7 +2035,7 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
 				PRODUCT_NAME = "Twitbit Lite";
-				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+				PROVISIONING_PROFILE = "673A86B7-3643-4B98-86EC-5FC4F2D7EDA4";
 			};
 			name = "Release - Doug";
 		};
@@ -2062,7 +2062,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Douglas Kurth";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2074,7 +2074,7 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
 				PRODUCT_NAME = "Twitbit Lite";
-				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+				PROVISIONING_PROFILE = "673A86B7-3643-4B98-86EC-5FC4F2D7EDA4";
 			};
 			name = "Debug - Doug";
 		};
@@ -2105,7 +2105,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Douglas Kurth";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2118,7 +2118,7 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
 				PRODUCT_NAME = Twitbit;
-				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+				PROVISIONING_PROFILE = "AA7F2B41-6452-442A-ADBF-895609D202AE";
 			};
 			name = "Debug - Doug";
 		};
@@ -2147,7 +2147,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Douglas Kurth";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
@@ -2158,7 +2158,7 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
 				PRODUCT_NAME = Twitbit;
-				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+				PROVISIONING_PROFILE = "AA7F2B41-6452-442A-ADBF-895609D202AE";
 			};
 			name = "Release - Doug";
 		};
