@@ -3,4 +3,4 @@
 #url = 'https://sandbox.twitch.highorderbit.com/tweet_publisher/check'
 url = 'http://megatron.local:3000/tweet_publisher/check'
 
-`curl -O #{url}`
+`curl -O -k #{url}`

@@ -43,6 +43,7 @@
 		05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05977A3B0FEF0C9700E37B9C /* Icon.png */; };
 		0599416B0FFB32F100842518 /* twitch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0599416A0FFB32F100842518 /* twitch.xcdatamodeld */; };
 		0599416C0FFB32F100842518 /* twitch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0599416A0FFB32F100842518 /* twitch.xcdatamodeld */; };
+		059942310FFB6CE800842518 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 059942300FFB6CE800842518 /* Entitlements.plist */; };
 		05AE708E0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */; };
 		05AE711B0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE711A0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m */; };
 		05AE71C40FF2E5F40037D1D6 /* FollowUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE71C30FF2E5F40037D1D6 /* FollowUserResponseProcessor.m */; };
@@ -436,6 +437,7 @@
 		057E82DE0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QueryIsFollowingResponseProcessor.m; path = twitter/processors/QueryIsFollowingResponseProcessor.m; sourceTree = "<group>"; };
 		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		0599416D0FFB32F100842518 /* twitch 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch 2.xcdatamodel"; sourceTree = "<group>"; };
+		059942300FFB6CE800842518 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		05AE708C0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFavoritesForUserResponseProcessor.h; path = twitter/processors/FetchFavoritesForUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFavoritesForUserResponseProcessor.m; path = twitter/processors/FetchFavoritesForUserResponseProcessor.m; sourceTree = "<group>"; };
 		05AE71190FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkFavoriteResponseProcessor.h; path = twitter/processors/MarkFavoriteResponseProcessor.h; sourceTree = "<group>"; };
@@ -1236,6 +1238,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				059942300FFB6CE800842518 /* Entitlements.plist */,
 			);
 			name = twitch;
 			sourceTree = "<group>";
@@ -1542,6 +1545,7 @@
 				05C35E790FF5474800F91448 /* SearchBarView.xib in Resources */,
 				057620340FF736D600392ADC /* OauthLogInView.xib in Resources */,
 				05C7051D0FF88C4100936E4C /* ExplainOauthView.xib in Resources */,
+				059942310FFB6CE800842518 /* Entitlements.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1969,7 +1973,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		05B239D00FEEA62800A6A2E6 /* Distribution */ = {
+		059942430FFB6E9A00842518 /* Distribution - App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -1978,15 +1982,18 @@
 				GCC_PREPROCESSOR_DEFINITIONS = NS_BLOCK_ASSERTIONS;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					$SDKROOT/usr/include/libxml2,
+				);
 				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BD30541-6CA6-4F48-B159-BC45D542BBD5";
 				SDKROOT = iphoneos3.0;
 			};
-			name = Distribution;
+			name = "Distribution - App Store";
 		};
-		05B239D10FEEA62800A6A2E6 /* Distribution */ = {
+		059942440FFB6E9A00842518 /* Distribution - App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2002,7 +2009,70 @@
 				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
 			};
-			name = Distribution;
+			name = "Distribution - App Store";
+		};
+		059942450FFB6E9A00842518 /* Distribution - App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: High Order Bit, Inc.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: High Order Bit, Inc.";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = twitch_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HOB_TWITBIT_PUSH_ENABLE,
+					NS_BLOCK_ASSERTIONS,
+				);
+				INFOPLIST_FILE = "twitbit-push-info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Classes/vendor/yajl\"",
+				);
+				PRODUCT_NAME = Twitbit;
+				PROVISIONING_PROFILE = "9BD30541-6CA6-4F48-B159-BC45D542BBD5";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BD30541-6CA6-4F48-B159-BC45D542BBD5";
+			};
+			name = "Distribution - App Store";
+		};
+		05B239D00FEEA62800A6A2E6 /* Distribution - Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: High Order Bit, Inc.";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = NS_BLOCK_ASSERTIONS;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					$SDKROOT/usr/include/libxml2,
+				);
+				OTHER_LDFLAGS = "-licucore";
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BD30541-6CA6-4F48-B159-BC45D542BBD5";
+				SDKROOT = iphoneos3.0;
+			};
+			name = "Distribution - Ad Hoc";
+		};
+		05B239D10FEEA62800A6A2E6 /* Distribution - Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = twitch_Prefix.pch;
+				INFOPLIST_FILE = "twitbit-info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Classes/vendor/yajl\"",
+				);
+				PRODUCT_NAME = Twitbit;
+				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+			};
+			name = "Distribution - Ad Hoc";
 		};
 		05B239D20FEEA62C00A6A2E6 /* Release - Doug */ = {
 			isa = XCBuildConfiguration;
@@ -2098,8 +2168,8 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
 				PRODUCT_NAME = Twitbit;
-				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+				PROVISIONING_PROFILE = "F3704AFC-1236-41D2-A7DB-B6D40C6E56DE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F3704AFC-1236-41D2-A7DB-B6D40C6E56DE";
 			};
 			name = "Debug - John";
 		};
@@ -2128,8 +2198,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Debay";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: High Order Bit, Inc.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: High Order Bit, Inc.";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
@@ -2140,8 +2210,8 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
 				PRODUCT_NAME = Twitbit;
-				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+				PROVISIONING_PROFILE = "B16782A6-5448-411A-B6E6-B352BCBDE421";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B16782A6-5448-411A-B6E6-B352BCBDE421";
 			};
 			name = "Release - John";
 		};
@@ -2164,11 +2234,13 @@
 			};
 			name = "Release - Doug";
 		};
-		05EF418E0FFADF95007B59F1 /* Distribution */ = {
+		05EF418E0FFADF95007B59F1 /* Distribution - Ad Hoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: High Order Bit, Inc.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: High Order Bit, Inc.";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
@@ -2182,9 +2254,10 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
 				PRODUCT_NAME = Twitbit;
-				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+				PROVISIONING_PROFILE = "B16782A6-5448-411A-B6E6-B352BCBDE421";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B16782A6-5448-411A-B6E6-B352BCBDE421";
 			};
-			name = Distribution;
+			name = "Distribution - Ad Hoc";
 		};
 		1D6058940D05DD3E006BFB54 /* Debug - John */ = {
 			isa = XCBuildConfiguration;
@@ -2232,7 +2305,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Debay";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -2242,7 +2315,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9144975B-C454-429F-9F87-7D966DF0C7D0";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Debug - John";
@@ -2251,7 +2324,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: High Order Bit, Inc.";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -2261,7 +2334,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B16782A6-5448-411A-B6E6-B352BCBDE421";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Release - John";
@@ -2276,7 +2349,8 @@
 				05EF418B0FFADF95007B59F1 /* Debug - Doug */,
 				05EF418C0FFADF95007B59F1 /* Release - John */,
 				05EF418D0FFADF95007B59F1 /* Release - Doug */,
-				05EF418E0FFADF95007B59F1 /* Distribution */,
+				05EF418E0FFADF95007B59F1 /* Distribution - Ad Hoc */,
+				059942450FFB6E9A00842518 /* Distribution - App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Release - John";
@@ -2288,7 +2362,8 @@
 				05B239D50FEEA63500A6A2E6 /* Debug - Doug */,
 				1D6058950D05DD3E006BFB54 /* Release - John */,
 				05B239D30FEEA62C00A6A2E6 /* Release - Doug */,
-				05B239D10FEEA62800A6A2E6 /* Distribution */,
+				05B239D10FEEA62800A6A2E6 /* Distribution - Ad Hoc */,
+				059942440FFB6E9A00842518 /* Distribution - App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Release - John";
@@ -2300,7 +2375,8 @@
 				05B239D40FEEA63500A6A2E6 /* Debug - Doug */,
 				C01FCF5008A954540054247B /* Release - John */,
 				05B239D20FEEA62C00A6A2E6 /* Release - Doug */,
-				05B239D00FEEA62800A6A2E6 /* Distribution */,
+				05B239D00FEEA62800A6A2E6 /* Distribution - Ad Hoc */,
+				059942430FFB6E9A00842518 /* Distribution - App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Release - John";

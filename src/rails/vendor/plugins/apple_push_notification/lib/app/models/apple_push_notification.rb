@@ -8,7 +8,7 @@ require 'openssl'
 
 class ApplePushNotification < ActiveRecord::Base
 
-	HOST = "gateway.sandbox.push.apple.com"
+	HOST = "gateway.push.apple.com"
 	PATH = '/'
 	PORT = 2195
 	CERT = File.read("config/apple_push_notification.pem") if File.exists?("config/apple_push_notification.pem")
