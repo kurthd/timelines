@@ -190,6 +190,9 @@
 
 - (void)showDarkTransparentView
 {
+    [self.networkAwareViewController.view.superview.superview
+        addSubview:self.darkTransparentView];  
+
     self.darkTransparentView.alpha = 0.0;
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationTransition:UIViewAnimationTransitionNone
@@ -212,6 +215,8 @@
     self.darkTransparentView.alpha = 0.0;
 
     [UIView commitAnimations];
+
+    [self.darkTransparentView removeFromSuperview];
 }
 
 #pragma mark Accessors
@@ -224,9 +229,6 @@
             [[UIView alloc] initWithFrame:darkTransparentViewFrame];
         darkTransparentView.backgroundColor = [UIColor blackColor];
         darkTransparentView.alpha = 0.0;
-
-        [self.networkAwareViewController.view.superview.superview
-            addSubview:self.darkTransparentView];
     }
     
     return darkTransparentView;
