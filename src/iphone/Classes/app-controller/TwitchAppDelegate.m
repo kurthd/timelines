@@ -537,6 +537,16 @@
 {
     NSLog(@"Application did fail to register for push notifications. Error: %@",
         error);
+
+#if !TARGET_IPHONE_SIMULATOR  // don't show this error in the simulator
+
+    NSString * title =
+        NSLocalizedString(@"notification.registration.failed.alert.title", @"");
+    NSString * message = error.localizedDescription;
+    [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
+
+#endif
+
 }
 
 - (void)application:(UIApplication *)application
@@ -577,20 +587,10 @@
 
 - (void)failedToRegisterDeviceWithToken:(NSData *)token error:(NSError *)error
 {
+    // only log the error for now; add an error message later if it becomes
+    // necessary
     NSLog(@"Failed to register device for push notifications: '%@', error: "
         "'%@'.", token, error);
-
-    NSString * title =
-        NSLocalizedString(@"notification.registration.failed.alert.title", @"");
-    NSString * message =
-        [NSString stringWithFormat:@"%@\n\n%@",
-        error.localizedDescription,
-        NSLocalizedString(@"notification.registration.failed.alert.message",
-            @"")];
-
-    UIAlertView * alert = [UIAlertView simpleAlertViewWithTitle:title
-                                                        message:message];
-    [alert show];
 }
 
 #pragma mark Push notification helpers
