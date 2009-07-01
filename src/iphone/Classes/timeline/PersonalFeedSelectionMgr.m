@@ -46,7 +46,7 @@
         allTimelineRefresh = YES;
         mentionsTimelineRefresh = YES;
         messagesTimelineRefresh = YES;
-        
+
         allTimelinePagesShown = 1;
         mentionsTimelinePagesShown = 1;
         messagesTimelinePagesShown = 1;
@@ -121,6 +121,13 @@
     }
 
     previousTab = segmentedControl.selectedSegmentIndex;
+}
+
+- (void)setCredentials:(TwitterCredentials *)credentials
+{
+    allTimelineRefresh = previousTab != 0 || allTimelineRefresh;
+    mentionsTimelineRefresh = previousTab != 1 || mentionsTimelineRefresh;
+    messagesTimelineRefresh = previousTab != 2 || messagesTimelineRefresh;
 }
 
 @end
