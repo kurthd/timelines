@@ -15,5 +15,6 @@
 @property (nonatomic, assign) id<TrendsViewControllerDelegate> delegate;
 
 - (void)updateWithTrends:(NSArray *)trends;
+- (void)scrollToTop:(BOOL)animated;
 
 @end

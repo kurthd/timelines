@@ -41,6 +41,8 @@
 		057E82420FF345CA0074A91B /* SendDirectMessageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E82410FF345CA0074A91B /* SendDirectMessageResponseProcessor.m */; };
 		057E82DF0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E82DE0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m */; };
 		05977A3C0FEF0C9700E37B9C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05977A3B0FEF0C9700E37B9C /* Icon.png */; };
+		0599416B0FFB32F100842518 /* twitch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0599416A0FFB32F100842518 /* twitch.xcdatamodeld */; };
+		0599416C0FFB32F100842518 /* twitch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0599416A0FFB32F100842518 /* twitch.xcdatamodeld */; };
 		05AE708E0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */; };
 		05AE711B0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE711A0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m */; };
 		05AE71C40FF2E5F40037D1D6 /* FollowUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE71C30FF2E5F40037D1D6 /* FollowUserResponseProcessor.m */; };
@@ -67,7 +69,6 @@
 		05B239490FEDD10900A6A2E6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 05B239470FEDD10900A6A2E6 /* Localizable.strings */; };
 		05B239670FEDD1E500A6A2E6 /* AbstractUpdatePublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B239660FEDD1E500A6A2E6 /* AbstractUpdatePublisher.m */; };
 		05B2396C0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B2396B0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.m */; };
-		05B239F10FEEABBB00A6A2E6 /* twitch.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 05B239F00FEEABBB00A6A2E6 /* twitch.xcdatamodel */; };
 		05B23A320FEEB29D00A6A2E6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B23A310FEEB29D00A6A2E6 /* CoreData.framework */; };
 		05B23ACB0FEEC2AE00A6A2E6 /* InfoPlistConfigReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23ACA0FEEC2AE00A6A2E6 /* InfoPlistConfigReader.m */; };
 		05B23B120FEEC48C00A6A2E6 /* PListUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23B110FEEC48C00A6A2E6 /* PListUtils.m */; };
@@ -165,7 +166,6 @@
 		05EF410E0FFADF95007B59F1 /* UIAlertView+InstantiationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B2393E0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.m */; };
 		05EF410F0FFADF95007B59F1 /* AbstractUpdatePublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B239660FEDD1E500A6A2E6 /* AbstractUpdatePublisher.m */; };
 		05EF41100FFADF95007B59F1 /* CredentialsActivatedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B2396B0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.m */; };
-		05EF41110FFADF95007B59F1 /* twitch.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 05B239F00FEEABBB00A6A2E6 /* twitch.xcdatamodel */; };
 		05EF41120FFADF95007B59F1 /* NetworkAwareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79A0FEEADD7007143A9 /* NetworkAwareViewController.m */; };
 		05EF41130FFADF95007B59F1 /* NSArray+IterationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79D0FEEADD7007143A9 /* NSArray+IterationAdditions.m */; };
 		05EF41140FFADF95007B59F1 /* NSDate+IsToday.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79F0FEEADD7007143A9 /* NSDate+IsToday.m */; };
@@ -435,6 +435,7 @@
 		057E82DD0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QueryIsFollowingResponseProcessor.h; path = twitter/processors/QueryIsFollowingResponseProcessor.h; sourceTree = "<group>"; };
 		057E82DE0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QueryIsFollowingResponseProcessor.m; path = twitter/processors/QueryIsFollowingResponseProcessor.m; sourceTree = "<group>"; };
 		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		0599416D0FFB32F100842518 /* twitch 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch 2.xcdatamodel"; sourceTree = "<group>"; };
 		05AE708C0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFavoritesForUserResponseProcessor.h; path = twitter/processors/FetchFavoritesForUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFavoritesForUserResponseProcessor.m; path = twitter/processors/FetchFavoritesForUserResponseProcessor.m; sourceTree = "<group>"; };
 		05AE71190FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkFavoriteResponseProcessor.h; path = twitter/processors/MarkFavoriteResponseProcessor.h; sourceTree = "<group>"; };
@@ -488,7 +489,7 @@
 		05B239660FEDD1E500A6A2E6 /* AbstractUpdatePublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AbstractUpdatePublisher.m; path = publishers/AbstractUpdatePublisher.m; sourceTree = "<group>"; };
 		05B2396A0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialsActivatedPublisher.h; path = publishers/CredentialsActivatedPublisher.h; sourceTree = "<group>"; };
 		05B2396B0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CredentialsActivatedPublisher.m; path = publishers/CredentialsActivatedPublisher.m; sourceTree = "<group>"; };
-		05B239F00FEEABBB00A6A2E6 /* twitch.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; name = twitch.xcdatamodel; path = "data-model/twitch.xcdatamodel"; sourceTree = "<group>"; };
+		05B239F00FEEABBB00A6A2E6 /* twitch.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = twitch.xcdatamodel; sourceTree = "<group>"; };
 		05B23A310FEEB29D00A6A2E6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		05B23AC20FEEC09800A6A2E6 /* DeviceRegistrarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceRegistrarDelegate.h; path = "push-notifications/DeviceRegistrarDelegate.h"; sourceTree = "<group>"; };
 		05B23AC80FEEC2AE00A6A2E6 /* ConfigReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigReader.h; path = configuration/ConfigReader.h; sourceTree = "<group>"; };
@@ -1051,7 +1052,7 @@
 		05B23A040FEEB10B00A6A2E6 /* data-model */ = {
 			isa = PBXGroup;
 			children = (
-				05B239F00FEEABBB00A6A2E6 /* twitch.xcdatamodel */,
+				0599416A0FFB32F100842518 /* twitch.xcdatamodeld */,
 			);
 			name = "data-model";
 			sourceTree = "<group>";
@@ -1571,7 +1572,7 @@
 				05EF410E0FFADF95007B59F1 /* UIAlertView+InstantiationAdditions.m in Sources */,
 				05EF410F0FFADF95007B59F1 /* AbstractUpdatePublisher.m in Sources */,
 				05EF41100FFADF95007B59F1 /* CredentialsActivatedPublisher.m in Sources */,
-				05EF41110FFADF95007B59F1 /* twitch.xcdatamodel in Sources */,
+				0599416C0FFB32F100842518 /* twitch.xcdatamodeld in Sources */,
 				05EF41120FFADF95007B59F1 /* NetworkAwareViewController.m in Sources */,
 				05EF41130FFADF95007B59F1 /* NSArray+IterationAdditions.m in Sources */,
 				05EF41140FFADF95007B59F1 /* NSDate+IsToday.m in Sources */,
@@ -1710,7 +1711,7 @@
 				05B2393F0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.m in Sources */,
 				05B239670FEDD1E500A6A2E6 /* AbstractUpdatePublisher.m in Sources */,
 				05B2396C0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.m in Sources */,
-				05B239F10FEEABBB00A6A2E6 /* twitch.xcdatamodel in Sources */,
+				0599416B0FFB32F100842518 /* twitch.xcdatamodeld in Sources */,
 				916BD7AC0FEEADD7007143A9 /* NetworkAwareViewController.m in Sources */,
 				916BD7AD0FEEADD7007143A9 /* NSArray+IterationAdditions.m in Sources */,
 				916BD7AE0FEEADD7007143A9 /* NSDate+IsToday.m in Sources */,
@@ -2305,6 +2306,21 @@
 			defaultConfigurationName = "Release - John";
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0599416A0FFB32F100842518 /* twitch.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				05B239F00FEEABBB00A6A2E6 /* twitch.xcdatamodel */,
+				0599416D0FFB32F100842518 /* twitch 2.xcdatamodel */,
+			);
+			currentVersion = 05B239F00FEEABBB00A6A2E6 /* twitch.xcdatamodel */;
+			name = twitch.xcdatamodeld;
+			path = "data-model/twitch.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
 }

@@ -46,6 +46,12 @@ NSInteger usernameSort(TwitterCredentials * user1,
     self.selectedAccount = [self.delegate currentActiveAccount];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self setEditing:NO animated:animated];
+}
+
 #pragma mark Button actions
 
 - (IBAction)userWantsToAddAccount:(id)sender

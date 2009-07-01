@@ -22,6 +22,21 @@
     [super dealloc];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView flashScrollIndicators];
+}
+
+- (void)scrollToTop:(BOOL)animated
+{
+    NSIndexPath * firstRow = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView scrollToRowAtIndexPath:firstRow
+                          atScrollPosition:UITableViewScrollPositionTop
+                                  animated:animated];
+    [self.tableView flashScrollIndicators];
+}
+
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv
