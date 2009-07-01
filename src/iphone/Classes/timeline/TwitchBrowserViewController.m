@@ -42,7 +42,6 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)aWebView
 {
-    self.currentUrl = [[webView.request URL] absoluteString];
     haltButton.image = [UIImage imageNamed:@"StopLoading.png"];
     [self animatedActivityIndicators:YES];
     [self updatePageTitle];
@@ -52,6 +51,7 @@
 
 - (void)setUrl:(NSString *)urlString
 {
+    self.currentUrl = urlString;
     titleLabel.text = urlString;
 
     NSURL * url = [NSURL URLWithString:urlString];
@@ -90,7 +90,8 @@
 
 - (IBAction)openInSafari
 {
-    NSURL * url = [NSURL URLWithString:self.currentUrl];
+    NSURL * url = [webView.request URL];
+    url = url ? url : [NSURL URLWithString:self.currentUrl];
     [[UIApplication sharedApplication] openURL:url];
 }
 
