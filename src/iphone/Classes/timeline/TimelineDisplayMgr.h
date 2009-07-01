@@ -131,7 +131,7 @@
 - (void)refreshWithLatest;
 - (void)refreshWithCurrentPages;
 
-- (void)addTweet:(Tweet *)tweet displayImmediately:(BOOL)displayImmediately;
+- (void)addTweet:(Tweet *)tweet;
 
 - (void)setShowInboxOutbox:(BOOL)show;
 

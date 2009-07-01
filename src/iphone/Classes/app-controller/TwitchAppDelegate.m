@@ -211,12 +211,9 @@
 {
     UISegmentedControl * control = (UISegmentedControl *)
         homeNetAwareViewController.navigationItem.titleView;
-    BOOL displayImmediately =
-        control.selectedSegmentIndex == 0 ||
-        control.selectedSegmentIndex == 1;
-    [timelineDisplayMgr addTweet:tweet displayImmediately:displayImmediately];
-    [profileTimelineDisplayMgr addTweet:tweet
-                     displayImmediately:displayImmediately];
+    if (control.selectedSegmentIndex == 0)
+        [timelineDisplayMgr addTweet:tweet];
+    [profileTimelineDisplayMgr addTweet:tweet];
 
     [homeNetAwareViewController.navigationItem
         setRightBarButtonItem:[self newTweetButtonItem]
@@ -247,10 +244,8 @@
 {
     UISegmentedControl * control = (UISegmentedControl *)
         homeNetAwareViewController.navigationItem.titleView;
-    BOOL displayImmediately =
-        control.selectedSegmentIndex == 0 ||
-        control.selectedSegmentIndex == 1;
-    [timelineDisplayMgr addTweet:reply displayImmediately:displayImmediately];
+        if (control.selectedSegmentIndex == 0)
+            [timelineDisplayMgr addTweet:reply];
 }
 
 - (void)userFailedToReplyToTweet:(NSString *)origTweetId
