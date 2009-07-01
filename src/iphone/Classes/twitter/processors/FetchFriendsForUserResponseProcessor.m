@@ -65,6 +65,11 @@
     NSMutableArray * users = [NSMutableArray arrayWithCapacity:infos.count];
     for (NSDictionary * info in infos) {
         NSString * userId = [[info objectForKey:@"id"] description];
+        if (!userId)
+            // asking for more when there are none gives us an element in the
+            // dictionary with one element named 'friends'
+            continue;
+
         User * user = [User userWithId:userId context:context];
 
         if (!user)
