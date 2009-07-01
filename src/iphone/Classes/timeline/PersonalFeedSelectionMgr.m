@@ -46,7 +46,7 @@
         allTimelineRefresh = YES;
         mentionsTimelineRefresh = YES;
         messagesTimelineRefresh = YES;
-        
+
         allTimelinePagesShown = 1;
         mentionsTimelinePagesShown = 1;
         messagesTimelinePagesShown = 1;
@@ -63,16 +63,19 @@
             self.allTimelineTweets = timelineDisplayMgr.timeline;
             allTimelinePagesShown = timelineDisplayMgr.pagesShown;
             allTimelineAllPagesLoaded = timelineDisplayMgr.allPagesLoaded;
+            allTimelineRefresh = !timelineDisplayMgr.firstFetchReceived;
             break;
         case 1:
             self.mentionsTimelineTweets = timelineDisplayMgr.timeline;
             mentionsTimelinePagesShown = timelineDisplayMgr.pagesShown;
             mentionsTimelineAllPagesLoaded = timelineDisplayMgr.allPagesLoaded;
+            mentionsTimelineRefresh = !timelineDisplayMgr.firstFetchReceived;
             break;
         case 2:
             self.messagesTimelineTweets = timelineDisplayMgr.timeline;
             messagesTimelinePagesShown = timelineDisplayMgr.pagesShown;
             messagesTimelineAllPagesLoaded = timelineDisplayMgr.allPagesLoaded;
+            messagesTimelineRefresh = !timelineDisplayMgr.firstFetchReceived;
             break;
     }
 
@@ -92,7 +95,6 @@
                 tweets:self.allTimelineTweets page:allTimelinePagesShown
                 forceRefresh:allTimelineRefresh
                 allPagesLoaded:allTimelineAllPagesLoaded];
-            allTimelineRefresh = NO;
             break;
         case 1:
             NSLog(@"Selected mentions tab");
@@ -104,7 +106,6 @@
                 page:mentionsTimelinePagesShown
                 forceRefresh:mentionsTimelineRefresh
                 allPagesLoaded:mentionsTimelineAllPagesLoaded];
-            mentionsTimelineRefresh = NO;
             break;
         case 2:
             NSLog(@"Selected direct messages tab");
@@ -116,11 +117,17 @@
                 page:messagesTimelinePagesShown
                 forceRefresh:messagesTimelineRefresh
                 allPagesLoaded:messagesTimelineAllPagesLoaded];
-            messagesTimelineRefresh = NO;
             break;
     }
 
     previousTab = segmentedControl.selectedSegmentIndex;
+}
+
+- (void)setCredentials:(TwitterCredentials *)credentials
+{
+    allTimelineRefresh = previousTab != 0 || allTimelineRefresh;
+    mentionsTimelineRefresh = previousTab != 1 || mentionsTimelineRefresh;
+    messagesTimelineRefresh = previousTab != 2 || messagesTimelineRefresh;
 }
 
 @end

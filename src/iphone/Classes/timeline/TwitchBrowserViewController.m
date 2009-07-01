@@ -90,7 +90,8 @@
 
 - (IBAction)openInSafari
 {
-    NSURL * url = [NSURL URLWithString:self.currentUrl];
+    NSURL * url = [webView.request URL];
+    url = url ? url : [NSURL URLWithString:self.currentUrl];
     [[UIApplication sharedApplication] openURL:url];
 }
 

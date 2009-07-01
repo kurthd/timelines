@@ -45,4 +45,6 @@
 
 - (void)tabSelected:(id)sender;
 
+- (void)setCredentials:(TwitterCredentials *)credentials;
+
 @end

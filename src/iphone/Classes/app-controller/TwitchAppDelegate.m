@@ -374,6 +374,10 @@
     [segmentedControl addTarget:personalFeedSelectionMgr
         action:@selector(tabSelected:)
         forControlEvents:UIControlEventValueChanged];
+
+    [[CredentialsActivatedPublisher alloc]
+        initWithListener:personalFeedSelectionMgr
+        action:@selector(setCredentials:)];
 }
 
 - (void)initProfileTab
@@ -879,7 +883,6 @@
         [dms setObject:[TweetInfo createFromDirectMessage:dm]
                 forKey:dm.identifier];
 
-    
     personalFeedSelectionMgr.allTimelineTweets = tweets;
     personalFeedSelectionMgr.mentionsTimelineTweets = mentions;
     personalFeedSelectionMgr.messagesTimelineTweets = dms;

@@ -32,7 +32,7 @@
     tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher,
     lastFollowingUsername, lastTweetDetailsWrapperController,
     lastTweetDetailsController, currentTweetDetailsUser, currentUsername,
-    allPagesLoaded, setUserToAuthenticatedUser;
+    allPagesLoaded, setUserToAuthenticatedUser, firstFetchReceived;
 
 - (void)dealloc
 {
@@ -149,6 +149,7 @@
     [wrapperController setCachedDataAvailable:YES];
     refreshingTweets = NO;
     failedState = NO;
+    firstFetchReceived = YES;
 }
 
 - (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)anUpdateId
@@ -200,6 +201,7 @@
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchfriends", @"");
     [self displayErrorWithTitle:errorMessage error:error];
+    [self.userListNetAwareViewController setUpdatingState:kDisconnected];
 }
 
 - (void)followers:(NSArray *)friends fetchedForUsername:(NSString *)username
@@ -220,6 +222,7 @@
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchfollowers", @"");
     [self displayErrorWithTitle:errorMessage error:error];
+    [self.userListNetAwareViewController setUpdatingState:kDisconnected];
 }
 
 - (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page
@@ -900,6 +903,8 @@
 
     [self.wrapperController
         setCachedDataAvailable:[[someTweets allKeys] count] > 0];
+        
+    firstFetchReceived = !refresh;
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
@@ -939,7 +944,7 @@
             [service fetchUserInfoForUsername:credentials.username];
         [wrapperController.navigationController
             popToRootViewControllerAnimated:NO];
-        
+
         needsRefresh = YES;
         pagesShown = 1;
 
@@ -948,7 +953,7 @@
         if (self.timelineController.segregatedSenderUsername)
             [self.timelineController
                 setSegregateTweetsFromUser:credentials.username];
-            
+
         [self.wrapperController setCachedDataAvailable:NO];
         [self.wrapperController setUpdatingState:kConnectedAndUpdating];
     } else if (hasBeenDisplayed) {// set for first time and persisted data shown

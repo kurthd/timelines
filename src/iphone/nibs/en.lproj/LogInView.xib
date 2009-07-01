@@ -242,20 +242,20 @@
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="237280166"/>
 			</object>
-			<object class="IBUIView" id="905384121">
+			<object class="IBUIView" id="809278703">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="IBUILabel" id="694646908">
-						<reference key="NSNextResponder" ref="905384121"/>
+					<object class="IBUILabel" id="577613616">
+						<reference key="NSNextResponder" ref="809278703"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{9, 5}, {302, 68}}</string>
-						<reference key="NSSuperview" ref="905384121"/>
+						<reference key="NSSuperview" ref="809278703"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<string key="IBUIText">Photos are hosted with Twitpic -- a service dedicated to Twitter photo sharing.  To enable photo posts, provide Twitpic with your Twitter username and password.</string>
+						<string key="IBUIText">Photos are hosted with Twitpic, a service dedicated to Twitter photo sharing.  To enable photos, provide Twitpic with your Twitter username and password.</string>
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Helvetica</string>
 							<double key="NSSize">1.400000e+01</double>
@@ -406,7 +406,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">footerView</string>
 						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="905384121"/>
+						<reference key="destination" ref="809278703"/>
 					</object>
 					<int key="connectionID">34</int>
 				</object>
@@ -519,18 +519,18 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">32</int>
-						<reference key="object" ref="905384121"/>
+						<reference key="object" ref="809278703"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="694646908"/>
+							<reference ref="577613616"/>
 						</object>
 						<reference key="parent" ref="599214385"/>
 						<string key="objectName">Footer view</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">33</int>
-						<reference key="object" ref="694646908"/>
-						<reference key="parent" ref="905384121"/>
+						<reference key="object" ref="577613616"/>
+						<reference key="parent" ref="809278703"/>
 					</object>
 				</object>
 			</object>
