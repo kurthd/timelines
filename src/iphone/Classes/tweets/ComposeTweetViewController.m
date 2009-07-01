@@ -40,6 +40,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     [super viewWillAppear:animated];
 
+    sendButton.enabled =
+        textView.text.length > 0 && textView.text.length <= MAX_TWEET_LENGTH;
     if (!displayingActivity)
         [textView becomeFirstResponder];
 }
@@ -63,7 +65,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)promptWithText:(NSString *)text
 {
-    sendButton.enabled = NO;
+    sendButton.enabled = text.length > 0 && text.length <= MAX_TWEET_LENGTH;
     cancelButton.enabled = YES;
 
     textView.text = text;

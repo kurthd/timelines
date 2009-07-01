@@ -17,10 +17,10 @@
 
     IBOutlet UITableView * tableView;
 
-    IBOutlet UITableViewCell * authorizationCell;
-    IBOutlet UIView * buttonView;
-    IBOutlet UIView * activityView;
-    IBOutlet UIView * authorizingView;
+    UITableViewCell * activeCell;
+    IBOutlet UITableViewCell * buttonCell;
+    IBOutlet UITableViewCell * activityCell;
+    IBOutlet UITableViewCell * authorizingCell;
 
     IBOutlet UINavigationBar * navigationBar;
     IBOutlet UIBarButtonItem * cancelButton;

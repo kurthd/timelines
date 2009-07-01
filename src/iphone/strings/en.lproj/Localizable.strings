@@ -15,7 +15,7 @@ appdelegate.profiletabtitle = "Profile";
 /* NetworkAwareViewController */
 nodata.updating.text = "Updating...";
 nodata.loading.text = "Loading...";
-nodata.noconnection.text = "No Connection";
+nodata.noconnection.text = "Failed to Update";
 
 /* Push notification registration */
 notification.registration.failed.alert.title = "Failed to Register for Notifications";

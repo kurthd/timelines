@@ -32,7 +32,7 @@
     tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher,
     lastFollowingUsername, lastTweetDetailsWrapperController,
     lastTweetDetailsController, currentTweetDetailsUser, currentUsername,
-    allPagesLoaded;
+    allPagesLoaded, setUserToAuthenticatedUser;
 
 - (void)dealloc
 {
@@ -111,24 +111,30 @@
     NSLog(@"Timeline page: %@", page);
 
     self.updateId = anUpdateId;
-    NSInteger pageAsInt = [page intValue];
-    if (pageAsInt != 0)
-        pagesShown = pageAsInt;
 
     NSInteger oldTimelineCount = [[timeline allKeys] count];
     for (TweetInfo * tweet in aTimeline)
         [timeline setObject:tweet forKey:tweet.identifier];
     NSInteger newTimelineCount = [[timeline allKeys] count];
-    allPagesLoaded =
-        (!refreshingTweets && oldTimelineCount == newTimelineCount) ||
-        newTimelineCount == 0;
-    if (allPagesLoaded) {
-        NSLog(@"Timeline display manager: setting all pages loaded");
-        NSLog(@"Refreshing tweets?: %d", refreshingTweets);
-        NSLog(@"Old timeline count: %d", oldTimelineCount);
-        NSLog(@"New timeline count: %d", newTimelineCount);
+    
+    if (!refreshingTweets) {
+        allPagesLoaded =
+            (oldTimelineCount == newTimelineCount) ||
+            newTimelineCount == 0;
+        if (allPagesLoaded) {
+            NSLog(@"Timeline display manager: setting all pages loaded");
+            NSLog(@"Refreshing tweets?: %d", refreshingTweets);
+            NSLog(@"Old timeline count: %d", oldTimelineCount);
+            NSLog(@"New timeline count: %d", newTimelineCount);
+        } else {
+            NSInteger pageAsInt = [page intValue];
+            if (pageAsInt != 0)
+                pagesShown = pageAsInt;
+        }
+
+        [timelineController setAllPagesLoaded:allPagesLoaded];
     }
-    [timelineController setAllPagesLoaded:allPagesLoaded];
+
     if (setUserToFirstTweeter) {
         timelineController.showWithoutAvatars = YES;
         if ([aTimeline count] > 0) {
@@ -292,7 +298,7 @@
 
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
 {
-    NSLog(@"Timeline display mgr: fetched tweet %@", tweetId);
+    NSLog(@"Timeline display mgr: fetched tweet: %@", tweet);
     TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
 
     [self.lastTweetDetailsController setTweet:tweetInfo avatar:nil];
@@ -912,6 +918,9 @@
         self.timelineController.invertedCellUsernames = invertedCellUsernames;
     }
 
+    if (setUserToAuthenticatedUser)
+        self.currentUsername = credentials.username;
+
     [service setCredentials:credentials];
 
     // check for pointer equality rather than string equality against username
@@ -946,6 +955,10 @@
         [service fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
     }
+
+    [self.timelineController.tableView
+        scrollRectToVisible:self.timelineController.tableView.frame
+        animated:NO];
 }
 
 - (void)setUser:(User *)aUser

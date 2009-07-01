@@ -14,6 +14,8 @@
 - (UIImage *)getAvatarForUrl:(NSString *)url;
 - (UIImage *)convertUrlToImage:(NSString *)url;
 - (NSArray *)sortedTweets;
+- (void)triggerDelayedRefresh;
+- (void)processDelayedRefresh;
 
 @end
 
@@ -155,7 +157,7 @@
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
         [avatarCache setObject:avatarImage forKey:urlAsString];
-        [self.tableView reloadData];
+        [self triggerDelayedRefresh];
 
         if ([urlAsString isEqual:user.profileImageUrl])
             avatarView.imageView.image = avatarImage;
@@ -201,7 +203,7 @@
         withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView scrollToRowAtIndexPath:
         [NSIndexPath indexPathForRow:0 inSection:0]
-        atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        atScrollPosition:UITableViewScrollPositionNone animated:YES];
 
     NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
     [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
@@ -247,7 +249,7 @@
         NSLog(@"Displaying tweets with inbox/outbox...");
         self.incomingSortedTweetCache = nil;
         self.outgoingSortedTweetCache = nil;
-        
+
         [outgoingTweets removeAllObjects];
         [incomingTweets removeAllObjects];
         for (TweetInfo * tweet in someTweets) {
@@ -331,7 +333,7 @@
 {
     NSLog(@"Setting inbox username...");
     self.segregatedSenderUsername = username;
-    
+
     if (username) {
         self.tableView.tableHeaderView = inboxOutboxView;
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -349,6 +351,21 @@
     NSLog(@"Setting inbox/outbox control...");
     showInbox = inboxOutboxControl.selectedSegmentIndex == 0;
     [self.tableView reloadData];
+}
+
+- (void)triggerDelayedRefresh
+{
+    if (!delayedRefreshTriggered)
+        [self performSelector:@selector(processDelayedRefresh) withObject:nil
+            afterDelay:0.5];
+
+    delayedRefreshTriggered = YES;
+}
+
+- (void)processDelayedRefresh
+{
+    [self.tableView reloadData];
+    delayedRefreshTriggered = NO;
 }
 
 @end

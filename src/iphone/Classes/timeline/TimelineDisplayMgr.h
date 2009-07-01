@@ -60,6 +60,7 @@
     BOOL setUserToFirstTweeter;
     BOOL refreshingTweets;
     BOOL showInboxOutbox;
+    BOOL setUserToAuthenticatedUser;
 
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     TimelineDisplayMgr * tweetDetailsTimelineDisplayMgr;
@@ -99,6 +100,7 @@
 
 @property (nonatomic, assign) BOOL displayAsConversation;
 @property (nonatomic, assign) BOOL setUserToFirstTweeter;
+@property (nonatomic, assign) BOOL setUserToAuthenticatedUser;
 
 @property (nonatomic, retain)
     TimelineDisplayMgr * tweetDetailsTimelineDisplayMgr;

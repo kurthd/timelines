@@ -44,7 +44,8 @@
 - (void)initSearchTab;
 
 - (UIBarButtonItem *)newTweetButtonItem;
-- (UIBarButtonItem *)sendingTweetProgressView;
+- (UIBarButtonItem *)homeSendingTweetProgressView;
+- (UIBarButtonItem *)profileSendingTweetProgressView;
 
 - (void)broadcastActivatedCredentialsChanged:(TwitterCredentials *)tc;
 
@@ -102,7 +103,8 @@
     [trendsDisplayMgr release];
     [accountsDisplayMgr release];
 
-    [sendingTweetProgressView release];
+    [homeSendingTweetProgressView release];
+    [profileSendingTweetProgressView release];
 
     [super dealloc];
 }
@@ -198,7 +200,10 @@
 - (void)userIsSendingTweet:(NSString *)tweet
 {
     [homeNetAwareViewController.navigationItem
-        setRightBarButtonItem:[self sendingTweetProgressView]
+        setRightBarButtonItem:[self homeSendingTweetProgressView]
+                     animated:YES];
+    [profileNetAwareViewController.navigationItem
+        setRightBarButtonItem:[self profileSendingTweetProgressView]
                      animated:YES];
 }
 
@@ -210,8 +215,13 @@
         control.selectedSegmentIndex == 0 ||
         control.selectedSegmentIndex == 1;
     [timelineDisplayMgr addTweet:tweet displayImmediately:displayImmediately];
+    [profileTimelineDisplayMgr addTweet:tweet
+                     displayImmediately:displayImmediately];
 
     [homeNetAwareViewController.navigationItem
+        setRightBarButtonItem:[self newTweetButtonItem]
+                     animated:YES];
+    [profileNetAwareViewController.navigationItem
         setRightBarButtonItem:[self newTweetButtonItem]
                      animated:YES];
 }
@@ -325,6 +335,7 @@
         retain];
     profileTimelineDisplayMgr.displayAsConversation = NO;
     profileTimelineDisplayMgr.setUserToFirstTweeter = YES;
+    profileTimelineDisplayMgr.setUserToAuthenticatedUser = YES;
     UIBarButtonItem * refreshButton =
         profileNetAwareViewController.navigationItem.leftBarButtonItem;
     refreshButton.target = profileTimelineDisplayMgr;
@@ -531,16 +542,6 @@
 {
     NSLog(@"Application did fail to register for push notifications. Error: %@",
         error);
-
-#if !TARGET_IPHONE_SIMULATOR  // don't show this error in the simulator
-
-    NSString * title =
-        NSLocalizedString(@"notification.registration.failed.alert.title", @"");
-    NSString * message = error.localizedDescription;
-    [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
-
-#endif
-
 }
 
 - (void)application:(UIApplication *)application
@@ -720,7 +721,7 @@
             c = [((Mention *) t) credentials];
             key = @"mention";
         } else
-            NSLog(@"Still have a %@ tweet type!", [t class]);
+            NSLog(@"Still have a %@ tweet type!", [t className]);
 
         if (c) {
             NSMutableDictionary * perCredentials =
@@ -755,7 +756,9 @@
     [living removeAllObjects];
     [hitList removeAllObjects];
 
-    NSArray * allDms = [DirectMessage findAll:context];
+    NSArray * allDms =
+        [[DirectMessage findAll:context]
+         sortedArrayUsingSelector:@selector(compare:)];
     for (DirectMessage * dm in allDms) {
         TwitterCredentials * c = dm.credentials;
 
@@ -949,14 +952,14 @@
     return composeTweetDisplayMgr;
 }
 
-- (UIBarButtonItem *)sendingTweetProgressView
+- (UIBarButtonItem *)homeSendingTweetProgressView
 {
-    if (!sendingTweetProgressView) {
+    if (!homeSendingTweetProgressView) {
         UIActivityIndicatorView * view =
             [[UIActivityIndicatorView alloc]
             initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 
-        sendingTweetProgressView =
+        homeSendingTweetProgressView =
             [[UIBarButtonItem alloc] initWithCustomView:view];
 
         [view startAnimating];
@@ -964,7 +967,25 @@
         [view release];
     }
 
-    return sendingTweetProgressView;
+    return homeSendingTweetProgressView;
+}
+
+- (UIBarButtonItem *)profileSendingTweetProgressView
+{
+    if (!profileSendingTweetProgressView) {
+        UIActivityIndicatorView * view =
+            [[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+
+        profileSendingTweetProgressView =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [view startAnimating];
+
+        [view release];
+    }
+
+    return profileSendingTweetProgressView;
 }
 
 - (UIBarButtonItem *)newTweetButtonItem

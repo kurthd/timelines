@@ -12,6 +12,7 @@
 @interface TweetDetailsViewController ()
 
 - (void)setupWebView;
+- (void)showWebView;
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer;
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer
     header:(NSString *)header;
@@ -40,16 +41,16 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 {
     [super viewWillAppear:animated];
     [delegate showingTweetDetails];
+    webView.hidden = YES;
+    [self performSelector:@selector(showWebView) withObject:nil afterDelay:0.1];
     if (self.selectedTweet) {
         [delegate setCurrentTweetDetailsUser:self.selectedTweet.user.username];
-        webView.hidden = YES;
         [self setupWebView];
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)showWebView
 {
-    [super viewDidAppear:animated];
     webView.hidden = NO;
 }
 
@@ -180,6 +181,10 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
             NSString * replyToUsername =
                 self.selectedTweet.inReplyToTwitterUsername;
             [delegate loadNewTweetWithId:tweetId username:replyToUsername];
+        } else if ([webpage isMatchedByRegex:@"^mailto:"]) {
+            NSLog(@"Opening 'Mail' with url: %@", webpage);
+            NSURL * url = [[NSURL alloc] initWithString:webpage];
+            [[UIApplication sharedApplication] openURL:url];
         } else
             [delegate visitWebpage:webpage];
     }

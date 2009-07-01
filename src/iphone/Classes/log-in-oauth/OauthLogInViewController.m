@@ -58,11 +58,6 @@
 
     // reset the view
     [self.webView loadHTMLString:@"<html></html>" baseURL:nil];
-    /*
-    [self.enterPinView removeFromSuperview];
-    [self.navigationBar.topItem
-        setRightBarButtonItem:self.doneButton animated:YES];
-     */
 }
 
 - (IBAction)userDidCancel
@@ -96,18 +91,6 @@
     return YES;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    NSLog(@"Should text field return??");
-    return YES;
-}
-
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-    //[self.pinTextField resignFirstResponder];
-    return YES;
-}
-
 #pragma mark UIWebViewDelegate implementation
 
 - (void)webViewDidStartLoad:(UIWebView *)view
@@ -126,14 +109,14 @@
 {
     [self.navigationBar.topItem setRightBarButtonItem:self.activityButton
                                              animated:YES];
-    [[UIApplication sharedApplication] networkActivityIsStarting];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
 - (void)hideActivity
 {
     [self.navigationBar.topItem setRightBarButtonItem:self.doneButton
                                              animated:YES];
-    [[UIApplication sharedApplication] networkActivityDidFinish];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 #pragma mark Accessors

@@ -338,9 +338,19 @@
 	if (params)
 	    fullPath = [self _queryStringWithBase:fullPath parameters:params prefixed:YES];
 
-    NSString *urlString = [NSString stringWithFormat:@"%@://%@/%@", 
-                           (_secureConnection) ? @"https" : @"http",
-                           _APIDomain, fullPath];
+    NSString * domain = nil, * connectionType = nil;
+    if (requestType == MGTwitterSearchRequest) {
+		domain = _searchDomain;
+		connectionType = @"http";
+	} else {
+		domain = _APIDomain;
+		if (_secureConnection)
+			connectionType = @"https";
+		else
+			connectionType = @"http";
+	}
+
+    NSString *urlString = [NSString stringWithFormat:@"%@://%@/%@", connectionType, domain, fullPath];
     NSURL *finalURL = [NSURL URLWithString:urlString];
     if (!finalURL) {
         return nil;

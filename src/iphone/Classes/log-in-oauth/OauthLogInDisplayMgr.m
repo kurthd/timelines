@@ -195,8 +195,8 @@
 
 - (void)userIsDone:(NSString *)pin
 {
-    [self.explainOauthViewController showAuthorizingView];
     [self.explainOauthViewController dismissModalViewControllerAnimated:YES];
+    [self.explainOauthViewController showAuthorizingView];
 
     [self.twitter requestAccessToken:pin];
     [[UIApplication sharedApplication] networkActivityIsStarting];
