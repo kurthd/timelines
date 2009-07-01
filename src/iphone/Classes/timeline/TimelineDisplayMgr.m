@@ -200,6 +200,7 @@
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchfriends", @"");
     [self displayErrorWithTitle:errorMessage error:error];
+    [self.userListNetAwareViewController setUpdatingState:kDisconnected];
 }
 
 - (void)followers:(NSArray *)friends fetchedForUsername:(NSString *)username
@@ -220,6 +221,7 @@
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchfollowers", @"");
     [self displayErrorWithTitle:errorMessage error:error];
+    [self.userListNetAwareViewController setUpdatingState:kDisconnected];
 }
 
 - (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page
