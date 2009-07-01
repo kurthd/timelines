@@ -231,8 +231,17 @@
     [homeNetAwareViewController.navigationItem
         setRightBarButtonItem:[self newTweetButtonItem]
                      animated:YES];
+    [profileNetAwareViewController.navigationItem
+     setRightBarButtonItem:[self newTweetButtonItem]
+                  animated:YES];
 
-    [self.composeTweetDisplayMgr composeTweetWithText:tweet];
+    // if the error happened quickly, while the compose modal view is still
+    // dismissing, re-presenting it has no effect; force a brief delay for now
+    // and revisit later
+    [self.composeTweetDisplayMgr
+        performSelector:@selector(composeTweetWithText:)
+             withObject:tweet
+             afterDelay:0.8];
 }
 
 - (void)userIsReplyingToTweet:(NSString *)origTweetId
@@ -247,14 +256,39 @@
 {
     UISegmentedControl * control = (UISegmentedControl *)
         homeNetAwareViewController.navigationItem.titleView;
-        if (control.selectedSegmentIndex == 0)
-            [timelineDisplayMgr addTweet:reply];
+    if (control.selectedSegmentIndex == 0)
+        [timelineDisplayMgr addTweet:reply];
+    [profileTimelineDisplayMgr addTweet:reply];
 }
 
 - (void)userFailedToReplyToTweet:(NSString *)origTweetId
                         fromUser:(NSString *)origUsername
                         withText:(NSString *)text
 {
+    NSDictionary * userInfo =
+        [NSDictionary dictionaryWithObjectsAndKeys:
+        origTweetId, @"origTweetId",
+        origUsername, @"origUsername",
+        text, @"text", nil];
+
+    // if the error happened quickly, while the compose modal view is still
+    // dismissing, re-presenting it has no effect; force a brief delay for now
+    // and revisit later
+    [NSTimer
+        scheduledTimerWithTimeInterval:0.8
+                                target:self
+                              selector:@selector(presentFailedReplyOnTimer:)
+                              userInfo:userInfo
+                               repeats:NO];
+}
+
+- (void)presentFailedReplyOnTimer:(NSTimer *)timer
+{
+    NSDictionary * userInfo = timer.userInfo;
+    NSString * origTweetId = [userInfo objectForKey:@"origTweetId"];
+    NSString * origUsername = [userInfo objectForKey:@"origUsername"];
+    NSString * text = [userInfo objectForKey:@"text"];
+
     [self.composeTweetDisplayMgr composeReplyToTweet:origTweetId
                                             fromUser:origUsername
                                             withText:text];
@@ -271,6 +305,28 @@
 
 - (void)userFailedToSendDirectMessage:(NSString *)dm to:(NSString *)username
 {
+    NSDictionary * userInfo =
+        [NSDictionary dictionaryWithObjectsAndKeys:
+        dm, @"dm",
+        username, @"username", nil];
+
+    // if the error happened quickly, while the compose modal view is still
+    // dismissing, re-presenting it has no effect; force a brief delay for now
+    // and revisit later
+    SEL sel = @selector(presentFailedDirectMessageOnTimer:);
+    [NSTimer scheduledTimerWithTimeInterval:0.8
+                                     target:self
+                                   selector:sel
+                                   userInfo:userInfo
+                                    repeats:NO];
+}
+
+- (void)presentFailedDirectMessageOnTimer:(NSTimer *)timer
+{
+    NSDictionary * userInfo = timer.userInfo;
+    NSString * dm = [userInfo objectForKey:@"dm"];
+    NSString * username = [userInfo objectForKey:@"username"];
+
     [self.composeTweetDisplayMgr composeDirectMessageTo:username withText:dm];
 }
 
