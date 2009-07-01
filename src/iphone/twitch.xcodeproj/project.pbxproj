@@ -598,7 +598,7 @@
 		05F45D830FF06BD100EBAFC7 /* ComposeTweetViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetViewControllerDelegate.h; path = tweets/ComposeTweetViewControllerDelegate.h; sourceTree = "<group>"; };
 		05F45E8A0FF08D9400EBAFC7 /* ComposeTweetDisplayMgrDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetDisplayMgrDelegate.h; path = tweets/ComposeTweetDisplayMgrDelegate.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D6058910D05DD3D006BFB54 /* Twitbit Lite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twitbit Lite.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Twitbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AB4B0D9B1048005BE974 /* twitch_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twitch_Prefix.pch; sourceTree = "<group>"; };
@@ -1222,7 +1222,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* Twitbit Lite.app */,
+				1D6058910D05DD3D006BFB54 /* Twitbit.app */,
 				05EF418F0FFADF95007B59F1 /* Twitbit.app */,
 			);
 			name = Products;
@@ -1422,7 +1422,7 @@
 			);
 			name = Twitbit;
 			productName = twitch;
-			productReference = 1D6058910D05DD3D006BFB54 /* Twitbit Lite.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Twitbit.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1973,7 +1973,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: High Order Bit, Inc.";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = NS_BLOCK_ASSERTIONS;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1981,7 +1981,7 @@
 				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
 				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BD30541-6CA6-4F48-B159-BC45D542BBD5";
 				SDKROOT = iphoneos3.0;
 			};
 			name = Distribution;
@@ -1999,7 +1999,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = "Twitbit Lite";
+				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
 			};
 			name = Distribution;
@@ -2036,7 +2036,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = "Twitbit Lite";
+				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "673A86B7-3643-4B98-86EC-5FC4F2D7EDA4";
 			};
 			name = "Release - Doug";
@@ -2075,7 +2075,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = "Twitbit Lite";
+				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "673A86B7-3643-4B98-86EC-5FC4F2D7EDA4";
 			};
 			name = "Debug - Doug";
@@ -2202,7 +2202,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = "Twitbit Lite";
+				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "C1790731-FE46-4E4F-8283-A3B58F62F361";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C1790731-FE46-4E4F-8283-A3B58F62F361";
 			};
@@ -2222,7 +2222,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = "Twitbit Lite";
+				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "C1790731-FE46-4E4F-8283-A3B58F62F361";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C1790731-FE46-4E4F-8283-A3B58F62F361";
 			};
