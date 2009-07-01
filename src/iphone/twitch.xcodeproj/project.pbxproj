@@ -105,6 +105,186 @@
 		05D173E30FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D173E20FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m */; };
 		05D174070FF69FC500DCB22D /* Mention.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D174060FF69FC500DCB22D /* Mention.m */; };
 		05EC40430FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */; };
+		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
+		05EF40D50FFADF95007B59F1 /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
+		05EF40D60FFADF95007B59F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 05B239470FEDD10900A6A2E6 /* Localizable.strings */; };
+		05EF40D70FFADF95007B59F1 /* HomeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7CC0FEEB11F007143A9 /* HomeIcon.png */; };
+		05EF40D80FFADF95007B59F1 /* HomeIconWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7CE0FEEB193007143A9 /* HomeIconWhite.png */; };
+		05EF40D90FFADF95007B59F1 /* MentionsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D00FEEB2DE007143A9 /* MentionsIcon.png */; };
+		05EF40DA0FFADF95007B59F1 /* Envelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D20FEEB49B007143A9 /* Envelope.png */; };
+		05EF40DB0FFADF95007B59F1 /* LineChart.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D30FEEB49B007143A9 /* LineChart.png */; };
+		05EF40DC0FFADF95007B59F1 /* Star.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D60FEEB5CB007143A9 /* Star.png */; };
+		05EF40DD0FFADF95007B59F1 /* Profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D80FEEB770007143A9 /* Profile.png */; };
+		05EF40DE0FFADF95007B59F1 /* Gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7DA0FEEB839007143A9 /* Gear.png */; };
+		05EF40DF0FFADF95007B59F1 /* House.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7DB0FEEB839007143A9 /* House.png */; };
+		05EF40E00FFADF95007B59F1 /* NoDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7ED0FEEB958007143A9 /* NoDataView.xib */; };
+		05EF40E10FFADF95007B59F1 /* TimelineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8020FEEBD56007143A9 /* TimelineView.xib */; };
+		05EF40E20FFADF95007B59F1 /* TableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD88D0FEED9DE007143A9 /* TableViewCellGradient.png */; };
+		05EF40E30FFADF95007B59F1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8940FEEDAD9007143A9 /* Default.png */; };
+		05EF40E40FFADF95007B59F1 /* DefaultAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8950FEEDAD9007143A9 /* DefaultAvatar.png */; };
+		05EF40E50FFADF95007B59F1 /* UserHeaderGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8A20FEEDFBD007143A9 /* UserHeaderGradient.png */; };
+		05EF40E60FFADF95007B59F1 /* TimelineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916BD9100FEEFB07007143A9 /* TimelineTableViewCell.xib */; };
+		05EF40E70FFADF95007B59F1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05977A3B0FEF0C9700E37B9C /* Icon.png */; };
+		05EF40E80FFADF95007B59F1 /* TweetDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916BD9F40FEF46B1007143A9 /* TweetDetailsView.xib */; };
+		05EF40E90FFADF95007B59F1 /* tweet-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 916BDA4D0FEF573A007143A9 /* tweet-style.css */; };
+		05EF40EA0FFADF95007B59F1 /* Favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000420FEF76E800BCE9BC /* Favorite.png */; };
+		05EF40EB0FFADF95007B59F1 /* NotFavorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E0004B0FEF786300BCE9BC /* NotFavorite.png */; };
+		05EF40EC0FFADF95007B59F1 /* TweetDetailsHeaderGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */; };
+		05EF40ED0FFADF95007B59F1 /* DropShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000940FEFFCC700BCE9BC /* DropShadow.png */; };
+		05EF40EE0FFADF95007B59F1 /* ComposeTweetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05F45CFF0FF059B400EBAFC7 /* ComposeTweetView.xib */; };
+		05EF40EF0FFADF95007B59F1 /* UserInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E89580FF1863C0042BBEE /* UserInfoView.xib */; };
+		05EF40F00FFADF95007B59F1 /* UserInfoLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */; };
+		05EF40F10FFADF95007B59F1 /* UserListTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910BE2020FF2BA17005342EE /* UserListTableView.xib */; };
+		05EF40F20FFADF95007B59F1 /* UserSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910BE2050FF2BA3F005342EE /* UserSummaryTableViewCell.xib */; };
+		05EF40F30FFADF95007B59F1 /* TrendsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C5E6A70FF43CC10073E7F2 /* TrendsView.xib */; };
+		05EF40F40FFADF95007B59F1 /* TwitchBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */; };
+		05EF40F50FFADF95007B59F1 /* ForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82A40FF5543E004D04D5 /* ForwardButton.png */; };
+		05EF40F60FFADF95007B59F1 /* BackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82AA0FF55536004D04D5 /* BackButton.png */; };
+		05EF40F70FFADF95007B59F1 /* StopLoading.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82AC0FF55751004D04D5 /* StopLoading.png */; };
+		05EF40F80FFADF95007B59F1 /* Refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82B60FF558FE004D04D5 /* Refresh.png */; };
+		05EF40F90FFADF95007B59F1 /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C35E770FF5474800F91448 /* SearchBarView.xib */; };
+		05EF40FA0FFADF95007B59F1 /* OauthLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 057620320FF736D600392ADC /* OauthLogInView.xib */; };
+		05EF40FB0FFADF95007B59F1 /* ExplainOauthView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7051B0FF88C4100936E4C /* ExplainOauthView.xib */; };
+		05EF40FD0FFADF95007B59F1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		05EF40FE0FFADF95007B59F1 /* TwitchAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 052C64180FED703200B259D7 /* TwitchAppDelegate.m */; };
+		05EF40FF0FFADF95007B59F1 /* MGTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237EE0FEDB20900A6A2E6 /* MGTwitterEngine.m */; };
+		05EF41000FFADF95007B59F1 /* MGTwitterHTTPURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237F20FEDB20900A6A2E6 /* MGTwitterHTTPURLConnection.m */; };
+		05EF41010FFADF95007B59F1 /* MGTwitterLibXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237F40FEDB20900A6A2E6 /* MGTwitterLibXMLParser.m */; };
+		05EF41020FFADF95007B59F1 /* MGTwitterMessagesLibXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237F60FEDB20900A6A2E6 /* MGTwitterMessagesLibXMLParser.m */; };
+		05EF41030FFADF95007B59F1 /* MGTwitterMessagesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237F80FEDB20900A6A2E6 /* MGTwitterMessagesParser.m */; };
+		05EF41040FFADF95007B59F1 /* MGTwitterMiscLibXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237FA0FEDB20900A6A2E6 /* MGTwitterMiscLibXMLParser.m */; };
+		05EF41050FFADF95007B59F1 /* MGTwitterMiscParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237FC0FEDB20900A6A2E6 /* MGTwitterMiscParser.m */; };
+		05EF41060FFADF95007B59F1 /* MGTwitterStatusesLibXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B238000FEDB20900A6A2E6 /* MGTwitterStatusesLibXMLParser.m */; };
+		05EF41070FFADF95007B59F1 /* MGTwitterStatusesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B238020FEDB20900A6A2E6 /* MGTwitterStatusesParser.m */; };
+		05EF41080FFADF95007B59F1 /* MGTwitterUsersLibXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B238040FEDB20900A6A2E6 /* MGTwitterUsersLibXMLParser.m */; };
+		05EF41090FFADF95007B59F1 /* MGTwitterUsersParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B238060FEDB20900A6A2E6 /* MGTwitterUsersParser.m */; };
+		05EF410A0FFADF95007B59F1 /* MGTwitterXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B238080FEDB20900A6A2E6 /* MGTwitterXMLParser.m */; };
+		05EF410B0FFADF95007B59F1 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B2380A0FEDB20900A6A2E6 /* NSData+Base64.m */; };
+		05EF410C0FFADF95007B59F1 /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B2380C0FEDB20900A6A2E6 /* NSString+UUID.m */; };
+		05EF410D0FFADF95007B59F1 /* DeviceRegistrar.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B2387C0FEDC15800A6A2E6 /* DeviceRegistrar.m */; };
+		05EF410E0FFADF95007B59F1 /* UIAlertView+InstantiationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B2393E0FEDD06D00A6A2E6 /* UIAlertView+InstantiationAdditions.m */; };
+		05EF410F0FFADF95007B59F1 /* AbstractUpdatePublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B239660FEDD1E500A6A2E6 /* AbstractUpdatePublisher.m */; };
+		05EF41100FFADF95007B59F1 /* CredentialsActivatedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B2396B0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.m */; };
+		05EF41110FFADF95007B59F1 /* twitch.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 05B239F00FEEABBB00A6A2E6 /* twitch.xcdatamodel */; };
+		05EF41120FFADF95007B59F1 /* NetworkAwareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79A0FEEADD7007143A9 /* NetworkAwareViewController.m */; };
+		05EF41130FFADF95007B59F1 /* NSArray+IterationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79D0FEEADD7007143A9 /* NSArray+IterationAdditions.m */; };
+		05EF41140FFADF95007B59F1 /* NSDate+IsToday.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD79F0FEEADD7007143A9 /* NSDate+IsToday.m */; };
+		05EF41150FFADF95007B59F1 /* NSDate+TwitterStringHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A10FEEADD7007143A9 /* NSDate+TwitterStringHelpers.m */; };
+		05EF41160FFADF95007B59F1 /* NSDate+StringHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A30FEEADD7007143A9 /* NSDate+StringHelpers.m */; };
+		05EF41170FFADF95007B59F1 /* NSError+InstantiationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A50FEEADD7007143A9 /* NSError+InstantiationAdditions.m */; };
+		05EF41180FFADF95007B59F1 /* UIColor+TwitchColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A70FEEADD7007143A9 /* UIColor+TwitchColors.m */; };
+		05EF41190FFADF95007B59F1 /* UITableViewCell+InstantiationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7A90FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.m */; };
+		05EF411A0FFADF95007B59F1 /* UIWebView+FileLoadingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7AB0FEEADD7007143A9 /* UIWebView+FileLoadingAdditions.m */; };
+		05EF411B0FFADF95007B59F1 /* NoDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7B70FEEAED1007143A9 /* NoDataViewController.m */; };
+		05EF411C0FFADF95007B59F1 /* NSObject+RuntimeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD7BD0FEEAF13007143A9 /* NSObject+RuntimeAdditions.m */; };
+		05EF411D0FFADF95007B59F1 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD8150FEEBE26007143A9 /* TimelineViewController.m */; };
+		05EF411E0FFADF95007B59F1 /* TimelineDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD8180FEEBE35007143A9 /* TimelineDisplayMgr.m */; };
+		05EF411F0FFADF95007B59F1 /* TimelineDisplayMgrFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD81E0FEEC12B007143A9 /* TimelineDisplayMgrFactory.m */; };
+		05EF41200FFADF95007B59F1 /* InfoPlistConfigReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23ACA0FEEC2AE00A6A2E6 /* InfoPlistConfigReader.m */; };
+		05EF41210FFADF95007B59F1 /* PListUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23B110FEEC48C00A6A2E6 /* PListUtils.m */; };
+		05EF41220FFADF95007B59F1 /* RoundedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD8BE0FEEEE4A007143A9 /* RoundedImage.m */; };
+		05EF41230FFADF95007B59F1 /* TimelineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD9140FEEFB24007143A9 /* TimelineTableViewCell.m */; };
+		05EF41240FFADF95007B59F1 /* TwitterService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23B390FEEC6AB00A6A2E6 /* TwitterService.m */; };
+		05EF41250FFADF95007B59F1 /* ResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23B450FEED55100A6A2E6 /* ResponseProcessor.m */; };
+		05EF41260FFADF95007B59F1 /* CheckCredentialsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23B480FEED5A000A6A2E6 /* CheckCredentialsResponseProcessor.m */; };
+		05EF41270FFADF95007B59F1 /* FetchTimelineResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23B4B0FEED5C600A6A2E6 /* FetchTimelineResponseProcessor.m */; };
+		05EF41280FFADF95007B59F1 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B23C1A0FEEEFC700A6A2E6 /* Tweet.m */; };
+		05EF41290FFADF95007B59F1 /* UILabel+DrawingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD9D20FEF3D05007143A9 /* UILabel+DrawingAdditions.m */; };
+		05EF412A0FFADF95007B59F1 /* NSManagedObject+TediousCodeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */; };
+		05EF412B0FFADF95007B59F1 /* FetchDirectMessagesResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F459EE0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m */; };
+		05EF412C0FFADF95007B59F1 /* DirectMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A2F0FF0181600EBAFC7 /* DirectMessage.m */; };
+		05EF412D0FFADF95007B59F1 /* User+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A500FF01D5E00EBAFC7 /* User+CoreDataAdditions.m */; };
+		05EF412E0FFADF95007B59F1 /* Tweet+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A530FF01DE000EBAFC7 /* Tweet+CoreDataAdditions.m */; };
+		05EF412F0FFADF95007B59F1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A5C0FF01E3F00EBAFC7 /* User.m */; };
+		05EF41300FFADF95007B59F1 /* ResponseProcessor+ParsingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A6A0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m */; };
+		05EF41310FFADF95007B59F1 /* DirectMessage+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45B400FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m */; };
+		05EF41320FFADF95007B59F1 /* TweetDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD9F90FEF46E4007143A9 /* TweetDetailsViewController.m */; };
+		05EF41330FFADF95007B59F1 /* FetchMentionsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45BA10FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m */; };
+		05EF41340FFADF95007B59F1 /* SendTweetResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45C220FF0482200EBAFC7 /* SendTweetResponseProcessor.m */; };
+		05EF41350FFADF95007B59F1 /* AllTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */; };
+		05EF41360FFADF95007B59F1 /* MessagesTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8420FF03C9A00D6A769 /* MessagesTimelineDataSource.m */; };
+		05EF41370FFADF95007B59F1 /* PersonalFeedSelectionMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */; };
+		05EF41380FFADF95007B59F1 /* TweetInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A92D0FF06AA100D6A769 /* TweetInfo.m */; };
+		05EF41390FFADF95007B59F1 /* AsynchronousNetworkFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45C9A0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m */; };
+		05EF413A0FFADF95007B59F1 /* MentionsTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */; };
+		05EF413B0FFADF95007B59F1 /* ComposeTweetDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45D2F0FF05B8200EBAFC7 /* ComposeTweetDisplayMgr.m */; };
+		05EF413C0FFADF95007B59F1 /* ComposeTweetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45D320FF05B9400EBAFC7 /* ComposeTweetViewController.m */; };
+		05EF413D0FFADF95007B59F1 /* AccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524BDF60FF16E0500A6099B /* AccountsViewController.m */; };
+		05EF413E0FFADF95007B59F1 /* AccountsDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524BDFA0FF16E2200A6099B /* AccountsDisplayMgr.m */; };
+		05EF413F0FFADF95007B59F1 /* UserTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 918E891B0FF16EE30042BBEE /* UserTimelineDataSource.m */; };
+		05EF41400FFADF95007B59F1 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 918E894F0FF183070042BBEE /* UserInfoViewController.m */; };
+		05EF41410FFADF95007B59F1 /* UserInfoLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 918E8AA30FF1C69D0042BBEE /* UserInfoLabelCell.m */; };
+		05EF41420FFADF95007B59F1 /* ActiveTwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C02E0FF1B1E300A6099B /* ActiveTwitterCredentials.m */; };
+		05EF41430FFADF95007B59F1 /* CredentialsSetChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C07B0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m */; };
+		05EF41440FFADF95007B59F1 /* UIApplication+NetworkActivityIndicatorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */; };
+		05EF41450FFADF95007B59F1 /* FetchUserInfoResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C2550FF1ED1700A6099B /* FetchUserInfoResponseProcessor.m */; };
+		05EF41460FFADF95007B59F1 /* ArbUserTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE1860FF2A755005342EE /* ArbUserTimelineDataSource.m */; };
+		05EF41470FFADF95007B59F1 /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C3BB0FF2A7D400A6099B /* SFHFKeychainUtils.m */; };
+		05EF41480FFADF95007B59F1 /* UserSummaryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE1FC0FF2B91D005342EE /* UserSummaryTableViewCell.m */; };
+		05EF41490FFADF95007B59F1 /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE1FF0FF2B948005342EE /* UserListTableViewController.m */; };
+		05EF414A0FFADF95007B59F1 /* FetchFriendsForUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C4B70FF2B51600A6099B /* FetchFriendsForUserResponseProcessor.m */; };
+		05EF414B0FFADF95007B59F1 /* FetchFollowersForUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524C53F0FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.m */; };
+		05EF414C0FFADF95007B59F1 /* FetchFavoritesForUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */; };
+		05EF414D0FFADF95007B59F1 /* MarkFavoriteResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE711A0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m */; };
+		05EF414E0FFADF95007B59F1 /* FollowUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE71C30FF2E5F40037D1D6 /* FollowUserResponseProcessor.m */; };
+		05EF414F0FFADF95007B59F1 /* TwitPicImageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AE71FE0FF2EEB40037D1D6 /* TwitPicImageSender.m */; };
+		05EF41500FFADF95007B59F1 /* TwitPicResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E800D0FF314830074A91B /* TwitPicResponseParser.m */; };
+		05EF41510FFADF95007B59F1 /* FavoritesTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE31A0FF30296005342EE /* FavoritesTimelineDataSource.m */; };
+		05EF41520FFADF95007B59F1 /* UIState.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE3690FF32059005342EE /* UIState.m */; };
+		05EF41530FFADF95007B59F1 /* UIStatePersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE36C0FF32137005342EE /* UIStatePersistenceStore.m */; };
+		05EF41540FFADF95007B59F1 /* SendDirectMessageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E82410FF345CA0074A91B /* SendDirectMessageResponseProcessor.m */; };
+		05EF41550FFADF95007B59F1 /* QueryIsFollowingResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E82DE0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m */; };
+		05EF41560FFADF95007B59F1 /* TrendsDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E6630FF434360073E7F2 /* TrendsDisplayMgr.m */; };
+		05EF41570FFADF95007B59F1 /* TrendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E6660FF434730073E7F2 /* TrendsViewController.m */; };
+		05EF41580FFADF95007B59F1 /* FetchTrendsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E7B10FF455B00073E7F2 /* FetchTrendsResponseProcessor.m */; };
+		05EF41590FFADF95007B59F1 /* MGTwitterMessagesYAJLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E7F40FF468F60073E7F2 /* MGTwitterMessagesYAJLParser.m */; };
+		05EF415A0FFADF95007B59F1 /* MGTwitterMiscYAJLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E7F60FF468F60073E7F2 /* MGTwitterMiscYAJLParser.m */; };
+		05EF415B0FFADF95007B59F1 /* MGTwitterSearchYAJLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E7F80FF468F60073E7F2 /* MGTwitterSearchYAJLParser.m */; };
+		05EF415C0FFADF95007B59F1 /* MGTwitterStatusesYAJLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E7FA0FF468F60073E7F2 /* MGTwitterStatusesYAJLParser.m */; };
+		05EF415D0FFADF95007B59F1 /* MGTwitterUsersYAJLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E7FC0FF468F60073E7F2 /* MGTwitterUsersYAJLParser.m */; };
+		05EF415E0FFADF95007B59F1 /* MGTwitterYAJLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E80E0FF469B40073E7F2 /* MGTwitterYAJLParser.m */; };
+		05EF415F0FFADF95007B59F1 /* Trend.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E8CD0FF473020073E7F2 /* Trend.m */; };
+		05EF41600FFADF95007B59F1 /* SearchDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E9B10FF48BA70073E7F2 /* SearchDisplayMgr.m */; };
+		05EF41610FFADF95007B59F1 /* SearchResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E9C30FF494390073E7F2 /* SearchResponseProcessor.m */; };
+		05EF41620FFADF95007B59F1 /* TwitchBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */; };
+		05EF41630FFADF95007B59F1 /* SearchBarDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */; };
+		05EF41640FFADF95007B59F1 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D1728B0FF67ED900DCB22D /* RegexKitLite.m */; };
+		05EF41650FFADF95007B59F1 /* TwitterCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D173E20FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m */; };
+		05EF41660FFADF95007B59F1 /* Mention.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D174060FF69FC500DCB22D /* Mention.m */; };
+		05EF41670FFADF95007B59F1 /* UserTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761AFE0FF6ADD600392ADC /* UserTweet.m */; };
+		05EF41680FFADF95007B59F1 /* FetchTweetResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0562BE2E0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m */; };
+		05EF41690FFADF95007B59F1 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761F5D0FF72C1C00392ADC /* NSMutableURLRequest+Parameters.m */; };
+		05EF416A0FFADF95007B59F1 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761F610FF72C1C00392ADC /* NSString+URLEncoding.m */; };
+		05EF416B0FFADF95007B59F1 /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761F650FF72C1C00392ADC /* NSURL+Base.m */; };
+		05EF416C0FFADF95007B59F1 /* OAAsynchronousDataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761F690FF72C1C00392ADC /* OAAsynchronousDataFetcher.m */; };
+		05EF416D0FFADF95007B59F1 /* OAConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761F6B0FF72C1C00392ADC /* OAConsumer.m */; };
+		05EF416E0FFADF95007B59F1 /* OADataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761F6F0FF72C1C00392ADC /* OADataFetcher.m */; };
+		05EF416F0FFADF95007B59F1 /* OAHMAC_SHA1SignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761F730FF72C1C00392ADC /* OAHMAC_SHA1SignatureProvider.m */; };
+		05EF41700FFADF95007B59F1 /* OAMutableURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761F770FF72C1C00392ADC /* OAMutableURLRequest.m */; };
+		05EF41710FFADF95007B59F1 /* OAPlaintextSignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761F7B0FF72C1C00392ADC /* OAPlaintextSignatureProvider.m */; };
+		05EF41720FFADF95007B59F1 /* OARequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761F7F0FF72C1C00392ADC /* OARequestParameter.m */; };
+		05EF41730FFADF95007B59F1 /* OAServiceTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761F830FF72C1C00392ADC /* OAServiceTicket.m */; };
+		05EF41740FFADF95007B59F1 /* OAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761F860FF72C1C00392ADC /* OAToken.m */; };
+		05EF41750FFADF95007B59F1 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 05761FDC0FF72D4600392ADC /* Base64Transcoder.c */; };
+		05EF41760FFADF95007B59F1 /* hmac.c in Sources */ = {isa = PBXBuildFile; fileRef = 05761FDE0FF72D4600392ADC /* hmac.c */; };
+		05EF41770FFADF95007B59F1 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 05761FE00FF72D4600392ADC /* sha1.c */; };
+		05EF41780FFADF95007B59F1 /* YHOAuthTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 057621390FF7536800392ADC /* YHOAuthTwitterEngine.m */; };
+		05EF41790FFADF95007B59F1 /* LogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C702810FF8359B00936E4C /* LogInDisplayMgr.m */; };
+		05EF417A0FFADF95007B59F1 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C702830FF8359B00936E4C /* LogInViewController.m */; };
+		05EF417B0FFADF95007B59F1 /* OauthLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C702890FF835AE00936E4C /* OauthLogInDisplayMgr.m */; };
+		05EF417C0FFADF95007B59F1 /* OauthLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7028B0FF835AE00936E4C /* OauthLogInViewController.m */; };
+		05EF417D0FFADF95007B59F1 /* TwitPicCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7029C0FF83DBE00936E4C /* TwitPicCredentials.m */; };
+		05EF417E0FFADF95007B59F1 /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C702A10FF83DF000936E4C /* TwitterCredentials.m */; };
+		05EF417F0FFADF95007B59F1 /* TwitPicCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C702BC0FF83F7C00936E4C /* TwitPicCredentials+KeychainAdditions.m */; };
+		05EF41800FFADF95007B59F1 /* ExplainOauthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C705190FF88C1E00936E4C /* ExplainOauthViewController.m */; };
+		05EF41820FFADF95007B59F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		05EF41830FFADF95007B59F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		05EF41840FFADF95007B59F1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
+		05EF41850FFADF95007B59F1 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B238310FEDBA6600A6A2E6 /* libxml2.dylib */; };
+		05EF41860FFADF95007B59F1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B23A310FEEB29D00A6A2E6 /* CoreData.framework */; };
+		05EF41870FFADF95007B59F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0524C4510FF2AEEE00A6099B /* Security.framework */; };
+		05EF41880FFADF95007B59F1 /* libYAJLIPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */; };
+		05EF41980FFAE449007B59F1 /* twitbit-push-info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 05EF41970FFAE449007B59F1 /* twitbit-push-info.plist */; };
 		05F459EF0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F459EE0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m */; };
 		05F45A300FF0181600EBAFC7 /* DirectMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A2F0FF0181600EBAFC7 /* DirectMessage.m */; };
 		05F45A510FF01D5E00EBAFC7 /* User+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A500FF01D5E00EBAFC7 /* User+CoreDataAdditions.m */; };
@@ -387,6 +567,8 @@
 		05D174060FF69FC500DCB22D /* Mention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mention.m; path = tweets/Mention.m; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
 		05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+TediousCodeAdditions.m"; path = "shared/NSManagedObject+TediousCodeAdditions.m"; sourceTree = "<group>"; };
+		05EF418F0FFADF95007B59F1 /* Twitbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		05EF41970FFAE449007B59F1 /* twitbit-push-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "twitbit-push-info.plist"; sourceTree = "<group>"; };
 		05F459ED0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchDirectMessagesResponseProcessor.h; path = twitter/processors/FetchDirectMessagesResponseProcessor.h; sourceTree = "<group>"; };
 		05F459EE0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchDirectMessagesResponseProcessor.m; path = twitter/processors/FetchDirectMessagesResponseProcessor.m; sourceTree = "<group>"; };
 		05F45A2E0FF0181600EBAFC7 /* DirectMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessage.h; path = tweets/DirectMessage.h; sourceTree = "<group>"; };
@@ -416,12 +598,12 @@
 		05F45D830FF06BD100EBAFC7 /* ComposeTweetViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetViewControllerDelegate.h; path = tweets/ComposeTweetViewControllerDelegate.h; sourceTree = "<group>"; };
 		05F45E8A0FF08D9400EBAFC7 /* ComposeTweetDisplayMgrDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetDisplayMgrDelegate.h; path = tweets/ComposeTweetDisplayMgrDelegate.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D6058910D05DD3D006BFB54 /* Twitbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Twitbit Lite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twitbit Lite.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AB4B0D9B1048005BE974 /* twitch_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twitch_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* twitch-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "twitch-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* twitbit-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "twitbit-info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		910BE1850FF2A755005342EE /* ArbUserTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArbUserTimelineDataSource.h; path = timeline/ArbUserTimelineDataSource.h; sourceTree = "<group>"; };
 		910BE1860FF2A755005342EE /* ArbUserTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArbUserTimelineDataSource.m; path = timeline/ArbUserTimelineDataSource.m; sourceTree = "<group>"; };
 		910BE1FB0FF2B91D005342EE /* UserSummaryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSummaryTableViewCell.h; path = "user-network/UserSummaryTableViewCell.h"; sourceTree = "<group>"; };
@@ -529,6 +711,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		05EF41810FFADF95007B59F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05EF41820FFADF95007B59F1 /* Foundation.framework in Frameworks */,
+				05EF41830FFADF95007B59F1 /* UIKit.framework in Frameworks */,
+				05EF41840FFADF95007B59F1 /* CoreGraphics.framework in Frameworks */,
+				05EF41850FFADF95007B59F1 /* libxml2.dylib in Frameworks */,
+				05EF41860FFADF95007B59F1 /* CoreData.framework in Frameworks */,
+				05EF41870FFADF95007B59F1 /* Security.framework in Frameworks */,
+				05EF41880FFADF95007B59F1 /* libYAJLIPhone.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1026,7 +1222,8 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* Twitbit.app */,
+				1D6058910D05DD3D006BFB54 /* Twitbit Lite.app */,
+				05EF418F0FFADF95007B59F1 /* Twitbit.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1060,7 +1257,8 @@
 				916BD7CB0FEEB112007143A9 /* images */,
 				05B239440FEDD0E400A6A2E6 /* nibs */,
 				05B239450FEDD0F800A6A2E6 /* strings */,
-				8D1107310486CEB800E47090 /* twitch-Info.plist */,
+				8D1107310486CEB800E47090 /* twitbit-info.plist */,
+				05EF41970FFAE449007B59F1 /* twitbit-push-info.plist */,
 				05977A3B0FEF0C9700E37B9C /* Icon.png */,
 			);
 			name = Resources;
@@ -1193,9 +1391,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* twitch */ = {
+		05EF40D20FFADF95007B59F1 /* Twitbit Push */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "twitch" */;
+			buildConfigurationList = 05EF41890FFADF95007B59F1 /* Build configuration list for PBXNativeTarget "Twitbit Push" */;
+			buildPhases = (
+				05EF40D30FFADF95007B59F1 /* Resources */,
+				05EF40FC0FFADF95007B59F1 /* Sources */,
+				05EF41810FFADF95007B59F1 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Twitbit Push";
+			productName = twitch;
+			productReference = 05EF418F0FFADF95007B59F1 /* Twitbit.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1D6058900D05DD3D006BFB54 /* Twitbit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Twitbit" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -1205,9 +1420,9 @@
 			);
 			dependencies = (
 			);
-			name = twitch;
+			name = Twitbit;
 			productName = twitch;
-			productReference = 1D6058910D05DD3D006BFB54 /* Twitbit.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Twitbit Lite.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1229,12 +1444,60 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* twitch */,
+				1D6058900D05DD3D006BFB54 /* Twitbit */,
+				05EF40D20FFADF95007B59F1 /* Twitbit Push */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		05EF40D30FFADF95007B59F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */,
+				05EF40D50FFADF95007B59F1 /* LogInView.xib in Resources */,
+				05EF40D60FFADF95007B59F1 /* Localizable.strings in Resources */,
+				05EF40D70FFADF95007B59F1 /* HomeIcon.png in Resources */,
+				05EF40D80FFADF95007B59F1 /* HomeIconWhite.png in Resources */,
+				05EF40D90FFADF95007B59F1 /* MentionsIcon.png in Resources */,
+				05EF40DA0FFADF95007B59F1 /* Envelope.png in Resources */,
+				05EF40DB0FFADF95007B59F1 /* LineChart.png in Resources */,
+				05EF40DC0FFADF95007B59F1 /* Star.png in Resources */,
+				05EF40DD0FFADF95007B59F1 /* Profile.png in Resources */,
+				05EF40DE0FFADF95007B59F1 /* Gear.png in Resources */,
+				05EF40DF0FFADF95007B59F1 /* House.png in Resources */,
+				05EF40E00FFADF95007B59F1 /* NoDataView.xib in Resources */,
+				05EF40E10FFADF95007B59F1 /* TimelineView.xib in Resources */,
+				05EF40E20FFADF95007B59F1 /* TableViewCellGradient.png in Resources */,
+				05EF40E30FFADF95007B59F1 /* Default.png in Resources */,
+				05EF40E40FFADF95007B59F1 /* DefaultAvatar.png in Resources */,
+				05EF40E50FFADF95007B59F1 /* UserHeaderGradient.png in Resources */,
+				05EF40E60FFADF95007B59F1 /* TimelineTableViewCell.xib in Resources */,
+				05EF40E70FFADF95007B59F1 /* Icon.png in Resources */,
+				05EF40E80FFADF95007B59F1 /* TweetDetailsView.xib in Resources */,
+				05EF40E90FFADF95007B59F1 /* tweet-style.css in Resources */,
+				05EF40EA0FFADF95007B59F1 /* Favorite.png in Resources */,
+				05EF40EB0FFADF95007B59F1 /* NotFavorite.png in Resources */,
+				05EF40EC0FFADF95007B59F1 /* TweetDetailsHeaderGradient.png in Resources */,
+				05EF40ED0FFADF95007B59F1 /* DropShadow.png in Resources */,
+				05EF40EE0FFADF95007B59F1 /* ComposeTweetView.xib in Resources */,
+				05EF40EF0FFADF95007B59F1 /* UserInfoView.xib in Resources */,
+				05EF40F00FFADF95007B59F1 /* UserInfoLabelCell.xib in Resources */,
+				05EF40F10FFADF95007B59F1 /* UserListTableView.xib in Resources */,
+				05EF40F20FFADF95007B59F1 /* UserSummaryTableViewCell.xib in Resources */,
+				05EF40F30FFADF95007B59F1 /* TrendsView.xib in Resources */,
+				05EF40F40FFADF95007B59F1 /* TwitchBrowserView.xib in Resources */,
+				05EF40F50FFADF95007B59F1 /* ForwardButton.png in Resources */,
+				05EF40F60FFADF95007B59F1 /* BackButton.png in Resources */,
+				05EF40F70FFADF95007B59F1 /* StopLoading.png in Resources */,
+				05EF40F80FFADF95007B59F1 /* Refresh.png in Resources */,
+				05EF40F90FFADF95007B59F1 /* SearchBarView.xib in Resources */,
+				05EF40FA0FFADF95007B59F1 /* OauthLogInView.xib in Resources */,
+				05EF40FB0FFADF95007B59F1 /* ExplainOauthView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1D60588D0D05DD3D006BFB54 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1279,12 +1542,152 @@
 				05C35E790FF5474800F91448 /* SearchBarView.xib in Resources */,
 				057620340FF736D600392ADC /* OauthLogInView.xib in Resources */,
 				05C7051D0FF88C4100936E4C /* ExplainOauthView.xib in Resources */,
+				05EF41980FFAE449007B59F1 /* twitbit-push-info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		05EF40FC0FFADF95007B59F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05EF40FD0FFADF95007B59F1 /* main.m in Sources */,
+				05EF40FE0FFADF95007B59F1 /* TwitchAppDelegate.m in Sources */,
+				05EF40FF0FFADF95007B59F1 /* MGTwitterEngine.m in Sources */,
+				05EF41000FFADF95007B59F1 /* MGTwitterHTTPURLConnection.m in Sources */,
+				05EF41010FFADF95007B59F1 /* MGTwitterLibXMLParser.m in Sources */,
+				05EF41020FFADF95007B59F1 /* MGTwitterMessagesLibXMLParser.m in Sources */,
+				05EF41030FFADF95007B59F1 /* MGTwitterMessagesParser.m in Sources */,
+				05EF41040FFADF95007B59F1 /* MGTwitterMiscLibXMLParser.m in Sources */,
+				05EF41050FFADF95007B59F1 /* MGTwitterMiscParser.m in Sources */,
+				05EF41060FFADF95007B59F1 /* MGTwitterStatusesLibXMLParser.m in Sources */,
+				05EF41070FFADF95007B59F1 /* MGTwitterStatusesParser.m in Sources */,
+				05EF41080FFADF95007B59F1 /* MGTwitterUsersLibXMLParser.m in Sources */,
+				05EF41090FFADF95007B59F1 /* MGTwitterUsersParser.m in Sources */,
+				05EF410A0FFADF95007B59F1 /* MGTwitterXMLParser.m in Sources */,
+				05EF410B0FFADF95007B59F1 /* NSData+Base64.m in Sources */,
+				05EF410C0FFADF95007B59F1 /* NSString+UUID.m in Sources */,
+				05EF410D0FFADF95007B59F1 /* DeviceRegistrar.m in Sources */,
+				05EF410E0FFADF95007B59F1 /* UIAlertView+InstantiationAdditions.m in Sources */,
+				05EF410F0FFADF95007B59F1 /* AbstractUpdatePublisher.m in Sources */,
+				05EF41100FFADF95007B59F1 /* CredentialsActivatedPublisher.m in Sources */,
+				05EF41110FFADF95007B59F1 /* twitch.xcdatamodel in Sources */,
+				05EF41120FFADF95007B59F1 /* NetworkAwareViewController.m in Sources */,
+				05EF41130FFADF95007B59F1 /* NSArray+IterationAdditions.m in Sources */,
+				05EF41140FFADF95007B59F1 /* NSDate+IsToday.m in Sources */,
+				05EF41150FFADF95007B59F1 /* NSDate+TwitterStringHelpers.m in Sources */,
+				05EF41160FFADF95007B59F1 /* NSDate+StringHelpers.m in Sources */,
+				05EF41170FFADF95007B59F1 /* NSError+InstantiationAdditions.m in Sources */,
+				05EF41180FFADF95007B59F1 /* UIColor+TwitchColors.m in Sources */,
+				05EF41190FFADF95007B59F1 /* UITableViewCell+InstantiationAdditions.m in Sources */,
+				05EF411A0FFADF95007B59F1 /* UIWebView+FileLoadingAdditions.m in Sources */,
+				05EF411B0FFADF95007B59F1 /* NoDataViewController.m in Sources */,
+				05EF411C0FFADF95007B59F1 /* NSObject+RuntimeAdditions.m in Sources */,
+				05EF411D0FFADF95007B59F1 /* TimelineViewController.m in Sources */,
+				05EF411E0FFADF95007B59F1 /* TimelineDisplayMgr.m in Sources */,
+				05EF411F0FFADF95007B59F1 /* TimelineDisplayMgrFactory.m in Sources */,
+				05EF41200FFADF95007B59F1 /* InfoPlistConfigReader.m in Sources */,
+				05EF41210FFADF95007B59F1 /* PListUtils.m in Sources */,
+				05EF41220FFADF95007B59F1 /* RoundedImage.m in Sources */,
+				05EF41230FFADF95007B59F1 /* TimelineTableViewCell.m in Sources */,
+				05EF41240FFADF95007B59F1 /* TwitterService.m in Sources */,
+				05EF41250FFADF95007B59F1 /* ResponseProcessor.m in Sources */,
+				05EF41260FFADF95007B59F1 /* CheckCredentialsResponseProcessor.m in Sources */,
+				05EF41270FFADF95007B59F1 /* FetchTimelineResponseProcessor.m in Sources */,
+				05EF41280FFADF95007B59F1 /* Tweet.m in Sources */,
+				05EF41290FFADF95007B59F1 /* UILabel+DrawingAdditions.m in Sources */,
+				05EF412A0FFADF95007B59F1 /* NSManagedObject+TediousCodeAdditions.m in Sources */,
+				05EF412B0FFADF95007B59F1 /* FetchDirectMessagesResponseProcessor.m in Sources */,
+				05EF412C0FFADF95007B59F1 /* DirectMessage.m in Sources */,
+				05EF412D0FFADF95007B59F1 /* User+CoreDataAdditions.m in Sources */,
+				05EF412E0FFADF95007B59F1 /* Tweet+CoreDataAdditions.m in Sources */,
+				05EF412F0FFADF95007B59F1 /* User.m in Sources */,
+				05EF41300FFADF95007B59F1 /* ResponseProcessor+ParsingHelpers.m in Sources */,
+				05EF41310FFADF95007B59F1 /* DirectMessage+CoreDataAdditions.m in Sources */,
+				05EF41320FFADF95007B59F1 /* TweetDetailsViewController.m in Sources */,
+				05EF41330FFADF95007B59F1 /* FetchMentionsResponseProcessor.m in Sources */,
+				05EF41340FFADF95007B59F1 /* SendTweetResponseProcessor.m in Sources */,
+				05EF41350FFADF95007B59F1 /* AllTimelineDataSource.m in Sources */,
+				05EF41360FFADF95007B59F1 /* MessagesTimelineDataSource.m in Sources */,
+				05EF41370FFADF95007B59F1 /* PersonalFeedSelectionMgr.m in Sources */,
+				05EF41380FFADF95007B59F1 /* TweetInfo.m in Sources */,
+				05EF41390FFADF95007B59F1 /* AsynchronousNetworkFetcher.m in Sources */,
+				05EF413A0FFADF95007B59F1 /* MentionsTimelineDataSource.m in Sources */,
+				05EF413B0FFADF95007B59F1 /* ComposeTweetDisplayMgr.m in Sources */,
+				05EF413C0FFADF95007B59F1 /* ComposeTweetViewController.m in Sources */,
+				05EF413D0FFADF95007B59F1 /* AccountsViewController.m in Sources */,
+				05EF413E0FFADF95007B59F1 /* AccountsDisplayMgr.m in Sources */,
+				05EF413F0FFADF95007B59F1 /* UserTimelineDataSource.m in Sources */,
+				05EF41400FFADF95007B59F1 /* UserInfoViewController.m in Sources */,
+				05EF41410FFADF95007B59F1 /* UserInfoLabelCell.m in Sources */,
+				05EF41420FFADF95007B59F1 /* ActiveTwitterCredentials.m in Sources */,
+				05EF41430FFADF95007B59F1 /* CredentialsSetChangedPublisher.m in Sources */,
+				05EF41440FFADF95007B59F1 /* UIApplication+NetworkActivityIndicatorAdditions.m in Sources */,
+				05EF41450FFADF95007B59F1 /* FetchUserInfoResponseProcessor.m in Sources */,
+				05EF41460FFADF95007B59F1 /* ArbUserTimelineDataSource.m in Sources */,
+				05EF41470FFADF95007B59F1 /* SFHFKeychainUtils.m in Sources */,
+				05EF41480FFADF95007B59F1 /* UserSummaryTableViewCell.m in Sources */,
+				05EF41490FFADF95007B59F1 /* UserListTableViewController.m in Sources */,
+				05EF414A0FFADF95007B59F1 /* FetchFriendsForUserResponseProcessor.m in Sources */,
+				05EF414B0FFADF95007B59F1 /* FetchFollowersForUserResponseProcessor.m in Sources */,
+				05EF414C0FFADF95007B59F1 /* FetchFavoritesForUserResponseProcessor.m in Sources */,
+				05EF414D0FFADF95007B59F1 /* MarkFavoriteResponseProcessor.m in Sources */,
+				05EF414E0FFADF95007B59F1 /* FollowUserResponseProcessor.m in Sources */,
+				05EF414F0FFADF95007B59F1 /* TwitPicImageSender.m in Sources */,
+				05EF41500FFADF95007B59F1 /* TwitPicResponseParser.m in Sources */,
+				05EF41510FFADF95007B59F1 /* FavoritesTimelineDataSource.m in Sources */,
+				05EF41520FFADF95007B59F1 /* UIState.m in Sources */,
+				05EF41530FFADF95007B59F1 /* UIStatePersistenceStore.m in Sources */,
+				05EF41540FFADF95007B59F1 /* SendDirectMessageResponseProcessor.m in Sources */,
+				05EF41550FFADF95007B59F1 /* QueryIsFollowingResponseProcessor.m in Sources */,
+				05EF41560FFADF95007B59F1 /* TrendsDisplayMgr.m in Sources */,
+				05EF41570FFADF95007B59F1 /* TrendsViewController.m in Sources */,
+				05EF41580FFADF95007B59F1 /* FetchTrendsResponseProcessor.m in Sources */,
+				05EF41590FFADF95007B59F1 /* MGTwitterMessagesYAJLParser.m in Sources */,
+				05EF415A0FFADF95007B59F1 /* MGTwitterMiscYAJLParser.m in Sources */,
+				05EF415B0FFADF95007B59F1 /* MGTwitterSearchYAJLParser.m in Sources */,
+				05EF415C0FFADF95007B59F1 /* MGTwitterStatusesYAJLParser.m in Sources */,
+				05EF415D0FFADF95007B59F1 /* MGTwitterUsersYAJLParser.m in Sources */,
+				05EF415E0FFADF95007B59F1 /* MGTwitterYAJLParser.m in Sources */,
+				05EF415F0FFADF95007B59F1 /* Trend.m in Sources */,
+				05EF41600FFADF95007B59F1 /* SearchDisplayMgr.m in Sources */,
+				05EF41610FFADF95007B59F1 /* SearchResponseProcessor.m in Sources */,
+				05EF41620FFADF95007B59F1 /* TwitchBrowserViewController.m in Sources */,
+				05EF41630FFADF95007B59F1 /* SearchBarDisplayMgr.m in Sources */,
+				05EF41640FFADF95007B59F1 /* RegexKitLite.m in Sources */,
+				05EF41650FFADF95007B59F1 /* TwitterCredentials+KeychainAdditions.m in Sources */,
+				05EF41660FFADF95007B59F1 /* Mention.m in Sources */,
+				05EF41670FFADF95007B59F1 /* UserTweet.m in Sources */,
+				05EF41680FFADF95007B59F1 /* FetchTweetResponseProcessor.m in Sources */,
+				05EF41690FFADF95007B59F1 /* NSMutableURLRequest+Parameters.m in Sources */,
+				05EF416A0FFADF95007B59F1 /* NSString+URLEncoding.m in Sources */,
+				05EF416B0FFADF95007B59F1 /* NSURL+Base.m in Sources */,
+				05EF416C0FFADF95007B59F1 /* OAAsynchronousDataFetcher.m in Sources */,
+				05EF416D0FFADF95007B59F1 /* OAConsumer.m in Sources */,
+				05EF416E0FFADF95007B59F1 /* OADataFetcher.m in Sources */,
+				05EF416F0FFADF95007B59F1 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
+				05EF41700FFADF95007B59F1 /* OAMutableURLRequest.m in Sources */,
+				05EF41710FFADF95007B59F1 /* OAPlaintextSignatureProvider.m in Sources */,
+				05EF41720FFADF95007B59F1 /* OARequestParameter.m in Sources */,
+				05EF41730FFADF95007B59F1 /* OAServiceTicket.m in Sources */,
+				05EF41740FFADF95007B59F1 /* OAToken.m in Sources */,
+				05EF41750FFADF95007B59F1 /* Base64Transcoder.c in Sources */,
+				05EF41760FFADF95007B59F1 /* hmac.c in Sources */,
+				05EF41770FFADF95007B59F1 /* sha1.c in Sources */,
+				05EF41780FFADF95007B59F1 /* YHOAuthTwitterEngine.m in Sources */,
+				05EF41790FFADF95007B59F1 /* LogInDisplayMgr.m in Sources */,
+				05EF417A0FFADF95007B59F1 /* LogInViewController.m in Sources */,
+				05EF417B0FFADF95007B59F1 /* OauthLogInDisplayMgr.m in Sources */,
+				05EF417C0FFADF95007B59F1 /* OauthLogInViewController.m in Sources */,
+				05EF417D0FFADF95007B59F1 /* TwitPicCredentials.m in Sources */,
+				05EF417E0FFADF95007B59F1 /* TwitterCredentials.m in Sources */,
+				05EF417F0FFADF95007B59F1 /* TwitPicCredentials+KeychainAdditions.m in Sources */,
+				05EF41800FFADF95007B59F1 /* ExplainOauthViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1578,6 +1981,7 @@
 				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
 				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos3.0;
 			};
 			name = Distribution;
@@ -1586,15 +1990,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				INFOPLIST_FILE = "twitch-Info.plist";
+				INFOPLIST_FILE = "twitbit-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twitbit;
+				PRODUCT_NAME = "Twitbit Lite";
+				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
 			};
 			name = Distribution;
 		};
@@ -1602,7 +2008,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Douglas Kurth";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1612,7 +2018,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AA7F2B41-6452-442A-ADBF-895609D202AE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Release - Doug";
@@ -1621,15 +2027,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				INFOPLIST_FILE = "twitch-Info.plist";
+				INFOPLIST_FILE = "twitbit-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twitbit;
+				PRODUCT_NAME = "Twitbit Lite";
+				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
 			};
 			name = "Release - Doug";
 		};
@@ -1637,7 +2045,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Douglas Kurth";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1647,7 +2055,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AA7F2B41-6452-442A-ADBF-895609D202AE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Debug - Doug";
@@ -1656,35 +2064,144 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				INFOPLIST_FILE = "twitch-Info.plist";
+				INFOPLIST_FILE = "twitbit-info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Classes/vendor/yajl\"",
+				);
+				PRODUCT_NAME = "Twitbit Lite";
+				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+			};
+			name = "Debug - Doug";
+		};
+		05EF418A0FFADF95007B59F1 /* Debug - John */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Debay";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = twitch_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
+				INFOPLIST_FILE = "twitbit-push-info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
+				);
+				PRODUCT_NAME = Twitbit;
+				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+			};
+			name = "Debug - John";
+		};
+		05EF418B0FFADF95007B59F1 /* Debug - Doug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = twitch_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
+				INFOPLIST_FILE = "twitbit-push-info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
+				);
+				PRODUCT_NAME = Twitbit;
+				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+			};
+			name = "Debug - Doug";
+		};
+		05EF418C0FFADF95007B59F1 /* Release - John */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Debay";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = twitch_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
+				INFOPLIST_FILE = "twitbit-push-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
 				PRODUCT_NAME = Twitbit;
+				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
 			};
-			name = "Debug - Doug";
+			name = "Release - John";
+		};
+		05EF418D0FFADF95007B59F1 /* Release - Doug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = twitch_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
+				INFOPLIST_FILE = "twitbit-push-info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
+				);
+				PRODUCT_NAME = Twitbit;
+				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+			};
+			name = "Release - Doug";
+		};
+		05EF418E0FFADF95007B59F1 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = twitch_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
+				INFOPLIST_FILE = "twitbit-push-info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
+				);
+				PRODUCT_NAME = Twitbit;
+				PROVISIONING_PROFILE = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+			};
+			name = Distribution;
 		};
 		1D6058940D05DD3E006BFB54 /* Debug - John */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Debay";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				INFOPLIST_FILE = "twitch-Info.plist";
+				INFOPLIST_FILE = "twitbit-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twitbit;
+				PRODUCT_NAME = "Twitbit Lite";
+				PROVISIONING_PROFILE = "C1790731-FE46-4E4F-8283-A3B58F62F361";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C1790731-FE46-4E4F-8283-A3B58F62F361";
 			};
 			name = "Debug - John";
 		};
@@ -1692,15 +2209,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: John Debay";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Debay";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				INFOPLIST_FILE = "twitch-Info.plist";
+				INFOPLIST_FILE = "twitbit-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 				);
-				PRODUCT_NAME = Twitbit;
+				PRODUCT_NAME = "Twitbit Lite";
+				PROVISIONING_PROFILE = "C1790731-FE46-4E4F-8283-A3B58F62F361";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C1790731-FE46-4E4F-8283-A3B58F62F361";
 			};
 			name = "Release - John";
 		};
@@ -1708,7 +2229,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Debay";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1718,7 +2239,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Debug - John";
@@ -1727,7 +2248,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Debay";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1737,7 +2258,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6124029E-B2EC-4B21-AC90-EE804F742CA6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Release - John";
@@ -1745,7 +2266,19 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "twitch" */ = {
+		05EF41890FFADF95007B59F1 /* Build configuration list for PBXNativeTarget "Twitbit Push" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05EF418A0FFADF95007B59F1 /* Debug - John */,
+				05EF418B0FFADF95007B59F1 /* Debug - Doug */,
+				05EF418C0FFADF95007B59F1 /* Release - John */,
+				05EF418D0FFADF95007B59F1 /* Release - Doug */,
+				05EF418E0FFADF95007B59F1 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Release - John";
+		};
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Twitbit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug - John */,

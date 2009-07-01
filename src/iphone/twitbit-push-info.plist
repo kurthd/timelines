@@ -10,8 +10,6 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
 	<string></string>
-	<key>UIPrerenderedIcon</key>
-	<true/>
 	<key>CFBundleIdentifier</key>
 	<string>com.highorderbit.twitch</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -24,15 +22,17 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>DeviceRegistrationDomain</key>
+	<string>sandbox.twitch.highorderbit.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
-	<key>DeviceRegistrationDomain</key>
-	<string>sandbox.twitch.highorderbit.com</string>
+	<key>SBUsesNetwork</key>
+	<true/>
 	<key>TwitPicPostUrl</key>
 	<string>https://twitpic.com/api/upload</string>
-	<key>SBUsesNetwork</key>
+	<key>UIPrerenderedIcon</key>
 	<true/>
 </dict>
 </plist>
