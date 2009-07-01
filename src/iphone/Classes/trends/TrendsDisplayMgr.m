@@ -144,6 +144,7 @@ typedef enum
         [self fetchTrends:selectedTrend];
     } else {
         [self.trendsViewController updateWithTrends:cachedTrends];
+        [self.trendsViewController scrollToTop:NO];
         [self.networkAwareViewController
             setUpdatingState:kConnectedAndNotUpdating];
         [self.networkAwareViewController setCachedDataAvailable:YES];
@@ -246,6 +247,7 @@ typedef enum
 - (void)showTrends:(NSArray *)trends
 {
     [self.trendsViewController updateWithTrends:trends];
+    [self.trendsViewController scrollToTop:NO];
     [self.networkAwareViewController setUpdatingState:kConnectedAndNotUpdating];
     [self.networkAwareViewController setCachedDataAvailable:YES];
     
