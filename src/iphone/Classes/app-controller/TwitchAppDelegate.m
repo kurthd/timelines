@@ -165,6 +165,9 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    // reset the unread message count to 0
+    application.applicationIconBadgeNumber = 0;
+
     if (tabBarController.selectedViewController ==
         accountsViewController.navigationController) {
         // make sure account changes get saved
