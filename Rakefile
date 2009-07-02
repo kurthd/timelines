@@ -52,10 +52,12 @@ task :push do |t|
 end
 
 task :build_tags do |t|
-  tags_file = "src/Classes/tags"
+  src_dir =
+    File.expand_path(File.dirname(__FILE__) + "/src/iphone/Classes")
+  tags_file = "#{src_dir}/tags"
 
   print "Rebuilding tags in '#{tags_file}'..."
-  output = %x{ ctags --language-force=objc --objc-kinds=+PiIMCZ -f #{tags_file} src/Classes/** }
+  output = %x{ ctags --language-force=objc --objc-kinds=+PiIMCZ -f #{tags_file}  #{src_dir}/** }
   if (output.chomp.length > 0)
     puts ""      # print a newline
     puts output  # only produces output if there's an error
