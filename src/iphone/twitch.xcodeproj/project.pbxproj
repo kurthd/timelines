@@ -356,6 +356,7 @@
 		918E895A0FF1863C0042BBEE /* UserInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E89580FF1863C0042BBEE /* UserInfoView.xib */; };
 		918E8A5F0FF1C5560042BBEE /* UserInfoLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */; };
 		918E8AA40FF1C69D0042BBEE /* UserInfoLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 918E8AA30FF1C69D0042BBEE /* UserInfoLabelCell.m */; };
+		91B28D130FFC60A10080023B /* TweetInfo+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */; };
 		91CD821B0FF5403F004D04D5 /* TwitchBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */; };
 		91CD821E0FF54066004D04D5 /* TwitchBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */; };
 		91CD82A50FF5543E004D04D5 /* ForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82A40FF5543E004D04D5 /* ForwardButton.png */; };
@@ -699,6 +700,8 @@
 		918E8A5E0FF1C5560042BBEE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/UserInfoLabelCell.xib; sourceTree = "<group>"; };
 		918E8AA20FF1C69D0042BBEE /* UserInfoLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoLabelCell.h; path = "user-info/UserInfoLabelCell.h"; sourceTree = "<group>"; };
 		918E8AA30FF1C69D0042BBEE /* UserInfoLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoLabelCell.m; path = "user-info/UserInfoLabelCell.m"; sourceTree = "<group>"; };
+		91B28D110FFC60A10080023B /* TweetInfo+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TweetInfo+UIAdditions.h"; path = "timeline/TweetInfo+UIAdditions.h"; sourceTree = "<group>"; };
+		91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TweetInfo+UIAdditions.m"; path = "timeline/TweetInfo+UIAdditions.m"; sourceTree = "<group>"; };
 		91CD821A0FF5403F004D04D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TwitchBrowserView.xib; sourceTree = "<group>"; };
 		91CD821C0FF54066004D04D5 /* TwitchBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchBrowserViewController.h; path = timeline/TwitchBrowserViewController.h; sourceTree = "<group>"; };
 		91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchBrowserViewController.m; path = timeline/TwitchBrowserViewController.m; sourceTree = "<group>"; };
@@ -1367,6 +1370,8 @@
 				910BE31A0FF30296005342EE /* FavoritesTimelineDataSource.m */,
 				91CD821C0FF54066004D04D5 /* TwitchBrowserViewController.h */,
 				91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */,
+				91B28D110FFC60A10080023B /* TweetInfo+UIAdditions.h */,
+				91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -1827,6 +1832,7 @@
 				05C702A20FF83DF000936E4C /* TwitterCredentials.m in Sources */,
 				05C702BD0FF83F7C00936E4C /* TwitPicCredentials+KeychainAdditions.m in Sources */,
 				05C7051A0FF88C1E00936E4C /* ExplainOauthViewController.m in Sources */,
+				91B28D130FFC60A10080023B /* TweetInfo+UIAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

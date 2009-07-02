@@ -22,7 +22,7 @@
 - (id)initWithImageView:(UIImageView *)anImageView radius:(float)aRadius
 {
     if (self = [super init]) {
-        self.imageView = anImageView;
+        imageView = [anImageView retain];
         self.radius = aRadius;
     }
 
@@ -61,20 +61,19 @@
     [imageView.image drawInRect:CGRectMake(0, 0, w, h)];
 }
 
-- (UIImageView *)imageView
+- (void)setImage:(UIImage *)image
 {
-    [self setNeedsDisplay];
-
-    return imageView;
+    if (image != imageView.image) {
+        imageView.image = image;
+        [self setNeedsDisplay];
+    }
 }
 
-- (void)setImageView:(UIImageView *)anImageView
+- (UIImage *)image
 {
-    [anImageView retain];
-    [imageView release];
-    imageView = anImageView;
-    
     [self setNeedsDisplay];
+
+    return imageView.image;
 }
 
 @end

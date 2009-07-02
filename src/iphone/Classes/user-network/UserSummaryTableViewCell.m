@@ -17,7 +17,7 @@
 
 - (void)setAvatar:(UIImage *)avatar
 {
-    avatarView.imageView.image = avatar;
+    [avatarView setImage:avatar];
 }
 
 - (void)setName:(NSString *)name

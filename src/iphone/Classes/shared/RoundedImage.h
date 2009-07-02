@@ -10,7 +10,9 @@
     float radius;
 }
 
-@property (nonatomic, retain) UIImageView * imageView;
 @property (nonatomic, assign) float radius;
+
+- (void)setImage:(UIImage *)image;
+- (UIImage *)image;
 
 @end

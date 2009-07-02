@@ -33,22 +33,28 @@ static UIImage * backgroundImage;
     self.backgroundView.contentMode =  UIViewContentModeBottom;
 
     avatar.radius = 4;
+    
+    needsLayout = YES;
 }
 
 - (void)layoutSubviews
 {
-    [super layoutSubviews];
+    if (needsLayout) {
+        [super layoutSubviews];
 
-    CGFloat tweetTextHeight =
-        [tweetTextLabel heightForString:tweetTextLabel.text];
-    CGRect tweetTextLabelFrame = tweetTextLabel.frame;
-    tweetTextLabelFrame.size.height = tweetTextHeight;
-    tweetTextLabel.frame = tweetTextLabelFrame;
+        CGFloat tweetTextHeight =
+            [tweetTextLabel heightForString:tweetTextLabel.text];
+        CGRect tweetTextLabelFrame = tweetTextLabel.frame;
+        tweetTextLabelFrame.size.height = tweetTextHeight;
+        tweetTextLabel.frame = tweetTextLabelFrame;
+        
+        needsLayout = NO;
+    }
 }
 
 - (void)setAvatarImage:(UIImage *)image
 {
-    avatar.imageView.image = image;
+    [avatar setImage:image];
 }
 
 - (void)setName:(NSString *)name
@@ -68,47 +74,51 @@ static UIImage * backgroundImage;
 
 - (void)setDisplayType:(TimelineTableViewCellType)aDisplayType
 {
-    displayType = aDisplayType;
+    if (displayType != aDisplayType) {
+        needsLayout = YES;
 
-    CGRect avatarFrame = avatar.frame;
-    CGRect nameLabelFrame = nameLabel.frame;
-    CGRect dateLabelFrame = dateLabel.frame;
-    CGRect tweetTextLabelFrame = tweetTextLabel.frame;
+        displayType = aDisplayType;
 
-    switch (displayType) {
-        case kTimelineTableViewCellTypeInverted:
-            avatar.hidden = NO;
-            avatarFrame.origin.x = 245;
-            nameLabel.hidden = YES;
-            dateLabelFrame.origin.x = 7;
-            dateLabel.textAlignment = UITextAlignmentLeft;
-            tweetTextLabelFrame.origin.x = 7;
-            tweetTextLabelFrame.size.width = 234;
-            break;
-        case kTimelineTableViewCellTypeNormal:
-            avatar.hidden = NO;
-            avatarFrame.origin.x = 7;
-            nameLabel.hidden = NO;
-            nameLabelFrame.origin.x = 64;
-            dateLabelFrame.origin.x = 212;
-            dateLabel.textAlignment = UITextAlignmentRight;
-            tweetTextLabelFrame.origin.x = 64;
-            tweetTextLabelFrame.size.width = 234;
-            break;
-        case kTimelineTableViewCellTypeNoAvatar:
-            nameLabel.hidden = YES;
-            dateLabelFrame.origin.x = 7;
-            dateLabel.textAlignment = UITextAlignmentLeft;
-            tweetTextLabelFrame.origin.x = 7;
-            avatar.hidden = YES;
-            tweetTextLabelFrame.size.width = 291;
-            break;
+        CGRect avatarFrame = avatar.frame;
+        CGRect nameLabelFrame = nameLabel.frame;
+        CGRect dateLabelFrame = dateLabel.frame;
+        CGRect tweetTextLabelFrame = tweetTextLabel.frame;
+
+        switch (displayType) {
+            case kTimelineTableViewCellTypeInverted:
+                avatar.hidden = NO;
+                avatarFrame.origin.x = 245;
+                nameLabel.hidden = YES;
+                dateLabelFrame.origin.x = 7;
+                dateLabel.textAlignment = UITextAlignmentLeft;
+                tweetTextLabelFrame.origin.x = 7;
+                tweetTextLabelFrame.size.width = 234;
+                break;
+            case kTimelineTableViewCellTypeNormal:
+                avatar.hidden = NO;
+                avatarFrame.origin.x = 7;
+                nameLabel.hidden = NO;
+                nameLabelFrame.origin.x = 64;
+                dateLabelFrame.origin.x = 212;
+                dateLabel.textAlignment = UITextAlignmentRight;
+                tweetTextLabelFrame.origin.x = 64;
+                tweetTextLabelFrame.size.width = 234;
+                break;
+            case kTimelineTableViewCellTypeNoAvatar:
+                nameLabel.hidden = YES;
+                dateLabelFrame.origin.x = 7;
+                dateLabel.textAlignment = UITextAlignmentLeft;
+                tweetTextLabelFrame.origin.x = 7;
+                avatar.hidden = YES;
+                tweetTextLabelFrame.size.width = 291;
+                break;
+        }
+
+        avatar.frame = avatarFrame;
+        nameLabel.frame = nameLabelFrame;
+        dateLabel.frame = dateLabelFrame;
+        tweetTextLabel.frame = tweetTextLabelFrame;
     }
-
-    avatar.frame = avatarFrame;
-    nameLabel.frame = nameLabelFrame;
-    dateLabel.frame = dateLabelFrame;
-    tweetTextLabel.frame = tweetTextLabelFrame;
 }
 
 + (CGFloat)heightForContent:(NSString *)tweetText

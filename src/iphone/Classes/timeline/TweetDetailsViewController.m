@@ -69,9 +69,9 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
     if (!avatarImage) {
         NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
         [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
-        avatar.imageView.image = [UIImage imageNamed:@"DefaultAvatar.png"];
+        [avatar setImage:[UIImage imageNamed:@"DefaultAvatar.png"]];
     } else
-        avatar.imageView.image = avatarImage;
+        [avatar setImage:avatarImage];
 
     NSString * locationText = tweet.user.location;
     locationButton.hidden = !locationText || [locationText isEqual:@""];
@@ -155,7 +155,7 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 {
     NSLog(@"Received avatar for url: %@", url);
     UIImage * avatarImage = [UIImage imageWithData:data];
-    avatar.imageView.image = avatarImage;
+    [avatar setImage:avatarImage];
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher

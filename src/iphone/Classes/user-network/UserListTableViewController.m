@@ -29,9 +29,13 @@
 - (UIImage *)getAvatarForUrl:(NSString *)url;
 - (NSArray *)sortedUsers;
 
++ (UIImage *)defaultAvatar;
+
 @end
 
 @implementation UserListTableViewController
+
+static UIImage * defaultAvatar;
 
 @synthesize delegate, sortedUserCache;
 
@@ -129,7 +133,6 @@
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
     didReceiveData:(NSData *)data fromUrl:(NSURL *)url
 {
-    NSLog(@"Received avatar for url: %@", url);
     NSString * urlAsString = [url absoluteString];
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
@@ -179,7 +182,7 @@
 {
     UIImage * avatarImage = [avatarCache objectForKey:url];
     if (!avatarImage) {
-        avatarImage = [UIImage imageNamed:@"DefaultAvatar.png"];
+        avatarImage = [[self class] defaultAvatar];
         if (![alreadySent objectForKey:url]) {
             NSURL * avatarUrl = [NSURL URLWithString:url];
             [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
@@ -206,6 +209,14 @@
             [users sortedArrayUsingSelector:@selector(compare:)];
 
     return sortedUserCache;
+}
+
++ (UIImage *)defaultAvatar
+{
+    if (!defaultAvatar)
+        defaultAvatar = [UIImage imageNamed:@"DefaultAvatar.png"];
+
+    return defaultAvatar;
 }
 
 @end

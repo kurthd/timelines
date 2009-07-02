@@ -221,7 +221,7 @@ enum {
 {
     NSLog(@"Received avatar for url: %@", url);
     UIImage * avatarImage = [UIImage imageWithData:data];
-    avatarView.imageView.image = avatarImage;
+    [avatarView setImage:avatarImage];
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
@@ -264,9 +264,9 @@ enum {
     if (!avatarImage) {
         NSURL * avatarUrl = [NSURL URLWithString:user.profileImageUrl];
         [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
-        avatarView.imageView.image = [UIImage imageNamed:@"DefaultAvatar.png"];
+        [avatarView setImage:[UIImage imageNamed:@"DefaultAvatar.png"]];
     } else
-        avatarView.imageView.image = avatarImage;
+        [avatarView setImage:avatarImage];
     nameLabel.text = aUser.name;
     usernameLabel.text = [NSString stringWithFormat:@"@%@", aUser.username];
     bioLabel.text = aUser.bio;

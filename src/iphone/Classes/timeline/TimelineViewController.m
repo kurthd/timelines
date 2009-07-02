@@ -8,6 +8,7 @@
 #import "DirectMessage.h"
 #import "AsynchronousNetworkFetcher.h"
 #import "UIColor+TwitchColors.h"
+#import "TweetInfo+UIAdditions.h"
 
 @interface TimelineViewController ()
 
@@ -17,9 +18,13 @@
 - (void)triggerDelayedRefresh;
 - (void)processDelayedRefresh;
 
++ (UIImage *)defaultAvatar;
+
 @end
 
 @implementation TimelineViewController
+
+static UIImage * defaultAvatar;
 
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
     showWithoutAvatars, outgoingSortedTweetCache, incomingSortedTweetCache,
@@ -83,20 +88,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
     cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * cellIdentifier = @"TimelineTableViewCell";
-
-    TimelineTableViewCell * cell =
-        (TimelineTableViewCell *)
-        [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil) {
-        NSArray * nib =
-            [[NSBundle mainBundle] loadNibNamed:@"TimelineTableViewCell"
-            owner:self options:nil];
-
-        cell = [nib objectAtIndex:0];
-    }
-
     TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
+
+    TimelineTableViewCell * cell = [tweet cell];
+
     UIImage * avatarImage = [self getAvatarForUrl:tweet.user.profileImageUrl];
     [cell setAvatarImage:avatarImage];
     if (tweet.recipient && ![tweet.recipient isEqual:@""] && !showInbox) {
@@ -107,8 +102,6 @@
         [cell setName:nameString];
     } else
         [cell setName:tweet.user.name ? tweet.user.name : tweet.user.username];
-    [cell setDate:tweet.timestamp];
-    [cell setTweetText:tweet.text];
 
     TimelineTableViewCellType displayType;
     if (showWithoutAvatars)
@@ -152,7 +145,6 @@
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
     didReceiveData:(NSData *)data fromUrl:(NSURL *)url
 {
-    NSLog(@"Received avatar for url: %@", url);
     NSString * urlAsString = [url absoluteString];
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
@@ -160,7 +152,7 @@
         [self triggerDelayedRefresh];
 
         if ([urlAsString isEqual:user.profileImageUrl])
-            avatarView.imageView.image = avatarImage;
+            [avatarView setImage:avatarImage];
     }
 }
 
@@ -233,7 +225,7 @@
             aUser.friendsCount, aUser.followersCount];
         UIImage * avatarImage =
             [self getAvatarForUrl:aUser.profileImageUrl];
-        avatarView.imageView.image = avatarImage;
+        [avatarView setImage:avatarImage];
     }
 }
 
@@ -269,6 +261,10 @@
         [NSString stringWithFormat:showingMultPagesFormatString, page] :
         showingSinglePageFormatString;
 
+    // create cells for all tweets
+    for (TweetInfo * tweet in someTweets)
+        [tweet cell];
+
     [self.tableView reloadData];
 
     [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
@@ -287,7 +283,7 @@
 {
     UIImage * avatarImage = [avatarCache objectForKey:url];
     if (!avatarImage) {
-        avatarImage = [UIImage imageNamed:@"DefaultAvatar.png"];
+        avatarImage = [[self class] defaultAvatar];
         if (![alreadySent objectForKey:url]) {
             NSURL * avatarUrl = [NSURL URLWithString:url];
             [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
@@ -366,6 +362,14 @@
 {
     [self.tableView reloadData];
     delayedRefreshTriggered = NO;
+}
+
++ (UIImage *)defaultAvatar
+{
+    if (!defaultAvatar)
+        defaultAvatar = [UIImage imageNamed:@"DefaultAvatar.png"];
+
+    return defaultAvatar;
 }
 
 @end
