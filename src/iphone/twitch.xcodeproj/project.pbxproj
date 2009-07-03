@@ -356,6 +356,10 @@
 		918E895A0FF1863C0042BBEE /* UserInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E89580FF1863C0042BBEE /* UserInfoView.xib */; };
 		918E8A5F0FF1C5560042BBEE /* UserInfoLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */; };
 		918E8AA40FF1C69D0042BBEE /* UserInfoLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 918E8AA30FF1C69D0042BBEE /* UserInfoLabelCell.m */; };
+		91A247650FFE7EF400538F29 /* TweetDetailsFooterGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247640FFE7EF400538F29 /* TweetDetailsFooterGradient.png */; };
+		91A2476B0FFE7FA300538F29 /* DropShadowReversed.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */; };
+		91A247730FFE81D300538F29 /* DeleteTweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247720FFE81D300538F29 /* DeleteTweet.png */; };
+		91A247790FFE838D00538F29 /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
 		91B28D130FFC60A10080023B /* TweetInfo+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */; };
 		91CD821B0FF5403F004D04D5 /* TwitchBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */; };
 		91CD821E0FF54066004D04D5 /* TwitchBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */; };
@@ -700,6 +704,10 @@
 		918E8A5E0FF1C5560042BBEE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/UserInfoLabelCell.xib; sourceTree = "<group>"; };
 		918E8AA20FF1C69D0042BBEE /* UserInfoLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoLabelCell.h; path = "user-info/UserInfoLabelCell.h"; sourceTree = "<group>"; };
 		918E8AA30FF1C69D0042BBEE /* UserInfoLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoLabelCell.m; path = "user-info/UserInfoLabelCell.m"; sourceTree = "<group>"; };
+		91A247640FFE7EF400538F29 /* TweetDetailsFooterGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsFooterGradient.png; path = images/TweetDetailsFooterGradient.png; sourceTree = "<group>"; };
+		91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadowReversed.png; path = images/DropShadowReversed.png; sourceTree = "<group>"; };
+		91A247720FFE81D300538F29 /* DeleteTweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweet.png; path = images/DeleteTweet.png; sourceTree = "<group>"; };
+		91A247780FFE838D00538F29 /* Re-tweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweet.png"; path = "images/Re-tweet.png"; sourceTree = "<group>"; };
 		91B28D110FFC60A10080023B /* TweetInfo+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TweetInfo+UIAdditions.h"; path = "timeline/TweetInfo+UIAdditions.h"; sourceTree = "<group>"; };
 		91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TweetInfo+UIAdditions.m"; path = "timeline/TweetInfo+UIAdditions.m"; sourceTree = "<group>"; };
 		91CD821A0FF5403F004D04D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TwitchBrowserView.xib; sourceTree = "<group>"; };
@@ -1310,6 +1318,10 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91A247780FFE838D00538F29 /* Re-tweet.png */,
+				91A247720FFE81D300538F29 /* DeleteTweet.png */,
+				91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */,
+				91A247640FFE7EF400538F29 /* TweetDetailsFooterGradient.png */,
 				91CD82B60FF558FE004D04D5 /* Refresh.png */,
 				91CD82AC0FF55751004D04D5 /* StopLoading.png */,
 				91CD82AA0FF55536004D04D5 /* BackButton.png */,
@@ -1551,6 +1563,10 @@
 				057620340FF736D600392ADC /* OauthLogInView.xib in Resources */,
 				05C7051D0FF88C4100936E4C /* ExplainOauthView.xib in Resources */,
 				059942310FFB6CE800842518 /* Entitlements.plist in Resources */,
+				91A247650FFE7EF400538F29 /* TweetDetailsFooterGradient.png in Resources */,
+				91A2476B0FFE7FA300538F29 /* DropShadowReversed.png in Resources */,
+				91A247730FFE81D300538F29 /* DeleteTweet.png in Resources */,
+				91A247790FFE838D00538F29 /* Re-tweet.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

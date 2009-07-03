@@ -8,6 +8,7 @@
 #import "NSDate+StringHelpers.h"
 #import "AsynchronousNetworkFetcher.h"
 #import "RegexKitLite.h"
+#import "UIAlertView+InstantiationAdditions.h"
 
 @interface TweetDetailsViewController ()
 
@@ -34,6 +35,7 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
     [userTweetsButton release];
     [locationButton release];
     [avatar release];
+    [deleteTweetButton release];
     [super dealloc];
 }
 
@@ -190,6 +192,27 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
     }
 
     return navigationType != UIWebViewNavigationTypeLinkClicked;
+}
+- (IBAction)reTweet:(id)sender
+{
+    NSLog(@"Re-tweet button selected");
+    NSString * title = @"Not yet implemented";
+    NSString * message = @"Sorry, we're in the process of implementing this feature.  Thanks for beta testing!";
+    UIAlertView * alert =
+        [UIAlertView simpleAlertViewWithTitle:title message:message];
+
+    [alert show];
+}
+
+- (IBAction)deleteTweet:(id)sender
+{
+    NSLog(@"Delete tweet button selected");
+    NSString * title = @"Not yet implemented";
+    NSString * message = @"Sorry, we're in the process of implementing this feature.  Thanks for beta testing!";
+    UIAlertView * alert =
+        [UIAlertView simpleAlertViewWithTitle:title message:message];
+
+    [alert show];
 }
 
 #pragma mark static helper methods

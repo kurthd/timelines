@@ -19,7 +19,8 @@
     IBOutlet UILabel * nameLabel;
     IBOutlet UIButton * locationButton;
     IBOutlet RoundedImage * avatar;
-    
+    IBOutlet UIButton * deleteTweetButton;
+
     TweetInfo * selectedTweet;
     BOOL favorite;
 }
@@ -31,5 +32,8 @@
 - (IBAction)showLocationOnMap:(id)sender;
 - (IBAction)showUserTweets:(id)sender;
 - (IBAction)toggleFavoriteValue:(id)sender;
+
+- (IBAction)reTweet:(id)sender;
+- (IBAction)deleteTweet:(id)sender;
 
 @end
