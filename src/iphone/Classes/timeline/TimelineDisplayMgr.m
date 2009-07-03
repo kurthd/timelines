@@ -113,13 +113,15 @@
     self.updateId = anUpdateId;
 
     NSInteger oldTimelineCount = [[timeline allKeys] count];
+    if (!firstFetchReceived)
+        [timeline removeAllObjects];
     for (TweetInfo * tweet in aTimeline)
         [timeline setObject:tweet forKey:tweet.identifier];
     NSInteger newTimelineCount = [[timeline allKeys] count];
-    
+
     if (!refreshingTweets) {
         allPagesLoaded =
-            (oldTimelineCount == newTimelineCount) ||
+            (oldTimelineCount == newTimelineCount && firstFetchReceived) ||
             newTimelineCount == 0;
         if (allPagesLoaded) {
             NSLog(@"Timeline display manager: setting all pages loaded");
@@ -903,7 +905,7 @@
 
     [self.wrapperController
         setCachedDataAvailable:[[someTweets allKeys] count] > 0];
-        
+
     firstFetchReceived = !refresh;
 }
 
