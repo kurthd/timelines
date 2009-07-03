@@ -94,7 +94,7 @@
 @property (nonatomic, retain) User * user;
 @property (nonatomic, copy) NSNumber * updateId;
 
-@property (nonatomic, copy) NSMutableDictionary * timeline;
+@property (nonatomic, readonly) NSMutableDictionary * timeline;
 @property (nonatomic, readonly) NSUInteger pagesShown;
 @property (nonatomic, readonly) BOOL allPagesLoaded;
 @property (nonatomic, copy) NSString * lastFollowingUsername;

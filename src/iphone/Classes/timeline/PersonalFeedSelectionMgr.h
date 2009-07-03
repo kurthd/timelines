@@ -44,7 +44,8 @@
     messagesService:(TwitterService *)messagesService;
 
 - (void)tabSelected:(id)sender;
-
+- (void)tabSelectedWithIndex:(NSInteger)index;
 - (void)setCredentials:(TwitterCredentials *)credentials;
+- (void)refreshCurrentTabData;
 
 @end

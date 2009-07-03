@@ -120,19 +120,18 @@
     NSInteger newTimelineCount = [[timeline allKeys] count];
 
     if (!refreshingTweets) {
+        NSInteger pageAsInt = [page intValue];
         allPagesLoaded =
-            (oldTimelineCount == newTimelineCount && firstFetchReceived) ||
+            (oldTimelineCount == newTimelineCount && firstFetchReceived &&
+            pageAsInt > pagesShown) ||
             newTimelineCount == 0;
         if (allPagesLoaded) {
             NSLog(@"Timeline display manager: setting all pages loaded");
             NSLog(@"Refreshing tweets?: %d", refreshingTweets);
             NSLog(@"Old timeline count: %d", oldTimelineCount);
             NSLog(@"New timeline count: %d", newTimelineCount);
-        } else {
-            NSInteger pageAsInt = [page intValue];
-            if (pageAsInt != 0)
-                pagesShown = pageAsInt;
-        }
+        } else if (pageAsInt != 0)
+            pagesShown = pageAsInt;
 
         [timelineController setAllPagesLoaded:allPagesLoaded];
     }
@@ -899,6 +898,12 @@
     [timeline removeAllObjects];
     [timeline addEntriesFromDictionary:someTweets];
 
+
+    BOOL cachedDataAvailable = [[timeline allKeys] count] > 0;
+    if (cachedDataAvailable)
+        NSLog(@"Setting cached data available");
+    [self.wrapperController setCachedDataAvailable:cachedDataAvailable];
+
     pagesShown = page;
     allPagesLoaded = newAllPagesLoaded;
 
@@ -967,7 +972,6 @@
             [self.timelineController
                 setSegregateTweetsFromUser:credentials.username];
 
-        [self.wrapperController setCachedDataAvailable:NO];
         [self.wrapperController setUpdatingState:kConnectedAndUpdating];
     } else if (hasBeenDisplayed) {// set for first time and persisted data shown
         NSLog(@"Timeline display manager: setting account for first time");
