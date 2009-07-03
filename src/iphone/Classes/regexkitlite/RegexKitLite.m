@@ -484,8 +484,14 @@ static id performRegexOp(id self, SEL _cmd, RKLRegexOp doRegexOp, NSString *rege
   RKLCDelayedAssert((cacheSlot->icu_regex != NULL) && (exception == NULL), &exception, exitNow);
 
   if(cacheSlot->setToNeedsConversion != 0) {
+
+#if !defined(NS_BLOCK_ASSERTIONS)
+
     RKLBuffer *buffer = (cacheSlot->setToLength < RKL_FIXED_LENGTH) ? &fixedBuffer : &dynamicBuffer;
     RKLCDelayedAssert((cacheSlot->setToHash == buffer->hash) && (cacheSlot->setToLength == buffer->length) && (cacheSlot->setToUniChar == buffer->uniChar), &exception, exitNow);
+
+#endif
+
   }
 
   switch(regexOp) {

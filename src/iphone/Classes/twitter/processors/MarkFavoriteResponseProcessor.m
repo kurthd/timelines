@@ -79,9 +79,10 @@
 
     NSDictionary * tweetData = status;
 
-    NSString * aTweetId = [[tweetData objectForKey:@"id"] description];
-    NSAssert2([aTweetId isEqualToString:tweetId], @"Expected to receive "
-        "status for tweet '%@', but got '%@' instead.", tweetId, aTweetId);
+    NSAssert2(
+        [[[tweetData objectForKey:@"id"] description] isEqualToString:tweetId],
+        @"Expected to receive status for tweet '%@', but got '%@' instead.",
+        tweetId, [[tweetData objectForKey:@"id"] description]);
 
     Tweet * tweet = [Tweet tweetWithId:tweetId context:context];
     if (!tweet)
