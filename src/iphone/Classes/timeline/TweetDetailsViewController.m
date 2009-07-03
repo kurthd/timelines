@@ -49,6 +49,8 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
         [delegate setCurrentTweetDetailsUser:self.selectedTweet.user.username];
         [self setupWebView];
     }
+    
+    deleteTweetButton.enabled = deleteTweetButtonEnabled;
 }
 
 - (void)showWebView
@@ -86,6 +88,11 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
     else
         [favoriteButton setImage:[UIImage imageNamed:@"NotFavorite.png"]
             forState:UIControlStateNormal];
+}
+
+- (void)setDeleteButtonEnabled:(BOOL)enabled
+{
+    deleteTweetButtonEnabled = enabled;
 }
 
 - (void)setupWebView
@@ -196,12 +203,7 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 - (IBAction)reTweet:(id)sender
 {
     NSLog(@"Re-tweet button selected");
-    NSString * title = @"Not yet implemented";
-    NSString * message = @"Sorry, we're in the process of implementing this feature.  Thanks for beta testing!";
-    UIAlertView * alert =
-        [UIAlertView simpleAlertViewWithTitle:title message:message];
-
-    [alert show];
+    [delegate reTweetSelected];
 }
 
 - (IBAction)deleteTweet:(id)sender

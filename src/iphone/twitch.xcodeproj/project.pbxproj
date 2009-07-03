@@ -360,6 +360,9 @@
 		91A2476B0FFE7FA300538F29 /* DropShadowReversed.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */; };
 		91A247730FFE81D300538F29 /* DeleteTweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247720FFE81D300538F29 /* DeleteTweet.png */; };
 		91A247790FFE838D00538F29 /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
+		91A2479E0FFE9D0200538F29 /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
+		91A2479F0FFE9D0200538F29 /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
+		91A247A70FFE9ED300538F29 /* DeleteTweetDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247A60FFE9ED300538F29 /* DeleteTweetDisabled.png */; };
 		91B28D130FFC60A10080023B /* TweetInfo+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */; };
 		91CD821B0FF5403F004D04D5 /* TwitchBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */; };
 		91CD821E0FF54066004D04D5 /* TwitchBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */; };
@@ -708,6 +711,9 @@
 		91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadowReversed.png; path = images/DropShadowReversed.png; sourceTree = "<group>"; };
 		91A247720FFE81D300538F29 /* DeleteTweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweet.png; path = images/DeleteTweet.png; sourceTree = "<group>"; };
 		91A247780FFE838D00538F29 /* Re-tweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweet.png"; path = "images/Re-tweet.png"; sourceTree = "<group>"; };
+		91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweetSelected.png; path = images/DeleteTweetSelected.png; sourceTree = "<group>"; };
+		91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweetSelected.png"; path = "images/Re-tweetSelected.png"; sourceTree = "<group>"; };
+		91A247A60FFE9ED300538F29 /* DeleteTweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweetDisabled.png; path = images/DeleteTweetDisabled.png; sourceTree = "<group>"; };
 		91B28D110FFC60A10080023B /* TweetInfo+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TweetInfo+UIAdditions.h"; path = "timeline/TweetInfo+UIAdditions.h"; sourceTree = "<group>"; };
 		91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TweetInfo+UIAdditions.m"; path = "timeline/TweetInfo+UIAdditions.m"; sourceTree = "<group>"; };
 		91CD821A0FF5403F004D04D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TwitchBrowserView.xib; sourceTree = "<group>"; };
@@ -1318,6 +1324,9 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91A247A60FFE9ED300538F29 /* DeleteTweetDisabled.png */,
+				91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */,
+				91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */,
 				91A247780FFE838D00538F29 /* Re-tweet.png */,
 				91A247720FFE81D300538F29 /* DeleteTweet.png */,
 				91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */,
@@ -1567,6 +1576,9 @@
 				91A2476B0FFE7FA300538F29 /* DropShadowReversed.png in Resources */,
 				91A247730FFE81D300538F29 /* DeleteTweet.png in Resources */,
 				91A247790FFE838D00538F29 /* Re-tweet.png in Resources */,
+				91A2479E0FFE9D0200538F29 /* DeleteTweetSelected.png in Resources */,
+				91A2479F0FFE9D0200538F29 /* Re-tweetSelected.png in Resources */,
+				91A247A70FFE9ED300538F29 /* DeleteTweetDisabled.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

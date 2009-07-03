@@ -329,8 +329,10 @@
     NSLog(@"Timeline display manager: selected tweet: %@", tweet);
     self.selectedTweet = tweet;
 
+    BOOL tweetByUser = [tweet.user.username isEqual:credentials.username];
     self.tweetDetailsController.navigationItem.rightBarButtonItem.enabled =
-        ![tweet.user.username isEqual:credentials.username];
+        !tweetByUser;
+    [self.tweetDetailsController setDeleteButtonEnabled:tweetByUser];
     if (tweet.recipient) {
         self.tweetDetailsController.navigationItem.rightBarButtonItem.action =
             @selector(replyToTweetWithMessage);
@@ -764,6 +766,15 @@
     [composeTweetDisplayMgr
         composeReplyToTweet:selectedTweet.identifier
         fromUser:self.currentTweetDetailsUser];
+}
+
+- (void)reTweetSelected
+{
+    NSLog(@"Timeline display manager: replying to tweet with direct message");
+    NSString * reTweetMessage =
+        [NSString stringWithFormat:@"RT @%@ %@", selectedTweet.user.username,
+        selectedTweet.text];
+    [composeTweetDisplayMgr composeTweetWithText:reTweetMessage];
 }
 
 #pragma mark Accessors
