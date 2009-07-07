@@ -55,8 +55,9 @@ class DeviceControllerTest < ActionController::TestCase
   test "invalid registration" do
     params = self.build_params(@iphone, @usernames[0, 1], @keys[0, 1], [])
 
-    post(:register, params)
-    assert_response :success
+    assert_raise(Exception) do
+      post(:register, params)
+    end
     assert_nil assigns(:subscriptions)
   end
 

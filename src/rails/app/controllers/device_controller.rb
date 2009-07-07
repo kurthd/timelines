@@ -3,23 +3,17 @@ class DeviceController < ApplicationController
 
   def register
     if request.post?
-      logger.info "Received post request."
-      logger.debug "device-token: '#{params[:devicetoken]}.'"
+      begin
+        logger.info "Received post request."
+        logger.debug "device-token: '#{params[:devicetoken]}.'"
 
-      token = params[:devicetoken]
-      results = self.construct_params(params)
+        token = params[:devicetoken]
+        results = self.construct_params(params)
 
-      usernames = results[0]
-      keys = results[1]
-      secrets = results[2]
+        usernames = results[0]
+        keys = results[1]
+        secrets = results[2]
 
-      if usernames.length != keys.length || usernames.length != secrets.length
-        # raising an exception seems to break tests (??), so just
-        # checking manually for now
-        logger.error "Received #{usernames.length} usernames, " +
-          "#{keys.length} keys, and #{secrets.length} secrets. Usernames, " +
-          "keys, and secrets must match."
-      else
         iphone = Iphone.find_or_create(token)
         @subscriptions = DeviceSubscription.set_subscriptions_for_device(
           iphone, usernames, keys, secrets)
@@ -29,6 +23,8 @@ class DeviceController < ApplicationController
         @subscriptions.each do |s|
           logger.info "\t#{s.twitter_user}"
         end
+      rescue
+        logger.warn "Failed to process registration for device: #{token}: #{$!}"
       end
     end
   end
@@ -48,6 +44,12 @@ class DeviceController < ApplicationController
       elsif name =~ /^secret(\d+)$/
         secrets[$1.to_i] = value
       end
+    end
+
+    if (usernames.length != keys.length || usernames.length != secrets.length)
+      raise Exception, "Received #{usernames.length} usernames, " +
+        "#{keys.length} keys, and #{secrets.length} secrets. Usernames, " +
+        "keys, and secrets must match."
     end
 
     [ usernames, keys, secrets ]
