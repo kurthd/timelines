@@ -57,6 +57,12 @@
 
 - (void)tabSelected:(id)sender
 {
+    UISegmentedControl * control = (UISegmentedControl *)sender;
+    [self tabSelectedWithIndex:control.selectedSegmentIndex];
+}
+
+- (void)tabSelectedWithIndex:(NSInteger)index
+{
     NSLog(@"Tab selected");
     switch (previousTab) {
         case 0:
@@ -79,12 +85,11 @@
             break;
     }
 
-    UISegmentedControl * segmentedControl = (UISegmentedControl *)sender;
     allTimelineDataSource.delegate = nil;
     mentionsTimelineDataSource.delegate = nil;
     messagesTimelineDataSource.delegate = nil;
 
-    switch (segmentedControl.selectedSegmentIndex) {
+    switch (index) {
         case 0:
             NSLog(@"Selected all tweets tab; forcing refresh: %d",
                 allTimelineRefresh);
@@ -120,7 +125,14 @@
             break;
     }
 
-    previousTab = segmentedControl.selectedSegmentIndex;
+    previousTab = index;
+}
+
+- (void)refreshCurrentTabData
+{
+    NSInteger currentIndex = previousTab;
+    previousTab = -1;
+    [self tabSelectedWithIndex:currentIndex];
 }
 
 - (void)setCredentials:(TwitterCredentials *)credentials

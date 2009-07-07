@@ -14,5 +14,6 @@
 - (void)showingTweetDetails;
 - (void)loadNewTweetWithId:(NSString *)tweetId username:(NSString *)username;
 - (void)setCurrentTweetDetailsUser:(NSString *)username;
+- (void)reTweetSelected;
 
 @end

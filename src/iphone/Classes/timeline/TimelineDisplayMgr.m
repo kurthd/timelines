@@ -113,24 +113,25 @@
     self.updateId = anUpdateId;
 
     NSInteger oldTimelineCount = [[timeline allKeys] count];
+    if (!firstFetchReceived)
+        [timeline removeAllObjects];
     for (TweetInfo * tweet in aTimeline)
         [timeline setObject:tweet forKey:tweet.identifier];
     NSInteger newTimelineCount = [[timeline allKeys] count];
-    
+
     if (!refreshingTweets) {
+        NSInteger pageAsInt = [page intValue];
         allPagesLoaded =
-            (oldTimelineCount == newTimelineCount) ||
+            (oldTimelineCount == newTimelineCount && firstFetchReceived &&
+            pageAsInt > pagesShown) ||
             newTimelineCount == 0;
         if (allPagesLoaded) {
             NSLog(@"Timeline display manager: setting all pages loaded");
             NSLog(@"Refreshing tweets?: %d", refreshingTweets);
             NSLog(@"Old timeline count: %d", oldTimelineCount);
             NSLog(@"New timeline count: %d", newTimelineCount);
-        } else {
-            NSInteger pageAsInt = [page intValue];
-            if (pageAsInt != 0)
-                pagesShown = pageAsInt;
-        }
+        } else if (pageAsInt != 0)
+            pagesShown = pageAsInt;
 
         [timelineController setAllPagesLoaded:allPagesLoaded];
     }
@@ -327,8 +328,10 @@
     NSLog(@"Timeline display manager: selected tweet: %@", tweet);
     self.selectedTweet = tweet;
 
+    BOOL tweetByUser = [tweet.user.username isEqual:credentials.username];
     self.tweetDetailsController.navigationItem.rightBarButtonItem.enabled =
-        ![tweet.user.username isEqual:credentials.username];
+        !tweetByUser;
+    [self.tweetDetailsController setDeleteButtonEnabled:tweetByUser];
     if (tweet.recipient) {
         self.tweetDetailsController.navigationItem.rightBarButtonItem.action =
             @selector(replyToTweetWithMessage);
@@ -764,6 +767,15 @@
         fromUser:self.currentTweetDetailsUser];
 }
 
+- (void)reTweetSelected
+{
+    NSLog(@"Timeline display manager: replying to tweet with direct message");
+    NSString * reTweetMessage =
+        [NSString stringWithFormat:@"RT @%@ %@", selectedTweet.user.username,
+        selectedTweet.text];
+    [composeTweetDisplayMgr composeTweetWithText:reTweetMessage];
+}
+
 #pragma mark Accessors
 
 - (NetworkAwareViewController *)newTweetDetailsWrapperController
@@ -886,6 +898,12 @@
     [timeline removeAllObjects];
     [timeline addEntriesFromDictionary:someTweets];
 
+
+    BOOL cachedDataAvailable = [[timeline allKeys] count] > 0;
+    if (cachedDataAvailable)
+        NSLog(@"Setting cached data available");
+    [self.wrapperController setCachedDataAvailable:cachedDataAvailable];
+
     pagesShown = page;
     allPagesLoaded = newAllPagesLoaded;
 
@@ -903,7 +921,7 @@
 
     [self.wrapperController
         setCachedDataAvailable:[[someTweets allKeys] count] > 0];
-        
+
     firstFetchReceived = !refresh;
 }
 
@@ -954,7 +972,6 @@
             [self.timelineController
                 setSegregateTweetsFromUser:credentials.username];
 
-        [self.wrapperController setCachedDataAvailable:NO];
         [self.wrapperController setUpdatingState:kConnectedAndUpdating];
     } else if (hasBeenDisplayed) {// set for first time and persisted data shown
         NSLog(@"Timeline display manager: setting account for first time");

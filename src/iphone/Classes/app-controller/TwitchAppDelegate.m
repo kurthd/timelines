@@ -886,6 +886,8 @@
     personalFeedSelectionMgr.allTimelineTweets = tweets;
     personalFeedSelectionMgr.mentionsTimelineTweets = mentions;
     personalFeedSelectionMgr.messagesTimelineTweets = dms;
+
+    [personalFeedSelectionMgr refreshCurrentTabData];
 }
 
 - (void)setUIStateFromPersistence
