@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class TwitterUserTest < ActiveSupport::TestCase
+
 #  @@encryption_secret_file = File.join(RAILS_ROOT, 'config', 'garbage')
 #
 #  test "encrypt" do

@@ -1,7 +1,19 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+debay:
+  username: 'debay'
+  key: '11945852-Q485KxT24YkPRF5OeI8WnEXsMfK57dpMj0QBCLeQf'
+  secret: 'LVdzzEMzYJBV0PptOzqm5qN74s42j0f0T5BhqqxQ'
 
-# one:
-#   column: value
-#
-# two:
-#   column: value
+kurthd:
+  username: 'kurthd'
+  key: '16964523-RDasOEwcb50wtpa9x2xBT4cFHuvxZKqjjiFk76X9d'
+  secret: '5rzZ5H79p7gJfXxhE8rCufnKbrfG2QelAY9aSnrxE'
+
+highorderbit:
+  username: 'highorderbit'
+  key: '19849349-SVvwiPixQA1TGZvmOVyMlK8p8zltrKP0E0zfDSQ61'
+  secret: 'CWDyD16vLrr9qLFA9aY4HOHJ9f7tx1weFqn5EfhPe0'
+
+achiaram:
+  username: 'achiaram'
+  key: '17093624-j0ZWZuhYOtoSuDxN00qv1ad0ZVydIZ06ppOd6HAPk'
+  secret: 'xCtZGngb4cZ8I7PWCE1VRkZnRkDQ3hAogVGGrEOO98k'

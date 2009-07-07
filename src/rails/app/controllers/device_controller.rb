@@ -11,37 +11,14 @@ class DeviceController < ApplicationController
       logger.debug "device-token: '#{params[:devicetoken]}.'"
 
       token = params[:devicetoken]
+      results = self.construct_params(params)
 
-      usernames = Array.new
-      keys = Array.new
-      secrets = Array.new
+      usernames = results[0]
+      keys = results[1]
+      secrets = results[2]
 
-      params.each do |name, value|
-        if name =~ /^username(\d+)$/
-          usernames[$1.to_i] = value
-        elsif name =~ /^key(\d+)$/
-          keys[$1.to_i] = value
-        elsif name =~ /^secret(\d+)$/
-          secrets[$1.to_i] = value
-        end
-      end
-
-      if (usernames.length != keys.length || usernames.length != secrets.length)
-        logger.error "Received #{usernames.length} usernames, " +
-          "#{keys.length} keys, and #{secrets.length} for device token: " +
-          "#{token}. Usernames, keys, and secrets must match. Aborting " +
-          "registration."
-      else
-        iphone = self.find_or_create_iphone(token)
-
-        self.register_accounts(iphone, usernames, keys, secrets)
-
-        # clean up
-        #deleted_subscriptions =
-          #self.remove_stale_subscriptions(iphone, accounts)
-        #self.remove_stale_iphone(iphone)
-        #self.remove_stale_twitter_users(deleted_subscriptions)
-      end
+      iphone = Iphone.find_or_create(token)
+      self.register_accounts(iphone, usernames, keys, secrets)
     else
       @devices = Iphone.find(:all)
     end
@@ -49,50 +26,29 @@ class DeviceController < ApplicationController
 
   @private
 
-  def register_accounts(iphone, usernames, keys, secrets)
-    subscriptions = DeviceSubscription.find(:all,
-      :conditions => [ 'iphone_id = ?', iphone.id ])
-    logger.info "#{iphone}: Found #{subscriptions.length} existing " +
-      "subscriptions."
+  def construct_params(params)
+    usernames = Array.new
+    keys = Array.new
+    secrets = Array.new
 
-    subscriptions_to_delete = Array.new
-
-    subscriptions.each do |subscription|
-      logger.debug "Looking for twitter user: #{subscription.twitter_user_id}"
-
-      user = TwitterUser.find(:first,
-        :conditions => [ 'id = ?', subscription.twitter_user_id ])
-      index = user ? usernames.index(user.username) : nil
-      if index != nil
-        # update this user with potentially new keys and secrets
-        user.key = keys[index]
-        user.secret = secrets[index]
-        user.save!
-
-        # done processing this account
-        usernames.delete_at(index)
-        keys.delete_at(index)
-        secrets.delete_at(index)
-      else
-        # the user is deleting this subscription
-        subscriptions_to_delete << subscription
+    params.each do |name, value|
+      if name =~ /^username(\d+)$/
+        usernames[$1.to_i] = value
+      elsif name =~ /^key(\d+)$/
+        keys[$1.to_i] = value
+      elsif name =~ /^secret(\d+)$/
+        secrets[$1.to_i] = value
       end
     end
 
-    # need to delete the unused subscriptions
-    logger.info "Deleting #{subscriptions_to_delete.length} stale subscriptions"
-    subscriptions_to_delete.each { |s| self.delete_subscription(s) }
-
-    # need to create new subscriptions for the remaining users
-    logger.info "Adding #{usernames.length} new subscriptions"
-    for i in (0..usernames.length - 1)
-      self.register_account(iphone, usernames[i], keys[i], secrets[i])
+    if (usernames.length != keys.length || usernames.length != secrets.length)
+      raise Exception.new("Received #{usernames.length} usernames, " +
+        "#{keys.length} keys, and #{secrets.length} for device token: " +
+        "#{token}. Usernames, keys, and secrets must match. Aborting " +
+        "registration.")
     end
 
-    subscriptions = DeviceSubscription.find_all_by_iphone_id(iphone.id)
-    if (subscriptions.length == 0)
-      iphone.delete  # the user does not have any accounts
-    end
+    [ usernames, keys, secrets ]
   end
 
   def delete_subscription(subscription)
@@ -156,16 +112,22 @@ class DeviceController < ApplicationController
     twitter_user =
       self.create_twitter_user(username, key, secret)
     subscription = self.create_subscription(twitter_user.id, iphone.id)
-  end
 
-  def find_or_create_iphone(token)
-    iphone = Iphone.find(:first, :conditions => [ 'device_token = ?', token ])
-    if iphone == nil
-      iphone = Iphone.new(:device_token => token)
-      result = iphone.save!
+    begin
+      # connects to twitter; save the user's last dm and mention
+      suscriber_status =
+        SubscriberStatus.initialize_from_twitter(twitter_user, subscription)
+    rescue
+      logger.warn "Failed to check current status for user: #{twitter_user}: " +
+        "#{$!}"
+      # just save zeros; it'll get filled in the next time the polling job runs
+      SubscriberStatus.create(
+        :last_direct_message => '0',
+        :last_mention => '0',
+        :device_subscription_id => subscription.id)
     end
 
-    iphone
+    subscription
   end
 
   def create_twitter_user(username, key, secret)
@@ -182,11 +144,4 @@ class DeviceController < ApplicationController
     subscription.save!
     subscription
   end
-
-  #def private_key_passwd
-    #f = File.new(@@encryption_secret_file)
-    #pass = f.read.chomp
-    #f.close
-    #pass
-  #end
 end
