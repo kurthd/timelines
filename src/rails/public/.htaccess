@@ -1,3 +1,0 @@
-RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
-RewriteCond %{SCRIPT_FILENAME} !maintenance.html
-RewriteCond ^.*$ /system/maintenance.html [L]

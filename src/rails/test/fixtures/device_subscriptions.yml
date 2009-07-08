@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-johns_iphone_debay:
-  iphone: johns_iphone
-  twitter_user: debay
-
-johns_iphone_hob:
-  iphone: johns_iphone
-  twitter_user: highorderbit
