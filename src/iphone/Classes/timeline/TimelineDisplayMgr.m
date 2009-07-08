@@ -771,8 +771,8 @@
 {
     NSLog(@"Timeline display manager: replying to tweet with direct message");
     NSString * reTweetMessage =
-        [NSString stringWithFormat:@"RT @%@ %@", selectedTweet.user.username,
-        selectedTweet.text];
+        [NSString stringWithFormat:@"%@ (via %@)", selectedTweet.text,
+        selectedTweet.user.username];
     [composeTweetDisplayMgr composeTweetWithText:reTweetMessage];
 }
 
