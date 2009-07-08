@@ -14,7 +14,7 @@ role :db, "#{user}@#{application}"
 #
 
 default_run_options[:pty] = true  # required to get the password prompt from git
-set :repository, "git@github.com:highorderbit/twitch.git"
+set :repository, "git@github.com:highorderbit/twitbit-server.git"
 set :scm, "git"
 set :scm_username, "jad"
 set :scm_passphrase, proc{Capistrano::CLI.password_prompt('git password:')}
@@ -49,9 +49,9 @@ set :deploy_to, "/home/#{user}/#{application}"
 set :use_sudo, false
 set :run_method, :run
 
-namespace(:deploy) do
+namespace :deploy do
   desc "Restart Passenger on a shared host"
-  task :restart do
-    FileUtils.touch("#{deploy_to}/current/src/rails/tmp/restart.txt")
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    run "touch #{current_path}/tmp/restart.txt"
   end
 end
