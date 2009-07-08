@@ -254,10 +254,42 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
         header, content, footer];
 }
 
+// This implementation is a bit of a hack to get around a RegexKitLite
+// limitation: there's a limit to how many strings can be replaced
+// If not for the bug, the implementation would be:
+//     return [body stringByReplacingOccurrencesOfRegex:usernameRegex
+//         withString:@"<a href=\"#$1\">$1</a>"];
 + (NSString *)bodyWithUserLinks:(NSString *)body
 {
-    return [body stringByReplacingOccurrencesOfRegex:usernameRegex
-        withString:@"<a href=\"#$1\">$1</a>"];
+    NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
+
+    NSMutableDictionary * uniqueMentions = [NSMutableDictionary dictionary];
+    NSRange currentRange = [body rangeOfRegex:usernameRegex];
+    while (!NSEqualRanges(currentRange, notFoundRange)) {
+        NSString * mention = [body substringWithRange:currentRange];
+        [uniqueMentions setObject:mention forKey:mention];
+
+        NSUInteger startingPosition =
+            currentRange.location + currentRange.length;
+        if (startingPosition < [body length]) {
+            NSRange remainingRange =
+                NSMakeRange(startingPosition, [body length] - startingPosition);
+            currentRange =
+                [body rangeOfRegex:usernameRegex inRange:remainingRange];
+        } else
+            currentRange = notFoundRange;
+    }
+
+    NSString * bodyWithUserLinks = [[body copy] autorelease];
+    for (NSString * mention in [uniqueMentions allKeys]) {
+        NSString * mentionRegex =
+            [NSString stringWithFormat:@"\\B(%@)\\b", mention];
+        bodyWithUserLinks =
+            [bodyWithUserLinks stringByReplacingOccurrencesOfRegex:mentionRegex
+            withString:@"<a href=\"#$1\">$1</a>"];
+    }
+
+    return bodyWithUserLinks;
 }
 
 @end

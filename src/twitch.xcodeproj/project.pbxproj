@@ -186,6 +186,13 @@
 		05EF41860FFADF95007B59F1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B23A310FEEB29D00A6A2E6 /* CoreData.framework */; };
 		05EF41870FFADF95007B59F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0524C4510FF2AEEE00A6099B /* Security.framework */; };
 		05EF41880FFADF95007B59F1 /* libYAJLIPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */; };
+		9145EF5B1005073200C2E485 /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
+		9145EF5C1005073F00C2E485 /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
+		9145EF5D1005074A00C2E485 /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
+		9145EF5E1005075000C2E485 /* DeleteTweetDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247A60FFE9ED300538F29 /* DeleteTweetDisabled.png */; };
+		9145EF5F1005075800C2E485 /* DeleteTweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247720FFE81D300538F29 /* DeleteTweet.png */; };
+		9145EF601005076000C2E485 /* DropShadowReversed.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */; };
+		9145EF611005076700C2E485 /* TweetDetailsFooterGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247640FFE7EF400538F29 /* TweetDetailsFooterGradient.png */; };
 		91BDAFF61004FBC000761694 /* TweetInfo+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */; };
 /* End PBXBuildFile section */
 
@@ -1309,6 +1316,13 @@
 				05EF40F90FFADF95007B59F1 /* SearchBarView.xib in Resources */,
 				05EF40FA0FFADF95007B59F1 /* OauthLogInView.xib in Resources */,
 				05EF40FB0FFADF95007B59F1 /* ExplainOauthView.xib in Resources */,
+				9145EF5B1005073200C2E485 /* Re-tweet.png in Resources */,
+				9145EF5C1005073F00C2E485 /* Re-tweetSelected.png in Resources */,
+				9145EF5D1005074A00C2E485 /* DeleteTweetSelected.png in Resources */,
+				9145EF5E1005075000C2E485 /* DeleteTweetDisabled.png in Resources */,
+				9145EF5F1005075800C2E485 /* DeleteTweet.png in Resources */,
+				9145EF601005076000C2E485 /* DropShadowReversed.png in Resources */,
+				9145EF611005076700C2E485 /* TweetDetailsFooterGradient.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
