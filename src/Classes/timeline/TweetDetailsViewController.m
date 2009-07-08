@@ -36,6 +36,9 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
     [locationButton release];
     [avatar release];
     [deleteTweetButton release];
+    [reTweetButton release];
+    [footerView release];
+    [footerGradient release];
     [super dealloc];
 }
 
@@ -50,7 +53,14 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
         [self setupWebView];
     }
     
-    deleteTweetButton.enabled = deleteTweetButtonEnabled;
+    footerView.hidden = usersTweet;
+    footerGradient.hidden = usersTweet;
+    CGRect webViewFrame = webView.frame;
+    if (usersTweet)
+        webViewFrame.size.height = 292;
+    else
+        webViewFrame.size.height = 238;
+    webView.frame = webViewFrame;
 }
 
 - (void)showWebView
@@ -90,9 +100,9 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
             forState:UIControlStateNormal];
 }
 
-- (void)setDeleteButtonEnabled:(BOOL)enabled
+- (void)setUsersTweet:(BOOL)usersTweetValue
 {
-    deleteTweetButtonEnabled = enabled;
+    usersTweet = usersTweetValue;
 }
 
 - (void)setupWebView
@@ -141,6 +151,11 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 - (IBAction)showUserTweets:(id)sender
 {
     [delegate showTweetsForUser:selectedTweet.user.username];
+}
+
+- (IBAction)sendDirectMessage:(id)sender
+{
+    [delegate sendDirectMessageToUser:selectedTweet.user.username];
 }
 
 - (IBAction)toggleFavoriteValue:(id)sender

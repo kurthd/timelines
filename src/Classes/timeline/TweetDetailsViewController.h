@@ -20,20 +20,23 @@
     IBOutlet UIButton * locationButton;
     IBOutlet RoundedImage * avatar;
     IBOutlet UIButton * deleteTweetButton;
+    IBOutlet UIButton * reTweetButton;
+    IBOutlet UIView * footerView;
+    IBOutlet UIImageView * footerGradient;
 
     TweetInfo * selectedTweet;
     BOOL favorite;
 
     // Required because setting directly on deleteTweetButton fails if called
     // before it's wired from loading the nib
-    BOOL deleteTweetButtonEnabled;
+    BOOL usersTweet;
 }
 
 @property (nonatomic, assign) NSObject<TweetDetailsViewDelegate> * delegate;
 @property (nonatomic, retain) TweetInfo * selectedTweet;
 
 - (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar;
-- (void)setDeleteButtonEnabled:(BOOL)enabled;
+- (void)setUsersTweet:(BOOL)usersTweet;
 
 - (IBAction)showLocationOnMap:(id)sender;
 - (IBAction)showUserTweets:(id)sender;
@@ -41,5 +44,6 @@
 
 - (IBAction)reTweet:(id)sender;
 - (IBAction)deleteTweet:(id)sender;
+- (IBAction)sendDirectMessage:(id)sender;
 
 @end

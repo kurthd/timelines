@@ -331,7 +331,7 @@
     BOOL tweetByUser = [tweet.user.username isEqual:credentials.username];
     self.tweetDetailsController.navigationItem.rightBarButtonItem.enabled =
         !tweetByUser;
-    [self.tweetDetailsController setDeleteButtonEnabled:tweetByUser];
+    [self.tweetDetailsController setUsersTweet:tweetByUser];
     if (tweet.recipient) {
         self.tweetDetailsController.navigationItem.rightBarButtonItem.action =
             @selector(replyToTweetWithMessage);

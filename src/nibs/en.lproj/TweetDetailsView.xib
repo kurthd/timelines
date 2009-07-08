@@ -236,10 +236,10 @@
 									<string key="NSResourceName">TweetDetailsFooterGradient.png</string>
 								</object>
 							</object>
-							<object class="IBUIButton" id="190421346">
+							<object class="IBUIButton" id="885572781">
 								<reference key="NSNextResponder" ref="715826418"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{7, 9}, {149, 37}}</string>
+								<int key="NSvFlags">-2147483356</int>
+								<string key="NSFrame">{{164, 9}, {149, 37}}</string>
 								<reference key="NSSuperview" ref="715826418"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -250,34 +250,6 @@
 									<double key="NSSize">1.600000e+01</double>
 									<int key="NSfFlags">16</int>
 								</object>
-								<int key="IBUIButtonType">1</int>
-								<string key="IBUINormalTitle">  Re-tweet</string>
-								<reference key="IBUIHighlightedTitleColor" ref="98511986"/>
-								<object class="NSColor" key="IBUINormalTitleColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4xOTYwNzg0MyAwLjMwOTgwMzkzIDAuNTIxNTY4NjYAA</bytes>
-								</object>
-								<reference key="IBUINormalTitleShadowColor" ref="593042989"/>
-								<object class="NSCustomResource" key="IBUIHighlightedImage" id="811665015">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">Re-tweetSelected.png</string>
-								</object>
-								<reference key="IBUISelectedImage" ref="811665015"/>
-								<object class="NSCustomResource" key="IBUINormalImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">Re-tweet.png</string>
-								</object>
-							</object>
-							<object class="IBUIButton" id="885572781">
-								<reference key="NSNextResponder" ref="715826418"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{164, 9}, {149, 37}}</string>
-								<reference key="NSSuperview" ref="715826418"/>
-								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
-								<int key="IBUIContentHorizontalAlignment">0</int>
-								<int key="IBUIContentVerticalAlignment">0</int>
-								<reference key="IBUIFont" ref="619926447"/>
 								<int key="IBUIButtonType">1</int>
 								<string key="IBUINormalTitle">  Delete</string>
 								<reference key="IBUIHighlightedTitleColor" ref="98511986"/>
@@ -301,6 +273,75 @@
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">DeleteTweet.png</string>
+								</object>
+							</object>
+							<object class="IBUIButton" id="190421346">
+								<reference key="NSNextResponder" ref="715826418"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{7, 9}, {149, 37}}</string>
+								<reference key="NSSuperview" ref="715826418"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+								<int key="IBUIContentHorizontalAlignment">0</int>
+								<int key="IBUIContentVerticalAlignment">0</int>
+								<reference key="IBUIFont" ref="619926447"/>
+								<int key="IBUIButtonType">1</int>
+								<string key="IBUINormalTitle">  Retweet</string>
+								<reference key="IBUIHighlightedTitleColor" ref="98511986"/>
+								<object class="NSColor" key="IBUIDisabledTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC40MDAwMDAwMSAwLjQwMDAwMDAxIDAuNDAwMDAwMDEAA</bytes>
+								</object>
+								<object class="NSColor" key="IBUINormalTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC4xOTYwNzg0MyAwLjMwOTgwMzkzIDAuNTIxNTY4NjYAA</bytes>
+								</object>
+								<reference key="IBUINormalTitleShadowColor" ref="593042989"/>
+								<object class="NSCustomResource" key="IBUIHighlightedImage" id="811665015">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">Re-tweetSelected.png</string>
+								</object>
+								<object class="NSCustomResource" key="IBUIDisabledImage" id="947195465">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">Re-tweetDisabled.png</string>
+								</object>
+								<reference key="IBUISelectedImage" ref="811665015"/>
+								<object class="NSCustomResource" key="IBUINormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">Re-tweet.png</string>
+								</object>
+							</object>
+							<object class="IBUIButton" id="920129719">
+								<reference key="NSNextResponder" ref="715826418"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{164, 9}, {150, 37}}</string>
+								<reference key="NSSuperview" ref="715826418"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+								<int key="IBUIContentHorizontalAlignment">0</int>
+								<int key="IBUIContentVerticalAlignment">0</int>
+								<reference key="IBUIFont" ref="619926447"/>
+								<int key="IBUIButtonType">1</int>
+								<string key="IBUINormalTitle">  Direct Reply</string>
+								<reference key="IBUIHighlightedTitleColor" ref="98511986"/>
+								<object class="NSColor" key="IBUIDisabledTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC40MDAwMDAwMSAwLjQwMDAwMDAxIDAuNDAwMDAwMDEAA</bytes>
+								</object>
+								<object class="NSColor" key="IBUINormalTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC4xOTYwNzg0MyAwLjMwOTgwMzkzIDAuNTIxNTY4NjYAA</bytes>
+								</object>
+								<reference key="IBUINormalTitleShadowColor" ref="593042989"/>
+								<object class="NSCustomResource" key="IBUIHighlightedImage" id="298367639">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">Envelope.png</string>
+								</object>
+								<reference key="IBUIDisabledImage" ref="947195465"/>
+								<reference key="IBUISelectedImage" ref="298367639"/>
+								<object class="NSCustomResource" key="IBUINormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">BlueEnvelope.png</string>
 								</object>
 							</object>
 						</object>
@@ -450,6 +491,39 @@
 					</object>
 					<int key="connectionID">42</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">reTweetButton</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="190421346"/>
+					</object>
+					<int key="connectionID">43</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">footerView</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="715826418"/>
+					</object>
+					<int key="connectionID">44</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">footerGradient</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="881816510"/>
+					</object>
+					<int key="connectionID">45</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">sendDirectMessage:</string>
+						<reference key="source" ref="920129719"/>
+						<reference key="destination" ref="841351856"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">47</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -544,9 +618,10 @@
 						<reference key="object" ref="715826418"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="885572781"/>
 							<reference ref="383603915"/>
 							<reference ref="190421346"/>
+							<reference ref="920129719"/>
+							<reference ref="885572781"/>
 						</object>
 						<reference key="parent" ref="111838698"/>
 					</object>
@@ -569,6 +644,11 @@
 						<int key="objectID">39</int>
 						<reference key="object" ref="881816510"/>
 						<reference key="parent" ref="111838698"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">46</int>
+						<reference key="object" ref="920129719"/>
+						<reference key="parent" ref="715826418"/>
 					</object>
 				</object>
 			</object>
@@ -595,6 +675,7 @@
 					<string>38.IBPluginDependency</string>
 					<string>39.IBPluginDependency</string>
 					<string>4.IBPluginDependency</string>
+					<string>46.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -606,7 +687,8 @@
 					<string>RoundedImage</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{424, 271}, {320, 460}}</string>
+					<string>{{503, 270}, {320, 460}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -639,7 +721,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">42</int>
+			<int key="maxID">47</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -672,12 +754,14 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>deleteTweet:</string>
 							<string>reTweet:</string>
+							<string>sendDirectMessage:</string>
 							<string>showLocationOnMap:</string>
 							<string>showUserTweets:</string>
 							<string>toggleFavoriteValue:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -692,8 +776,11 @@
 							<string>avatar</string>
 							<string>deleteTweetButton</string>
 							<string>favoriteButton</string>
+							<string>footerGradient</string>
+							<string>footerView</string>
 							<string>locationButton</string>
 							<string>nameLabel</string>
+							<string>reTweetButton</string>
 							<string>userTweetsButton</string>
 							<string>webView</string>
 						</object>
@@ -702,8 +789,11 @@
 							<string>RoundedImage</string>
 							<string>UIButton</string>
 							<string>UIButton</string>
+							<string>UIImageView</string>
+							<string>UIView</string>
 							<string>UIButton</string>
 							<string>UILabel</string>
+							<string>UIButton</string>
 							<string>UIButton</string>
 							<string>UIWebView</string>
 						</object>

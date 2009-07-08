@@ -15,5 +15,6 @@
 - (void)loadNewTweetWithId:(NSString *)tweetId username:(NSString *)username;
 - (void)setCurrentTweetDetailsUser:(NSString *)username;
 - (void)reTweetSelected;
+- (void)sendDirectMessageToUser:(NSString *)username;
 
 @end

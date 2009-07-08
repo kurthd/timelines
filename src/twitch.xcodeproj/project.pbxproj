@@ -193,6 +193,8 @@
 		9145EF5F1005075800C2E485 /* DeleteTweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247720FFE81D300538F29 /* DeleteTweet.png */; };
 		9145EF601005076000C2E485 /* DropShadowReversed.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */; };
 		9145EF611005076700C2E485 /* TweetDetailsFooterGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247640FFE7EF400538F29 /* TweetDetailsFooterGradient.png */; };
+		9145EFCA1005276100C2E485 /* Re-tweetDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 9145EFC91005276100C2E485 /* Re-tweetDisabled.png */; };
+		9145EFFB10054D9400C2E485 /* BlueEnvelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 9145EFFA10054D9400C2E485 /* BlueEnvelope.png */; };
 		91BDAFF61004FBC000761694 /* TweetInfo+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */; };
 /* End PBXBuildFile section */
 
@@ -459,6 +461,8 @@
 		9115A92D0FF06AA100D6A769 /* TweetInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetInfo.m; path = timeline/TweetInfo.m; sourceTree = "<group>"; };
 		9115A97F0FF0874700D6A769 /* MentionsTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionsTimelineDataSource.h; path = timeline/MentionsTimelineDataSource.h; sourceTree = "<group>"; };
 		9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionsTimelineDataSource.m; path = timeline/MentionsTimelineDataSource.m; sourceTree = "<group>"; };
+		9145EFC91005276100C2E485 /* Re-tweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweetDisabled.png"; path = "images/Re-tweetDisabled.png"; sourceTree = "<group>"; };
+		9145EFFA10054D9400C2E485 /* BlueEnvelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueEnvelope.png; path = images/BlueEnvelope.png; sourceTree = "<group>"; };
 		916BD7990FEEADD7007143A9 /* NetworkAwareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkAwareViewController.h; path = shared/NetworkAwareViewController.h; sourceTree = "<group>"; };
 		916BD79A0FEEADD7007143A9 /* NetworkAwareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkAwareViewController.m; path = shared/NetworkAwareViewController.m; sourceTree = "<group>"; };
 		916BD79B0FEEADD7007143A9 /* NetworkAwareViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkAwareViewControllerDelegate.h; path = shared/NetworkAwareViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -1134,6 +1138,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9145EFFA10054D9400C2E485 /* BlueEnvelope.png */,
+				9145EFC91005276100C2E485 /* Re-tweetDisabled.png */,
 				91A247A60FFE9ED300538F29 /* DeleteTweetDisabled.png */,
 				91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */,
 				91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */,
@@ -1323,6 +1329,8 @@
 				9145EF5F1005075800C2E485 /* DeleteTweet.png in Resources */,
 				9145EF601005076000C2E485 /* DropShadowReversed.png in Resources */,
 				9145EF611005076700C2E485 /* TweetDetailsFooterGradient.png in Resources */,
+				9145EFCA1005276100C2E485 /* Re-tweetDisabled.png in Resources */,
+				9145EFFB10054D9400C2E485 /* BlueEnvelope.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
