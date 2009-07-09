@@ -205,6 +205,8 @@ static UIImage * defaultAvatar;
 
     NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
     [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+    
+    [self.tableView reloadData];
 }
 
 - (void)setUser:(User *)aUser
