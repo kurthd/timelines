@@ -47,9 +47,22 @@ static UIImage * backgroundImage;
         CGRect tweetTextLabelFrame = tweetTextLabel.frame;
         tweetTextLabelFrame.size.height = tweetTextHeight;
         tweetTextLabel.frame = tweetTextLabelFrame;
-        
+
         needsLayout = NO;
     }
+}
+
+- (void)setAvatarView:(RoundedImage *)avatarView
+{
+    CGRect avatarFrame = avatar.frame;
+    CGFloat avatarRadius = avatar.radius;
+
+    [avatarView retain];
+    [avatar release];
+    avatar = avatarView;
+
+    avatar.frame = avatarFrame;
+    avatar.radius = avatarRadius;
 }
 
 - (void)setAvatarImage:(UIImage *)image

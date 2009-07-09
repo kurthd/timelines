@@ -23,6 +23,7 @@ typedef enum {
     BOOL needsLayout;
 }
 
+- (void)setAvatarView:(RoundedImage *)avatarView;
 - (void)setAvatarImage:(UIImage *)image;
 - (void)setName:(NSString *)name;
 - (void)setDate:(NSDate *)date;

@@ -261,7 +261,7 @@ static UIImage * defaultAvatar;
         [NSString stringWithFormat:showingMultPagesFormatString, page] :
         showingSinglePageFormatString;
 
-    // create cells for all tweets
+    // ensure cells created for all tweets
     for (TweetInfo * tweet in someTweets)
         [tweet cell];
 

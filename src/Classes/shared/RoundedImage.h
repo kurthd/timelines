@@ -12,6 +12,8 @@
 
 @property (nonatomic, assign) float radius;
 
+- (id)initWithRadius:(float)aRadius;
+
 - (void)setImage:(UIImage *)image;
 - (UIImage *)image;
 

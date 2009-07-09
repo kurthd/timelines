@@ -19,10 +19,15 @@
     radius = 6.0;
 }
 
-- (id)initWithImageView:(UIImageView *)anImageView radius:(float)aRadius
+- (id)init
+{
+    return [self initWithRadius:6.0];
+}
+
+- (id)initWithRadius:(float)aRadius
 {
     if (self = [super init]) {
-        imageView = [anImageView retain];
+        imageView = [[UIImageView alloc] init];
         self.radius = aRadius;
     }
 

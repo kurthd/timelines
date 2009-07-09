@@ -3,9 +3,11 @@
 //
 
 #import "TweetInfo+UIAdditions.h"
+#import "User+UIAdditions.h"
 
 @interface TweetInfo (Private)
 
+- (TimelineTableViewCell *)createCell;
 + (NSMutableDictionary *)cellCache;
 
 @end
@@ -19,23 +21,43 @@ static NSMutableDictionary * cells;
     TimelineTableViewCell * timelineCell =
         [[[self class] cellCache] objectForKey:self.identifier];
 
+    if (!timelineCell)
+        timelineCell = [self createCell];
+
+    return timelineCell;
+}
+
+- (TimelineTableViewCell *)cellWithAvatar
+{
+    TimelineTableViewCell * timelineCell =
+        [[[self class] cellCache] objectForKey:self.identifier];
+
     if (!timelineCell) {
-        NSArray * nib =
-            [[NSBundle mainBundle] loadNibNamed:@"TimelineTableViewCell"
-            owner:self options:nil];
-
-        timelineCell = [nib objectAtIndex:0];
-
-        NSString * displayName =
-            self.user.name ? self.user.name : self.user.username;
-        [timelineCell setName:displayName];
-        [timelineCell setDate:self.timestamp];
-        [timelineCell setTweetText:self.text];
-        
-        [[[self class] cellCache]
-            setObject:timelineCell forKey:self.identifier];
+        timelineCell = [self createCell];
+        RoundedImage * avatarView = [self.user avatar];
+        [timelineCell setAvatarView:avatarView];
     }
 
+    return timelineCell;
+}
+
+- (TimelineTableViewCell *)createCell
+{
+    NSArray * nib =
+        [[NSBundle mainBundle] loadNibNamed:@"TimelineTableViewCell"
+        owner:self options:nil];
+
+    TimelineTableViewCell * timelineCell = [nib objectAtIndex:0];
+
+    NSString * displayName =
+        self.user.name ? self.user.name : self.user.username;
+    [timelineCell setName:displayName];
+    [timelineCell setDate:self.timestamp];
+    [timelineCell setTweetText:self.text];
+
+    [[[self class] cellCache]
+        setObject:timelineCell forKey:self.identifier];
+    
     return timelineCell;
 }
 
