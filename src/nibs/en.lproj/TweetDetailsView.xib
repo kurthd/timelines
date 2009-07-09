@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="35"/>
+			<integer value="2"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -92,7 +92,7 @@
 					<object class="IBUILabel" id="653692468">
 						<reference key="NSNextResponder" ref="111838698"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{73, 5}, {201, 23}}</string>
+						<string key="NSFrame">{{73, 4}, {201, 23}}</string>
 						<reference key="NSSuperview" ref="111838698"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -124,9 +124,9 @@
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<object class="NSFont" key="IBUIFont" id="124278737">
+						<object class="NSFont" key="IBUIFont" id="619926447">
 							<string key="NSName">Helvetica-Bold</string>
-							<double key="NSSize">1.500000e+01</double>
+							<double key="NSSize">1.600000e+01</double>
 							<int key="NSfFlags">16</int>
 						</object>
 						<string key="IBUITitleShadowOffset">{0, 1}</string>
@@ -172,12 +172,12 @@
 					<object class="IBUIButton" id="156147488">
 						<reference key="NSNextResponder" ref="111838698"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{73, 27}, {201, 23}}</string>
+						<string key="NSFrame">{{73, 26}, {201, 23}}</string>
 						<reference key="NSSuperview" ref="111838698"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<reference key="IBUIFont" ref="124278737"/>
+						<reference key="IBUIFont" ref="619926447"/>
 						<string key="IBUITitleShadowOffset">{0, 1}</string>
 						<string key="IBUINormalTitle">@kurthd</string>
 						<object class="NSColor" key="IBUIHighlightedTitleColor">
@@ -199,7 +199,11 @@
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<reference key="IBUIFont" ref="124278737"/>
+						<object class="NSFont" key="IBUIFont">
+							<string key="NSName">Helvetica-Bold</string>
+							<double key="NSSize">1.500000e+01</double>
+							<int key="NSfFlags">16</int>
+						</object>
 						<object class="NSColor" key="IBUIHighlightedTitleColor" id="98511986">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
@@ -245,11 +249,7 @@
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<object class="NSFont" key="IBUIFont" id="619926447">
-									<string key="NSName">Helvetica-Bold</string>
-									<double key="NSSize">1.600000e+01</double>
-									<int key="NSfFlags">16</int>
-								</object>
+								<reference key="IBUIFont" ref="619926447"/>
 								<int key="IBUIButtonType">1</int>
 								<string key="IBUINormalTitle">  Delete</string>
 								<reference key="IBUIHighlightedTitleColor" ref="98511986"/>
@@ -687,7 +687,7 @@
 					<string>RoundedImage</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{503, 270}, {320, 460}}</string>
+					<string>{{501, 207}, {320, 460}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
