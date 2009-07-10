@@ -41,6 +41,8 @@
     [lastTweetDetailsWrapperController release];
     [lastTweetDetailsController release];
     [tweetDetailsController release];
+    [browserController release];
+    [photoBrowser release];
 
     [service release];
 
@@ -532,6 +534,18 @@
     [self.browserController setUrl:webpageUrl];
 }
 
+- (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto
+{
+    NSLog(@"Timeline display manager: showing photo: %@", remotePhoto);
+    // [[UIApplication sharedApplication]
+    //     setStatusBarStyle:UIStatusBarStyleBlackOpaque
+    //     animated:YES];
+    // 
+    // [self.wrapperController presentModalViewController:self.photoBrowser
+    //     animated:YES];
+    // [self.photoBrowser addRemotePhoto:remotePhoto];
+}
+
 - (void)displayFollowingForUser:(NSString *)username
 {
     NSLog(@"Timeline display manager: displaying 'following' list for %@",
@@ -882,6 +896,17 @@
     }
 
     return browserController;
+}
+
+- (PhotoBrowser *)photoBrowser
+{
+    if (!photoBrowser) {
+        photoBrowser =
+            [[PhotoBrowser alloc]
+            initWithNibName:@"PhotoBrowserView" bundle:nil];
+    }
+
+    return photoBrowser;
 }
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService

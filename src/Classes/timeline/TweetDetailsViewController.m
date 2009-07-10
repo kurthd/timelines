@@ -18,10 +18,12 @@
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer
     header:(NSString *)header;
 + (NSString *)bodyWithUserLinks:(NSString *)body;
++ (UIImage *)defaultAvatar;
 
 @end
 
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
+static UIImage * defaultAvatar;
 
 @implementation TweetDetailsViewController
 
@@ -83,7 +85,7 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
     if (!avatarImage) {
         NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
         [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
-        [avatar setImage:[UIImage imageNamed:@"DefaultAvatar.png"]];
+        [avatar setImage:[[self class] defaultAvatar]];
     } else
         [avatar setImage:avatarImage];
 
@@ -170,6 +172,19 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
     else
         [favoriteButton setImage:[UIImage imageNamed:@"NotFavorite.png"]
             forState:UIControlStateNormal];
+}
+
+- (IBAction)showFullProfileImage:(id)sender
+{
+    NSLog(@"Profile image selected");
+    UIImage * avatarImage =
+        avatar.image != [[self class] defaultAvatar] ? avatar.image : nil;
+    User * selectedUser = selectedTweet.user;
+    RemotePhoto * remotePhoto =
+        [[RemotePhoto alloc]
+        initWithImage:avatarImage url:selectedUser.profileImageUrl
+        name:selectedUser.name];
+    [delegate showPhotoInBrowser:remotePhoto];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -305,6 +320,14 @@ static NSString * usernameRegex = @"\\B(@[\\w_]+)";
     }
 
     return bodyWithUserLinks;
+}
+
++ (UIImage *)defaultAvatar
+{
+    if (!defaultAvatar)
+        defaultAvatar = [UIImage imageNamed:@"DefaultAvatar.png"];
+
+    return defaultAvatar;
 }
 
 @end

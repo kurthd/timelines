@@ -196,6 +196,9 @@
 		9145EFCA1005276100C2E485 /* Re-tweetDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 9145EFC91005276100C2E485 /* Re-tweetDisabled.png */; };
 		9145EFFB10054D9400C2E485 /* BlueEnvelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 9145EFFA10054D9400C2E485 /* BlueEnvelope.png */; };
 		9145F024100573AF00C2E485 /* User+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145F023100573AF00C2E485 /* User+UIAdditions.m */; };
+		91BD1138100672EF0082D209 /* PhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BD1137100672EF0082D209 /* PhotoBrowser.m */; };
+		91BD113B1006736F0082D209 /* PhotoBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BD11391006736F0082D209 /* PhotoBrowserView.xib */; };
+		91BD1141100676480082D209 /* RemotePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BD1140100676480082D209 /* RemotePhoto.m */; };
 		91BDAFF61004FBC000761694 /* TweetInfo+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */; };
 /* End PBXBuildFile section */
 
@@ -541,6 +544,11 @@
 		91A247A60FFE9ED300538F29 /* DeleteTweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweetDisabled.png; path = images/DeleteTweetDisabled.png; sourceTree = "<group>"; };
 		91B28D110FFC60A10080023B /* TweetInfo+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TweetInfo+UIAdditions.h"; path = "timeline/TweetInfo+UIAdditions.h"; sourceTree = "<group>"; };
 		91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TweetInfo+UIAdditions.m"; path = "timeline/TweetInfo+UIAdditions.m"; sourceTree = "<group>"; };
+		91BD1136100672EF0082D209 /* PhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBrowser.h; path = shared/PhotoBrowser.h; sourceTree = "<group>"; };
+		91BD1137100672EF0082D209 /* PhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBrowser.m; path = shared/PhotoBrowser.m; sourceTree = "<group>"; };
+		91BD113A1006736F0082D209 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/PhotoBrowserView.xib; sourceTree = "<group>"; };
+		91BD113F100676480082D209 /* RemotePhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemotePhoto.h; path = shared/RemotePhoto.h; sourceTree = "<group>"; };
+		91BD1140100676480082D209 /* RemotePhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RemotePhoto.m; path = shared/RemotePhoto.m; sourceTree = "<group>"; };
 		91CD821A0FF5403F004D04D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TwitchBrowserView.xib; sourceTree = "<group>"; };
 		91CD821C0FF54066004D04D5 /* TwitchBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchBrowserViewController.h; path = timeline/TwitchBrowserViewController.h; sourceTree = "<group>"; };
 		91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchBrowserViewController.m; path = timeline/TwitchBrowserViewController.m; sourceTree = "<group>"; };
@@ -841,6 +849,10 @@
 				05F45CF20FF056DF00EBAFC7 /* AsynchronousNetworkFetcherDelegate.h */,
 				0524C1F00FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.h */,
 				0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */,
+				91BD1136100672EF0082D209 /* PhotoBrowser.h */,
+				91BD1137100672EF0082D209 /* PhotoBrowser.m */,
+				91BD113F100676480082D209 /* RemotePhoto.h */,
+				91BD1140100676480082D209 /* RemotePhoto.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -864,6 +876,7 @@
 				05C35E770FF5474800F91448 /* SearchBarView.xib */,
 				057620320FF736D600392ADC /* OauthLogInView.xib */,
 				05C7051B0FF88C4100936E4C /* ExplainOauthView.xib */,
+				91BD11391006736F0082D209 /* PhotoBrowserView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -1336,6 +1349,7 @@
 				9145EF611005076700C2E485 /* TweetDetailsFooterGradient.png in Resources */,
 				9145EFCA1005276100C2E485 /* Re-tweetDisabled.png in Resources */,
 				9145EFFB10054D9400C2E485 /* BlueEnvelope.png in Resources */,
+				91BD113B1006736F0082D209 /* PhotoBrowserView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1480,6 +1494,8 @@
 				05EF41800FFADF95007B59F1 /* ExplainOauthViewController.m in Sources */,
 				91BDAFF61004FBC000761694 /* TweetInfo+UIAdditions.m in Sources */,
 				9145F024100573AF00C2E485 /* User+UIAdditions.m in Sources */,
+				91BD1138100672EF0082D209 /* PhotoBrowser.m in Sources */,
+				91BD1141100676480082D209 /* RemotePhoto.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1613,6 +1629,14 @@
 				918E8A5E0FF1C5560042BBEE /* en */,
 			);
 			name = UserInfoLabelCell.xib;
+			sourceTree = "<group>";
+		};
+		91BD11391006736F0082D209 /* PhotoBrowserView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91BD113A1006736F0082D209 /* en */,
+			);
+			name = PhotoBrowserView.xib;
 			sourceTree = "<group>";
 		};
 		91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */ = {

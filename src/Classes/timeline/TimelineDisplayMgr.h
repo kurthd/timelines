@@ -18,6 +18,7 @@
 #import "UserListTableViewController.h"
 #import "ComposeTweetDisplayMgr.h"
 #import "TwitchBrowserViewController.h"
+#import "PhotoBrowser.h"
 
 @class TimelineDisplayMgrFactory;
 
@@ -34,6 +35,7 @@
     TweetDetailsViewController * tweetDetailsController;
     UserInfoViewController * userInfoController;
     TwitchBrowserViewController * browserController;
+    PhotoBrowser * photoBrowser;
 
     NSObject<TimelineDataSource> * service;
 
@@ -88,6 +90,7 @@
 @property (readonly) TweetDetailsViewController * tweetDetailsController;
 @property (readonly) UserInfoViewController * userInfoController;
 @property (readonly) TwitchBrowserViewController * browserController;
+@property (readonly) PhotoBrowser * photoBrowser;
 
 @property (nonatomic, retain) TweetInfo * selectedTweet;
 @property (nonatomic, retain) NSString * currentUsername;

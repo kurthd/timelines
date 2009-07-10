@@ -45,5 +45,6 @@
 - (IBAction)reTweet:(id)sender;
 - (IBAction)deleteTweet:(id)sender;
 - (IBAction)sendDirectMessage:(id)sender;
+- (IBAction)showFullProfileImage:(id)sender;
 
 @end

@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "User.h"
+#import "RemotePhoto.h"
 
 @protocol TweetDetailsViewDelegate
 
@@ -16,5 +17,6 @@
 - (void)setCurrentTweetDetailsUser:(NSString *)username;
 - (void)reTweetSelected;
 - (void)sendDirectMessageToUser:(NSString *)username;
+- (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto;
 
 @end
