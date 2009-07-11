@@ -53,7 +53,7 @@ end
 
 task :build_tags do |t|
   src_dir =
-    File.expand_path(File.dirname(__FILE__) + "/src/iphone/Classes")
+    File.expand_path(File.dirname(__FILE__) + "/src/Classes")
   tags_file = "#{src_dir}/tags"
 
   print "Rebuilding tags in '#{tags_file}'..."
