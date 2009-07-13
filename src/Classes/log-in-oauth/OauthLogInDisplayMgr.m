@@ -119,6 +119,8 @@
 {
     [self displayErrorWithMessage:error.localizedDescription];
     [self.explainOauthViewController showButtonView];
+
+    [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 - (void)receivedAccessToken:(id)sender
@@ -176,6 +178,8 @@
 {
     [self displayErrorWithMessage:error.localizedDescription];
     [self.explainOauthViewController showButtonView];
+
+    [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 #pragma mark ExplainOauthViewControllerDelegate
@@ -184,6 +188,8 @@
 {
     [self.twitter requestRequestToken];
     [self.explainOauthViewController showActivityView];
+
+    [[UIApplication sharedApplication] networkActivityIsStarting];
 }
 
 - (void)userDidCancelExplanation
@@ -199,6 +205,7 @@
     [self.explainOauthViewController showAuthorizingView];
 
     [self.twitter requestAccessToken:pin];
+
     [[UIApplication sharedApplication] networkActivityIsStarting];
 }
 
