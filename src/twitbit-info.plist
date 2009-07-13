@@ -23,7 +23,7 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>DeviceRegistrationDomain</key>
-	<string>client.twitbit.highorderbit.com</string>
+	<string>${DEVICE_REGISTRATION_DOMAIN}</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMainNibFile</key>
