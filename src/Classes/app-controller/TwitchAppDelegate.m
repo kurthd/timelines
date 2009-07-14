@@ -541,6 +541,7 @@
     if (managedObjectModel != nil) {
         return managedObjectModel;
     }
+
     managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];    
     return managedObjectModel;
 }
@@ -559,9 +560,24 @@
     NSURL *storeUrl = [NSURL fileURLWithPath: [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"Twitch.sqlite"]];
 	
 	NSError *error;
-    persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
-    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]) {
-        // Handle error
+    persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    NSDictionary * pscOptions =
+        [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
+                                    forKey:NSMigratePersistentStoresAutomaticallyOption];
+    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:pscOptions error:&error]) {
+        NSLog(@"Failed to created persistent store coordinator: '%@'.", error);
+
+        NSString * message;
+        if (error.userInfo) {
+            message = [error.userInfo valueForKeyPath:@"reason"];
+            NSLog(@"Reason: %@", message);
+            NSLog(@"User info: '%@'.", error.userInfo);
+        } else
+            message = error.localizedDescription;
+
+        NSString * title =
+            NSLocalizedString(@"persistence.initialization.failed.title", @"");
+        [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
     }    
 	
     return persistentStoreCoordinator;

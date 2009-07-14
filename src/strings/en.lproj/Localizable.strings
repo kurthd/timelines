@@ -87,3 +87,6 @@ trends.fetch.failed = "Failed to Load Trends";
 /* Search */
 search.view.title = "Search";
 search.fetch.failed = "Search Failed";
+
+/* Persistence */
+persistence.initialization.failed.title = "Failed to Initialize Persistent Store";
