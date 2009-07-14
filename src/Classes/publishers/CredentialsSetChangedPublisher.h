@@ -13,7 +13,8 @@
 
 //
 // The selector provided should have the same arguments as:
-//   - (void)credentialsChanged:(TwitterCredentials *)credentials;
+//   - (void)credentialsSetChanged:(TwitterCredentials *)changedCredentials
+//                           added:(NSNumber *)added
 //
 + (id)publisherWithListener:(id)aListener action:(SEL)anAction;
 - (id)initWithListener:(id)aListener action:(SEL)anAction;

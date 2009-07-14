@@ -11,7 +11,9 @@
 #import "LogInDisplayMgr.h"
 
 @class ComposeTweetViewController;
-@class CredentialsActivatedPublisher;
+@class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
+@class TweetDraft, DirectMessageDraft;
+@class TweetDraftMgr;
 
 @interface ComposeTweetDisplayMgr :
     NSObject
@@ -34,12 +36,12 @@
     NSString * origTweetId;  // non-nil if composing a reply
     NSString * origUsername;
 
-    NSString * tweetDraft;
-    NSString * dmDraft;
+    TweetDraftMgr * draftMgr;
 
     NSManagedObjectContext * context;
 
     CredentialsActivatedPublisher * credentialsUpdatePublisher;
+    CredentialsSetChangedPublisher * credentialsSetChangedPublisher;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;

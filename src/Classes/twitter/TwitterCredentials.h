@@ -21,32 +21,37 @@
 }
 
 @property (nonatomic, retain) NSString * username;
-@property (nonatomic, retain) NSSet* directMessages;
+@property (nonatomic, retain) TwitPicCredentials * twitPicCredentials;
 @property (nonatomic, retain) ActiveTwitterCredentials * activeCredentials;
 @property (nonatomic, retain) NSSet* userTimeline;
+@property (nonatomic, retain) NSSet* directMessageDrafts;
 @property (nonatomic, retain) TweetDraft * tweetDraft;
 @property (nonatomic, retain) NSSet* mentions;
-@property (nonatomic, retain) DirectMessageDraft * directMessageDraft;
-@property (nonatomic, retain) TwitPicCredentials * twitPicCredentials;
+@property (nonatomic, retain) NSSet* directMessages;
 
 @end
 
 
 @interface TwitterCredentials (CoreDataGeneratedAccessors)
-- (void)addDirectMessagesObject:(DirectMessage *)value;
-- (void)removeDirectMessagesObject:(DirectMessage *)value;
-- (void)addDirectMessages:(NSSet *)value;
-- (void)removeDirectMessages:(NSSet *)value;
-
 - (void)addUserTimelineObject:(UserTweet *)value;
 - (void)removeUserTimelineObject:(UserTweet *)value;
 - (void)addUserTimeline:(NSSet *)value;
 - (void)removeUserTimeline:(NSSet *)value;
 
+- (void)addDirectMessageDraftsObject:(DirectMessageDraft *)value;
+- (void)removeDirectMessageDraftsObject:(DirectMessageDraft *)value;
+- (void)addDirectMessageDrafts:(NSSet *)value;
+- (void)removeDirectMessageDrafts:(NSSet *)value;
+
 - (void)addMentionsObject:(Mention *)value;
 - (void)removeMentionsObject:(Mention *)value;
 - (void)addMentions:(NSSet *)value;
 - (void)removeMentions:(NSSet *)value;
+
+- (void)addDirectMessagesObject:(DirectMessage *)value;
+- (void)removeDirectMessagesObject:(DirectMessage *)value;
+- (void)addDirectMessages:(NSSet *)value;
+- (void)removeDirectMessages:(NSSet *)value;
 
 @end
 

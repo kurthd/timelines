@@ -1,0 +1,38 @@
+//
+//  Copyright High Order Bit, Inc. 2009. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "TwitterCredentials.h"
+#import "TweetDraft.h"
+#import "DirectMessageDraft.h"
+
+@class NSManagedObjectContext;
+
+@interface TweetDraftMgr : NSObject
+{
+    NSManagedObjectContext * context;
+}
+
+- (id)initWithManagedObjectContext:(NSManagedObjectContext *)aContext;
+
+- (TweetDraft *)tweetDraftForCredentials:(TwitterCredentials *)credentials;
+- (BOOL)saveTweetDraft:(NSString *)text
+           credentials:(TwitterCredentials *)credentials
+                 error:(NSError **)error;
+- (BOOL)deleteTweetDraftForCredentials:(TwitterCredentials *)credentials
+                                 error:(NSError **)error;
+
+- (DirectMessageDraft *)directMessageDraftForCredentials:(TwitterCredentials *)c
+                                               recipient:(NSString *)recipient;
+- (BOOL)saveDirectMessageDraft:(NSString *)text
+                     recipient:(NSString *)recipient
+                   credentials:(TwitterCredentials *)credentials
+                         error:(NSError **)error;
+- (BOOL)deleteDirectMessageDraftForRecipient:(NSString *)recipient
+                                 credentials:(TwitterCredentials *)credentials
+                                       error:(NSError **)error;
+- (BOOL)deleteAllDirectMessageDraftsForCredentials:(TwitterCredentials *)c
+                                             error:(NSError **)error;
+
+@end

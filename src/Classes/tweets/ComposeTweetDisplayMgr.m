@@ -6,7 +6,11 @@
 #import "ComposeTweetViewController.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "CredentialsActivatedPublisher.h"
+#import "CredentialsSetChangedPublisher.h"
 #import "TwitPicImageSender.h"
+#import "TweetDraft.h"
+#import "DirectMessageDraft.h"
+#import "TweetDraftMgr.h"
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -20,13 +24,14 @@
 
 @property (nonatomic, retain) CredentialsActivatedPublisher *
     credentialsUpdatePublisher;
+@property (nonatomic, retain) CredentialsSetChangedPublisher *
+    credentialsSetChangedPublisher;
 
 @property (nonatomic, copy) NSString * recipient;
 @property (nonatomic, copy) NSString * origUsername;
 @property (nonatomic, copy) NSString * origTweetId;
 
-@property (nonatomic, copy) NSString * tweetDraft;
-@property (nonatomic, copy) NSString * dmDraft;
+@property (nonatomic, retain) TweetDraftMgr * draftMgr;
 
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
@@ -39,11 +44,12 @@
 @implementation ComposeTweetDisplayMgr
 
 @synthesize rootViewController, composeTweetViewController;
-@synthesize service, imageSender, credentialsUpdatePublisher;
+@synthesize service, imageSender;
+@synthesize credentialsUpdatePublisher, credentialsSetChangedPublisher;
 @synthesize logInDisplayMgr, context;
 @synthesize delegate;
 @synthesize recipient, origUsername, origTweetId;
-@synthesize tweetDraft, dmDraft;
+@synthesize draftMgr;
 
 - (void)dealloc
 {
@@ -53,11 +59,11 @@
     self.service = nil;
     self.imageSender = nil;
     self.credentialsUpdatePublisher = nil;
+    self.credentialsSetChangedPublisher = nil;
     self.recipient = nil;
     self.origUsername = nil;
     self.origTweetId = nil;
-    self.tweetDraft = nil;
-    self.dmDraft = nil;
+    self.draftMgr = nil;
     [super dealloc];
 }
 
@@ -78,6 +84,10 @@
 
         credentialsUpdatePublisher = [[CredentialsActivatedPublisher alloc]
             initWithListener:self action:@selector(setCredentials:)];
+        credentialsSetChangedPublisher =
+            [[CredentialsSetChangedPublisher alloc]
+                initWithListener:self
+                          action:@selector(credentialsSetChanged:added:)];
     }
 
     return self;
@@ -85,9 +95,11 @@
 
 - (void)composeTweet
 {
-    NSString * text = self.tweetDraft ? self.tweetDraft : @"";
+    TweetDraft * draft =
+        [self.draftMgr tweetDraftForCredentials:self.service.credentials];
+
+    NSString * text = draft ? draft.text : @"";
     [self composeTweetWithText:text];
-    self.tweetDraft = nil;
 }
 
 - (void)composeTweetWithText:(NSString *)tweet
@@ -128,9 +140,12 @@
 
 - (void)composeDirectMessageTo:(NSString *)username
 {
-    NSString * text = self.dmDraft ? self.dmDraft : @"";
+    DirectMessageDraft * draft =
+        [self.draftMgr directMessageDraftForCredentials:self.service.credentials
+                                              recipient:username];
+
+    NSString * text = draft ? draft.text : @"";
     [self composeDirectMessageTo:username withText:text];
-    self.dmDraft = nil;
 }
 
 - (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)tweet
@@ -157,6 +172,28 @@
     self.service.credentials = credentials;
 }
 
+- (void)credentialsSetChanged:(TwitterCredentials *)credentials
+                        added:(NSNumber *)added
+{
+    if (![added boolValue]) {
+        // remove all drafts for the deleted account
+        NSError * error = nil;
+        [self.draftMgr deleteTweetDraftForCredentials:credentials error:&error];
+
+        if (error) {
+            NSLog(@"Failed to delete tweet drafts for deleted credentials: '%@', "
+                  "'%@'.", credentials, error);
+            error = nil;
+        }
+
+        [self.draftMgr deleteAllDirectMessageDraftsForCredentials:credentials
+                                                            error:&error];
+        if (error)
+            NSLog(@"Failed to delete direct message drafts for deleted "
+                "credentials: '%@', '%@'.", credentials, error);
+    }
+}
+
 #pragma mark LogInDisplayMgrDelegate implementation
 
 - (void)logInCompleted
@@ -175,9 +212,14 @@
 {
     [self.rootViewController dismissModalViewControllerAnimated:YES];
 
+    NSError * error = nil;
     if (recipient) {
         [self.delegate userIsSendingDirectMessage:tweet to:self.recipient];
         [self.service sendDirectMessage:tweet to:self.recipient];
+        [self.draftMgr
+            deleteDirectMessageDraftForRecipient:self.recipient
+                                     credentials:self.service.credentials
+                                           error:&error];
     } else {
         if (self.origTweetId) {  // sending a public reply
             [self.delegate userIsReplyingToTweet:self.origTweetId
@@ -188,21 +230,57 @@
             [self.delegate userIsSendingTweet:tweet];
             [self.service sendTweet:tweet];
         }
+
+        [self.draftMgr deleteTweetDraftForCredentials:self.service.credentials
+                                                error:&error];
     }
+
+    if (error)
+        NSLog(@"Failed to delete tweet drafts: '%@', '%@'.", error,
+              error.userInfo);
 }
 
 - (void)userDidSaveAsDraft:(NSString *)draft
 {
+    NSError * error = nil;
     if (recipient)  // was a direct message
-        self.dmDraft = draft;
+        [self.draftMgr saveDirectMessageDraft:draft
+                                    recipient:recipient
+                                  credentials:self.service.credentials
+                                        error:&error];
     else
-        self.tweetDraft = draft;
+        [self.draftMgr saveTweetDraft:draft
+                          credentials:self.service.credentials
+                                error:&error];
 
-    [self userDidCancel];
+    if (error) {
+        NSLog(@"Failed to save tweet drafts: '%@', '%@'.", error,
+            error.userInfo);
+        NSString * title =
+            NSLocalizedString(@"compose.draft.save.failed.title", @"");
+        NSString * message =
+            [error.userInfo valueForKeyPath:@"reason"] ?
+            [error.userInfo valueForKeyPath:@"reason"] :
+            error.localizedDescription;
+        [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
+    }
+
+    [self.delegate userDidCancelComposingTweet];
+    [self.rootViewController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)userDidCancel
 {
+    NSError * error = nil;
+    if (recipient)
+        [self.draftMgr
+            deleteDirectMessageDraftForRecipient:self.recipient
+                                     credentials:self.service.credentials
+                                           error:&error];
+    else
+        [self.draftMgr deleteTweetDraftForCredentials:self.service.credentials
+                                                error:&error];
+
     [self.delegate userDidCancelComposingTweet];
     [self.rootViewController dismissModalViewControllerAnimated:YES];
 }
@@ -404,7 +482,6 @@
     [imagePicker release];
 }
 
-
 #pragma mark Accessors
 
 - (ComposeTweetViewController *)composeTweetViewController
@@ -429,6 +506,15 @@
     }
 
     return logInDisplayMgr;
+}
+
+- (TweetDraftMgr *)draftMgr
+{
+    if (!draftMgr)
+        draftMgr =
+            [[TweetDraftMgr alloc] initWithManagedObjectContext:self.context];
+
+    return draftMgr;
 }
 
 @end

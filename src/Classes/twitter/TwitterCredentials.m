@@ -19,12 +19,12 @@
 @implementation TwitterCredentials 
 
 @dynamic username;
-@dynamic directMessages;
+@dynamic twitPicCredentials;
 @dynamic activeCredentials;
 @dynamic userTimeline;
+@dynamic directMessageDrafts;
 @dynamic tweetDraft;
 @dynamic mentions;
-@dynamic directMessageDraft;
-@dynamic twitPicCredentials;
+@dynamic directMessages;
 
 @end

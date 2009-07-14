@@ -55,6 +55,7 @@ composetweet.cancel.confirm.save = "Save Draft";
 composetweet.cancel.confirm.cancel = "Cancel";
 directmessage.failed.alert.title = "Failed to Send Direct Message";
 composedirectmessage.view.title = "DM to @%@";
+compose.draft.save.failed.title = "Failed to Save Draft";
 imagepicker.choose.cancel = "Cancel";
 imagepicker.choose.camera = "Take Photo";
 imagepicker.choose.photos = "Choose Existing Photo";
