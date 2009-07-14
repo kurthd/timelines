@@ -1743,7 +1743,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "86370A6E-A17F-44DD-A7A3-E53062D55715";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "34267B39-4A5D-47E3-B7F6-62DBC6988CEE";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Distribution - Ad Hoc";
@@ -1899,7 +1899,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "311240E3-9A8D-4042-AB39-8A0E7AB37E88";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4D2CFC7-162B-42E3-8B03-4F8F61F670A4";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Debug - John";
@@ -1919,7 +1919,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "311240E3-9A8D-4042-AB39-8A0E7AB37E88";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4D2CFC7-162B-42E3-8B03-4F8F61F670A4";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Release - John";
