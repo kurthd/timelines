@@ -202,6 +202,7 @@
 		91BDAFF61004FBC000761694 /* TweetInfo+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */; };
 		91D36956100D12B300B59D12 /* ButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36955100D12B300B59D12 /* ButtonBackground.png */; };
 		91D36965100D1CC900B59D12 /* ButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */; };
+		91D36976100D44D200B59D12 /* AvatarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36975100D44D200B59D12 /* AvatarBackground.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -560,6 +561,7 @@
 		91CD82B60FF558FE004D04D5 /* Refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Refresh.png; path = images/Refresh.png; sourceTree = "<group>"; };
 		91D36955100D12B300B59D12 /* ButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ButtonBackground.png; path = images/ButtonBackground.png; sourceTree = "<group>"; };
 		91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ButtonBackgroundHighlighted.png; path = images/ButtonBackgroundHighlighted.png; sourceTree = "<group>"; };
+		91D36975100D44D200B59D12 /* AvatarBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AvatarBackground.png; path = images/AvatarBackground.png; sourceTree = "<group>"; };
 		91E000420FEF76E800BCE9BC /* Favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Favorite.png; path = images/Favorite.png; sourceTree = "<group>"; };
 		91E0004B0FEF786300BCE9BC /* NotFavorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NotFavorite.png; path = images/NotFavorite.png; sourceTree = "<group>"; };
 		91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsHeaderGradient.png; path = images/TweetDetailsHeaderGradient.png; sourceTree = "<group>"; };
@@ -1160,6 +1162,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91D36975100D44D200B59D12 /* AvatarBackground.png */,
 				91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */,
 				91D36955100D12B300B59D12 /* ButtonBackground.png */,
 				9145EFFA10054D9400C2E485 /* BlueEnvelope.png */,
@@ -1358,6 +1361,7 @@
 				91BD113B1006736F0082D209 /* PhotoBrowserView.xib in Resources */,
 				91D36956100D12B300B59D12 /* ButtonBackground.png in Resources */,
 				91D36965100D1CC900B59D12 /* ButtonBackgroundHighlighted.png in Resources */,
+				91D36976100D44D200B59D12 /* AvatarBackground.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

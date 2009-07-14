@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="2"/>
+			<integer value="35"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -73,6 +73,20 @@
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">TweetDetailsHeaderGradient.png</string>
+						</object>
+					</object>
+					<object class="IBUIImageView" id="694844249">
+						<reference key="NSNextResponder" ref="111838698"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{4, 4}, {64, 64}}</string>
+						<reference key="NSSuperview" ref="111838698"/>
+						<bool key="IBUIOpaque">NO</bool>
+						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+						<int key="IBUIContentMode">4</int>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">AvatarBackground.png</string>
 						</object>
 					</object>
 					<object class="IBUIView" id="40749587">
@@ -313,9 +327,13 @@
 								</object>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4zMDE5NjA4IDAuMzc2NDcwNiAwLjU0OTAxOTYzAA</bytes>
+									<bytes key="NSRGB">MC4zMDA3MTY4OCAwLjM3NzEwNjU1IDAuNTI1NTEwMTkAA</bytes>
 								</object>
-								<reference key="IBUINormalTitleShadowColor" ref="593042989"/>
+								<object class="NSColor" key="IBUIHighlightedTitleShadowColor">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MSAwAA</bytes>
+								</object>
+								<reference key="IBUINormalTitleShadowColor" ref="98511986"/>
 								<object class="NSCustomResource" key="IBUIDisabledImage" id="947195465">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">Re-tweetDisabled.png</string>
@@ -351,9 +369,13 @@
 								</object>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4zMDE5NjA4IDAuMzc2NDcwNiAwLjU0OTAxOTYzAA</bytes>
+									<bytes key="NSRGB">MC4zMDA3MTY4OCAwLjM3NzEwNjU1IDAuNTI1NTEwMTkAA</bytes>
 								</object>
-								<reference key="IBUINormalTitleShadowColor" ref="593042989"/>
+								<object class="NSColor" key="IBUIHighlightedTitleShadowColor">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MSAwAA</bytes>
+								</object>
+								<reference key="IBUINormalTitleShadowColor" ref="98511986"/>
 								<reference key="IBUIDisabledImage" ref="947195465"/>
 								<object class="NSCustomResource" key="IBUISelectedImage">
 									<string key="NSClassName">NSImage</string>
@@ -582,13 +604,14 @@
 							<reference ref="391932042"/>
 							<reference ref="653692468"/>
 							<reference ref="574989134"/>
-							<reference ref="310698968"/>
 							<reference ref="40749587"/>
 							<reference ref="451322137"/>
 							<reference ref="156147488"/>
 							<reference ref="408069380"/>
 							<reference ref="715826418"/>
 							<reference ref="881816510"/>
+							<reference ref="694844249"/>
+							<reference ref="310698968"/>
 						</object>
 						<reference key="parent" ref="299450094"/>
 					</object>
@@ -683,6 +706,11 @@
 						<reference key="object" ref="661105327"/>
 						<reference key="parent" ref="40749587"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">50</int>
+						<reference key="object" ref="694844249"/>
+						<reference key="parent" ref="111838698"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -710,6 +738,7 @@
 					<string>4.IBPluginDependency</string>
 					<string>46.IBPluginDependency</string>
 					<string>48.IBPluginDependency</string>
+					<string>50.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -722,6 +751,7 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{622, 192}, {320, 460}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -756,7 +786,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">49</int>
+			<int key="maxID">50</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
