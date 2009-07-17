@@ -54,7 +54,7 @@ static UIImage * defaultAvatar;
         [delegate setCurrentTweetDetailsUser:self.selectedTweet.user.username];
         [self setupWebView];
     }
-    
+
     footerView.hidden = usersTweet;
     footerGradient.hidden = usersTweet;
     CGRect webViewFrame = webView.frame;

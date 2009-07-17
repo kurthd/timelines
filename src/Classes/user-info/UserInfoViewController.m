@@ -24,11 +24,15 @@ enum {
 - (void)layoutViews;
 - (void)updateDisplayForFollwoing:(BOOL)following;
 
++ (UIImage *)defaultAvatar;
+
 @end
 
 @implementation UserInfoViewController
 
 @synthesize delegate, followingEnabled;
+
+static UIImage * defaultAvatar;
 
 - (void)dealloc
 {
@@ -264,7 +268,7 @@ enum {
     if (!avatarImage) {
         NSURL * avatarUrl = [NSURL URLWithString:user.profileImageUrl];
         [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
-        [avatarView setImage:[UIImage imageNamed:@"DefaultAvatar.png"]];
+        [avatarView setImage:[[self class] defaultAvatar]];
     } else
         [avatarView setImage:avatarImage];
     nameLabel.text = aUser.name;
@@ -343,6 +347,26 @@ enum {
         NSLocalizedString(@"userinfoview.stopfollowing", @"") :
         NSLocalizedString(@"userinfoview.startfollowing", @"");
     [followButton setTitle:followingBtnText forState:UIControlStateNormal];
+}
+
+- (IBAction)showFullProfileImage:(id)sender
+{
+    NSLog(@"Profile image selected");
+    UIImage * avatarImage =
+        avatarView.image != [[self class] defaultAvatar] ?
+        avatarView.image : nil;
+    RemotePhoto * remotePhoto =
+        [[RemotePhoto alloc]
+        initWithImage:avatarImage url:user.profileImageUrl name:user.name];
+    [delegate showPhotoInBrowser:remotePhoto];
+}
+
++ (UIImage *)defaultAvatar
+{
+    if (!defaultAvatar)
+        defaultAvatar = [UIImage imageNamed:@"DefaultAvatar.png"];
+
+    return defaultAvatar;
 }
 
 @end

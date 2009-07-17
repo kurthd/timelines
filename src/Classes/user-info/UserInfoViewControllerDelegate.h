@@ -3,6 +3,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RemotePhoto.h"
 
 @protocol UserInfoViewControllerDelegate
 
@@ -15,5 +16,6 @@
 - (void)stopFollowingUser:(NSString *)username;
 - (void)showingUserInfoView;
 - (void)sendDirectMessageToUser:(NSString *)username;
+- (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto;
 
 @end
