@@ -95,7 +95,6 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self startFadeTimer];
-    NSLog(@"Touches: %@", touches);
 
     UITouch * touch = [touches anyObject];
     NSUInteger tapCount = [touch tapCount];
@@ -255,11 +254,13 @@
 
 - (void)goBack:(id)sender
 {
+    [self startFadeTimer];
     [self setIndex:selectedIndex - 1];
 }
 
 - (void)goForward:(id)sender
 {
+    [self startFadeTimer];
     [self setIndex:selectedIndex + 1];
 }
 
@@ -354,7 +355,7 @@
 
 - (void)hideStatusBar
 {
-    if (isDisplayed)
+    if (isDisplayed && barsFaded)
         [[UIApplication sharedApplication] setStatusBarHidden:YES animated:YES];
 }
 
@@ -393,6 +394,8 @@
 
 - (IBAction)showActions:(id)sender
 {
+    [self startFadeTimer];
+
     NSString * cancel = NSLocalizedString(@"photobrowser.actions.cancel", @"");
     NSString * email = NSLocalizedString(@"photobrowser.actions.email", @"");
     NSString * save = NSLocalizedString(@"photobrowser.actions.save", @"");
