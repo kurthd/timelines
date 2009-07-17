@@ -91,3 +91,11 @@ search.fetch.failed = "Search Failed";
 
 /* Persistence */
 persistence.initialization.failed.title = "Failed to Initialize Persistent Store";
+
+/* PhotoBrowser */
+photobrowser.actions.cancel = "Cancel";
+photobrowser.actions.email = "Email Photo";
+photobrowser.actions.save = "Save to Album";
+photobrowser.emailerror.title = "Error Sending Email";
+photobrowser.unabletosendmail.title = "Unable to Send Mail";
+photobrowser.unabletosendmail.message = "Your device is not configured for sending mail";

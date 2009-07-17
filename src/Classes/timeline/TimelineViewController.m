@@ -380,4 +380,16 @@ static UIImage * defaultAvatar;
     return defaultAvatar;
 }
 
+- (IBAction)showFullProfileImage:(id)sender
+{
+    NSLog(@"Profile image selected");
+    UIImage * avatarImage =
+        avatarView.image != [[self class] defaultAvatar] ?
+        avatarView.image : nil;
+    RemotePhoto * remotePhoto =
+        [[RemotePhoto alloc]
+        initWithImage:avatarImage url:user.profileImageUrl name:user.name];
+    [delegate showPhotoInBrowser:remotePhoto];
+}
+
 @end

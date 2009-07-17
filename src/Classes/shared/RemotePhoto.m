@@ -34,4 +34,11 @@
         self.name];
 }
 
+- (BOOL)isEqual:(id)otherObject
+{
+    RemotePhoto * otherRemotePhoto = (RemotePhoto *)otherObject;
+
+    return otherRemotePhoto && [self.url isEqual:otherRemotePhoto.url];
+}
+
 @end

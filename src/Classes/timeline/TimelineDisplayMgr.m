@@ -537,13 +537,16 @@
 - (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto
 {
     NSLog(@"Timeline display manager: showing photo: %@", remotePhoto);
-    // [[UIApplication sharedApplication]
-    //     setStatusBarStyle:UIStatusBarStyleBlackOpaque
-    //     animated:YES];
-    // 
-    // [self.wrapperController presentModalViewController:self.photoBrowser
-    //     animated:YES];
-    // [self.photoBrowser addRemotePhoto:remotePhoto];
+
+    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
+    [[UIApplication sharedApplication]
+        setStatusBarStyle:UIStatusBarStyleBlackTranslucent
+        animated:YES];
+
+    [self.wrapperController presentModalViewController:self.photoBrowser
+        animated:YES];
+    [self.photoBrowser addRemotePhoto:remotePhoto];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
 }
 
 - (void)displayFollowingForUser:(NSString *)username

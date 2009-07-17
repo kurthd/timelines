@@ -40,5 +40,6 @@
 - (void)setFollowing:(BOOL)enabled;
 - (IBAction)toggleFollowing:(id)sender;
 - (IBAction)sendMessage:(id)sender;
+- (IBAction)showFullProfileImage:(id)sender;
 
 @end

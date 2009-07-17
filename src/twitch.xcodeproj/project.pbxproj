@@ -200,6 +200,9 @@
 		9145EFCA1005276100C2E485 /* Re-tweetDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 9145EFC91005276100C2E485 /* Re-tweetDisabled.png */; };
 		9145EFFB10054D9400C2E485 /* BlueEnvelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 9145EFFA10054D9400C2E485 /* BlueEnvelope.png */; };
 		9145F024100573AF00C2E485 /* User+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145F023100573AF00C2E485 /* User+UIAdditions.m */; };
+		91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD5A3C100FED36009C2179 /* MessageUI.framework */; };
+		91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
+		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
 		91BD1138100672EF0082D209 /* PhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BD1137100672EF0082D209 /* PhotoBrowser.m */; };
 		91BD113B1006736F0082D209 /* PhotoBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BD11391006736F0082D209 /* PhotoBrowserView.xib */; };
 		91BD1141100676480082D209 /* RemotePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BD1140100676480082D209 /* RemotePhoto.m */; };
@@ -556,6 +559,9 @@
 		91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweetSelected.png; path = images/DeleteTweetSelected.png; sourceTree = "<group>"; };
 		91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweetSelected.png"; path = "images/Re-tweetSelected.png"; sourceTree = "<group>"; };
 		91A247A60FFE9ED300538F29 /* DeleteTweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweetDisabled.png; path = images/DeleteTweetDisabled.png; sourceTree = "<group>"; };
+		91AD5A3C100FED36009C2179 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		91AD5A6F101017AC009C2179 /* PhotoBackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoBackButton.png; path = images/PhotoBackButton.png; sourceTree = "<group>"; };
+		91AD5A711010187D009C2179 /* PhotoForwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoForwardButton.png; path = images/PhotoForwardButton.png; sourceTree = "<group>"; };
 		91B28D110FFC60A10080023B /* TweetInfo+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TweetInfo+UIAdditions.h"; path = "timeline/TweetInfo+UIAdditions.h"; sourceTree = "<group>"; };
 		91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TweetInfo+UIAdditions.m"; path = "timeline/TweetInfo+UIAdditions.m"; sourceTree = "<group>"; };
 		91BD1136100672EF0082D209 /* PhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBrowser.h; path = shared/PhotoBrowser.h; sourceTree = "<group>"; };
@@ -591,6 +597,7 @@
 				05EF41860FFADF95007B59F1 /* CoreData.framework in Frameworks */,
 				05EF41870FFADF95007B59F1 /* Security.framework in Frameworks */,
 				05EF41880FFADF95007B59F1 /* libYAJLIPhone.a in Frameworks */,
+				91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1143,6 +1150,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				91AD5A3C100FED36009C2179 /* MessageUI.framework */,
 				0524C4510FF2AEEE00A6099B /* Security.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
@@ -1180,6 +1188,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91AD5A711010187D009C2179 /* PhotoForwardButton.png */,
+				91AD5A6F101017AC009C2179 /* PhotoBackButton.png */,
 				91D36975100D44D200B59D12 /* AvatarBackground.png */,
 				91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */,
 				91D36955100D12B300B59D12 /* ButtonBackground.png */,
@@ -1380,6 +1390,8 @@
 				91D36956100D12B300B59D12 /* ButtonBackground.png in Resources */,
 				91D36965100D1CC900B59D12 /* ButtonBackgroundHighlighted.png in Resources */,
 				91D36976100D44D200B59D12 /* AvatarBackground.png in Resources */,
+				91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */,
+				91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

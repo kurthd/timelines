@@ -64,6 +64,7 @@
 - (IBAction)loadMoreTweets:(id)sender;
 - (IBAction)showUserInfo:(id)sender;
 - (IBAction)setInboxOutbox:(id)sender;
+- (IBAction)showFullProfileImage:(id)sender;
 
 - (void)addTweet:(TweetInfo *)tweet;
 
