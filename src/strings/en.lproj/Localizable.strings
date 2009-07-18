@@ -45,6 +45,9 @@ tweetdetailsview.title.directmessage = "Direct Message";
 tweetdetailsview.tweetfooter = "%@ from %@";
 tweetdetailsview.tweetheader = "To: %@";
 tweetdetailsview.replyto = "in reply to";
+tweetdetailsview.actions.cancel = "Cancel";
+tweetdetailsview.actions.browser = "Open in Browser";
+tweetdetailsview.actions.email = "Send in Email";
 
 /* Sending tweets */
 sendtweet.failed.alert.title = "Failed to Send Tweet";

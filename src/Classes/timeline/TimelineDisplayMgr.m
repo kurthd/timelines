@@ -21,6 +21,7 @@
 - (NetworkAwareViewController *)newTweetDetailsWrapperController;
 - (TweetDetailsViewController *)newTweetDetailsController;
 - (void)replyToCurrentTweetDetailsUser;
+- (void)presentTweetActions;
 
 @end
 
@@ -334,18 +335,27 @@
     self.tweetDetailsController.navigationItem.rightBarButtonItem.enabled =
         !tweetByUser;
     [self.tweetDetailsController setUsersTweet:tweetByUser];
-    if (tweet.recipient) {
-        self.tweetDetailsController.navigationItem.rightBarButtonItem.action =
-            @selector(replyToTweetWithMessage);
+    if (tweet.recipient) { // direct message
+        UIBarButtonItem * rightBarButtonItem =
+            [[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self
+            action:@selector(replyToTweetWithMessage)];
+        self.tweetDetailsController.navigationItem.rightBarButtonItem =
+            rightBarButtonItem;
         self.tweetDetailsController.navigationItem.title =
             NSLocalizedString(@"tweetdetailsview.title.directmessage", @"");
+        [self.tweetDetailsController setUsersTweet:YES];
     } else {
-        self.tweetDetailsController.navigationItem.rightBarButtonItem.action =
-            @selector(replyToTweet);
+        UIBarButtonItem * rightBarButtonItem =
+            [[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
+            action:@selector(presentTweetActions)];
+        self.tweetDetailsController.navigationItem.rightBarButtonItem =
+            rightBarButtonItem;
         self.tweetDetailsController.navigationItem.title =
             NSLocalizedString(@"tweetdetailsview.title", @"");
     }
-    
+
     [self.wrapperController.navigationController
         pushViewController:self.tweetDetailsController animated:YES];
     [self.tweetDetailsController setTweet:tweet avatar:avatarImage];
@@ -456,6 +466,24 @@
     [composeTweetDisplayMgr
         composeReplyToTweet:selectedTweet.identifier
         fromUser:selectedTweet.user.username];
+}
+
+- (void)presentTweetActions
+{
+    NSString * cancel =
+        NSLocalizedString(@"tweetdetailsview.actions.cancel", @"");
+    NSString * browser =
+        NSLocalizedString(@"tweetdetailsview.actions.browser", @"");
+    NSString * email =
+        NSLocalizedString(@"tweetdetailsview.actions.email", @"");
+
+    UIActionSheet * sheet =
+        [[UIActionSheet alloc]
+        initWithTitle:nil delegate:self.tweetDetailsController
+        cancelButtonTitle:cancel destructiveButtonTitle:nil
+        otherButtonTitles:browser, email, nil];
+
+    [sheet showInView:self.tweetDetailsController.view];
 }
 
 - (void)showingTweetDetails
@@ -837,8 +865,8 @@
 
         UIBarButtonItem * replyButton =
             [[[UIBarButtonItem alloc]
-            initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self
-            action:@selector(replyToTweet)]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
+            action:@selector(presentTweetActions)]
             autorelease];
         [tweetDetailsController.navigationItem
             setRightBarButtonItem:replyButton];

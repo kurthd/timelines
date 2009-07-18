@@ -16,6 +16,7 @@
 - (void)loadNewTweetWithId:(NSString *)tweetId username:(NSString *)username;
 - (void)setCurrentTweetDetailsUser:(NSString *)username;
 - (void)reTweetSelected;
+- (void)replyToTweet;
 - (void)sendDirectMessageToUser:(NSString *)username;
 - (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto;
 

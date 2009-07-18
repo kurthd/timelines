@@ -14,6 +14,7 @@
 
 - (void)setupWebView;
 - (void)showWebView;
+- (void)displayComposerMailSheet;
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer;
 + (NSString *)htmlForContent:(NSString *)content footer:(NSString *)footer
     header:(NSString *)header;
@@ -155,6 +156,11 @@ static UIImage * defaultAvatar;
     [delegate showTweetsForUser:selectedTweet.user.username];
 }
 
+- (IBAction)publicReply:(id)sender
+{
+    [delegate replyToTweet];
+}
+
 - (IBAction)sendDirectMessage:(id)sender
 {
     [delegate sendDirectMessageToUser:selectedTweet.user.username];
@@ -248,11 +254,96 @@ static UIImage * defaultAvatar;
 {
     NSLog(@"Delete tweet button selected");
     NSString * title = @"Not yet implemented";
-    NSString * message = @"Sorry, we're in the process of implementing this feature.  Thanks for beta testing!";
+    NSString * message =
+        @"Sorry, we're in the process of implementing this feature.  Thanks for beta testing!";
     UIAlertView * alert =
         [UIAlertView simpleAlertViewWithTitle:title message:message];
 
     [alert show];
+}
+
+#pragma mark MFMailComposeViewControllerDelegate implementation
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+    didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    
+    if (result == MFMailComposeResultFailed) {
+        NSString * title =
+            NSLocalizedString(@"photobrowser.emailerror.title", @"");
+        UIAlertView * alert =
+            [UIAlertView simpleAlertViewWithTitle:title
+            message:[error description]];
+        [alert show];
+    }
+
+    [controller dismissModalViewControllerAnimated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
+}
+
+#pragma mark UIActionSheetDelegate implementation
+
+- (void)actionSheet:(UIActionSheet *)sheet
+    clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"User clicked button at index: %d.", buttonIndex);
+
+    NSString * webAddress;
+    NSString * title =
+        NSLocalizedString(@"photobrowser.unabletosendmail.title", @"");
+    NSString * message =
+        NSLocalizedString(@"photobrowser.unabletosendmail.message", @"");
+
+    switch (buttonIndex) {
+        case 0:
+           webAddress =
+                [NSString stringWithFormat:@"http://twitter.com/%@/status/%@",
+                self.selectedTweet.user, self.selectedTweet.identifier];
+            NSLog(@"Opening tweet in browser (%@)...", webAddress);
+            [delegate visitWebpage:webAddress];
+            break;
+        case 1:
+            NSLog(@"Sending tweet in email...");
+            if ([MFMailComposeViewController canSendMail]) {
+                [self displayComposerMailSheet];
+            } else {     
+                UIAlertView * alert =
+                    [UIAlertView simpleAlertViewWithTitle:title
+                    message:message];
+                [alert show];
+            }
+            break;
+    }
+
+    [sheet autorelease];
+}
+
+- (void)displayComposerMailSheet
+{
+    MFMailComposeViewController * picker =
+        [[MFMailComposeViewController alloc] init];
+    picker.mailComposeDelegate = self;
+
+    static NSString * subjectRegex = @"\\S+\\s\\S+\\s\\S+\\s\\S+\\s\\S+";
+    NSString * subject =
+        [self.selectedTweet.text stringByMatching:subjectRegex];
+    if (subject && ![subject isEqual:@""])
+        subject = [NSString stringWithFormat:@"%@...", subject];
+    else
+        subject = self.selectedTweet.text;
+    [picker setSubject:subject];
+
+    NSString * webAddress =
+         [NSString stringWithFormat:@"http://twitter.com/%@/status/%@",
+         self.selectedTweet.user, self.selectedTweet.identifier];
+    NSString * body =
+        [NSString stringWithFormat:@"%@\n\n%@", self.selectedTweet.text,
+        webAddress];
+    [picker setMessageBody:body isHTML:NO];
+
+    [self presentModalViewController:picker animated:YES];
+
+    [picker release];
 }
 
 #pragma mark static helper methods

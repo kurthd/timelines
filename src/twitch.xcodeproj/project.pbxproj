@@ -203,6 +203,8 @@
 		917FFF0F1010F7A700335C0F /* PhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF0C1010F7A700335C0F /* PhotoBrowser.m */; };
 		917FFF101010F7A700335C0F /* RemotePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF0E1010F7A700335C0F /* RemotePhoto.m */; };
 		917FFF1B1010F8B800335C0F /* CommonTwitterServicePhotoSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF1A1010F8B800335C0F /* CommonTwitterServicePhotoSource.m */; };
+		9180B6BF101240B60096DFA1 /* ButtonBackground-92x35.png in Resources */ = {isa = PBXBuildFile; fileRef = 9180B6BE101240B60096DFA1 /* ButtonBackground-92x35.png */; };
+		9180B6C5101244CD0096DFA1 /* ButtonBackground-108x35.png in Resources */ = {isa = PBXBuildFile; fileRef = 9180B6C4101244CD0096DFA1 /* ButtonBackground-108x35.png */; };
 		91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD5A3C100FED36009C2179 /* MessageUI.framework */; };
 		91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
 		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
@@ -553,6 +555,8 @@
 		917FFF191010F8B800335C0F /* CommonTwitterServicePhotoSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonTwitterServicePhotoSource.h; path = "photo-browser/CommonTwitterServicePhotoSource.h"; sourceTree = "<group>"; };
 		917FFF1A1010F8B800335C0F /* CommonTwitterServicePhotoSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonTwitterServicePhotoSource.m; path = "photo-browser/CommonTwitterServicePhotoSource.m"; sourceTree = "<group>"; };
 		917FFFC710112B1200335C0F /* PhotoBrowserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBrowserDelegate.h; path = "photo-browser/PhotoBrowserDelegate.h"; sourceTree = "<group>"; };
+		9180B6BE101240B60096DFA1 /* ButtonBackground-92x35.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ButtonBackground-92x35.png"; path = "images/ButtonBackground-92x35.png"; sourceTree = "<group>"; };
+		9180B6C4101244CD0096DFA1 /* ButtonBackground-108x35.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ButtonBackground-108x35.png"; path = "images/ButtonBackground-108x35.png"; sourceTree = "<group>"; };
 		918E891A0FF16EE30042BBEE /* UserTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTimelineDataSource.h; path = timeline/UserTimelineDataSource.h; sourceTree = "<group>"; };
 		918E891B0FF16EE30042BBEE /* UserTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTimelineDataSource.m; path = timeline/UserTimelineDataSource.m; sourceTree = "<group>"; };
 		918E894E0FF183070042BBEE /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoViewController.h; path = "user-info/UserInfoViewController.h"; sourceTree = "<group>"; };
@@ -1191,6 +1195,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9180B6C4101244CD0096DFA1 /* ButtonBackground-108x35.png */,
+				9180B6BE101240B60096DFA1 /* ButtonBackground-92x35.png */,
 				91AD5A711010187D009C2179 /* PhotoForwardButton.png */,
 				91AD5A6F101017AC009C2179 /* PhotoBackButton.png */,
 				91D36975100D44D200B59D12 /* AvatarBackground.png */,
@@ -1411,6 +1417,8 @@
 				91D36976100D44D200B59D12 /* AvatarBackground.png in Resources */,
 				91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */,
 				91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */,
+				9180B6BF101240B60096DFA1 /* ButtonBackground-92x35.png in Resources */,
+				9180B6C5101244CD0096DFA1 /* ButtonBackground-108x35.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

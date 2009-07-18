@@ -7,9 +7,11 @@
 #import "RoundedImage.h"
 #import "TweetInfo.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
 @interface TweetDetailsViewController :
-    UIViewController <AsynchronousNetworkFetcherDelegate, UIWebViewDelegate>
+    UIViewController <AsynchronousNetworkFetcherDelegate, UIWebViewDelegate,
+    UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 {
     NSObject<TweetDetailsViewDelegate> * delegate;
 
@@ -45,6 +47,7 @@
 - (IBAction)reTweet:(id)sender;
 - (IBAction)deleteTweet:(id)sender;
 - (IBAction)sendDirectMessage:(id)sender;
+- (IBAction)publicReply:(id)sender;
 - (IBAction)showFullProfileImage:(id)sender;
 
 @end
