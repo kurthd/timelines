@@ -19,6 +19,7 @@
 #import "ComposeTweetDisplayMgr.h"
 #import "TwitchBrowserViewController.h"
 #import "PhotoBrowser.h"
+#import "PhotoBrowserDelegate.h"
 
 @class TimelineDisplayMgrFactory;
 
@@ -26,7 +27,8 @@
     NSObject
     <TimelineDataSourceDelegate, TimelineViewControllerDelegate,
     TweetDetailsViewDelegate, NetworkAwareViewControllerDelegate,
-    UserInfoViewControllerDelegate, UserListTableViewControllerDelegate>
+    UserInfoViewControllerDelegate, UserListTableViewControllerDelegate,
+    PhotoBrowserDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;

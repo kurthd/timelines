@@ -4,11 +4,13 @@
 
 #import <UIKit/UIKit.h>
 #import "RemotePhoto.h"
-#import "AsynchronousNetworkFetcherDelegate.h"
+#import "PhotoSource.h"
+#import "PhotoSourceDelegate.h"
 #import <MessageUI/MFMailComposeViewController.h>
+#import "PhotoBrowserDelegate.h"
 
 @interface PhotoBrowser :
-    UIViewController <AsynchronousNetworkFetcherDelegate, UIActionSheetDelegate,
+    UIViewController <PhotoSourceDelegate, UIActionSheetDelegate,
     MFMailComposeViewControllerDelegate>
 {
     IBOutlet UIImageView * photoView;
@@ -23,16 +25,23 @@
     NSMutableArray * photoList;
 
     NSInteger selectedIndex;
-    
+
     BOOL zoomed;
     BOOL notSingleTap;
     BOOL barsFaded;
     NSUInteger touchesCount;
-    
+
     BOOL isDisplayed;
+
+    NSObject<PhotoSource> * photoSource;
+
+    NSObject<PhotoBrowserDelegate> * delegate;
 }
 
 @property (nonatomic, readonly) NSMutableArray * photoList;
+@property (nonatomic, readonly) NSObject<PhotoSource> * photoSource;
+
+@property (nonatomic, assign) NSObject<PhotoBrowserDelegate> * delegate;
 
 - (IBAction)done:(id)sender;
 - (IBAction)showActions:(id)sender;

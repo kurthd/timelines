@@ -93,7 +93,7 @@ static UIImage * defaultAvatar;
     locationButton.hidden = !locationText || [locationText isEqual:@""];
 
     [locationButton setTitle:locationText forState:UIControlStateNormal];
-    
+
     if (favorite = [tweet.favorited isEqual:[NSNumber numberWithInt:1]])
         [favoriteButton setImage:[UIImage imageNamed:@"Favorite.png"]
             forState:UIControlStateNormal];
@@ -210,6 +210,8 @@ static UIImage * defaultAvatar;
     NSString * inReplyToString;
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         NSString * webpage = [[request URL] absoluteString];
+        static NSString * imageUrlRegex =
+            @"^http://twitpic.com/.+|^http://yfrog.com/.+|^http://tinypic.com/.+|^http://twitgoo.com/.+|^http://mobypicture.com/.+";
         if ([webpage isMatchedByRegex:usernameRegex]) {
             NSString * username =
                 [[webpage stringByMatching:usernameRegex] substringFromIndex:1];
@@ -224,6 +226,12 @@ static UIImage * defaultAvatar;
             NSLog(@"Opening 'Mail' with url: %@", webpage);
             NSURL * url = [[NSURL alloc] initWithString:webpage];
             [[UIApplication sharedApplication] openURL:url];
+        } else if ([webpage isMatchedByRegex:imageUrlRegex]) {
+            // load twitpic url in photo browser
+            RemotePhoto * remotePhoto =
+                [[RemotePhoto alloc]
+                initWithImage:nil url:webpage name:webpage];
+            [delegate showPhotoInBrowser:remotePhoto];
         } else
             [delegate visitWebpage:webpage];
     }

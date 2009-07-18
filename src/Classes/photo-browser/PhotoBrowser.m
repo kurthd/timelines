@@ -4,8 +4,8 @@
 
 #import "PhotoBrowser.h"
 #import "UIWebView+FileLoadingAdditions.h"
-#import "AsynchronousNetworkFetcher.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "CommonTwitterServicePhotoSource.h"
 
 @interface PhotoBrowser ()
 
@@ -25,12 +25,15 @@
 
 - (void)sendSelectedImageInEmail;
 - (void)saveSelectedImageToAlbum;
+- (void)openImageInBrowser;
 
 - (void)displayComposerMailSheet;
 
 @end
 
 @implementation PhotoBrowser
+
+@synthesize delegate;
 
 - (void)dealloc
 {
@@ -70,25 +73,34 @@
     isDisplayed = NO;
 }
 
-#pragma mark AsynchronousNetworkFetcherDelegate implementation
+#pragma mark PhotoSourceDelegate implementation
 
-- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
-    didReceiveData:(NSData *)data fromUrl:(NSURL *)url
+- (void)fetchedImage:(UIImage *)image withUrl:(NSString *)url
 {
-    NSLog(@"Received avatar for url: %@", url);
-    UIImage * avatarImage = [UIImage imageWithData:data];
-
-    RemotePhoto * remoteImage = [self remoteImageForUrl:[url absoluteString]];
-    remoteImage.image = avatarImage;
+    NSLog(@"Received image for url: %@", url);
+    RemotePhoto * remoteImage = [self remoteImageForUrl:url];
+    remoteImage.image = image;
 
     RemotePhoto * selectedImage = [self.photoList objectAtIndex:selectedIndex];
     if ([remoteImage isEqual:selectedImage])
-        [self showImage:avatarImage];
+        [self showImage:image];
 }
 
-- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
-    failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
-{}
+- (void)failedToFetchImageWithUrl:(NSString *)url error:(NSError *)error
+{
+    NSString * title =
+        NSLocalizedString(@"photobrowser.fetcherror.title", @"");
+    UIAlertView * alert =
+        [UIAlertView simpleAlertViewWithTitle:title
+        message:[error description]];
+    [alert show];
+}
+
+- (void)unableToFindImageForUrl:(NSString *)url
+{
+    [self performSelector:@selector(openImageInBrowser) withObject:nil
+        afterDelay:0.7];
+}
 
 #pragma mark UIResponder implementation
 
@@ -128,6 +140,9 @@
             break;
         case 1:
             [self saveSelectedImageToAlbum];
+            break;
+        case 2:
+            [self openImageInBrowser];
             break;
     }
 
@@ -191,8 +206,7 @@
     if (selectedImage.image)
         [self showImage:selectedImage.image];
     else {
-        NSURL * avatarUrl = [NSURL URLWithString:selectedImage.url];
-        [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+        [self.photoSource fetchImageWithUrl:selectedImage.url];
         [self setLoadingState:YES];
     }
 
@@ -232,7 +246,7 @@
     CGRect photoViewFrame = photoView.frame;
     photoViewFrame.size = imageSize;
     photoViewFrame.origin.x = (MAX_WIDTH - imageSize.width) / 2;
-    photoViewFrame.origin.y = (MAX_HEIGHT - imageSize.height) / 2 - 20;
+    photoViewFrame.origin.y = (MAX_HEIGHT - imageSize.height) / 2;
     photoView.frame = photoViewFrame;
 
     photoView.image = image;
@@ -246,7 +260,7 @@
     photoViewFrame.size.height = 480;
     photoViewFrame.size.width = 320;
     photoViewFrame.origin.x = 0;
-    photoViewFrame.origin.y = -20;
+    photoViewFrame.origin.y = 0;
     photoView.frame = photoViewFrame;
 
     photoView.image = image;
@@ -399,11 +413,12 @@
     NSString * cancel = NSLocalizedString(@"photobrowser.actions.cancel", @"");
     NSString * email = NSLocalizedString(@"photobrowser.actions.email", @"");
     NSString * save = NSLocalizedString(@"photobrowser.actions.save", @"");
+    NSString * browser = NSLocalizedString(@"photobrowser.actions.browser", @"");
 
     UIActionSheet * sheet =
         [[UIActionSheet alloc]
         initWithTitle:nil delegate:self cancelButtonTitle:cancel
-        destructiveButtonTitle:nil otherButtonTitles:email, save, nil];
+        destructiveButtonTitle:nil otherButtonTitles:email, save, browser, nil];
 
     [sheet showInView:self.view];
 }
@@ -454,10 +469,29 @@
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
 }
 
+- (void)openImageInBrowser
+{
+    [self done:nil];
+    RemotePhoto * selectedPhoto = [self.photoList objectAtIndex:selectedIndex];
+    NSString * selectedUrl = selectedPhoto.url;
+    [delegate performSelector:@selector(visitWebpage:) withObject:selectedUrl
+        afterDelay:0.7];
+}
+
 - (void)setLoadingState:(BOOL)loading
 {
     actionButton.enabled = !loading;
     loadingView.hidden = !loading;
+}
+
+- (NSObject<PhotoSource> *)photoSource
+{
+    if (!photoSource) {
+        photoSource = [[CommonTwitterServicePhotoSource alloc] init];
+        ((CommonTwitterServicePhotoSource *)photoSource).delegate = self;
+    }
+
+    return photoSource;
 }
 
 @end

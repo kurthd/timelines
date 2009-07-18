@@ -200,12 +200,13 @@
 		9145EFCA1005276100C2E485 /* Re-tweetDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 9145EFC91005276100C2E485 /* Re-tweetDisabled.png */; };
 		9145EFFB10054D9400C2E485 /* BlueEnvelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 9145EFFA10054D9400C2E485 /* BlueEnvelope.png */; };
 		9145F024100573AF00C2E485 /* User+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145F023100573AF00C2E485 /* User+UIAdditions.m */; };
+		917FFF0F1010F7A700335C0F /* PhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF0C1010F7A700335C0F /* PhotoBrowser.m */; };
+		917FFF101010F7A700335C0F /* RemotePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF0E1010F7A700335C0F /* RemotePhoto.m */; };
+		917FFF1B1010F8B800335C0F /* CommonTwitterServicePhotoSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF1A1010F8B800335C0F /* CommonTwitterServicePhotoSource.m */; };
 		91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD5A3C100FED36009C2179 /* MessageUI.framework */; };
 		91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
 		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
-		91BD1138100672EF0082D209 /* PhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BD1137100672EF0082D209 /* PhotoBrowser.m */; };
 		91BD113B1006736F0082D209 /* PhotoBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BD11391006736F0082D209 /* PhotoBrowserView.xib */; };
-		91BD1141100676480082D209 /* RemotePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BD1140100676480082D209 /* RemotePhoto.m */; };
 		91BDAFF61004FBC000761694 /* TweetInfo+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */; };
 		91D36956100D12B300B59D12 /* ButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36955100D12B300B59D12 /* ButtonBackground.png */; };
 		91D36965100D1CC900B59D12 /* ButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */; };
@@ -543,6 +544,15 @@
 		916BD9FB0FEF4986007143A9 /* TimelineViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineViewControllerDelegate.h; path = timeline/TimelineViewControllerDelegate.h; sourceTree = "<group>"; };
 		916BDA140FEF4E96007143A9 /* TweetDetailsViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailsViewDelegate.h; path = timeline/TweetDetailsViewDelegate.h; sourceTree = "<group>"; };
 		916BDA4D0FEF573A007143A9 /* tweet-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "tweet-style.css"; sourceTree = "<group>"; };
+		917FFF0B1010F7A700335C0F /* PhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBrowser.h; path = "photo-browser/PhotoBrowser.h"; sourceTree = "<group>"; };
+		917FFF0C1010F7A700335C0F /* PhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBrowser.m; path = "photo-browser/PhotoBrowser.m"; sourceTree = "<group>"; };
+		917FFF0D1010F7A700335C0F /* RemotePhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemotePhoto.h; path = "photo-browser/RemotePhoto.h"; sourceTree = "<group>"; };
+		917FFF0E1010F7A700335C0F /* RemotePhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RemotePhoto.m; path = "photo-browser/RemotePhoto.m"; sourceTree = "<group>"; };
+		917FFF121010F7CB00335C0F /* PhotoSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSource.h; path = "photo-browser/PhotoSource.h"; sourceTree = "<group>"; };
+		917FFF151010F7E500335C0F /* PhotoSourceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSourceDelegate.h; path = "photo-browser/PhotoSourceDelegate.h"; sourceTree = "<group>"; };
+		917FFF191010F8B800335C0F /* CommonTwitterServicePhotoSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonTwitterServicePhotoSource.h; path = "photo-browser/CommonTwitterServicePhotoSource.h"; sourceTree = "<group>"; };
+		917FFF1A1010F8B800335C0F /* CommonTwitterServicePhotoSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonTwitterServicePhotoSource.m; path = "photo-browser/CommonTwitterServicePhotoSource.m"; sourceTree = "<group>"; };
+		917FFFC710112B1200335C0F /* PhotoBrowserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBrowserDelegate.h; path = "photo-browser/PhotoBrowserDelegate.h"; sourceTree = "<group>"; };
 		918E891A0FF16EE30042BBEE /* UserTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTimelineDataSource.h; path = timeline/UserTimelineDataSource.h; sourceTree = "<group>"; };
 		918E891B0FF16EE30042BBEE /* UserTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTimelineDataSource.m; path = timeline/UserTimelineDataSource.m; sourceTree = "<group>"; };
 		918E894E0FF183070042BBEE /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoViewController.h; path = "user-info/UserInfoViewController.h"; sourceTree = "<group>"; };
@@ -564,11 +574,7 @@
 		91AD5A711010187D009C2179 /* PhotoForwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoForwardButton.png; path = images/PhotoForwardButton.png; sourceTree = "<group>"; };
 		91B28D110FFC60A10080023B /* TweetInfo+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TweetInfo+UIAdditions.h"; path = "timeline/TweetInfo+UIAdditions.h"; sourceTree = "<group>"; };
 		91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TweetInfo+UIAdditions.m"; path = "timeline/TweetInfo+UIAdditions.m"; sourceTree = "<group>"; };
-		91BD1136100672EF0082D209 /* PhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBrowser.h; path = shared/PhotoBrowser.h; sourceTree = "<group>"; };
-		91BD1137100672EF0082D209 /* PhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBrowser.m; path = shared/PhotoBrowser.m; sourceTree = "<group>"; };
 		91BD113A1006736F0082D209 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/PhotoBrowserView.xib; sourceTree = "<group>"; };
-		91BD113F100676480082D209 /* RemotePhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemotePhoto.h; path = shared/RemotePhoto.h; sourceTree = "<group>"; };
-		91BD1140100676480082D209 /* RemotePhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RemotePhoto.m; path = shared/RemotePhoto.m; sourceTree = "<group>"; };
 		91CD821A0FF5403F004D04D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TwitchBrowserView.xib; sourceTree = "<group>"; };
 		91CD821C0FF54066004D04D5 /* TwitchBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchBrowserViewController.h; path = timeline/TwitchBrowserViewController.h; sourceTree = "<group>"; };
 		91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchBrowserViewController.m; path = timeline/TwitchBrowserViewController.m; sourceTree = "<group>"; };
@@ -873,10 +879,6 @@
 				05F45CF20FF056DF00EBAFC7 /* AsynchronousNetworkFetcherDelegate.h */,
 				0524C1F00FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.h */,
 				0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */,
-				91BD1136100672EF0082D209 /* PhotoBrowser.h */,
-				91BD1137100672EF0082D209 /* PhotoBrowser.m */,
-				91BD113F100676480082D209 /* RemotePhoto.h */,
-				91BD1140100676480082D209 /* RemotePhoto.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -1080,6 +1082,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				917FFF011010F71A00335C0F /* photo-browser */,
 				052C64150FED700B00B259D7 /* app-controller */,
 				910BE3670FF32040005342EE /* persistence */,
 				910BE1FA0FF2B8E4005342EE /* user-network */,
@@ -1274,6 +1277,22 @@
 				916BDA4D0FEF573A007143A9 /* tweet-style.css */,
 			);
 			path = html;
+			sourceTree = "<group>";
+		};
+		917FFF011010F71A00335C0F /* photo-browser */ = {
+			isa = PBXGroup;
+			children = (
+				917FFF0B1010F7A700335C0F /* PhotoBrowser.h */,
+				917FFF0C1010F7A700335C0F /* PhotoBrowser.m */,
+				917FFF0D1010F7A700335C0F /* RemotePhoto.h */,
+				917FFF0E1010F7A700335C0F /* RemotePhoto.m */,
+				917FFF121010F7CB00335C0F /* PhotoSource.h */,
+				917FFF151010F7E500335C0F /* PhotoSourceDelegate.h */,
+				917FFF191010F8B800335C0F /* CommonTwitterServicePhotoSource.h */,
+				917FFF1A1010F8B800335C0F /* CommonTwitterServicePhotoSource.m */,
+				917FFFC710112B1200335C0F /* PhotoBrowserDelegate.h */,
+			);
+			name = "photo-browser";
 			sourceTree = "<group>";
 		};
 		918E894C0FF182E20042BBEE /* user-info */ = {
@@ -1535,13 +1554,14 @@
 				05EF41800FFADF95007B59F1 /* ExplainOauthViewController.m in Sources */,
 				91BDAFF61004FBC000761694 /* TweetInfo+UIAdditions.m in Sources */,
 				9145F024100573AF00C2E485 /* User+UIAdditions.m in Sources */,
-				91BD1138100672EF0082D209 /* PhotoBrowser.m in Sources */,
-				91BD1141100676480082D209 /* RemotePhoto.m in Sources */,
 				053A11A3100CDBA5008DD2F6 /* DirectMessageDraft.m in Sources */,
 				053A11A4100CDBA5008DD2F6 /* TweetDraft.m in Sources */,
 				0533E03D100D124400CC2378 /* TweetDraftMgr.m in Sources */,
 				0533E0B7100D1F7F00CC2378 /* TwitterCredentials.m in Sources */,
 				0533E0C7100D1FD800CC2378 /* v1-to-v2.xcmappingmodel in Sources */,
+				917FFF0F1010F7A700335C0F /* PhotoBrowser.m in Sources */,
+				917FFF101010F7A700335C0F /* RemotePhoto.m in Sources */,
+				917FFF1B1010F8B800335C0F /* CommonTwitterServicePhotoSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

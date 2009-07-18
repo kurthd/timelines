@@ -907,6 +907,7 @@
         photoBrowser =
             [[PhotoBrowser alloc]
             initWithNibName:@"PhotoBrowserView" bundle:nil];
+        photoBrowser.delegate = self;
     }
 
     return photoBrowser;
