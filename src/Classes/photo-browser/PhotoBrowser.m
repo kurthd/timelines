@@ -154,7 +154,6 @@
 - (void)mailComposeController:(MFMailComposeViewController *)controller
     didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
-    
     if (result == MFMailComposeResultFailed) {
         NSString * title =
             NSLocalizedString(@"photobrowser.emailerror.title", @"");
@@ -163,9 +162,12 @@
             message:[error description]];
         [alert show];
     }
-    
+
+    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
     [controller dismissModalViewControllerAnimated:YES];
     [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
+    [[UIApplication sharedApplication]
+        setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
 }
 
 #pragma mark PhotoBrowser implementation
@@ -441,7 +443,8 @@
 
 - (void)displayComposerMailSheet
 {
-    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault
+        animated:YES];
 
     RemotePhoto * selectedPhoto = [self.photoList objectAtIndex:selectedIndex];
     UIImage * image = selectedPhoto.image;
