@@ -32,6 +32,7 @@
         //  https://sandbox.twitch.highorderbit.com/device/register
         self.urlString =
             [NSString stringWithFormat:@"https://%@/device/register", aDomain];
+            //[NSString stringWithFormat:@"http://%@/device/register", aDomain];
 
     return self;
 }
