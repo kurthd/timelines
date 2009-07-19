@@ -29,6 +29,32 @@
     [super dealloc];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation {
+
+    if (orientation == UIInterfaceOrientationPortrait ||
+        orientation == UIInterfaceOrientationPortrait) {
+
+        CGRect activityIndicatorFrame = activityIndicator.frame;
+        activityIndicatorFrame.origin.x = 291;
+        activityIndicator.frame = activityIndicatorFrame;
+
+        CGRect titleLabelFrame = titleLabel.frame;
+        titleLabelFrame.size.width = 218;
+        titleLabel.frame = titleLabelFrame;
+    } else {
+        CGRect activityIndicatorFrame = activityIndicator.frame;
+        activityIndicatorFrame.origin.x = 451;
+        activityIndicator.frame = activityIndicatorFrame;
+
+        CGRect titleLabelFrame = titleLabel.frame;
+        titleLabelFrame.size.width = 378;
+        titleLabel.frame = titleLabelFrame;
+    }
+
+	return YES;
+}
+
 #pragma mark UIWebViewDelegate implementation
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView
