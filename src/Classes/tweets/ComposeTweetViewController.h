@@ -12,6 +12,7 @@
     IBOutlet UITextView * textView;
 
     IBOutlet UINavigationBar * navigationBar;
+    IBOutlet UIToolbar * toolbar;
     IBOutlet UIBarButtonItem * sendButton;
     IBOutlet UIBarButtonItem * cancelButton;
 

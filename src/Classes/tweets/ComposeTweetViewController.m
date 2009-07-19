@@ -3,6 +3,7 @@
 //
 
 #import "ComposeTweetViewController.h"
+#import "UIColor+TwitchColors.h"
 
 static const NSInteger MAX_TWEET_LENGTH = 140;
 
@@ -21,6 +22,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     [textView release];
     [navigationBar release];
+    [toolbar release];
     [cancelButton release];
     [sendButton release];
     [characterCount release];
@@ -44,12 +46,51 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         textView.text.length > 0 && textView.text.length <= MAX_TWEET_LENGTH;
     if (!displayingActivity)
         [textView becomeFirstResponder];
+        
+    CGRect characterCountFrame = characterCount.frame;
+     // hack -- this needs to be 210 when displayed, but 133 after a rotation
+    characterCountFrame.origin.y = 210;
+    characterCount.frame = characterCountFrame;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [textView resignFirstResponder];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation {
+
+    if (orientation == UIInterfaceOrientationPortrait ||
+        orientation == UIInterfaceOrientationPortrait) {
+
+        CGRect textViewFrame = textView.frame;
+        textViewFrame.size.width = 320;
+        textViewFrame.size.height = 178;
+        textView.frame = textViewFrame;
+
+        CGRect characterCountFrame = characterCount.frame;
+        characterCountFrame.origin.y = 133;
+        characterCount.frame = characterCountFrame;
+        characterCount.textColor = [UIColor whiteColor];
+
+        toolbar.hidden = NO;
+    } else {
+        CGRect textViewFrame = textView.frame;
+        textViewFrame.size.width = 480;
+        textViewFrame.size.height = 95;
+        textView.frame = textViewFrame;
+
+        CGRect characterCountFrame = characterCount.frame;
+        characterCountFrame.origin.y = 173;
+        characterCount.frame = characterCountFrame;
+        characterCount.textColor = [UIColor twitchGrayColor];
+
+        toolbar.hidden = YES;
+    }
+
+	return YES;
 }
 
 - (void)setTitle:(NSString *)title
@@ -171,7 +212,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                           destructiveButtonTitle:nil
                                otherButtonTitles:saveTitle, dontSaveTitle, nil];
 
-        [sheet showInView:self.view.superview];
+        [sheet showInView:self.view];
     }
 }
 
