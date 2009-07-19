@@ -3,8 +3,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MessageUI/MFMailComposeViewController.h>
+#import "TwitchBrowserViewControllerDelegate.h"
 
-@interface TwitchBrowserViewController : UIViewController <UIWebViewDelegate>
+@interface TwitchBrowserViewController :
+    UIViewController <UIWebViewDelegate, UIActionSheetDelegate,
+    MFMailComposeViewControllerDelegate>
 {
     IBOutlet UINavigationItem * navItem;
     IBOutlet UIWebView * webView;
@@ -15,9 +19,14 @@
     IBOutlet UIActivityIndicatorView * activityIndicator;
 
     NSString * currentUrl;
+    
+    NSObject<TwitchBrowserViewControllerDelegate> * delegate;
 }
 
 @property (nonatomic, copy) NSString * currentUrl;
+
+@property (nonatomic, assign) NSObject<TwitchBrowserViewControllerDelegate> *
+    delegate;
 
 - (void)setUrl:(NSString *)url;
 
@@ -25,6 +34,10 @@
 - (IBAction)moveBackAPage;
 - (IBAction)moveForwardAPage;
 - (IBAction)haltLoading;
-- (IBAction)openInSafari;
+- (IBAction)showActions;
+
+- (void)openInSafari;
+- (void)sendInEmail;
+- (void)postInTweet;
 
 @end

@@ -104,3 +104,9 @@ photobrowser.emailerror.title = "Error Sending Email";
 photobrowser.unabletosendmail.title = "Unable to Send Mail";
 photobrowser.unabletosendmail.message = "Your device is not configured for sending mail";
 photobrowser.fetcherror.title = "Error Fetching Image";
+
+/* BrowserView */
+browserview.actions.cancel = "Cancel";
+browserview.actions.browser = "Open in Safari";
+browserview.actions.post = "Post in Tweet";
+browserview.actions.email = "Email Link";

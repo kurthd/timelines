@@ -814,11 +814,19 @@
 
 - (void)reTweetSelected
 {
-    NSLog(@"Timeline display manager: replying to tweet with direct message");
+    NSLog(@"Timeline display manager: composing retweet");
     NSString * reTweetMessage =
         [NSString stringWithFormat:@"%@ (via @%@)", selectedTweet.text,
         selectedTweet.user.username];
     [composeTweetDisplayMgr composeTweetWithText:reTweetMessage];
+}
+
+#pragma mark TwitchBrowserViewControllerDelegate implementation
+
+- (void)composeTweetWithText:(NSString *)text
+{
+    NSLog(@"Timeline display manager: composing tweet with text'%@'", text);
+    [composeTweetDisplayMgr composeTweetWithText:text];
 }
 
 #pragma mark Accessors
@@ -924,6 +932,7 @@
         browserController =
             [[TwitchBrowserViewController alloc]
             initWithNibName:@"TwitchBrowserView" bundle:nil];
+        browserController.delegate = self;
     }
 
     return browserController;

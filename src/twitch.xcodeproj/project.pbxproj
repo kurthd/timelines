@@ -557,6 +557,7 @@
 		917FFFC710112B1200335C0F /* PhotoBrowserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBrowserDelegate.h; path = "photo-browser/PhotoBrowserDelegate.h"; sourceTree = "<group>"; };
 		9180B6BE101240B60096DFA1 /* ButtonBackground-92x35.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ButtonBackground-92x35.png"; path = "images/ButtonBackground-92x35.png"; sourceTree = "<group>"; };
 		9180B6C4101244CD0096DFA1 /* ButtonBackground-108x35.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ButtonBackground-108x35.png"; path = "images/ButtonBackground-108x35.png"; sourceTree = "<group>"; };
+		9180B7AD1012AA170096DFA1 /* TwitchBrowserViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchBrowserViewControllerDelegate.h; path = timeline/TwitchBrowserViewControllerDelegate.h; sourceTree = "<group>"; };
 		918E891A0FF16EE30042BBEE /* UserTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTimelineDataSource.h; path = timeline/UserTimelineDataSource.h; sourceTree = "<group>"; };
 		918E891B0FF16EE30042BBEE /* UserTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTimelineDataSource.m; path = timeline/UserTimelineDataSource.m; sourceTree = "<group>"; };
 		918E894E0FF183070042BBEE /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoViewController.h; path = "user-info/UserInfoViewController.h"; sourceTree = "<group>"; };
@@ -1273,6 +1274,7 @@
 				91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */,
 				91B28D110FFC60A10080023B /* TweetInfo+UIAdditions.h */,
 				91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */,
+				9180B7AD1012AA170096DFA1 /* TwitchBrowserViewControllerDelegate.h */,
 			);
 			name = timeline;
 			sourceTree = "<group>";

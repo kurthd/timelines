@@ -4,18 +4,20 @@
 
 #import "TwitchBrowserViewController.h"
 #import "RegexKitLite.h"
+#import "UIAlertView+InstantiationAdditions.h"
 
 @interface TwitchBrowserViewController ()
 
 - (void)updateViewForNotLoading;
 - (void)updatePageTitle;
 - (void)animatedActivityIndicators:(BOOL)animating;
+- (void)displayComposerMailSheet;
 
 @end
 
 @implementation TwitchBrowserViewController
 
-@synthesize currentUrl;
+@synthesize currentUrl, delegate;
 
 - (void)dealloc
 {
@@ -73,6 +75,45 @@
     [self updatePageTitle];
 }
 
+#pragma mark UIActionSheetDelegate implementation
+
+- (void)actionSheet:(UIActionSheet *)sheet
+    clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"User clicked button at index: %d.", buttonIndex);
+
+    switch (buttonIndex) {
+        case 0:
+            [self openInSafari];
+            break;
+        case 1:
+            [self postInTweet];
+            break;
+        case 2:
+            [self sendInEmail];
+            break;
+    }
+
+    [sheet autorelease];
+}
+
+#pragma mark MFMailComposeViewControllerDelegate implementation
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+    didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    if (result == MFMailComposeResultFailed) {
+        NSString * title =
+            NSLocalizedString(@"photobrowser.emailerror.title", @"");
+        UIAlertView * alert =
+            [UIAlertView simpleAlertViewWithTitle:title
+            message:[error description]];
+        [alert show];
+    }
+
+    [controller dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark TwitchBrowserViewController implementation
 
 - (void)setUrl:(NSString *)urlString
@@ -114,11 +155,75 @@
         [webView reload];
 }
 
-- (IBAction)openInSafari
+- (IBAction)showActions
 {
+    NSString * cancel = NSLocalizedString(@"browserview.actions.cancel", @"");
+    NSString * browser = NSLocalizedString(@"browserview.actions.browser", @"");
+    NSString * post = NSLocalizedString(@"browserview.actions.post", @"");
+    NSString * email = NSLocalizedString(@"browserview.actions.email", @"");
+
+    UIActionSheet * sheet =
+        [[UIActionSheet alloc]
+        initWithTitle:nil delegate:self cancelButtonTitle:cancel
+        destructiveButtonTitle:nil otherButtonTitles:browser, post, email, nil];
+
+    [sheet showInView:self.view];
+}
+
+- (void)openInSafari
+{
+    NSLog(@"Opening page in safari");
     NSURL * url = [webView.request URL];
     url = url ? url : [NSURL URLWithString:self.currentUrl];
     [[UIApplication sharedApplication] openURL:url];
+}
+
+- (void)sendInEmail
+{
+    NSLog(@"Sending page link in email");
+    if ([MFMailComposeViewController canSendMail]) {
+        [self displayComposerMailSheet];
+    } else {
+        NSString * title =
+            NSLocalizedString(@"photobrowser.unabletosendmail.title", @"");
+        NSString * message =
+            NSLocalizedString(@"photobrowser.unabletosendmail.message", @"");
+        UIAlertView * alert =
+            [UIAlertView simpleAlertViewWithTitle:title message:message];
+        [alert show];
+    }
+}
+
+- (void)displayComposerMailSheet
+{
+	MFMailComposeViewController * picker =
+	    [[MFMailComposeViewController alloc] init];
+	picker.mailComposeDelegate = self;
+
+    [picker setSubject:titleLabel.text];
+
+    NSURL * url = [webView.request URL];
+    url = url ? url : [NSURL URLWithString:self.currentUrl];
+    NSString * urlAsString = [url absoluteString];
+
+    [picker setMessageBody:urlAsString isHTML:NO];
+
+	[self presentModalViewController:picker animated:YES];
+
+    [picker release];
+}
+
+- (void)postInTweet
+{
+    NSLog(@"Posting page link in tweet");
+    
+    NSURL * url = [webView.request URL];
+    url = url ? url : [NSURL URLWithString:self.currentUrl];
+    NSString * urlAsString = [url absoluteString];
+    
+    [self dismissView];
+    [delegate performSelector:@selector(composeTweetWithText:)
+        withObject:urlAsString afterDelay:0.5];
 }
 
 - (void)updateViewForNotLoading
