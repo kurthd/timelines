@@ -10,6 +10,7 @@
 + (NSString *)plistName;
 + (NSString *)selectedTabKey;
 + (NSString *)selectedTimelineFeedKey;
++ (NSString *)viewedTweetIdKey;
 
 @end
 
@@ -27,9 +28,12 @@
     NSUInteger selectedTimelineFeed =
         [[dict objectForKey:[[self class] selectedTimelineFeedKey]]
         unsignedIntValue];
+    NSString * viewedTweetId =
+        [dict objectForKey:[[self class] viewedTweetIdKey]];
 
     state.selectedTab = selectedTab;
     state.selectedTimelineFeed = selectedTimelineFeed;
+    state.viewedTweetId = viewedTweetId;
 
     return state;
 }
@@ -44,6 +48,7 @@
         [NSNumber numberWithInt:state.selectedTimelineFeed];
     [dict setObject:selectedTimelineFeed
         forKey:[[self class] selectedTimelineFeedKey]];
+    [dict setObject:state.viewedTweetId forKey:[[self class] viewedTweetIdKey]];
 
     [PlistUtils saveDictionary:dict toPlist:[[self class] plistName]];
 }
@@ -61,6 +66,11 @@
 + (NSString *)selectedTimelineFeedKey
 {
     return @"selectedTimelineFeedKey";
+}
+
++ (NSString *)viewedTweetIdKey
+{
+    return @"viewedTweetIdKey";
 }
 
 @end

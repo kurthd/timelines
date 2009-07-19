@@ -57,7 +57,8 @@
 @property (nonatomic, copy) NSString * segregatedSenderUsername;
 
 - (void)setUser:(User *)user;
-- (void)setTweets:(NSArray *)tweets page:(NSUInteger)page;
+- (void)setTweets:(NSArray *)tweets page:(NSUInteger)page
+    visibleTweetId:(NSString *)visibleTweetId;
 - (void)setAllPagesLoaded:(BOOL)allLoaded;
 - (void)setSegregateTweetsFromUser:(NSString *)username;
 
@@ -67,5 +68,6 @@
 - (IBAction)showFullProfileImage:(id)sender;
 
 - (void)addTweet:(TweetInfo *)tweet;
+- (NSString *)mostRecentTweetId;
 
 @end

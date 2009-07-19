@@ -925,6 +925,8 @@
     // HACK: Let the search view do some custom drawing when it appears
     if (uiState.selectedTab == 3)
         [searchBarDisplayMgr searchBarViewWillAppear:NO];
+
+    timelineDisplayMgr.tweetIdToShow = uiState.viewedTweetId;
 }
 
 - (void)persistUIState
@@ -936,6 +938,7 @@
     UISegmentedControl * control = (UISegmentedControl *)
         homeNetAwareViewController.navigationItem.titleView;
     uiState.selectedTimelineFeed = control.selectedSegmentIndex;
+    uiState.viewedTweetId = [timelineDisplayMgr mostRecentTweetId];
     [uiStatePersistenceStore save:uiState];
 }
 

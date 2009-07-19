@@ -238,6 +238,7 @@ static UIImage * defaultAvatar;
 }
 
 - (void)setTweets:(NSArray *)someTweets page:(NSUInteger)page
+    visibleTweetId:(NSString *)visibleTweetId
 {
     if (!segregatedSenderUsername) {
         NSLog(@"Displaying tweets without inbox/outbox...");
@@ -278,6 +279,24 @@ static UIImage * defaultAvatar;
     [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
         forState:UIControlStateNormal];
     loadMoreButton.enabled = YES;
+    
+    if (visibleTweetId) {
+        NSLog(@"Scrolling to visible tweet id %@", visibleTweetId);
+        NSUInteger visibleRow = 0;
+        for (TweetInfo * tweetInfo in self.sortedTweets) {
+            if ([visibleTweetId isEqual:tweetInfo.identifier])
+                break;
+            visibleRow++;
+        }
+        if (visibleRow < [self.sortedTweets count]) {
+            NSLog(@"Scrolling to row %d", visibleRow);
+            NSIndexPath * scrollIndexPath =
+                [NSIndexPath indexPathForRow:visibleRow inSection:0];
+            [self.tableView scrollToRowAtIndexPath:scrollIndexPath
+                atScrollPosition:UITableViewScrollPositionTop animated:NO];
+            [self.tableView flashScrollIndicators];
+        }
+    }
 }
 
 - (void)setAllPagesLoaded:(BOOL)allLoaded
@@ -390,6 +409,14 @@ static UIImage * defaultAvatar;
         [[RemotePhoto alloc]
         initWithImage:avatarImage url:user.profileImageUrl name:user.name];
     [delegate showPhotoInBrowser:remotePhoto];
+}
+
+- (NSString *)mostRecentTweetId
+{
+    TweetInfo * mostRecentTweet =
+        (TweetInfo *)[[self sortedTweetCache] objectAtIndex:0];
+
+    return mostRecentTweet.identifier;
 }
 
 @end

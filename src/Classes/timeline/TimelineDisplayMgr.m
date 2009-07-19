@@ -33,7 +33,8 @@
     tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher,
     lastFollowingUsername, lastTweetDetailsWrapperController,
     lastTweetDetailsController, currentTweetDetailsUser, currentUsername,
-    allPagesLoaded, setUserToAuthenticatedUser, firstFetchReceived;
+    allPagesLoaded, setUserToAuthenticatedUser, firstFetchReceived,
+    tweetIdToShow;
 
 - (void)dealloc
 {
@@ -122,7 +123,7 @@
         [timeline setObject:tweet forKey:tweet.identifier];
     NSInteger newTimelineCount = [[timeline allKeys] count];
 
-    if (!refreshingTweets) {
+    if (!refreshingTweets) { // loading more
         NSInteger pageAsInt = [page intValue];
         allPagesLoaded =
             (oldTimelineCount == newTimelineCount && firstFetchReceived &&
@@ -148,12 +149,15 @@
         } else if (credentials)
             [service fetchUserInfoForUsername:self.currentUsername];
     }
-    [timelineController setTweets:[timeline allValues] page:pagesShown];
+
+    [timelineController setTweets:[timeline allValues] page:pagesShown
+        visibleTweetId:self.tweetIdToShow];
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
     [wrapperController setCachedDataAvailable:YES];
     refreshingTweets = NO;
     failedState = NO;
     firstFetchReceived = YES;
+    self.tweetIdToShow = nil;
 }
 
 - (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)anUpdateId
@@ -979,7 +983,8 @@
         scrollRectToVisible:self.timelineController.tableView.frame
         animated:NO];
 
-    [timelineController setTweets:[timeline allValues] page:pagesShown];
+    [timelineController setTweets:[timeline allValues] page:pagesShown
+        visibleTweetId:nil];
     [timelineController setAllPagesLoaded:allPagesLoaded];
 
     if (refresh || [[someTweets allKeys] count] == 0)
@@ -1092,6 +1097,11 @@
             credentials.username);
         [self.timelineController setSegregateTweetsFromUser:nil];
     }
+}
+
+- (NSString *)mostRecentTweetId
+{
+    return [self.timelineController mostRecentTweetId];
 }
 
 @end

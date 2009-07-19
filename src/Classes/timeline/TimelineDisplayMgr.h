@@ -82,6 +82,8 @@
     BOOL failedState;
     
     NSString * currentTweetDetailsUser;
+    
+    NSString * tweetIdToShow;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
@@ -124,6 +126,8 @@
 
 @property (nonatomic, copy) NSString * currentTweetDetailsUser;
     
+@property (nonatomic, copy) NSString * tweetIdToShow;
+    
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController
     service:(NSObject<TimelineDataSource> *)service title:(NSString *)title
@@ -142,5 +146,7 @@
 - (void)addTweet:(Tweet *)tweet;
 
 - (void)setShowInboxOutbox:(BOOL)show;
+
+- (NSString *)mostRecentTweetId;
 
 @end

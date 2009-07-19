@@ -6,6 +6,6 @@
 
 @implementation UIState
 
-@synthesize selectedTab, selectedTimelineFeed;
+@synthesize selectedTab, selectedTimelineFeed, viewedTweetId;
 
 @end

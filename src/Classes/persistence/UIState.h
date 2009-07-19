@@ -8,9 +8,11 @@
 {
     NSUInteger selectedTab;
     NSUInteger selectedTimelineFeed;
+    NSString * viewedTweetId;
 }
 
 @property (nonatomic, assign) NSUInteger selectedTab;
 @property (nonatomic, assign) NSUInteger selectedTimelineFeed;
+@property (nonatomic, copy) NSString * viewedTweetId;
 
 @end
