@@ -22,6 +22,7 @@
 - (void)processFadeBarsEvent;
 - (void)setLoadingState:(BOOL)loading;
 - (void)hideStatusBar;
+- (void)showStatusBar;
 
 - (void)sendSelectedImageInEmail;
 - (void)saveSelectedImageToAlbum;
@@ -71,6 +72,58 @@
 {
     [super viewWillDisappear:animated];
     isDisplayed = NO;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation {
+
+    if (orientation == UIInterfaceOrientationPortrait ||
+        orientation == UIInterfaceOrientationPortrait) {
+
+        CGRect navigationBarFrame = navigationBar.frame;
+        navigationBarFrame.size.width = 320;
+        navigationBar.frame = navigationBarFrame;
+
+        CGRect photoViewFrame = photoView.frame;
+        photoViewFrame.size.width = 320;
+        photoViewFrame.size.height = 480;
+        photoView.frame = photoViewFrame;
+        
+        CGRect toolbarFrame = toolbar.frame;
+        toolbarFrame.size.width = 320;
+        toolbarFrame.origin.y = 436;
+        toolbar.frame = toolbarFrame;
+    } else {
+        CGRect navigationBarFrame = navigationBar.frame;
+        navigationBarFrame.size.width = 480;
+        navigationBar.frame = navigationBarFrame;
+
+        CGRect photoViewFrame = photoView.frame;
+        photoViewFrame.size.width = 480;
+        photoViewFrame.size.height = 320;
+        photoView.frame = photoViewFrame;
+
+        CGRect toolbarFrame = toolbar.frame;
+        toolbarFrame.size.width = 480;
+        toolbarFrame.origin.y = 276;
+        toolbar.frame = toolbarFrame;
+    }
+
+	return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
+    duration:(NSTimeInterval)duration
+{
+    if (![[UIApplication sharedApplication] isStatusBarHidden]) {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
+        [self performSelector:@selector(showStatusBar) withObject:nil
+            afterDelay:0.3];
+    }
+
+    RemotePhoto * selectedImage = [self.photoList objectAtIndex:selectedIndex];
+    UIImage * image = selectedImage.image;
+    [self showImageZoomed:image];
 }
 
 #pragma mark PhotoSourceDelegate implementation
@@ -229,26 +282,32 @@
 
 - (void)showImage:(UIImage *)image
 {
-    static const NSInteger MAX_HEIGHT = 480;
-    static const NSInteger MAX_WIDTH = 320;
+    NSInteger maxHeight =
+        (self.interfaceOrientation == UIInterfaceOrientationPortrait ||
+        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) ?
+        480 : 320;
+    NSInteger maxWidth =
+        (self.interfaceOrientation == UIInterfaceOrientationPortrait ||
+        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) ?
+        320 : 480;
     
     CGSize imageSize = image.size;
-    if (imageSize.height > MAX_HEIGHT || imageSize.width > MAX_WIDTH) {
+    if (imageSize.height > maxHeight || imageSize.width > maxWidth) {
         CGFloat heightToWidthRatio =
             (CGFloat)imageSize.height / imageSize.width;
-        if (heightToWidthRatio > (CGFloat)MAX_HEIGHT / MAX_WIDTH) {
-            imageSize.height = MAX_HEIGHT;
-            imageSize.width = 1 / heightToWidthRatio * MAX_HEIGHT;
+        if (heightToWidthRatio > (CGFloat)maxHeight / maxWidth) {
+            imageSize.height = maxHeight;
+            imageSize.width = 1 / heightToWidthRatio * maxHeight;
         } else {
-            imageSize.height = heightToWidthRatio * MAX_WIDTH;
-            imageSize.width = MAX_WIDTH;
+            imageSize.height = heightToWidthRatio * maxWidth;
+            imageSize.width = maxWidth;
         }
     }
 
     CGRect photoViewFrame = photoView.frame;
     photoViewFrame.size = imageSize;
-    photoViewFrame.origin.x = (MAX_WIDTH - imageSize.width) / 2;
-    photoViewFrame.origin.y = (MAX_HEIGHT - imageSize.height) / 2;
+    photoViewFrame.origin.x = (maxWidth - imageSize.width) / 2;
+    photoViewFrame.origin.y = (maxHeight - imageSize.height) / 2;
     photoView.frame = photoViewFrame;
 
     photoView.image = image;
@@ -259,8 +318,14 @@
 - (void)showImageZoomed:(UIImage *)image
 {
     CGRect photoViewFrame = photoView.frame;
-    photoViewFrame.size.height = 480;
-    photoViewFrame.size.width = 320;
+    photoViewFrame.size.height =
+        (self.interfaceOrientation == UIInterfaceOrientationPortrait ||
+        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) ?
+        480 : 320;
+    photoViewFrame.size.width =
+        (self.interfaceOrientation == UIInterfaceOrientationPortrait ||
+        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) ?
+        320 : 480;
     photoViewFrame.origin.x = 0;
     photoViewFrame.origin.y = 0;
     photoView.frame = photoViewFrame;
@@ -373,6 +438,12 @@
 {
     if (isDisplayed && barsFaded)
         [[UIApplication sharedApplication] setStatusBarHidden:YES animated:YES];
+}
+
+- (void)showStatusBar
+{
+    if (!barsFaded)
+        [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
 }
 
 - (void)showBars
