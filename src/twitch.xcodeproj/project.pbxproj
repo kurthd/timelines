@@ -12,6 +12,8 @@
 		0533E0C7100D1FD800CC2378 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0533E0C6100D1FD800CC2378 /* v1-to-v2.xcmappingmodel */; };
 		053A11A3100CDBA5008DD2F6 /* DirectMessageDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 053A11A0100CDBA5008DD2F6 /* DirectMessageDraft.m */; };
 		053A11A4100CDBA5008DD2F6 /* TweetDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 053A11A2100CDBA5008DD2F6 /* TweetDraft.m */; };
+		05948992101569B700C37C98 /* AccountSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05948991101569B700C37C98 /* AccountSettingsViewController.m */; };
+		05948995101569D500C37C98 /* AccountSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05948993101569D500C37C98 /* AccountSettingsView.xib */; };
 		0599416C0FFB32F100842518 /* twitch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0599416A0FFB32F100842518 /* twitch.xcdatamodeld */; };
 		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		05EF40D50FFADF95007B59F1 /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
@@ -291,6 +293,9 @@
 		057E82410FF345CA0074A91B /* SendDirectMessageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SendDirectMessageResponseProcessor.m; path = twitter/processors/SendDirectMessageResponseProcessor.m; sourceTree = "<group>"; };
 		057E82DD0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QueryIsFollowingResponseProcessor.h; path = twitter/processors/QueryIsFollowingResponseProcessor.h; sourceTree = "<group>"; };
 		057E82DE0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QueryIsFollowingResponseProcessor.m; path = twitter/processors/QueryIsFollowingResponseProcessor.m; sourceTree = "<group>"; };
+		05948990101569B700C37C98 /* AccountSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountSettingsViewController.h; path = accounts/AccountSettingsViewController.h; sourceTree = "<group>"; };
+		05948991101569B700C37C98 /* AccountSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountSettingsViewController.m; path = accounts/AccountSettingsViewController.m; sourceTree = "<group>"; };
+		05948994101569D500C37C98 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/AccountSettingsView.xib; sourceTree = "<group>"; };
 		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		0599416D0FFB32F100842518 /* twitch-v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.xcdatamodel"; sourceTree = "<group>"; };
 		059942300FFB6CE800842518 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
@@ -622,6 +627,8 @@
 				0524BDFA0FF16E2200A6099B /* AccountsDisplayMgr.m */,
 				0524BDF50FF16E0500A6099B /* AccountsViewController.h */,
 				0524BDF60FF16E0500A6099B /* AccountsViewController.m */,
+				05948990101569B700C37C98 /* AccountSettingsViewController.h */,
+				05948991101569B700C37C98 /* AccountSettingsViewController.m */,
 			);
 			name = accounts;
 			sourceTree = "<group>";
@@ -908,6 +915,7 @@
 				057620320FF736D600392ADC /* OauthLogInView.xib */,
 				05C7051B0FF88C4100936E4C /* ExplainOauthView.xib */,
 				91BD11391006736F0082D209 /* PhotoBrowserView.xib */,
+				05948993101569D500C37C98 /* AccountSettingsView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -1421,6 +1429,7 @@
 				91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */,
 				9180B6BF101240B60096DFA1 /* ButtonBackground-92x35.png in Resources */,
 				9180B6C5101244CD0096DFA1 /* ButtonBackground-108x35.png in Resources */,
+				05948995101569D500C37C98 /* AccountSettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1572,6 +1581,7 @@
 				917FFF0F1010F7A700335C0F /* PhotoBrowser.m in Sources */,
 				917FFF101010F7A700335C0F /* RemotePhoto.m in Sources */,
 				917FFF1B1010F8B800335C0F /* CommonTwitterServicePhotoSource.m in Sources */,
+				05948992101569B700C37C98 /* AccountSettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1584,6 +1594,14 @@
 				057620330FF736D600392ADC /* en */,
 			);
 			name = OauthLogInView.xib;
+			sourceTree = "<group>";
+		};
+		05948993101569D500C37C98 /* AccountSettingsView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				05948994101569D500C37C98 /* en */,
+			);
+			name = AccountSettingsView.xib;
 			sourceTree = "<group>";
 		};
 		05B238820FEDC34200A6A2E6 /* MainWindow.xib */ = {
