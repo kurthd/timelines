@@ -22,8 +22,6 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>DeviceRegistrationDomainLocal</key>
-	<string>megatron.local:3000</string>
 	<key>DeviceRegistrationDomain</key>
 	<string>${DEVICE_REGISTRATION_DOMAIN}</string>
 	<key>LSRequiresIPhoneOS</key>
