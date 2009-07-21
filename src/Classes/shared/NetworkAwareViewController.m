@@ -84,7 +84,11 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 {
     [super viewDidAppear:animated];
     visible = YES;
-    [targetViewController.view.superview addSubview:[self updatingView]];
+    
+    // Is this line necessary?  It doesn't appear so, and it fixes a bug where
+    // the updating view consumes the whole screen once a tab is moved under
+    // the 'more' tab.
+//    [targetViewController.view.superview addSubview:[self updatingView]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

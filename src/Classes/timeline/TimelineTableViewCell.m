@@ -125,6 +125,15 @@ static UIImage * backgroundImage;
                 avatar.hidden = YES;
                 tweetTextLabelFrame.size.width = 291;
                 break;
+            case kTimelineTableViewCellTypeNormalNoName:
+                avatar.hidden = NO;
+                avatarFrame.origin.x = 7;
+                nameLabel.hidden = YES;
+                dateLabelFrame.origin.x = 64;
+                dateLabel.textAlignment = UITextAlignmentLeft;
+                tweetTextLabelFrame.origin.x = 64;
+                tweetTextLabelFrame.size.width = 234;
+            break;
         }
 
         avatar.frame = avatarFrame;
@@ -151,7 +160,7 @@ static UIImage * backgroundImage;
     NSInteger minHeight =
         displayType == kTimelineTableViewCellTypeNoAvatar ?
         0 : 64;
-    NSUInteger height = 34.0 + size.height;
+    NSUInteger height = 36.0 + size.height;
     height = height > minHeight ? height : minHeight;
 
     return height;

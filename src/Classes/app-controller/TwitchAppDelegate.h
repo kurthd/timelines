@@ -6,6 +6,7 @@
 #import "NetworkAwareViewController.h"
 #import "DeviceRegistrarDelegate.h"
 #import "TimelineDisplayMgrFactory.h"
+#import "DirectMessageDisplayMgrFactory.h"
 #import "TwitterServiceDelegate.h"
 #import "ComposeTweetDisplayMgrDelegate.h"
 #import "PersonalFeedSelectionMgr.h"
@@ -43,12 +44,15 @@
 
     // Root view controllers
     IBOutlet NetworkAwareViewController * homeNetAwareViewController;
+    IBOutlet NetworkAwareViewController * messagesNetAwareViewController;
     IBOutlet NetworkAwareViewController * profileNetAwareViewController;
     IBOutlet NetworkAwareViewController * trendsNetAwareViewController;
     IBOutlet NetworkAwareViewController * searchNetAwareViewController;
     IBOutlet AccountsViewController * accountsViewController;
-    
+
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
+    DirectMessageDisplayMgrFactory * directMessageDisplayMgrFactory;
+    DirectMessagesDisplayMgr * directMessageDisplayMgr;
     TimelineDisplayMgr * timelineDisplayMgr;
     TimelineDisplayMgr * profileTimelineDisplayMgr;
     PersonalFeedSelectionMgr * personalFeedSelectionMgr;

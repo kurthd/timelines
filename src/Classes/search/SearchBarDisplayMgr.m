@@ -101,6 +101,10 @@
                                forceRefresh:NO
                              allPagesLoaded:NO];
         self.searchDisplayMgr.dataSourceDelegate = self.timelineDisplayMgr;
+
+        [self.networkAwareViewController setUpdatingState:kDisconnected];
+        [self.networkAwareViewController setCachedDataAvailable:NO];
+        [self.networkAwareViewController setNoConnectionText:@""];
     }
 
     return self;

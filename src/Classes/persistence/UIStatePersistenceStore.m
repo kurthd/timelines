@@ -11,6 +11,7 @@
 + (NSString *)selectedTabKey;
 + (NSString *)selectedTimelineFeedKey;
 + (NSString *)viewedTweetIdKey;
++ (NSString *)tabOrderKey;
 
 @end
 
@@ -30,10 +31,11 @@
         unsignedIntValue];
     NSString * viewedTweetId =
         [dict objectForKey:[[self class] viewedTweetIdKey]];
-
+    NSArray * tabOrder = [dict objectForKey:[[self class] tabOrderKey]];
     state.selectedTab = selectedTab;
     state.selectedTimelineFeed = selectedTimelineFeed;
     state.viewedTweetId = viewedTweetId;
+    state.tabOrder = tabOrder;
 
     return state;
 }
@@ -49,6 +51,7 @@
     [dict setObject:selectedTimelineFeed
         forKey:[[self class] selectedTimelineFeedKey]];
     [dict setObject:state.viewedTweetId forKey:[[self class] viewedTweetIdKey]];
+    [dict setObject:state.tabOrder forKey:[[self class] tabOrderKey]];
 
     [PlistUtils saveDictionary:dict toPlist:[[self class] plistName]];
 }
@@ -70,7 +73,12 @@
 
 + (NSString *)viewedTweetIdKey
 {
-    return @"viewedTweetIdKey";
+    return @"viewedTweetId";
+}
+
++ (NSString *)tabOrderKey
+{
+    return @"tabOrder";
 }
 
 @end

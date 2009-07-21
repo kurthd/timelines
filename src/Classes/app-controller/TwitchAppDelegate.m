@@ -39,6 +39,7 @@
     activeCredentials;
 
 - (void)initHomeTab;
+- (void)initMessagesTab;
 - (void)initProfileTab;
 - (void)initTrendsTab;
 - (void)initAccountsTab;
@@ -57,6 +58,7 @@
 - (void)prunePersistenceStore;
 - (void)loadHomeViewWithCachedData:(TwitterCredentials *)account;
 - (void)setUIStateFromPersistence;
+- (void)setSelectedTabFromPersistence;
 - (void)persistUIState;
 
 @end
@@ -91,12 +93,15 @@
     [persistentStoreCoordinator release];
 
     [homeNetAwareViewController release];
+    [messagesNetAwareViewController release];
     [profileNetAwareViewController release];
     [trendsNetAwareViewController release];
     [searchNetAwareViewController release];
 
     [timelineDisplayMgrFactory release];
+    [directMessageDisplayMgrFactory release];
     [timelineDisplayMgr release];
+    [directMessageDisplayMgr release];
     [profileTimelineDisplayMgr release];
     [personalFeedSelectionMgr release];
 
@@ -137,7 +142,11 @@
     timelineDisplayMgrFactory =
         [[TimelineDisplayMgrFactory alloc]
         initWithContext:[self managedObjectContext]];
+    directMessageDisplayMgrFactory =
+        [[DirectMessageDisplayMgrFactory alloc]
+        initWithContext:[self managedObjectContext]];
     [self initHomeTab];
+    [self initMessagesTab];
     [self initProfileTab];
     [self initTrendsTab];
     [self initSearchTab];
@@ -157,6 +166,7 @@
         NSLog(@"Active credentials on startup: '%@'.", c);
 
         [timelineDisplayMgr setCredentials:c];
+        [directMessageDisplayMgr setCredentials:c];
         [profileTimelineDisplayMgr setCredentials:c];
         [trendsDisplayMgr setCredentials:c];
         [searchBarDisplayMgr setCredentials:c];
@@ -188,7 +198,7 @@
         if (![self saveContext])
             exit(-1);  // fail
     }
-    
+
     [self persistUIState];
 }
 
@@ -364,15 +374,10 @@
         context:[self managedObjectContext]]
         autorelease];
 
-    TwitterService * messagesService =
-        [[[TwitterService alloc] initWithTwitterCredentials:nil
-        context:[self managedObjectContext]]
-        autorelease];
-
     personalFeedSelectionMgr =
         [[PersonalFeedSelectionMgr alloc]
         initWithTimelineDisplayMgr:timelineDisplayMgr allService:allService
-        mentionsService:mentionsService messagesService:messagesService];
+        mentionsService:mentionsService];
     UISegmentedControl * segmentedControl =
         (UISegmentedControl *)
         homeNetAwareViewController.navigationItem.titleView;
@@ -383,6 +388,18 @@
     [[CredentialsActivatedPublisher alloc]
         initWithListener:personalFeedSelectionMgr
         action:@selector(setCredentials:)];
+}
+
+- (void)initMessagesTab
+{
+    directMessageDisplayMgr =
+        [[directMessageDisplayMgrFactory
+        createDirectMessageDisplayMgrWithWrapperController:
+        messagesNetAwareViewController
+        managedObjectContext:[self managedObjectContext]
+        composeTweetDisplayMgr:self.composeTweetDisplayMgr
+        timelineDisplayMgrFactory:timelineDisplayMgrFactory]
+        retain];
 }
 
 - (void)initProfileTab
@@ -889,32 +906,24 @@
 
     NSArray * allTweets = [UserTweet findAll:predicate context:context];
     NSArray * allMentions = [Mention findAll:predicate context:context];
-    NSArray * allDms = [DirectMessage findAll:predicate context:context];
 
     NSLog(@"Loaded tweets: '%@'.", allTweets);
     NSLog(@"Loaded mentions: '%@'.", allMentions);
-    NSLog(@"Loaded direct messages: '%@'.", allDms);
 
     // convert them all to dictionaries
     NSMutableDictionary * tweets =
         [NSMutableDictionary dictionaryWithCapacity:allTweets.count];
     NSMutableDictionary * mentions =
         [NSMutableDictionary dictionaryWithCapacity:allMentions.count];
-    NSMutableDictionary * dms =
-        [NSMutableDictionary dictionaryWithCapacity:allDms.count];
     for (UserTweet * tweet in allTweets)
         [tweets setObject:[TweetInfo createFromTweet:tweet]
                    forKey:tweet.identifier];
     for (Mention * mention in allMentions)
         [mentions setObject:[TweetInfo createFromTweet:mention]
                      forKey:mention.identifier];
-    for (DirectMessage * dm in allDms)
-        [dms setObject:[TweetInfo createFromDirectMessage:dm]
-                forKey:dm.identifier];
 
     personalFeedSelectionMgr.allTimelineTweets = tweets;
     personalFeedSelectionMgr.mentionsTimelineTweets = mentions;
-    personalFeedSelectionMgr.messagesTimelineTweets = dms;
 
     [personalFeedSelectionMgr refreshCurrentTabData];
 }
@@ -924,12 +933,31 @@
     UIStatePersistenceStore * uiStatePersistenceStore =
         [[[UIStatePersistenceStore alloc] init] autorelease];
     UIState * uiState = [uiStatePersistenceStore load];
+
+    NSMutableArray * viewControllers = [NSMutableArray array];
+    NSArray * tabOrder = uiState.tabOrder;
+    if (tabOrder) {
+        for (NSNumber * tabNumber in tabOrder)
+            for (UIViewController * viewController in
+                tabBarController.viewControllers)
+                    if (viewController.tabBarItem.tag == [tabNumber intValue]) {
+                        [viewControllers addObject:viewController];
+                        break;
+                    }
+        tabBarController.viewControllers = viewControllers;
+    }    
+
+    // HACK: see method for details
+    [self performSelector:@selector(setSelectedTabFromPersistence)
+        withObject:nil afterDelay:0.0];
+
     tabBarController.selectedIndex = uiState.selectedTab;
+
     UISegmentedControl * control = (UISegmentedControl *)
         homeNetAwareViewController.navigationItem.titleView;
     NSLog(@"Setting segmented control index");
     control.selectedSegmentIndex = uiState.selectedTimelineFeed;
-    
+
     // HACK: Force tab selected to be called when selected index is zero, which
     // is the default
     if (uiState.selectedTimelineFeed == 0)
@@ -942,6 +970,17 @@
     timelineDisplayMgr.tweetIdToShow = uiState.viewedTweetId;
 }
 
+// HACK: this forces tabs greater than 4 to be set properly (with a 'more' back
+// button and without any noticable animation quirks)
+- (void)setSelectedTabFromPersistence
+{
+    UIStatePersistenceStore * uiStatePersistenceStore =
+        [[[UIStatePersistenceStore alloc] init] autorelease];
+    UIState * uiState = [uiStatePersistenceStore load];
+    tabBarController.selectedIndex = 0;
+    tabBarController.selectedIndex = uiState.selectedTab;
+}
+
 - (void)persistUIState
 {
     UIStatePersistenceStore * uiStatePersistenceStore =
@@ -952,6 +991,16 @@
         homeNetAwareViewController.navigationItem.titleView;
     uiState.selectedTimelineFeed = control.selectedSegmentIndex;
     uiState.viewedTweetId = [timelineDisplayMgr mostRecentTweetId];
+
+    NSMutableArray * tabOrder = [NSMutableArray array];
+    for (UIViewController * viewController in tabBarController.viewControllers)
+    {
+        NSNumber * tagNumber =
+            [NSNumber numberWithInt:viewController.tabBarItem.tag];
+        [tabOrder addObject:tagNumber];
+    }
+    uiState.tabOrder = tabOrder;
+
     [uiStatePersistenceStore save:uiState];
 }
 

@@ -100,6 +100,7 @@ static UIImage * defaultAvatar;
 
     UIImage * avatarImage = [self getAvatarForUrl:tweet.user.profileImageUrl];
     [cell setAvatarImage:avatarImage];
+
     if (tweet.recipient && ![tweet.recipient isEqual:@""] && !showInbox) {
         NSString * formatString =
             NSLocalizedString(@"timelineview.directmessage.name", @"");
