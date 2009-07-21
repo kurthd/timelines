@@ -12,6 +12,8 @@
 - (void)userWantsToAddAccount;
 - (BOOL)userDeletedAccount:(TwitterCredentials *)credentials;
 
+- (void)userWantsToEditAccount:(TwitterCredentials *)credentials;
+
 - (TwitterCredentials *)currentActiveAccount;
 
 @end
@@ -22,6 +24,8 @@
 
     NSArray * accounts;
     TwitterCredentials * selectedAccount;
+
+    BOOL remainInEditingMode;
 }
 
 @property (nonatomic, assign) id<AccountsViewControllerDelegate> delegate;

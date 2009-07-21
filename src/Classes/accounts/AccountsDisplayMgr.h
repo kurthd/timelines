@@ -4,15 +4,20 @@
 
 #import <Foundation/Foundation.h>
 #import "AccountsViewController.h"
+#import "AccountSettingsViewController.h"
 #import "OauthLogInDisplayMgr.h"
 #import "TwitterCredentials.h"
 
 @class CredentialsSetChangedPublisher;
 
 @interface AccountsDisplayMgr :
-    NSObject <AccountsViewControllerDelegate, OathLogInDisplayMgrDelegate>
+    NSObject
+    <AccountsViewControllerDelegate, AccountSettingsViewControllerDelegate,
+    OathLogInDisplayMgrDelegate>
 {
     AccountsViewController * accountsViewController;
+    AccountSettingsViewController * accountSettingsViewController;
+
     OauthLogInDisplayMgr * logInDisplayMgr;
 
     NSMutableSet * userAccounts;

@@ -80,6 +80,10 @@ userinfoview.followinglabel.notfollowing = "Not following";
 /* AccountsViewController */
 account.deletion.failed.alert.title = "Failed to Remove %@";
 
+/* AccountSettingsViewController */
+accountsettings.push.header = "Push Notification Settings";
+accountsettings.push.footer = "Twitbit can send push notifications for\nmentions and direct messages.";
+
 /* UserListTableViewController */
 userlisttableview.following = "%@ following, %@ followers";
 userlisttableview.followers.title = "Followers";

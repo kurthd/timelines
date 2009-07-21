@@ -16,6 +16,7 @@
 @class AccountsViewController;
 @class DeviceRegistrar;
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
+@class AccountSettingsChangedPublisher;
 @class ActiveTwitterCredentials;
 
 @interface TwitchAppDelegate : NSObject
@@ -27,7 +28,6 @@
 
     OauthLogInDisplayMgr * logInDisplayMgr;
 
-    BOOL deviceNeedsRegistration;
     DeviceRegistrar * registrar;
 
     NSMutableArray * credentials;
@@ -35,6 +35,7 @@
 
     CredentialsActivatedPublisher * credentialsActivatedPublisher;
     CredentialsSetChangedPublisher * credentialsSetChangedPublisher;
+    AccountSettingsChangedPublisher * accountSettingsChangedPublisher;
 
     // Core Data classes
     NSManagedObjectModel * managedObjectModel;

@@ -3,6 +3,7 @@
 //
 
 #import "AccountsViewController.h"
+#import "AccountsTableViewCell.h"
 #import "TwitterCredentials.h"
 #import "UIColor+TwitchColors.h"
 
@@ -35,6 +36,9 @@ NSInteger usernameSort(TwitterCredentials * user1,
     [super viewDidLoad];
 
     [self.navigationItem setLeftBarButtonItem:self.editButtonItem animated:NO];
+    self.tableView.allowsSelectionDuringEditing = YES;
+
+    remainInEditingMode = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -44,20 +48,24 @@ NSInteger usernameSort(TwitterCredentials * user1,
     self.accounts = [[self.delegate accounts]
         sortedArrayUsingFunction:usernameSort context:NULL];
     self.selectedAccount = [self.delegate currentActiveAccount];
+
+    remainInEditingMode = NO;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [self setEditing:NO animated:animated];
+
+    if (!remainInEditingMode)
+        [self setEditing:NO animated:animated];
 }
 
 #pragma mark Button actions
 
 - (IBAction)userWantsToAddAccount:(id)sender
 {
-    if (self.tableView.editing)
-        self.tableView.editing = NO;
+    if (self.editing)
+        [self setEditing:NO animated:YES];
 
     [self.delegate userWantsToAddAccount];
 }
@@ -84,7 +92,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
     self.accounts = newAccounts;
 
     NSIndexPath * indexPath =
-    [NSIndexPath indexPathForRow:where inSection:0];
+        [NSIndexPath indexPathForRow:where inSection:0];
 
     [self.tableView
         insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
@@ -118,11 +126,11 @@ NSInteger usernameSort(TwitterCredentials * user1,
 {
     static NSString * CellIdentifier = @"AccountsTableViewCell";
 
-    UITableViewCell * cell =
+    AccountsTableViewCell * cell = (AccountsTableViewCell *)
         [tv dequeueReusableCellWithIdentifier:CellIdentifier];
 
     if (cell == nil)
-        cell = [[[UITableViewCell alloc]
+        cell = [[[AccountsTableViewCell alloc]
             initWithStyle:UITableViewCellStyleDefault
           reuseIdentifier:CellIdentifier] autorelease];
 
@@ -132,10 +140,14 @@ NSInteger usernameSort(TwitterCredentials * user1,
     if ([account.username isEqualToString:self.selectedAccount.username]) {
         cell.textLabel.textColor = [UIColor twitchCheckedColor];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        cell.accountSelected = YES;
     } else {
         cell.textLabel.textColor = [UIColor blackColor];
         cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.accountSelected = NO;
     }
+    cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 
     return cell;
 }
@@ -143,26 +155,39 @@ NSInteger usernameSort(TwitterCredentials * user1,
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger accountIndex = [self.accounts indexOfObject:self.selectedAccount];
-    if (accountIndex == indexPath.row)
-        return;
-    NSIndexPath * oldIndexPath =
-        [NSIndexPath indexPathForRow:accountIndex inSection:0];
+    if (self.tableView.editing) {
+        TwitterCredentials * account =
+            [self.accounts objectAtIndex:indexPath.row];
+        [self.delegate userWantsToEditAccount:account];
+        remainInEditingMode = YES;
+    } else {
+        // toggle the active account
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+        NSInteger accountIndex =
+            [self.accounts indexOfObject:self.selectedAccount];
+        if (accountIndex == indexPath.row)
+            return;  // nothing changed
+
+        NSIndexPath * oldIndexPath =
+            [NSIndexPath indexPathForRow:accountIndex inSection:0];
  
-    UITableViewCell * newCell =
-        [self.tableView cellForRowAtIndexPath:indexPath];
-    if (newCell.accessoryType == UITableViewCellAccessoryNone) {
-        newCell.accessoryType = UITableViewCellAccessoryCheckmark;
-        self.selectedAccount = [self.accounts objectAtIndex:indexPath.row];
-        newCell.textLabel.textColor = [UIColor twitchCheckedColor];
-    }
- 
-    UITableViewCell * oldCell =
-        [self.tableView cellForRowAtIndexPath:oldIndexPath];
-    if (oldCell.accessoryType == UITableViewCellAccessoryCheckmark) {
-        oldCell.accessoryType = UITableViewCellAccessoryNone;
-        oldCell.textLabel.textColor = [UIColor blackColor];
+        AccountsTableViewCell * newCell = (AccountsTableViewCell *)
+            [self.tableView cellForRowAtIndexPath:indexPath];
+        if (newCell.accessoryType == UITableViewCellAccessoryNone) {
+            newCell.accessoryType = UITableViewCellAccessoryCheckmark;
+            self.selectedAccount = [self.accounts objectAtIndex:indexPath.row];
+            newCell.textLabel.textColor = [UIColor twitchCheckedColor];
+            newCell.accountSelected = YES;
+        }
+
+        AccountsTableViewCell * oldCell = (AccountsTableViewCell *)
+            [self.tableView cellForRowAtIndexPath:oldIndexPath];
+        if (oldCell.accessoryType == UITableViewCellAccessoryCheckmark) {
+            oldCell.accessoryType = UITableViewCellAccessoryNone;
+            oldCell.textLabel.textColor = [UIColor blackColor];
+            oldCell.accountSelected = NO;
+        }
     }
 }
 
@@ -196,10 +221,11 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
                     NSIndexPath * newIndexPath =
                         [NSIndexPath indexPathForRow:index inSection:0];
-                    UITableViewCell * cell =
+                    AccountsTableViewCell * cell = (AccountsTableViewCell *)
                         [self.tableView cellForRowAtIndexPath:newIndexPath];
                     cell.accessoryType = UITableViewCellAccessoryCheckmark;
-                    cell.textLabel.textColor = [UIColor twitchCheckedColor];
+                    //cell.textLabel.textColor = [UIColor twitchCheckedColor];
+                    cell.accountSelected = YES;
                 }
             }
         }

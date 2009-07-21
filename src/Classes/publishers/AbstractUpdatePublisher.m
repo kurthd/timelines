@@ -6,7 +6,7 @@
 
 @interface AbstractUpdatePublisher ()
 
-- (NSString *)notificationName;  // to be provided by subclasses
++ (NSString *)notificationName;  // to be provided by subclasses
 - (void)subscribeForNotifications;
 - (void)unsubscribeForNotifications;
 
@@ -46,7 +46,7 @@
     [invocation invoke];
 }
 
-- (NSString *)notificationName
++ (NSString *)notificationName
 {
     NSAssert(NO, @"Subclasses must implement notificationName.");
     return nil;
@@ -55,7 +55,7 @@
 - (void)subscribeForNotifications
 {
     // provided by subclasses
-    NSString * notificationName = [self notificationName];
+    NSString * notificationName = [[self class] notificationName];
     NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
 
     [nc addObserver:self

@@ -56,7 +56,7 @@
 
 #pragma mark Subscribing for notifications
 
-- (NSString *)notificationName
++ (NSString *)notificationName
 {
     return @"CredentialsSetChangedNotification";
 }
