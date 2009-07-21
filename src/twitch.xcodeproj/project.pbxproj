@@ -14,7 +14,10 @@
 		053A11A4100CDBA5008DD2F6 /* TweetDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 053A11A2100CDBA5008DD2F6 /* TweetDraft.m */; };
 		05948992101569B700C37C98 /* AccountSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05948991101569B700C37C98 /* AccountSettingsViewController.m */; };
 		05948995101569D500C37C98 /* AccountSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05948993101569D500C37C98 /* AccountSettingsView.xib */; };
+		05948A0510157B6400C37C98 /* AccountSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 05948A0410157B6400C37C98 /* AccountSettings.m */; };
 		0599416C0FFB32F100842518 /* twitch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0599416A0FFB32F100842518 /* twitch.xcdatamodeld */; };
+		05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */; };
+		05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C8872810163DB90097FEFF /* AccountsTableViewCell.m */; };
 		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		05EF40D50FFADF95007B59F1 /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
 		05EF40D60FFADF95007B59F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 05B239470FEDD10900A6A2E6 /* Localizable.strings */; };
@@ -296,6 +299,8 @@
 		05948990101569B700C37C98 /* AccountSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountSettingsViewController.h; path = accounts/AccountSettingsViewController.h; sourceTree = "<group>"; };
 		05948991101569B700C37C98 /* AccountSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountSettingsViewController.m; path = accounts/AccountSettingsViewController.m; sourceTree = "<group>"; };
 		05948994101569D500C37C98 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/AccountSettingsView.xib; sourceTree = "<group>"; };
+		05948A0310157B6400C37C98 /* AccountSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountSettings.h; path = accounts/AccountSettings.h; sourceTree = "<group>"; };
+		05948A0410157B6400C37C98 /* AccountSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountSettings.m; path = accounts/AccountSettings.m; sourceTree = "<group>"; };
 		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		0599416D0FFB32F100842518 /* twitch-v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.xcdatamodel"; sourceTree = "<group>"; };
 		059942300FFB6CE800842518 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
@@ -420,6 +425,10 @@
 		05C705180FF88C1E00936E4C /* ExplainOauthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExplainOauthViewController.h; sourceTree = "<group>"; };
 		05C705190FF88C1E00936E4C /* ExplainOauthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExplainOauthViewController.m; sourceTree = "<group>"; };
 		05C7051C0FF88C4100936E4C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/ExplainOauthView.xib; sourceTree = "<group>"; };
+		05C886D2101639050097FEFF /* AccountSettingsChangedPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountSettingsChangedPublisher.h; path = publishers/AccountSettingsChangedPublisher.h; sourceTree = "<group>"; };
+		05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountSettingsChangedPublisher.m; path = publishers/AccountSettingsChangedPublisher.m; sourceTree = "<group>"; };
+		05C8872710163DB90097FEFF /* AccountsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsTableViewCell.h; path = accounts/AccountsTableViewCell.h; sourceTree = "<group>"; };
+		05C8872810163DB90097FEFF /* AccountsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsTableViewCell.m; path = accounts/AccountsTableViewCell.m; sourceTree = "<group>"; };
 		05D1728A0FF67ED900DCB22D /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		05D1728B0FF67ED900DCB22D /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		05D173E10FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TwitterCredentials+KeychainAdditions.h"; path = "twitter/TwitterCredentials+KeychainAdditions.h"; sourceTree = "<group>"; };
@@ -629,6 +638,10 @@
 				0524BDF60FF16E0500A6099B /* AccountsViewController.m */,
 				05948990101569B700C37C98 /* AccountSettingsViewController.h */,
 				05948991101569B700C37C98 /* AccountSettingsViewController.m */,
+				05948A0310157B6400C37C98 /* AccountSettings.h */,
+				05948A0410157B6400C37C98 /* AccountSettings.m */,
+				05C8872710163DB90097FEFF /* AccountsTableViewCell.h */,
+				05C8872810163DB90097FEFF /* AccountsTableViewCell.m */,
 			);
 			name = accounts;
 			sourceTree = "<group>";
@@ -937,6 +950,8 @@
 				05B2396B0FEDD21B00A6A2E6 /* CredentialsActivatedPublisher.m */,
 				0524C07A0FF1BB4600A6099B /* CredentialsSetChangedPublisher.h */,
 				0524C07B0FF1BB4600A6099B /* CredentialsSetChangedPublisher.m */,
+				05C886D2101639050097FEFF /* AccountSettingsChangedPublisher.h */,
+				05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */,
 			);
 			name = publishers;
 			sourceTree = "<group>";
@@ -1582,6 +1597,9 @@
 				917FFF101010F7A700335C0F /* RemotePhoto.m in Sources */,
 				917FFF1B1010F8B800335C0F /* CommonTwitterServicePhotoSource.m in Sources */,
 				05948992101569B700C37C98 /* AccountSettingsViewController.m in Sources */,
+				05948A0510157B6400C37C98 /* AccountSettings.m in Sources */,
+				05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */,
+				05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

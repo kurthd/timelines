@@ -5,12 +5,16 @@
 #import "AccountsDisplayMgr.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "CredentialsSetChangedPublisher.h"
+#import "AccountSettingsChangedPublisher.h"
 #import "ActiveTwitterCredentials.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
+#import "AccountSettings.h"
 
 @interface AccountsDisplayMgr ()
 
 @property (nonatomic, retain) AccountsViewController * accountsViewController;
+@property (nonatomic, retain) AccountSettingsViewController *
+    accountSettingsViewController;
 @property (nonatomic, retain) OauthLogInDisplayMgr * logInDisplayMgr;
 @property (nonatomic, copy) NSMutableSet * userAccounts;
 @property (nonatomic, retain) CredentialsSetChangedPublisher *
@@ -21,12 +25,14 @@
 
 @implementation AccountsDisplayMgr
 
-@synthesize logInDisplayMgr, accountsViewController, userAccounts;
+@synthesize accountsViewController, accountSettingsViewController;
+@synthesize logInDisplayMgr, userAccounts;
 @synthesize context, credentialsSetChangedPublisher;
 
 - (void)dealloc
 {
     self.accountsViewController = nil;
+    self.accountSettingsViewController = nil;
     self.logInDisplayMgr = nil;
     self.userAccounts = nil;
     self.credentialsSetChangedPublisher = nil;
@@ -88,6 +94,8 @@
 
 - (BOOL)userDeletedAccount:(TwitterCredentials *)credentials
 {
+    [AccountSettings deleteSettingsForKey:credentials.username];
+
     [self.userAccounts removeObject:credentials];
     if (self.userAccounts.count == 0) {
         self.logInDisplayMgr.allowsCancel = NO;
@@ -127,9 +135,44 @@
     return YES;
 }
 
+- (void)userWantsToEditAccount:(TwitterCredentials *)credentials
+{
+    NSLog(@"Editing account: '%@'.", credentials);
+    AccountSettings * settings =
+        [AccountSettings settingsForKey:credentials.username];
+
+    [self.accountSettingsViewController presentSettings:settings
+                                             forAccount:credentials];
+
+    UINavigationController * navController =
+        self.accountsViewController.navigationController;
+    [navController pushViewController:self.accountSettingsViewController
+                             animated:YES];
+}
+
 - (TwitterCredentials *)currentActiveAccount
 {
     return [[ActiveTwitterCredentials findFirst:context] credentials];
+}
+
+#pragma mark AccountSettingsViewControllerDelegate implementation
+
+- (void)userDidCommitSettings:(AccountSettings *)newSettings
+                   forAccount:(TwitterCredentials *)credentials
+{
+    AccountSettings * settings =
+        [AccountSettings settingsForKey:credentials.username];
+
+    if (![settings isEqualToSettings:newSettings]) {
+        NSLog(@"Committing settings: '%@' for account: '%@'", newSettings,
+            credentials);
+
+        [AccountSettings setSettings:newSettings forKey:credentials.username];
+        [AccountSettingsChangedPublisher
+            publishAccountSettingsChanged:newSettings
+                               forAccount:credentials.username];
+    } else
+        NSLog(@"User did not change settings for account: '%@'", settings);
 }
 
 #pragma mark LogInDisplayMgrDelegate implementation
@@ -143,6 +186,18 @@
 }
 
 #pragma mark Accessors
+
+- (AccountSettingsViewController *)accountSettingsViewController
+{
+    if (!accountSettingsViewController) {
+        accountSettingsViewController =
+            [[AccountSettingsViewController alloc]
+            initWithNibName:@"AccountSettingsView" bundle:nil];
+        accountSettingsViewController.delegate = self;
+    }
+
+    return accountSettingsViewController;
+}
 
 - (NSMutableSet *)userAccounts
 {

@@ -4,80 +4,73 @@
 
 #import "AccountSettingsViewController.h"
 
+@interface AccountSettingsViewController ()
+
+@property (nonatomic, retain) UITableViewCell * pushMentionsCell;
+@property (nonatomic, retain) UITableViewCell * pushDirectMessagesCell;
+
+@property (nonatomic, retain) UISwitch * pushMentionsSwitch;
+@property (nonatomic, retain) UISwitch * pushDirectMessagesSwitch;
+
+@property (nonatomic, copy) NSArray * pushSettingTableViewCells;
+
+@property (nonatomic, retain) TwitterCredentials * credentials;
+@property (nonatomic, copy) AccountSettings * settings;
+
+- (void)syncDisplayWithSettings;
+
+@end
+
 @implementation AccountSettingsViewController
+
+@synthesize delegate;
+@synthesize pushMentionsCell, pushDirectMessagesCell;
+@synthesize pushMentionsSwitch, pushDirectMessagesSwitch;
+@synthesize pushSettingTableViewCells;
+@synthesize credentials, settings;
 
 - (void)dealloc
 {
+    self.delegate = nil;
+
+    self.pushMentionsCell = nil;
+    self.pushDirectMessagesCell = nil;
+
+    self.pushMentionsSwitch = nil;
+    self.pushDirectMessagesSwitch = nil;
+
+    self.pushSettingTableViewCells = nil;
+
+    self.credentials = nil;
+    self.settings = nil;
+
     [super dealloc];
 }
 
-/*
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    // Override initWithStyle: if you create the controller programmatically and
-    // want to perform customization that is not appropriate for viewDidLoad.
-    if (self = [super initWithStyle:style]) {
-    }
-
-    return self;
-}
-*/
-
-/*
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to display an Edit button in the navigation
-    // bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    pushSettingTableViewCells =
+        [[NSArray alloc] initWithObjects:
+        pushMentionsCell, pushDirectMessagesCell, nil];
 }
-*/
 
-/*
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self syncDisplayWithSettings];
 }
-*/
 
-/*
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-*/
-
-/*
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-}
-*/
 
-/*
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-*/
+    [self.settings setPushMentions:self.pushMentionsSwitch.on];
+    [self.settings setPushDirectMessages:self.pushDirectMessagesSwitch.on];
 
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];  // Releases the view if it doesn't have a
-                                      // superview
-
-    // Release anything that's not essential, such as cached data
+    [delegate userDidCommitSettings:self.settings
+                         forAccount:self.credentials];
 }
 
 #pragma mark Table view methods
@@ -87,91 +80,52 @@
     return 1;
 }
 
-// Customize the number of rows in the table view.
+- (NSString *)tableView:(UITableView *)tableView
+    titleForHeaderInSection:(NSInteger)section
+{
+    return NSLocalizedString(@"accountsettings.push.header", @"");
+    
+}
+
+- (NSString *)tableView:(UITableView *)tableView
+    titleForFooterInSection:(NSInteger)section
+{
+    return NSLocalizedString(@"accountsettings.push.footer", @"");
+}
+
 - (NSInteger)tableView:(UITableView *)tv
  numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return pushSettingTableViewCells.count;
 }
 
-// Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * CellIdentifier = @"Cell";
-
     UITableViewCell * cell =
-        [tv dequeueReusableCellWithIdentifier:CellIdentifier];
-
-    if (cell == nil) {
-        cell =
-            [[[UITableViewCell alloc]
-              initWithFrame:CGRectZero reuseIdentifier:CellIdentifier]
-             autorelease];
-    }
-
-    // Set up the cell...
-
+        [self.pushSettingTableViewCells objectAtIndex:indexPath.row];
     return cell;
 }
 
-- (void)          tableView:(UITableView *)tv
-    didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark Public interface to update the display
+
+- (void)presentSettings:(AccountSettings *)someSettings
+             forAccount:(TwitterCredentials *)someCredentials
 {
-    // Navigation logic may go here. Create and push another view controller.
-    // AnotherViewController *anotherViewController =
-    //     [[AnotherViewController alloc]
-    //      initWithNibName:@"AnotherView" bundle:nil];
-    // [self.navigationController pushViewController:anotherViewController];
-    // [anotherViewController release];
+    self.settings = someSettings;
+    self.credentials = someCredentials;
+
+    [self syncDisplayWithSettings];
+
+    self.navigationItem.title = credentials.username;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)        tableView:(UITableView *)tv
-    canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+#pragma mark Display helpers
 
-/*
-// Override to support editing the table view.
-- (void)     tableView:(UITableView *)tv
-    commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
-     forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)syncDisplayWithSettings
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView
-         deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-               withRowAnimation:YES];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the
-        // array, and add a new row to the table view
-    }   
+    [pushMentionsSwitch setOn:[settings pushMentions] animated:NO];
+    [pushDirectMessagesSwitch setOn:[settings pushDirectMessages] animated:NO];
 }
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)     tableView:(UITableView *)tv
-    moveRowAtIndexPath:(NSIndexPath *)fromIndexPath
-           toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)        tableView:(UITableView *)tv
-    canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 @end

@@ -7,6 +7,7 @@
 #import "OauthLogInDisplayMgr.h"
 #import "CredentialsActivatedPublisher.h"
 #import "CredentialsSetChangedPublisher.h"
+#import "AccountSettingsChangedPublisher.h"
 #import "TwitterCredentials.h"
 #import "TwitterCredentials+KeychainAdditions.h"
 #import "UIAlertView+InstantiationAdditions.h"
@@ -83,6 +84,7 @@
 
     [credentialsActivatedPublisher release];
     [credentialsSetChangedPublisher release];
+    [accountSettingsChangedPublisher release];
 
     [managedObjectContext release];
     [managedObjectModel release];
@@ -113,7 +115,6 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
-    deviceNeedsRegistration = YES;
     [self registerDeviceForPushNotifications];
 
     // reset the unread message count to 0
@@ -125,6 +126,10 @@
     credentialsSetChangedPublisher =
         [[CredentialsSetChangedPublisher alloc]
          initWithListener:self action:@selector(credentialSetChanged:added:)];
+    accountSettingsChangedPublisher =
+        [[AccountSettingsChangedPublisher alloc]
+        initWithListener:self
+                  action:@selector(accountSettingsChanged:forAccount:)];
 
     // Add the tab bar controller's current view as a subview of the window
     [window addSubview:tabBarController.view];
@@ -614,8 +619,7 @@
 - (void)application:(UIApplication *)app
     didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    NSLog(@"Application did fail to register for push notifications. Error: %@",
-        error);
+    NSLog(@"Application failed to register for push notifications: %@", error);
 
 #if !TARGET_IPHONE_SIMULATOR  // don't show this error in the simulator
 
@@ -641,14 +645,19 @@
         [NSMutableDictionary dictionaryWithCapacity:allCredentials.count];
     for (NSInteger i = 0, count = allCredentials.count; i < count; ++i) {
         TwitterCredentials * c = [allCredentials objectAtIndex:i];
+        AccountSettings * settings =
+            [AccountSettings settingsForKey:c.username];
 
         NSString * usernameKey = [NSString stringWithFormat:@"username%d", i];
         NSString * keyKey = [NSString stringWithFormat:@"key%d", i];
         NSString * secretKey = [NSString stringWithFormat:@"secret%d", i];
+        NSString * configKey =
+            [NSString stringWithFormat:@"push_notification_config%d", i];
 
         [args setObject:c.username forKey:usernameKey];
         [args setObject:c.key forKey:keyKey];
         [args setObject:c.secret forKey:secretKey];
+        [args setObject:[settings pushSettings] forKey:configKey];
     }
 
     return args;
@@ -660,8 +669,6 @@
 {
     NSLog(@"Successfully registered the device for push notifications: '%@'.",
         token);
-
-    deviceNeedsRegistration = NO;
 }
 
 - (void)failedToRegisterDeviceWithToken:(NSData *)token error:(NSError *)error
@@ -686,6 +693,7 @@
 
     [[UIApplication sharedApplication]
         registerForRemoteNotificationTypes:notificationTypes];
+
 #endif
 
 }
@@ -716,12 +724,17 @@
         [self.credentials removeObject:changedCredentials];
     }
 
-    deviceNeedsRegistration = YES;
     [self registerDeviceForPushNotifications];
 
     NSLog(@"Active credentials after account switch: '%@'.",
         self.activeCredentials.credentials);
     [self saveContext];
+}
+
+- (void)accountSettingsChanged:(AccountSettings *)settings
+                    forAccount:(NSString *)account
+{
+    [self registerDeviceForPushNotifications];
 }
 
 - (void)broadcastActivatedCredentialsChanged:(TwitterCredentials *)tc
