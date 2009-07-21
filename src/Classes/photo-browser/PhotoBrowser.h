@@ -36,6 +36,8 @@
     NSObject<PhotoSource> * photoSource;
 
     NSObject<PhotoBrowserDelegate> * delegate;
+    
+    NSInteger previousOrientation;
 }
 
 @property (nonatomic, readonly) NSMutableArray * photoList;

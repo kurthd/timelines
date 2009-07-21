@@ -56,6 +56,8 @@
     viewFrame.origin.y = -20;
     viewFrame.size.height = 480;
     self.view.frame = viewFrame;
+
+    previousOrientation = -1;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -68,46 +70,44 @@
     isDisplayed = YES;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    isDisplayed = NO;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:
     (UIInterfaceOrientation)orientation {
 
-    if (orientation == UIInterfaceOrientationPortrait ||
-        orientation == UIInterfaceOrientationPortrait) {
-
-        CGRect navigationBarFrame = navigationBar.frame;
-        navigationBarFrame.size.width = 320;
-        navigationBar.frame = navigationBarFrame;
-
-        CGRect photoViewFrame = photoView.frame;
-        photoViewFrame.size.width = 320;
-        photoViewFrame.size.height = 480;
-        photoView.frame = photoViewFrame;
+    if (isDisplayed) {
+        if (orientation == UIInterfaceOrientationPortrait ||
+            orientation == UIInterfaceOrientationPortrait) {
+    
+            CGRect navigationBarFrame = navigationBar.frame;
+            navigationBarFrame.size.width = 320;
+            navigationBar.frame = navigationBarFrame;
+    
+            CGRect photoViewFrame = photoView.frame;
+            photoViewFrame.size.width = 320;
+            photoViewFrame.size.height = 480;
+            photoView.frame = photoViewFrame;
         
-        CGRect toolbarFrame = toolbar.frame;
-        toolbarFrame.size.width = 320;
-        toolbarFrame.origin.y = 436;
-        toolbar.frame = toolbarFrame;
-    } else {
-        CGRect navigationBarFrame = navigationBar.frame;
-        navigationBarFrame.size.width = 480;
-        navigationBar.frame = navigationBarFrame;
-
-        CGRect photoViewFrame = photoView.frame;
-        photoViewFrame.size.width = 480;
-        photoViewFrame.size.height = 320;
-        photoView.frame = photoViewFrame;
-
-        CGRect toolbarFrame = toolbar.frame;
-        toolbarFrame.size.width = 480;
-        toolbarFrame.origin.y = 276;
-        toolbar.frame = toolbarFrame;
+            CGRect toolbarFrame = toolbar.frame;
+            toolbarFrame.size.width = 320;
+            toolbarFrame.origin.y = 436;
+            toolbar.frame = toolbarFrame;
+        } else {
+            CGRect navigationBarFrame = navigationBar.frame;
+            navigationBarFrame.size.width = 480;
+            navigationBar.frame = navigationBarFrame;
+    
+            CGRect photoViewFrame = photoView.frame;
+            photoViewFrame.size.width = 480;
+            photoViewFrame.size.height = 320;
+            photoView.frame = photoViewFrame;
+    
+            CGRect toolbarFrame = toolbar.frame;
+            toolbarFrame.size.width = 480;
+            toolbarFrame.origin.y = 276;
+            toolbar.frame = toolbarFrame;
+        }
     }
+
+    previousOrientation = orientation;
 
 	return YES;
 }
@@ -120,7 +120,7 @@
         [self performSelector:@selector(showStatusBar) withObject:nil
             afterDelay:0.3];
     }
-
+    
     RemotePhoto * selectedImage = [self.photoList objectAtIndex:selectedIndex];
     UIImage * image = selectedImage.image;
     [self showImageZoomed:image];
@@ -227,6 +227,7 @@
 
 - (IBAction)done:(id)sender
 {
+    isDisplayed = NO;
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     [self dismissModalViewControllerAnimated:YES];
@@ -282,6 +283,8 @@
 
 - (void)showImage:(UIImage *)image
 {
+    NSLog(@"Photo Browser: showing image in original size");
+
     NSInteger maxHeight =
         (self.interfaceOrientation == UIInterfaceOrientationPortrait ||
         self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) ?
@@ -317,6 +320,8 @@
 
 - (void)showImageZoomed:(UIImage *)image
 {
+    NSLog(@"Photo Browser: showing zoomed image");
+        
     CGRect photoViewFrame = photoView.frame;
     photoViewFrame.size.height =
         (self.interfaceOrientation == UIInterfaceOrientationPortrait ||
@@ -360,6 +365,7 @@
 
 - (void)changeZoom
 {
+    NSLog(@"Photo Browser: changing zoom");
     RemotePhoto * selectedPhoto = [self.photoList objectAtIndex:selectedIndex];
     UIImage * image = selectedPhoto.image;
     if (image) {
