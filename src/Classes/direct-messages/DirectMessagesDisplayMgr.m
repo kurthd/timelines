@@ -110,6 +110,7 @@
 
 - (void)directMessages:(NSArray *)directMessages
     fetchedSinceUpdateId:(NSNumber *)updateId page:(NSNumber *)page
+    count:(NSNumber *)count
 {
     NSLog(@"Messages Display Manager: Received direct messages (%d)...",
         [directMessages count]);
@@ -120,7 +121,7 @@
 }
 
 - (void)failedToFetchDirectMessagesSinceUpdateId:(NSNumber *)updateId
-    page:(NSNumber *)page error:(NSError *)error
+    page:(NSNumber *)page count:(NSNumber *)count error:(NSError *)error
 {
     NSLog(@"Message Display Manager: failed to fetch timeline since %@",
         updateId);
@@ -131,7 +132,8 @@
 }
 
 - (void)sentDirectMessages:(NSArray *)directMessages
-      fetchedSinceUpdateId:(NSNumber *)updateId page:(NSNumber *)page
+    fetchedSinceUpdateId:(NSNumber *)updateId page:(NSNumber *)page
+    count:(NSNumber *)count
 {
     NSLog(@"Messages Display Manager: Received sent direct messages (%d)...",
         [directMessages count]);
@@ -142,7 +144,7 @@
 }
 
 - (void)failedToFetchSentDirectMessagesSinceUpdateId:(NSNumber *)updateId
-    page:(NSNumber *)page error:(NSError *)error
+    page:(NSNumber *)page count:(NSNumber *)count error:(NSError *)error
 {
     NSLog(@"Message Display Manager: failed to fetch timeline since %@",
         updateId);
@@ -487,14 +489,18 @@
     numMessages:(NSNumber *)numMessages
 {
     outstandingReceivedRequests++;
-    [service fetchDirectMessagesSinceId:updateId page:page];
+
+    NSNumber * count = [NSNumber numberWithInteger:200];
+    [service fetchDirectMessagesSinceId:updateId page:page count:count];
 }
 
 - (void)fetchSentDirectMessagesSinceId:(NSNumber *)updateId
     page:(NSNumber *)page numMessages:(NSNumber *)numMessages
 {
     outstandingSentRequests++;
-    [service fetchSentDirectMessagesSinceId:updateId page:page];
+
+    NSNumber * count = [NSNumber numberWithInteger:200];
+    [service fetchSentDirectMessagesSinceId:updateId page:page count:count];
 }
 
 - (void)setUpdatingState

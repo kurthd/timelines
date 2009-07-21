@@ -16,6 +16,7 @@
 
 @property (nonatomic, copy) NSNumber * updateId;
 @property (nonatomic, copy) NSNumber * page;
+@property (nonatomic, copy) NSNumber * count;
 @property (nonatomic, assign) BOOL sent;
 @property (nonatomic, retain) TwitterCredentials * credentials;
 @property (nonatomic, retain) NSManagedObjectContext * context;
@@ -25,10 +26,11 @@
 
 @implementation FetchDirectMessagesResponseProcessor
 
-@synthesize updateId, page, sent, credentials, delegate, context;
+@synthesize updateId, page, count, sent, credentials, delegate, context;
 
 + (id)processorWithUpdateId:(NSNumber *)anUpdateId
                        page:(NSNumber *)aPage
+                      count:(NSNumber *)aCount
                        sent:(BOOL)isSent
                 credentials:(TwitterCredentials *)someCredentials
                     context:(NSManagedObjectContext *)aContext
@@ -36,6 +38,7 @@
 {
     id obj = [[[self class] alloc] initWithUpdateId:anUpdateId
                                                page:aPage
+                                              count:aCount
                                                sent:isSent
                                         credentials:someCredentials
                                             context:aContext
@@ -47,6 +50,7 @@
 {
     self.updateId = nil;
     self.page = nil;
+    self.count = nil;
     self.credentials = nil;
     self.context = nil;
     self.delegate = nil;
@@ -55,6 +59,7 @@
 
 - (id)initWithUpdateId:(NSNumber *)anUpdateId
                   page:(NSNumber *)aPage
+                 count:(NSNumber *)aCount
                   sent:(BOOL)isSent
            credentials:(TwitterCredentials *)someCredentials
                context:(NSManagedObjectContext *)aContext
@@ -63,6 +68,7 @@
     if (self = [super init]) {
         self.updateId = anUpdateId;
         self.page = aPage;
+        self.count = aCount;
         self.sent = isSent;
         self.credentials = someCredentials;
         self.context = aContext;
@@ -115,12 +121,12 @@
 
     SEL sel;
     if (sent)
-        sel = @selector(sentDirectMessages:fetchedSinceUpdateId:page:);
+        sel = @selector(sentDirectMessages:fetchedSinceUpdateId:page:count:);
     else
-        sel = @selector(directMessages:fetchedSinceUpdateId:page:);
+        sel = @selector(directMessages:fetchedSinceUpdateId:page:count:);
 
     [self invokeSelector:sel withTarget:delegate args:dms, updateId, page,
-        nil];
+        count, nil];
 
     return YES;
 }
@@ -129,13 +135,14 @@
 {
     SEL sel;
     if (sent)
-        sel =
-            @selector(failedToFetchSentDirectMessagesSinceUpdateId:page:error:);
+        sel = @selector(failedToFetchSentDirectMessagesSinceUpdateId:page:\
+            count:error:);
     else
-        sel = @selector(failedToFetchDirectMessagesSinceUpdateId:page:error:);
+        sel = @selector(failedToFetchDirectMessagesSinceUpdateId:page:count:\
+            error:);
         
-    [self invokeSelector:sel withTarget:delegate args:updateId, page, error,
-        nil];
+    [self invokeSelector:sel withTarget:delegate args:updateId, page, count,
+        error, nil];
 
     return YES;
 }

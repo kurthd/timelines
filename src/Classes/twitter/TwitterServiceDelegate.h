@@ -76,16 +76,20 @@
 
 - (void)directMessages:(NSArray *)directMessages
   fetchedSinceUpdateId:(NSNumber *)updateId
-                  page:(NSNumber *)page;
+                  page:(NSNumber *)page
+                 count:(NSNumber *)count;
 - (void)failedToFetchDirectMessagesSinceUpdateId:(NSNumber *)updateId
                                             page:(NSNumber *)page
+                                           count:(NSNumber *)count
                                            error:(NSError *)error;
 
 - (void)sentDirectMessages:(NSArray *)directMessages
       fetchedSinceUpdateId:(NSNumber *)updateId
-                      page:(NSNumber *)page;
+                      page:(NSNumber *)page
+                     count:(NSNumber *)count;
 - (void)failedToFetchSentDirectMessagesSinceUpdateId:(NSNumber *)updateId
                                                 page:(NSNumber *)page
+                                               count:(NSNumber *)count
                                                error:(NSError *)error;
 
 - (void)directMessage:(DirectMessage *)dm sentToUser:(NSString *)username;
