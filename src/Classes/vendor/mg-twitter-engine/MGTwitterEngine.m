@@ -1347,6 +1347,25 @@
                            responseType:MGTwitterDirectMessages];
 }
 
+- (NSString *)getDirectMessagesSinceID:(NSNumber *)updateID startingAtPage:(int)pageNum count:(int)count; // direct_messages
+{
+    NSString *path = [NSString stringWithFormat:@"direct_messages.%@", API_FORMAT];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
+    if ([updateID longLongValue] > 0) {
+        [params setObject:[NSString stringWithFormat:@"%@", updateID] forKey:@"since_id"];
+    }
+    if (pageNum > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];
+    }
+    if (count > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", count] forKey:@"count"];
+    }
+    
+    return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil 
+                            requestType:MGTwitterDirectMessagesRequest 
+                           responseType:MGTwitterDirectMessages];
+}
 
 - (NSString *)getSentDirectMessagesSince:(NSDate *)date startingAtPage:(int)pageNum
 {
@@ -1376,6 +1395,26 @@
     }
     if (pageNum > 0) {
         [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];
+    }
+    
+    return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil 
+                            requestType:MGTwitterDirectMessagesRequest 
+                           responseType:MGTwitterDirectMessages];
+}
+
+- (NSString *)getSentDirectMessagesSinceID:(NSNumber *)updateID startingAtPage:(int)pageNum count:(int)count; // direct_messages/sent
+{
+    NSString *path = [NSString stringWithFormat:@"direct_messages/sent.%@", API_FORMAT];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
+    if ([updateID longLongValue] > 0) {
+        [params setObject:[NSString stringWithFormat:@"%@", updateID] forKey:@"since_id"];
+    }
+    if (pageNum > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];
+    }
+    if (count > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", count] forKey:@"count"];
     }
     
     return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil 

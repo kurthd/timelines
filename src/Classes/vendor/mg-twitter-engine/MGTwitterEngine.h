@@ -125,9 +125,11 @@
 
 - (NSString *)getDirectMessagesSince:(NSDate *)date startingAtPage:(int)pageNum; // direct_messages
 - (NSString *)getDirectMessagesSinceID:(int)updateID startingAtPage:(int)pageNum; // direct_messages
+- (NSString *)getDirectMessagesSinceID:(NSNumber *)updateID startingAtPage:(int)pageNum count:(int)count; // direct_messages
 
 - (NSString *)getSentDirectMessagesSince:(NSDate *)date startingAtPage:(int)pageNum; // direct_messages/sent
 - (NSString *)getSentDirectMessagesSinceID:(int)updateID startingAtPage:(int)pageNum; // direct_messages/sent
+- (NSString *)getSentDirectMessagesSinceID:(NSNumber *)updateID startingAtPage:(int)pageNum count:(int)count; // direct_messages/sent
 
 - (NSString *)sendDirectMessage:(NSString *)message to:(NSString *)username; // direct_messages/new
 - (NSString *)deleteDirectMessage:(int)updateID;// direct_messages/destroy

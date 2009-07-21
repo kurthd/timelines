@@ -40,8 +40,10 @@
     NSLog(@"'Direct messages' data source: fetching timeline");
     outstandingIncomingMessages++;
     outstandingOutgoingMessages++;
-    [service fetchDirectMessagesSinceId:updateId page:page];
-    [service fetchSentDirectMessagesSinceId:updateId page:page];
+
+    NSNumber * count = [NSNumber numberWithInteger:200];
+    [service fetchDirectMessagesSinceId:updateId page:page count:count];
+    [service fetchSentDirectMessagesSinceId:updateId page:page count:count];
 }
 
 - (void)fetchUserInfoForUsername:(NSString *)username

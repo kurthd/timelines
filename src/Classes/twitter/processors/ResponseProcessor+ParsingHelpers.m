@@ -42,6 +42,7 @@
     user.webpage = [data safeObjectForKey:@"url"];
     user.identifier = [[data safeObjectForKey:@"id"] description];
     user.profileImageUrl = [data safeObjectForKey:@"profile_image_url"];
+    NSLog(@"profile url: %@", user.profileImageUrl);
 }
 
 - (void)populateTweet:(Tweet *)tweet fromData:(NSDictionary *)data

@@ -20,12 +20,14 @@
 
 + (id)processorWithUpdateId:(NSNumber *)anUpdateId
                        page:(NSNumber *)aPage
+                      count:(NSNumber *)aCount
                        sent:(BOOL)isSent
                 credentials:(TwitterCredentials *)someCredentials
                     context:(NSManagedObjectContext *)aContext
                    delegate:(id)aDelegate;
 - (id)initWithUpdateId:(NSNumber *)anUpdateId
                   page:(NSNumber *)aPage
+                 count:(NSNumber *)aCount
                   sent:(BOOL)isSent
            credentials:(TwitterCredentials *)someCredentials
                context:(NSManagedObjectContext *)aContext

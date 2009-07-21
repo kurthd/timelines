@@ -188,37 +188,44 @@
 
 #pragma mark Direct messages
 
-- (void)fetchDirectMessagesSinceId:(NSNumber *)updateId page:(NSNumber *)page
+- (void)fetchDirectMessagesSinceId:(NSNumber *)updateId
+                              page:(NSNumber *)page
+                             count:(NSNumber *)count
 {
     ResponseProcessor * processor =
         [FetchDirectMessagesResponseProcessor processorWithUpdateId:updateId
                                                                page:page
+                                                              count:count
                                                                sent:NO
                                                         credentials:credentials
                                                             context:context
                                                            delegate:delegate];
 
     NSString * requestId =
-        [twitter getDirectMessagesSinceID:[updateId integerValue]
-                           startingAtPage:[page integerValue]];
+        [twitter getDirectMessagesSinceID:updateId
+                           startingAtPage:[page integerValue]
+                                    count:[count integerValue]];
 
     [self request:requestId isHandledBy:processor];
 }
 
 - (void)fetchSentDirectMessagesSinceId:(NSNumber *)updateId
                                   page:(NSNumber *)page
+                                 count:(NSNumber *)count
 {
     ResponseProcessor * processor =
         [FetchDirectMessagesResponseProcessor processorWithUpdateId:updateId
                                                                page:page
+                                                              count:count
                                                                sent:YES
                                                         credentials:credentials
                                                             context:context
                                                            delegate:delegate];
 
     NSString * requestId =
-        [twitter getSentDirectMessagesSinceID:[updateId integerValue]
-                               startingAtPage:[page integerValue]];
+        [twitter getSentDirectMessagesSinceID:updateId
+                               startingAtPage:[page integerValue]
+                                        count:[count integerValue]];
 
     [self request:requestId isHandledBy:processor];
 }

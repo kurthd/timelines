@@ -66,9 +66,12 @@
 
 #pragma mark Direct messages
 
-- (void)fetchDirectMessagesSinceId:(NSNumber *)updateId page:(NSNumber *)page;
+- (void)fetchDirectMessagesSinceId:(NSNumber *)updateId
+                              page:(NSNumber *)page
+                             count:(NSNumber *)count;
 - (void)fetchSentDirectMessagesSinceId:(NSNumber *)updateId
-                                  page:(NSNumber *)page;
+                                  page:(NSNumber *)page
+                                 count:(NSNumber *)count;
 - (void)sendDirectMessage:(NSString *)message to:(NSString *)username;
 
 #pragma mark Favorites
