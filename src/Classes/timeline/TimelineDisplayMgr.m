@@ -396,8 +396,7 @@
 - (void)showTweetsForUser:(NSString *)username
 {
     NSLog(@"Timeline display manager: showing tweets for %@", username);
-    // create a tweetDetailsTimelineDisplayMgr
-    // push corresponding view controller for tweet details timeline display mgr
+
     NSString * title =
         NSLocalizedString(@"timelineview.usertweets.title", @"");
     self.tweetDetailsNetAwareViewController =

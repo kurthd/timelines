@@ -5,7 +5,6 @@
 #import <Foundation/Foundation.h>
 #import "TimelineDisplayMgr.h"
 #import "AllTimelineDataSource.h"
-#import "MessagesTimelineDataSource.h"
 #import "MentionsTimelineDataSource.h"
 #import "TwitterService.h"
 
@@ -13,18 +12,12 @@
 {
     TimelineDisplayMgr * timelineDisplayMgr;
     AllTimelineDataSource * allTimelineDataSource;
-    MessagesTimelineDataSource * messagesTimelineDataSource;
     MentionsTimelineDataSource * mentionsTimelineDataSource;
 
     NSDictionary * allTimelineTweets;
     NSUInteger allTimelinePagesShown;
     BOOL allTimelineRefresh;
     BOOL allTimelineAllPagesLoaded;
-
-    NSDictionary * messagesTimelineTweets;
-    NSUInteger messagesTimelinePagesShown;
-    BOOL messagesTimelineRefresh;
-    BOOL messagesTimelineAllPagesLoaded;
 
     NSDictionary * mentionsTimelineTweets;
     NSUInteger mentionsTimelinePagesShown;
@@ -36,12 +29,10 @@
 
 @property (nonatomic, copy) NSDictionary * allTimelineTweets;
 @property (nonatomic, copy) NSDictionary * mentionsTimelineTweets;
-@property (nonatomic, copy) NSDictionary * messagesTimelineTweets;
 
 - (id)initWithTimelineDisplayMgr:(TimelineDisplayMgr *)timelineDisplayMgr
     allService:(TwitterService *)allService
-    mentionsService:(TwitterService *)mentionsService
-    messagesService:(TwitterService *)messagesService;
+    mentionsService:(TwitterService *)mentionsService;
 
 - (void)tabSelected:(id)sender;
 - (void)tabSelectedWithIndex:(NSInteger)index;

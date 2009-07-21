@@ -64,6 +64,8 @@ static UIImage * defaultAvatar;
     else
         webViewFrame.size.height = 238;
     webView.frame = webViewFrame;
+
+    favoriteButton.hidden = hideFavoriteButton;
 }
 
 - (void)showWebView
@@ -344,6 +346,11 @@ static UIImage * defaultAvatar;
     [self presentModalViewController:picker animated:YES];
 
     [picker release];
+}
+
+- (void)hideFavoriteButton:(BOOL)hide
+{
+    hideFavoriteButton = hide;
 }
 
 #pragma mark static helper methods

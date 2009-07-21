@@ -8,7 +8,8 @@
 typedef enum {
     kTimelineTableViewCellTypeNormal,
     kTimelineTableViewCellTypeInverted,
-    kTimelineTableViewCellTypeNoAvatar
+    kTimelineTableViewCellTypeNoAvatar,
+    kTimelineTableViewCellTypeNormalNoName
 } TimelineTableViewCellType;
 
 @interface TimelineTableViewCell : UITableViewCell

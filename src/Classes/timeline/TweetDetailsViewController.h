@@ -32,6 +32,7 @@
     // Required because setting directly on deleteTweetButton fails if called
     // before it's wired from loading the nib
     BOOL usersTweet;
+    BOOL hideFavoriteButton;
 }
 
 @property (nonatomic, assign) NSObject<TweetDetailsViewDelegate> * delegate;
@@ -39,6 +40,7 @@
 
 - (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar;
 - (void)setUsersTweet:(BOOL)usersTweet;
+- (void)hideFavoriteButton:(BOOL)hide;
 
 - (IBAction)showLocationOnMap:(id)sender;
 - (IBAction)showUserTweets:(id)sender;
