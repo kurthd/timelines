@@ -51,7 +51,7 @@
 @synthesize activeAcctUsername, otherUserInConversation, selectedMessage,
     tweetDetailsTimelineDisplayMgr, tweetDetailsNetAwareViewController,
     tweetDetailsCredentialsPublisher, userListNetAwareViewController,
-    userListController;
+    userListController, directMessageCache;
 
 - (void)dealloc
 {
@@ -93,10 +93,10 @@
             directMessageCache = [[DirectMessageCache alloc] init];
             [wrapperController setCachedDataAvailable:NO];
         }
-        
+
         conversations = [[NSMutableDictionary dictionary] retain];
         sortedConversations = [[NSMutableDictionary dictionary] retain];
-        
+
         UIBarButtonItem * composeDirectMessageButton =
             wrapperController.navigationItem.rightBarButtonItem;
         composeDirectMessageButton.target = self;
@@ -379,6 +379,7 @@
     [directMessageCache clear];
     [conversations removeAllObjects];
     [sortedConversations removeAllObjects];
+    alreadyBeenDisplayedAfterCredentialChange = NO;
 
     // may not actually be displayed, but call this anyway -- for now
     [self viewAppearedForFirstTimeAfterCredentialChange];
@@ -481,6 +482,15 @@
     }
 
     return photoBrowser;
+}
+
+- (void)setDirectMessageCache:(DirectMessageCache *)aMessageCache
+{
+    [aMessageCache retain];
+    [directMessageCache release];
+    directMessageCache = aMessageCache;
+
+    [self updateViewsWithNewMessages];    
 }
 
 #pragma mark Private DirectMessagesDisplayMgr implementation

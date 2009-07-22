@@ -97,6 +97,8 @@
     BOOL failedState;
 }
 
+@property (nonatomic, retain) DirectMessageCache * directMessageCache;
+
 @property (readonly)
     DirectMessageConversationViewController * conversationController;
 @property (readonly) TweetDetailsViewController * tweetDetailsController;
