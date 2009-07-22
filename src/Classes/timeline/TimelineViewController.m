@@ -414,10 +414,15 @@ static UIImage * defaultAvatar;
 
 - (NSString *)mostRecentTweetId
 {
-    TweetInfo * mostRecentTweet =
-        (TweetInfo *)[[self sortedTweetCache] objectAtIndex:0];
+    NSString * mostRecentId;
+    if ([[self sortedTweetCache] count] > 0) {
+        TweetInfo * mostRecentTweet =
+            (TweetInfo *)[[self sortedTweetCache] objectAtIndex:0];
+        mostRecentId = mostRecentTweet.identifier;
+    } else
+        mostRecentId = nil;
 
-    return mostRecentTweet.identifier;
+    return mostRecentId;
 }
 
 @end

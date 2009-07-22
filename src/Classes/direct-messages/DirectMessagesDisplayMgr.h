@@ -131,7 +131,7 @@
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
 
-- (void)updateDirecMessagesSinceLastUpdateIds;
+- (void)updateDirectMessagesSinceLastUpdateIds;
 - (void)updateWithABunchOfRecentMessages;
 
 - (void)viewAppearedForFirstTimeAfterCredentialChange;

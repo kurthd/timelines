@@ -158,6 +158,7 @@
 
 - (void)networkAwareViewWillAppear
 {
+    NSLog(@"Message Display Manager: view will appear");
     if (!alreadyBeenDisplayedAfterCredentialChange)
         [self viewAppearedForFirstTimeAfterCredentialChange];
 }
@@ -381,19 +382,19 @@
     [sortedConversations removeAllObjects];
     alreadyBeenDisplayedAfterCredentialChange = NO;
 
-    // may not actually be displayed, but call this anyway -- for now
-    [self viewAppearedForFirstTimeAfterCredentialChange];
-    
     self.conversationController.segregatedSenderUsername = credentials.username;
 }
 
 - (void)viewAppearedForFirstTimeAfterCredentialChange
 {
-    [self updateWithABunchOfRecentMessages]; // TEMPORARY?
+    if (directMessageCache.receivedUpdateId && directMessageCache.sentUpdateId)
+        [self updateDirectMessagesSinceLastUpdateIds];
+    else
+        [self updateWithABunchOfRecentMessages];
     alreadyBeenDisplayedAfterCredentialChange = YES;
 }
 
-- (void)updateDirecMessagesSinceLastUpdateIds
+- (void)updateDirectMessagesSinceLastUpdateIds
 {
     NSNumber * receivedUpdateId = directMessageCache.receivedUpdateId;
     NSNumber * sentUpdateId = directMessageCache.sentUpdateId;
