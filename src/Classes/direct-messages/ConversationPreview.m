@@ -35,10 +35,6 @@
     return self;
 }
 
-- (id)copy {
-    return [self retain]; // immutable
-}
-
 - (NSComparisonResult)compare:(ConversationPreview *)preview
 {
     return [preview.mostRecentMessageDate compare:self.mostRecentMessageDate];
@@ -46,8 +42,9 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"{%@, %@, %@, %@}", otherUserId,
-        otherUserName, mostRecentMessage, mostRecentMessageDate];
+    return [NSString stringWithFormat:@"{%@, %@, %@, %@, %d}", otherUserId,
+        otherUserName, mostRecentMessage, mostRecentMessageDate,
+        numNewMessages];
 }
 
 @end

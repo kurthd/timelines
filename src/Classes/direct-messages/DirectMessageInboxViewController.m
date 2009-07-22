@@ -10,6 +10,12 @@
 
 @synthesize delegate;
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
+
 #pragma mark UITableViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -51,7 +57,8 @@
 {
     ConversationPreview * preview =
         [conversationPreviews objectAtIndex:indexPath.row];
-    [delegate selectedConversationForUserId:preview.otherUserId];
+    [delegate selectedConversationPreview:preview];
+    preview.numNewMessages = 0;
 }
 
 #pragma mark UITableViewDelegate implementation
@@ -66,6 +73,7 @@
 
 - (void)setConversationPreviews:(NSArray *)someConversationPreviews
 {
+    NSLog(@"Conversation previews: %@", someConversationPreviews);
     NSArray * tempConversationPreviews = [someConversationPreviews copy];
     [conversationPreviews release];
     conversationPreviews = tempConversationPreviews;

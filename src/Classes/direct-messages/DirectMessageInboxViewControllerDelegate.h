@@ -3,9 +3,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ConversationPreview.h"
 
 @protocol DirectMessageInboxViewControllerDelegate
 
-- (void)selectedConversationForUserId:(NSString *)userId;
+- (void)selectedConversationPreview:(ConversationPreview *)preview;
 
 @end
