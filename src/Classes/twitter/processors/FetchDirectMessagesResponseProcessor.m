@@ -99,8 +99,13 @@
         NSDictionary * dmData = datum;
 
         NSString * dmId = [[dmData objectForKey:@"id"] description];
-        DirectMessage * dm = [DirectMessage directMessageWithId:dmId
-                                                        context:context];
+
+        NSPredicate * predicate =
+            [NSPredicate predicateWithFormat:
+             @"credentials.username == %@ and identifier == %@",
+             self.credentials.username, dmId];
+        DirectMessage * dm = [DirectMessage findFirst:predicate
+                                              context:context];
 
         if (!dm) {
             dm = [DirectMessage createInstance:context];
@@ -117,7 +122,7 @@
 
     NSError * error;
     if (![context save:&error])
-        NSLog(@"Failed to save tweets and users: '%@'", error);
+        NSLog(@"Failed to save direct messages and users: '%@'", error);
 
     SEL sel;
     if (sent)

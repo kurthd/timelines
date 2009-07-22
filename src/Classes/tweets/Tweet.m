@@ -29,7 +29,7 @@
         [NSNumber numberWithLongLong:[self.identifier longLongValue]];
     NSNumber * theirId =
         [NSNumber numberWithLongLong:[tweet.identifier longLongValue]];
-    
+
     return [theirId compare:myId];
 }
 

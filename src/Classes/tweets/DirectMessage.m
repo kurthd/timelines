@@ -34,7 +34,7 @@
         [NSNumber numberWithLongLong:[self.identifier longLongValue]];
     NSNumber * theirId =
         [NSNumber numberWithLongLong:[dm.identifier longLongValue]];
-    
+
     return [theirId compare:myId];
 }
 
