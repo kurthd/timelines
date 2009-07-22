@@ -95,6 +95,8 @@
     TwitterCredentials * credentials;
 
     BOOL failedState;
+
+    BOOL refreshingMessages;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;

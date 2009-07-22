@@ -85,10 +85,12 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
     [super viewDidAppear:animated];
     visible = YES;
     
-    // Is this line necessary?  It doesn't appear so, and it fixes a bug where
-    // the updating view consumes the whole screen once a tab is moved under
-    // the 'more' tab.
-//    [targetViewController.view.superview addSubview:[self updatingView]];
+    // HACK: When a net aware view controller is on the 'more' tab, the
+    // 'updating' view consumes the whole screen.  If the view isn't added, it
+    // doesn't appear as early as it should, so this hacks just the case when
+    // the tab is on the 'more' tab.
+    if (!self.tabBarController || self.tabBarController.selectedIndex < 4)
+        [targetViewController.view.superview addSubview:[self updatingView]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

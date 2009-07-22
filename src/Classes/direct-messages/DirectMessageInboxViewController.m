@@ -59,7 +59,7 @@
 - (CGFloat)tableView:(UITableView *)aTableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 66;
+    return 62;
 }
 
 #pragma mark DirectMessageInboxViewController implementation

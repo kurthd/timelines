@@ -101,6 +101,12 @@
             wrapperController.navigationItem.rightBarButtonItem;
         composeDirectMessageButton.target = self;
         composeDirectMessageButton.action = @selector(composeNewDirectMessage);
+
+        UIBarButtonItem * refreshButton =
+            wrapperController.navigationItem.leftBarButtonItem;
+        refreshButton.target = self;
+        refreshButton.action =
+            @selector(updateDirectMessagesSinceLastUpdateIds);
     }
 
     return self;
@@ -115,6 +121,7 @@
     NSLog(@"Messages Display Manager: Received direct messages (%d)...",
         [directMessages count]);
     [directMessageCache addReceivedDirectMessages:directMessages];
+    directMessageCache.receivedUpdateId = updateId;
 
     outstandingReceivedRequests--;
     [self updateViewsWithNewMessages];
@@ -129,6 +136,8 @@
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchmessages", @"");
     [self displayErrorWithTitle:errorMessage error:error];
+
+    outstandingReceivedRequests--;
 }
 
 - (void)sentDirectMessages:(NSArray *)directMessages
@@ -138,6 +147,7 @@
     NSLog(@"Messages Display Manager: Received sent direct messages (%d)...",
         [directMessages count]);
     [directMessageCache addSentDirectMessages:directMessages];
+    directMessageCache.sentUpdateId = updateId;
 
     outstandingSentRequests--;
     [self updateViewsWithNewMessages];
@@ -152,6 +162,8 @@
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchmessages", @"");
     [self displayErrorWithTitle:errorMessage error:error];
+
+    outstandingSentRequests--;
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation
@@ -400,15 +412,22 @@
     NSNumber * sentUpdateId = directMessageCache.sentUpdateId;
     NSLog(@"Messages Display Manager: Updating since update id %@, %@...",
         receivedUpdateId, sentUpdateId);
-    [self fetchDirectMessagesSinceId:receivedUpdateId page:nil numMessages:nil];
-    [self fetchSentDirectMessagesSinceId:sentUpdateId page:nil numMessages:nil];
+    if (receivedUpdateId && sentUpdateId) {
+        refreshingMessages = YES;
+        [self fetchDirectMessagesSinceId:receivedUpdateId page:nil
+            numMessages:nil];
+        [self fetchSentDirectMessagesSinceId:sentUpdateId page:nil
+            numMessages:nil];
 
-    [self setUpdatingState];
+        [self setUpdatingState];
+    } else
+        [self updateWithABunchOfRecentMessages];
 }
 
 - (void)updateWithABunchOfRecentMessages
 {
     NSLog(@"Messages Display Manager: Updating with a bunch of messages...");
+    refreshingMessages = NO;
     [self fetchDirectMessagesSinceId:nil page:[NSNumber numberWithInt:1]
         numMessages:nil];
     [self fetchSentDirectMessagesSinceId:nil
@@ -499,19 +518,21 @@
 - (void)fetchDirectMessagesSinceId:(NSNumber *)updateId page:(NSNumber *)page
     numMessages:(NSNumber *)numMessages
 {
-    outstandingReceivedRequests++;
-
-    NSNumber * count = [NSNumber numberWithInteger:200];
-    [service fetchDirectMessagesSinceId:updateId page:page count:count];
+    if (outstandingReceivedRequests == 0) { // only one at a time
+        outstandingReceivedRequests++;
+        NSNumber * count = [NSNumber numberWithInteger:200];
+        [service fetchDirectMessagesSinceId:updateId page:page count:count];
+    }
 }
 
 - (void)fetchSentDirectMessagesSinceId:(NSNumber *)updateId
     page:(NSNumber *)page numMessages:(NSNumber *)numMessages
 {
-    outstandingSentRequests++;
-
-    NSNumber * count = [NSNumber numberWithInteger:200];
-    [service fetchSentDirectMessagesSinceId:updateId page:page count:count];
+    if (outstandingSentRequests == 0) { // only one at a time
+        outstandingSentRequests++;
+        NSNumber * count = [NSNumber numberWithInteger:200];
+        [service fetchSentDirectMessagesSinceId:updateId page:page count:count];
+    }
 }
 
 - (void)setUpdatingState
@@ -586,7 +607,7 @@
             otherUserName:otherUser.name
             mostRecentMessage:mostRecentMessage.text
             mostRecentMessageDate:mostRecentMessage.created
-            newMessages:NO]
+            numNewMessages:0]
             autorelease];
         [conversationPreviews addObject:preview];
     }

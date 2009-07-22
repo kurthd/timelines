@@ -38,7 +38,7 @@
 							<object class="IBUILabel" id="296937323">
 								<reference key="NSNextResponder" ref="30309900"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{32, 3}, {167, 21}}</string>
+								<string key="NSFrame">{{32, 2}, {167, 21}}</string>
 								<reference key="NSSuperview" ref="30309900"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -63,7 +63,7 @@
 							<object class="IBUILabel" id="1022490771">
 								<reference key="NSNextResponder" ref="30309900"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{32, 26}, {259, 34}}</string>
+								<string key="NSFrame">{{32, 23}, {259, 34}}</string>
 								<reference key="NSSuperview" ref="30309900"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -86,7 +86,7 @@
 							<object class="IBUILabel" id="545575707">
 								<reference key="NSNextResponder" ref="30309900"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{207, 3}, {84, 21}}</string>
+								<string key="NSFrame">{{207, 2}, {84, 21}}</string>
 								<reference key="NSSuperview" ref="30309900"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -108,7 +108,7 @@
 							<object class="IBUIImageView" id="871885842">
 								<reference key="NSNextResponder" ref="30309900"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{9, 25}, {14, 14}}</string>
+								<string key="NSFrame">{{9, 23}, {14, 14}}</string>
 								<reference key="NSSuperview" ref="30309900"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -120,7 +120,7 @@
 								</object>
 							</object>
 						</object>
-						<string key="NSFrameSize">{300, 65}</string>
+						<string key="NSFrameSize">{300, 61}</string>
 						<reference key="NSSuperview" ref="205713040"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -132,7 +132,7 @@
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 					</object>
 				</object>
-				<string key="NSFrameSize">{320, 66}</string>
+				<string key="NSFrameSize">{320, 62}</string>
 				<reference key="NSSuperview"/>
 				<reference key="IBUIBackgroundColor" ref="949391469"/>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -257,7 +257,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>UIResponder</string>
 					<string>DirectMessageInboxCell</string>
-					<string>{{228, 499}, {320, 66}}</string>
+					<string>{{228, 503}, {320, 62}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>

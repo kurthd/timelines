@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="127"/>
+			<integer value="124"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -81,7 +81,7 @@
 								<object class="IBUISegmentedControl" key="IBUITitleView" id="765980778">
 									<reference key="NSNextResponder"/>
 									<int key="NSvFlags">292</int>
-									<string key="NSFrame">{{88, 7}, {144, 30}}</string>
+									<string key="NSFrame">{{76, 7}, {168, 30}}</string>
 									<reference key="NSSuperview"/>
 									<bool key="IBUIOpaque">NO</bool>
 									<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -154,6 +154,10 @@
 								</object>
 								<object class="IBUINavigationItem" key="IBUINavigationItem" id="143609198">
 									<string key="IBUITitle">Messages</string>
+									<object class="IBUIBarButtonItem" key="IBUILeftBarButtonItem" id="125741576">
+										<int key="IBUIStyle">1</int>
+										<int key="IBUISystemItemIdentifier">13</int>
+									</object>
 									<object class="IBUIBarButtonItem" key="IBUIRightBarButtonItem" id="433342287">
 										<int key="IBUIStyle">1</int>
 										<int key="IBUISystemItemIdentifier">7</int>
@@ -781,12 +785,18 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="433342287"/>
+							<reference ref="125741576"/>
 						</object>
 						<reference key="parent" ref="269688130"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">180</int>
 						<reference key="object" ref="433342287"/>
+						<reference key="parent" ref="143609198"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">182</int>
+						<reference key="object" ref="125741576"/>
 						<reference key="parent" ref="143609198"/>
 					</object>
 				</object>
@@ -837,6 +847,7 @@
 					<string>174.IBPluginDependency</string>
 					<string>176.IBPluginDependency</string>
 					<string>180.IBPluginDependency</string>
+					<string>182.IBPluginDependency</string>
 					<string>2.IBAttributePlaceholdersKey</string>
 					<string>2.IBEditorWindowLastContentRect</string>
 					<string>2.IBPluginDependency</string>
@@ -887,6 +898,7 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSMutableDictionary">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
@@ -922,7 +934,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">181</int>
+			<int key="maxID">182</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
