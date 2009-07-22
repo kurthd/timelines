@@ -27,7 +27,8 @@
 #import "DirectMessage.h"
 #import "NSObject+RuntimeAdditions.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
-#import "TweetInfo.h"  // so they can be fed to the personalFeedSelectionMgr
+#import "TweetInfo.h"  // so persisted objects can be displayed
+#import "DirectMessageCache.h"  // so persisted objects can be displayed
 
 @interface TwitchAppDelegate ()
 
@@ -57,6 +58,7 @@
 - (BOOL)saveContext;
 - (void)prunePersistenceStore;
 - (void)loadHomeViewWithCachedData:(TwitterCredentials *)account;
+- (void)loadMessagesViewWithCachedData:(TwitterCredentials *)account;
 - (void)setUIStateFromPersistence;
 - (void)setSelectedTabFromPersistence;
 - (void)persistUIState;
@@ -173,6 +175,7 @@
         [self.composeTweetDisplayMgr setCredentials:c];
 
         [self loadHomeViewWithCachedData:c];
+        [self loadMessagesViewWithCachedData:c];
     }
 
     [self setUIStateFromPersistence];
@@ -195,8 +198,10 @@
 
     if (managedObjectContext != nil) {
         [self prunePersistenceStore];
-        if (![self saveContext])
-            exit(-1);  // fail
+        if (![self saveContext]) {
+            NSLog(@"Failed to save state on application shutdown.");
+            exit(-1);
+        }
     }
 
     [self persistUIState];
@@ -523,6 +528,7 @@
 
             [self broadcastActivatedCredentialsChanged:activeAccount];
             [self loadHomeViewWithCachedData:activeAccount];
+            [self loadMessagesViewWithCachedData:activeAccount];
         }
     }
 
@@ -807,7 +813,8 @@
     }
 
     // only keep the last n tweets, mentions, and dms for each account
-    static const NSUInteger NUM_TO_KEEP = 20;
+    static const NSUInteger NUM_TWEETS_TO_KEEP = 20;
+    static const NSUInteger NUM_DIRECT_MESSAGES_TO_KEEP = 200;
 
     NSMutableDictionary * living =
         [NSMutableDictionary dictionaryWithCapacity:self.credentials.count];
@@ -847,7 +854,7 @@
             }
 
             // finally, insert the tweet if it should be saved
-            if (perTweetType.count < NUM_TO_KEEP) {
+            if (perTweetType.count < NUM_TWEETS_TO_KEEP) {
                 [perTweetType addObject:t];  // it lives
                 [sparedUsers addObject:t.user];
             } else
@@ -868,6 +875,7 @@
     NSArray * allDms =
         [[DirectMessage findAll:context]
          sortedArrayUsingSelector:@selector(compare:)];
+
     for (DirectMessage * dm in allDms) {
         TwitterCredentials * c = dm.credentials;
 
@@ -877,7 +885,7 @@
             [living setObject:perCredentials forKey:c.username];
         }
 
-        if (perCredentials.count < NUM_TO_KEEP) {
+        if (perCredentials.count < NUM_DIRECT_MESSAGES_TO_KEEP) {
             [perCredentials addObject:dm];
             [sparedUsers addObject:dm.recipient];
             [sparedUsers addObject:dm.sender];
@@ -907,6 +915,7 @@
     NSArray * allTweets = [UserTweet findAll:predicate context:context];
     NSArray * allMentions = [Mention findAll:predicate context:context];
 
+    NSLog(@"Loading persisted tweets:");
     NSLog(@"Loaded tweets: '%@'.", allTweets);
     NSLog(@"Loaded mentions: '%@'.", allMentions);
 
@@ -926,6 +935,56 @@
     personalFeedSelectionMgr.mentionsTimelineTweets = mentions;
 
     [personalFeedSelectionMgr refreshCurrentTabData];
+}
+
+- (void)loadMessagesViewWithCachedData:(TwitterCredentials *)account
+{
+    // important to access the context via the accessor
+    NSManagedObjectContext * context = [self managedObjectContext];
+
+    NSPredicate * predicate = 
+        [NSPredicate predicateWithFormat:@"credentials.username == %@",
+        account.username];
+
+    NSArray * allDms = [DirectMessage findAll:predicate context:context];
+    NSLog(@"All DMs for '%@':\n%@", account, allDms);
+    NSNumber * largestSentId = [NSNumber numberWithLongLong:0];
+    NSNumber * largestRecvdId = [NSNumber numberWithLongLong:0];
+
+    NSMutableArray * recvdDms = [NSMutableArray arrayWithCapacity:allDms.count];
+    NSMutableArray * sentDms = [NSMutableArray arrayWithCapacity:allDms.count];
+
+    for (DirectMessage * dm in allDms) {
+        if ([account.username isEqualToString:dm.sender.username]) {
+            [sentDms addObject:dm];
+
+            if ([largestSentId longLongValue] < [dm.identifier longLongValue])
+                largestSentId =
+                    [NSNumber numberWithLongLong:[dm.identifier longLongValue]];
+        } else if ([account.username isEqualToString:dm.recipient.username]) {
+            [recvdDms addObject:dm];
+
+            if ([largestRecvdId longLongValue] < [dm.identifier longLongValue])
+                largestRecvdId =
+                    [NSNumber numberWithLongLong:[dm.identifier longLongValue]];
+        } else
+            NSLog(@"Warning: this direct message doesn't belong to '%@': '%@'.",
+                account, dm);
+    }
+
+    NSLog(@"Loading direct messages from persistence:");
+    NSLog(@"Sent up to %@:\n%@", largestSentId, sentDms);
+    NSLog(@"Received up to %@:\n%@", largestRecvdId, recvdDms);
+
+    DirectMessageCache * cache = [[DirectMessageCache alloc] init];
+    cache.receivedUpdateId = largestRecvdId;
+    cache.sentUpdateId = largestSentId;
+    [cache addReceivedDirectMessages:recvdDms];
+    [cache addSentDirectMessages:sentDms];
+
+    directMessageDisplayMgr.directMessageCache = cache;
+
+    [cache release];
 }
 
 - (void)setUIStateFromPersistence
