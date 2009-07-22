@@ -89,7 +89,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     (UIInterfaceOrientation)orientation {
 
     if (orientation == UIInterfaceOrientationPortrait ||
-        orientation == UIInterfaceOrientationPortrait) {
+        orientation == UIInterfaceOrientationPortraitUpsideDown) {
 
         CGRect recipientViewFrame = recipientView.frame;
         recipientViewFrame.size.height = 39;
