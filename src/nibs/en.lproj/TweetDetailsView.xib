@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="2"/>
+			<integer value="35"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -319,6 +319,7 @@
 									<double key="NSSize">1.300000e+01</double>
 									<int key="NSfFlags">16</int>
 								</object>
+								<string key="IBUITitleShadowOffset">{0, 1}</string>
 								<string key="IBUINormalTitle">Retweet</string>
 								<reference key="IBUIHighlightedTitleColor" ref="98511986"/>
 								<object class="NSColor" key="IBUIDisabledTitleColor">
@@ -361,6 +362,7 @@
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<reference key="IBUIFont" ref="281209981"/>
+								<string key="IBUITitleShadowOffset">{0, 1}</string>
 								<string key="IBUINormalTitle">Public Reply</string>
 								<reference key="IBUIHighlightedTitleColor" ref="98511986"/>
 								<object class="NSColor" key="IBUIDisabledTitleColor">
@@ -391,6 +393,7 @@
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<reference key="IBUIFont" ref="281209981"/>
+								<string key="IBUITitleShadowOffset">{0, 1}</string>
 								<string key="IBUINormalTitle">Direct Message</string>
 								<reference key="IBUIHighlightedTitleColor" ref="98511986"/>
 								<object class="NSColor" key="IBUIDisabledTitleColor">

@@ -76,39 +76,49 @@
     if (isDisplayed) {
         if (orientation == UIInterfaceOrientationPortrait ||
             orientation == UIInterfaceOrientationPortrait) {
-    
+
             CGRect navigationBarFrame = navigationBar.frame;
             navigationBarFrame.size.width = 320;
             navigationBar.frame = navigationBarFrame;
-    
+
             CGRect photoViewFrame = photoView.frame;
             photoViewFrame.size.width = 320;
             photoViewFrame.size.height = 480;
             photoView.frame = photoViewFrame;
-        
+
             CGRect toolbarFrame = toolbar.frame;
             toolbarFrame.size.width = 320;
             toolbarFrame.origin.y = 436;
             toolbar.frame = toolbarFrame;
+
+            CGRect loadingViewFrame = loadingView.frame;
+            loadingViewFrame.origin.x = 141;
+            loadingViewFrame.origin.y = 221;
+            loadingView.frame = loadingViewFrame;
         } else {
             CGRect navigationBarFrame = navigationBar.frame;
             navigationBarFrame.size.width = 480;
             navigationBar.frame = navigationBarFrame;
-    
+
             CGRect photoViewFrame = photoView.frame;
             photoViewFrame.size.width = 480;
             photoViewFrame.size.height = 320;
             photoView.frame = photoViewFrame;
-    
+
             CGRect toolbarFrame = toolbar.frame;
             toolbarFrame.size.width = 480;
             toolbarFrame.origin.y = 276;
             toolbar.frame = toolbarFrame;
+
+            CGRect loadingViewFrame = loadingView.frame;
+            loadingViewFrame.origin.x = 221;
+            loadingViewFrame.origin.y = 141;
+            loadingView.frame = loadingViewFrame;
         }
     }
 
     previousOrientation = orientation;
-
+    
 	return YES;
 }
 
