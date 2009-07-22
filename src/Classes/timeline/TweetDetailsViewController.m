@@ -133,6 +133,10 @@ static UIImage * defaultAvatar;
         footer;
 
     NSString * body = [[self class] bodyWithUserLinks:self.selectedTweet.text];
+    // some tweets have newlines -- convert them to HTML line breaks for display
+    // in the tweet view
+    body =
+        [body stringByReplacingOccurrencesOfString:@"\n" withString:@"<br />"];
     if (self.selectedTweet.recipient) {
         NSString * headerFormatString =
             NSLocalizedString(@"tweetdetailsview.tweetheader", @"");
