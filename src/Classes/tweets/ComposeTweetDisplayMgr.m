@@ -108,14 +108,12 @@
         presentModalViewController:self.composeTweetViewController
                           animated:YES];
 
-    [self.composeTweetViewController
-        setTitle:NSLocalizedString(@"composetweet.view.title", @"")];
-    [self.composeTweetViewController setUsername:service.credentials.username];
-    [self.composeTweetViewController promptWithText:tweet];
-
     self.recipient = nil;
     self.origTweetId = nil;
     self.origUsername = nil;
+
+    [self.composeTweetViewController composeTweet:tweet
+                                             from:service.credentials.username];
 }
 
 - (void)composeReplyToTweet:(NSString *)tweetId
@@ -130,12 +128,22 @@
                    fromUser:(NSString *)user
                    withText:(NSString *)text
 {
-    [self composeTweetWithText:text];
+    [self.rootViewController
+        presentModalViewController:self.composeTweetViewController
+                          animated:YES];
+
+    self.recipient = nil;
     self.origTweetId = tweetId;
     self.origUsername = user;
 
-    [self.composeTweetViewController
-        setTitle:[NSString stringWithFormat:@"@%@", user]];
+    [self.composeTweetViewController composeTweet:text
+                                             from:service.credentials.username
+                                        inReplyTo:user];
+}
+
+- (void)composeDirectMessage
+{
+    [self composeDirectMessageTo:@"" withText:@""];
 }
 
 - (void)composeDirectMessageTo:(NSString *)username
@@ -148,21 +156,20 @@
     [self composeDirectMessageTo:username withText:text];
 }
 
-- (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)tweet
+- (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)text
 {
     [self.rootViewController
         presentModalViewController:self.composeTweetViewController
                           animated:YES];
 
-    [self.composeTweetViewController setUsername:service.credentials.username];
-    [self.composeTweetViewController promptWithText:tweet];
-    [self.composeTweetViewController setTitle:
-        [NSString stringWithFormat:
-        NSLocalizedString(@"composedirectmessage.view.title", @""), username]];
-
+    self.origUsername = nil;
     self.recipient = username;
     self.origTweetId = nil;
-    self.origUsername = nil;
+
+    NSString * sender = service.credentials.username;
+    [self.composeTweetViewController composeDirectMessage:text
+                                                     from:sender
+                                                       to:username];
 }
 
 #pragma mark Credentials notifications

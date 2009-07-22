@@ -60,6 +60,7 @@
                    fromUser:(NSString *)user
                    withText:(NSString *)text;
 
+- (void)composeDirectMessage;
 - (void)composeDirectMessageTo:(NSString *)username;
 - (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)tweet;
 

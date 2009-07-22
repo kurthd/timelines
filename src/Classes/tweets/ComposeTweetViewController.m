@@ -11,6 +11,15 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)disableForm;
 - (void)enableForm;
+- (void)showRecipientView;
+- (void)hideRecipientView;
+
+- (void)enableSendButtonFromInterface;
+- (void)enableSendButtonFromText:(NSString *)text
+                    andRecipient:(NSString *)recipient;
+
+- (void)updateCharacterCountFromInterface;
+- (void)updateCharacterCountFromText:(NSString *)text;
 
 @end
 
@@ -21,13 +30,20 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)dealloc
 {
     [textView release];
+
     [navigationBar release];
     [toolbar release];
-    [cancelButton release];
     [sendButton release];
+    [cancelButton release];
+
     [characterCount release];
     [accountLabel release];
+
+    [recipientView release];
+    [recipientTextField release];
+
     [activityView release];
+
     [super dealloc];
 }
 
@@ -42,21 +58,31 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     [super viewWillAppear:animated];
 
-    sendButton.enabled =
-        textView.text.length > 0 && textView.text.length <= MAX_TWEET_LENGTH;
-    if (!displayingActivity)
-        [textView becomeFirstResponder];
-        
+    [self enableSendButtonFromInterface];
+    if (!displayingActivity) {
+        if (recipientTextField.text.length == 0)
+            [recipientTextField becomeFirstResponder];
+        else
+            [textView becomeFirstResponder];
+    }
+
+    [self updateCharacterCountFromText:textView.text];
+
     CGRect characterCountFrame = characterCount.frame;
      // hack -- this needs to be 210 when displayed, but 133 after a rotation
     characterCountFrame.origin.y = 210;
     characterCount.frame = characterCountFrame;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+- (void)viewDidDisappear:(BOOL)animated
 {
-    [super viewWillDisappear:animated];
+    [super viewDidDisappear:animated];
+
+    [recipientTextField resignFirstResponder];
     [textView resignFirstResponder];
+
+    textView.text = @"";
+    recipientTextField.text = @"";
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
@@ -65,27 +91,35 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     if (orientation == UIInterfaceOrientationPortrait ||
         orientation == UIInterfaceOrientationPortrait) {
 
+        CGRect recipientViewFrame = recipientView.frame;
+        recipientViewFrame.size.height = 39;
+        recipientView.frame = recipientViewFrame;
+
         CGRect textViewFrame = textView.frame;
-        textViewFrame.size.width = 320;
-        textViewFrame.size.height = 178;
+        textViewFrame.origin.y = 83;
         textView.frame = textViewFrame;
 
         CGRect characterCountFrame = characterCount.frame;
         characterCountFrame.origin.y = 133;
         characterCount.frame = characterCountFrame;
         characterCount.textColor = [UIColor whiteColor];
+        characterCount.backgroundColor = [UIColor clearColor];
 
         toolbar.hidden = NO;
     } else {
+        CGRect recipientViewFrame = recipientView.frame;
+        recipientViewFrame.size.height = 29;
+        recipientView.frame = recipientViewFrame;
+
         CGRect textViewFrame = textView.frame;
-        textViewFrame.size.width = 480;
-        textViewFrame.size.height = 95;
+        textViewFrame.origin.y = 73;
         textView.frame = textViewFrame;
 
         CGRect characterCountFrame = characterCount.frame;
         characterCountFrame.origin.y = 173;
         characterCount.frame = characterCountFrame;
         characterCount.textColor = [UIColor twitchGrayColor];
+        characterCount.backgroundColor = [UIColor whiteColor];
 
         toolbar.hidden = YES;
     }
@@ -93,36 +127,74 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 	return YES;
 }
 
-- (void)setTitle:(NSString *)title
+- (void)composeTweet:(NSString *)text from:(NSString *)sender
 {
-    navigationBar.topItem.title = title;
-}
-
-- (void)setUsername:(NSString *)username
-{
-    accountLabel.text = [NSString stringWithFormat:@"@%@", username];
-}
-
-- (void)promptWithText:(NSString *)text
-{
-    sendButton.enabled = text.length > 0 && text.length <= MAX_TWEET_LENGTH;
-    cancelButton.enabled = YES;
-
     textView.text = text;
+    accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
 
-    characterCount.text = [NSString stringWithFormat:@"%d",
-        MAX_TWEET_LENGTH - text.length];
+    [self hideRecipientView];
+    [textView becomeFirstResponder];
+    [self enableSendButtonFromInterface];
+    [self updateCharacterCountFromText:text];
+
+    navigationBar.topItem.title =
+        NSLocalizedString(@"composetweet.view.title", @"");
+}
+
+- (void)composeTweet:(NSString *)text
+                from:(NSString *)sender
+           inReplyTo:(NSString *)recipient
+{
+    textView.text = text;
+    accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
+
+    [self hideRecipientView];
+    [textView becomeFirstResponder];
+    [self enableSendButtonFromInterface];
+    [self updateCharacterCountFromText:text];
+
+    navigationBar.topItem.title =
+        NSLocalizedString(@"composetweet.view.title", @"");
+}
+
+- (void)composeDirectMessage:(NSString *)text from:(NSString *)sender
+{
+    textView.text = text;
+    accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
+    recipientTextField.text = @"";
+
+    [self showRecipientView];
+    [recipientTextField becomeFirstResponder];
+    [self enableSendButtonFromInterface];
+    [self updateCharacterCountFromText:text];
+}
+
+- (void)composeDirectMessage:(NSString *)text
+                        from:(NSString *)sender
+                          to:(NSString *)recipient
+{
+    textView.text = text;
+    accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
+    recipientTextField.text = recipient;
+
+    [self showRecipientView];
+    NSLog(@"Recipient: '%@'", recipient);
+    if (recipient.length)
+        [textView becomeFirstResponder];
+    else
+        [recipientTextField becomeFirstResponder];
+    [self enableSendButtonFromInterface];
+    [self updateCharacterCountFromText:text];
+    navigationBar.topItem.title = @"Direct Message";
 }
 
 - (void)addTextToMessage:(NSString *)text
 {
     NSString * current = textView.text;
     textView.text = [current stringByAppendingFormat:@" %@", text];
-    characterCount.text =
-        [NSString stringWithFormat:@"%d",
-        MAX_TWEET_LENGTH - textView.text.length];
-    sendButton.enabled =
-        textView.text.length > 0 && textView.text.length <= MAX_TWEET_LENGTH;
+
+    [self enableSendButtonFromInterface];
+    [self updateCharacterCountFromText:textView.text];
 }
 
 - (void)displayActivityView
@@ -161,11 +233,36 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     displayingActivity = NO;
 }
 
+#pragma mark UITextFieldDelegate implementation
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    [self enableSendButtonFromText:textView.text andRecipient:@""];
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textView becomeFirstResponder];
+    return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField
+    shouldChangeCharactersInRange:(NSRange)range
+                replacementString:(NSString *)string
+{
+    NSString * s = [textField.text stringByReplacingCharactersInRange:range
+                                                           withString:string];
+
+    [self enableSendButtonFromText:textView.text andRecipient:s];
+
+    return YES;
+}
+
 #pragma mark UITextViewDelegate implementation
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    NSLog(@"Called");
     return !displayingActivity;
 }
 
@@ -178,9 +275,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     NSString * s = [textView.text stringByReplacingCharactersInRange:range
                                                           withString:text];
 
-    characterCount.text =
-        [NSString stringWithFormat:@"%d", MAX_TWEET_LENGTH - s.length];
-    sendButton.enabled = s.length > 0 && s.length <= MAX_TWEET_LENGTH;
+    [self updateCharacterCountFromText:s];
+    [self enableSendButtonFromText:s andRecipient:recipientTextField.text];
 
     return YES;
 }
@@ -250,6 +346,62 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     sendButton.enabled = YES;
     cancelButton.enabled = YES;
+}
+
+- (void)showRecipientView
+{
+    if (recipientView.hidden) {
+        CGRect recipientFrame = recipientView.frame;
+        CGRect textViewFrame = textView.frame;
+
+        textViewFrame.origin.y += recipientFrame.size.height;
+        textViewFrame.size.height -= recipientFrame.size.height;
+
+        textView.frame = textViewFrame;
+        recipientView.hidden = NO;
+    }
+}
+
+- (void)hideRecipientView
+{
+    if (!recipientView.hidden) {
+        CGRect recipientFrame = recipientView.frame;
+        CGRect textViewFrame = textView.frame;
+
+        textViewFrame.origin.y = navigationBar.frame.size.height;
+        textViewFrame.size.height += recipientFrame.size.height;
+
+        textView.frame = textViewFrame;
+        recipientView.hidden = YES;
+    }
+}
+
+// convenience method
+- (void)enableSendButtonFromInterface
+{
+    [self enableSendButtonFromText:textView.text
+                      andRecipient:recipientTextField.text];
+}
+
+- (void)enableSendButtonFromText:(NSString *)text
+                    andRecipient:(NSString *)recipient
+{
+    sendButton.enabled =
+        recipient.length > 0 &&
+        (text.length > 0 && text.length <= MAX_TWEET_LENGTH);
+}
+
+// convenience method
+- (void)updateCharacterCountFromInterface
+{
+    [self updateCharacterCountFromText:textView.text];
+}
+
+- (void)updateCharacterCountFromText:(NSString *)text
+{
+    characterCount.text =
+        [NSString stringWithFormat:@"%d", MAX_TWEET_LENGTH - text.length];
+
 }
 
 @end

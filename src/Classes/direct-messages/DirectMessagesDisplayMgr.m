@@ -597,7 +597,7 @@
 - (void)composeNewDirectMessage
 {
     NSLog(@"Messages display manager: composing new direct message...");
-    [composeTweetDisplayMgr composeTweetWithText:@""];
+    [composeTweetDisplayMgr composeDirectMessage];
 }
 
 - (void)sendDirectMessageToOtherUserInConversation
