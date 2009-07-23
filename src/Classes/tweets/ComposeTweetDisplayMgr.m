@@ -110,7 +110,6 @@
         presentModalViewController:self.composeTweetViewController
                           animated:YES];
 
-    //self.recipient = nil;
     self.origTweetId = nil;
     self.origUsername = nil;
 
@@ -134,7 +133,6 @@
         presentModalViewController:self.composeTweetViewController
                           animated:YES];
 
-    //self.recipient = nil;
     self.origTweetId = tweetId;
     self.origUsername = user;
 
@@ -185,7 +183,6 @@
                           animated:YES];
 
     self.origUsername = nil;
-    //self.recipient = username;
     self.origTweetId = nil;
 
     fromHomeScreen = NO;

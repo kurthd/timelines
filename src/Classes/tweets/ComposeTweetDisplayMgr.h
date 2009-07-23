@@ -31,8 +31,6 @@
     TwitPicImageSender * imageSender;
     LogInDisplayMgr * logInDisplayMgr;
 
-    //NSString * recipient;  // non-nil if composing a direct message
-
     BOOL fromHomeScreen;  // HACK: restore the correct draft from the "root"
                           // direct messages view
 
