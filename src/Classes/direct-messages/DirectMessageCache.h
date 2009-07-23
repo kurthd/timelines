@@ -3,6 +3,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DirectMessage.h"
 
 @interface DirectMessageCache : NSObject
 {
@@ -16,9 +17,11 @@
 @property (nonatomic, copy) NSNumber * receivedUpdateId;
 @property (nonatomic, copy) NSNumber * sentUpdateId;
 
+- (void)addReceivedDirectMessage:(DirectMessage *)newDirectMessage;
 - (void)addReceivedDirectMessages:(NSArray *)newDirectMessages;
 - (NSDictionary *)receivedDirectMessages;
 
+- (void)addSentDirectMessage:(DirectMessage *)newDirectMessage;
 - (void)addSentDirectMessages:(NSArray *)newDirectMessages;
 - (NSDictionary *)sentDirectMessages;
 

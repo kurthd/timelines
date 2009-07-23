@@ -3,7 +3,6 @@
 //
 
 #import "DirectMessageCache.h"
-#import "DirectMessage.h"
 
 @implementation DirectMessageCache
 
@@ -28,6 +27,11 @@
     return self;
 }
 
+- (void)addReceivedDirectMessage:(DirectMessage *)message
+{
+    [receivedDirectMessages setObject:message forKey:message.identifier];
+}
+
 - (void)addReceivedDirectMessages:(NSArray *)newDirectMessages
 {
     for (DirectMessage * message in newDirectMessages)
@@ -37,6 +41,11 @@
 - (NSDictionary *)receivedDirectMessages
 {
     return [[receivedDirectMessages copy] autorelease];
+}
+
+- (void)addSentDirectMessage:(DirectMessage *)message
+{
+    [sentDirectMessages setObject:message forKey:message.identifier];
 }
 
 - (void)addSentDirectMessages:(NSArray *)newDirectMessages
