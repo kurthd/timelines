@@ -82,29 +82,42 @@
 {
     NSString * regex = nil;
     NSString * removeString = nil;
+    NSInteger capture = 0;
 
     if ([url isMatchedByRegex:@"^http://twitpic.com/"]) {
-        regex = @"http:\\/\\/s3\\.amazonaws\\.com\\/twitpic\\/photo.*\"";
+        // extract the 'src' attribute from a tag that looks like:
+        //   <img id="photo-display"
+        //        class="photo-large"
+        //        src="http://web2.twitpic.com/..."
+        //        alt="my twitpic">
+
+        regex =
+            @"<img id=\"photo-display\" class=\"photo-large\" src=\"(.*?)\"";
         removeString = @"\"";
+        capture = 1;
     } else if ([url isMatchedByRegex:@"^http://yfrog.com/"]) {
         regex =
-            @"http:\\\\\\/\\\\\\/img\\d+\\.imageshack\\.\\w+\\\\\\/img\\d+\\\\\\/\\d+\\\\\\/\\w+\\.\\w+\\\\n";
+            @"(http:\\\\\\/\\\\\\/img\\d+\\.imageshack\\.\\w+\\\\\\/img\\d+\\\\\\/\\d+\\\\\\/\\w+\\.\\w+\\\\n)";
         removeString = @"\\\\n|\\\\";
+        capture = 1;
     } else if ([url isMatchedByRegex:@"^http://tinypic.com/"]) {
         regex =
-            @"http:\\/\\/[a-zA-Z0-9]+\\.tinypic\\.com\\/[a-zA-Z0-9]+\\.\\w+\"";
+            @"(http:\\/\\/[a-zA-Z0-9]+\\.tinypic\\.com\\/[a-zA-Z0-9]+\\.\\w+\")";
         removeString = @"\"";
+        capture = 1;
     } else if ([url isMatchedByRegex:@"^http://twitgoo.com/"]) {
         regex =
-            @"http:\\/\\/[a-zA-Z0-9]+\\.tinypic\\.com\\/[a-zA-Z0-9]+\\.\\w+\"";
+            @"(http:\\/\\/[a-zA-Z0-9]+\\.tinypic\\.com\\/[a-zA-Z0-9]+\\.\\w+\")";
         removeString = @"\"";
+        capture = 1;
     } else if ([url isMatchedByRegex:@"^http://mobypicture.com/"]) {
         regex =
-            @"http:\\/\\/www\\.mobypicture\\.com\\/images\\/user\\/[a-zA-Z0-9_]+\\.\\w+\"";
+            @"(http:\\/\\/www\\.mobypicture\\.com\\/images\\/user\\/[a-zA-Z0-9_]+\\.\\w+\")";
         removeString = @"\"";
+        capture = 1;
     }
 
-    NSString * imageUrl = [html stringByMatching:regex];
+    NSString * imageUrl = [html stringByMatching:regex capture:capture];
     imageUrl =
         [imageUrl stringByReplacingOccurrencesOfRegex:removeString
         withString:@""];
