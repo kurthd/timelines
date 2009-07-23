@@ -31,7 +31,7 @@
     TwitPicImageSender * imageSender;
     LogInDisplayMgr * logInDisplayMgr;
 
-    NSString * recipient;  // non-nil if composing a direct message
+    //NSString * recipient;  // non-nil if composing a direct message
 
     NSString * origTweetId;  // non-nil if composing a reply
     NSString * origUsername;

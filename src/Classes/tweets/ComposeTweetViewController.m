@@ -9,8 +9,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 @interface ComposeTweetViewController ()
 
-- (void)disableForm;
-- (void)enableForm;
 - (void)showRecipientView;
 - (void)hideRecipientView;
 
@@ -59,6 +57,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [super viewWillAppear:animated];
 
     [self enableSendButtonFromInterface];
+
     if (!displayingActivity) {
         if (recipientTextField.text.length == 0)
             [recipientTextField becomeFirstResponder];
@@ -285,15 +284,23 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (IBAction)userDidSave
 {
-    [self disableForm];
-    [delegate userDidSave:textView.text];
+    if (recipientTextField.hidden)
+        [delegate userWantsToSendTweet:textView.text];
+    else
+        [delegate userWantsToSendDirectMessage:textView.text
+                                   toRecipient:recipientTextField.text];
 }
 
 - (IBAction)userDidCancel
 {
-    if (textView.text.length == 0)
-        [delegate userDidCancel];
-    else {
+    if (textView.text.length == 0) {
+        if (recipientView.hidden)
+            [delegate userDidCancelComposingTweet:textView.text];
+        else
+            [delegate
+                userDidCancelComposingDirectMessage:textView.text
+                                        toRecipient:recipientTextField.text];
+    } else {
         NSString * cancelTitle =
             NSLocalizedString(@"composetweet.cancel.confirm.cancel", @"");
         NSString * saveTitle =
@@ -324,10 +331,21 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     switch (buttonIndex) {
         case 0:  // save as draft
-            [delegate userDidSaveAsDraft:textView.text];
+            if (recipientView.hidden)
+                [delegate userDidSaveTweetDraft:textView.text];
+            else
+                [delegate
+                    userDidSaveDirectMessageDraft:textView.text
+                                      toRecipient:recipientTextField.text];
             break;
         case 1:  // user confirmed the cancel
-            [delegate userDidCancel];
+            if (recipientTextField.hidden)
+                [delegate userDidCancelComposingTweet:textView.text];
+            else {
+                NSString * recipient = recipientTextField.text;
+                [delegate userDidCancelComposingDirectMessage:textView.text
+                                                  toRecipient:recipient];
+            }
             break;
     }
 
@@ -335,18 +353,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 }
 
 #pragma mark Helpers
-
-- (void)disableForm
-{
-    cancelButton.enabled = NO;
-    sendButton.enabled = NO;
-}
-
-- (void)enableForm
-{
-    sendButton.enabled = YES;
-    cancelButton.enabled = YES;
-}
 
 - (void)showRecipientView
 {
