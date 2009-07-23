@@ -236,7 +236,7 @@ static UIImage * defaultAvatar;
 
         static NSString * imageUrlRegex =
             @"^http://twitpic.com/.+|"
-             "^http://yfrog.com/.+|"
+             "^http://.*\\.?yfrog.com/.+|"
              "^http://tinypic.com/.+|"
              "^http://twitgoo.com/.+|"
              "^http://mobypicture.com/.+|"

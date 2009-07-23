@@ -47,7 +47,10 @@
 
     NSLog(@"Url as string: %@", urlAsString);
     static NSString * imageRegex =
-        @".*\\.png.*|.*\\.jpg.*|.*\\.jpeg.*|.*\\.gif.*|.*\\.tif.*|.*\\.bmp.*";
+        //@".*\\.png.*|.*\\.jpg.*|.*\\.jpeg.*|.*\\.gif.*|.*\\.tif.*|.*\\.bmp.*|"
+        //".*\\.ico.*";
+        @"\\.png$|\\.jpg$|\\.jpeg$|\\.gif$|\\.tif$|\\tiff$|\\.bmp$|"
+        "\\.ico$";
 
     RKLRegexOptions options = RKLCaseless;
     NSRange range = NSMakeRange(0, urlAsString.length);
@@ -84,47 +87,64 @@
     NSInteger capture = 0;
 
     if ([url isMatchedByRegex:@"^http://twitpic.com/"]) {
-        // extract the 'src' attribute from a tag that looks like:
+        // extract the 'src' attribute from the main img tag:
         //   <img id="photo-display"
         //        class="photo-large"
         //        src="http://web2.twitpic.com/..."
         //        alt="my twitpic">
-
         regex =
-            @"<img id=\"photo-display\" class=\"photo-large\" src=\"(.*?)\"";
+            @"<img id=\"photo-display\"\\s+"
+                   "class=\"photo-large\"\\s+"
+                   "src=\"(.*?)\".*?>";
         capture = 1;
-    } else if ([url isMatchedByRegex:@"^http://yfrog.com/"]) {
-        // extract the 'href' attribute from:
+    } else if ([url isMatchedByRegex:@"^http://.*\\.?yfrog.com/"]) {
+        // yfrog's main img tag uses an absolute URL without the domain,
+        // e.g. "/img14/7946/ot4.png". We want to avoid one query for the
+        // image path and another for the image domain. This is
+        // the only place in the HTML where the full url lives. Example:
         // <link type="application/rss+xml"
         //       href="http://img14.yfrog.com/img14/7946/ot4.png.comments.xml"
         //       title="RSS"
         //       rel="alternate"/>
-
         regex =
             @"<link\\s+type=\"application/rss\\+xml\"\\s+"
                       "href=\"(.*)\\.comments\\.xml\"\\s+"
                       "title=\"RSS\"\\s+"
-                      "rel=\"alternate\"\\s*/>";
+                      "rel=\"alternate\".*?>";
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://tinypic.com/"]) {
-        // extract the 'src' attribute from an img tag:
+        // extract the 'src' attribute from the main img tag:
         //   <img src="http://i26.tinypic.com/28iudy9.jpg"
         //   title="Click for a larger view"
         //   id="imgElement"
         //   alt=""/>
         regex =
-            @"<img src=\"(.*?)\"\\s+"
-                  "title=\".*?\"\\s+"      // ignore the title
-                  "id=\"imgElement\"\\s+"  // rely on the unique img id
-                  "alt=\".*?\"\\s*/>";     // ignore the alt tag
+            @"<img\\+src=\"(.*?)\"\\s+"
+                    "title=\".*?\"\\s+"      // ignore the title
+                    "id=\"imgElement\"\\s+"  // rely on the unique img id
+                    "alt=\".*?\".*?>";     // ignore the alt tag
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://twitgoo.com/"]) {
+        // extract the 'src' attribute from the main img tag:
+        //  <img id="fullsize"
+        //       src="http://i28.tinypic.com/2q15snq.jpg"
+        //       alt="My brother and my niece." /> 
         regex =
-            @"(http:\\/\\/[a-zA-Z0-9]+\\.tinypic\\.com\\/[a-zA-Z0-9]+\\.\\w+\")";
+            @"<img\\s+id=\"fullsize\"\\s+"
+                     "src=\"(.*?)\"\\s+"
+                     "alt=\".*?\".*?>";
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://mobypicture.com/"]) {
+        // extract from the main image 'src' attribute:
+        // <img class="imageLinkBorder"
+        //      src="http://img.mobypicture.com/whatever.jpg"
+        //      id="main_picture"
+        //      alt="Whatever" />
         regex =
-            @"(http:\\/\\/www\\.mobypicture\\.com\\/images\\/user\\/[a-zA-Z0-9_]+\\.\\w+\")";
+            @"<img\\s+class=\".*?\"\\s+"
+                     "src=\"(.*?)\"\\s+"
+                     "id=\"main_picture\"\\s+"
+                     "alt=\".*?\".*?>";
         capture = 1;
     }
 
