@@ -670,7 +670,7 @@
 - (ComposeTweetDisplayMgr *)composeMessageDisplayMgr
 {
     if (!composeMessageDisplayMgr) {
-        TwitterService * twitterService = [service clone];
+        TwitterService * twitterService = [service clone];  // autoreleased
             // [[TwitterService alloc]
             // initWithTwitterCredentials:nil context:managedObjectContext];
 
@@ -685,7 +685,6 @@
                         twitterService:twitterService
                            imageSender:imageSender
                                context:managedObjectContext];
-        [twitterService release];
         [imageSender release];
 
         composeMessageDisplayMgr.delegate = self;
