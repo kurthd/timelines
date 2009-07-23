@@ -24,6 +24,7 @@
 #import "CredentialsActivatedPublisher.h"
 #import "UserListTableViewController.h"
 #import "NewDirectMessagesState.h"
+#import "ComposeTweetDisplayMgrDelegate.h"
 
 /*  This class is responsible for managing the display of the direct messages
     tab.  It will function very similarly to the timeline display, re-using many
@@ -58,7 +59,8 @@
     NSObject <TwitterServiceDelegate, NetworkAwareViewControllerDelegate,
     DirectMessageInboxViewControllerDelegate,
     DirectMessageConversationViewControllerDelegate, TweetDetailsViewDelegate,
-    PhotoBrowserDelegate, TwitchBrowserViewControllerDelegate>
+    PhotoBrowserDelegate, TwitchBrowserViewControllerDelegate,
+    ComposeTweetDisplayMgrDelegate>
 {
     NetworkAwareViewController * wrapperController;
     DirectMessageInboxViewController * inboxController;
@@ -102,6 +104,8 @@
 
     NSUInteger loadMoreSentNextPage;
     NSUInteger loadMoreReceivedNextPage;
+
+    ComposeTweetDisplayMgr * composeMessageDisplayMgr;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;
@@ -132,6 +136,9 @@
 
 @property (nonatomic, copy) NSArray * newDirectMessages;
 @property (nonatomic, retain) NewDirectMessagesState * newDirectMessagesState;
+
+@property (nonatomic, readonly)
+    ComposeTweetDisplayMgr * composeMessageDisplayMgr;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     inboxController:(DirectMessageInboxViewController *)anInboxController

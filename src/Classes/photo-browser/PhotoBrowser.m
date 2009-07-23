@@ -76,7 +76,7 @@
 
     if (isDisplayed) {
         if (orientation == UIInterfaceOrientationPortrait ||
-            orientation == UIInterfaceOrientationPortrait) {
+            orientation == UIInterfaceOrientationPortraitUpsideDown) {
 
             CGRect navigationBarFrame = navigationBar.frame;
             navigationBarFrame.size.width = 320;
