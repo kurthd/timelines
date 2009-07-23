@@ -5,7 +5,8 @@
 #import <UIKit/UIKit.h>
 #import "ComposeTweetViewControllerDelegate.h"
 
-@interface ComposeTweetViewController : UIViewController <UIActionSheetDelegate>
+@interface ComposeTweetViewController :
+    UIViewController <UIActionSheetDelegate, UITextFieldDelegate>
 {
     id<ComposeTweetViewControllerDelegate> delegate;
 
@@ -19,15 +20,25 @@
     IBOutlet UILabel * characterCount;
     IBOutlet UILabel * accountLabel;
 
+    IBOutlet UIView * recipientView;
+    IBOutlet UITextField * recipientTextField;
+
     IBOutlet UIView * activityView;
     BOOL displayingActivity;
 }
 
 @property (nonatomic, assign) id<ComposeTweetViewControllerDelegate> delegate;
 
-- (void)setTitle:(NSString *)title;
-- (void)setUsername:(NSString *)username;
-- (void)promptWithText:(NSString *)text;
+- (void)composeTweet:(NSString *)text from:(NSString *)sender;
+- (void)composeTweet:(NSString *)text
+                from:(NSString *)sender
+           inReplyTo:(NSString *)recipient;
+
+- (void)composeDirectMessage:(NSString *)text from:(NSString *)sender;
+- (void)composeDirectMessage:(NSString *)text
+                        from:(NSString *)sender
+                          to:(NSString *)recipient;
+
 - (void)addTextToMessage:(NSString *)text;
 
 - (void)displayActivityView;

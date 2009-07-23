@@ -816,7 +816,7 @@
 
     // only keep the last n tweets, mentions, and dms for each account
     static const NSUInteger NUM_TWEETS_TO_KEEP = 20;
-    static const NSUInteger NUM_DIRECT_MESSAGES_TO_KEEP = 200;
+    static const NSUInteger NUM_DIRECT_MESSAGES_TO_KEEP = 500;
 
     NSMutableDictionary * living =
         [NSMutableDictionary dictionaryWithCapacity:self.credentials.count];
@@ -957,17 +957,17 @@
     NSMutableArray * sentDms = [NSMutableArray arrayWithCapacity:allDms.count];
 
     for (DirectMessage * dm in allDms) {
-        if ([account.username isEqualToString:dm.sender.username]) {
-            [sentDms addObject:dm];
-
-            if ([largestSentId longLongValue] < [dm.identifier longLongValue])
-                largestSentId =
-                    [NSNumber numberWithLongLong:[dm.identifier longLongValue]];
-        } else if ([account.username isEqualToString:dm.recipient.username]) {
+        if ([account.username isEqualToString:dm.recipient.username]) {
             [recvdDms addObject:dm];
 
             if ([largestRecvdId longLongValue] < [dm.identifier longLongValue])
                 largestRecvdId =
+                    [NSNumber numberWithLongLong:[dm.identifier longLongValue]];
+        } else if ([account.username isEqualToString:dm.sender.username]) {
+            [sentDms addObject:dm];
+
+            if ([largestSentId longLongValue] < [dm.identifier longLongValue])
+                largestSentId =
                     [NSNumber numberWithLongLong:[dm.identifier longLongValue]];
         } else
             NSLog(@"Warning: this direct message doesn't belong to '%@': '%@'.",

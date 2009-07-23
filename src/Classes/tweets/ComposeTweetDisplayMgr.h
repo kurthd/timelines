@@ -31,7 +31,10 @@
     TwitPicImageSender * imageSender;
     LogInDisplayMgr * logInDisplayMgr;
 
-    NSString * recipient;  // non-nil if composing a direct message
+    //NSString * recipient;  // non-nil if composing a direct message
+
+    BOOL fromHomeScreen;  // HACK: restore the correct draft from the "root"
+                          // direct messages view
 
     NSString * origTweetId;  // non-nil if composing a reply
     NSString * origUsername;
@@ -60,6 +63,7 @@
                    fromUser:(NSString *)user
                    withText:(NSString *)text;
 
+- (void)composeDirectMessage;
 - (void)composeDirectMessageTo:(NSString *)username;
 - (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)tweet;
 

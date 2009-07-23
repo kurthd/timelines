@@ -6,9 +6,17 @@
 
 @protocol ComposeTweetViewControllerDelegate
 
-- (void)userDidSave:(NSString *)text;
-- (void)userDidSaveAsDraft:(NSString *)draft;
-- (void)userDidCancel;
+- (void)userWantsToSendTweet:(NSString *)text;
+- (void)userWantsToSendDirectMessage:(NSString *)text
+                         toRecipient:(NSString *)recipient;
+
+- (void)userDidSaveTweetDraft:(NSString *)text;
+- (void)userDidSaveDirectMessageDraft:(NSString *)text
+                          toRecipient:(NSString *)recipient;
+
+- (void)userDidCancelComposingTweet:(NSString *)text;
+- (void)userDidCancelComposingDirectMessage:(NSString *)text
+                                toRecipient:(NSString *)recipient;
 
 - (void)userWantsToSelectPhoto;
 
