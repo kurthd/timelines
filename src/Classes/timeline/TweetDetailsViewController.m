@@ -230,7 +230,12 @@ static UIImage * defaultAvatar;
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         NSString * webpage = [[request URL] absoluteString];
         static NSString * imageUrlRegex =
-            @"^http://twitpic.com/.+|^http://yfrog.com/.+|^http://tinypic.com/.+|^http://twitgoo.com/.+|^http://mobypicture.com/.+";
+            @"^http://twitpic.com/.+|"
+             "^http://yfrog.com/.+|"
+             "^http://tinypic.com/.+|"
+             "^http://twitgoo.com/.+|"
+             "^http://mobypicture.com/.+|"
+             "\\.jpg$|\\.jpeg$|\\.bmp|\\.gif|\\.png";
         if ([webpage isMatchedByRegex:usernameRegex]) {
             NSString * username =
                 [[webpage stringByMatching:usernameRegex] substringFromIndex:1];
