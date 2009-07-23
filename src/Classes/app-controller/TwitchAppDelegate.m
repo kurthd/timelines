@@ -662,6 +662,8 @@
 {
     NSLog(@"The application received a server notification while running: "
         "%@.", userInfo);
+
+    [directMessageDisplayMgr updateDirectMessagesSinceLastUpdateIds];
 }
 
 - (NSDictionary *)deviceRegistrationArgsForCredentials:(NSArray *)allCredentials
