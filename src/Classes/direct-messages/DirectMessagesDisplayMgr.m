@@ -8,6 +8,7 @@
 #import "TweetInfo.h"
 #import "ArbUserTimelineDataSource.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#include <AudioToolbox/AudioToolbox.h>
 
 @interface DirectMessage (Sorting)
 
@@ -52,7 +53,8 @@
 @synthesize activeAcctUsername, otherUserInConversation, selectedMessage,
     tweetDetailsTimelineDisplayMgr, tweetDetailsNetAwareViewController,
     tweetDetailsCredentialsPublisher, userListNetAwareViewController,
-    userListController, directMessageCache, newDirectMessages;
+    userListController, directMessageCache, newDirectMessages,
+    newDirectMessagesState;
 
 - (void)dealloc
 {
@@ -69,7 +71,7 @@
     [composeTweetDisplayMgr release];
     [credentials release];
     [newDirectMessages release];
-    [newMessageCountByUser release];
+    [newDirectMessagesState release];
     [super dealloc];
 }
 
@@ -111,7 +113,7 @@
         refreshButton.action =
             @selector(updateDirectMessagesSinceLastUpdateIds);
 
-        newMessageCountByUser = [[NSMutableDictionary dictionary] retain];
+        newDirectMessagesState = [[NewDirectMessagesState alloc] init];
     }
 
     return self;
@@ -138,9 +140,11 @@
         directMessageCache.receivedUpdateId =
             [NSNumber numberWithLongLong:updateIdAsLongLong];
 
-        numNewMessages += [directMessages count];
+        [newDirectMessagesState incrementCountBy:[directMessages count]];
         [self updateBadge];
         self.newDirectMessages = directMessages;
+
+        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
     }
 
     [self updateViewsWithNewMessages];
@@ -226,18 +230,14 @@
     [wrapperController.navigationController
         pushViewController:self.conversationController animated:YES];
     [self.conversationController setMessages:messages];
-
-    NSNumber * newMessageCountForUser =
-        [newMessageCountByUser objectForKey:preview.otherUserId];
-    NSUInteger newMessageCountForUserAsInt = newMessageCountByUser ?
-        [newMessageCountForUser intValue] : 0;
+    NSUInteger newMessageCountForUserAsInt =
+        [newDirectMessagesState countForUserId:preview.otherUserId];
     newMessageCountForUserAsInt =
         newMessageCountForUserAsInt - preview.numNewMessages;
-    [newMessageCountByUser
-        setObject:[NSNumber numberWithInt:newMessageCountForUserAsInt]
-        forKey:preview.otherUserId];
+    [newDirectMessagesState setCount:newMessageCountForUserAsInt
+        forUserId:preview.otherUserId];
 
-    numNewMessages -= preview.numNewMessages;
+    [newDirectMessagesState incrementCountBy:-preview.numNewMessages];
     [self updateBadge];
 }
 
@@ -438,6 +438,7 @@
     [sortedConversations removeAllObjects];
     alreadyBeenDisplayedAfterCredentialChange = NO;
     self.newDirectMessages = nil;
+    [newDirectMessagesState clear];
 
     self.conversationController.segregatedSenderUsername = credentials.username;
 }
@@ -558,6 +559,16 @@
     [self updateViewsWithNewMessages];
 }
 
+- (void)setNewDirectMessagesState:(NewDirectMessagesState *)state
+{
+    [state retain];
+    [newDirectMessagesState release];
+    newDirectMessagesState = state;
+
+    [self updateViewsWithNewMessages];
+    [self updateBadge];
+}
+
 - (UITabBarItem *)tabBarItem
 {
     return wrapperController.parentViewController.tabBarItem;
@@ -647,15 +658,10 @@
 {
     NSMutableArray * conversationPreviews = [NSMutableArray array];
 
-    for (DirectMessage * message in self.newDirectMessages) {
-        NSNumber * numMessagesAsNumber =
-            [newMessageCountByUser objectForKey:message.sender.identifier];
-        NSUInteger numMessagesForUser =
-            numMessagesAsNumber ? [numMessagesAsNumber intValue] + 1 : 1;
-        [newMessageCountByUser
-            setObject:[NSNumber numberWithInt:numMessagesForUser]
-            forKey:message.sender.identifier];
-    }
+    for (DirectMessage * message in self.newDirectMessages)
+        [newDirectMessagesState
+            incrementCountForUserId:message.sender.identifier];
+
     self.newDirectMessages = nil;
 
     for (NSArray * conversation in [sortedConversations allValues]) {
@@ -663,10 +669,8 @@
         User * otherUser =
             [mostRecentMessage.sender.username isEqual:activeAcctUsername] ?
             mostRecentMessage.recipient : mostRecentMessage.sender;
-        NSNumber * numMessagesAsNumber =
-            [newMessageCountByUser objectForKey:otherUser.identifier];
         NSUInteger numMessages =
-            numMessagesAsNumber ? [numMessagesAsNumber intValue] : 0;
+            [newDirectMessagesState countForUserId:otherUser.identifier];
         ConversationPreview * preview =
             [[[ConversationPreview alloc]
             initWithOtherUserId:otherUser.identifier
@@ -718,8 +722,11 @@
 
 - (void)updateBadge
 {
-    self.tabBarItem.badgeValue = numNewMessages > 0 ?
-        [NSString stringWithFormat:@"%d", numNewMessages] : nil;
+    self.tabBarItem.badgeValue =
+        newDirectMessagesState.numNewMessages > 0 ?
+        [NSString stringWithFormat:@"%d",
+        newDirectMessagesState.numNewMessages] :
+        nil;
 }
 
 @end
