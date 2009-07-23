@@ -35,7 +35,7 @@
     (UIInterfaceOrientation)orientation {
 
     if (orientation == UIInterfaceOrientationPortrait ||
-        orientation == UIInterfaceOrientationPortrait) {
+        orientation == UIInterfaceOrientationPortraitUpsideDown) {
 
         CGRect activityIndicatorFrame = activityIndicator.frame;
         activityIndicatorFrame.origin.x = 291;
