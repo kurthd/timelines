@@ -9,6 +9,7 @@
 #import "ArbUserTimelineDataSource.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #include <AudioToolbox/AudioToolbox.h>
+#import "InfoPlistConfigReader.h"
 
 @interface DirectMessagesDisplayMgr ()
 
@@ -25,6 +26,7 @@
 - (void)deallocateTweetDetailsNode;
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
 - (void)updateBadge;
+- (void)presentFailedDirectMessageOnTimer:(NSTimer *)timer;
 
 @end
 
@@ -407,6 +409,89 @@
     [composeTweetDisplayMgr composeTweetWithText:text];
 }
 
+#pragma mark ComposeTweetDisplayMgrDelegate implementation
+
+- (void)userDidCancelComposingTweet
+{
+    // Not applicable
+}
+
+- (void)userIsSendingTweet:(NSString *)tweet
+{
+    // Not applicable
+}
+
+- (void)userDidSendTweet:(Tweet *)tweet
+{
+    // Not applicable
+}
+
+- (void)userFailedToSendTweet:(NSString *)tweet
+{
+    // Not applicable
+}
+
+- (void)userIsReplyingToTweet:(NSString *)origTweetId
+                     fromUser:(NSString *)origUsername
+                     withText:(NSString *)text
+{
+}
+
+- (void)userDidReplyToTweet:(NSString *)origTweetId
+                   fromUser:(NSString *)origUsername
+                  withTweet:(Tweet *)reply
+{
+    // Not applicable
+}
+
+- (void)userFailedToReplyToTweet:(NSString *)origTweetId
+                        fromUser:(NSString *)origUsername
+                        withText:(NSString *)text
+{
+    // Not applicable
+}
+
+// - (void)presentFailedReplyOnTimer:(NSTimer *)timer
+// {
+//     // Not applicable
+// }
+
+- (void)userIsSendingDirectMessage:(NSString *)dm to:(NSString *)username
+{
+}
+
+- (void)userDidSendDirectMessage:(DirectMessage *)dm
+{
+    [conversationController addTweet:dm];
+}
+
+- (void)userFailedToSendDirectMessage:(NSString *)dm to:(NSString *)username
+{
+    NSDictionary * userInfo =
+        [NSDictionary dictionaryWithObjectsAndKeys:
+        dm, @"dm",
+        username, @"username", nil];
+
+    // if the error happened quickly, while the compose modal view is still
+    // dismissing, re-presenting it has no effect; force a brief delay for now
+    // and revisit later
+    SEL sel = @selector(presentFailedDirectMessageOnTimer:);
+    [NSTimer scheduledTimerWithTimeInterval:0.8
+                                     target:self
+                                   selector:sel
+                                   userInfo:userInfo
+                                    repeats:NO];
+}
+
+- (void)presentFailedDirectMessageOnTimer:(NSTimer *)timer
+{
+    NSDictionary * userInfo = timer.userInfo;
+    NSString * dm = [userInfo objectForKey:@"dm"];
+    NSString * username = [userInfo objectForKey:@"username"];
+
+    [self.composeMessageDisplayMgr composeDirectMessageTo:username withText:dm];
+}
+
 #pragma mark Public DirectMessagesDisplayMgr implementation
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
@@ -582,6 +667,33 @@
     return wrapperController.parentViewController.tabBarItem;
 }
 
+- (ComposeTweetDisplayMgr *)composeMessageDisplayMgr
+{
+    if (!composeMessageDisplayMgr) {
+        TwitterService * twitterService = [service clone];
+            // [[TwitterService alloc]
+            // initWithTwitterCredentials:nil context:managedObjectContext];
+
+        NSString * twitPicUrl =
+            [[InfoPlistConfigReader reader] valueForKey:@"TwitPicPostUrl"];
+        TwitPicImageSender * imageSender =
+            [[TwitPicImageSender alloc] initWithUrl:twitPicUrl];
+
+        composeMessageDisplayMgr =
+            [[ComposeTweetDisplayMgr alloc]
+            initWithRootViewController:wrapperController.tabBarController
+                        twitterService:twitterService
+                           imageSender:imageSender
+                               context:managedObjectContext];
+        [twitterService release];
+        [imageSender release];
+
+        composeMessageDisplayMgr.delegate = self;
+    }
+
+    return composeMessageDisplayMgr;
+}
+
 #pragma mark Private DirectMessagesDisplayMgr implementation
 
 - (void)fetchDirectMessagesSinceId:(NSNumber *)updateId page:(NSNumber *)page
@@ -702,14 +814,14 @@
 - (void)composeNewDirectMessage
 {
     NSLog(@"Messages display manager: composing new direct message...");
-    [composeTweetDisplayMgr composeDirectMessage];
+    [self.composeMessageDisplayMgr composeDirectMessage];
 }
 
 - (void)sendDirectMessageToOtherUserInConversation
 {
     NSLog(@"Messages display manager: sending direct message to %@",
         self.otherUserInConversation.username);
-    [composeTweetDisplayMgr
+    [self.composeMessageDisplayMgr
         composeDirectMessageTo:self.otherUserInConversation.username];
 }
 
