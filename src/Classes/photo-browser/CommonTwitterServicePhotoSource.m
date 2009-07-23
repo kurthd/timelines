@@ -93,7 +93,9 @@
         //        src="http://web2.twitpic.com/..."
         //        alt="my twitpic">
         regex =
-            @"<img id=\"photo-display\" class=\"photo-large\" src=\"(.*?)\"";
+            @"<img id=\"photo-display\"\\s+"
+                   "class=\"photo-large\"\\s+"
+                   "src=\"(.*?)\".*?>";
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://.*\\.?yfrog.com/"]) {
         // yfrog's main img tag uses an absolute URL without the domain,
@@ -108,7 +110,7 @@
             @"<link\\s+type=\"application/rss\\+xml\"\\s+"
                       "href=\"(.*)\\.comments\\.xml\"\\s+"
                       "title=\"RSS\"\\s+"
-                      "rel=\"alternate\"\\s*/>";
+                      "rel=\"alternate\".*?>";
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://tinypic.com/"]) {
         // extract the 'src' attribute from the main img tag:
@@ -120,7 +122,7 @@
             @"<img\\+src=\"(.*?)\"\\s+"
                     "title=\".*?\"\\s+"      // ignore the title
                     "id=\"imgElement\"\\s+"  // rely on the unique img id
-                    "alt=\".*?\"\\s*/>";     // ignore the alt tag
+                    "alt=\".*?\".*?>";     // ignore the alt tag
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://twitgoo.com/"]) {
         // extract the 'src' attribute from the main img tag:
@@ -130,7 +132,7 @@
         regex =
             @"<img\\s+id=\"fullsize\"\\s+"
                      "src=\"(.*?)\"\\s+"
-                     "alt=\".*?\"\\s*/>";
+                     "alt=\".*?\".*?>";
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://mobypicture.com/"]) {
         // extract from the main image 'src' attribute:
@@ -142,7 +144,7 @@
             @"<img\\s+class=\".*?\"\\s+"
                      "src=\"(.*?)\"\\s+"
                      "id=\"main_picture\"\\s+"
-                     "alt=\".*?\".*?/>";
+                     "alt=\".*?\".*?>";
         capture = 1;
     }
 
