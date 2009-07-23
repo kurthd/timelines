@@ -47,8 +47,19 @@
 
     NSLog(@"Url as string: %@", urlAsString);
     static NSString * imageRegex =
-        @".*\\.png.*|.*\\.jpg.*|.*\\.gif.*|.*\\.tiff.*";
-    if (![urlAsString isMatchedByRegex:imageRegex]) {
+        @".*\\.png.*|.*\\.jpg.*|.*\\.jpeg.*|.*\\.gif.*|.*\\.tiff.*";
+
+    RKLRegexOptions options = RKLCaseless;
+    NSRange range = NSMakeRange(0, urlAsString.length);
+    NSError * error = 0;
+    BOOL matches =
+        [urlAsString
+        isMatchedByRegex:imageRegex options:options inRange:range error:&error];
+    if (error)
+        NSLog(@"Error matching '%@' against '%@': %@.", urlAsString, imageRegex,
+            error);
+
+    if (error || !matches) {
         NSString * html =
             [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]
             autorelease];
