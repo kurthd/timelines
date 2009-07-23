@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0533E03D100D124400CC2378 /* TweetDraftMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0533E03C100D124400CC2378 /* TweetDraftMgr.m */; };
 		0533E0B7100D1F7F00CC2378 /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0533E0B6100D1F7F00CC2378 /* TwitterCredentials.m */; };
-		0533E0C7100D1FD800CC2378 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0533E0C6100D1FD800CC2378 /* v1-to-v2.xcmappingmodel */; };
 		053A11A4100CDBA5008DD2F6 /* TweetDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 053A11A2100CDBA5008DD2F6 /* TweetDraft.m */; };
 		058207C11017744C00DFC051 /* ComposeRecipientGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 058207C01017744C00DFC051 /* ComposeRecipientGradient.png */; };
 		05948992101569B700C37C98 /* AccountSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05948991101569B700C37C98 /* AccountSettingsViewController.m */; };
@@ -17,6 +16,7 @@
 		05948A0510157B6400C37C98 /* AccountSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 05948A0410157B6400C37C98 /* AccountSettings.m */; };
 		0599416C0FFB32F100842518 /* twitch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0599416A0FFB32F100842518 /* twitch.xcdatamodeld */; };
 		059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */; };
+		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */; };
 		05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C8872810163DB90097FEFF /* AccountsTableViewCell.m */; };
 		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
@@ -259,7 +259,6 @@
 		0533E03C100D124400CC2378 /* TweetDraftMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDraftMgr.m; path = tweets/TweetDraftMgr.m; sourceTree = "<group>"; };
 		0533E0B5100D1F7F00CC2378 /* TwitterCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterCredentials.h; path = twitter/TwitterCredentials.h; sourceTree = "<group>"; };
 		0533E0B6100D1F7F00CC2378 /* TwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterCredentials.m; path = twitter/TwitterCredentials.m; sourceTree = "<group>"; };
-		0533E0C6100D1FD800CC2378 /* v1-to-v2.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v1-to-v2.xcmappingmodel"; path = "data-model/v1-to-v2.xcmappingmodel"; sourceTree = "<group>"; };
 		053A11A1100CDBA5008DD2F6 /* TweetDraft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDraft.h; path = tweets/TweetDraft.h; sourceTree = "<group>"; };
 		053A11A2100CDBA5008DD2F6 /* TweetDraft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDraft.m; path = tweets/TweetDraft.m; sourceTree = "<group>"; };
 		0562BE2D0FF6AB6B005DA549 /* FetchTweetResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTweetResponseProcessor.h; path = twitter/processors/FetchTweetResponseProcessor.h; sourceTree = "<group>"; };
@@ -318,6 +317,7 @@
 		059942300FFB6CE800842518 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		059F6EE51017EDD900B323D7 /* DirectMessageDraft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageDraft.h; path = tweets/DirectMessageDraft.h; sourceTree = "<group>"; };
 		059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageDraft.m; path = tweets/DirectMessageDraft.m; sourceTree = "<group>"; };
+		059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v1-to-v2.xcmappingmodel"; path = "data-model/v1-to-v2.xcmappingmodel"; sourceTree = "<group>"; };
 		05AE708C0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFavoritesForUserResponseProcessor.h; path = twitter/processors/FetchFavoritesForUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFavoritesForUserResponseProcessor.m; path = twitter/processors/FetchFavoritesForUserResponseProcessor.m; sourceTree = "<group>"; };
 		05AE71190FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkFavoriteResponseProcessor.h; path = twitter/processors/MarkFavoriteResponseProcessor.h; sourceTree = "<group>"; };
@@ -999,7 +999,7 @@
 			isa = PBXGroup;
 			children = (
 				0599416A0FFB32F100842518 /* twitch.xcdatamodeld */,
-				0533E0C6100D1FD800CC2378 /* v1-to-v2.xcmappingmodel */,
+				059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */,
 			);
 			name = "data-model";
 			sourceTree = "<group>";
@@ -1663,7 +1663,6 @@
 				053A11A4100CDBA5008DD2F6 /* TweetDraft.m in Sources */,
 				0533E03D100D124400CC2378 /* TweetDraftMgr.m in Sources */,
 				0533E0B7100D1F7F00CC2378 /* TwitterCredentials.m in Sources */,
-				0533E0C7100D1FD800CC2378 /* v1-to-v2.xcmappingmodel in Sources */,
 				917FFF0F1010F7A700335C0F /* PhotoBrowser.m in Sources */,
 				917FFF101010F7A700335C0F /* RemotePhoto.m in Sources */,
 				917FFF1B1010F8B800335C0F /* CommonTwitterServicePhotoSource.m in Sources */,
@@ -1680,6 +1679,7 @@
 				05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */,
 				05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */,
 				059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */,
+				059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
