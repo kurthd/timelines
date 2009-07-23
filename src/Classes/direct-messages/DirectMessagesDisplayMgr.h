@@ -99,6 +99,9 @@
     BOOL refreshingMessages;
     NSArray * newDirectMessages;
     NewDirectMessagesState * newDirectMessagesState;
+
+    NSUInteger loadMoreSentNextPage;
+    NSUInteger loadMoreReceivedNextPage;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;
@@ -142,6 +145,7 @@
 
 - (void)updateDirectMessagesSinceLastUpdateIds;
 - (void)updateWithABunchOfRecentMessages;
+- (void)loadAnotherPageOfMessages;
 
 - (void)viewAppearedForFirstTimeAfterCredentialChange;
 

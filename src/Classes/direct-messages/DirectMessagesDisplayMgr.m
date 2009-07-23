@@ -94,6 +94,9 @@
             @selector(updateDirectMessagesSinceLastUpdateIds);
 
         newDirectMessagesState = [[NewDirectMessagesState alloc] init];
+        
+        loadMoreSentNextPage = 1;
+        loadMoreReceivedNextPage = 1;
     }
 
     return self;
@@ -110,22 +113,25 @@
     [directMessageCache addReceivedDirectMessages:directMessages];
     outstandingReceivedRequests--;
 
-    if (refreshingMessages && [directMessages count] > 0) {
-        NSArray * sortedDirectMessages =
-            [directMessages sortedArrayUsingSelector:@selector(compare:)];
-        DirectMessage * mostRecentMessage =
-            [sortedDirectMessages objectAtIndex:0];
-        long long updateIdAsLongLong =
-            [mostRecentMessage.identifier longLongValue];
-        directMessageCache.receivedUpdateId =
-            [NSNumber numberWithLongLong:updateIdAsLongLong];
+    if (refreshingMessages) {
+        if ([directMessages count] > 0) {
+            NSArray * sortedDirectMessages =
+                [directMessages sortedArrayUsingSelector:@selector(compare:)];
+            DirectMessage * mostRecentMessage =
+                [sortedDirectMessages objectAtIndex:0];
+            long long updateIdAsLongLong =
+                [mostRecentMessage.identifier longLongValue];
+            directMessageCache.receivedUpdateId =
+                [NSNumber numberWithLongLong:updateIdAsLongLong];
 
-        [newDirectMessagesState incrementCountBy:[directMessages count]];
-        [self updateBadge];
-        self.newDirectMessages = directMessages;
+            [newDirectMessagesState incrementCountBy:[directMessages count]];
+            [self updateBadge];
+            self.newDirectMessages = directMessages;
 
-        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
-    }
+            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+        }
+    } else
+        loadMoreReceivedNextPage = [page intValue] + 1;
 
     [self updateViewsWithNewMessages];
 }
@@ -153,16 +159,19 @@
 
     outstandingSentRequests--;
 
-    if (refreshingMessages && [directMessages count] > 0) {
-        NSArray * sortedDirectMessages =
-            [directMessages sortedArrayUsingSelector:@selector(compare:)];
-        DirectMessage * mostRecentMessage =
-            [sortedDirectMessages objectAtIndex:0];
-        long long updateIdAsLongLong =
-            [mostRecentMessage.identifier longLongValue];
-        directMessageCache.sentUpdateId =
-            [NSNumber numberWithLongLong:updateIdAsLongLong];
-    }
+    if (refreshingMessages) {
+        if ([directMessages count] > 0) {
+            NSArray * sortedDirectMessages =
+                [directMessages sortedArrayUsingSelector:@selector(compare:)];
+            DirectMessage * mostRecentMessage =
+                [sortedDirectMessages objectAtIndex:0];
+            long long updateIdAsLongLong =
+                [mostRecentMessage.identifier longLongValue];
+            directMessageCache.sentUpdateId =
+                [NSNumber numberWithLongLong:updateIdAsLongLong];
+        }
+    } else
+        loadMoreSentNextPage = [page intValue] + 1;
 
     [self updateViewsWithNewMessages];
 }
@@ -403,7 +412,7 @@
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
     NSLog(@"Message display manager: setting credentials to '%@'", credentials);
-    
+
     [someCredentials retain];
     [credentials release];
     credentials = someCredentials;
@@ -419,6 +428,9 @@
     alreadyBeenDisplayedAfterCredentialChange = NO;
     self.newDirectMessages = nil;
     [newDirectMessagesState clear];
+    loadMoreSentNextPage = 1;
+    loadMoreReceivedNextPage = 1;
+    [inboxController setNumReceivedMessages:0 sentMessages:0];
 
     self.conversationController.segregatedSenderUsername = credentials.username;
 }
@@ -458,6 +470,18 @@
         numMessages:nil];
     [self fetchSentDirectMessagesSinceId:nil
         page:[NSNumber numberWithInt:1] numMessages:nil];
+
+    [self setUpdatingState];
+}
+
+- (void)loadAnotherPageOfMessages
+{
+    NSLog(@"Messages Display Manager: Loading more messages...");
+    refreshingMessages = NO;
+    [self fetchDirectMessagesSinceId:nil
+        page:[NSNumber numberWithInt:loadMoreReceivedNextPage] numMessages:nil];
+    [self fetchSentDirectMessagesSinceId:nil
+        page:[NSNumber numberWithInt:loadMoreSentNextPage] numMessages:nil];
 
     [self setUpdatingState];
 }
@@ -592,6 +616,12 @@
         [inboxController setConversationPreviews:
             [self constructConversationPreviewsFromMessages]];
         [wrapperController setCachedDataAvailable:YES];
+
+        NSUInteger numReceived =
+            [[directMessageCache receivedDirectMessages] count];
+        NSUInteger numSent = [[directMessageCache sentDirectMessages] count];
+        [inboxController setNumReceivedMessages:numReceived
+            sentMessages:numSent];
     }
 }
 

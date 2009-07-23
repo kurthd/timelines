@@ -8,5 +8,6 @@
 @protocol DirectMessageInboxViewControllerDelegate
 
 - (void)selectedConversationPreview:(ConversationPreview *)preview;
+- (void)loadAnotherPageOfMessages;
 
 @end

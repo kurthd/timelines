@@ -5,10 +5,26 @@
 #import "DirectMessageInboxViewController.h"
 #import "DirectMessageInboxCell.h"
 #import "ConversationPreview.h"
+#import "UIColor+TwitchColors.h"
 
 @implementation DirectMessageInboxViewController
 
 @synthesize delegate;
+
+- (void)dealloc
+{
+    [loadMoreButton release];
+    [footerView release];
+    [numMessagesLabel release];
+    [conversationPreviews release];
+    [super dealloc];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.tableView.tableFooterView = footerView;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -71,6 +87,15 @@
 
 #pragma mark DirectMessageInboxViewController implementation
 
+- (IBAction)loadMoreDirectMessages:(id)sender
+{
+    NSLog(@"'Load more direct messages' selected");
+    [delegate loadAnotherPageOfMessages];
+    [loadMoreButton setTitleColor:[UIColor grayColor]
+        forState:UIControlStateNormal];
+    loadMoreButton.enabled = NO;
+}
+
 - (void)setConversationPreviews:(NSArray *)someConversationPreviews
 {
     NSLog(@"Conversation previews: %@", someConversationPreviews);
@@ -79,6 +104,20 @@
     conversationPreviews = tempConversationPreviews;
 
     [self.tableView reloadData];
+
+    [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
+        forState:UIControlStateNormal];
+    loadMoreButton.enabled = YES;
+}
+
+- (void)setNumReceivedMessages:(NSUInteger)receivedMessages
+    sentMessages:(NSUInteger)sentMessages
+{
+    NSString * numMessagesFormatString =
+        NSLocalizedString(@"directmessageinbox.nummessages", @"");
+    numMessagesLabel.text =
+        [NSString stringWithFormat:numMessagesFormatString,
+        receivedMessages, sentMessages];
 }
 
 @end
