@@ -86,6 +86,42 @@
     return [DirectMessageDraft findFirst:predicate context:self.context];
 }
 
+- (DirectMessageDraft *)directMessageDraftFromHomeScreenForCredentials:
+    (TwitterCredentials *)credentials
+{
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:
+        @"credentials.username == %@ && fromHomeScreen == YES",
+        credentials.username];
+
+    return [DirectMessageDraft findFirst:predicate context:self.context];
+}
+
+- (BOOL)saveDirectMessageDraftFromHomeScreen:(NSString *)text
+                                   recipient:(NSString *)recipient
+                                 credentials:(TwitterCredentials *)credentials
+                                       error:(NSError **)error
+{
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:
+        @"credentials.username == %@ && fromHomeScreen == YES",
+        credentials.username];
+
+    // either create a new one, or update the existing draft for this user
+    DirectMessageDraft * draft =
+        [DirectMessageDraft findFirst:predicate context:self.context];
+    if (!draft)
+        draft = [DirectMessageDraft createInstance:self.context];
+
+    draft.recipient = recipient;
+    draft.credentials = credentials;
+    draft.text = text;
+    draft.fromHomeScreen = [NSNumber numberWithBool:YES];
+
+    *error = nil;
+    return [self.context save:error];
+}
+
 - (BOOL)saveDirectMessageDraft:(NSString *)text
                      recipient:(NSString *)recipient
                    credentials:(TwitterCredentials *)credentials
@@ -95,12 +131,13 @@
     DirectMessageDraft * draft =
         [self directMessageDraftForCredentials:credentials
                                      recipient:recipient];
-    if (!draft) {
+    if (!draft)
         draft = [DirectMessageDraft createInstance:self.context];
-        draft.recipient = recipient;
-        draft.credentials = credentials;
-    }
+
+    draft.recipient = recipient;
+    draft.credentials = credentials;
     draft.text = text;
+    draft.fromHomeScreen = [NSNumber numberWithBool:NO];
 
     *error = nil;
     return [self.context save:error];
@@ -114,6 +151,28 @@
         [NSPredicate predicateWithFormat:
         @"credentials.username == %@ && recipient == %@",
         credentials.username, recipient];
+
+    // either create a new one, or update the existing draft for this user
+    DirectMessageDraft * draft = [DirectMessageDraft findFirst:predicate
+                                                       context:self.context];
+
+    *error = nil;
+    if (draft) {
+        [self.context deleteObject:draft];
+        return [self.context save:error];
+    }
+
+    return NO;
+}
+
+- (BOOL)deleteDirectMessageDraftFromHomeScreenForCredentials:
+    (TwitterCredentials *)credentials
+    error:(NSError **)error
+{
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:
+        @"credentials.username == %@ && fromHomeScreen == YES",
+        credentials.username];
 
     // either create a new one, or update the existing draft for this user
     DirectMessageDraft * draft = [DirectMessageDraft findFirst:predicate

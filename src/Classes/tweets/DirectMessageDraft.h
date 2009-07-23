@@ -2,7 +2,7 @@
 //  DirectMessageDraft.h
 //  twitch
 //
-//  Created by John A. Debay on 7/14/09.
+//  Created by John A. Debay on 7/22/09.
 //  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) NSString * recipient;
+@property (nonatomic, retain) NSNumber * fromHomeScreen;
 @property (nonatomic, retain) TwitterCredentials * credentials;
 
 @end

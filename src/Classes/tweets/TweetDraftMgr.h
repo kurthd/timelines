@@ -25,6 +25,13 @@
 
 - (DirectMessageDraft *)directMessageDraftForCredentials:(TwitterCredentials *)c
                                                recipient:(NSString *)recipient;
+- (DirectMessageDraft *)directMessageDraftFromHomeScreenForCredentials:
+    (TwitterCredentials *)credentials;
+
+- (BOOL)saveDirectMessageDraftFromHomeScreen:(NSString *)text
+                                   recipient:(NSString *)recipient
+                                 credentials:(TwitterCredentials *)credentials
+                                       error:(NSError **)error;
 - (BOOL)saveDirectMessageDraft:(NSString *)text
                      recipient:(NSString *)recipient
                    credentials:(TwitterCredentials *)credentials
@@ -32,6 +39,9 @@
 - (BOOL)deleteDirectMessageDraftForRecipient:(NSString *)recipient
                                  credentials:(TwitterCredentials *)credentials
                                        error:(NSError **)error;
+- (BOOL)deleteDirectMessageDraftFromHomeScreenForCredentials:
+    (TwitterCredentials *)credentials
+    error:(NSError **)error;
 - (BOOL)deleteAllDirectMessageDraftsForCredentials:(TwitterCredentials *)c
                                              error:(NSError **)error;
 

@@ -33,6 +33,9 @@
 
     //NSString * recipient;  // non-nil if composing a direct message
 
+    BOOL fromHomeScreen;  // HACK: restore the correct draft from the "root"
+                          // direct messages view
+
     NSString * origTweetId;  // non-nil if composing a reply
     NSString * origUsername;
 
