@@ -159,7 +159,7 @@ static UIImage * backgroundImage;
 
     NSInteger minHeight =
         displayType == kTimelineTableViewCellTypeNoAvatar ?
-        0 : 64;
+        0 : 65;
     NSUInteger height = 36.0 + size.height;
     height = height > minHeight ? height : minHeight;
 

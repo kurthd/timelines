@@ -95,6 +95,10 @@
     TwitterCredentials * credentials;
 
     BOOL failedState;
+    BOOL refreshingMessages;
+    NSUInteger numNewMessages;
+    NSArray * newDirectMessages;
+    NSMutableDictionary * newMessageCountByUser;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;
@@ -120,6 +124,10 @@
     NetworkAwareViewController * userListNetAwareViewController;
 @property (nonatomic, readonly)
     UserListTableViewController * userListController;
+
+@property (nonatomic, readonly) UITabBarItem * tabBarItem;
+
+@property (nonatomic, copy) NSArray * newDirectMessages;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     inboxController:(DirectMessageInboxViewController *)anInboxController

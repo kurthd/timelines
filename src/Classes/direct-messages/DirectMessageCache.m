@@ -22,7 +22,7 @@
 {
     if (self = [super init]) {
         receivedDirectMessages = [[NSMutableDictionary dictionary] retain];
-        sentDirectMessages = [[NSMutableDictionary dictionary] retain];;
+        sentDirectMessages = [[NSMutableDictionary dictionary] retain];
     }
 
     return self;

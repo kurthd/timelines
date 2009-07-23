@@ -10,6 +10,12 @@
 
 @synthesize delegate;
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
+
 #pragma mark UITableViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -51,7 +57,8 @@
 {
     ConversationPreview * preview =
         [conversationPreviews objectAtIndex:indexPath.row];
-    [delegate selectedConversationForUserId:preview.otherUserId];
+    [delegate selectedConversationPreview:preview];
+    preview.numNewMessages = 0;
 }
 
 #pragma mark UITableViewDelegate implementation
@@ -59,13 +66,14 @@
 - (CGFloat)tableView:(UITableView *)aTableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 66;
+    return 62;
 }
 
 #pragma mark DirectMessageInboxViewController implementation
 
 - (void)setConversationPreviews:(NSArray *)someConversationPreviews
 {
+    NSLog(@"Conversation previews: %@", someConversationPreviews);
     NSArray * tempConversationPreviews = [someConversationPreviews copy];
     [conversationPreviews release];
     conversationPreviews = tempConversationPreviews;

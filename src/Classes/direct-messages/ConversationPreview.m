@@ -7,7 +7,7 @@
 @implementation ConversationPreview
 
 @synthesize otherUserId, otherUserName, mostRecentMessage,
-    mostRecentMessageDate, newMessages;
+    mostRecentMessageDate, numNewMessages;
 
 - (void)dealloc
 {
@@ -22,21 +22,17 @@
     otherUserName:(NSString *)anotherUserName
     mostRecentMessage:(NSString *)aMostRecentMessage
     mostRecentMessageDate:(NSDate *)aMostRecentMessageDate
-    newMessages:(BOOL)newMessagesVal
+    numNewMessages:(NSUInteger)numNewMessagesVal
 {
     if (self = [super init]) {
         otherUserId = [anotherUserId copy];
         otherUserName = [anotherUserName copy];
         mostRecentMessage = [aMostRecentMessage copy];
         mostRecentMessageDate = [aMostRecentMessageDate retain];
-        newMessages = newMessagesVal;
+        numNewMessages = numNewMessagesVal;
     }
 
     return self;
-}
-
-- (id)copy {
-    return [self retain]; // immutable
 }
 
 - (NSComparisonResult)compare:(ConversationPreview *)preview
@@ -46,8 +42,9 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"{%@, %@, %@, %@}", otherUserId,
-        otherUserName, mostRecentMessage, mostRecentMessageDate];
+    return [NSString stringWithFormat:@"{%@, %@, %@, %@, %d}", otherUserId,
+        otherUserName, mostRecentMessage, mostRecentMessageDate,
+        numNewMessages];
 }
 
 @end

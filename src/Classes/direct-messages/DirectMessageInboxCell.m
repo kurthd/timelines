@@ -35,7 +35,7 @@
     nameLabel.text = preview.otherUserName;
     dateLabel.text = [preview.mostRecentMessageDate shortDescription];
     messagePreviewLabel.text = preview.mostRecentMessage;
-    newMessagesView.hidden = !preview.newMessages;
+    newMessagesView.hidden = preview.numNewMessages == 0;
 }
 
 @end
