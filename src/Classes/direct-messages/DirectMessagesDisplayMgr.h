@@ -99,6 +99,7 @@
 
     BOOL failedState;
     BOOL refreshingMessages;
+    BOOL receivedQueryResponse;
     NSArray * newDirectMessages;
     NewDirectMessagesState * newDirectMessagesState;
 
@@ -106,6 +107,8 @@
     NSUInteger loadMoreReceivedNextPage;
 
     ComposeTweetDisplayMgr * composeMessageDisplayMgr;
+
+    UIBarButtonItem * sendingTweetProgressView;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;
@@ -139,6 +142,9 @@
 
 @property (nonatomic, readonly)
     ComposeTweetDisplayMgr * composeMessageDisplayMgr;
+
+@property (nonatomic, readonly) UIBarButtonItem * sendingTweetProgressView;
+@property (nonatomic, readonly) UIBarButtonItem * newMessageButtonItem;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     inboxController:(DirectMessageInboxViewController *)anInboxController

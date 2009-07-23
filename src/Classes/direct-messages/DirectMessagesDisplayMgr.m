@@ -51,9 +51,11 @@
     [sortedConversations release];
     [managedObjectContext release];
     [composeTweetDisplayMgr release];
+    [composeMessageDisplayMgr release];
     [credentials release];
     [newDirectMessages release];
     [newDirectMessagesState release];
+    [sendingTweetProgressView release];
     [super dealloc];
 }
 
@@ -114,6 +116,7 @@
         [directMessages count]);
     [directMessageCache addReceivedDirectMessages:directMessages];
     outstandingReceivedRequests--;
+    receivedQueryResponse = YES;
 
     if (refreshingMessages) {
         if ([directMessages count] > 0) {
@@ -160,6 +163,7 @@
     [directMessageCache addSentDirectMessages:directMessages];
 
     outstandingSentRequests--;
+    receivedQueryResponse = YES;
 
     if (refreshingMessages) {
         if ([directMessages count] > 0) {
@@ -451,18 +455,19 @@
     // Not applicable
 }
 
-// - (void)presentFailedReplyOnTimer:(NSTimer *)timer
-// {
-//     // Not applicable
-// }
-
 - (void)userIsSendingDirectMessage:(NSString *)dm to:(NSString *)username
 {
+    [conversationController.navigationItem
+        setRightBarButtonItem:[self sendingTweetProgressView] animated:YES];
 }
 
 - (void)userDidSendDirectMessage:(DirectMessage *)dm
 {
+    [conversationController.navigationItem
+        setRightBarButtonItem:[self newMessageButtonItem] animated:YES];
     [conversationController addTweet:dm];
+    [directMessageCache addSentDirectMessage:dm];
+    [self updateViewsWithNewMessages];
 }
 
 - (void)userFailedToSendDirectMessage:(NSString *)dm to:(NSString *)username
@@ -671,8 +676,6 @@
 {
     if (!composeMessageDisplayMgr) {
         TwitterService * twitterService = [service clone];  // autoreleased
-            // [[TwitterService alloc]
-            // initWithTwitterCredentials:nil context:managedObjectContext];
 
         NSString * twitPicUrl =
             [[InfoPlistConfigReader reader] valueForKey:@"TwitPicPostUrl"];
@@ -691,6 +694,35 @@
     }
 
     return composeMessageDisplayMgr;
+}
+
+- (UIBarButtonItem *)sendingTweetProgressView
+{
+    if (!sendingTweetProgressView) {
+        UIActivityIndicatorView * view =
+            [[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+
+        sendingTweetProgressView =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [view startAnimating];
+
+        [view release];
+    }
+
+    return sendingTweetProgressView;
+}
+
+- (UIBarButtonItem *)newMessageButtonItem
+{
+    UIBarButtonItem * button =
+        [[UIBarButtonItem alloc]
+        initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                             target:self
+                             action:@selector(composeTweet:)];
+
+    return [button autorelease];
 }
 
 #pragma mark Private DirectMessagesDisplayMgr implementation
@@ -730,7 +762,13 @@
         [self constructConversationsFromMessages];
         [inboxController setConversationPreviews:
             [self constructConversationPreviewsFromMessages]];
-        [wrapperController setCachedDataAvailable:YES];
+            
+        BOOL cachedData =
+            receivedQueryResponse ||
+            [[directMessageCache receivedDirectMessages] count] > 0 ||
+            [[directMessageCache sentDirectMessages] count];
+
+        [wrapperController setCachedDataAvailable:cachedData];
 
         NSUInteger numReceived =
             [[directMessageCache receivedDirectMessages] count];
