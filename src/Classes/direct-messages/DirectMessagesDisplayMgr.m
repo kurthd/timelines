@@ -114,6 +114,7 @@
         [directMessages count]);
     [directMessageCache addReceivedDirectMessages:directMessages];
     outstandingReceivedRequests--;
+    receivedQueryResponse = YES;
 
     if (refreshingMessages) {
         if ([directMessages count] > 0) {
@@ -160,6 +161,7 @@
     [directMessageCache addSentDirectMessages:directMessages];
 
     outstandingSentRequests--;
+    receivedQueryResponse = YES;
 
     if (refreshingMessages) {
         if ([directMessages count] > 0) {
@@ -730,7 +732,13 @@
         [self constructConversationsFromMessages];
         [inboxController setConversationPreviews:
             [self constructConversationPreviewsFromMessages]];
-        [wrapperController setCachedDataAvailable:YES];
+            
+        BOOL cachedData =
+            receivedQueryResponse ||
+            [[directMessageCache receivedDirectMessages] count] > 0 ||
+            [[directMessageCache sentDirectMessages] count];
+
+        [wrapperController setCachedDataAvailable:cachedData];
 
         NSUInteger numReceived =
             [[directMessageCache receivedDirectMessages] count];
