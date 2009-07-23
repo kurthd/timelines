@@ -466,22 +466,26 @@
 {
     NSLog(@"Messages Display Manager: Updating with a bunch of messages...");
     refreshingMessages = NO;
+    NSNumber * count = [NSNumber numberWithInteger:200];
     [self fetchDirectMessagesSinceId:nil page:[NSNumber numberWithInt:1]
-        numMessages:nil];
+        numMessages:count];
     [self fetchSentDirectMessagesSinceId:nil
-        page:[NSNumber numberWithInt:1] numMessages:nil];
+        page:[NSNumber numberWithInt:1] numMessages:count];
 
     [self setUpdatingState];
 }
 
 - (void)loadAnotherPageOfMessages
 {
-    NSLog(@"Messages Display Manager: Loading more messages...");
+    NSLog(@"Messages Display Manager: Loading more messages (page %d)...",
+        loadMoreReceivedNextPage);
     refreshingMessages = NO;
+    NSNumber * count = [NSNumber numberWithInteger:200];
     [self fetchDirectMessagesSinceId:nil
-        page:[NSNumber numberWithInt:loadMoreReceivedNextPage] numMessages:nil];
+        page:[NSNumber numberWithInt:loadMoreReceivedNextPage]
+        numMessages:count];
     [self fetchSentDirectMessagesSinceId:nil
-        page:[NSNumber numberWithInt:loadMoreSentNextPage] numMessages:nil];
+        page:[NSNumber numberWithInt:loadMoreSentNextPage] numMessages:count];
 
     [self setUpdatingState];
 }
@@ -585,8 +589,8 @@
 {
     if (outstandingReceivedRequests == 0) { // only one at a time
         outstandingReceivedRequests++;
-        NSNumber * count = [NSNumber numberWithInteger:200];
-        [service fetchDirectMessagesSinceId:updateId page:page count:count];
+        [service fetchDirectMessagesSinceId:updateId page:page
+            count:numMessages];
     }
 }
 
@@ -595,8 +599,8 @@
 {
     if (outstandingSentRequests == 0) { // only one at a time
         outstandingSentRequests++;
-        NSNumber * count = [NSNumber numberWithInteger:200];
-        [service fetchSentDirectMessagesSinceId:updateId page:page count:count];
+        [service fetchSentDirectMessagesSinceId:updateId page:page
+            count:numMessages];
     }
 }
 
