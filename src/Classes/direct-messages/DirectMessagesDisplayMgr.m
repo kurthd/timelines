@@ -9,26 +9,6 @@
 #import "ArbUserTimelineDataSource.h"
 #import "UIAlertView+InstantiationAdditions.h"
 
-@interface DirectMessage (Sorting)
-
-- (NSComparisonResult)compare:(DirectMessage *)directMessage;
-
-@end
-
-@implementation DirectMessage (Sorting)
-
-- (NSComparisonResult)compare:(DirectMessage *)directMessage
-{
-    NSNumber * myId =
-        [NSNumber numberWithLongLong:[self.identifier longLongValue]];
-    NSNumber * theirId =
-        [NSNumber numberWithLongLong:[directMessage.identifier longLongValue]];
-
-    return [theirId compare:myId];
-}
-
-@end
-
 @interface DirectMessagesDisplayMgr ()
 
 - (void)fetchDirectMessagesSinceId:(NSNumber *)updateId page:(NSNumber *)page

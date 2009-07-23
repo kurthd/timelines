@@ -189,13 +189,20 @@ static UIImage * defaultAvatar;
 - (IBAction)showFullProfileImage:(id)sender
 {
     NSLog(@"Profile image selected");
-    UIImage * avatarImage =
-        avatar.image != [[self class] defaultAvatar] ? avatar.image : nil;
     User * selectedUser = selectedTweet.user;
+
+    NSString * url =
+        [selectedUser.profileImageUrl
+        stringByReplacingOccurrencesOfString:@"_normal."
+        withString:@"."];
+    UIImage * avatarImage =
+        [url isEqualToString:selectedUser.profileImageUrl] ?
+        (avatar.image != [[self class] defaultAvatar] ? avatar.image : nil) :
+        nil;
+
     RemotePhoto * remotePhoto =
         [[RemotePhoto alloc]
-        initWithImage:avatarImage url:selectedUser.profileImageUrl
-        name:selectedUser.name];
+        initWithImage:avatarImage url:url name:selectedUser.name];
     [delegate showPhotoInBrowser:remotePhoto];
 }
 

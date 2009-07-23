@@ -352,12 +352,20 @@ static UIImage * defaultAvatar;
 - (IBAction)showFullProfileImage:(id)sender
 {
     NSLog(@"Profile image selected");
+
+    NSString * url =
+        [user.profileImageUrl
+        stringByReplacingOccurrencesOfString:@"_normal."
+        withString:@"."];
     UIImage * avatarImage =
-        avatarView.image != [[self class] defaultAvatar] ?
-        avatarView.image : nil;
+        [url isEqualToString:user.profileImageUrl] ?
+        (avatarView.image != [[self class] defaultAvatar] ?
+        avatarView.image : nil) :
+        nil;
+
     RemotePhoto * remotePhoto =
         [[RemotePhoto alloc]
-        initWithImage:avatarImage url:user.profileImageUrl name:user.name];
+        initWithImage:avatarImage url:url name:user.name];
     [delegate showPhotoInBrowser:remotePhoto];
 }
 
