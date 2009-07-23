@@ -1075,6 +1075,11 @@
         [[[NewDirectMessagesPersistenceStore alloc] init] autorelease];
     [newDirectMessagesPersistenceStore
         save:directMessageDisplayMgr.newDirectMessagesState];
+        
+    NSUInteger numUnreadMessages =
+        directMessageDisplayMgr.newDirectMessagesState.numNewMessages;
+    [[UIApplication sharedApplication]
+        setApplicationIconBadgeNumber:numUnreadMessages];
 }
 
 #pragma mark Accessors
