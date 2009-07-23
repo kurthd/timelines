@@ -45,6 +45,7 @@
     [forwardButton release];
     [backButton release];
     [loadingView release];
+    [loadingIndicator release];
     [navigationBar release];
     [toolbar release];
     [super dealloc];
@@ -92,9 +93,14 @@
             toolbar.frame = toolbarFrame;
 
             CGRect loadingViewFrame = loadingView.frame;
-            loadingViewFrame.origin.x = 141;
-            loadingViewFrame.origin.y = 221;
+            loadingViewFrame.size.width = 320;
+            loadingViewFrame.size.height = 480;
             loadingView.frame = loadingViewFrame;
+            
+            CGRect loadingIndicatorFrame = loadingIndicator.frame;
+            loadingIndicatorFrame.origin.x = 141;
+            loadingIndicatorFrame.origin.y = 221;
+            loadingIndicator.frame = loadingIndicatorFrame;
         } else {
             CGRect navigationBarFrame = navigationBar.frame;
             navigationBarFrame.size.width = 480;
@@ -111,9 +117,14 @@
             toolbar.frame = toolbarFrame;
 
             CGRect loadingViewFrame = loadingView.frame;
-            loadingViewFrame.origin.x = 221;
-            loadingViewFrame.origin.y = 141;
+            loadingViewFrame.size.width = 480;
+            loadingViewFrame.size.height = 320;
             loadingView.frame = loadingViewFrame;
+            
+            CGRect loadingIndicatorFrame = loadingIndicator.frame;
+            loadingIndicatorFrame.origin.x = 221;
+            loadingIndicatorFrame.origin.y = 141;
+            loadingIndicator.frame = loadingIndicatorFrame;
         }
     }
 

@@ -46,6 +46,32 @@
 						<int key="IBUIContentMode">1</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 					</object>
+					<object class="IBUIView" id="742528584">
+						<reference key="NSNextResponder" ref="1013792426"/>
+						<int key="NSvFlags">292</int>
+						<object class="NSMutableArray" key="NSSubviews">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBUIActivityIndicatorView" id="514414328">
+								<reference key="NSNextResponder" ref="742528584"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{141, 221}, {37, 37}}</string>
+								<reference key="NSSuperview" ref="742528584"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<bool key="IBUIHidesWhenStopped">NO</bool>
+								<bool key="IBUIAnimating">YES</bool>
+								<int key="IBUIStyle">0</int>
+							</object>
+						</object>
+						<string key="NSFrameSize">{320, 480}</string>
+						<reference key="NSSuperview" ref="1013792426"/>
+						<object class="NSColor" key="IBUIBackgroundColor" id="111941358">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MCAwIDAAA</bytes>
+						</object>
+						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+					</object>
 					<object class="IBUINavigationBar" id="106684178">
 						<reference key="NSNextResponder" ref="1013792426"/>
 						<int key="NSvFlags">290</int>
@@ -113,32 +139,6 @@
 								<int key="IBUISystemItemIdentifier">6</int>
 							</object>
 						</object>
-					</object>
-					<object class="IBUIView" id="742528584">
-						<reference key="NSNextResponder" ref="1013792426"/>
-						<int key="NSvFlags">292</int>
-						<object class="NSMutableArray" key="NSSubviews">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBUIActivityIndicatorView" id="514414328">
-								<reference key="NSNextResponder" ref="742528584"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrameSize">{37, 37}</string>
-								<reference key="NSSuperview" ref="742528584"/>
-								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<bool key="IBUIHidesWhenStopped">NO</bool>
-								<bool key="IBUIAnimating">YES</bool>
-								<int key="IBUIStyle">0</int>
-							</object>
-						</object>
-						<string key="NSFrame">{{141, 221}, {37, 37}}</string>
-						<reference key="NSSuperview" ref="1013792426"/>
-						<object class="NSColor" key="IBUIBackgroundColor" id="111941358">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAAA</bytes>
-						</object>
-						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 					</object>
 				</object>
 				<string key="NSFrameSize">{320, 480}</string>
@@ -259,6 +259,14 @@
 					</object>
 					<int key="connectionID">34</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">loadingIndicator</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="514414328"/>
+					</object>
+					<int key="connectionID">39</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -288,9 +296,9 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="609435414"/>
-							<reference ref="742528584"/>
 							<reference ref="726590234"/>
 							<reference ref="106684178"/>
+							<reference ref="742528584"/>
 						</object>
 						<reference key="parent" ref="958549381"/>
 					</object>
@@ -453,7 +461,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">38</int>
+			<int key="maxID">39</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -492,6 +500,7 @@
 							<string>actionButton</string>
 							<string>backButton</string>
 							<string>forwardButton</string>
+							<string>loadingIndicator</string>
 							<string>loadingView</string>
 							<string>navItem</string>
 							<string>navigationBar</string>
@@ -503,6 +512,7 @@
 							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
+							<string>UIActivityIndicatorView</string>
 							<string>UIView</string>
 							<string>UINavigationItem</string>
 							<string>UINavigationBar</string>
