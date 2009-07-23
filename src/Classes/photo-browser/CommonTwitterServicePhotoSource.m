@@ -47,7 +47,7 @@
 
     NSLog(@"Url as string: %@", urlAsString);
     static NSString * imageRegex =
-        @".*\\.png.*|.*\\.jpg.*|.*\\.jpeg.*|.*\\.gif.*|.*\\.tif.*";
+        @".*\\.png.*|.*\\.jpg.*|.*\\.jpeg.*|.*\\.gif.*|.*\\.tif.*|.*\\.bmp.*";
 
     RKLRegexOptions options = RKLCaseless;
     NSRange range = NSMakeRange(0, urlAsString.length);
@@ -81,7 +81,6 @@
 - (void)requestImageFromHtml:(NSString *)html withUrl:(NSString *)url
 {
     NSString * regex = nil;
-    NSString * removeString = nil;
     NSInteger capture = 0;
 
     if ([url isMatchedByRegex:@"^http://twitpic.com/"]) {
@@ -93,34 +92,43 @@
 
         regex =
             @"<img id=\"photo-display\" class=\"photo-large\" src=\"(.*?)\"";
-        removeString = @"\"";
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://yfrog.com/"]) {
+        // extract the 'href' attribute from:
+        // <link type="application/rss+xml"
+        //       href="http://img14.yfrog.com/img14/7946/ot4.png.comments.xml"
+        //       title="RSS"
+        //       rel="alternate"/>
+
         regex =
-            @"(http:\\\\\\/\\\\\\/img\\d+\\.imageshack\\.\\w+\\\\\\/img\\d+\\\\\\/\\d+\\\\\\/\\w+\\.\\w+\\\\n)";
-        removeString = @"\\\\n|\\\\";
+            @"<link\\s+type=\"application/rss\\+xml\"\\s+"
+                      "href=\"(.*)\\.comments\\.xml\"\\s+"
+                      "title=\"RSS\"\\s+"
+                      "rel=\"alternate\"\\s*/>";
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://tinypic.com/"]) {
+        // extract the 'src' attribute from an img tag:
+        //   <img src="http://i26.tinypic.com/28iudy9.jpg"
+        //   title="Click for a larger view"
+        //   id="imgElement"
+        //   alt=""/>
         regex =
-            @"(http:\\/\\/[a-zA-Z0-9]+\\.tinypic\\.com\\/[a-zA-Z0-9]+\\.\\w+\")";
-        removeString = @"\"";
+            @"<img src=\"(.*?)\"\\s+"
+                  "title=\".*?\"\\s+"      // ignore the title
+                  "id=\"imgElement\"\\s+"  // rely on the unique img id
+                  "alt=\".*?\"\\s*/>";     // ignore the alt tag
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://twitgoo.com/"]) {
         regex =
             @"(http:\\/\\/[a-zA-Z0-9]+\\.tinypic\\.com\\/[a-zA-Z0-9]+\\.\\w+\")";
-        removeString = @"\"";
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://mobypicture.com/"]) {
         regex =
             @"(http:\\/\\/www\\.mobypicture\\.com\\/images\\/user\\/[a-zA-Z0-9_]+\\.\\w+\")";
-        removeString = @"\"";
         capture = 1;
     }
 
     NSString * imageUrl = [html stringByMatching:regex capture:capture];
-    imageUrl =
-        [imageUrl stringByReplacingOccurrencesOfRegex:removeString
-        withString:@""];
     NSLog(@"Parsed image '%@' from html; sending request...", imageUrl);
 
     if (imageUrl && ![imageUrl isEqual:@""]) {
