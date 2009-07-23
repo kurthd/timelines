@@ -133,8 +133,16 @@
                      "alt=\".*?\"\\s*/>";
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://mobypicture.com/"]) {
+        // extract from the main image 'src' attribute:
+        // <img class="imageLinkBorder"
+        //      src="http://img.mobypicture.com/whatever.jpg"
+        //      id="main_picture"
+        //      alt="Whatever" />
         regex =
-            @"(http:\\/\\/www\\.mobypicture\\.com\\/images\\/user\\/[a-zA-Z0-9_]+\\.\\w+\")";
+            @"<img\\s+class=\".*?\"\\s+"
+                     "src=\"(.*?)\"\\s+"
+                     "id=\"main_picture\"\\s+"
+                     "alt=\".*?\".*?/>";
         capture = 1;
     }
 
