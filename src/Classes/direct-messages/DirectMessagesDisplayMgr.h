@@ -23,6 +23,7 @@
 #import "NetworkAwareViewController.h"
 #import "CredentialsActivatedPublisher.h"
 #import "UserListTableViewController.h"
+#import "NewDirectMessagesState.h"
 
 /*  This class is responsible for managing the display of the direct messages
     tab.  It will function very similarly to the timeline display, re-using many
@@ -96,9 +97,8 @@
 
     BOOL failedState;
     BOOL refreshingMessages;
-    NSUInteger numNewMessages;
     NSArray * newDirectMessages;
-    NSMutableDictionary * newMessageCountByUser;
+    NewDirectMessagesState * newDirectMessagesState;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;
@@ -128,6 +128,7 @@
 @property (nonatomic, readonly) UITabBarItem * tabBarItem;
 
 @property (nonatomic, copy) NSArray * newDirectMessages;
+@property (nonatomic, retain) NewDirectMessagesState * newDirectMessagesState;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     inboxController:(DirectMessageInboxViewController *)anInboxController

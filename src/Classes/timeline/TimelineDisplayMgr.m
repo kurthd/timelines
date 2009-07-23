@@ -114,7 +114,14 @@
     NSLog(@"Timeline update id: %@", anUpdateId);
     NSLog(@"Timeline page: %@", page);
 
-    self.updateId = anUpdateId;
+    if ([aTimeline count] > 0) {
+        NSArray * sortedTimeline =
+            [aTimeline sortedArrayUsingSelector:@selector(compare:)];
+        TweetInfo * mostRecentTweetInfo = [sortedTimeline objectAtIndex:0];
+        long long updateIdAsLongLong =
+            [mostRecentTweetInfo.identifier longLongValue];
+        self.updateId = [NSNumber numberWithLongLong:updateIdAsLongLong];
+    }
 
     NSInteger oldTimelineCount = [[timeline allKeys] count];
     if (!firstFetchReceived)

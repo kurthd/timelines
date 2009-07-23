@@ -196,6 +196,9 @@
 		05EF41860FFADF95007B59F1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B23A310FEEB29D00A6A2E6 /* CoreData.framework */; };
 		05EF41870FFADF95007B59F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0524C4510FF2AEEE00A6099B /* Security.framework */; };
 		05EF41880FFADF95007B59F1 /* libYAJLIPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */; };
+		910EFE1D1017E391002083D6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 910EFE1C1017E391002083D6 /* AudioToolbox.framework */; };
+		910EFE5F1017E78A002083D6 /* NewDirectMessagesState.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE5E1017E78A002083D6 /* NewDirectMessagesState.m */; };
+		910EFE831017F078002083D6 /* NewDirectMessagesPersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE821017F078002083D6 /* NewDirectMessagesPersistenceStore.m */; };
 		9145EF5B1005073200C2E485 /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
 		9145EF5C1005073F00C2E485 /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
 		9145EF5D1005074A00C2E485 /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
@@ -501,6 +504,11 @@
 		910BE3690FF32059005342EE /* UIState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIState.m; path = persistence/UIState.m; sourceTree = "<group>"; };
 		910BE36B0FF32137005342EE /* UIStatePersistenceStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIStatePersistenceStore.h; path = persistence/UIStatePersistenceStore.h; sourceTree = "<group>"; };
 		910BE36C0FF32137005342EE /* UIStatePersistenceStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIStatePersistenceStore.m; path = persistence/UIStatePersistenceStore.m; sourceTree = "<group>"; };
+		910EFE1C1017E391002083D6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		910EFE5D1017E78A002083D6 /* NewDirectMessagesState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewDirectMessagesState.h; path = "direct-messages/NewDirectMessagesState.h"; sourceTree = "<group>"; };
+		910EFE5E1017E78A002083D6 /* NewDirectMessagesState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewDirectMessagesState.m; path = "direct-messages/NewDirectMessagesState.m"; sourceTree = "<group>"; };
+		910EFE811017F078002083D6 /* NewDirectMessagesPersistenceStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewDirectMessagesPersistenceStore.h; path = "direct-messages/NewDirectMessagesPersistenceStore.h"; sourceTree = "<group>"; };
+		910EFE821017F078002083D6 /* NewDirectMessagesPersistenceStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewDirectMessagesPersistenceStore.m; path = "direct-messages/NewDirectMessagesPersistenceStore.m"; sourceTree = "<group>"; };
 		9115A8380FF03A6100D6A769 /* TimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDataSource.h; path = timeline/TimelineDataSource.h; sourceTree = "<group>"; };
 		9115A83B0FF03BA900D6A769 /* TimelineDataSourceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDataSourceDelegate.h; path = timeline/TimelineDataSourceDelegate.h; sourceTree = "<group>"; };
 		9115A83E0FF03C8300D6A769 /* AllTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllTimelineDataSource.h; path = timeline/AllTimelineDataSource.h; sourceTree = "<group>"; };
@@ -659,6 +667,7 @@
 				05EF41870FFADF95007B59F1 /* Security.framework in Frameworks */,
 				05EF41880FFADF95007B59F1 /* libYAJLIPhone.a in Frameworks */,
 				91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */,
+				910EFE1D1017E391002083D6 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1221,6 +1230,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				910EFE1C1017E391002083D6 /* AudioToolbox.framework */,
 				91AD5A3C100FED36009C2179 /* MessageUI.framework */,
 				0524C4510FF2AEEE00A6099B /* Security.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
@@ -1277,6 +1287,10 @@
 				9152E27110156CAB0033B63B /* DirectMessageConversationViewControllerDelegate.h */,
 				9152E2741015729D0033B63B /* DirectMessage+UIAdditions.h */,
 				9152E2751015729D0033B63B /* DirectMessage+UIAdditions.m */,
+				910EFE5D1017E78A002083D6 /* NewDirectMessagesState.h */,
+				910EFE5E1017E78A002083D6 /* NewDirectMessagesState.m */,
+				910EFE811017F078002083D6 /* NewDirectMessagesPersistenceStore.h */,
+				910EFE821017F078002083D6 /* NewDirectMessagesPersistenceStore.m */,
 			);
 			name = "direct-messages";
 			sourceTree = "<group>";
@@ -1678,6 +1692,8 @@
 				05948A0510157B6400C37C98 /* AccountSettings.m in Sources */,
 				05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */,
 				05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */,
+				910EFE5F1017E78A002083D6 /* NewDirectMessagesState.m in Sources */,
+				910EFE831017F078002083D6 /* NewDirectMessagesPersistenceStore.m in Sources */,
 				059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */,
 				059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */,
 			);

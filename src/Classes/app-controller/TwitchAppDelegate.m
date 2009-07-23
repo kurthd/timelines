@@ -29,6 +29,8 @@
 #import "NSManagedObject+TediousCodeAdditions.h"
 #import "TweetInfo.h"  // so persisted objects can be displayed
 #import "DirectMessageCache.h"  // so persisted objects can be displayed
+#import "NewDirectMessagesPersistenceStore.h"
+#import "NewDirectMessagesState.h"
 
 @interface TwitchAppDelegate ()
 
@@ -1029,6 +1031,11 @@
         [searchBarDisplayMgr searchBarViewWillAppear:NO];
 
     timelineDisplayMgr.tweetIdToShow = uiState.viewedTweetId;
+    
+    NewDirectMessagesPersistenceStore * newDirectMessagesPersistenceStore =
+        [[[NewDirectMessagesPersistenceStore alloc] init] autorelease];
+    directMessageDisplayMgr.newDirectMessagesState =
+        [newDirectMessagesPersistenceStore load];
 }
 
 // HACK: this forces tabs greater than 4 to be set properly (with a 'more' back
@@ -1063,6 +1070,11 @@
     uiState.tabOrder = tabOrder;
 
     [uiStatePersistenceStore save:uiState];
+
+    NewDirectMessagesPersistenceStore * newDirectMessagesPersistenceStore =
+        [[[NewDirectMessagesPersistenceStore alloc] init] autorelease];
+    [newDirectMessagesPersistenceStore
+        save:directMessageDisplayMgr.newDirectMessagesState];
 }
 
 #pragma mark Accessors
