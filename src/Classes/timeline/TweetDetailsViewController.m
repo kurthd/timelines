@@ -229,8 +229,18 @@ static UIImage * defaultAvatar;
     NSString * inReplyToString;
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         NSString * webpage = [[request URL] absoluteString];
+
+        RKLRegexOptions options = RKLCaseless;
+        NSRange range = NSMakeRange(0, webpage.length);
+        NSError * error = 0;
+
         static NSString * imageUrlRegex =
-            @"^http://twitpic.com/.+|^http://yfrog.com/.+|^http://tinypic.com/.+|^http://twitgoo.com/.+|^http://mobypicture.com/.+";
+            @"^http://twitpic.com/.+|"
+             "^http://yfrog.com/.+|"
+             "^http://tinypic.com/.+|"
+             "^http://twitgoo.com/.+|"
+             "^http://mobypicture.com/.+|"
+             "\\.jpg$|\\.jpeg$|\\.bmp|\\.gif|\\.png";
         if ([webpage isMatchedByRegex:usernameRegex]) {
             NSString * username =
                 [[webpage stringByMatching:usernameRegex] substringFromIndex:1];
@@ -245,7 +255,8 @@ static UIImage * defaultAvatar;
             NSLog(@"Opening 'Mail' with url: %@", webpage);
             NSURL * url = [[NSURL alloc] initWithString:webpage];
             [[UIApplication sharedApplication] openURL:url];
-        } else if ([webpage isMatchedByRegex:imageUrlRegex]) {
+        } else if ([webpage isMatchedByRegex:imageUrlRegex options:options
+            inRange:range error:&error]) {
             // load twitpic url in photo browser
             RemotePhoto * remotePhoto =
                 [[RemotePhoto alloc]
