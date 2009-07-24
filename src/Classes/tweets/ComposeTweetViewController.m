@@ -13,6 +13,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)hideRecipientView;
 
 - (void)enableSendButtonFromInterface;
+- (void)enableSendButtonFromText:(NSString *)text;
 - (void)enableSendButtonFromText:(NSString *)text
                     andRecipient:(NSString *)recipient;
 
@@ -59,7 +60,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [self enableSendButtonFromInterface];
 
     if (!displayingActivity) {
-        if (recipientTextField.text.length == 0)
+        if (!recipientView.hidden && recipientTextField.text.length == 0)
             [recipientTextField becomeFirstResponder];
         else
             [textView becomeFirstResponder];
@@ -275,7 +276,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                                                           withString:text];
 
     [self updateCharacterCountFromText:s];
-    [self enableSendButtonFromText:s andRecipient:recipientTextField.text];
+
+    if (recipientView.hidden)
+        [self enableSendButtonFromText:s];
+    else
+        [self enableSendButtonFromText:s andRecipient:recipientTextField.text];
 
     return YES;
 }
@@ -385,8 +390,16 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 // convenience method
 - (void)enableSendButtonFromInterface
 {
-    [self enableSendButtonFromText:textView.text
-                      andRecipient:recipientTextField.text];
+    if (recipientView.hidden)
+        [self enableSendButtonFromText:textView.text];
+    else
+        [self enableSendButtonFromText:textView.text
+                          andRecipient:recipientTextField.text];
+}
+
+- (void)enableSendButtonFromText:(NSString *)text
+{
+    sendButton.enabled = text.length > 0 && text.length <= MAX_TWEET_LENGTH;
 }
 
 - (void)enableSendButtonFromText:(NSString *)text
