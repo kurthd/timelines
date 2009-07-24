@@ -86,18 +86,27 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)orientation {
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
+                                duration:(NSTimeInterval)duration
+{
+    NSLog(@"Did rotate to interface orientation.");
     if (orientation == UIInterfaceOrientationPortrait ||
         orientation == UIInterfaceOrientationPortraitUpsideDown) {
 
-        CGRect recipientViewFrame = recipientView.frame;
-        recipientViewFrame.size.height = 39;
-        recipientView.frame = recipientViewFrame;
+        if (!recipientView.hidden) {
+            CGRect recipientViewFrame = recipientView.frame;
+            recipientViewFrame.size.height = 39;
+            recipientView.frame = recipientViewFrame;
 
-        CGRect textViewFrame = textView.frame;
-        textViewFrame.origin.y = 83;
-        textView.frame = textViewFrame;
+            CGRect textViewFrame = textView.frame;
+            textViewFrame.origin.y = 83;
+            textView.frame = textViewFrame;
+        }
 
         CGRect characterCountFrame = characterCount.frame;
         characterCountFrame.origin.y = 133;
@@ -107,13 +116,15 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
         toolbar.hidden = NO;
     } else {
-        CGRect recipientViewFrame = recipientView.frame;
-        recipientViewFrame.size.height = 29;
-        recipientView.frame = recipientViewFrame;
+        if (!recipientView.hidden) {
+            CGRect recipientViewFrame = recipientView.frame;
+            recipientViewFrame.size.height = 29;
+            recipientView.frame = recipientViewFrame;
 
-        CGRect textViewFrame = textView.frame;
-        textViewFrame.origin.y = 73;
-        textView.frame = textViewFrame;
+            CGRect textViewFrame = textView.frame;
+            textViewFrame.origin.y = 73;
+            textView.frame = textViewFrame;
+        }
 
         CGRect characterCountFrame = characterCount.frame;
         characterCountFrame.origin.y = 173;
@@ -123,8 +134,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
         toolbar.hidden = YES;
     }
-
-	return YES;
 }
 
 - (void)composeTweet:(NSString *)text from:(NSString *)sender
