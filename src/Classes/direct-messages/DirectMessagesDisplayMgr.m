@@ -730,9 +730,8 @@
 {
     UIBarButtonItem * button =
         [[UIBarButtonItem alloc]
-        initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                             target:self
-                             action:@selector(composeTweet:)];
+        initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self
+        action:@selector(sendDirectMessageToOtherUserInConversation)];
 
     return [button autorelease];
 }
