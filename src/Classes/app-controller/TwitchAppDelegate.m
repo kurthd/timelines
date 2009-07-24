@@ -994,8 +994,17 @@
     NSLog(@"Received up to %@:\n%@", largestRecvdId, recvdDms);
 
     DirectMessageCache * cache = [[DirectMessageCache alloc] init];
-    cache.receivedUpdateId = largestRecvdId;
-    cache.sentUpdateId = largestSentId;
+
+    if ([largestRecvdId longLongValue] == 0)
+        cache.receivedUpdateId = nil;
+    else
+        cache.receivedUpdateId = largestRecvdId;
+
+    if ([largestSentId longLongValue] == 0)
+        cache.sentUpdateId = nil;
+    else
+        cache.sentUpdateId = largestSentId;
+
     [cache addReceivedDirectMessages:recvdDms];
     [cache addSentDirectMessages:sentDms];
 
