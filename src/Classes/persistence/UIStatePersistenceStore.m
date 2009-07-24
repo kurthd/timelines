@@ -50,7 +50,11 @@
         [NSNumber numberWithInt:state.selectedTimelineFeed];
     [dict setObject:selectedTimelineFeed
         forKey:[[self class] selectedTimelineFeedKey]];
-    [dict setObject:state.viewedTweetId forKey:[[self class] viewedTweetIdKey]];
+
+    if (state.viewedTweetId)
+        [dict setObject:state.viewedTweetId
+                 forKey:[[self class] viewedTweetIdKey]];
+
     [dict setObject:state.tabOrder forKey:[[self class] tabOrderKey]];
 
     [PlistUtils saveDictionary:dict toPlist:[[self class] plistName]];

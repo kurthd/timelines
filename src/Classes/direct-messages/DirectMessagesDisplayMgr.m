@@ -514,6 +514,9 @@
     self.activeAcctUsername = credentials.username;
 
     self.conversationController.segregatedSenderUsername = credentials.username;
+
+    [wrapperController.navigationController
+        popToRootViewControllerAnimated:NO];
 }
 
 - (void)clearState

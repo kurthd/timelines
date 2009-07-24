@@ -288,7 +288,6 @@
 {
     [self.rootViewController dismissModalViewControllerAnimated:YES];
 
-
     NSError * error = nil;
     [self.draftMgr saveTweetDraft:text
                       credentials:self.service.credentials

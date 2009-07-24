@@ -72,7 +72,8 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)orientation {
+    (UIInterfaceOrientation)orientation
+{
 
     if (isDisplayed) {
         if (orientation == UIInterfaceOrientationPortrait ||
@@ -96,7 +97,7 @@
             loadingViewFrame.size.width = 320;
             loadingViewFrame.size.height = 480;
             loadingView.frame = loadingViewFrame;
-            
+
             CGRect loadingIndicatorFrame = loadingIndicator.frame;
             loadingIndicatorFrame.origin.x = 141;
             loadingIndicatorFrame.origin.y = 221;
@@ -120,7 +121,7 @@
             loadingViewFrame.size.width = 480;
             loadingViewFrame.size.height = 320;
             loadingView.frame = loadingViewFrame;
-            
+
             CGRect loadingIndicatorFrame = loadingIndicator.frame;
             loadingIndicatorFrame.origin.x = 221;
             loadingIndicatorFrame.origin.y = 141;
@@ -129,8 +130,8 @@
     }
 
     previousOrientation = orientation;
-    
-	return YES;
+
+    return YES;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
@@ -141,7 +142,7 @@
         [self performSelector:@selector(showStatusBar) withObject:nil
             afterDelay:0.3];
     }
-    
+
     RemotePhoto * selectedImage = [self.photoList objectAtIndex:selectedIndex];
     UIImage * image = selectedImage.image;
     [self showImageZoomed:image];

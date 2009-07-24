@@ -32,8 +32,14 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)orientation {
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
+                                duration:(NSTimeInterval)duration
+{
     if (orientation == UIInterfaceOrientationPortrait ||
         orientation == UIInterfaceOrientationPortraitUpsideDown) {
 
@@ -53,8 +59,6 @@
         titleLabelFrame.size.width = 378;
         titleLabel.frame = titleLabelFrame;
     }
-
-	return YES;
 }
 
 #pragma mark UIWebViewDelegate implementation

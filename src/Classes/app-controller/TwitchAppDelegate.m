@@ -760,6 +760,8 @@
         [TwitterCredentials
             deleteKeyAndSecretForUsername:changedCredentials.username];
         [self.credentials removeObject:changedCredentials];
+        [directMessageAcctMgr
+            processAccountRemovedForUsername:changedCredentials.username];
     }
 
     [self registerDeviceForPushNotifications];
