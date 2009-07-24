@@ -47,11 +47,6 @@
               self.username, error);
 }
 
-- (NSString *)description
-{
-    return self.username;
-}
-
 + (void)deletePasswordForUsername:(NSString *)aUsername
 {
     NSString * service = [[self class] keychainServiceName];
