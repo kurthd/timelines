@@ -118,17 +118,19 @@
     outstandingReceivedRequests--;
     receivedQueryResponse = YES;
 
+    if ([directMessages count] > 0) {
+        NSArray * sortedDirectMessages =
+            [directMessages sortedArrayUsingSelector:@selector(compare:)];
+        DirectMessage * mostRecentMessage =
+            [sortedDirectMessages objectAtIndex:0];
+        long long updateIdAsLongLong =
+            [mostRecentMessage.identifier longLongValue];
+        directMessageCache.receivedUpdateId =
+            [NSNumber numberWithLongLong:updateIdAsLongLong];
+    }
+
     if (refreshingMessages) {
         if ([directMessages count] > 0) {
-            NSArray * sortedDirectMessages =
-                [directMessages sortedArrayUsingSelector:@selector(compare:)];
-            DirectMessage * mostRecentMessage =
-                [sortedDirectMessages objectAtIndex:0];
-            long long updateIdAsLongLong =
-                [mostRecentMessage.identifier longLongValue];
-            directMessageCache.receivedUpdateId =
-                [NSNumber numberWithLongLong:updateIdAsLongLong];
-
             [newDirectMessagesState incrementCountBy:[directMessages count]];
             [self updateBadge];
             self.newDirectMessages = directMessages;
@@ -165,18 +167,18 @@
     outstandingSentRequests--;
     receivedQueryResponse = YES;
 
-    if (refreshingMessages) {
-        if ([directMessages count] > 0) {
-            NSArray * sortedDirectMessages =
-                [directMessages sortedArrayUsingSelector:@selector(compare:)];
-            DirectMessage * mostRecentMessage =
-                [sortedDirectMessages objectAtIndex:0];
-            long long updateIdAsLongLong =
-                [mostRecentMessage.identifier longLongValue];
-            directMessageCache.sentUpdateId =
-                [NSNumber numberWithLongLong:updateIdAsLongLong];
-        }
-    } else
+    if ([directMessages count] > 0) {
+        NSArray * sortedDirectMessages =
+            [directMessages sortedArrayUsingSelector:@selector(compare:)];
+        DirectMessage * mostRecentMessage =
+            [sortedDirectMessages objectAtIndex:0];
+        long long updateIdAsLongLong =
+            [mostRecentMessage.identifier longLongValue];
+        directMessageCache.sentUpdateId =
+            [NSNumber numberWithLongLong:updateIdAsLongLong];
+    }
+
+    if (!refreshingMessages)
         loadMoreSentNextPage = [page intValue] + 1;
 
     [self updateViewsWithNewMessages];
