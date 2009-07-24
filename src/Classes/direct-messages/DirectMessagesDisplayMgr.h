@@ -109,6 +109,8 @@
     ComposeTweetDisplayMgr * composeMessageDisplayMgr;
 
     UIBarButtonItem * sendingTweetProgressView;
+
+    NSNumber * currentConversationUserId;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;
@@ -145,6 +147,8 @@
 
 @property (nonatomic, readonly) UIBarButtonItem * sendingTweetProgressView;
 @property (nonatomic, readonly) UIBarButtonItem * newMessageButtonItem;
+
+@property (nonatomic, copy) NSNumber * currentConversationUserId;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     inboxController:(DirectMessageInboxViewController *)anInboxController
