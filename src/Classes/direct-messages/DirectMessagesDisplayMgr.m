@@ -291,7 +291,7 @@
     self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = YES;
     self.tweetDetailsTimelineDisplayMgr.currentUsername = username;
     [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
-    
+
     UIBarButtonItem * sendDMButton =
         [[UIBarButtonItem alloc]
         initWithImage:[UIImage imageNamed:@"Envelope.png"]
@@ -513,18 +513,18 @@
 
     self.activeAcctUsername = credentials.username;
 
-    // clear any state, if something outside of this class sets it, fine
-    [directMessageCache clear];
+    self.conversationController.segregatedSenderUsername = credentials.username;
+}
+
+- (void)clearState
+{
     [conversations removeAllObjects];
     [sortedConversations removeAllObjects];
     alreadyBeenDisplayedAfterCredentialChange = NO;
     self.newDirectMessages = nil;
-    [newDirectMessagesState clear];
     loadMoreSentNextPage = 1;
     loadMoreReceivedNextPage = 1;
     [inboxController setNumReceivedMessages:0 sentMessages:0];
-
-    self.conversationController.segregatedSenderUsername = credentials.username;
 }
 
 - (void)viewAppearedForFirstTimeAfterCredentialChange

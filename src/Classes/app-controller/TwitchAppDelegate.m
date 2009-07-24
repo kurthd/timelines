@@ -106,6 +106,7 @@
     [directMessageDisplayMgrFactory release];
     [timelineDisplayMgr release];
     [directMessageDisplayMgr release];
+    [directMessageAcctMgr release];
     [profileTimelineDisplayMgr release];
     [personalFeedSelectionMgr release];
 
@@ -407,6 +408,10 @@
         composeTweetDisplayMgr:self.composeTweetDisplayMgr
         timelineDisplayMgrFactory:timelineDisplayMgrFactory]
         retain];
+
+    directMessageAcctMgr =
+        [[DirectMessageAcctMgr alloc]
+        initWithDirectMessagesDisplayMgr:directMessageDisplayMgr];
 }
 
 - (void)initProfileTab
@@ -528,9 +533,15 @@
             activeAccount != self.activeCredentials.credentials) {
             NSLog(@"Switching account to: '%@'.", activeAccount);
 
+            NSString * oldUsername =
+                self.activeCredentials.credentials.username;
             [self broadcastActivatedCredentialsChanged:activeAccount];
             [self loadHomeViewWithCachedData:activeAccount];
             [self loadMessagesViewWithCachedData:activeAccount];
+
+            [directMessageAcctMgr
+                processAccountChangeToUsername:activeAccount.username
+                fromUsername:oldUsername];
         }
     }
 

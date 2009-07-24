@@ -231,6 +231,7 @@
 		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
 		91BD113B1006736F0082D209 /* PhotoBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BD11391006736F0082D209 /* PhotoBrowserView.xib */; };
 		91BDAFF61004FBC000761694 /* TweetInfo+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */; };
+		91C4F25710192FDA00896046 /* DirectMessageAcctMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C4F25610192FDA00896046 /* DirectMessageAcctMgr.m */; };
 		91D36956100D12B300B59D12 /* ButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36955100D12B300B59D12 /* ButtonBackground.png */; };
 		91D36965100D1CC900B59D12 /* ButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */; };
 		91D36976100D44D200B59D12 /* AvatarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36975100D44D200B59D12 /* AvatarBackground.png */; };
@@ -638,6 +639,8 @@
 		91B28D110FFC60A10080023B /* TweetInfo+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TweetInfo+UIAdditions.h"; path = "timeline/TweetInfo+UIAdditions.h"; sourceTree = "<group>"; };
 		91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TweetInfo+UIAdditions.m"; path = "timeline/TweetInfo+UIAdditions.m"; sourceTree = "<group>"; };
 		91BD113A1006736F0082D209 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/PhotoBrowserView.xib; sourceTree = "<group>"; };
+		91C4F25510192FDA00896046 /* DirectMessageAcctMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageAcctMgr.h; path = "direct-messages/DirectMessageAcctMgr.h"; sourceTree = "<group>"; };
+		91C4F25610192FDA00896046 /* DirectMessageAcctMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageAcctMgr.m; path = "direct-messages/DirectMessageAcctMgr.m"; sourceTree = "<group>"; };
 		91CD821A0FF5403F004D04D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TwitchBrowserView.xib; sourceTree = "<group>"; };
 		91CD821C0FF54066004D04D5 /* TwitchBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchBrowserViewController.h; path = timeline/TwitchBrowserViewController.h; sourceTree = "<group>"; };
 		91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchBrowserViewController.m; path = timeline/TwitchBrowserViewController.m; sourceTree = "<group>"; };
@@ -1291,6 +1294,8 @@
 				910EFE5E1017E78A002083D6 /* NewDirectMessagesState.m */,
 				910EFE811017F078002083D6 /* NewDirectMessagesPersistenceStore.h */,
 				910EFE821017F078002083D6 /* NewDirectMessagesPersistenceStore.m */,
+				91C4F25510192FDA00896046 /* DirectMessageAcctMgr.h */,
+				91C4F25610192FDA00896046 /* DirectMessageAcctMgr.m */,
 			);
 			name = "direct-messages";
 			sourceTree = "<group>";
@@ -1696,6 +1701,7 @@
 				910EFE831017F078002083D6 /* NewDirectMessagesPersistenceStore.m in Sources */,
 				059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */,
 				059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */,
+				91C4F25710192FDA00896046 /* DirectMessageAcctMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

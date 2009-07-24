@@ -98,7 +98,6 @@
 
 - (void)setConversationPreviews:(NSArray *)someConversationPreviews
 {
-    NSLog(@"Conversation previews: %@", someConversationPreviews);
     NSArray * tempConversationPreviews = [someConversationPreviews copy];
     [conversationPreviews release];
     conversationPreviews = tempConversationPreviews;
