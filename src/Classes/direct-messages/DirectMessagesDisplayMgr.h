@@ -155,6 +155,7 @@
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
+- (void)clearState;
 
 - (void)updateDirectMessagesSinceLastUpdateIds;
 - (void)updateWithABunchOfRecentMessages;

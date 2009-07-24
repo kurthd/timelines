@@ -31,12 +31,18 @@
 {
     NSNumber * countAsNum = [NSNumber numberWithInt:count];
     [newMessageCountByUser setObject:countAsNum forKey:identifier];
+    
+    // force badge to be consistent with unread messages at this point
+    numNewMessages = 0;
+    for (NSNumber * userCount in [newMessageCountByUser allValues])
+        numNewMessages += [userCount intValue];
+        
 }
 
 - (NSUInteger)countForUserId:(NSString *)identifier
 {
     NSNumber * countAsNumber = [newMessageCountByUser objectForKey:identifier];
-
+    
     return countAsNumber ? [countAsNumber intValue] : 0;
 }
 

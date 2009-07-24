@@ -10,6 +10,7 @@
 #import "TwitterServiceDelegate.h"
 #import "ComposeTweetDisplayMgrDelegate.h"
 #import "PersonalFeedSelectionMgr.h"
+#import "DirectMessageAcctMgr.h"
 
 @class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class TrendsDisplayMgr, SearchBarDisplayMgr;
@@ -53,6 +54,7 @@
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     DirectMessageDisplayMgrFactory * directMessageDisplayMgrFactory;
     DirectMessagesDisplayMgr * directMessageDisplayMgr;
+    DirectMessageAcctMgr * directMessageAcctMgr;
     TimelineDisplayMgr * timelineDisplayMgr;
     TimelineDisplayMgr * profileTimelineDisplayMgr;
     PersonalFeedSelectionMgr * personalFeedSelectionMgr;
