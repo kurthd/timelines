@@ -10,6 +10,7 @@
 + (NSString *)plistName;
 + (NSString *)numNewMessagesKey;
 + (NSString *)newMessageCountByUserKey;
++ (NSString *)allAccountsPlistName;
 
 @end
 
@@ -19,7 +20,7 @@
 {
     NewDirectMessagesState * state =
         [[[NewDirectMessagesState alloc] init] autorelease];
-    
+
     NSDictionary * dict =
         [PlistUtils getDictionaryFromPlist:[[self class] plistName]];
 
@@ -32,14 +33,14 @@
         NSNumber * count = [newMessageCountByUser objectForKey:userId];
         [state setCount:[count intValue] forUserId:userId];
     }
-    
+
     return state;
 }
 
 - (void)save:(NewDirectMessagesState *)state
 {
     NSMutableDictionary * dict = [NSMutableDictionary dictionary];
-    
+
     NSNumber * numNewMessages =
         [NSNumber numberWithUnsignedInt:state.numNewMessages];
     [dict setObject:numNewMessages forKey:[[self class] numNewMessagesKey]];
@@ -48,6 +49,18 @@
         forKey:[[self class] newMessageCountByUserKey]];
 
     [PlistUtils saveDictionary:dict toPlist:[[self class] plistName]];
+}
+
+- (NSDictionary *)loadNewMessageCountsForAllAccounts
+{
+    return [PlistUtils getDictionaryFromPlist:
+        [[self class] allAccountsPlistName]];
+}
+
+- (void)saveNewMessageCountsForAllAccounts:(NSDictionary *)state
+{
+    [PlistUtils saveDictionary:state
+        toPlist:[[self class] allAccountsPlistName]];
 }
 
 + (NSString *)plistName
@@ -63,6 +76,11 @@
 + (NSString *)newMessageCountByUserKey
 {
     return @"newMessageCountByUser";
+}
+
++ (NSString *)allAccountsPlistName
+{
+    return @"NewDirectMessagesByAccount";
 }
 
 @end

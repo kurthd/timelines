@@ -10,4 +10,8 @@
 - (NewDirectMessagesState *)load;
 - (void)save:(NewDirectMessagesState *)state;
 
+// Dictionary of dictionary of numbers
+- (NSDictionary *)loadNewMessageCountsForAllAccounts;
+- (void)saveNewMessageCountsForAllAccounts:(NSDictionary *)state;
+
 @end
