@@ -9,12 +9,15 @@
 
 - (TimelineTableViewCell *)createCell;
 + (NSMutableDictionary *)cellCache;
++ (BOOL)displayWithUsername;
 
 @end
 
 @implementation TweetInfo (UIAdditions)
 
 static NSMutableDictionary * cells;
+static BOOL displayWithUsername;
+static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (TimelineTableViewCell *)cell
 {
@@ -50,7 +53,8 @@ static NSMutableDictionary * cells;
     TimelineTableViewCell * timelineCell = [nib objectAtIndex:0];
 
     NSString * displayName =
-        self.user.name ? self.user.name : self.user.username;
+        self.user.name && ![[self class] displayWithUsername] ?
+        self.user.name : self.user.username;
     [timelineCell setName:displayName];
     [timelineCell setDate:self.timestamp];
     [timelineCell setTweetText:self.text];
@@ -67,6 +71,20 @@ static NSMutableDictionary * cells;
         cells = [[NSMutableDictionary dictionary] retain];
 
     return cells;
+}
+
++ (BOOL)displayWithUsername
+{
+    if (!alreadyReadDisplayWithUsernameValue) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger displayNameValAsNumber =
+            [defaults integerForKey:@"display_name"];
+        displayWithUsername = displayNameValAsNumber;
+    }
+
+    alreadyReadDisplayWithUsernameValue = YES;
+
+    return displayWithUsername;
 }
 
 @end

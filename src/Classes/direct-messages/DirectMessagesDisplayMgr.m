@@ -27,10 +27,14 @@
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
 - (void)updateBadge;
 - (void)presentFailedDirectMessageOnTimer:(NSTimer *)timer;
++ (BOOL)displayWithUsername;
 
 @end
 
 @implementation DirectMessagesDisplayMgr
+
+static BOOL displayWithUsername;
+static BOOL alreadyReadDisplayWithUsernameValue;
 
 @synthesize activeAcctUsername, otherUserInConversation, selectedMessage,
     tweetDetailsTimelineDisplayMgr, tweetDetailsNetAwareViewController,
@@ -222,7 +226,11 @@
         [firstMessage.sender.username isEqual:activeAcctUsername] ?
         firstMessage.recipient : firstMessage.sender;
 
-    NSString * name = self.otherUserInConversation.name;
+    NSString * name =
+        self.otherUserInConversation.name &&
+        ![[self class] displayWithUsername] ?
+        self.otherUserInConversation.name :
+        self.otherUserInConversation.username;
 
     self.conversationController.navigationItem.title = name;
     [wrapperController.navigationController
@@ -846,10 +854,14 @@
             mostRecentMessage.recipient : mostRecentMessage.sender;
         NSUInteger numMessages =
             [newDirectMessagesState countForUserId:otherUser.identifier];
+            
+        NSString * displayName =
+            otherUser.name && ![[self class] displayWithUsername] ?
+            otherUser.name : otherUser.username;
         ConversationPreview * preview =
             [[[ConversationPreview alloc]
             initWithOtherUserId:otherUser.identifier
-            otherUserName:otherUser.name
+            otherUserName:displayName
             mostRecentMessage:mostRecentMessage.text
             mostRecentMessageDate:mostRecentMessage.created
             numNewMessages:numMessages]
@@ -902,6 +914,20 @@
         [NSString stringWithFormat:@"%d",
         newDirectMessagesState.numNewMessages] :
         nil;
+}
+
++ (BOOL)displayWithUsername
+{
+    if (!alreadyReadDisplayWithUsernameValue) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger displayNameValAsNumber =
+            [defaults integerForKey:@"display_name"];
+        displayWithUsername = displayNameValAsNumber;
+    }
+
+    alreadyReadDisplayWithUsernameValue = YES;
+
+    return displayWithUsername;
 }
 
 @end

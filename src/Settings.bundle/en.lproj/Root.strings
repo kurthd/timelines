@@ -1,0 +1,9 @@
+﻿/* A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences. */
+
+"displayname" = "Display Name";
+"displayname.fullname" = "Full Name";
+"displayname.username" = "Username";
+
+"retweetformat" = "Retweet Format";
+"retweetformat.via" = "... (via @name)";
+"retweetformat.rt" = "RT @name: ...";

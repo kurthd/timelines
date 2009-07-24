@@ -101,15 +101,6 @@ static UIImage * defaultAvatar;
     UIImage * avatarImage = [self getAvatarForUrl:tweet.user.profileImageUrl];
     [cell setAvatarImage:avatarImage];
 
-    if (tweet.recipient && ![tweet.recipient isEqual:@""] && !showInbox) {
-        NSString * formatString =
-            NSLocalizedString(@"timelineview.directmessage.name", @"");
-        NSString * nameString =
-            [NSString stringWithFormat:formatString, tweet.recipient.name];
-        [cell setName:nameString];
-    } else
-        [cell setName:tweet.user.name ? tweet.user.name : tweet.user.username];
-
     TimelineTableViewCellType displayType;
     if (showWithoutAvatars)
         displayType = kTimelineTableViewCellTypeNoAvatar;

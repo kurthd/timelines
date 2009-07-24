@@ -23,9 +23,19 @@
 - (void)replyToCurrentTweetDetailsUser;
 - (void)presentTweetActions;
 
++ (NSInteger)retweetFormat;
+
 @end
 
+enum {
+    kRetweetFormatVia,
+    kRetweetFormatRT
+} RetweetFormat;
+
 @implementation TimelineDisplayMgr
+
+static NSInteger retweetFormat;
+static NSInteger retweetFormatValueAlredyRead;
 
 @synthesize wrapperController, timelineController, userInfoController,
     selectedTweet, updateId, user, timeline, pagesShown, displayAsConversation,
@@ -825,9 +835,20 @@
 - (void)reTweetSelected
 {
     NSLog(@"Timeline display manager: composing retweet");
-    NSString * reTweetMessage =
-        [NSString stringWithFormat:@"%@ (via @%@)", selectedTweet.text,
-        selectedTweet.user.username];
+    NSString * reTweetMessage;
+    switch ([[self class] retweetFormat]) {
+        case kRetweetFormatVia:
+            reTweetMessage =
+                [NSString stringWithFormat:@"%@ (via @%@)", selectedTweet.text,
+                selectedTweet.user.username];
+        break;
+        case kRetweetFormatRT:
+            reTweetMessage =
+                [NSString stringWithFormat:@"RT @%@: %@",
+                selectedTweet.user.username, selectedTweet.text];
+        break;
+    }
+
     [composeTweetDisplayMgr composeTweetWithText:reTweetMessage];
 }
 
@@ -1108,6 +1129,18 @@
 - (NSString *)mostRecentTweetId
 {
     return [self.timelineController mostRecentTweetId];
+}
+
++ (NSInteger)retweetFormat
+{
+    if (!retweetFormatValueAlredyRead) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        retweetFormat = [defaults integerForKey:@"retweet_format"];
+    }
+
+    retweetFormatValueAlredyRead = YES;
+
+    return retweetFormat;
 }
 
 @end

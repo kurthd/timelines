@@ -235,6 +235,7 @@
 		91D36956100D12B300B59D12 /* ButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36955100D12B300B59D12 /* ButtonBackground.png */; };
 		91D36965100D1CC900B59D12 /* ButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */; };
 		91D36976100D44D200B59D12 /* AvatarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36975100D44D200B59D12 /* AvatarBackground.png */; };
+		91FC6B57101A339600354D67 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6B56101A339600354D67 /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -655,6 +656,7 @@
 		91E0004B0FEF786300BCE9BC /* NotFavorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NotFavorite.png; path = images/NotFavorite.png; sourceTree = "<group>"; };
 		91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsHeaderGradient.png; path = images/TweetDetailsHeaderGradient.png; sourceTree = "<group>"; };
 		91E000940FEFFCC700BCE9BC /* DropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadow.png; path = images/DropShadow.png; sourceTree = "<group>"; };
+		91FC6B56101A339600354D67 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1226,6 +1228,7 @@
 				0554E3EF0FFDB9EF00329FFA /* entitlements */,
 				05EF41970FFAE449007B59F1 /* twitbit-info.plist */,
 				05977A3B0FEF0C9700E37B9C /* Icon.png */,
+				91FC6B56101A339600354D67 /* Settings.bundle */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1536,6 +1539,7 @@
 				9152E239101557AC0033B63B /* NewMessagesDot.png in Resources */,
 				05948995101569D500C37C98 /* AccountSettingsView.xib in Resources */,
 				058207C11017744C00DFC051 /* ComposeRecipientGradient.png in Resources */,
+				91FC6B57101A339600354D67 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

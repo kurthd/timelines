@@ -9,12 +9,15 @@
 
 - (TimelineTableViewCell *)createCell;
 + (NSMutableDictionary *)cellCache;
++ (BOOL)displayWithUsername;
 
 @end
 
 @implementation DirectMessage (UIAdditions)
 
 static NSMutableDictionary * cells;
+static BOOL displayWithUsername;
+static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (TimelineTableViewCell *)cell
 {
@@ -48,9 +51,10 @@ static NSMutableDictionary * cells;
         owner:self options:nil];
 
     TimelineTableViewCell * timelineCell = [nib objectAtIndex:0];
-
+        
     NSString * displayName =
-        self.sender.name ? self.sender.name : self.sender.username;
+        self.sender.name && ![[self class] displayWithUsername] ?
+        self.sender.name : self.sender.username;
     [timelineCell setName:displayName];
     [timelineCell setDate:self.created];
     [timelineCell setTweetText:self.text];
@@ -67,6 +71,20 @@ static NSMutableDictionary * cells;
         cells = [[NSMutableDictionary dictionary] retain];
 
     return cells;
+}
+
++ (BOOL)displayWithUsername
+{
+    if (!alreadyReadDisplayWithUsernameValue) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger displayNameValAsNumber =
+            [defaults integerForKey:@"display_name"];
+        displayWithUsername = displayNameValAsNumber;
+    }
+
+    alreadyReadDisplayWithUsernameValue = YES;
+
+    return displayWithUsername;
 }
 
 @end
