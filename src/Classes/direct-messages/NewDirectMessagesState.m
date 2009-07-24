@@ -34,11 +34,8 @@
     
     // force badge to be consistent with unread messages at this point
     numNewMessages = 0;
-    for (NSNumber * userCount in [newMessageCountByUser allValues]) {
+    for (NSNumber * userCount in [newMessageCountByUser allValues])
         numNewMessages += [userCount intValue];
-    }
-    NSLog(@"Num new messages: %d", numNewMessages);
-    NSLog(@"New message count by user: %@", newMessageCountByUser);
 }
 
 - (NSUInteger)countForUserId:(NSString *)identifier
