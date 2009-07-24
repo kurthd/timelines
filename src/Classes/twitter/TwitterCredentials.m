@@ -27,4 +27,9 @@
 @dynamic mentions;
 @dynamic directMessages;
 
+- (NSString *)description
+{
+    return self.username;
+}
+
 @end
