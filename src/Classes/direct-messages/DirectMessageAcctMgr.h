@@ -18,4 +18,7 @@
     fromUsername:(NSString *)fromUsername;
 - (void)processAccountRemovedForUsername:(NSString *)username;
 
+- (NSDictionary *)directMessageCountsByAccount;
+- (void)setWithDirectMessageCountsByAccount:(NSDictionary *)dict;
+
 @end

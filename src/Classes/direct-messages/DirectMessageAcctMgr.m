@@ -49,4 +49,32 @@
     [newMessageStates removeObjectForKey:username];
 }
 
+- (NSDictionary *)directMessageCountsByAccount
+{
+    NSMutableDictionary * returnVal = [NSMutableDictionary dictionary];
+    for (NSString * username in [newMessageStates allKeys]) {
+        NewDirectMessagesState * dmState =
+            [newMessageStates objectForKey:username];
+        [returnVal setObject:dmState.allNewMessagesByUser forKey:username];
+    }
+    
+    return returnVal;
+}
+
+- (void)setWithDirectMessageCountsByAccount:(NSDictionary *)dict
+{
+    for (NSString * acctUsername in [dict allKeys]) {
+        NewDirectMessagesState * dmState =
+            [[[NewDirectMessagesState alloc] init] autorelease];
+        NSDictionary * newMessagesForAcct = [dict objectForKey:acctUsername];
+        for (NSString * userId in [newMessagesForAcct allKeys]) {
+            NSUInteger count =
+                [[newMessagesForAcct objectForKey:userId] intValue];
+            [dmState setCount:count forUserId:userId];
+        }
+
+        [newMessageStates setObject:dmState forKey:acctUsername];
+    }
+}
+
 @end

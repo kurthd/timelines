@@ -1058,6 +1058,8 @@
         [[[NewDirectMessagesPersistenceStore alloc] init] autorelease];
     directMessageDisplayMgr.newDirectMessagesState =
         [newDirectMessagesPersistenceStore load];
+    [directMessageAcctMgr setWithDirectMessageCountsByAccount:
+        [newDirectMessagesPersistenceStore loadNewMessageCountsForAllAccounts]];
 }
 
 // HACK: this forces tabs greater than 4 to be set properly (with a 'more' back
@@ -1097,7 +1099,11 @@
         [[[NewDirectMessagesPersistenceStore alloc] init] autorelease];
     [newDirectMessagesPersistenceStore
         save:directMessageDisplayMgr.newDirectMessagesState];
-        
+
+    [newDirectMessagesPersistenceStore
+        saveNewMessageCountsForAllAccounts:
+        [directMessageAcctMgr directMessageCountsByAccount]];
+
     NSUInteger numUnreadMessages =
         directMessageDisplayMgr.newDirectMessagesState.numNewMessages;
     [[UIApplication sharedApplication]
