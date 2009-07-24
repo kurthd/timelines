@@ -36,7 +36,7 @@
     tweetDetailsTimelineDisplayMgr, tweetDetailsNetAwareViewController,
     tweetDetailsCredentialsPublisher, userListNetAwareViewController,
     userListController, directMessageCache, newDirectMessages,
-    newDirectMessagesState;
+    newDirectMessagesState, currentConversationUserId;
 
 - (void)dealloc
 {
@@ -210,11 +210,12 @@
 
 - (void)selectedConversationPreview:(ConversationPreview *)preview
 {
-    NSString * userId = preview.otherUserId;
+    self.currentConversationUserId = preview.otherUserId;
     NSLog(@"Messages Display Manager: Selected conversation for user '%@'",
-        userId);
+        self.currentConversationUserId);
 
-    NSArray * messages = [sortedConversations objectForKey:userId];
+    NSArray * messages =
+        [sortedConversations objectForKey:self.currentConversationUserId];
     DirectMessage * firstMessage = [messages objectAtIndex:0];
 
     self.otherUserInConversation =
@@ -460,15 +461,18 @@
 
 - (void)userIsSendingDirectMessage:(NSString *)dm to:(NSString *)username
 {
-    [conversationController.navigationItem
+    [self.conversationController.navigationItem
         setRightBarButtonItem:[self sendingTweetProgressView] animated:YES];
 }
 
 - (void)userDidSendDirectMessage:(DirectMessage *)dm
 {
-    [conversationController.navigationItem
+    [self.conversationController.navigationItem
         setRightBarButtonItem:[self newMessageButtonItem] animated:YES];
-    [conversationController addTweet:dm];
+        
+    if ([dm.recipient.identifier isEqual:self.currentConversationUserId])
+        [self.conversationController addTweet:dm];
+    
     [directMessageCache addSentDirectMessage:dm];
     [self updateViewsWithNewMessages];
 }
@@ -530,6 +534,7 @@
     loadMoreReceivedNextPage = 1;
     refreshingMessages = NO;
     [inboxController setNumReceivedMessages:0 sentMessages:0];
+    self.currentConversationUserId = nil;
 }
 
 - (void)viewAppearedForFirstTimeAfterCredentialChange
