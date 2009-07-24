@@ -5,6 +5,7 @@
 #import <Foundation/Foundation.h>
 #import "ResponseProcessor.h"
 #import "TwitterCredentials.h"
+#import "TwitterServiceDelegate.h"
 
 @interface FetchDirectMessagesResponseProcessor : ResponseProcessor
 {
@@ -13,7 +14,7 @@
     BOOL sent;
     NSNumber * count;
     TwitterCredentials * credentials;
-    id delegate;
+    id<TwitterServiceDelegate> delegate;
 
     NSManagedObjectContext * context;
 }
@@ -24,13 +25,13 @@
                        sent:(BOOL)isSent
                 credentials:(TwitterCredentials *)someCredentials
                     context:(NSManagedObjectContext *)aContext
-                   delegate:(id)aDelegate;
+                   delegate:(id<TwitterServiceDelegate>)aDelegate;
 - (id)initWithUpdateId:(NSNumber *)anUpdateId
                   page:(NSNumber *)aPage
                  count:(NSNumber *)aCount
                   sent:(BOOL)isSent
            credentials:(TwitterCredentials *)someCredentials
                context:(NSManagedObjectContext *)aContext
-              delegate:(id)aDelegate;
+              delegate:(id<TwitterServiceDelegate>)aDelegate;
 
 @end

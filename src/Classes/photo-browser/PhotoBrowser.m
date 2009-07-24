@@ -164,9 +164,14 @@
 {
     NSString * title =
         NSLocalizedString(@"photobrowser.fetcherror.title", @"");
+    NSString * message = error.localizedDescription;
+    NSString * cancelTitle = NSLocalizedString(@"alert.dismiss", @"");
+
     UIAlertView * alert =
-        [UIAlertView simpleAlertViewWithTitle:title
-        message:[error description]];
+        [[[UIAlertView alloc] initWithTitle:title message:message
+        delegate:self cancelButtonTitle:cancelTitle otherButtonTitles:nil]
+        autorelease];
+
     [alert show];
 }
 
@@ -174,6 +179,15 @@
 {
     [self performSelector:@selector(openImageInBrowser) withObject:nil
         afterDelay:0.7];
+}
+
+#pragma mark UIAlertViewDelegate implementation
+
+- (void)alertView:(UIAlertView *)alertView
+    clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    // only one button
+    [self done:self];
 }
 
 #pragma mark UIResponder implementation

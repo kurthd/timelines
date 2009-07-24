@@ -77,7 +77,10 @@
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
     failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
-{}
+{
+    NSLog(@"Failed to load image from URL: '%@': %@.", url, error);
+    [delegate failedToFetchImageWithUrl:[url absoluteString] error:error];
+}
 
 #pragma mark CommonTwitterServicePhotoSource implementation
 
