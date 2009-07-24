@@ -231,10 +231,11 @@
         [newDirectMessagesState countForUserId:preview.otherUserId];
     newMessageCountForUserAsInt =
         newMessageCountForUserAsInt - preview.numNewMessages;
+
+    // this will also update the total count
     [newDirectMessagesState setCount:newMessageCountForUserAsInt
         forUserId:preview.otherUserId];
 
-    [newDirectMessagesState incrementCountBy:-preview.numNewMessages];
     [self updateBadge];
 }
 
@@ -527,6 +528,7 @@
     self.newDirectMessages = nil;
     loadMoreSentNextPage = 1;
     loadMoreReceivedNextPage = 1;
+    refreshingMessages = NO;
     [inboxController setNumReceivedMessages:0 sentMessages:0];
 }
 
