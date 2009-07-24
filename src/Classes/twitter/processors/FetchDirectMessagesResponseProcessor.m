@@ -34,7 +34,7 @@
                        sent:(BOOL)isSent
                 credentials:(TwitterCredentials *)someCredentials
                     context:(NSManagedObjectContext *)aContext
-                   delegate:(id)aDelegate
+                   delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithUpdateId:anUpdateId
                                                page:aPage
@@ -63,7 +63,7 @@
                   sent:(BOOL)isSent
            credentials:(TwitterCredentials *)someCredentials
                context:(NSManagedObjectContext *)aContext
-              delegate:(id)aDelegate
+              delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.updateId = anUpdateId;
@@ -124,14 +124,22 @@
     if (![context save:&error])
         NSLog(@"Failed to save direct messages and users: '%@'", error);
 
-    SEL sel;
-    if (sent)
-        sel = @selector(sentDirectMessages:fetchedSinceUpdateId:page:count:);
-    else
-        sel = @selector(directMessages:fetchedSinceUpdateId:page:count:);
-
-    [self invokeSelector:sel withTarget:delegate args:dms, updateId, page,
-        count, nil];
+    if (sent) {
+        SEL sel =
+            @selector(sentDirectMessages:fetchedSinceUpdateId:page:count:);
+        if ([delegate respondsToSelector:sel])
+            [delegate sentDirectMessages:dms
+                    fetchedSinceUpdateId:self.updateId
+                                    page:self.page
+                                   count:self.count];
+    } else {
+        SEL sel = @selector(directMessages:fetchedSinceUpdateId:page:count:);
+        if ([delegate respondsToSelector:sel])
+            [delegate directMessages:dms
+                fetchedSinceUpdateId:self.updateId
+                                page:self.page
+                               count:self.count];
+    }
 
     return YES;
 }
