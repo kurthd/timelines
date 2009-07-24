@@ -298,7 +298,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (IBAction)userDidSave
 {
-    if (recipientTextField.hidden)
+    if (recipientView.hidden)
         [delegate userWantsToSendTweet:textView.text];
     else
         [delegate userWantsToSendDirectMessage:textView.text
@@ -353,7 +353,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                                       toRecipient:recipientTextField.text];
             break;
         case 1:  // user confirmed the cancel
-            if (recipientTextField.hidden)
+            if (recipientView.hidden)
                 [delegate userDidCancelComposingTweet:textView.text];
             else {
                 NSString * recipient = recipientTextField.text;
