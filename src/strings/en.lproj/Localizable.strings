@@ -115,6 +115,7 @@ browserview.actions.cancel = "Cancel";
 browserview.actions.browser = "Open in Safari";
 browserview.actions.post = "Post in Tweet";
 browserview.actions.email = "Email Link";
+browserview.fetcherror.title = "Cannot Open Page";  // same title as Safari
 
 /* DirectMessageInboxView */
 directmessageinbox.nummessages = "%d received, %d sent";

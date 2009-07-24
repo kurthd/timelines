@@ -75,6 +75,18 @@
     [self updatePageTitle];
 }
 
+- (void)webView:(UIWebView *)aWebView didFailLoadWithError:(NSError *)error
+{
+    NSLog(@"Failed to load with error: '%@'.", error);
+    NSString * title =
+        NSLocalizedString(@"browserview.fetcherror.title", @"");
+    NSString * message = error.localizedDescription;
+
+    [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
+
+    [self webViewDidFinishLoad:aWebView];
+}
+
 #pragma mark UIActionSheetDelegate implementation
 
 - (void)actionSheet:(UIActionSheet *)sheet
