@@ -167,11 +167,7 @@
         tweet.source =
             [NSString
             decodeHTMLEntities:[tweetData safeObjectForKey:@"source"]];
-
-        // timestamp is in the 'created_at' field, but is always set to
-        // 1969-12-31; fix once twitter results are fixed -- could be mg
-        // twitter engine or twitter itself
-        tweet.timestamp = nil;
+        tweet.timestamp = [tweetData objectForKey:@"created_at"];
 
         tweet.user = tweetAuthor;
 
