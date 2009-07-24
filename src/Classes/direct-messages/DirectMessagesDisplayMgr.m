@@ -504,7 +504,8 @@
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
-    NSLog(@"Message display manager: setting credentials to '%@'", credentials);
+    NSLog(@"Message display manager: setting credentials to '%@'",
+        someCredentials);
 
     [someCredentials retain];
     [credentials release];
