@@ -72,8 +72,14 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)orientation {
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
+                                duration:(NSTimeInterval)duration
+{
     if (isDisplayed) {
         if (orientation == UIInterfaceOrientationPortrait ||
             orientation == UIInterfaceOrientationPortraitUpsideDown) {
@@ -129,19 +135,13 @@
     }
 
     previousOrientation = orientation;
-    
-	return YES;
-}
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
-    duration:(NSTimeInterval)duration
-{
     if (![[UIApplication sharedApplication] isStatusBarHidden]) {
         [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
         [self performSelector:@selector(showStatusBar) withObject:nil
-            afterDelay:0.3];
+                   afterDelay:0.3];
     }
-    
+
     RemotePhoto * selectedImage = [self.photoList objectAtIndex:selectedIndex];
     UIImage * image = selectedImage.image;
     [self showImageZoomed:image];
