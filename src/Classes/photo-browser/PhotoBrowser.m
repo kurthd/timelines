@@ -74,12 +74,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:
     (UIInterfaceOrientation)orientation
 {
-    return YES;
-}
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
-                                duration:(NSTimeInterval)duration
-{
     if (isDisplayed) {
         if (orientation == UIInterfaceOrientationPortrait ||
             orientation == UIInterfaceOrientationPortraitUpsideDown) {
@@ -102,7 +97,7 @@
             loadingViewFrame.size.width = 320;
             loadingViewFrame.size.height = 480;
             loadingView.frame = loadingViewFrame;
-            
+
             CGRect loadingIndicatorFrame = loadingIndicator.frame;
             loadingIndicatorFrame.origin.x = 141;
             loadingIndicatorFrame.origin.y = 221;
@@ -126,7 +121,7 @@
             loadingViewFrame.size.width = 480;
             loadingViewFrame.size.height = 320;
             loadingView.frame = loadingViewFrame;
-            
+
             CGRect loadingIndicatorFrame = loadingIndicator.frame;
             loadingIndicatorFrame.origin.x = 221;
             loadingIndicatorFrame.origin.y = 141;
@@ -136,10 +131,16 @@
 
     previousOrientation = orientation;
 
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
+    duration:(NSTimeInterval)duration
+{
     if (![[UIApplication sharedApplication] isStatusBarHidden]) {
         [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
         [self performSelector:@selector(showStatusBar) withObject:nil
-                   afterDelay:0.3];
+            afterDelay:0.3];
     }
 
     RemotePhoto * selectedImage = [self.photoList objectAtIndex:selectedIndex];
