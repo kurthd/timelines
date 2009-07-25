@@ -243,6 +243,7 @@
 - (void)mailComposeController:(MFMailComposeViewController *)controller
     didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
+    sendingInEmail = NO;
     if (result == MFMailComposeResultFailed) {
         NSString * title =
             NSLocalizedString(@"photobrowser.emailerror.title", @"");
@@ -478,7 +479,7 @@
 
 - (void)hideStatusBar
 {
-    if (isDisplayed && barsFaded)
+    if (isDisplayed && barsFaded && !sendingInEmail)
         [[UIApplication sharedApplication] setStatusBarHidden:YES animated:YES];
 }
 
@@ -556,6 +557,8 @@
 
 - (void)displayComposerMailSheet
 {
+    sendingInEmail = YES;
+
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault
         animated:YES];
 

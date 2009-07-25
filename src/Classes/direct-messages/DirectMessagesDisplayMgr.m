@@ -544,6 +544,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     refreshingMessages = NO;
     [inboxController setNumReceivedMessages:0 sentMessages:0];
     self.currentConversationUserId = nil;
+    receivedQueryResponse = NO;
 }
 
 - (void)viewAppearedForFirstTimeAfterCredentialChange
