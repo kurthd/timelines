@@ -44,7 +44,7 @@ static NSInteger retweetFormatValueAlredyRead;
     lastFollowingUsername, lastTweetDetailsWrapperController,
     lastTweetDetailsController, currentTweetDetailsUser, currentUsername,
     allPagesLoaded, setUserToAuthenticatedUser, firstFetchReceived,
-    tweetIdToShow;
+    tweetIdToShow, suppressTimelineFailures;
 
 - (void)dealloc
 {
@@ -183,9 +183,12 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Timeline display manager: failed to fetch timeline since %@",
         anUpdateId);
     NSLog(@"Error: %@", error);
-    NSString * errorMessage =
-        NSLocalizedString(@"timelinedisplaymgr.error.fetchtimeline", @"");
-    [self displayErrorWithTitle:errorMessage error:error];
+    if (!suppressTimelineFailures) {
+        NSString * errorMessage =
+            NSLocalizedString(@"timelinedisplaymgr.error.fetchtimeline", @"");
+        [self displayErrorWithTitle:errorMessage error:error];
+    } else
+        [wrapperController setUpdatingState:kDisconnected];
 }
 
 - (void)userInfo:(User *)aUser fetchedForUsername:(NSString *)username
@@ -756,19 +759,22 @@ static NSInteger retweetFormatValueAlredyRead;
         refreshingTweets = YES;
         [service fetchTimelineSince:self.updateId
             page:[NSNumber numberWithInt:0]];
-    }
+    } else
+        NSLog(@"Timeline display manager: not updating due to nil credentials");
     [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 
 - (void)refreshWithCurrentPages
 {
+    NSLog(@"Timeline display manager: refreshing with current pages...");
     if([service credentials]) {
         refreshingTweets = YES;
         hasBeenDisplayed = YES;
         [service fetchTimelineSince:[NSNumber numberWithInt:0] page:
         [NSNumber numberWithInt:pagesShown]];
-    }
+    } else
+        NSLog(@"Timeline display manager: not updating due to nil credentials");
     [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }

@@ -8,7 +8,7 @@
 
 @implementation ArbUserTimelineDataSource
 
-@synthesize delegate;
+@synthesize delegate, username;
 
 - (void)dealloc
 {

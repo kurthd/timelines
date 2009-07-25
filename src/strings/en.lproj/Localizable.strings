@@ -11,6 +11,7 @@ oauth.requesttokenfetch.failed.message = "Failed to connect to Twitter.";
 /* TwitchAppDelegate */
 appdelegate.hometabtitle = "Home";
 appdelegate.profiletabtitle = "Profile";
+appdelegate.findpeopletabtitle = "People";
 
 /* NetworkAwareViewController */
 nodata.updating.text = "Updating...";
@@ -119,3 +120,6 @@ browserview.fetcherror.title = "Cannot Open Page";  // same title as Safari
 
 /* DirectMessageInboxView */
 directmessageinbox.nummessages = "%d received, %d sent";
+
+/* Find people */
+findpeople.nouser = "No exact matches for username '%@'";

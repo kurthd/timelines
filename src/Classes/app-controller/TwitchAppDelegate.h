@@ -11,6 +11,7 @@
 #import "ComposeTweetDisplayMgrDelegate.h"
 #import "PersonalFeedSelectionMgr.h"
 #import "DirectMessageAcctMgr.h"
+#import "FindPeopleSearchDisplayMgr.h"
 
 @class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class TrendsDisplayMgr, SearchBarDisplayMgr;
@@ -50,6 +51,7 @@
     IBOutlet NetworkAwareViewController * trendsNetAwareViewController;
     IBOutlet NetworkAwareViewController * searchNetAwareViewController;
     IBOutlet AccountsViewController * accountsViewController;
+    IBOutlet NetworkAwareViewController * findPeopleNetAwareViewController;
 
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     DirectMessageDisplayMgrFactory * directMessageDisplayMgrFactory;
@@ -57,12 +59,14 @@
     DirectMessageAcctMgr * directMessageAcctMgr;
     TimelineDisplayMgr * timelineDisplayMgr;
     TimelineDisplayMgr * profileTimelineDisplayMgr;
+    TimelineDisplayMgr * findPeopleTimelineDisplayMgr;
     PersonalFeedSelectionMgr * personalFeedSelectionMgr;
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 
     TrendsDisplayMgr * trendsDisplayMgr;
     SearchBarDisplayMgr * searchBarDisplayMgr;
+    FindPeopleSearchDisplayMgr * findPeopleSearchDisplayMgr;
     AccountsDisplayMgr * accountsDisplayMgr;
 
     UIBarButtonItem * homeSendingTweetProgressView;

@@ -235,7 +235,9 @@
 		91D36956100D12B300B59D12 /* ButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36955100D12B300B59D12 /* ButtonBackground.png */; };
 		91D36965100D1CC900B59D12 /* ButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */; };
 		91D36976100D44D200B59D12 /* AvatarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36975100D44D200B59D12 /* AvatarBackground.png */; };
+		91DEF180101B7118001354D5 /* FindPeopleSearchDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DEF17F101B7118001354D5 /* FindPeopleSearchDisplayMgr.m */; };
 		91FC6B57101A339600354D67 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6B56101A339600354D67 /* Settings.bundle */; };
+		91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6C44101A51F800354D67 /* PersonSearch.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -652,11 +654,14 @@
 		91D36955100D12B300B59D12 /* ButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ButtonBackground.png; path = images/ButtonBackground.png; sourceTree = "<group>"; };
 		91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ButtonBackgroundHighlighted.png; path = images/ButtonBackgroundHighlighted.png; sourceTree = "<group>"; };
 		91D36975100D44D200B59D12 /* AvatarBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AvatarBackground.png; path = images/AvatarBackground.png; sourceTree = "<group>"; };
+		91DEF17E101B7118001354D5 /* FindPeopleSearchDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FindPeopleSearchDisplayMgr.h; path = timeline/FindPeopleSearchDisplayMgr.h; sourceTree = "<group>"; };
+		91DEF17F101B7118001354D5 /* FindPeopleSearchDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindPeopleSearchDisplayMgr.m; path = timeline/FindPeopleSearchDisplayMgr.m; sourceTree = "<group>"; };
 		91E000420FEF76E800BCE9BC /* Favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Favorite.png; path = images/Favorite.png; sourceTree = "<group>"; };
 		91E0004B0FEF786300BCE9BC /* NotFavorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NotFavorite.png; path = images/NotFavorite.png; sourceTree = "<group>"; };
 		91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsHeaderGradient.png; path = images/TweetDetailsHeaderGradient.png; sourceTree = "<group>"; };
 		91E000940FEFFCC700BCE9BC /* DropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadow.png; path = images/DropShadow.png; sourceTree = "<group>"; };
 		91FC6B56101A339600354D67 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		91FC6C44101A51F800354D67 /* PersonSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PersonSearch.png; path = images/PersonSearch.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1306,6 +1311,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91FC6C44101A51F800354D67 /* PersonSearch.png */,
 				058207C01017744C00DFC051 /* ComposeRecipientGradient.png */,
 				9152E238101557AC0033B63B /* NewMessagesDot.png */,
 				9180B6C4101244CD0096DFA1 /* ButtonBackground-108x35.png */,
@@ -1387,6 +1393,8 @@
 				91B28D110FFC60A10080023B /* TweetInfo+UIAdditions.h */,
 				91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */,
 				9180B7AD1012AA170096DFA1 /* TwitchBrowserViewControllerDelegate.h */,
+				91DEF17E101B7118001354D5 /* FindPeopleSearchDisplayMgr.h */,
+				91DEF17F101B7118001354D5 /* FindPeopleSearchDisplayMgr.m */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -1540,6 +1548,7 @@
 				05948995101569D500C37C98 /* AccountSettingsView.xib in Resources */,
 				058207C11017744C00DFC051 /* ComposeRecipientGradient.png in Resources */,
 				91FC6B57101A339600354D67 /* Settings.bundle in Resources */,
+				91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1706,6 +1715,7 @@
 				059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */,
 				059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */,
 				91C4F25710192FDA00896046 /* DirectMessageAcctMgr.m in Sources */,
+				91DEF180101B7118001354D5 /* FindPeopleSearchDisplayMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

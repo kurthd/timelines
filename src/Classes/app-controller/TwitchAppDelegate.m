@@ -31,6 +31,7 @@
 #import "DirectMessageCache.h"  // so persisted objects can be displayed
 #import "NewDirectMessagesPersistenceStore.h"
 #import "NewDirectMessagesState.h"
+#import "ArbUserTimelineDataSource.h"
 
 @interface TwitchAppDelegate ()
 
@@ -44,6 +45,7 @@
 - (void)initHomeTab;
 - (void)initMessagesTab;
 - (void)initProfileTab;
+- (void)initFindPeopleTab;
 - (void)initTrendsTab;
 - (void)initAccountsTab;
 - (void)initSearchTab;
@@ -101,6 +103,7 @@
     [profileNetAwareViewController release];
     [trendsNetAwareViewController release];
     [searchNetAwareViewController release];
+    [findPeopleNetAwareViewController release];
 
     [timelineDisplayMgrFactory release];
     [directMessageDisplayMgrFactory release];
@@ -108,11 +111,13 @@
     [directMessageDisplayMgr release];
     [directMessageAcctMgr release];
     [profileTimelineDisplayMgr release];
+    [findPeopleTimelineDisplayMgr release];
     [personalFeedSelectionMgr release];
 
     [composeTweetDisplayMgr release];
 
     [trendsDisplayMgr release];
+    [findPeopleSearchDisplayMgr release];
     [accountsDisplayMgr release];
 
     [homeSendingTweetProgressView release];
@@ -153,6 +158,7 @@
     [self initHomeTab];
     [self initMessagesTab];
     [self initProfileTab];
+    [self initFindPeopleTab];
     [self initTrendsTab];
     [self initSearchTab];
     [self initAccountsTab];
@@ -173,6 +179,7 @@
         [timelineDisplayMgr setCredentials:c];
         [directMessageDisplayMgr setCredentials:c];
         [profileTimelineDisplayMgr setCredentials:c];
+        [findPeopleTimelineDisplayMgr setCredentials:c];
         [trendsDisplayMgr setCredentials:c];
         [searchBarDisplayMgr setCredentials:c];
         [self.composeTweetDisplayMgr setCredentials:c];
@@ -449,6 +456,50 @@
     [profileTimelineDisplayMgr setService:dataSource tweets:nil page:1
         forceRefresh:NO allPagesLoaded:NO];
     dataSource.delegate = profileTimelineDisplayMgr;
+}
+
+- (void)initFindPeopleTab
+{
+    NSString * findPeopleTabTitle =
+        NSLocalizedString(@"appdelegate.findpeopletabtitle", @"");
+    findPeopleTimelineDisplayMgr =
+        [[timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:
+        findPeopleNetAwareViewController title:findPeopleTabTitle
+        managedObjectContext:[self managedObjectContext]
+        composeTweetDisplayMgr:self.composeTweetDisplayMgr]
+        retain];
+    findPeopleTimelineDisplayMgr.displayAsConversation = NO;
+    findPeopleTimelineDisplayMgr.setUserToFirstTweeter = YES;
+    findPeopleTimelineDisplayMgr.setUserToAuthenticatedUser = NO;
+    UIBarButtonItem * refreshButton =
+        findPeopleNetAwareViewController.navigationItem.leftBarButtonItem;
+    refreshButton.target = findPeopleTimelineDisplayMgr;
+    refreshButton.action = @selector(refreshWithLatest);
+
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:[self managedObjectContext]]
+        autorelease];
+    ArbUserTimelineDataSource * dataSource =
+        [[[ArbUserTimelineDataSource alloc]
+        initWithTwitterService:twitterService username:nil]
+        autorelease];
+
+    // Don't autorelease
+    [[CredentialsActivatedPublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+
+    twitterService.delegate = dataSource;
+    [findPeopleTimelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO allPagesLoaded:NO];
+    dataSource.delegate = findPeopleTimelineDisplayMgr;
+
+    findPeopleSearchDisplayMgr =
+        [[FindPeopleSearchDisplayMgr alloc]
+        initWithNetAwareController:findPeopleNetAwareViewController
+        timelineDisplayMgr:findPeopleTimelineDisplayMgr
+        dataSource:dataSource];
 }
 
 - (void)initTrendsTab
@@ -1020,15 +1071,20 @@
     UIState * uiState = [uiStatePersistenceStore load];
 
     NSMutableArray * viewControllers = [NSMutableArray array];
+    [viewControllers addObjectsFromArray:tabBarController.viewControllers];
     NSArray * tabOrder = uiState.tabOrder;
     if (tabOrder) {
-        for (NSNumber * tabNumber in tabOrder)
+        for (int i = [tabOrder count] - 1; i >= 0; i--) {
+            NSNumber * tabNumber = [tabOrder objectAtIndex:i];
             for (UIViewController * viewController in
                 tabBarController.viewControllers)
                     if (viewController.tabBarItem.tag == [tabNumber intValue]) {
-                        [viewControllers addObject:viewController];
+                        [viewControllers removeObject:viewController];
+                        [viewControllers insertObject:viewController
+                            atIndex:0];
                         break;
                     }
+        }
         tabBarController.viewControllers = viewControllers;
     }    
 
