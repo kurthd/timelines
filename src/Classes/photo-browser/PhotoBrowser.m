@@ -258,6 +258,10 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
+
+    RemotePhoto * selectedPhoto = [self.photoList objectAtIndex:selectedIndex];
+    UIImage * image = selectedPhoto.image;
+    [self showImageZoomed:image];
 }
 
 #pragma mark PhotoBrowser implementation
@@ -559,6 +563,7 @@
 {
     sendingInEmail = YES;
 
+    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault
         animated:YES];
 
