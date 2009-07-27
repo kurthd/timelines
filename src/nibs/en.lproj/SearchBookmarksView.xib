@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="20"/>
+			<integer value="11"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -71,7 +71,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBUINavigationItem" id="1000911692">
 								<reference key="IBUINavigationBar" ref="99430269"/>
-								<string key="IBUITitle">Bookmarks</string>
+								<string key="IBUITitle">Saved Searches</string>
 								<object class="IBUIBarButtonItem" key="IBUIRightBarButtonItem" id="64999381">
 									<string key="IBUITitle">Done</string>
 									<int key="IBUIStyle">1</int>
@@ -87,7 +87,7 @@
 							<object class="IBUISegmentedControl" id="459775837">
 								<reference key="NSNextResponder" ref="760191706"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{57, 8}, {207, 30}}</string>
+								<string key="NSFrame">{{53, 8}, {215, 30}}</string>
 								<reference key="NSSuperview" ref="760191706"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -96,7 +96,7 @@
 								<int key="IBSelectedSegmentIndex">0</int>
 								<object class="NSArray" key="IBSegmentTitles">
 									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>Bookmarks</string>
+									<string>Saved Searches</string>
 									<string>Recents</string>
 								</object>
 								<object class="NSMutableArray" key="IBSegmentWidths">
@@ -422,7 +422,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>SearchBookmarksViewController</string>
 					<string>UIResponder</string>
-					<string>{{312, 639}, {320, 460}}</string>
+					<string>{{312, 396}, {320, 460}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
