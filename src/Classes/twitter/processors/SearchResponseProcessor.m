@@ -9,58 +9,7 @@
 #import "Tweet+CoreDataAdditions.h"
 #import "ResponseProcessor+ParsingHelpers.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
-
-@interface NSString (HTMLEntityDecodingAdditions)
-+ (NSString *)decodeHTMLEntities:(NSString *)source;
-@end
-
-@implementation NSString (HTMLEntityDecodingAdditions)
-
-+ (NSString *)decodeHTMLEntities:(NSString *)source
-{ 
-  if(!source) return nil;
-  else if([source rangeOfString: @"&"].location == NSNotFound) return source;
-  else
-  {
-
-    NSMutableString *escaped = [NSMutableString stringWithString: source];
-
-
-    NSArray *entities = [NSArray arrayWithObjects: 
-                      @"&amp;", @"&lt;", @"&gt;", @"&quot;",
-                       nil];
-    
-    NSArray *characters = [NSArray arrayWithObjects:@"&", @"<", @">", @"\"", nil];
-    
-    int i, count = [entities count], characterCount = [characters count];
-    
-    // Html
-    for(i = 0; i < count; i++)
-    {
-      NSRange range = [source rangeOfString: [entities objectAtIndex:i]];
-      if(range.location != NSNotFound)
-      {
-        if (i < characterCount)
-        {
-          [escaped replaceOccurrencesOfString:[entities objectAtIndex: i] 
-                                   withString:[characters objectAtIndex:i] 
-                                      options:NSLiteralSearch 
-                                        range:NSMakeRange(0, [escaped length])];
-        }
-        else
-        {
-          [escaped replaceOccurrencesOfString:[entities objectAtIndex: i] 
-                                   withString:[NSString stringWithFormat: @"%C", (160-characterCount) + i] 
-                                      options:NSLiteralSearch 
-                                        range:NSMakeRange(0, [escaped length])];
-        }
-      }
-    }
-
-    return escaped;    // Note this is autoreleased
-  }
-}
-@end
+#import "NSString+HtmlEncodingAdditions.h"
 
 @interface NSDictionary (CopyAndPastedParsingHelpers)
 - (id)safeObjectForKey:(id)key;
@@ -163,10 +112,11 @@
             tweet = [Tweet createInstance:context];
 
         tweet.identifier = tweetId;
-        tweet.text = [tweetData safeObjectForKey:@"text"];
+        tweet.text =
+            [[tweetData safeObjectForKey:@"text"] stringByDecodingHtmlEntities];
         tweet.source =
-            [NSString
-            decodeHTMLEntities:[tweetData safeObjectForKey:@"source"]];
+            [[tweetData safeObjectForKey:@"source"]
+            stringByDecodingHtmlEntities];
         tweet.timestamp = [tweetData objectForKey:@"created_at"];
 
         tweet.user = tweetAuthor;
