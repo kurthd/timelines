@@ -1049,6 +1049,7 @@
 			children = (
 				0599416A0FFB32F100842518 /* twitch.xcdatamodeld */,
 				059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */,
+				0524829D101D81DA009ED4FA /* v2-v1.1.xcmappingmodel */,
 			);
 			name = "data-model";
 			sourceTree = "<group>";
@@ -1246,7 +1247,6 @@
 		29B97314FDCFA39411CA2CEA /* twitch */ = {
 			isa = PBXGroup;
 			children = (
-				0524829D101D81DA009ED4FA /* v2-v1.1.xcmappingmodel */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
