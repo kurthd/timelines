@@ -61,6 +61,13 @@
     self.queryTitle = aTitle;
 }
 
+- (void)clearDisplay
+{
+    self.searchResults = nil;
+    self.queryString = nil;
+    self.queryTitle = nil;
+}
+
 #pragma mark TimelineDataSource implementation
 
 - (void)fetchTimelineSince:(NSNumber *)anUpdateId page:(NSNumber *)page

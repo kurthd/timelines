@@ -1149,4 +1149,10 @@ static NSInteger retweetFormatValueAlredyRead;
     return retweetFormat;
 }
 
+// HACK: Added to get "Save Search" button in header view.
+- (void)setTimelineHeaderView:(UIView *)view
+{
+    [timelineController setTimelineHeaderView:view];
+}
+
 @end

@@ -424,4 +424,10 @@ static UIImage * defaultAvatar;
     return mostRecentId;
 }
 
+// HACK: Exposed to allow for "Save Search" button
+- (void)setTimelineHeaderView:(UIView *)aView
+{
+    self.tableView.tableHeaderView = aView;
+}
+
 @end

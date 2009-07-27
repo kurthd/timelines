@@ -15,7 +15,8 @@
     [NSPredicate predicateWithFormat:@"identifier == %@", targetId];
 
     NSError * error;
-    NSArray * results = [self findAll:predicate context:context error:&error];
+    NSArray * results =
+        [self findAll:predicate sortBy:nil context:context error:&error];
     if (results == nil)
         NSLog(@"Error finding '%@' objects: '%@'.", [self className], error);
 

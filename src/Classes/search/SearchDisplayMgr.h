@@ -31,5 +31,6 @@
 
 - (void)displaySearchResults:(NSString *)aQueryString
                    withTitle:(NSString *)aTitle;
+- (void)clearDisplay;
 
 @end

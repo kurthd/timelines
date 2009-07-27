@@ -3,11 +3,13 @@
 //
 
 #import "SearchBarDisplayMgr.h"
+#import "SearchBookmarksDisplayMgr.h"
 #import "UIAlertView+InstantiationAdditions.h"
 
 @interface SearchBarDisplayMgr ()
 
 @property (nonatomic, retain) TwitterService * service;
+@property (nonatomic, retain) NSManagedObjectContext * context;
 
 @property (nonatomic, retain) NetworkAwareViewController *
     networkAwareViewController;
@@ -15,6 +17,8 @@
 
 @property (nonatomic, retain) TimelineDisplayMgr * timelineDisplayMgr;
 @property (nonatomic, retain) SearchDisplayMgr * searchDisplayMgr;
+@property (nonatomic, retain) SearchBookmarksDisplayMgr *
+    searchBookmarksDisplayMgr;
 
 @property (nonatomic, copy) NSArray * searchResults;
 @property (nonatomic, copy) NSString * searchQuery;
@@ -25,17 +29,24 @@
 
 @property (nonatomic, retain) UIView * darkTransparentView;
 
+- (void)displayBookmarksView;
+
 - (void)showError:(NSError *)error;
 - (void)showDarkTransparentView;
 - (void)hideDarkTransparentView;
+
+- (UIView *)saveSearchView;
+- (UIView *)removeSearchView;
+- (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
+                                   action:(SEL)action;
 
 @end
 
 @implementation SearchBarDisplayMgr
 
-@synthesize service, networkAwareViewController;
-@synthesize searchBar;
-@synthesize timelineDisplayMgr, searchDisplayMgr;
+@synthesize service, context;
+@synthesize searchBar, networkAwareViewController;
+@synthesize timelineDisplayMgr, searchDisplayMgr, searchBookmarksDisplayMgr;
 @synthesize searchResults, searchQuery, searchPage;
 @synthesize dataSourceDelegate, credentialsActivatedPublisher;
 @synthesize darkTransparentView;
@@ -45,10 +56,12 @@
 - (void)dealloc
 {
     self.service = nil;
+    self.context = nil;
     self.networkAwareViewController = nil;
     self.searchBar = nil;
     self.timelineDisplayMgr = nil;
     self.searchDisplayMgr = nil;
+    self.searchBookmarksDisplayMgr = nil;
     self.searchResults = nil;
     self.searchQuery = nil;
     self.searchPage = nil;
@@ -61,10 +74,13 @@
 - (id)initWithTwitterService:(TwitterService *)aService
           netAwareController:(NetworkAwareViewController *)navc
           timelineDisplayMgr:(TimelineDisplayMgr *)aTimelineDisplayMgr
+                     context:(NSManagedObjectContext *)aContext
 {
     if (self = [super init]) {
         self.service = aService;
         self.service.delegate = self;
+
+        self.context = aContext;
 
         self.networkAwareViewController = navc;
         
@@ -74,6 +90,7 @@
 
         searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
         searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        searchBar.showsBookmarkButton = YES;
         searchBar.delegate = self;
 
         navItem.titleView = searchBar;
@@ -91,9 +108,9 @@
 
         // Don't autorelease
         credentialsActivatedPublisher =
-        [[CredentialsActivatedPublisher alloc]
-            initWithListener:searchDisplayMgr
-                      action:@selector(setCredentials:)];
+            [[CredentialsActivatedPublisher alloc]
+                initWithListener:self
+                          action:@selector(setCredentials:)];
 
         [self.timelineDisplayMgr setService:self.searchDisplayMgr
                                      tweets:nil
@@ -115,6 +132,13 @@
     [self.service setCredentials:credentials];
     [self.searchDisplayMgr setCredentials:credentials];
     [self.timelineDisplayMgr setCredentials:credentials];
+
+    self.searchBookmarksDisplayMgr = nil;
+    self.searchBar.text = @"";
+    self.searchResults = nil;
+    self.searchQuery = nil;
+    self.searchPage = nil;
+    [self.searchDisplayMgr clearDisplay];
 }
 
 - (void)searchBarViewWillAppear:(BOOL)promptUser
@@ -146,6 +170,7 @@
     self.searchResults = nil;
     self.searchQuery = self.searchBar.text;
     self.searchPage = [NSNumber numberWithInteger:1];
+    [self.searchBookmarksDisplayMgr addRecentSearch:self.searchQuery];
 
     NSLog(@"Searching Twitter for: '%@'...", self.searchQuery);
     [self.searchDisplayMgr displaySearchResults:self.searchQuery
@@ -155,6 +180,12 @@
                                    page:[self.searchPage integerValue]
                            forceRefresh:YES
                          allPagesLoaded:NO];
+
+    if ([self.searchBookmarksDisplayMgr isSearchSaved:self.searchQuery])
+        [self.timelineDisplayMgr setTimelineHeaderView:[self removeSearchView]];
+    else
+        [self.timelineDisplayMgr setTimelineHeaderView:[self saveSearchView]];
+
     UITableViewController * tvc = (UITableViewController *)
         self.networkAwareViewController.targetViewController;
     tvc.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -179,6 +210,41 @@
 {
     [self.searchBar setShowsCancelButton:NO animated:YES];
     return YES;
+}
+
+- (void)searchBarBookmarkButtonClicked:(UISearchBar *)searchBar
+{
+    [self displayBookmarksView];
+}
+
+#pragma mark Bookmarks
+
+- (void)displayBookmarksView
+{
+    [self.searchBookmarksDisplayMgr
+        displayBookmarksInRootView:self.networkAwareViewController];
+}
+
+- (void)saveSearch:(id)sender
+{
+    NSLog(@"Saving search: '%@'", self.searchQuery);
+    [self.searchBookmarksDisplayMgr addSavedSearch:self.searchQuery];
+    [self.timelineDisplayMgr setTimelineHeaderView:[self removeSearchView]];
+}
+
+- (void)removeSearch:(id)sender
+{
+    NSLog(@"Forgetting search: '%@'.", self.searchQuery);
+    [self.searchBookmarksDisplayMgr removeSavedSearch:self.searchQuery];
+    [self.timelineDisplayMgr setTimelineHeaderView:[self saveSearchView]];
+}
+
+#pragma mark SearchBookmarksDisplayMgrDelegate implementation
+
+- (void)searchFor:(NSString *)query
+{
+    self.searchBar.text = query;
+    [self searchBarSearchButtonClicked:self.searchBar];
 }
 
 #pragma mark UI helpers
@@ -225,6 +291,19 @@
 
 #pragma mark Accessors
 
+- (SearchBookmarksDisplayMgr *)searchBookmarksDisplayMgr
+{
+    if (!searchBookmarksDisplayMgr) {
+        NSString * accountName = self.service.credentials.username;
+        searchBookmarksDisplayMgr =
+            [[SearchBookmarksDisplayMgr alloc] initWithAccountName:accountName
+                                                           context:context];
+        searchBookmarksDisplayMgr.delegate = self;
+    }
+
+    return searchBookmarksDisplayMgr;
+}
+
 - (UIView *)darkTransparentView
 {
     if (!darkTransparentView) {
@@ -236,6 +315,54 @@
     }
     
     return darkTransparentView;
+}
+
+- (UIView *)saveSearchView
+{
+    NSString * title = NSLocalizedString(@"savedsearch.save.title", @"");
+    SEL action = @selector(saveSearch:);
+    return [self toggleSaveSearchViewWithTitle:title action:action];
+}
+
+- (UIView *)removeSearchView
+{
+    NSString * title = NSLocalizedString(@"savedsearch.remove.title", @"");
+    SEL action = @selector(removeSearch:);
+    return [self toggleSaveSearchViewWithTitle:title action:action];
+}
+
+- (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
+                                   action:(SEL)action
+{
+    CGRect viewFrame = CGRectMake(0, 0, 320, 51);
+    UIView * view = [[UIView alloc] initWithFrame:viewFrame];
+
+    CGRect buttonFrame = CGRectMake(20, 7, 280, 37);
+    UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = buttonFrame;
+
+    UIImage * background =
+        [UIImage imageNamed:@"SaveSearchButtonBackground.png"];
+    UIImage * selectedBackground =
+        [UIImage imageNamed:@"SaveSearchButtonBackgroundHighlighted.png"];
+    [button setBackgroundImage:background forState:UIControlStateNormal];
+    [button setBackgroundImage:selectedBackground
+                      forState:UIControlStateHighlighted];
+
+    [button setTitle:title forState:UIControlStateNormal];
+
+    UIColor * color = [UIColor colorWithRed:.353 green:.4 blue:.494 alpha:1.0];
+    [button setTitleColor:color forState:UIControlStateNormal];
+
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    button.titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
+
+    UIControlEvents events = UIControlEventTouchUpInside;
+    [button addTarget:self action:action forControlEvents:events];
+
+    [view addSubview:button];
+
+    return [view autorelease];
 }
 
 @end

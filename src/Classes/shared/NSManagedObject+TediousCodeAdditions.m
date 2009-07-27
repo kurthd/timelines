@@ -30,7 +30,7 @@
           error:(NSError **)error
 {
     NSArray * results =
-        [self findAll:predicate context:context error:error];
+        [self findAll:predicate sortBy:nil context:context error:error];
 
     if (results.count == 0)
         return nil;
@@ -38,21 +38,31 @@
     return [results objectAtIndex:0];
 }
 
-+ (id)findAll:(NSManagedObjectContext *)context
++ (NSArray *)findAll:(NSManagedObjectContext *)context
 {
     return [self findAll:nil context:context];
 }
 
-+ (id)findAll:(NSPredicate *)predicate
-      context:(NSManagedObjectContext *)context
++ (NSArray *)findAll:(NSPredicate *)predicate
+             context:(NSManagedObjectContext *)context
 {
-    NSError * error;
-    return [self findAll:predicate context:context error:&error];
+    NSError * error = nil;
+    return [self findAll:predicate sortBy:nil context:context error:&error];
 }
 
-+ (id)findAll:(NSPredicate *)predicate
-      context:(NSManagedObjectContext *)context
-        error:(NSError **)error
++ (NSArray *)findAll:(NSPredicate *)predicate
+              sortBy:(NSSortDescriptor *)sorter
+             context:(NSManagedObjectContext *)context
+{
+    NSError * error = nil;
+    return
+        [self findAll:predicate sortBy:sorter context:context error:&error];
+}
+
++ (NSArray *)findAll:(NSPredicate *)predicate
+              sortBy:(NSSortDescriptor *)sorter
+             context:(NSManagedObjectContext *)context
+               error:(NSError **)error
 {
     NSFetchRequest * request = [[NSFetchRequest alloc] init];
     NSEntityDescription * entity =
@@ -60,13 +70,32 @@
                     inManagedObjectContext:context];
     [request setEntity:entity];
     [request setPredicate:predicate];
-    [request setSortDescriptors:nil];
+
+    NSArray * sorters = sorter ? [NSArray arrayWithObject:sorter] : nil;
+    [request setSortDescriptors:sorters];
 
     NSArray * results = [context executeFetchRequest:request error:error];
 
     [request release];
 
     return results;
+}
+
++ (NSUInteger)deleteAll:(NSManagedObjectContext *)context
+{
+    return [[self class] deleteAll:nil context:context];
+}
+
++ (NSUInteger)deleteAll:(NSPredicate *)predicate
+                context:(NSManagedObjectContext *)context;
+{
+    NSArray * everything = [[self class] findAll:predicate context:context];
+    NSUInteger ndeleted = everything.count;
+
+    for (NSManagedObject * thing in everything)
+        [context deleteObject:thing];
+
+    return ndeleted;
 }
 
 @end
