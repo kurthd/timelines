@@ -47,10 +47,7 @@
 
     NSLog(@"Url as string: %@", urlAsString);
     static NSString * imageRegex =
-        //@".*\\.png.*|.*\\.jpg.*|.*\\.jpeg.*|.*\\.gif.*|.*\\.tif.*|.*\\.bmp.*|"
-        //".*\\.ico.*";
-        @"\\.png$|\\.jpg$|\\.jpeg$|\\.gif$|\\.tif$|\\tiff$|\\.bmp$|"
-        "\\.ico$";
+        @"\\.png|\\.jpg|\\.jpeg|\\.gif|\\.tif|\\.tiff|\\.bmp|\\.ico";
 
     RKLRegexOptions options = RKLCaseless;
     NSRange range = NSMakeRange(0, urlAsString.length);
