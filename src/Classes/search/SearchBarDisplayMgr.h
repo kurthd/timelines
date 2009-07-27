@@ -8,17 +8,21 @@
 #import "SearchDisplayMgr.h"
 #import "TimelineDisplayMgr.h"
 #import "CredentialsActivatedPublisher.h"
+#import "SearchBookmarksDisplayMgr.h";
 
 @interface SearchBarDisplayMgr : NSObject
-    <TwitterServiceDelegate, UISearchBarDelegate>
+    <TwitterServiceDelegate, UISearchBarDelegate,
+    SearchBookmarksDisplayMgrDelegate>
 {
     TwitterService * service;
+    NSManagedObjectContext * context;
 
     NetworkAwareViewController * networkAwareViewController;
     UISearchBar * searchBar;
 
     TimelineDisplayMgr * timelineDisplayMgr;
     SearchDisplayMgr * searchDisplayMgr;
+    SearchBookmarksDisplayMgr * searchBookmarksDisplayMgr;
 
     NSArray * searchResults;
     NSString * searchQuery;
@@ -35,7 +39,8 @@
 
 - (id)initWithTwitterService:(TwitterService *)aService
           netAwareController:(NetworkAwareViewController *)navc
-          timelineDisplayMgr:(TimelineDisplayMgr *)aTimelineDisplayMgr;
+          timelineDisplayMgr:(TimelineDisplayMgr *)aTimelineDisplayMgr
+                     context:(NSManagedObjectContext *)aContext;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
 

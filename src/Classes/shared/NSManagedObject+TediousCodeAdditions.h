@@ -15,11 +15,19 @@
         context:(NSManagedObjectContext *)context
           error:(NSError **)error;
 
-+ (id)findAll:(NSManagedObjectContext *)context;
-+ (id)findAll:(NSPredicate *)predicate
-      context:(NSManagedObjectContext *)context;
-+ (id)findAll:(NSPredicate *)predicate
-      context:(NSManagedObjectContext *)context
-        error:(NSError **)error;
++ (NSArray *)findAll:(NSManagedObjectContext *)context;
++ (NSArray *)findAll:(NSPredicate *)predicate
+             context:(NSManagedObjectContext *)context;
++ (NSArray *)findAll:(NSPredicate *)predicate
+              sortBy:(NSSortDescriptor *)sorter
+             context:(NSManagedObjectContext *)context;
++ (NSArray *)findAll:(NSPredicate *)predicate
+              sortBy:(NSSortDescriptor *)sorter
+             context:(NSManagedObjectContext *)context
+               error:(NSError **)error;
+
++ (NSUInteger)deleteAll:(NSManagedObjectContext *)context;
++ (NSUInteger)deleteAll:(NSPredicate *)predicate
+                context:(NSManagedObjectContext *)context;
 
 @end

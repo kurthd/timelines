@@ -70,4 +70,7 @@
 - (void)addTweet:(TweetInfo *)tweet;
 - (NSString *)mostRecentTweetId;
 
+// HACK: Exposed to allow for "Save Search" button
+- (void)setTimelineHeaderView:(UIView *)aView;
+
 @end

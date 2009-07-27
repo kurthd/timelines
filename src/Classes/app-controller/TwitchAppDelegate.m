@@ -31,6 +31,8 @@
 #import "DirectMessageCache.h"  // so persisted objects can be displayed
 #import "NewDirectMessagesPersistenceStore.h"
 #import "NewDirectMessagesState.h"
+#import "RecentSearchMgr.h"
+#import "SavedSearchMgr.h"
 
 @interface TwitchAppDelegate ()
 
@@ -135,7 +137,7 @@
         initWithListener:self action:@selector(credentialsActivated:)];
     credentialsSetChangedPublisher =
         [[CredentialsSetChangedPublisher alloc]
-         initWithListener:self action:@selector(credentialSetChanged:added:)];
+         initWithListener:self action:@selector(credentialsSetChanged:added:)];
     accountSettingsChangedPublisher =
         [[AccountSettingsChangedPublisher alloc]
         initWithListener:self
@@ -497,7 +499,8 @@
         [[SearchBarDisplayMgr alloc]
         initWithTwitterService:searchService
             netAwareController:searchNetAwareViewController
-            timelineDisplayMgr:displayMgr];
+            timelineDisplayMgr:displayMgr
+                       context:[self managedObjectContext]];
 }
 
 - (void)initAccountsTab
@@ -749,8 +752,8 @@
     [self saveContext];
 }
 
-- (void)credentialSetChanged:(TwitterCredentials *)changedCredentials
-                       added:(NSNumber *)added
+- (void)credentialsSetChanged:(TwitterCredentials *)changedCredentials
+                        added:(NSNumber *)added
 {
     if ([added integerValue]) {
         if (self.credentials.count == 0)  // first credentials -- active them
@@ -762,6 +765,21 @@
         [self.credentials removeObject:changedCredentials];
         [directMessageAcctMgr
             processAccountRemovedForUsername:changedCredentials.username];
+
+        // remove bookmarks and recent searches
+        RecentSearchMgr * recentSearches =
+            [[RecentSearchMgr alloc]
+            initWithAccountName:changedCredentials.username
+                        context:[self managedObjectContext]];
+        [recentSearches clear];
+        [recentSearches release];
+
+        SavedSearchMgr * savedSearches =
+            [[SavedSearchMgr alloc]
+            initWithAccountName:changedCredentials.username
+                        context:[self managedObjectContext]];
+        [savedSearches clear];
+        [savedSearches release];
     }
 
     [self registerDeviceForPushNotifications];

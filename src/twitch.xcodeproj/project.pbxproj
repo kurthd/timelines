@@ -7,8 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		051D7C69101D105A00B867C1 /* SavedSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 051D7C68101D105A00B867C1 /* SavedSearchMgr.m */; };
+		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
+		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
+		0524824B101D7883009ED4FA /* SavedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524824A101D7883009ED4FA /* SavedSearch.m */; };
+		0524829E101D81DA009ED4FA /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0524829D101D81DA009ED4FA /* v2-v1.1.xcmappingmodel */; };
 		0533E03D100D124400CC2378 /* TweetDraftMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0533E03C100D124400CC2378 /* TweetDraftMgr.m */; };
 		0533E0B7100D1F7F00CC2378 /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0533E0B6100D1F7F00CC2378 /* TwitterCredentials.m */; };
+		05340ABA101A3DAD0077E7C0 /* SearchBookmarksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05340AB8101A3DAD0077E7C0 /* SearchBookmarksView.xib */; };
+		05340ABD101A3E7E0077E7C0 /* SearchBookmarksDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05340ABC101A3E7E0077E7C0 /* SearchBookmarksDisplayMgr.m */; };
+		05340AC0101A3E970077E7C0 /* SearchBookmarksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05340ABF101A3E970077E7C0 /* SearchBookmarksViewController.m */; };
+		05340B39101A5BFB0077E7C0 /* RecentSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 05340B36101A5BFB0077E7C0 /* RecentSearch.m */; };
 		053A11A4100CDBA5008DD2F6 /* TweetDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 053A11A2100CDBA5008DD2F6 /* TweetDraft.m */; };
 		058207C11017744C00DFC051 /* ComposeRecipientGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 058207C01017744C00DFC051 /* ComposeRecipientGradient.png */; };
 		05948992101569B700C37C98 /* AccountSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05948991101569B700C37C98 /* AccountSettingsViewController.m */; };
@@ -19,6 +28,7 @@
 		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */; };
 		05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C8872810163DB90097FEFF /* AccountsTableViewCell.m */; };
+		05E0271B101B983D00A97AC9 /* RecentSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */; };
 		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		05EF40D50FFADF95007B59F1 /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
 		05EF40D60FFADF95007B59F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 05B239470FEDD10900A6A2E6 /* Localizable.strings */; };
@@ -56,7 +66,6 @@
 		05EF40F60FFADF95007B59F1 /* BackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82AA0FF55536004D04D5 /* BackButton.png */; };
 		05EF40F70FFADF95007B59F1 /* StopLoading.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82AC0FF55751004D04D5 /* StopLoading.png */; };
 		05EF40F80FFADF95007B59F1 /* Refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82B60FF558FE004D04D5 /* Refresh.png */; };
-		05EF40F90FFADF95007B59F1 /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C35E770FF5474800F91448 /* SearchBarView.xib */; };
 		05EF40FA0FFADF95007B59F1 /* OauthLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 057620320FF736D600392ADC /* OauthLogInView.xib */; };
 		05EF40FB0FFADF95007B59F1 /* ExplainOauthView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7051B0FF88C4100936E4C /* ExplainOauthView.xib */; };
 		05EF40FD0FFADF95007B59F1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -238,6 +247,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		051D7C67101D105A00B867C1 /* SavedSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearchMgr.h; path = search/SavedSearchMgr.h; sourceTree = "<group>"; };
+		051D7C68101D105A00B867C1 /* SavedSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearchMgr.m; path = search/SavedSearchMgr.m; sourceTree = "<group>"; };
+		052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackground.png; path = images/SaveSearchButtonBackground.png; sourceTree = "<group>"; };
+		052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackgroundHighlighted.png; path = images/SaveSearchButtonBackgroundHighlighted.png; sourceTree = "<group>"; };
+		05248249101D7883009ED4FA /* SavedSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearch.h; path = search/SavedSearch.h; sourceTree = "<group>"; };
+		0524824A101D7883009ED4FA /* SavedSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearch.m; path = search/SavedSearch.m; sourceTree = "<group>"; };
+		0524829D101D81DA009ED4FA /* v2-v1.1.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2-v1.1.xcmappingmodel"; path = "data-model/v2-v1.1.xcmappingmodel"; sourceTree = "<group>"; };
 		0524BDF50FF16E0500A6099B /* AccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsViewController.h; path = accounts/AccountsViewController.h; sourceTree = "<group>"; };
 		0524BDF60FF16E0500A6099B /* AccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsViewController.m; path = accounts/AccountsViewController.m; sourceTree = "<group>"; };
 		0524BDF90FF16E2200A6099B /* AccountsDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsDisplayMgr.h; path = accounts/AccountsDisplayMgr.h; sourceTree = "<group>"; };
@@ -263,6 +279,14 @@
 		0533E03C100D124400CC2378 /* TweetDraftMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDraftMgr.m; path = tweets/TweetDraftMgr.m; sourceTree = "<group>"; };
 		0533E0B5100D1F7F00CC2378 /* TwitterCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterCredentials.h; path = twitter/TwitterCredentials.h; sourceTree = "<group>"; };
 		0533E0B6100D1F7F00CC2378 /* TwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterCredentials.m; path = twitter/TwitterCredentials.m; sourceTree = "<group>"; };
+		05340AB9101A3DAD0077E7C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/SearchBookmarksView.xib; sourceTree = "<group>"; };
+		05340ABB101A3E7E0077E7C0 /* SearchBookmarksDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBookmarksDisplayMgr.h; path = search/SearchBookmarksDisplayMgr.h; sourceTree = "<group>"; };
+		05340ABC101A3E7E0077E7C0 /* SearchBookmarksDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBookmarksDisplayMgr.m; path = search/SearchBookmarksDisplayMgr.m; sourceTree = "<group>"; };
+		05340ABE101A3E970077E7C0 /* SearchBookmarksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBookmarksViewController.h; path = search/SearchBookmarksViewController.h; sourceTree = "<group>"; };
+		05340ABF101A3E970077E7C0 /* SearchBookmarksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBookmarksViewController.m; path = search/SearchBookmarksViewController.m; sourceTree = "<group>"; };
+		05340B32101A5B0D0077E7C0 /* twitch-v1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v1.1.xcdatamodel"; sourceTree = "<group>"; };
+		05340B35101A5BFB0077E7C0 /* RecentSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecentSearch.h; path = search/RecentSearch.h; sourceTree = "<group>"; };
+		05340B36101A5BFB0077E7C0 /* RecentSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearch.m; path = search/RecentSearch.m; sourceTree = "<group>"; };
 		053A11A1100CDBA5008DD2F6 /* TweetDraft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDraft.h; path = tweets/TweetDraft.h; sourceTree = "<group>"; };
 		053A11A2100CDBA5008DD2F6 /* TweetDraft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDraft.m; path = tweets/TweetDraft.m; sourceTree = "<group>"; };
 		0562BE2D0FF6AB6B005DA549 /* FetchTweetResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTweetResponseProcessor.h; path = twitter/processors/FetchTweetResponseProcessor.h; sourceTree = "<group>"; };
@@ -397,7 +421,6 @@
 		05B23C1A0FEEEFC700A6A2E6 /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tweet.m; path = tweets/Tweet.m; sourceTree = "<group>"; };
 		05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarDisplayMgr.h; path = search/SearchBarDisplayMgr.h; sourceTree = "<group>"; };
 		05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBarDisplayMgr.m; path = search/SearchBarDisplayMgr.m; sourceTree = "<group>"; };
-		05C35E780FF5474800F91448 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/SearchBarView.xib; sourceTree = "<group>"; };
 		05C5E6620FF434360073E7F2 /* TrendsDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendsDisplayMgr.h; path = trends/TrendsDisplayMgr.h; sourceTree = "<group>"; };
 		05C5E6630FF434360073E7F2 /* TrendsDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrendsDisplayMgr.m; path = trends/TrendsDisplayMgr.m; sourceTree = "<group>"; };
 		05C5E6650FF434730073E7F2 /* TrendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendsViewController.h; path = trends/TrendsViewController.h; sourceTree = "<group>"; };
@@ -453,6 +476,8 @@
 		05D173E20FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TwitterCredentials+KeychainAdditions.m"; path = "twitter/TwitterCredentials+KeychainAdditions.m"; sourceTree = "<group>"; };
 		05D174050FF69FC500DCB22D /* Mention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mention.h; path = tweets/Mention.h; sourceTree = "<group>"; };
 		05D174060FF69FC500DCB22D /* Mention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mention.m; path = tweets/Mention.m; sourceTree = "<group>"; };
+		05E02719101B983D00A97AC9 /* RecentSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecentSearchMgr.h; path = search/RecentSearchMgr.h; sourceTree = "<group>"; };
+		05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearchMgr.m; path = search/RecentSearchMgr.m; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
 		05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+TediousCodeAdditions.m"; path = "shared/NSManagedObject+TediousCodeAdditions.m"; sourceTree = "<group>"; };
 		05EF418F0FFADF95007B59F1 /* Twitbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -959,8 +984,8 @@
 		05B239440FEDD0E400A6A2E6 /* nibs */ = {
 			isa = PBXGroup;
 			children = (
-				916BD7ED0FEEB958007143A9 /* NoDataView.xib */,
 				05B238820FEDC34200A6A2E6 /* MainWindow.xib */,
+				916BD7ED0FEEB958007143A9 /* NoDataView.xib */,
 				05B238880FEDC35400A6A2E6 /* LogInView.xib */,
 				916BD8020FEEBD56007143A9 /* TimelineView.xib */,
 				916BD9100FEEFB07007143A9 /* TimelineTableViewCell.xib */,
@@ -972,7 +997,7 @@
 				910BE2050FF2BA3F005342EE /* UserSummaryTableViewCell.xib */,
 				05C5E6A70FF43CC10073E7F2 /* TrendsView.xib */,
 				91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */,
-				05C35E770FF5474800F91448 /* SearchBarView.xib */,
+				05340AB8101A3DAD0077E7C0 /* SearchBookmarksView.xib */,
 				057620320FF736D600392ADC /* OauthLogInView.xib */,
 				05C7051B0FF88C4100936E4C /* ExplainOauthView.xib */,
 				91BD11391006736F0082D209 /* PhotoBrowserView.xib */,
@@ -1132,6 +1157,18 @@
 				05C5E9B10FF48BA70073E7F2 /* SearchDisplayMgr.m */,
 				05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */,
 				05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */,
+				05340ABB101A3E7E0077E7C0 /* SearchBookmarksDisplayMgr.h */,
+				05340ABC101A3E7E0077E7C0 /* SearchBookmarksDisplayMgr.m */,
+				05340ABE101A3E970077E7C0 /* SearchBookmarksViewController.h */,
+				05340ABF101A3E970077E7C0 /* SearchBookmarksViewController.m */,
+				05340B35101A5BFB0077E7C0 /* RecentSearch.h */,
+				05340B36101A5BFB0077E7C0 /* RecentSearch.m */,
+				05E02719101B983D00A97AC9 /* RecentSearchMgr.h */,
+				05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */,
+				05248249101D7883009ED4FA /* SavedSearch.h */,
+				0524824A101D7883009ED4FA /* SavedSearch.m */,
+				051D7C67101D105A00B867C1 /* SavedSearchMgr.h */,
+				051D7C68101D105A00B867C1 /* SavedSearchMgr.m */,
 			);
 			name = search;
 			sourceTree = "<group>";
@@ -1197,6 +1234,7 @@
 		29B97314FDCFA39411CA2CEA /* twitch */ = {
 			isa = PBXGroup;
 			children = (
+				0524829D101D81DA009ED4FA /* v2-v1.1.xcmappingmodel */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -1303,6 +1341,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */,
+				052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */,
 				058207C01017744C00DFC051 /* ComposeRecipientGradient.png */,
 				9152E238101557AC0033B63B /* NewMessagesDot.png */,
 				9180B6C4101244CD0096DFA1 /* ButtonBackground-108x35.png */,
@@ -1510,7 +1550,6 @@
 				05EF40F60FFADF95007B59F1 /* BackButton.png in Resources */,
 				05EF40F70FFADF95007B59F1 /* StopLoading.png in Resources */,
 				05EF40F80FFADF95007B59F1 /* Refresh.png in Resources */,
-				05EF40F90FFADF95007B59F1 /* SearchBarView.xib in Resources */,
 				05EF40FA0FFADF95007B59F1 /* OauthLogInView.xib in Resources */,
 				05EF40FB0FFADF95007B59F1 /* ExplainOauthView.xib in Resources */,
 				9145EF5B1005073200C2E485 /* Re-tweet.png in Resources */,
@@ -1536,6 +1575,9 @@
 				9152E239101557AC0033B63B /* NewMessagesDot.png in Resources */,
 				05948995101569D500C37C98 /* AccountSettingsView.xib in Resources */,
 				058207C11017744C00DFC051 /* ComposeRecipientGradient.png in Resources */,
+				05340ABA101A3DAD0077E7C0 /* SearchBookmarksView.xib in Resources */,
+				052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */,
+				052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1702,12 +1744,27 @@
 				059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */,
 				059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */,
 				91C4F25710192FDA00896046 /* DirectMessageAcctMgr.m in Sources */,
+				05340ABD101A3E7E0077E7C0 /* SearchBookmarksDisplayMgr.m in Sources */,
+				05340AC0101A3E970077E7C0 /* SearchBookmarksViewController.m in Sources */,
+				05340B39101A5BFB0077E7C0 /* RecentSearch.m in Sources */,
+				05E0271B101B983D00A97AC9 /* RecentSearchMgr.m in Sources */,
+				051D7C69101D105A00B867C1 /* SavedSearchMgr.m in Sources */,
+				0524824B101D7883009ED4FA /* SavedSearch.m in Sources */,
+				0524829E101D81DA009ED4FA /* v2-v1.1.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		05340AB8101A3DAD0077E7C0 /* SearchBookmarksView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				05340AB9101A3DAD0077E7C0 /* en */,
+			);
+			name = SearchBookmarksView.xib;
+			sourceTree = "<group>";
+		};
 		057620320FF736D600392ADC /* OauthLogInView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1747,14 +1804,6 @@
 			);
 			name = Localizable.strings;
 			path = strings/en.lproj;
-			sourceTree = "<group>";
-		};
-		05C35E770FF5474800F91448 /* SearchBarView.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				05C35E780FF5474800F91448 /* en */,
-			);
-			name = SearchBarView.xib;
 			sourceTree = "<group>";
 		};
 		05C5E6A70FF43CC10073E7F2 /* TrendsView.xib */ = {
@@ -2169,8 +2218,9 @@
 			children = (
 				05B239F00FEEABBB00A6A2E6 /* twitch-v1.xcdatamodel */,
 				0599416D0FFB32F100842518 /* twitch-v2.xcdatamodel */,
+				05340B32101A5B0D0077E7C0 /* twitch-v1.1.xcdatamodel */,
 			);
-			currentVersion = 0599416D0FFB32F100842518 /* twitch-v2.xcdatamodel */;
+			currentVersion = 05340B32101A5B0D0077E7C0 /* twitch-v1.1.xcdatamodel */;
 			name = twitch.xcdatamodeld;
 			path = "data-model/twitch.xcdatamodeld";
 			sourceTree = "<group>";
