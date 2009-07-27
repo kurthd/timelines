@@ -587,12 +587,14 @@
             activeAccount != self.activeCredentials.credentials) {
             NSLog(@"Switching account to: '%@'.", activeAccount);
 
-            NSString * oldUsername =
-                self.activeCredentials.credentials.username;
             [self broadcastActivatedCredentialsChanged:activeAccount];
             [self loadHomeViewWithCachedData:activeAccount];
             [self loadMessagesViewWithCachedData:activeAccount];
 
+            // oldUsername will be nil when the previously active account is
+            // deleted
+            NSString * oldUsername =
+            self.activeCredentials.credentials.username;            
             [directMessageAcctMgr
                 processAccountChangeToUsername:activeAccount.username
                 fromUsername:oldUsername];

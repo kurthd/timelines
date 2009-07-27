@@ -29,9 +29,13 @@
     NSLog(@"Updating direct message display manager from '%@' to '%@'",
         fromUsername, toUsername);
 
-    NewDirectMessagesState * fromNewDirectMessagesState =
-        displayMgr.newDirectMessagesState;
-    [newMessageStates setObject:fromNewDirectMessagesState forKey:fromUsername];
+    // fromUsername is nil when changing from a deleted account
+    if (fromUsername) {
+        NewDirectMessagesState * fromNewDirectMessagesState =
+            displayMgr.newDirectMessagesState;
+        [newMessageStates setObject:fromNewDirectMessagesState
+                             forKey:fromUsername];
+    }
 
     [displayMgr clearState];
 
