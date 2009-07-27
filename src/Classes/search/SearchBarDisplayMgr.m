@@ -247,6 +247,12 @@
     [self searchBarSearchButtonClicked:self.searchBar];
 }
 
+- (void)savedSearchRemoved:(NSString *)query
+{
+    if ([self.searchQuery isEqualToString:query])
+        [self.timelineDisplayMgr setTimelineHeaderView:[self saveSearchView]];
+}
+
 #pragma mark UI helpers
 
 - (void)showError:(NSError *)error

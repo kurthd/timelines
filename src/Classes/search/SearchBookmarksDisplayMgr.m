@@ -92,6 +92,7 @@
 - (BOOL)removeSavedSearchWithQuery:(NSString *)query
 {
     [self.savedSearchMgr removeSavedSearchForQuery:query];
+    [self.delegate savedSearchRemoved:query];
     return YES;
 }
 

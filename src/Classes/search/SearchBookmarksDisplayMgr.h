@@ -10,6 +10,7 @@
 @protocol SearchBookmarksDisplayMgrDelegate
 
 - (void)searchFor:(NSString *)query;
+- (void)savedSearchRemoved:(NSString *)query;
 
 @end
 
