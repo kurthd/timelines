@@ -506,7 +506,15 @@ static NSInteger retweetFormatValueAlredyRead;
         cancelButtonTitle:cancel destructiveButtonTitle:nil
         otherButtonTitles:browser, email, nil];
 
-    [sheet showInView:self.tweetDetailsController.view];
+    // The alert sheet needs to be displayed in the UITabBarController's view.
+    // If it's displayed in a child view, the action sheet will appear to be
+    // modal on top of the tab bar, but it will not intercept any touches that
+    // occur within the tab bar's bounds. Thus about 3/4 of the 'Cancel' button
+    // becomes unusable. Reaching for the UITabBarController in this way is
+    // definitely a hack, but fixes the problem for now.
+    UIView * rootView =
+        self.wrapperController.parentViewController.parentViewController.view;
+    [sheet showInView:rootView];
 }
 
 - (void)showingTweetDetails
