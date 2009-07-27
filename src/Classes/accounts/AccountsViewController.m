@@ -209,7 +209,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
                    withRowAnimation:YES];
 
             if (self.accounts.count == 0)
-                [self setEditing:NO animated:YES];
+                remainInEditingMode = NO;
 
             if (c == self.selectedAccount) {
                 if (self.accounts.count == 0)
@@ -223,8 +223,16 @@ NSInteger usernameSort(TwitterCredentials * user1,
                         [NSIndexPath indexPathForRow:index inSection:0];
                     AccountsTableViewCell * cell = (AccountsTableViewCell *)
                         [self.tableView cellForRowAtIndexPath:newIndexPath];
-                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-                    //cell.textLabel.textColor = [UIColor twitchCheckedColor];
+
+                    if (cell.editing) {
+                        cell.accessoryType =
+                            UITableViewCellAccessoryDisclosureIndicator;
+                        cell.textLabel.textColor = [UIColor blackColor];
+                    } else {  // swipe-to-delete gesture tirggered the deletion
+                        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                        cell.textLabel.textColor = [UIColor twitchCheckedColor];
+                    }
+
                     cell.accountSelected = YES;
                 }
             }
