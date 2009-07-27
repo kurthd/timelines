@@ -19,6 +19,7 @@
 		05340AC0101A3E970077E7C0 /* SearchBookmarksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05340ABF101A3E970077E7C0 /* SearchBookmarksViewController.m */; };
 		05340B39101A5BFB0077E7C0 /* RecentSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 05340B36101A5BFB0077E7C0 /* RecentSearch.m */; };
 		053A11A4100CDBA5008DD2F6 /* TweetDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 053A11A2100CDBA5008DD2F6 /* TweetDraft.m */; };
+		054B6A20101E153600882C19 /* NSString+HtmlEncodingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */; };
 		058207C11017744C00DFC051 /* ComposeRecipientGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 058207C01017744C00DFC051 /* ComposeRecipientGradient.png */; };
 		05948992101569B700C37C98 /* AccountSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05948991101569B700C37C98 /* AccountSettingsViewController.m */; };
 		05948995101569D500C37C98 /* AccountSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05948993101569D500C37C98 /* AccountSettingsView.xib */; };
@@ -292,6 +293,8 @@
 		05340B36101A5BFB0077E7C0 /* RecentSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearch.m; path = search/RecentSearch.m; sourceTree = "<group>"; };
 		053A11A1100CDBA5008DD2F6 /* TweetDraft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDraft.h; path = tweets/TweetDraft.h; sourceTree = "<group>"; };
 		053A11A2100CDBA5008DD2F6 /* TweetDraft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDraft.m; path = tweets/TweetDraft.m; sourceTree = "<group>"; };
+		054B6A1E101E153600882C19 /* NSString+HtmlEncodingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HtmlEncodingAdditions.h"; path = "shared/NSString+HtmlEncodingAdditions.h"; sourceTree = "<group>"; };
+		054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HtmlEncodingAdditions.m"; path = "shared/NSString+HtmlEncodingAdditions.m"; sourceTree = "<group>"; };
 		0562BE2D0FF6AB6B005DA549 /* FetchTweetResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTweetResponseProcessor.h; path = twitter/processors/FetchTweetResponseProcessor.h; sourceTree = "<group>"; };
 		0562BE2E0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchTweetResponseProcessor.m; path = twitter/processors/FetchTweetResponseProcessor.m; sourceTree = "<group>"; };
 		05761AFD0FF6ADD600392ADC /* UserTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTweet.h; path = tweets/UserTweet.h; sourceTree = "<group>"; };
@@ -984,6 +987,8 @@
 				05F45CF20FF056DF00EBAFC7 /* AsynchronousNetworkFetcherDelegate.h */,
 				0524C1F00FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.h */,
 				0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */,
+				054B6A1E101E153600882C19 /* NSString+HtmlEncodingAdditions.h */,
+				054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -1765,6 +1770,7 @@
 				0524824B101D7883009ED4FA /* SavedSearch.m in Sources */,
 				0524829E101D81DA009ED4FA /* v2-v1.1.xcmappingmodel in Sources */,
 				91DEF180101B7118001354D5 /* FindPeopleSearchDisplayMgr.m in Sources */,
+				054B6A20101E153600882C19 /* NSString+HtmlEncodingAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
