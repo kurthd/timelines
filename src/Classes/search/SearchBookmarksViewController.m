@@ -222,6 +222,7 @@ typedef enum
     }
 
     [self.tableView reloadData];
+    [self.tableView flashScrollIndicators];
 }
 
 - (void)displayCategory:(BookmarkCategory)category
