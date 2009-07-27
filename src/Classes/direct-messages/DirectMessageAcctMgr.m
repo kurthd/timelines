@@ -47,6 +47,8 @@
 - (void)processAccountRemovedForUsername:(NSString *)username
 {
     [newMessageStates removeObjectForKey:username];
+    if ([[newMessageStates allKeys] count] == 0)
+        [displayMgr.newDirectMessagesState clear];
 }
 
 - (NSDictionary *)directMessageCountsByAccount

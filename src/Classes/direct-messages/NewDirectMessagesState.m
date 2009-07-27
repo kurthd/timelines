@@ -48,6 +48,7 @@
 - (void)clear
 {
     [newMessageCountByUser removeAllObjects];
+    numNewMessages = 0;
 }
 
 - (NSDictionary *)allNewMessagesByUser
