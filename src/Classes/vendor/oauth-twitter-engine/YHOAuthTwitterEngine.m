@@ -351,7 +351,7 @@
 	}
 
     NSString *urlString = [NSString stringWithFormat:@"%@://%@/%@", connectionType, domain, fullPath];
-    NSURL *finalURL = [NSURL URLWithString:urlString];
+    NSURL *finalURL = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     if (!finalURL) {
         return nil;
     }
