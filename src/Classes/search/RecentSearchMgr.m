@@ -101,7 +101,7 @@
         [NSPredicate predicateWithFormat:@"accountName == %@", accountName];
     [RecentSearch deleteAll:predicate context:self.context];
 
-    [context save:NULL];
+    [self.context save:NULL];
 }
 
 + (NSUInteger)defaultMaximumRecentSearches
