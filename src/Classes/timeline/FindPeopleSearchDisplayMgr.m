@@ -63,20 +63,6 @@
     return self;
 }
 
-- (void)searchBarViewWillAppear:(BOOL)promptUser
-{
-    // if (!self.searchQuery) {
-    //     [netAwareController setUpdatingState:kDisconnected];
-    //     [netAwareController setCachedDataAvailable:NO];
-    //     [netAwareController setNoConnectionText:@""];
-    // 
-    //     if (promptUser) {
-    //         [self.searchBar becomeFirstResponder];
-    //         // [self showDarkTransparentView];
-    //     }
-    // }
-}
-
 #pragma mark UISearchBarDelegate implementation
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)aSearchBar
@@ -88,15 +74,22 @@
 
     [netAwareController setUpdatingState:kConnectedAndUpdating];
     [netAwareController setCachedDataAvailable:NO];
+    NSCharacterSet * validUsernameCharSet =
+        [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+    NSString * searchName =
+        [[searchBar.text stringByTrimmingCharactersInSet:validUsernameCharSet] 
+        stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"Search name: %@", searchName);
     NSString * noConnFormatString =
         NSLocalizedString(@"findpeople.nouser", @"");
     NSString * noConnText =
         [searchBar.text isEqual:@""] ? @"" :
-        [NSString stringWithFormat:noConnFormatString, searchBar.text];
+        [NSString stringWithFormat:noConnFormatString, searchName];
     NSLog(@"No conn text: %@", noConnText);
     [netAwareController setNoConnectionText:noConnText];
 
-    dataSource.username = searchBar.text;
+    dataSource.username = searchName;
+    timelineDisplayMgr.currentUsername = searchName;
     [timelineDisplayMgr setService:dataSource tweets:[NSDictionary dictionary]
         page:1 forceRefresh:YES allPagesLoaded:NO];
     [timelineDisplayMgr refreshWithCurrentPages];

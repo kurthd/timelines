@@ -24,6 +24,4 @@
     timelineDisplayMgr:(TimelineDisplayMgr *)aTimelineDisplayMgr
     dataSource:(ArbUserTimelineDataSource *)dataSource;
 
-- (void)searchBarViewWillAppear:(BOOL)promptUser;
-
 @end
