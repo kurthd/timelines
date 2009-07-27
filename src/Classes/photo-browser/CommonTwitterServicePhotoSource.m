@@ -119,10 +119,10 @@
         //   id="imgElement"
         //   alt=""/>
         regex =
-            @"<img\\+src=\"(.*?)\"\\s+"
-                    "title=\".*?\"\\s+"      // ignore the title
-                    "id=\"imgElement\"\\s+"  // rely on the unique img id
-                    "alt=\".*?\".*?>";     // ignore the alt tag
+            @"<img\\s+src=\"(.*?)\"\\s+"
+                     "title=\".*?\"\\s+"      // ignore the title
+                     "id=\"imgElement\"\\s+"  // rely on the unique img id
+                     "alt=\".*?\".*?>";     // ignore the alt tag
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://twitgoo.com/"]) {
         // extract the 'src' attribute from the main img tag:
