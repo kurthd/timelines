@@ -23,9 +23,19 @@
 - (void)replyToCurrentTweetDetailsUser;
 - (void)presentTweetActions;
 
++ (NSInteger)retweetFormat;
+
 @end
 
+enum {
+    kRetweetFormatVia,
+    kRetweetFormatRT
+} RetweetFormat;
+
 @implementation TimelineDisplayMgr
+
+static NSInteger retweetFormat;
+static NSInteger retweetFormatValueAlredyRead;
 
 @synthesize wrapperController, timelineController, userInfoController,
     selectedTweet, updateId, user, timeline, pagesShown, displayAsConversation,
@@ -34,7 +44,7 @@
     lastFollowingUsername, lastTweetDetailsWrapperController,
     lastTweetDetailsController, currentTweetDetailsUser, currentUsername,
     allPagesLoaded, setUserToAuthenticatedUser, firstFetchReceived,
-    tweetIdToShow;
+    tweetIdToShow, suppressTimelineFailures;
 
 - (void)dealloc
 {
@@ -173,9 +183,12 @@
     NSLog(@"Timeline display manager: failed to fetch timeline since %@",
         anUpdateId);
     NSLog(@"Error: %@", error);
-    NSString * errorMessage =
-        NSLocalizedString(@"timelinedisplaymgr.error.fetchtimeline", @"");
-    [self displayErrorWithTitle:errorMessage error:error];
+    if (!suppressTimelineFailures) {
+        NSString * errorMessage =
+            NSLocalizedString(@"timelinedisplaymgr.error.fetchtimeline", @"");
+        [self displayErrorWithTitle:errorMessage error:error];
+    } else
+        [wrapperController setUpdatingState:kDisconnected];
 }
 
 - (void)userInfo:(User *)aUser fetchedForUsername:(NSString *)username
@@ -746,19 +759,22 @@
         refreshingTweets = YES;
         [service fetchTimelineSince:self.updateId
             page:[NSNumber numberWithInt:0]];
-    }
+    } else
+        NSLog(@"Timeline display manager: not updating due to nil credentials");
     [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 
 - (void)refreshWithCurrentPages
 {
+    NSLog(@"Timeline display manager: refreshing with current pages...");
     if([service credentials]) {
         refreshingTweets = YES;
         hasBeenDisplayed = YES;
         [service fetchTimelineSince:[NSNumber numberWithInt:0] page:
         [NSNumber numberWithInt:pagesShown]];
-    }
+    } else
+        NSLog(@"Timeline display manager: not updating due to nil credentials");
     [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
@@ -825,9 +841,20 @@
 - (void)reTweetSelected
 {
     NSLog(@"Timeline display manager: composing retweet");
-    NSString * reTweetMessage =
-        [NSString stringWithFormat:@"%@ (via @%@)", selectedTweet.text,
-        selectedTweet.user.username];
+    NSString * reTweetMessage;
+    switch ([[self class] retweetFormat]) {
+        case kRetweetFormatVia:
+            reTweetMessage =
+                [NSString stringWithFormat:@"%@ (via @%@)", selectedTweet.text,
+                selectedTweet.user.username];
+        break;
+        case kRetweetFormatRT:
+            reTweetMessage =
+                [NSString stringWithFormat:@"RT @%@: %@",
+                selectedTweet.user.username, selectedTweet.text];
+        break;
+    }
+
     [composeTweetDisplayMgr composeTweetWithText:reTweetMessage];
 }
 
@@ -1108,6 +1135,18 @@
 - (NSString *)mostRecentTweetId
 {
     return [self.timelineController mostRecentTweetId];
+}
+
++ (NSInteger)retweetFormat
+{
+    if (!retweetFormatValueAlredyRead) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        retweetFormat = [defaults integerForKey:@"retweet_format"];
+    }
+
+    retweetFormatValueAlredyRead = YES;
+
+    return retweetFormat;
 }
 
 // HACK: Added to get "Save Search" button in header view.

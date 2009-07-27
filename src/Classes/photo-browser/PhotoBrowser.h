@@ -30,6 +30,7 @@
     BOOL zoomed;
     BOOL notSingleTap;
     BOOL barsFaded;
+    BOOL sendingInEmail;
     NSUInteger touchesCount;
 
     BOOL isDisplayed;

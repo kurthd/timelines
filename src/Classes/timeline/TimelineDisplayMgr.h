@@ -84,6 +84,8 @@
     NSString * currentTweetDetailsUser;
     
     NSString * tweetIdToShow;
+    
+    BOOL suppressTimelineFailures;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
@@ -127,6 +129,8 @@
 @property (nonatomic, copy) NSString * currentTweetDetailsUser;
     
 @property (nonatomic, copy) NSString * tweetIdToShow;
+
+@property (nonatomic, assign) BOOL suppressTimelineFailures;
     
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController

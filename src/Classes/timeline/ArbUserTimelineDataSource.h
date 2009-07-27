@@ -18,6 +18,7 @@
 }
 
 @property (nonatomic, assign) NSObject<TimelineDataSourceDelegate> * delegate;
+@property (nonatomic, copy) NSString * username;
 
 - (id)initWithTwitterService:(TwitterService *)service
     username:(NSString *)username;

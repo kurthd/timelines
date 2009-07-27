@@ -35,7 +35,7 @@
 				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<string key="NSFrame">{{554, 98}, {320, 247}}</string>
-				<object class="NSColor" key="IBUIBackgroundColor" id="534924923">
+				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
 				</object>
@@ -69,7 +69,10 @@
 							<int key="NSfFlags">16</int>
 						</object>
 						<string key="IBUINormalTitle">Load more...</string>
-						<reference key="IBUIHighlightedTitleColor" ref="534924923"/>
+						<object class="NSColor" key="IBUIHighlightedTitleColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4xOTYwNzg0MyAwLjMwOTgwMzkzIDAuNTIxNTY4NjYAA</bytes>
+						</object>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MCAwLjQwMzkxNjA5IDAuODAxMDIwMzgAA</bytes>
@@ -261,7 +264,7 @@
 					<string>UIResponder</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{666, 443}, {320, 70}}</string>
+					<string>{{358, 443}, {320, 70}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
