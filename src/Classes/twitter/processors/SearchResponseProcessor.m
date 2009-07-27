@@ -104,6 +104,12 @@
         tweetAuthor.profileImageUrl =
             [userData objectForKey:@"profile_image_url"];
 
+        // fill in the rest of the required user fields that are not
+        // provided as part of the search results
+        tweetAuthor.followersCount = [NSNumber numberWithInteger:0];
+        tweetAuthor.friendsCount = [NSNumber numberWithInteger:0];
+        tweetAuthor.name = @"";
+
         NSDictionary * tweetData = result;
 
         NSString * tweetId = [[tweetData objectForKey:@"id"] description];
@@ -118,6 +124,11 @@
             [[tweetData safeObjectForKey:@"source"]
             stringByDecodingHtmlEntities];
         tweet.timestamp = [tweetData objectForKey:@"created_at"];
+
+        // fill in the rest of the required tweet fields that are not
+        // provided as part of the search results
+        tweet.truncated = [NSNumber numberWithBool:NO];
+        tweet.favorited = [NSNumber numberWithInteger:0];
 
         tweet.user = tweetAuthor;
 
