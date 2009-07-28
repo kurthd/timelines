@@ -53,7 +53,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     TimelineTableViewCell * timelineCell = [nib objectAtIndex:0];
 
     NSString * displayName =
-        self.user.name && ![[self class] displayWithUsername] ?
+        self.user.name && self.user.name.length > 0 &&
+        ![[self class] displayWithUsername] ?
         self.user.name : self.user.username;
     [timelineCell setName:displayName];
     [timelineCell setDate:self.timestamp];
