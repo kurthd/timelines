@@ -129,16 +129,16 @@
 
 - (void)setCredentials:(TwitterCredentials *)credentials
 {
-    [self.service setCredentials:credentials];
-    [self.searchDisplayMgr setCredentials:credentials];
-    [self.timelineDisplayMgr setCredentials:credentials];
-
     self.searchBookmarksDisplayMgr = nil;
     self.searchBar.text = @"";
     self.searchResults = nil;
     self.searchQuery = nil;
     self.searchPage = nil;
     [self.searchDisplayMgr clearDisplay];
+
+    [self.service setCredentials:credentials];
+    [self.searchDisplayMgr setCredentials:credentials];
+    [self.timelineDisplayMgr setCredentials:credentials];
 }
 
 - (void)searchBarViewWillAppear:(BOOL)promptUser

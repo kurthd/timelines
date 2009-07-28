@@ -72,8 +72,10 @@
 
 - (void)fetchTimelineSince:(NSNumber *)anUpdateId page:(NSNumber *)page
 {
-    self.updateId = anUpdateId;
-    [service searchFor:self.queryString page:page];
+    if (self.queryString) {
+        self.updateId = anUpdateId;
+        [service searchFor:self.queryString page:page];
+    }
 }
 
 - (TwitterCredentials *)credentials
