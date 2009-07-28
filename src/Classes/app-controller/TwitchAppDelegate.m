@@ -198,13 +198,14 @@
     // reset the unread message count to 0
     application.applicationIconBadgeNumber = 0;
 
-    if (tabBarController.selectedViewController ==
-        accountsViewController.navigationController) {
+    // the accounts tab bar item is selected
+    if (tabBarController.selectedViewController.tabBarItem.tag == 3) {
         // make sure account changes get saved
         TwitterCredentials * activeAccount =
             [accountsDisplayMgr selectedAccount];
         self.activeCredentials.credentials = activeAccount;
 
+        // send any push configurations that may be uncommitted
         [self registerDeviceForPushNotifications];
     }
 
