@@ -11,7 +11,6 @@
 		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
 		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
 		0524824B101D7883009ED4FA /* SavedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524824A101D7883009ED4FA /* SavedSearch.m */; };
-		0524829E101D81DA009ED4FA /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0524829D101D81DA009ED4FA /* v2-v1.1.xcmappingmodel */; };
 		0533E03D100D124400CC2378 /* TweetDraftMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0533E03C100D124400CC2378 /* TweetDraftMgr.m */; };
 		0533E0B7100D1F7F00CC2378 /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0533E0B6100D1F7F00CC2378 /* TwitterCredentials.m */; };
 		05340ABA101A3DAD0077E7C0 /* SearchBookmarksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05340AB8101A3DAD0077E7C0 /* SearchBookmarksView.xib */; };
@@ -29,6 +28,7 @@
 		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */; };
 		05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C8872810163DB90097FEFF /* AccountsTableViewCell.m */; };
+		05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */; };
 		05E0271B101B983D00A97AC9 /* RecentSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */; };
 		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		05EF40D50FFADF95007B59F1 /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
@@ -257,7 +257,6 @@
 		052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackgroundHighlighted.png; path = images/SaveSearchButtonBackgroundHighlighted.png; sourceTree = "<group>"; };
 		05248249101D7883009ED4FA /* SavedSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearch.h; path = search/SavedSearch.h; sourceTree = "<group>"; };
 		0524824A101D7883009ED4FA /* SavedSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearch.m; path = search/SavedSearch.m; sourceTree = "<group>"; };
-		0524829D101D81DA009ED4FA /* v2-v1.1.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2-v1.1.xcmappingmodel"; path = "data-model/v2-v1.1.xcmappingmodel"; sourceTree = "<group>"; };
 		0524BDF50FF16E0500A6099B /* AccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsViewController.h; path = accounts/AccountsViewController.h; sourceTree = "<group>"; };
 		0524BDF60FF16E0500A6099B /* AccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsViewController.m; path = accounts/AccountsViewController.m; sourceTree = "<group>"; };
 		0524BDF90FF16E2200A6099B /* AccountsDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsDisplayMgr.h; path = accounts/AccountsDisplayMgr.h; sourceTree = "<group>"; };
@@ -482,6 +481,7 @@
 		05D173E20FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TwitterCredentials+KeychainAdditions.m"; path = "twitter/TwitterCredentials+KeychainAdditions.m"; sourceTree = "<group>"; };
 		05D174050FF69FC500DCB22D /* Mention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mention.h; path = tweets/Mention.h; sourceTree = "<group>"; };
 		05D174060FF69FC500DCB22D /* Mention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mention.m; path = tweets/Mention.m; sourceTree = "<group>"; };
+		05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2-v1.1.xcmappingmodel"; path = "data-model/v2-v1.1.xcmappingmodel"; sourceTree = "<group>"; };
 		05E02719101B983D00A97AC9 /* RecentSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecentSearchMgr.h; path = search/RecentSearchMgr.h; sourceTree = "<group>"; };
 		05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearchMgr.m; path = search/RecentSearchMgr.m; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
@@ -1049,7 +1049,7 @@
 			children = (
 				0599416A0FFB32F100842518 /* twitch.xcdatamodeld */,
 				059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */,
-				0524829D101D81DA009ED4FA /* v2-v1.1.xcmappingmodel */,
+				05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */,
 			);
 			name = "data-model";
 			sourceTree = "<group>";
@@ -1768,9 +1768,9 @@
 				05E0271B101B983D00A97AC9 /* RecentSearchMgr.m in Sources */,
 				051D7C69101D105A00B867C1 /* SavedSearchMgr.m in Sources */,
 				0524824B101D7883009ED4FA /* SavedSearch.m in Sources */,
-				0524829E101D81DA009ED4FA /* v2-v1.1.xcmappingmodel in Sources */,
 				91DEF180101B7118001354D5 /* FindPeopleSearchDisplayMgr.m in Sources */,
 				054B6A20101E153600882C19 /* NSString+HtmlEncodingAdditions.m in Sources */,
+				05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
