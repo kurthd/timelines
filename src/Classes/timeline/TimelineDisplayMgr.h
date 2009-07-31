@@ -68,7 +68,6 @@
     BOOL needsRefresh;
     BOOL setUserToFirstTweeter;
     BOOL refreshingTweets;
-    BOOL showInboxOutbox;
     BOOL setUserToAuthenticatedUser;
     BOOL firstFetchReceived;
 
@@ -153,8 +152,6 @@
 - (void)refreshWithCurrentPages;
 
 - (void)addTweet:(Tweet *)tweet;
-
-- (void)setShowInboxOutbox:(BOOL)show;
 
 - (NSString *)mostRecentTweetId;
 

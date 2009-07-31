@@ -1081,12 +1081,6 @@ static NSInteger retweetFormatValueAlredyRead;
         needsRefresh = YES;
         pagesShown = 1;
 
-        // if we're currently displaying direct messages for the current user
-        // set the username to match the new credentials
-        if (self.timelineController.segregatedSenderUsername)
-            [self.timelineController
-                setSegregateTweetsFromUser:credentials.username];
-
         [self.wrapperController setUpdatingState:kConnectedAndUpdating];
     } else if (hasBeenDisplayed) {// set for first time and persisted data shown
         NSLog(@"Timeline display manager: setting account for first time");
@@ -1130,18 +1124,6 @@ static NSInteger retweetFormatValueAlredyRead;
     self.timelineController.invertedCellUsernames = invertedCellUsernames;
 }
 
-- (void)setShowInboxOutbox:(BOOL)show
-{
-    if (show) {
-        NSLog(@"Showing as inbox/outbox; username: %@", credentials.username);
-        [self.timelineController
-            setSegregateTweetsFromUser:credentials.username];
-    } else {
-        NSLog(@"Not showing as inbox/outbox; username: %@",
-            credentials.username);
-        [self.timelineController setSegregateTweetsFromUser:nil];
-    }
-}
 
 - (NSString *)mostRecentTweetId
 {

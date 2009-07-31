@@ -79,7 +79,6 @@
                 allTimelineRefresh);
             allTimelineDataSource.delegate = timelineDisplayMgr;
             timelineDisplayMgr.displayAsConversation = YES;
-            [timelineDisplayMgr setShowInboxOutbox:NO];
             [timelineDisplayMgr setService:allTimelineDataSource
                 tweets:self.allTimelineTweets page:allTimelinePagesShown
                 forceRefresh:allTimelineRefresh
@@ -89,7 +88,6 @@
             NSLog(@"Selected mentions tab");
             mentionsTimelineDataSource.delegate = timelineDisplayMgr;
             timelineDisplayMgr.displayAsConversation = NO;
-            [timelineDisplayMgr setShowInboxOutbox:NO];
             [timelineDisplayMgr setService:mentionsTimelineDataSource
                 tweets:self.mentionsTimelineTweets
                 page:mentionsTimelinePagesShown
