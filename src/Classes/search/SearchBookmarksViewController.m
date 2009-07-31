@@ -140,6 +140,12 @@ typedef enum
     [self.delegate userDidSelectSearchQuery:query];
 }
 
+-(BOOL)tableView:(UITableView*)tv
+    canEditRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    return self.selectedCategory == kSavedSearchCategory;
+}
+
 - (void)tableView:(UITableView *)tv
     commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
      forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -158,6 +164,12 @@ typedef enum
             NSArray * row = [NSArray arrayWithObject:indexPath];
             [self.tableView deleteRowsAtIndexPaths:row
                                   withRowAnimation:UITableViewRowAnimationFade];
+
+            // update UI appropriately after swiping-to-delete
+            if (self.navigationBar.topItem.leftBarButtonItem ==
+                editSavedSearchesButton)
+                self.navigationBar.topItem.leftBarButtonItem.enabled =
+                    [self.tableView numberOfRowsInSection:0] > 0;
         }
     }
 }
