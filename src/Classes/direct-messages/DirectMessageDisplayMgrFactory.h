@@ -17,7 +17,6 @@
 - (DirectMessagesDisplayMgr *)
     createDirectMessageDisplayMgrWithWrapperController:
     (NetworkAwareViewController *)wrapperController
-    managedObjectContext:(NSManagedObjectContext *)managedObjectContext
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     timelineDisplayMgrFactory:
     (TimelineDisplayMgrFactory *)timelineDisplayMgrFactory;

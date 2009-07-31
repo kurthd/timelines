@@ -5,7 +5,6 @@
 #import "DirectMessageDisplayMgrFactory.h"
 #import "DirectMessageInboxViewController.h"
 #import "TwitterService.h"
-#import "MessagesTimelineDataSource.h"
 #import "CredentialsActivatedPublisher.h"
 
 @implementation DirectMessageDisplayMgrFactory
@@ -27,7 +26,6 @@
 - (DirectMessagesDisplayMgr *)
     createDirectMessageDisplayMgrWithWrapperController:
     (NetworkAwareViewController *)wrapperController
-    managedObjectContext:(NSManagedObjectContext *)managedObjectContext
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     timelineDisplayMgrFactory:
     (TimelineDisplayMgrFactory *)timelineDisplayMgrFactory
@@ -47,7 +45,7 @@
         initWithWrapperController:wrapperController
         inboxController:inboxController service:service initialCache:nil
         factory:timelineDisplayMgrFactory
-        managedObjectContext:managedObjectContext
+        managedObjectContext:context
         composeTweetDisplayMgr:composeTweetDisplayMgr]
         autorelease];
     service.delegate = directMessageDisplayMgr;

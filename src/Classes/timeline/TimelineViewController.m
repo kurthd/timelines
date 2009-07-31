@@ -27,8 +27,7 @@
 static UIImage * defaultAvatar;
 
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
-    showWithoutAvatars, outgoingSortedTweetCache, incomingSortedTweetCache,
-    segregatedSenderUsername;
+    showWithoutAvatars;
 
 - (void)dealloc
 {
@@ -38,25 +37,17 @@ static UIImage * defaultAvatar;
     [fullNameLabel release];
     [usernameLabel release];
     [followingLabel release];
-    [inboxOutboxControl release];
-    [inboxOutboxView release];
 
     [tweets release];
-    [outgoingTweets release];
-    [incomingTweets release];
     [avatarCache release];
     [alreadySent release];
     [user release];
 
     [sortedTweetCache release];
-    [outgoingSortedTweetCache release];
-    [incomingSortedTweetCache release];
 
     [loadMoreButton release];
     [noMorePagesLabel release];
     [currentPagesLabel release];
-
-    [segregatedSenderUsername release];
 
     [super dealloc];
 }
@@ -67,8 +58,6 @@ static UIImage * defaultAvatar;
     self.tableView.tableFooterView = footerView;
     avatarCache = [[NSMutableDictionary dictionary] retain];
     alreadySent = [[NSMutableDictionary dictionary] retain];
-    outgoingTweets = [[NSMutableArray array] retain];
-    incomingTweets = [[NSMutableArray array] retain];
     showInbox = YES;
 }
 
@@ -208,10 +197,7 @@ static UIImage * defaultAvatar;
     user = aUser;
 
     if (!aUser) {
-        if (segregatedSenderUsername)
-            self.tableView.tableHeaderView = inboxOutboxView;
-        else
-            self.tableView.tableHeaderView = nil;
+        self.tableView.tableHeaderView = nil;
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     } else {
         self.tableView.contentInset = UIEdgeInsetsMake(-317, 0, 0, 0);
@@ -232,26 +218,11 @@ static UIImage * defaultAvatar;
 - (void)setTweets:(NSArray *)someTweets page:(NSUInteger)page
     visibleTweetId:(NSString *)visibleTweetId
 {
-    if (!segregatedSenderUsername) {
-        NSLog(@"Displaying tweets without inbox/outbox...");
-        self.sortedTweetCache = nil;
-        NSArray * tempTweets = [someTweets copy];
-        [tweets release];
-        tweets = tempTweets;
-    } else {
-        NSLog(@"Displaying tweets with inbox/outbox...");
-        self.incomingSortedTweetCache = nil;
-        self.outgoingSortedTweetCache = nil;
-
-        [outgoingTweets removeAllObjects];
-        [incomingTweets removeAllObjects];
-        for (TweetInfo * tweet in someTweets) {
-            if ([tweet.user.username isEqual:segregatedSenderUsername])
-                [outgoingTweets addObject:tweet];
-            else
-                [incomingTweets addObject:tweet];
-        }
-    }
+    NSLog(@"Displaying tweets without inbox/outbox...");
+    self.sortedTweetCache = nil;
+    NSArray * tempTweets = [someTweets copy];
+    [tweets release];
+    tweets = tempTweets;
 
     NSString * showingMultPagesFormatString =
         NSLocalizedString(@"timelineview.showingmultiplepages", @"");
@@ -323,49 +294,11 @@ static UIImage * defaultAvatar;
 
 - (NSArray *)sortedTweets
 {
-    NSArray * returnVal;
-    if (!segregatedSenderUsername) {
-        if (!self.sortedTweetCache)
-            self.sortedTweetCache =
-                [tweets sortedArrayUsingSelector:@selector(compare:)];
-        returnVal = self.sortedTweetCache;
-    } else if (showInbox) {
-        if (!self.incomingSortedTweetCache)
-            self.incomingSortedTweetCache =
-                [incomingTweets sortedArrayUsingSelector:@selector(compare:)];
-        returnVal = self.incomingSortedTweetCache;
-    } else {
-        if (!self.outgoingSortedTweetCache)
-            self.outgoingSortedTweetCache =
-                [outgoingTweets sortedArrayUsingSelector:@selector(compare:)];
-        returnVal = self.outgoingSortedTweetCache;
-    }
+    if (!self.sortedTweetCache)
+        self.sortedTweetCache =
+            [tweets sortedArrayUsingSelector:@selector(compare:)];
 
-    return returnVal;
-}
-
-- (void)setSegregateTweetsFromUser:(NSString *)username
-{
-    NSLog(@"Setting inbox username...");
-    self.segregatedSenderUsername = username;
-
-    if (username) {
-        self.tableView.tableHeaderView = inboxOutboxView;
-        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    } else if (user) {
-        self.tableView.tableHeaderView = headerView;
-        self.tableView.contentInset = UIEdgeInsetsMake(-317, 0, 0, 0);
-    } else {
-        self.tableView.tableHeaderView = nil;
-        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    }
-}
-
-- (IBAction)setInboxOutbox:(id)sender
-{
-    NSLog(@"Setting inbox/outbox control...");
-    showInbox = inboxOutboxControl.selectedSegmentIndex == 0;
-    [self.tableView reloadData];
+    return self.sortedTweetCache;
 }
 
 - (void)triggerDelayedRefresh
