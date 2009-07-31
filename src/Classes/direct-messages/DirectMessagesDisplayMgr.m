@@ -295,8 +295,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         tweetDetailsNetAwareViewController
-        title:title managedObjectContext:managedObjectContext
-        composeTweetDisplayMgr:composeTweetDisplayMgr];
+        title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
     self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = YES;
     self.tweetDetailsTimelineDisplayMgr.currentUsername = username;

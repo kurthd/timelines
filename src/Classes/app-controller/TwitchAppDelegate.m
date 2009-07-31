@@ -378,7 +378,6 @@
         [[timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         homeNetAwareViewController title:homeTabTitle
-        managedObjectContext:[self managedObjectContext]
         composeTweetDisplayMgr:self.composeTweetDisplayMgr]
         retain];
     timelineDisplayMgr.displayAsConversation = YES;
@@ -419,7 +418,6 @@
         [[directMessageDisplayMgrFactory
         createDirectMessageDisplayMgrWithWrapperController:
         messagesNetAwareViewController
-        managedObjectContext:[self managedObjectContext]
         composeTweetDisplayMgr:self.composeTweetDisplayMgr
         timelineDisplayMgrFactory:timelineDisplayMgrFactory]
         retain];
@@ -437,7 +435,6 @@
         [[timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         profileNetAwareViewController title:profileTabTitle
-        managedObjectContext:[self managedObjectContext]
         composeTweetDisplayMgr:self.composeTweetDisplayMgr]
         retain];
     profileTimelineDisplayMgr.displayAsConversation = NO;
@@ -474,7 +471,6 @@
         [[timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         findPeopleNetAwareViewController title:findPeopleTabTitle
-        managedObjectContext:[self managedObjectContext]
         composeTweetDisplayMgr:self.composeTweetDisplayMgr]
         retain];
     findPeopleTimelineDisplayMgr.displayAsConversation = NO;
@@ -525,7 +521,6 @@
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:navc
         title:@"Trends"  // set programmatically later
-        managedObjectContext:[self managedObjectContext]
         composeTweetDisplayMgr:self.composeTweetDisplayMgr];
     navc.delegate = displayMgr;
 
@@ -548,7 +543,6 @@
         createTimelineDisplayMgrWithWrapperController:
         searchNetAwareViewController
         title:@"Search"  // set programmatically later
-        managedObjectContext:[self managedObjectContext]
         composeTweetDisplayMgr:self.composeTweetDisplayMgr];
     searchNetAwareViewController.delegate = displayMgr;
 

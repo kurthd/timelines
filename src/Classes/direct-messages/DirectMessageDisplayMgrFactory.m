@@ -27,7 +27,6 @@
 - (DirectMessagesDisplayMgr *)
     createDirectMessageDisplayMgrWithWrapperController:
     (NetworkAwareViewController *)wrapperController
-    managedObjectContext:(NSManagedObjectContext *)managedObjectContext
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     timelineDisplayMgrFactory:
     (TimelineDisplayMgrFactory *)timelineDisplayMgrFactory
@@ -47,7 +46,7 @@
         initWithWrapperController:wrapperController
         inboxController:inboxController service:service initialCache:nil
         factory:timelineDisplayMgrFactory
-        managedObjectContext:managedObjectContext
+        managedObjectContext:context
         composeTweetDisplayMgr:composeTweetDisplayMgr]
         autorelease];
     service.delegate = directMessageDisplayMgr;
