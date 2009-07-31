@@ -21,6 +21,8 @@
 #import "PhotoBrowser.h"
 #import "PhotoBrowserDelegate.h"
 #import "TwitchBrowserViewControllerDelegate.h"
+#import "TwitterService.h"
+#import "TwitterServiceDelegate.h"
 
 @class TimelineDisplayMgrFactory;
 
@@ -29,7 +31,8 @@
     <TimelineDataSourceDelegate, TimelineViewControllerDelegate,
     TweetDetailsViewDelegate, NetworkAwareViewControllerDelegate,
     UserInfoViewControllerDelegate, UserListTableViewControllerDelegate,
-    PhotoBrowserDelegate, TwitchBrowserViewControllerDelegate>
+    PhotoBrowserDelegate, TwitchBrowserViewControllerDelegate,
+    TwitterServiceDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
@@ -40,7 +43,8 @@
     TwitchBrowserViewController * browserController;
     PhotoBrowser * photoBrowser;
 
-    NSObject<TimelineDataSource> * service;
+    NSObject<TimelineDataSource> * timelineSource;
+    TwitterService * service;
 
     TweetInfo * selectedTweet;
     NSString * currentUsername;
@@ -134,7 +138,8 @@
     
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController
-    service:(NSObject<TimelineDataSource> *)service title:(NSString *)title
+    timelineSource:(NSObject<TimelineDataSource> *)timelineSource
+    service:(TwitterService *)service title:(NSString *)title
     factory:(TimelineDisplayMgrFactory *)factory
     managedObjectContext:(NSManagedObjectContext* )managedObjectContext
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr;

@@ -4,7 +4,6 @@
 
 #import "TimelineDisplayMgr.h"
 #import "TimelineDisplayMgrFactory.h"
-#import "TwitterService.h"
 #import "ArbUserTimelineDataSource.h"
 #import "FavoritesTimelineDataSource.h"
 #import "UIAlertView+InstantiationAdditions.h"
@@ -56,6 +55,7 @@ static NSInteger retweetFormatValueAlredyRead;
     [browserController release];
     [photoBrowser release];
 
+    [timelineSource release];
     [service release];
 
     [selectedTweet release];
@@ -85,7 +85,8 @@ static NSInteger retweetFormatValueAlredyRead;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController
-    service:(NSObject<TimelineDataSource> *)aService title:(NSString *)title
+    timelineSource:(NSObject<TimelineDataSource> *)aTimelineSource
+    service:(TwitterService *)aService title:(NSString *)title
     factory:(TimelineDisplayMgrFactory *)factory
     managedObjectContext:(NSManagedObjectContext* )aManagedObjectContext
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)aComposeTweetDisplayMgr
@@ -93,6 +94,7 @@ static NSInteger retweetFormatValueAlredyRead;
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
         timelineController = [aTimelineController retain];
+        timelineSource = [aTimelineSource retain];
         service = [aService retain];
         timelineDisplayMgrFactory = [factory retain];
         managedObjectContext = [aManagedObjectContext retain];
@@ -190,6 +192,8 @@ static NSInteger retweetFormatValueAlredyRead;
     } else
         [wrapperController setUpdatingState:kDisconnected];
 }
+
+#pragma mark TwitterServiceDelegate implementation
 
 - (void)userInfo:(User *)aUser fetchedForUsername:(NSString *)username
 {
@@ -388,9 +392,9 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)loadMoreTweets
 {
     NSLog(@"Timeline display manager: loading more tweets...");
-    if ([service credentials]) {
+    if ([timelineSource credentials]) {
         NSInteger nextPage = pagesShown + 1;
-        [service fetchTimelineSince:[NSNumber numberWithInt:0]
+        [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:nextPage]];
         NSLog(@"Timeline display manager: sent request for page %d",
             nextPage);
@@ -556,9 +560,9 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)networkAwareViewWillAppear
 {
     NSLog(@"Timeline display manager: showing timeline view...");
-    if ((!hasBeenDisplayed && [service credentials]) || needsRefresh) {
+    if ((!hasBeenDisplayed && [timelineSource credentials]) || needsRefresh) {
         NSLog(@"Timeline display manager: fetching new timeline when shown...");
-        [service fetchTimelineSince:[NSNumber numberWithInt:0]
+        [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
     }
 
@@ -761,9 +765,9 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)refreshWithLatest
 {
     NSLog(@"Timeline display manager: refreshing timeline with latest...");
-    if([service credentials]) {
+    if([timelineSource credentials]) {
         refreshingTweets = YES;
-        [service fetchTimelineSince:self.updateId
+        [timelineSource fetchTimelineSince:self.updateId
             page:[NSNumber numberWithInt:0]];
     } else
         NSLog(@"Timeline display manager: not updating due to nil credentials");
@@ -774,11 +778,11 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)refreshWithCurrentPages
 {
     NSLog(@"Timeline display manager: refreshing with current pages...");
-    if([service credentials]) {
+    if([timelineSource credentials]) {
         refreshingTweets = YES;
         hasBeenDisplayed = YES;
-        [service fetchTimelineSince:[NSNumber numberWithInt:0] page:
-        [NSNumber numberWithInt:pagesShown]];
+        [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0] page:
+            [NSNumber numberWithInt:pagesShown]];
     } else
         NSLog(@"Timeline display manager: not updating due to nil credentials");
     [wrapperController setUpdatingState:kConnectedAndUpdating];
@@ -993,13 +997,13 @@ static NSInteger retweetFormatValueAlredyRead;
     return photoBrowser;
 }
 
-- (void)setService:(NSObject<TimelineDataSource> *)aService
+- (void)setService:(NSObject<TimelineDataSource> *)aTimelineSource
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page
     forceRefresh:(BOOL)refresh allPagesLoaded:(BOOL)newAllPagesLoaded
 {
-    [aService retain];
-    [service release];
-    service = aService;
+    [aTimelineSource retain];
+    [timelineSource release];
+    timelineSource = aTimelineSource;
 
     // in case in the middle of updating while switched
     [self.wrapperController setUpdatingState:kConnectedAndNotUpdating];
@@ -1016,7 +1020,7 @@ static NSInteger retweetFormatValueAlredyRead;
     pagesShown = page;
     allPagesLoaded = newAllPagesLoaded;
 
-    [aService setCredentials:credentials];
+    [aTimelineSource setCredentials:credentials];
 
     [self.timelineController.tableView
         scrollRectToVisible:self.timelineController.tableView.frame
@@ -1056,6 +1060,7 @@ static NSInteger retweetFormatValueAlredyRead;
         self.currentUsername = credentials.username;
 
     [service setCredentials:credentials];
+    [timelineSource setCredentials:credentials];
 
     // check for pointer equality rather than string equality against username
     // in case 'oldCredentials' has already been physically deleted (e.g. we're
@@ -1085,7 +1090,7 @@ static NSInteger retweetFormatValueAlredyRead;
         [self.wrapperController setUpdatingState:kConnectedAndUpdating];
     } else if (hasBeenDisplayed) {// set for first time and persisted data shown
         NSLog(@"Timeline display manager: setting account for first time");
-        [service fetchTimelineSince:[NSNumber numberWithInt:0]
+        [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
     }
 

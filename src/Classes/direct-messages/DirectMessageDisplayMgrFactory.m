@@ -5,7 +5,6 @@
 #import "DirectMessageDisplayMgrFactory.h"
 #import "DirectMessageInboxViewController.h"
 #import "TwitterService.h"
-#import "MessagesTimelineDataSource.h"
 #import "CredentialsActivatedPublisher.h"
 
 @implementation DirectMessageDisplayMgrFactory

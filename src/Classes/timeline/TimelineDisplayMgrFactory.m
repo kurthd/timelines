@@ -43,15 +43,22 @@
         autorelease];
     service.delegate = dataSource;
 
+    TwitterService * timelineService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:context]
+        autorelease];
+
     TimelineDisplayMgr * timelineDisplayMgr =
         [[[TimelineDisplayMgr alloc] initWithWrapperController:wrapperController
-        timelineController:timelineController service:dataSource title:title
-        factory:self managedObjectContext:context
+        timelineController:timelineController timelineSource:dataSource
+        service:timelineService title:title factory:self
+        managedObjectContext:context
         composeTweetDisplayMgr:composeTweetDisplayMgr]
         autorelease];
     dataSource.delegate = timelineDisplayMgr;
     timelineController.delegate = timelineDisplayMgr;
     wrapperController.delegate = timelineDisplayMgr;
+    timelineService.delegate = timelineDisplayMgr;
 
     // Don't autorelease
     [[CredentialsActivatedPublisher alloc]
