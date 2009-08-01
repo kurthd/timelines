@@ -11,7 +11,6 @@
 		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
 		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
 		0524824B101D7883009ED4FA /* SavedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 0524824A101D7883009ED4FA /* SavedSearch.m */; };
-		0524829E101D81DA009ED4FA /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0524829D101D81DA009ED4FA /* v2-v1.1.xcmappingmodel */; };
 		0533E03D100D124400CC2378 /* TweetDraftMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0533E03C100D124400CC2378 /* TweetDraftMgr.m */; };
 		0533E0B7100D1F7F00CC2378 /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0533E0B6100D1F7F00CC2378 /* TwitterCredentials.m */; };
 		05340ABA101A3DAD0077E7C0 /* SearchBookmarksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05340AB8101A3DAD0077E7C0 /* SearchBookmarksView.xib */; };
@@ -30,6 +29,7 @@
 		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */; };
 		05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C8872810163DB90097FEFF /* AccountsTableViewCell.m */; };
+		05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */; };
 		05E0271B101B983D00A97AC9 /* RecentSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */; };
 		05EE7C7D101E9C2E006663FD /* TimelineTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7C7C101E9C2E006663FD /* TimelineTableViewCellView.m */; };
 		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
@@ -127,7 +127,6 @@
 		05EF41330FFADF95007B59F1 /* FetchMentionsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45BA10FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m */; };
 		05EF41340FFADF95007B59F1 /* SendTweetResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45C220FF0482200EBAFC7 /* SendTweetResponseProcessor.m */; };
 		05EF41350FFADF95007B59F1 /* AllTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */; };
-		05EF41360FFADF95007B59F1 /* MessagesTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8420FF03C9A00D6A769 /* MessagesTimelineDataSource.m */; };
 		05EF41370FFADF95007B59F1 /* PersonalFeedSelectionMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */; };
 		05EF41380FFADF95007B59F1 /* TweetInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A92D0FF06AA100D6A769 /* TweetInfo.m */; };
 		05EF41390FFADF95007B59F1 /* AsynchronousNetworkFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45C9A0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m */; };
@@ -259,7 +258,6 @@
 		052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackgroundHighlighted.png; path = images/SaveSearchButtonBackgroundHighlighted.png; sourceTree = "<group>"; };
 		05248249101D7883009ED4FA /* SavedSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearch.h; path = search/SavedSearch.h; sourceTree = "<group>"; };
 		0524824A101D7883009ED4FA /* SavedSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearch.m; path = search/SavedSearch.m; sourceTree = "<group>"; };
-		0524829D101D81DA009ED4FA /* v2-v1.1.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2-v1.1.xcmappingmodel"; path = "data-model/v2-v1.1.xcmappingmodel"; sourceTree = "<group>"; };
 		0524BDF50FF16E0500A6099B /* AccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsViewController.h; path = accounts/AccountsViewController.h; sourceTree = "<group>"; };
 		0524BDF60FF16E0500A6099B /* AccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsViewController.m; path = accounts/AccountsViewController.m; sourceTree = "<group>"; };
 		0524BDF90FF16E2200A6099B /* AccountsDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsDisplayMgr.h; path = accounts/AccountsDisplayMgr.h; sourceTree = "<group>"; };
@@ -485,6 +483,7 @@
 		05D173E20FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TwitterCredentials+KeychainAdditions.m"; path = "twitter/TwitterCredentials+KeychainAdditions.m"; sourceTree = "<group>"; };
 		05D174050FF69FC500DCB22D /* Mention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mention.h; path = tweets/Mention.h; sourceTree = "<group>"; };
 		05D174060FF69FC500DCB22D /* Mention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mention.m; path = tweets/Mention.m; sourceTree = "<group>"; };
+		05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2-v1.1.xcmappingmodel"; path = "data-model/v2-v1.1.xcmappingmodel"; sourceTree = "<group>"; };
 		05E02719101B983D00A97AC9 /* RecentSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecentSearchMgr.h; path = search/RecentSearchMgr.h; sourceTree = "<group>"; };
 		05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearchMgr.m; path = search/RecentSearchMgr.m; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
@@ -550,8 +549,6 @@
 		9115A83B0FF03BA900D6A769 /* TimelineDataSourceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDataSourceDelegate.h; path = timeline/TimelineDataSourceDelegate.h; sourceTree = "<group>"; };
 		9115A83E0FF03C8300D6A769 /* AllTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllTimelineDataSource.h; path = timeline/AllTimelineDataSource.h; sourceTree = "<group>"; };
 		9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AllTimelineDataSource.m; path = timeline/AllTimelineDataSource.m; sourceTree = "<group>"; };
-		9115A8410FF03C9A00D6A769 /* MessagesTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessagesTimelineDataSource.h; path = timeline/MessagesTimelineDataSource.h; sourceTree = "<group>"; };
-		9115A8420FF03C9A00D6A769 /* MessagesTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessagesTimelineDataSource.m; path = timeline/MessagesTimelineDataSource.m; sourceTree = "<group>"; };
 		9115A8C50FF0503300D6A769 /* PersonalFeedSelectionMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalFeedSelectionMgr.h; path = timeline/PersonalFeedSelectionMgr.h; sourceTree = "<group>"; };
 		9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalFeedSelectionMgr.m; path = timeline/PersonalFeedSelectionMgr.m; sourceTree = "<group>"; };
 		9115A92C0FF06AA100D6A769 /* TweetInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetInfo.h; path = timeline/TweetInfo.h; sourceTree = "<group>"; };
@@ -1054,7 +1051,7 @@
 			children = (
 				0599416A0FFB32F100842518 /* twitch.xcdatamodeld */,
 				059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */,
-				0524829D101D81DA009ED4FA /* v2-v1.1.xcmappingmodel */,
+				05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */,
 			);
 			name = "data-model";
 			sourceTree = "<group>";
@@ -1427,8 +1424,6 @@
 				9115A83B0FF03BA900D6A769 /* TimelineDataSourceDelegate.h */,
 				9115A83E0FF03C8300D6A769 /* AllTimelineDataSource.h */,
 				9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */,
-				9115A8410FF03C9A00D6A769 /* MessagesTimelineDataSource.h */,
-				9115A8420FF03C9A00D6A769 /* MessagesTimelineDataSource.m */,
 				9115A8C50FF0503300D6A769 /* PersonalFeedSelectionMgr.h */,
 				9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */,
 				9115A92C0FF06AA100D6A769 /* TweetInfo.h */,
@@ -1672,7 +1667,6 @@
 				05EF41330FFADF95007B59F1 /* FetchMentionsResponseProcessor.m in Sources */,
 				05EF41340FFADF95007B59F1 /* SendTweetResponseProcessor.m in Sources */,
 				05EF41350FFADF95007B59F1 /* AllTimelineDataSource.m in Sources */,
-				05EF41360FFADF95007B59F1 /* MessagesTimelineDataSource.m in Sources */,
 				05EF41370FFADF95007B59F1 /* PersonalFeedSelectionMgr.m in Sources */,
 				05EF41380FFADF95007B59F1 /* TweetInfo.m in Sources */,
 				05EF41390FFADF95007B59F1 /* AsynchronousNetworkFetcher.m in Sources */,
@@ -1777,10 +1771,10 @@
 				05E0271B101B983D00A97AC9 /* RecentSearchMgr.m in Sources */,
 				051D7C69101D105A00B867C1 /* SavedSearchMgr.m in Sources */,
 				0524824B101D7883009ED4FA /* SavedSearch.m in Sources */,
-				0524829E101D81DA009ED4FA /* v2-v1.1.xcmappingmodel in Sources */,
 				91DEF180101B7118001354D5 /* FindPeopleSearchDisplayMgr.m in Sources */,
 				054B6A20101E153600882C19 /* NSString+HtmlEncodingAdditions.m in Sources */,
 				05EE7C7D101E9C2E006663FD /* TimelineTableViewCellView.m in Sources */,
+				05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2039,7 +2033,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: High Order Bit, Inc.";
 				DEVICE_REGISTRATION_DOMAIN = sandbox.twitbit.highorderbit.com;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2050,7 +2044,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "86370A6E-A17F-44DD-A7A3-E53062D55715";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Release - Doug";

@@ -335,7 +335,7 @@
 {
     NSString *fullPath = path;
 
-	if (params)
+	if (params && ![method isEqualToString:@"POST"])
 	    fullPath = [self _queryStringWithBase:fullPath parameters:params prefixed:YES];
 
     NSString * domain = nil, * connectionType = nil;

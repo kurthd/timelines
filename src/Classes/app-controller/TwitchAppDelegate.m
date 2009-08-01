@@ -172,8 +172,13 @@
         self.logInDisplayMgr.allowsCancel = NO;
         [self.logInDisplayMgr logIn:NO];
     } else {
-        NSAssert(self.activeCredentials.credentials, @"Credentials exist, but "
-            "no active account has been set.");
+        if (!self.activeCredentials.credentials) {
+            // for some reason the active credentials weren't set correctly
+            // last time, probably due to a crash while the app was in use;
+            // prevent another crash and set the active credentials here
+            self.activeCredentials.credentials =
+                [self.credentials objectAtIndex:0];
+        }
 
         TwitterCredentials * c = self.activeCredentials.credentials;
         NSLog(@"Active credentials on startup: '%@'.", c);
@@ -373,7 +378,6 @@
         [[timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         homeNetAwareViewController title:homeTabTitle
-        managedObjectContext:[self managedObjectContext]
         composeTweetDisplayMgr:self.composeTweetDisplayMgr]
         retain];
     timelineDisplayMgr.displayAsConversation = YES;
@@ -414,7 +418,6 @@
         [[directMessageDisplayMgrFactory
         createDirectMessageDisplayMgrWithWrapperController:
         messagesNetAwareViewController
-        managedObjectContext:[self managedObjectContext]
         composeTweetDisplayMgr:self.composeTweetDisplayMgr
         timelineDisplayMgrFactory:timelineDisplayMgrFactory]
         retain];
@@ -432,7 +435,6 @@
         [[timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         profileNetAwareViewController title:profileTabTitle
-        managedObjectContext:[self managedObjectContext]
         composeTweetDisplayMgr:self.composeTweetDisplayMgr]
         retain];
     profileTimelineDisplayMgr.displayAsConversation = NO;
@@ -469,7 +471,6 @@
         [[timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         findPeopleNetAwareViewController title:findPeopleTabTitle
-        managedObjectContext:[self managedObjectContext]
         composeTweetDisplayMgr:self.composeTweetDisplayMgr]
         retain];
     findPeopleTimelineDisplayMgr.displayAsConversation = NO;
@@ -520,7 +521,6 @@
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:navc
         title:@"Trends"  // set programmatically later
-        managedObjectContext:[self managedObjectContext]
         composeTweetDisplayMgr:self.composeTweetDisplayMgr];
     navc.delegate = displayMgr;
 
@@ -543,7 +543,6 @@
         createTimelineDisplayMgrWithWrapperController:
         searchNetAwareViewController
         title:@"Search"  // set programmatically later
-        managedObjectContext:[self managedObjectContext]
         composeTweetDisplayMgr:self.composeTweetDisplayMgr];
     searchNetAwareViewController.delegate = displayMgr;
 

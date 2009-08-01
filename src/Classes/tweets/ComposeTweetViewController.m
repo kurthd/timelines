@@ -80,9 +80,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [recipientTextField resignFirstResponder];
     [textView resignFirstResponder];
-
-    textView.text = @"";
-    recipientTextField.text = @"";
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
@@ -140,6 +137,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     textView.text = text;
     accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
+    recipientTextField.text = @"";
 
     [self hideRecipientView];
     [textView becomeFirstResponder];
@@ -156,6 +154,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     textView.text = text;
     accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
+    recipientTextField.text = @"";
 
     [self hideRecipientView];
     [textView becomeFirstResponder];

@@ -156,12 +156,12 @@
     NSString * sender = service.credentials.username;
     NSString * text = draft ? draft.text : @"";
 
-    [self.rootViewController
-        presentModalViewController:self.composeTweetViewController
-                          animated:YES];
     [self.composeTweetViewController composeDirectMessage:text
                                                      from:sender
                                                        to:recipient];
+    [self.rootViewController
+        presentModalViewController:self.composeTweetViewController
+                          animated:YES];
 }
 
 - (void)composeDirectMessageTo:(NSString *)username
@@ -178,10 +178,6 @@
 
 - (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)text
 {
-    [self.rootViewController
-        presentModalViewController:self.composeTweetViewController
-                          animated:YES];
-
     self.origUsername = nil;
     self.origTweetId = nil;
 
@@ -191,6 +187,10 @@
     [self.composeTweetViewController composeDirectMessage:text
                                                      from:sender
                                                        to:username];
+
+    [self.rootViewController
+        presentModalViewController:self.composeTweetViewController
+                          animated:YES];
 }
 
 #pragma mark Credentials notifications
