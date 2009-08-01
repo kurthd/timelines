@@ -22,7 +22,8 @@
     self.author = nil;
     self.timestamp = nil;
     self.avatar = nil;
-    
+
+    [super dealloc];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -46,6 +47,9 @@ static const CGFloat AUTHOR_LEFT_MARGIN = 64.0;
 static const CGFloat TEXT_LEFT_MARGIN = 64.0;
 static const CGFloat TEXT_RIGHT_MARGIN = 0.0;
 static const CGFloat TEXT_TOP_MARGIN = 28.0;
+
+static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
+static const CGFloat AVATAR_TOP_MARGIN = 7.0;
 
 - (void)drawRect:(CGRect)rect
 {
@@ -131,12 +135,12 @@ static const CGFloat TEXT_TOP_MARGIN = 28.0;
             withFont:textFont
        lineBreakMode:UILineBreakModeWordWrap];
 
-    /*
-    [text drawAtPoint:point
-             forWidth:size.width
-             withFont:textFont
-        lineBreakMode:UILineBreakModeWordWrap];
-     */
+    //
+    // Draw the avatar.
+    //
+
+    point = CGPointMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN);
+    [avatar drawAtPoint:point];
 }
 
 #pragma mark Accessors

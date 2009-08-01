@@ -49,7 +49,7 @@ static UIImage * backgroundImage;
 
 - (void)setAvatarImage:(UIImage *)image
 {
-    // ignore for now
+    timelineView.avatar = image;
 }
 
 - (void)setName:(NSString *)name
