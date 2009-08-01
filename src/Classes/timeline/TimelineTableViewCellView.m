@@ -78,7 +78,6 @@ static UIImage * backgroundImage;
     UIFont * textFont = [UIFont systemFontOfSize:14.0];
 
     CGRect contentRect = self.bounds;
-    CGFloat boundsX = contentRect.origin.x;
 
     CGPoint point;
     CGSize size;
@@ -111,7 +110,7 @@ static UIImage * backgroundImage;
     size = [timestamp sizeWithFont:timestampFont];
     point =
         CGPointMake(
-            (boundsX + contentRect.size.width) -
+            (contentRect.origin.x + contentRect.size.width) -
             TIMESTAMP_RIGHT_MARGIN - size.width,
             TIMESTAMP_TOP_MARGIN);
 
@@ -123,10 +122,7 @@ static UIImage * backgroundImage;
     //
 
     [authorColor set];
-    CGSize authorSize =
-        CGSizeMake((AUTHOR_LEFT_MARGIN + point.x) - 5.0,
-        99999.0);  // can this be authorFont.pointSize?
-    size = [author sizeWithFont:authorFont constrainedToSize:authorSize];
+    size = CGSizeMake(point.x - 5.0 - AUTHOR_LEFT_MARGIN, authorFont.pointSize);
     point = CGPointMake(AUTHOR_LEFT_MARGIN, AUTHOR_TOP_MARGIN);
 
     [author drawAtPoint:point forWidth:size.width withFont:authorFont
