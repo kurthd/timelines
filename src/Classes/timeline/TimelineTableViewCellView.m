@@ -5,22 +5,12 @@
 #import "TimelineTableViewCellView.h"
 #import "UIColor+TwitchColors.h"
 
-static const CGFloat TIMESTAMP_RIGHT_MARGIN = 0.0;
-static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
-
-static const CGFloat AUTHOR_TOP_MARGIN = 5.0;
-static const CGFloat AUTHOR_LEFT_MARGIN = 64.0;
-
-static const CGFloat TEXT_LEFT_MARGIN = 64.0;
-static const CGFloat TEXT_RIGHT_MARGIN = 0.0;
-static const CGFloat TEXT_TOP_MARGIN = 28.0;
-
-static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
-static const CGFloat AVATAR_TOP_MARGIN = 7.0;
-
 static UIImage * backgroundImage;
 
 @interface TimelineTableViewCellView ()
+
+- (void)drawRectNormal:(CGRect)rect;
+- (void)drawRectNoAvatar:(CGRect)rect;
 
 - (void)setStringValue:(NSString **)dest to:(NSString *)source;
 + (CGFloat)degreesToRadians:(CGFloat)degrees;
@@ -29,7 +19,7 @@ static UIImage * backgroundImage;
 
 @implementation TimelineTableViewCellView
 
-@synthesize text, author, timestamp, avatar;
+@synthesize text, author, timestamp, avatar, cellType;
 @synthesize highlighted;
 
 + (void)initialize
@@ -68,6 +58,37 @@ static UIImage * backgroundImage;
     // super's implementation.
     //
 
+    switch (cellType) {
+        case kTimelineTableViewCellTypeNormal:
+            [self drawRectNormal:rect];
+            break;
+        case kTimelineTableViewCellTypeInverted:
+            [self drawRectNormal:rect];
+            break;
+        case kTimelineTableViewCellTypeNoAvatar:
+            [self drawRectNoAvatar:rect];
+            break;
+        case kTimelineTableViewCellTypeNormalNoName:
+            [self drawRectNormal:rect];
+            break;
+    }
+}
+
+- (void)drawRectNormal:(CGRect)rect
+{
+    static const CGFloat TIMESTAMP_RIGHT_MARGIN = 0.0;
+    static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
+
+    static const CGFloat AUTHOR_TOP_MARGIN = 5.0;
+    static const CGFloat AUTHOR_LEFT_MARGIN = 64.0;
+
+    static const CGFloat TEXT_LEFT_MARGIN = 64.0;
+    static const CGFloat TEXT_RIGHT_MARGIN = 0.0;
+    static const CGFloat TEXT_TOP_MARGIN = 28.0;
+
+    static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
+    static const CGFloat AVATAR_TOP_MARGIN = 7.0;
+
     UIColor * authorColor = nil;
     UIFont * authorFont = [UIFont boldSystemFontOfSize:16.0];
 
@@ -94,11 +115,11 @@ static UIImage * backgroundImage;
         //
         // Draw the cell's background.
         //
-        CGRect rect =
+        CGRect backgroundImageRect =
             CGRectMake(0,
             contentRect.size.height - backgroundImage.size.height,
             320.0, 15.0);
-        [backgroundImage drawInRect:rect];
+        [backgroundImage drawInRect:backgroundImageRect];
     }
 
     //
@@ -206,6 +227,74 @@ static UIImage * backgroundImage;
     [avatar drawAtPoint:point];
 }
 
+- (void)drawRectNoAvatar:(CGRect)rect
+{
+    static const CGFloat TIMESTAMP_LEFT_MARGIN = 7.0;
+    static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
+
+    static const CGFloat TEXT_LEFT_MARGIN = 7.0;
+    static const CGFloat TEXT_RIGHT_MARGIN = 0.0;
+    static const CGFloat TEXT_TOP_MARGIN = 28.0;
+
+    UIColor * timestampColor = nil;
+    UIFont * timestampFont = [UIFont systemFontOfSize:14.0];
+
+    UIColor * textColor = nil;
+    UIFont * textFont = [UIFont systemFontOfSize:14.0];
+
+    CGRect contentRect = self.bounds;
+
+    CGPoint point;
+    CGSize size;
+
+    if (highlighted) {
+        timestampColor = [UIColor whiteColor];
+        textColor = [UIColor whiteColor];
+    } else {
+        timestampColor = [UIColor twitchBlueColor];
+        textColor = [UIColor blackColor];
+
+        //
+        // Draw the cell's background.
+        //
+        CGRect backgroundImageRect =
+            CGRectMake(0,
+            contentRect.size.height - backgroundImage.size.height,
+            320.0, 15.0);
+        [backgroundImage drawInRect:backgroundImageRect];
+    }
+
+    //
+    // Draw the timestamp.
+    //
+
+    [timestampColor set];
+    size = [timestamp sizeWithFont:timestampFont];
+    point = CGPointMake(TIMESTAMP_LEFT_MARGIN, TIMESTAMP_TOP_MARGIN);
+    [timestamp drawAtPoint:point withFont:timestampFont];
+
+    //
+    // Draw the main text.
+    //
+
+    [textColor set];
+    CGSize textSize =
+        CGSizeMake(
+        contentRect.size.width - TEXT_LEFT_MARGIN - TEXT_RIGHT_MARGIN,
+        99999.0);
+    size = [text sizeWithFont:textFont
+            constrainedToSize:textSize
+                lineBreakMode:UILineBreakModeWordWrap];
+    point = CGPointMake(TEXT_LEFT_MARGIN, TEXT_TOP_MARGIN);
+
+    CGRect drawingRect = CGRectMake(TEXT_LEFT_MARGIN, TEXT_TOP_MARGIN,
+        size.width, size.height);
+
+    [text drawInRect:drawingRect
+            withFont:textFont
+       lineBreakMode:UILineBreakModeWordWrap];
+}
+
 #pragma mark Accessors
 
 - (void)setText:(NSString *)s
@@ -237,6 +326,14 @@ static UIImage * backgroundImage;
 {
     if (highlighted != b) {
         highlighted = b;
+        [self setNeedsDisplay];
+    }
+}
+
+- (void)setCellType:(TimelineTableViewCellType)type
+{
+    if (cellType != type) {
+        cellType = type;
         [self setNeedsDisplay];
     }
 }

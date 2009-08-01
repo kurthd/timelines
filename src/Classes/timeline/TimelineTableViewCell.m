@@ -42,11 +42,6 @@ static UIImage * backgroundImage;
     return self;
 }
 
-- (void)setAvatarView:(RoundedImage *)avatarView
-{
-    // ignore for now
-}
-
 - (void)setAvatarImage:(UIImage *)image
 {
     timelineView.avatar = image;
@@ -69,7 +64,7 @@ static UIImage * backgroundImage;
 
 - (void)setDisplayType:(TimelineTableViewCellType)displayType
 {
-    // ignore for now
+    timelineView.cellType = displayType;
 }
 
 /*
