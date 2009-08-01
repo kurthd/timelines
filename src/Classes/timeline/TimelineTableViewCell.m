@@ -5,6 +5,7 @@
 #import "TimelineTableViewCell.h"
 #import "NSDate+StringHelpers.h"
 #import "UILabel+DrawingAdditions.h"
+#import "TimelineTableViewCellView.h"
 
 @interface TimelineTableViewCell ()
 
@@ -16,6 +17,60 @@
 
 static UIImage * backgroundImage;
 
+- (void)dealloc
+{
+    [timelineView release];
+    [super dealloc];
+}
+
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        CGRect frame = CGRectMake(0.0, 0.0, self.contentView.bounds.size.width,
+            self.contentView.bounds.size.height);
+        timelineView = [[TimelineTableViewCellView alloc] initWithFrame:frame];
+        timelineView.autoresizingMask =
+            UIViewAutoresizingFlexibleWidth |
+            UIViewAutoresizingFlexibleHeight;
+
+        [self.contentView addSubview:timelineView];
+    }
+
+    return self;
+}
+
+- (void)setAvatarView:(RoundedImage *)avatarView
+{
+    // ignore for now
+}
+
+- (void)setAvatarImage:(UIImage *)image
+{
+    // ignore for now
+}
+
+- (void)setName:(NSString *)name
+{
+    timelineView.author = name;
+}
+
+- (void)setDate:(NSDate *)date
+{
+    timelineView.timestamp = [date shortDescription];
+}
+
+- (void)setTweetText:(NSString *)tweetText
+{
+    timelineView.text = tweetText;
+}
+
+- (void)setDisplayType:(TimelineTableViewCellType)displayType
+{
+    // ignore for now
+}
+
+/*
 - (void)dealloc
 {
     [avatar release];
@@ -142,6 +197,7 @@ static UIImage * backgroundImage;
         tweetTextLabel.frame = tweetTextLabelFrame;
     }
 }
+*/
 
 + (CGFloat)heightForContent:(NSString *)tweetText
     displayType:(TimelineTableViewCellType)displayType

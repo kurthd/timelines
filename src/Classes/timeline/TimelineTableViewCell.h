@@ -5,6 +5,8 @@
 #import <UIKit/UIKit.h>
 #import "RoundedImage.h";
 
+@class TimelineTableViewCellView;
+
 typedef enum {
     kTimelineTableViewCellTypeNormal,
     kTimelineTableViewCellTypeInverted,
@@ -14,6 +16,7 @@ typedef enum {
 
 @interface TimelineTableViewCell : UITableViewCell
 {
+    /*
     IBOutlet RoundedImage * avatar;
     IBOutlet UILabel * nameLabel;
     IBOutlet UILabel * dateLabel;
@@ -22,6 +25,9 @@ typedef enum {
     TimelineTableViewCellType displayType;
     
     BOOL needsLayout;
+    */
+
+    TimelineTableViewCellView * timelineView;
 }
 
 - (void)setAvatarView:(RoundedImage *)avatarView;

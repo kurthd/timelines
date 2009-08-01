@@ -46,11 +46,18 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (TimelineTableViewCell *)createCell
 {
+    /* jad: remove me after optimizations
     NSArray * nib =
         [[NSBundle mainBundle] loadNibNamed:@"TimelineTableViewCell"
         owner:self options:nil];
 
     TimelineTableViewCell * timelineCell = [nib objectAtIndex:0];
+     */
+
+    TimelineTableViewCell * timelineCell =
+        [[TimelineTableViewCell alloc]
+         initWithStyle:UITableViewCellStyleDefault 
+         reuseIdentifier:@"TimelineTableViewCell"];
 
     NSString * displayName =
         self.user.name && self.user.name.length > 0 &&
@@ -63,7 +70,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [[[self class] cellCache]
         setObject:timelineCell forKey:self.identifier];
     
-    return timelineCell;
+    return [timelineCell autorelease];
 }
 
 + (NSMutableDictionary *)cellCache
