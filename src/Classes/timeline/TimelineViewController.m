@@ -386,7 +386,7 @@ static UIImage * defaultAvatar;
 + (UIImage *)defaultAvatar
 {
     if (!defaultAvatar)
-        defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar.png"] retain];
+        defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar50x50.png"] retain];
 
     return defaultAvatar;
 }
