@@ -5,9 +5,25 @@
 #import "TimelineTableViewCellView.h"
 #import "UIColor+TwitchColors.h"
 
+static const CGFloat TIMESTAMP_RIGHT_MARGIN = 0.0;
+static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
+
+static const CGFloat AUTHOR_TOP_MARGIN = 5.0;
+static const CGFloat AUTHOR_LEFT_MARGIN = 64.0;
+
+static const CGFloat TEXT_LEFT_MARGIN = 64.0;
+static const CGFloat TEXT_RIGHT_MARGIN = 0.0;
+static const CGFloat TEXT_TOP_MARGIN = 28.0;
+
+static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
+static const CGFloat AVATAR_TOP_MARGIN = 7.0;
+
+static UIImage * backgroundImage;
+
 @interface TimelineTableViewCellView ()
 
 - (void)setStringValue:(NSString **)dest to:(NSString *)source;
++ (CGFloat)degreesToRadians:(CGFloat)degrees;
 
 @end
 
@@ -15,6 +31,13 @@
 
 @synthesize text, author, timestamp, avatar;
 @synthesize highlighted;
+
++ (void)initialize
+{
+    NSAssert(!backgroundImage, @"backgroundImage should be nil.");
+    backgroundImage =
+        [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
+}
 
 - (void)dealloc
 {
@@ -30,26 +53,13 @@
 {
     if (self = [super initWithFrame:frame]) {
         self.opaque = YES;
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
     }
 
     return self;
 }
 
 #pragma mark Drawing the view
-
-static const CGFloat TIMESTAMP_RIGHT_MARGIN = 0.0;
-static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
-
-static const CGFloat AUTHOR_TOP_MARGIN = 5.0;
-static const CGFloat AUTHOR_LEFT_MARGIN = 64.0;
-
-static const CGFloat TEXT_LEFT_MARGIN = 64.0;
-static const CGFloat TEXT_RIGHT_MARGIN = 0.0;
-static const CGFloat TEXT_TOP_MARGIN = 28.0;
-
-static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
-static const CGFloat AVATAR_TOP_MARGIN = 7.0;
 
 - (void)drawRect:(CGRect)rect
 {
@@ -67,6 +77,12 @@ static const CGFloat AVATAR_TOP_MARGIN = 7.0;
     UIColor * textColor = nil;
     UIFont * textFont = [UIFont systemFontOfSize:14.0];
 
+    CGRect contentRect = self.bounds;
+    CGFloat boundsX = contentRect.origin.x;
+
+    CGPoint point;
+    CGSize size;
+
     if (highlighted) {
         authorColor = [UIColor whiteColor];
         timestampColor = [UIColor whiteColor];
@@ -75,13 +91,16 @@ static const CGFloat AVATAR_TOP_MARGIN = 7.0;
         authorColor = [UIColor blackColor];
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
+
+        //
+        // Draw the cell's background.
+        //
+        CGRect rect =
+            CGRectMake(0,
+            contentRect.size.height - backgroundImage.size.height,
+            320.0, 15.0);
+        [backgroundImage drawInRect:rect];
     }
-
-    CGRect contentRect = self.bounds;
-    CGFloat boundsX = contentRect.origin.x;
-
-    CGPoint point;
-    CGSize size;
 
     //
     // Draw the timestamp first since we'll draw the author within the
@@ -139,6 +158,54 @@ static const CGFloat AVATAR_TOP_MARGIN = 7.0;
     // Draw the avatar.
     //
 
+    // round the corners
+    CGContextRef ctx = UIGraphicsGetCurrentContext(); 
+    CGMutablePathRef outlinePath = CGPathCreateMutable(); 
+
+    CGFloat radius = 6.0;
+    CGRect imageRect =
+        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN, avatar.size.width,
+        avatar.size.height);
+    CGRect interiorRect = CGRectInset(imageRect, radius, radius);
+
+    CGPathAddArc(outlinePath, NULL,
+        CGRectGetMinX(interiorRect), CGRectGetMinY(interiorRect),
+        radius,
+        [[self class] degreesToRadians:180],
+        [[self class] degreesToRadians:270],
+        NO);
+
+    CGPathAddArc(outlinePath, NULL,
+        CGRectGetMaxX(interiorRect), CGRectGetMinY(interiorRect),
+        radius,
+        [[self class] degreesToRadians:270],
+        [[self class] degreesToRadians:360],
+        NO);
+
+    CGPathAddArc(outlinePath, NULL,
+        CGRectGetMaxX(interiorRect), CGRectGetMaxY(interiorRect),
+        radius,
+        [[self class] degreesToRadians:0],
+        [[self class] degreesToRadians:90.0],
+        NO);
+
+    CGPathAddArc(outlinePath, NULL,
+        CGRectGetMinX(interiorRect), CGRectGetMaxY(interiorRect),
+        radius,
+        [[self class] degreesToRadians:90.0],
+        [[self class] degreesToRadians:180.0],
+        NO);
+    
+    CGPathCloseSubpath(outlinePath);
+
+    CGContextSaveGState(ctx); 
+
+    CGContextAddPath(ctx, outlinePath); 
+    CGContextClip(ctx); 
+
+    CGPathRelease(outlinePath);
+
+    // draw the actual avatar image
     point = CGPointMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN);
     [avatar drawAtPoint:point];
 }
@@ -178,6 +245,8 @@ static const CGFloat AVATAR_TOP_MARGIN = 7.0;
     }
 }
 
+#pragma mark Private helpers
+
 - (void)setStringValue:(NSString **)dest to:(NSString *)source
 {
     if (*dest != source && ![*dest isEqualToString:source]) {
@@ -186,6 +255,11 @@ static const CGFloat AVATAR_TOP_MARGIN = 7.0;
 
         [self setNeedsDisplay];
     }
+}
+
++ (CGFloat)degreesToRadians:(CGFloat)degrees
+{
+    return degrees / 57.2958;
 }
 
 @end
