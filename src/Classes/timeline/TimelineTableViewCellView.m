@@ -22,7 +22,7 @@
     self.author = nil;
     self.timestamp = nil;
     self.avatar = nil;
-    [super dealloc];
+    
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -37,14 +37,14 @@
 
 #pragma mark Drawing the view
 
-static const CGFloat TIMESTAMP_RIGHT_MARGIN = 11.0;
-static const CGFloat TIMESTAMP_TOP_MARGIN = 5.0;
+static const CGFloat TIMESTAMP_RIGHT_MARGIN = 0.0;
+static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
 static const CGFloat AUTHOR_TOP_MARGIN = 5.0;
 static const CGFloat AUTHOR_LEFT_MARGIN = 64.0;
 
 static const CGFloat TEXT_LEFT_MARGIN = 64.0;
-static const CGFloat TEXT_RIGHT_MARGIN = 11.0;
+static const CGFloat TEXT_RIGHT_MARGIN = 0.0;
 static const CGFloat TEXT_TOP_MARGIN = 28.0;
 
 - (void)drawRect:(CGRect)rect
