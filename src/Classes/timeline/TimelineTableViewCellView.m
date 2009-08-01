@@ -12,6 +12,7 @@ static UIImage * backgroundImage;
 - (void)drawRectNormal:(CGRect)rect;
 - (void)drawRectInverted:(CGRect)rect;
 - (void)drawRectNoAvatar:(CGRect)rect;
+- (void)drawRectNoAuthor:(CGRect)rect;
 
 - (void)setStringValue:(NSString **)dest to:(NSString *)source;
 + (CGFloat)degreesToRadians:(CGFloat)degrees;
@@ -70,7 +71,7 @@ static UIImage * backgroundImage;
             [self drawRectNoAvatar:rect];
             break;
         case kTimelineTableViewCellTypeNormalNoName:
-            [self drawRectNormal:rect];
+            [self drawRectNoAuthor:rect];
             break;
     }
 }
@@ -421,6 +422,137 @@ static UIImage * backgroundImage;
     [text drawInRect:drawingRect
             withFont:textFont
        lineBreakMode:UILineBreakModeWordWrap];
+}
+
+- (void)drawRectNoAuthor:(CGRect)rect
+{
+    static const CGFloat TIMESTAMP_RIGHT_MARGIN = 0.0;
+    static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
+
+    static const CGFloat TEXT_LEFT_MARGIN = 64.0;
+    static const CGFloat TEXT_RIGHT_MARGIN = 0.0;
+    static const CGFloat TEXT_TOP_MARGIN = 28.0;
+
+    static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
+    static const CGFloat AVATAR_TOP_MARGIN = 7.0;
+
+    UIColor * timestampColor = nil;
+    UIFont * timestampFont = [UIFont systemFontOfSize:14.0];
+
+    UIColor * textColor = nil;
+    UIFont * textFont = [UIFont systemFontOfSize:14.0];
+
+    CGRect contentRect = self.bounds;
+
+    CGPoint point;
+    CGSize size;
+
+    if (highlighted) {
+        timestampColor = [UIColor whiteColor];
+        textColor = [UIColor whiteColor];
+    } else {
+        timestampColor = [UIColor twitchBlueColor];
+        textColor = [UIColor blackColor];
+
+        //
+        // Draw the cell's background.
+        //
+        CGRect backgroundImageRect =
+            CGRectMake(0,
+            contentRect.size.height - backgroundImage.size.height,
+            320.0, backgroundImage.size.height);
+        [backgroundImage drawInRect:backgroundImageRect];
+    }
+
+    //
+    // Draw the timestamp first since we'll draw the author within the
+    // space that remains after the timestamp has been drawn.
+    //
+
+    [timestampColor set];
+    size = [timestamp sizeWithFont:timestampFont];
+    point =
+        CGPointMake(
+            (contentRect.origin.x + contentRect.size.width) -
+            TIMESTAMP_RIGHT_MARGIN - size.width,
+            TIMESTAMP_TOP_MARGIN);
+
+    [timestamp drawAtPoint:point withFont:timestampFont];
+
+    //
+    // Draw the main text.
+    //
+
+    [textColor set];
+    CGSize textSize =
+        CGSizeMake(
+        contentRect.size.width - TEXT_LEFT_MARGIN - TEXT_RIGHT_MARGIN, 99999.0);
+    size = [text sizeWithFont:textFont
+            constrainedToSize:textSize
+                lineBreakMode:UILineBreakModeWordWrap];
+    point = CGPointMake(TEXT_LEFT_MARGIN, TEXT_TOP_MARGIN);
+
+    CGRect drawingRect = CGRectMake(TEXT_LEFT_MARGIN, TEXT_TOP_MARGIN,
+        size.width, size.height);
+
+    [text drawInRect:drawingRect
+            withFont:textFont
+       lineBreakMode:UILineBreakModeWordWrap];
+
+    //
+    // Draw the avatar.
+    //
+
+    // round the corners
+    CGContextRef ctx = UIGraphicsGetCurrentContext(); 
+    CGMutablePathRef outlinePath = CGPathCreateMutable(); 
+
+    CGFloat radius = 6.0;
+    CGRect imageRect =
+        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN, avatar.size.width,
+        avatar.size.height);
+    CGRect interiorRect = CGRectInset(imageRect, radius, radius);
+
+    CGPathAddArc(outlinePath, NULL,
+        CGRectGetMinX(interiorRect), CGRectGetMinY(interiorRect),
+        radius,
+        [[self class] degreesToRadians:180],
+        [[self class] degreesToRadians:270],
+        NO);
+
+    CGPathAddArc(outlinePath, NULL,
+        CGRectGetMaxX(interiorRect), CGRectGetMinY(interiorRect),
+        radius,
+        [[self class] degreesToRadians:270],
+        [[self class] degreesToRadians:360],
+        NO);
+
+    CGPathAddArc(outlinePath, NULL,
+        CGRectGetMaxX(interiorRect), CGRectGetMaxY(interiorRect),
+        radius,
+        [[self class] degreesToRadians:0],
+        [[self class] degreesToRadians:90.0],
+        NO);
+
+    CGPathAddArc(outlinePath, NULL,
+        CGRectGetMinX(interiorRect), CGRectGetMaxY(interiorRect),
+        radius,
+        [[self class] degreesToRadians:90.0],
+        [[self class] degreesToRadians:180.0],
+        NO);
+    
+    CGPathCloseSubpath(outlinePath);
+
+    CGContextSaveGState(ctx); 
+
+    CGContextAddPath(ctx, outlinePath); 
+    CGContextClip(ctx); 
+
+    CGPathRelease(outlinePath);
+
+    // draw the actual avatar image
+    point = CGPointMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN);
+    [avatar drawAtPoint:point];
 }
 
 #pragma mark Accessors
