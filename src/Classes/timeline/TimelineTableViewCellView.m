@@ -35,15 +35,10 @@ static UIImage * backgroundImage;
 + (CGFloat)heightForContent:(NSString *)tweetText
                    cellType:(TimelineTableViewCellType)cellType
 {
-    NSInteger tweetTextLabelWidth =
+    CGFloat tweetTextLabelWidth =
         cellType == kTimelineTableViewCellTypeNoAvatar ?
-        291 : 234;
-
-    CGSize maxSize;
-    if (cellType == kTimelineTableViewCellTypeNoAvatar)
-        maxSize = CGSizeMake(291.0, 999999.0);
-    else
-        maxSize = CGSizeMake(234.0, 999999.0);
+        310 : 245;
+    CGSize maxSize = CGSizeMake(tweetTextLabelWidth, 999999.0);
 
     UIFont * font = [UIFont systemFontOfSize:14.0];
     UILineBreakMode mode = UILineBreakModeWordWrap;
@@ -108,14 +103,14 @@ static UIImage * backgroundImage;
 
 - (void)drawRectNormal:(CGRect)rect
 {
-    static const CGFloat TIMESTAMP_RIGHT_MARGIN = 0.0;
+    static const CGFloat TIMESTAMP_RIGHT_MARGIN = 10.0;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat AUTHOR_TOP_MARGIN = 5.0;
     static const CGFloat AUTHOR_LEFT_MARGIN = 64.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 64.0;
-    static const CGFloat TEXT_RIGHT_MARGIN = 0.0;
+    static const CGFloat TEXT_RIGHT_MARGIN = 10.0;
     static const CGFloat TEXT_TOP_MARGIN = 28.0;
 
     static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
@@ -220,7 +215,7 @@ static UIImage * backgroundImage;
     static const CGFloat TEXT_RIGHT_MARGIN = 64.0;
     static const CGFloat TEXT_TOP_MARGIN = 28.0;
 
-    static const CGFloat AVATAR_LEFT_MARGIN = 245.0;
+    static const CGFloat AVATAR_LEFT_MARGIN = 260.0;
     static const CGFloat AVATAR_TOP_MARGIN = 7.0;
 
     UIColor * timestampColor = nil;
@@ -296,7 +291,7 @@ static UIImage * backgroundImage;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 7.0;
-    static const CGFloat TEXT_RIGHT_MARGIN = 0.0;
+    static const CGFloat TEXT_RIGHT_MARGIN = 10.0;
     static const CGFloat TEXT_TOP_MARGIN = 28.0;
 
     UIColor * timestampColor = nil;
@@ -364,7 +359,7 @@ static UIImage * backgroundImage;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 64.0;
-    static const CGFloat TEXT_RIGHT_MARGIN = 0.0;
+    static const CGFloat TEXT_RIGHT_MARGIN = 10.0;
     static const CGFloat TEXT_TOP_MARGIN = 28.0;
 
     static const CGFloat AVATAR_LEFT_MARGIN = 7.0;

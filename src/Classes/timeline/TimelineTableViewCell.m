@@ -26,8 +26,6 @@
             UIViewAutoresizingFlexibleHeight;
 
         [self.contentView addSubview:timelineView];
-
-        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
     return self;
