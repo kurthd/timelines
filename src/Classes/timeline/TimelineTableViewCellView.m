@@ -32,6 +32,35 @@ static UIImage * backgroundImage;
         [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
 }
 
++ (CGFloat)heightForContent:(NSString *)tweetText
+                   cellType:(TimelineTableViewCellType)cellType
+{
+    NSInteger tweetTextLabelWidth =
+        cellType == kTimelineTableViewCellTypeNoAvatar ?
+        291 : 234;
+
+    CGSize maxSize;
+    if (cellType == kTimelineTableViewCellTypeNoAvatar)
+        maxSize = CGSizeMake(291.0, 999999.0);
+    else
+        maxSize = CGSizeMake(234.0, 999999.0);
+
+    UIFont * font = [UIFont systemFontOfSize:14.0];
+    UILineBreakMode mode = UILineBreakModeWordWrap;
+
+    CGSize size =
+        [tweetText sizeWithFont:font constrainedToSize:maxSize
+        lineBreakMode:mode];
+
+    NSInteger minHeight =
+        cellType == kTimelineTableViewCellTypeNoAvatar ?
+        0 : 65;
+    NSUInteger height = 36.0 + size.height;
+    height = height > minHeight ? height : minHeight;
+
+    return height;
+}
+
 - (void)dealloc
 {
     self.text = nil;

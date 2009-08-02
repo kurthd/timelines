@@ -23,7 +23,7 @@
 @property (nonatomic, assign) TimelineTableViewCellType cellType;
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;
 
-//- (void)setAvatarView:(RoundedImage *)avatarView;
-//- (void)setDisplayType:(TimelineTableViewCellType)displayType;
++ (CGFloat)heightForContent:(NSString *)tweetText
+                   cellType:(TimelineTableViewCellType)cellType;
 
 @end
