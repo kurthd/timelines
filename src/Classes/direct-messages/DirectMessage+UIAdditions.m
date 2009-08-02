@@ -37,8 +37,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     if (!timelineCell) {
         timelineCell = [self createCell];
-        RoundedImage * avatarView = [self.sender avatar];
-        [timelineCell setAvatarView:avatarView];
+        //RoundedImage * avatarView = [self.sender avatar];
+        //[timelineCell setAvatarView:avatarView];
     }
 
     return timelineCell;
@@ -46,11 +46,18 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (TimelineTableViewCell *)createCell
 {
+    /*
     NSArray * nib =
         [[NSBundle mainBundle] loadNibNamed:@"TimelineTableViewCell"
         owner:self options:nil];
 
     TimelineTableViewCell * timelineCell = [nib objectAtIndex:0];
+     */
+
+    TimelineTableViewCell * timelineCell =
+        [[TimelineTableViewCell alloc]
+        initWithStyle:UITableViewCellStyleDefault 
+        reuseIdentifier:@"TimelineTableViewCell"];
         
     NSString * displayName =
         self.sender.name && ![[self class] displayWithUsername] ?
