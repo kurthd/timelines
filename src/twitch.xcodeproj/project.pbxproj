@@ -30,6 +30,7 @@
 		05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */; };
 		05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C8872810163DB90097FEFF /* AccountsTableViewCell.m */; };
 		05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */; };
+		05DB973B1025107E00D06489 /* UIImage+DrawingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */; };
 		05E0271B101B983D00A97AC9 /* RecentSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */; };
 		05EE7C7D101E9C2E006663FD /* TimelineTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7C7C101E9C2E006663FD /* TimelineTableViewCellView.m */; };
 		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
@@ -484,6 +485,8 @@
 		05D174050FF69FC500DCB22D /* Mention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mention.h; path = tweets/Mention.h; sourceTree = "<group>"; };
 		05D174060FF69FC500DCB22D /* Mention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mention.m; path = tweets/Mention.m; sourceTree = "<group>"; };
 		05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2-v1.1.xcmappingmodel"; path = "data-model/v2-v1.1.xcmappingmodel"; sourceTree = "<group>"; };
+		05DB97391025107E00D06489 /* UIImage+DrawingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+DrawingAdditions.h"; path = "shared/UIImage+DrawingAdditions.h"; sourceTree = "<group>"; };
+		05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+DrawingAdditions.m"; path = "shared/UIImage+DrawingAdditions.m"; sourceTree = "<group>"; };
 		05E02719101B983D00A97AC9 /* RecentSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecentSearchMgr.h; path = search/RecentSearchMgr.h; sourceTree = "<group>"; };
 		05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearchMgr.m; path = search/RecentSearchMgr.m; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
@@ -991,6 +994,8 @@
 				0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */,
 				054B6A1E101E153600882C19 /* NSString+HtmlEncodingAdditions.h */,
 				054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */,
+				05DB97391025107E00D06489 /* UIImage+DrawingAdditions.h */,
+				05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -1775,6 +1780,7 @@
 				054B6A20101E153600882C19 /* NSString+HtmlEncodingAdditions.m in Sources */,
 				05EE7C7D101E9C2E006663FD /* TimelineTableViewCellView.m in Sources */,
 				05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */,
+				05DB973B1025107E00D06489 /* UIImage+DrawingAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

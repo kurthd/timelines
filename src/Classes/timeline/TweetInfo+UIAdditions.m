@@ -37,8 +37,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     if (!timelineCell) {
         timelineCell = [self createCell];
-        RoundedImage * avatarView = [self.user avatar];
-        [timelineCell setAvatarView:avatarView];
+        //RoundedImage * avatarView = [self.user avatar];
+        //[timelineCell setAvatarView:avatarView];
     }
 
     return timelineCell;

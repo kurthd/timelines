@@ -4,6 +4,7 @@
 
 #import "TimelineTableViewCellView.h"
 #import "UIColor+TwitchColors.h"
+#import "UIImage+DrawingAdditions.h"
 
 static UIImage * backgroundImage;
 
@@ -177,56 +178,8 @@ static UIImage * backgroundImage;
     // Draw the avatar.
     //
 
-    // round the corners
-    CGContextRef ctx = UIGraphicsGetCurrentContext(); 
-    CGMutablePathRef outlinePath = CGPathCreateMutable(); 
-
-    CGFloat radius = 6.0;
-    CGRect imageRect =
-        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN, avatar.size.width,
-        avatar.size.height);
-    CGRect interiorRect = CGRectInset(imageRect, radius, radius);
-
-    CGPathAddArc(outlinePath, NULL,
-        CGRectGetMinX(interiorRect), CGRectGetMinY(interiorRect),
-        radius,
-        [[self class] degreesToRadians:180],
-        [[self class] degreesToRadians:270],
-        NO);
-
-    CGPathAddArc(outlinePath, NULL,
-        CGRectGetMaxX(interiorRect), CGRectGetMinY(interiorRect),
-        radius,
-        [[self class] degreesToRadians:270],
-        [[self class] degreesToRadians:360],
-        NO);
-
-    CGPathAddArc(outlinePath, NULL,
-        CGRectGetMaxX(interiorRect), CGRectGetMaxY(interiorRect),
-        radius,
-        [[self class] degreesToRadians:0],
-        [[self class] degreesToRadians:90.0],
-        NO);
-
-    CGPathAddArc(outlinePath, NULL,
-        CGRectGetMinX(interiorRect), CGRectGetMaxY(interiorRect),
-        radius,
-        [[self class] degreesToRadians:90.0],
-        [[self class] degreesToRadians:180.0],
-        NO);
-    
-    CGPathCloseSubpath(outlinePath);
-
-    CGContextSaveGState(ctx); 
-
-    CGContextAddPath(ctx, outlinePath); 
-    CGContextClip(ctx); 
-
-    CGPathRelease(outlinePath);
-
-    // draw the actual avatar image
     point = CGPointMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN);
-    [avatar drawAtPoint:point];
+    [avatar drawWithRoundedCornersAtPoint:point withRadius:6.0];
 }
 
 - (void)drawRectInverted:(CGRect)rect
@@ -304,56 +257,8 @@ static UIImage * backgroundImage;
     // Draw the avatar.
     //
 
-    // round the corners
-    CGContextRef ctx = UIGraphicsGetCurrentContext(); 
-    CGMutablePathRef outlinePath = CGPathCreateMutable(); 
-
-    CGFloat radius = 6.0;
-    CGRect imageRect =
-        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN, avatar.size.width,
-        avatar.size.height);
-    CGRect interiorRect = CGRectInset(imageRect, radius, radius);
-
-    CGPathAddArc(outlinePath, NULL,
-        CGRectGetMinX(interiorRect), CGRectGetMinY(interiorRect),
-        radius,
-        [[self class] degreesToRadians:180],
-        [[self class] degreesToRadians:270],
-        NO);
-
-    CGPathAddArc(outlinePath, NULL,
-        CGRectGetMaxX(interiorRect), CGRectGetMinY(interiorRect),
-        radius,
-        [[self class] degreesToRadians:270],
-        [[self class] degreesToRadians:360],
-        NO);
-
-    CGPathAddArc(outlinePath, NULL,
-        CGRectGetMaxX(interiorRect), CGRectGetMaxY(interiorRect),
-        radius,
-        [[self class] degreesToRadians:0],
-        [[self class] degreesToRadians:90.0],
-        NO);
-
-    CGPathAddArc(outlinePath, NULL,
-        CGRectGetMinX(interiorRect), CGRectGetMaxY(interiorRect),
-        radius,
-        [[self class] degreesToRadians:90.0],
-        [[self class] degreesToRadians:180.0],
-        NO);
-    
-    CGPathCloseSubpath(outlinePath);
-
-    CGContextSaveGState(ctx); 
-
-    CGContextAddPath(ctx, outlinePath); 
-    CGContextClip(ctx); 
-
-    CGPathRelease(outlinePath);
-
-    // draw the actual avatar image
     point = CGPointMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN);
-    [avatar drawAtPoint:point];
+    [avatar drawWithRoundedCornersAtPoint:point withRadius:6.0];
 }
 
 - (void)drawRectNoAvatar:(CGRect)rect
@@ -499,56 +404,8 @@ static UIImage * backgroundImage;
     // Draw the avatar.
     //
 
-    // round the corners
-    CGContextRef ctx = UIGraphicsGetCurrentContext(); 
-    CGMutablePathRef outlinePath = CGPathCreateMutable(); 
-
-    CGFloat radius = 6.0;
-    CGRect imageRect =
-        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN, avatar.size.width,
-        avatar.size.height);
-    CGRect interiorRect = CGRectInset(imageRect, radius, radius);
-
-    CGPathAddArc(outlinePath, NULL,
-        CGRectGetMinX(interiorRect), CGRectGetMinY(interiorRect),
-        radius,
-        [[self class] degreesToRadians:180],
-        [[self class] degreesToRadians:270],
-        NO);
-
-    CGPathAddArc(outlinePath, NULL,
-        CGRectGetMaxX(interiorRect), CGRectGetMinY(interiorRect),
-        radius,
-        [[self class] degreesToRadians:270],
-        [[self class] degreesToRadians:360],
-        NO);
-
-    CGPathAddArc(outlinePath, NULL,
-        CGRectGetMaxX(interiorRect), CGRectGetMaxY(interiorRect),
-        radius,
-        [[self class] degreesToRadians:0],
-        [[self class] degreesToRadians:90.0],
-        NO);
-
-    CGPathAddArc(outlinePath, NULL,
-        CGRectGetMinX(interiorRect), CGRectGetMaxY(interiorRect),
-        radius,
-        [[self class] degreesToRadians:90.0],
-        [[self class] degreesToRadians:180.0],
-        NO);
-    
-    CGPathCloseSubpath(outlinePath);
-
-    CGContextSaveGState(ctx); 
-
-    CGContextAddPath(ctx, outlinePath); 
-    CGContextClip(ctx); 
-
-    CGPathRelease(outlinePath);
-
-    // draw the actual avatar image
     point = CGPointMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN);
-    [avatar drawAtPoint:point];
+    [avatar drawWithRoundedCornersAtPoint:point withRadius:6.0];
 }
 
 #pragma mark Accessors
