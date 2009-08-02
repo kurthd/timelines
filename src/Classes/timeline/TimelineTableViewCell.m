@@ -6,7 +6,16 @@
 #import "NSDate+StringHelpers.h"
 #import "TimelineTableViewCellView.h"
 
+static UIImage * backgroundImage;
+
 @implementation TimelineTableViewCell
+
++ (void)initialize
+{
+    NSAssert(!backgroundImage, @"backgroundImage should be nil.");
+    backgroundImage =
+        [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
+}
 
 - (void)dealloc
 {
@@ -26,9 +35,23 @@
             UIViewAutoresizingFlexibleHeight;
 
         [self.contentView addSubview:timelineView];
+
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
     return self;
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    //
+    // Draw the cell's background here, rather than in the contentView's
+    // drawRect, so we can draw over the accessory view's space, too.
+    //
+    CGRect backgroundImageRect =
+        CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
+        320.0, backgroundImage.size.height);
+    [backgroundImage drawInRect:backgroundImageRect];
 }
 
 - (void)setAvatarImage:(UIImage *)image

@@ -6,7 +6,8 @@
 #import "UIColor+TwitchColors.h"
 #import "UIImage+DrawingAdditions.h"
 
-static UIImage * backgroundImage;
+static const CGFloat TEXT_WIDTH_WITHOUT_AVATAR = 290.0;
+static const CGFloat TEXT_WIDTH_WITH_AVATAR = 235.0;
 
 @interface TimelineTableViewCellView ()
 
@@ -25,19 +26,12 @@ static UIImage * backgroundImage;
 @synthesize text, author, timestamp, avatar, cellType;
 @synthesize highlighted;
 
-+ (void)initialize
-{
-    NSAssert(!backgroundImage, @"backgroundImage should be nil.");
-    backgroundImage =
-        [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
-}
-
 + (CGFloat)heightForContent:(NSString *)tweetText
                    cellType:(TimelineTableViewCellType)cellType
 {
     CGFloat tweetTextLabelWidth =
         cellType == kTimelineTableViewCellTypeNoAvatar ?
-        310 : 245;
+        TEXT_WIDTH_WITHOUT_AVATAR : TEXT_WIDTH_WITH_AVATAR;
     CGSize maxSize = CGSizeMake(tweetTextLabelWidth, 999999.0);
 
     UIFont * font = [UIFont systemFontOfSize:14.0];
@@ -103,14 +97,13 @@ static UIImage * backgroundImage;
 
 - (void)drawRectNormal:(CGRect)rect
 {
-    static const CGFloat TIMESTAMP_RIGHT_MARGIN = 10.0;
+    static const CGFloat TIMESTAMP_RIGHT_MARGIN = 0.0;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat AUTHOR_TOP_MARGIN = 5.0;
     static const CGFloat AUTHOR_LEFT_MARGIN = 64.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 64.0;
-    static const CGFloat TEXT_RIGHT_MARGIN = 10.0;
     static const CGFloat TEXT_TOP_MARGIN = 28.0;
 
     static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
@@ -138,15 +131,6 @@ static UIImage * backgroundImage;
         authorColor = [UIColor blackColor];
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
-
-        //
-        // Draw the cell's background.
-        //
-        CGRect backgroundImageRect =
-            CGRectMake(0,
-            contentRect.size.height - backgroundImage.size.height,
-            320.0, backgroundImage.size.height);
-        [backgroundImage drawInRect:backgroundImageRect];
     }
 
     //
@@ -183,9 +167,7 @@ static UIImage * backgroundImage;
     //
 
     [textColor set];
-    CGSize textSize =
-        CGSizeMake(
-        contentRect.size.width - TEXT_LEFT_MARGIN - TEXT_RIGHT_MARGIN, 99999.0);
+    CGSize textSize = CGSizeMake(TEXT_WIDTH_WITH_AVATAR, 999999.0);
     size = [text sizeWithFont:textFont
             constrainedToSize:textSize
                 lineBreakMode:UILineBreakModeWordWrap];
@@ -212,10 +194,9 @@ static UIImage * backgroundImage;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 7.0;
-    static const CGFloat TEXT_RIGHT_MARGIN = 64.0;
     static const CGFloat TEXT_TOP_MARGIN = 28.0;
 
-    static const CGFloat AVATAR_LEFT_MARGIN = 260.0;
+    static const CGFloat AVATAR_LEFT_MARGIN = 250.0;
     static const CGFloat AVATAR_TOP_MARGIN = 7.0;
 
     UIColor * timestampColor = nil;
@@ -223,8 +204,6 @@ static UIImage * backgroundImage;
 
     UIColor * textColor = nil;
     UIFont * textFont = [UIFont systemFontOfSize:14.0];
-
-    CGRect contentRect = self.bounds;
 
     CGPoint point;
     CGSize size;
@@ -235,15 +214,6 @@ static UIImage * backgroundImage;
     } else {
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
-
-        //
-        // Draw the cell's background.
-        //
-        CGRect backgroundImageRect =
-            CGRectMake(0,
-            contentRect.size.height - backgroundImage.size.height,
-            320.0, backgroundImage.size.height);
-        [backgroundImage drawInRect:backgroundImageRect];
     }
 
     //
@@ -262,9 +232,7 @@ static UIImage * backgroundImage;
     //
 
     [textColor set];
-    CGSize textSize =
-        CGSizeMake(
-        contentRect.size.width - TEXT_LEFT_MARGIN - TEXT_RIGHT_MARGIN, 99999.0);
+    CGSize textSize = CGSizeMake(TEXT_WIDTH_WITH_AVATAR, 999999.0);
     size = [text sizeWithFont:textFont
             constrainedToSize:textSize
                 lineBreakMode:UILineBreakModeWordWrap];
@@ -291,7 +259,6 @@ static UIImage * backgroundImage;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 7.0;
-    static const CGFloat TEXT_RIGHT_MARGIN = 10.0;
     static const CGFloat TEXT_TOP_MARGIN = 28.0;
 
     UIColor * timestampColor = nil;
@@ -299,8 +266,6 @@ static UIImage * backgroundImage;
 
     UIColor * textColor = nil;
     UIFont * textFont = [UIFont systemFontOfSize:14.0];
-
-    CGRect contentRect = self.bounds;
 
     CGPoint point;
     CGSize size;
@@ -311,15 +276,6 @@ static UIImage * backgroundImage;
     } else {
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
-
-        //
-        // Draw the cell's background.
-        //
-        CGRect backgroundImageRect =
-            CGRectMake(0,
-            contentRect.size.height - backgroundImage.size.height,
-            320.0, backgroundImage.size.height);
-        [backgroundImage drawInRect:backgroundImageRect];
     }
 
     //
@@ -336,10 +292,7 @@ static UIImage * backgroundImage;
     //
 
     [textColor set];
-    CGSize textSize =
-        CGSizeMake(
-        contentRect.size.width - TEXT_LEFT_MARGIN - TEXT_RIGHT_MARGIN,
-        99999.0);
+    CGSize textSize = CGSizeMake(TEXT_WIDTH_WITHOUT_AVATAR, 999999.0);
     size = [text sizeWithFont:textFont
             constrainedToSize:textSize
                 lineBreakMode:UILineBreakModeWordWrap];
@@ -359,7 +312,6 @@ static UIImage * backgroundImage;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 64.0;
-    static const CGFloat TEXT_RIGHT_MARGIN = 10.0;
     static const CGFloat TEXT_TOP_MARGIN = 28.0;
 
     static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
@@ -371,8 +323,6 @@ static UIImage * backgroundImage;
     UIColor * textColor = nil;
     UIFont * textFont = [UIFont systemFontOfSize:14.0];
 
-    CGRect contentRect = self.bounds;
-
     CGPoint point;
     CGSize size;
 
@@ -382,15 +332,6 @@ static UIImage * backgroundImage;
     } else {
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
-
-        //
-        // Draw the cell's background.
-        //
-        CGRect backgroundImageRect =
-            CGRectMake(0,
-            contentRect.size.height - backgroundImage.size.height,
-            320.0, backgroundImage.size.height);
-        [backgroundImage drawInRect:backgroundImageRect];
     }
 
     //
@@ -409,9 +350,7 @@ static UIImage * backgroundImage;
     //
 
     [textColor set];
-    CGSize textSize =
-        CGSizeMake(
-        contentRect.size.width - TEXT_LEFT_MARGIN - TEXT_RIGHT_MARGIN, 99999.0);
+    CGSize textSize = CGSizeMake(TEXT_WIDTH_WITH_AVATAR, 99999.0);
     size = [text sizeWithFont:textFont
             constrainedToSize:textSize
                 lineBreakMode:UILineBreakModeWordWrap];
