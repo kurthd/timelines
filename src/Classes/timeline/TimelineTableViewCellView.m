@@ -426,7 +426,7 @@ static UIImage * backgroundImage;
 
 - (void)drawRectNoAuthor:(CGRect)rect
 {
-    static const CGFloat TIMESTAMP_RIGHT_MARGIN = 0.0;
+    static const CGFloat TIMESTAMP_LEFT_MARGIN = 64.0;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 64.0;
@@ -471,11 +471,7 @@ static UIImage * backgroundImage;
 
     [timestampColor set];
     size = [timestamp sizeWithFont:timestampFont];
-    point =
-        CGPointMake(
-            (contentRect.origin.x + contentRect.size.width) -
-            TIMESTAMP_RIGHT_MARGIN - size.width,
-            TIMESTAMP_TOP_MARGIN);
+    point = CGPointMake(TIMESTAMP_LEFT_MARGIN, TIMESTAMP_TOP_MARGIN);
 
     [timestamp drawAtPoint:point withFont:timestampFont];
 
