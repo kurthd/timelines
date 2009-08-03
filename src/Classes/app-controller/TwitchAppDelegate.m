@@ -587,14 +587,15 @@
             activeAccount != self.activeCredentials.credentials) {
             NSLog(@"Switching account to: '%@'.", activeAccount);
 
+            // oldUsername will be nil when the previously active account is
+            // deleted
+            NSString * oldUsername =
+                self.activeCredentials.credentials.username;
+
             [self broadcastActivatedCredentialsChanged:activeAccount];
             [self loadHomeViewWithCachedData:activeAccount];
             [self loadMessagesViewWithCachedData:activeAccount];
 
-            // oldUsername will be nil when the previously active account is
-            // deleted
-            NSString * oldUsername =
-            self.activeCredentials.credentials.username;            
             [directMessageAcctMgr
                 processAccountChangeToUsername:activeAccount.username
                 fromUsername:oldUsername];
@@ -1004,8 +1005,6 @@
     NSArray * allMentions = [Mention findAll:predicate context:context];
 
     NSLog(@"Loading persisted tweets:");
-    NSLog(@"Loaded tweets: '%@'.", allTweets);
-    NSLog(@"Loaded mentions: '%@'.", allMentions);
 
     // convert them all to dictionaries
     NSMutableDictionary * tweets =
@@ -1035,7 +1034,6 @@
         account.username];
 
     NSArray * allDms = [DirectMessage findAll:predicate context:context];
-    NSLog(@"All DMs for '%@':\n%@", account, allDms);
     NSNumber * largestSentId = [NSNumber numberWithLongLong:0];
     NSNumber * largestRecvdId = [NSNumber numberWithLongLong:0];
 
@@ -1061,8 +1059,8 @@
     }
 
     NSLog(@"Loading direct messages from persistence:");
-    NSLog(@"Sent up to %@:\n%@", largestSentId, sentDms);
-    NSLog(@"Received up to %@:\n%@", largestRecvdId, recvdDms);
+    NSLog(@"Sent up to %@:", largestSentId);
+    NSLog(@"Received up to %@:", largestRecvdId);
 
     DirectMessageCache * cache = [[DirectMessageCache alloc] init];
 
