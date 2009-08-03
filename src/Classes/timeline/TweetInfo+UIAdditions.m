@@ -35,22 +35,18 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     TimelineTableViewCell * timelineCell =
         [[[self class] cellCache] objectForKey:self.identifier];
 
-    if (!timelineCell) {
+    if (!timelineCell)
         timelineCell = [self createCell];
-        RoundedImage * avatarView = [self.user avatar];
-        [timelineCell setAvatarView:avatarView];
-    }
 
     return timelineCell;
 }
 
 - (TimelineTableViewCell *)createCell
 {
-    NSArray * nib =
-        [[NSBundle mainBundle] loadNibNamed:@"TimelineTableViewCell"
-        owner:self options:nil];
-
-    TimelineTableViewCell * timelineCell = [nib objectAtIndex:0];
+    TimelineTableViewCell * timelineCell =
+        [[TimelineTableViewCell alloc]
+         initWithStyle:UITableViewCellStyleDefault 
+         reuseIdentifier:@"TimelineTableViewCell"];
 
     NSString * displayName =
         self.user.name && self.user.name.length > 0 &&
@@ -59,11 +55,12 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [timelineCell setName:displayName];
     [timelineCell setDate:self.timestamp];
     [timelineCell setTweetText:self.text];
+    timelineCell.avatarImageUrl = self.user.profileImageUrl;
 
     [[[self class] cellCache]
         setObject:timelineCell forKey:self.identifier];
     
-    return timelineCell;
+    return [timelineCell autorelease];
 }
 
 + (NSMutableDictionary *)cellCache

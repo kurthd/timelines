@@ -4,175 +4,94 @@
 
 #import "TimelineTableViewCell.h"
 #import "NSDate+StringHelpers.h"
-#import "UILabel+DrawingAdditions.h"
-
-@interface TimelineTableViewCell ()
-
-+ (UIImage *)staticBackgroundImage;
-
-@end
-
-@implementation TimelineTableViewCell
+#import "TimelineTableViewCellView.h"
 
 static UIImage * backgroundImage;
 
+@implementation TimelineTableViewCell
+
+@synthesize avatarImageUrl;
+
++ (void)initialize
+{
+    NSAssert(!backgroundImage, @"backgroundImage should be nil.");
+    backgroundImage =
+        [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
+}
+
 - (void)dealloc
 {
-    [avatar release];
-    [nameLabel release];
-    [dateLabel release];
-    [tweetTextLabel release];
+    [timelineView release];
+    [avatarImageUrl release];
     [super dealloc];
 }
 
-- (void)awakeFromNib
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self.backgroundView =
-        [[[UIImageView alloc]
-        initWithImage:[[self class] staticBackgroundImage]] autorelease];
-    self.backgroundView.contentMode =  UIViewContentModeBottom;
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        CGRect frame = CGRectMake(0.0, 0.0, self.contentView.bounds.size.width,
+            self.contentView.bounds.size.height);
+        timelineView = [[TimelineTableViewCellView alloc] initWithFrame:frame];
+        timelineView.autoresizingMask =
+            UIViewAutoresizingFlexibleWidth |
+            UIViewAutoresizingFlexibleHeight;
 
-    avatar.radius = 4;
-    
-    needsLayout = YES;
-}
+        [self.contentView addSubview:timelineView];
 
-- (void)layoutSubviews
-{
-    if (needsLayout) {
-        [super layoutSubviews];
-
-        CGFloat tweetTextHeight =
-            [tweetTextLabel heightForString:tweetTextLabel.text];
-        CGRect tweetTextLabelFrame = tweetTextLabel.frame;
-        tweetTextLabelFrame.size.height = tweetTextHeight;
-        tweetTextLabel.frame = tweetTextLabelFrame;
-
-        needsLayout = NO;
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
+
+    return self;
 }
 
-- (void)setAvatarView:(RoundedImage *)avatarView
+- (void)drawRect:(CGRect)rect
 {
-    CGRect avatarFrame = avatar.frame;
-    CGFloat avatarRadius = avatar.radius;
-
-    [avatarView retain];
-    [avatar release];
-    avatar = avatarView;
-
-    avatar.frame = avatarFrame;
-    avatar.radius = avatarRadius;
+    //
+    // Draw the cell's background here, as well as in the contentView's
+    // drawRect, so we can draw over the accessory view's space, too.
+    //
+    CGRect backgroundImageRect =
+        CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
+        320.0, backgroundImage.size.height);
+    [backgroundImage drawInRect:backgroundImageRect];
 }
 
 - (void)setAvatarImage:(UIImage *)image
 {
-    [avatar setImage:image];
+    timelineView.avatar = image;
 }
 
 - (void)setName:(NSString *)name
 {
-    nameLabel.text = name;
+    timelineView.author = name;
 }
 
 - (void)setDate:(NSDate *)date
 {
-    dateLabel.text = [date shortDescription];
+    timelineView.timestamp = [date shortDescription];
 }
 
 - (void)setTweetText:(NSString *)tweetText
 {
-    tweetTextLabel.text = tweetText;
+    timelineView.text = tweetText;
 }
 
-- (void)setDisplayType:(TimelineTableViewCellType)aDisplayType
+- (void)setDisplayType:(TimelineTableViewCellType)displayType
 {
-    if (displayType != aDisplayType) {
-        needsLayout = YES;
+    timelineView.cellType = displayType;
+}
 
-        displayType = aDisplayType;
-
-        CGRect avatarFrame = avatar.frame;
-        CGRect nameLabelFrame = nameLabel.frame;
-        CGRect dateLabelFrame = dateLabel.frame;
-        CGRect tweetTextLabelFrame = tweetTextLabel.frame;
-
-        switch (displayType) {
-            case kTimelineTableViewCellTypeInverted:
-                avatar.hidden = NO;
-                avatarFrame.origin.x = 245;
-                nameLabel.hidden = YES;
-                dateLabelFrame.origin.x = 7;
-                dateLabel.textAlignment = UITextAlignmentLeft;
-                tweetTextLabelFrame.origin.x = 7;
-                tweetTextLabelFrame.size.width = 234;
-                break;
-            case kTimelineTableViewCellTypeNormal:
-                avatar.hidden = NO;
-                avatarFrame.origin.x = 7;
-                nameLabel.hidden = NO;
-                nameLabelFrame.origin.x = 64;
-                dateLabelFrame.origin.x = 212;
-                dateLabel.textAlignment = UITextAlignmentRight;
-                tweetTextLabelFrame.origin.x = 64;
-                tweetTextLabelFrame.size.width = 234;
-                break;
-            case kTimelineTableViewCellTypeNoAvatar:
-                nameLabel.hidden = YES;
-                dateLabelFrame.origin.x = 7;
-                dateLabel.textAlignment = UITextAlignmentLeft;
-                tweetTextLabelFrame.origin.x = 7;
-                avatar.hidden = YES;
-                tweetTextLabelFrame.size.width = 291;
-                break;
-            case kTimelineTableViewCellTypeNormalNoName:
-                avatar.hidden = NO;
-                avatarFrame.origin.x = 7;
-                nameLabel.hidden = YES;
-                dateLabelFrame.origin.x = 64;
-                dateLabel.textAlignment = UITextAlignmentLeft;
-                tweetTextLabelFrame.origin.x = 64;
-                tweetTextLabelFrame.size.width = 234;
-            break;
-        }
-
-        avatar.frame = avatarFrame;
-        nameLabel.frame = nameLabelFrame;
-        dateLabel.frame = dateLabelFrame;
-        tweetTextLabel.frame = tweetTextLabelFrame;
-    }
++ (NSString *)reuseIdentifier
+{
+    return @"TimelineTableViewCell";
 }
 
 + (CGFloat)heightForContent:(NSString *)tweetText
     displayType:(TimelineTableViewCellType)displayType
 {
-    NSInteger tweetTextLabelWidth =
-        displayType == kTimelineTableViewCellTypeNoAvatar ?
-        291 : 234;
-    CGSize maxSize = CGSizeMake(tweetTextLabelWidth, 999999.0);
-    UIFont * font = [UIFont systemFontOfSize:14.0];
-    UILineBreakMode mode = UILineBreakModeWordWrap;
-
-    CGSize size =
-        [tweetText sizeWithFont:font constrainedToSize:maxSize
-        lineBreakMode:mode];
-
-    NSInteger minHeight =
-        displayType == kTimelineTableViewCellTypeNoAvatar ?
-        0 : 65;
-    NSUInteger height = 36.0 + size.height;
-    height = height > minHeight ? height : minHeight;
-
-    return height;
-}
-
-+ (UIImage *)staticBackgroundImage
-{
-    if (!backgroundImage)
-        backgroundImage =
-            [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
-
-    return backgroundImage;
+    return [TimelineTableViewCellView heightForContent:tweetText
+                                              cellType:displayType];
 }
 
 @end

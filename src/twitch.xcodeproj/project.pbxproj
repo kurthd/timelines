@@ -19,6 +19,7 @@
 		05340B39101A5BFB0077E7C0 /* RecentSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 05340B36101A5BFB0077E7C0 /* RecentSearch.m */; };
 		053A11A4100CDBA5008DD2F6 /* TweetDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 053A11A2100CDBA5008DD2F6 /* TweetDraft.m */; };
 		054B6A20101E153600882C19 /* NSString+HtmlEncodingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */; };
+		054F3EF910243FAA005B6805 /* DefaultAvatar50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */; };
 		058207C11017744C00DFC051 /* ComposeRecipientGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 058207C01017744C00DFC051 /* ComposeRecipientGradient.png */; };
 		05948992101569B700C37C98 /* AccountSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05948991101569B700C37C98 /* AccountSettingsViewController.m */; };
 		05948995101569D500C37C98 /* AccountSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05948993101569D500C37C98 /* AccountSettingsView.xib */; };
@@ -29,7 +30,9 @@
 		05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */; };
 		05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C8872810163DB90097FEFF /* AccountsTableViewCell.m */; };
 		05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */; };
+		05DB973B1025107E00D06489 /* UIImage+DrawingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */; };
 		05E0271B101B983D00A97AC9 /* RecentSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */; };
+		05EE7C7D101E9C2E006663FD /* TimelineTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7C7C101E9C2E006663FD /* TimelineTableViewCellView.m */; };
 		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		05EF40D50FFADF95007B59F1 /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
 		05EF40D60FFADF95007B59F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 05B239470FEDD10900A6A2E6 /* Localizable.strings */; };
@@ -294,6 +297,7 @@
 		053A11A2100CDBA5008DD2F6 /* TweetDraft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDraft.m; path = tweets/TweetDraft.m; sourceTree = "<group>"; };
 		054B6A1E101E153600882C19 /* NSString+HtmlEncodingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HtmlEncodingAdditions.h"; path = "shared/NSString+HtmlEncodingAdditions.h"; sourceTree = "<group>"; };
 		054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HtmlEncodingAdditions.m"; path = "shared/NSString+HtmlEncodingAdditions.m"; sourceTree = "<group>"; };
+		054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DefaultAvatar50x50.png; path = images/DefaultAvatar50x50.png; sourceTree = "<group>"; };
 		0562BE2D0FF6AB6B005DA549 /* FetchTweetResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTweetResponseProcessor.h; path = twitter/processors/FetchTweetResponseProcessor.h; sourceTree = "<group>"; };
 		0562BE2E0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchTweetResponseProcessor.m; path = twitter/processors/FetchTweetResponseProcessor.m; sourceTree = "<group>"; };
 		05761AFD0FF6ADD600392ADC /* UserTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTweet.h; path = tweets/UserTweet.h; sourceTree = "<group>"; };
@@ -482,10 +486,14 @@
 		05D174050FF69FC500DCB22D /* Mention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mention.h; path = tweets/Mention.h; sourceTree = "<group>"; };
 		05D174060FF69FC500DCB22D /* Mention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mention.m; path = tweets/Mention.m; sourceTree = "<group>"; };
 		05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2-v1.1.xcmappingmodel"; path = "data-model/v2-v1.1.xcmappingmodel"; sourceTree = "<group>"; };
+		05DB97391025107E00D06489 /* UIImage+DrawingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+DrawingAdditions.h"; path = "shared/UIImage+DrawingAdditions.h"; sourceTree = "<group>"; };
+		05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+DrawingAdditions.m"; path = "shared/UIImage+DrawingAdditions.m"; sourceTree = "<group>"; };
 		05E02719101B983D00A97AC9 /* RecentSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecentSearchMgr.h; path = search/RecentSearchMgr.h; sourceTree = "<group>"; };
 		05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearchMgr.m; path = search/RecentSearchMgr.m; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
 		05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+TediousCodeAdditions.m"; path = "shared/NSManagedObject+TediousCodeAdditions.m"; sourceTree = "<group>"; };
+		05EE7C7B101E9C2E006663FD /* TimelineTableViewCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineTableViewCellView.h; path = timeline/TimelineTableViewCellView.h; sourceTree = "<group>"; };
+		05EE7C7C101E9C2E006663FD /* TimelineTableViewCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineTableViewCellView.m; path = timeline/TimelineTableViewCellView.m; sourceTree = "<group>"; };
 		05EF418F0FFADF95007B59F1 /* Twitbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05EF41970FFAE449007B59F1 /* twitbit-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "twitbit-info.plist"; sourceTree = "<group>"; };
 		05F459ED0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchDirectMessagesResponseProcessor.h; path = twitter/processors/FetchDirectMessagesResponseProcessor.h; sourceTree = "<group>"; };
@@ -988,6 +996,8 @@
 				0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */,
 				054B6A1E101E153600882C19 /* NSString+HtmlEncodingAdditions.h */,
 				054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */,
+				05DB97391025107E00D06489 /* UIImage+DrawingAdditions.h */,
+				05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -1386,6 +1396,7 @@
 				916BD8A20FEEDFBD007143A9 /* UserHeaderGradient.png */,
 				916BD8940FEEDAD9007143A9 /* Default.png */,
 				916BD8950FEEDAD9007143A9 /* DefaultAvatar.png */,
+				054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */,
 				916BD88D0FEED9DE007143A9 /* TableViewCellGradient.png */,
 				916BD7DA0FEEB839007143A9 /* Gear.png */,
 				916BD7DB0FEEB839007143A9 /* House.png */,
@@ -1411,6 +1422,8 @@
 				916BD81E0FEEC12B007143A9 /* TimelineDisplayMgrFactory.m */,
 				916BD9130FEEFB24007143A9 /* TimelineTableViewCell.h */,
 				916BD9140FEEFB24007143A9 /* TimelineTableViewCell.m */,
+				05EE7C7B101E9C2E006663FD /* TimelineTableViewCellView.h */,
+				05EE7C7C101E9C2E006663FD /* TimelineTableViewCellView.m */,
 				916BD9F80FEF46E4007143A9 /* TweetDetailsViewController.h */,
 				916BD9F90FEF46E4007143A9 /* TweetDetailsViewController.m */,
 				916BD9FB0FEF4986007143A9 /* TimelineViewControllerDelegate.h */,
@@ -1595,6 +1608,7 @@
 				91FC6B57101A339600354D67 /* Settings.bundle in Resources */,
 				91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */,
 				917245521025046A007E0DF6 /* FavoriteMark.png in Resources */,
+				054F3EF910243FAA005B6805 /* DefaultAvatar50x50.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1768,7 +1782,9 @@
 				0524824B101D7883009ED4FA /* SavedSearch.m in Sources */,
 				91DEF180101B7118001354D5 /* FindPeopleSearchDisplayMgr.m in Sources */,
 				054B6A20101E153600882C19 /* NSString+HtmlEncodingAdditions.m in Sources */,
+				05EE7C7D101E9C2E006663FD /* TimelineTableViewCellView.m in Sources */,
 				05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */,
+				05DB973B1025107E00D06489 /* UIImage+DrawingAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -136,7 +136,13 @@ static UIImage * defaultAvatar;
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
         [avatarCache setObject:avatarImage forKey:urlAsString];
-        [self triggerDelayedRefresh];
+        //[self triggerDelayedRefresh];
+
+        // avoid calling reloadData by setting the avatars of the visible cells
+        NSArray * visibleCells = self.tableView.visibleCells;
+        for (TimelineTableViewCell * cell in visibleCells)
+            if ([cell.avatarImageUrl isEqualToString:urlAsString])
+                [cell setAvatarImage:avatarImage];
 
         if ([urlAsString isEqual:user.profileImageUrl])
             [avatarView setImage:avatarImage];
@@ -319,7 +325,7 @@ static UIImage * defaultAvatar;
 + (UIImage *)defaultAvatar
 {
     if (!defaultAvatar)
-        defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar.png"] retain];
+        defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar50x50.png"] retain];
 
     return defaultAvatar;
 }
