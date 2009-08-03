@@ -824,6 +824,13 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         }
         [conversation setObject:directMessage forKey:directMessage.identifier];
     }
+    
+    // perform sanity check
+    NSDictionary * allNewMessageCountsByUser =
+        [newDirectMessagesState allNewMessagesByUser];
+    for (id userId in [allNewMessageCountsByUser allKeys])
+        if (![conversations objectForKey:userId])
+            [newDirectMessagesState setCount:0 forUserId:userId];
 
     for (NSString * userId in [conversations allKeys]) {
         NSDictionary * conversation = [conversations objectForKey:userId];
