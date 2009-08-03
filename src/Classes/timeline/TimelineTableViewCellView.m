@@ -9,6 +9,8 @@
 static const CGFloat TEXT_WIDTH_WITHOUT_AVATAR = 290.0;
 static const CGFloat TEXT_WIDTH_WITH_AVATAR = 235.0;
 
+static UIImage * backgroundImage;
+
 @interface TimelineTableViewCellView ()
 
 - (void)drawRectNormal:(CGRect)rect;
@@ -25,6 +27,13 @@ static const CGFloat TEXT_WIDTH_WITH_AVATAR = 235.0;
 
 @synthesize text, author, timestamp, avatar, cellType;
 @synthesize highlighted;
+
++ (void)initialize
+{
+    NSAssert(!backgroundImage, @"backgroundImage should be nil.");
+    backgroundImage =
+        [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
+}
 
 + (CGFloat)heightForContent:(NSString *)tweetText
                    cellType:(TimelineTableViewCellType)cellType
@@ -64,7 +73,7 @@ static const CGFloat TEXT_WIDTH_WITH_AVATAR = 235.0;
 {
     if (self = [super initWithFrame:frame]) {
         self.opaque = YES;
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor whiteColor];
     }
 
     return self;
@@ -131,6 +140,11 @@ static const CGFloat TEXT_WIDTH_WITH_AVATAR = 235.0;
         authorColor = [UIColor blackColor];
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
+
+        CGRect backgroundImageRect =
+        CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
+            320.0, backgroundImage.size.height);
+        [backgroundImage drawInRect:backgroundImageRect];
     }
 
     //
@@ -214,6 +228,11 @@ static const CGFloat TEXT_WIDTH_WITH_AVATAR = 235.0;
     } else {
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
+
+        CGRect backgroundImageRect =
+        CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
+            320.0, backgroundImage.size.height);
+        [backgroundImage drawInRect:backgroundImageRect];
     }
 
     //
@@ -276,6 +295,11 @@ static const CGFloat TEXT_WIDTH_WITH_AVATAR = 235.0;
     } else {
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
+
+        CGRect backgroundImageRect =
+        CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
+            320.0, backgroundImage.size.height);
+        [backgroundImage drawInRect:backgroundImageRect];
     }
 
     //
@@ -332,6 +356,11 @@ static const CGFloat TEXT_WIDTH_WITH_AVATAR = 235.0;
     } else {
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
+
+        CGRect backgroundImageRect =
+        CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
+            320.0, backgroundImage.size.height);
+        [backgroundImage drawInRect:backgroundImageRect];
     }
 
     //

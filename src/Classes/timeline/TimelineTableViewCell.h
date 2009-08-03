@@ -17,7 +17,10 @@ typedef enum {
 @interface TimelineTableViewCell : UITableViewCell
 {
     TimelineTableViewCellView * timelineView;
+    NSString * avatarImageUrl;
 }
+
+@property (nonatomic, copy) NSString * avatarImageUrl;
 
 - (void)setAvatarImage:(UIImage *)image;
 - (void)setName:(NSString *)name;
@@ -25,6 +28,7 @@ typedef enum {
 - (void)setTweetText:(NSString *)tweetText;
 - (void)setDisplayType:(TimelineTableViewCellType)displayType;
 
++ (NSString *)reuseIdentifier;
 + (CGFloat)heightForContent:(NSString *)tweetText
     displayType:(TimelineTableViewCellType)displayType;
 

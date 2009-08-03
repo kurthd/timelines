@@ -10,6 +10,8 @@ static UIImage * backgroundImage;
 
 @implementation TimelineTableViewCell
 
+@synthesize avatarImageUrl;
+
 + (void)initialize
 {
     NSAssert(!backgroundImage, @"backgroundImage should be nil.");
@@ -20,6 +22,7 @@ static UIImage * backgroundImage;
 - (void)dealloc
 {
     [timelineView release];
+    [avatarImageUrl release];
     [super dealloc];
 }
 
@@ -45,7 +48,7 @@ static UIImage * backgroundImage;
 - (void)drawRect:(CGRect)rect
 {
     //
-    // Draw the cell's background here, rather than in the contentView's
+    // Draw the cell's background here, as well as in the contentView's
     // drawRect, so we can draw over the accessory view's space, too.
     //
     CGRect backgroundImageRect =
@@ -77,6 +80,11 @@ static UIImage * backgroundImage;
 - (void)setDisplayType:(TimelineTableViewCellType)displayType
 {
     timelineView.cellType = displayType;
+}
+
++ (NSString *)reuseIdentifier
+{
+    return @"TimelineTableViewCell";
 }
 
 + (CGFloat)heightForContent:(NSString *)tweetText
