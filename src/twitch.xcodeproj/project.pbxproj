@@ -28,6 +28,7 @@
 		059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */; };
 		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A1F5C91028C06A009F5B3E /* RegexKitLite.m */; };
+		05C6C92B1028F7F000182B4A /* Trend.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C6C92A1028F7F000182B4A /* Trend.m */; };
 		05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */; };
 		05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C8872810163DB90097FEFF /* AccountsTableViewCell.m */; };
 		05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */; };
@@ -65,7 +66,6 @@
 		05EF40F00FFADF95007B59F1 /* UserInfoLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */; };
 		05EF40F10FFADF95007B59F1 /* UserListTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910BE2020FF2BA17005342EE /* UserListTableView.xib */; };
 		05EF40F20FFADF95007B59F1 /* UserSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910BE2050FF2BA3F005342EE /* UserSummaryTableViewCell.xib */; };
-		05EF40F30FFADF95007B59F1 /* TrendsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C5E6A70FF43CC10073E7F2 /* TrendsView.xib */; };
 		05EF40F40FFADF95007B59F1 /* TwitchBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */; };
 		05EF40F50FFADF95007B59F1 /* ForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82A40FF5543E004D04D5 /* ForwardButton.png */; };
 		05EF40F60FFADF95007B59F1 /* BackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82AA0FF55536004D04D5 /* BackButton.png */; };
@@ -160,8 +160,6 @@
 		05EF41530FFADF95007B59F1 /* UIStatePersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE36C0FF32137005342EE /* UIStatePersistenceStore.m */; };
 		05EF41540FFADF95007B59F1 /* SendDirectMessageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E82410FF345CA0074A91B /* SendDirectMessageResponseProcessor.m */; };
 		05EF41550FFADF95007B59F1 /* QueryIsFollowingResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 057E82DE0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m */; };
-		05EF41560FFADF95007B59F1 /* TrendsDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E6630FF434360073E7F2 /* TrendsDisplayMgr.m */; };
-		05EF41570FFADF95007B59F1 /* TrendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E6660FF434730073E7F2 /* TrendsViewController.m */; };
 		05EF41580FFADF95007B59F1 /* FetchTrendsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E7B10FF455B00073E7F2 /* FetchTrendsResponseProcessor.m */; };
 		05EF41590FFADF95007B59F1 /* MGTwitterMessagesYAJLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E7F40FF468F60073E7F2 /* MGTwitterMessagesYAJLParser.m */; };
 		05EF415A0FFADF95007B59F1 /* MGTwitterMiscYAJLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E7F60FF468F60073E7F2 /* MGTwitterMiscYAJLParser.m */; };
@@ -169,7 +167,6 @@
 		05EF415C0FFADF95007B59F1 /* MGTwitterStatusesYAJLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E7FA0FF468F60073E7F2 /* MGTwitterStatusesYAJLParser.m */; };
 		05EF415D0FFADF95007B59F1 /* MGTwitterUsersYAJLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E7FC0FF468F60073E7F2 /* MGTwitterUsersYAJLParser.m */; };
 		05EF415E0FFADF95007B59F1 /* MGTwitterYAJLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E80E0FF469B40073E7F2 /* MGTwitterYAJLParser.m */; };
-		05EF415F0FFADF95007B59F1 /* Trend.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E8CD0FF473020073E7F2 /* Trend.m */; };
 		05EF41600FFADF95007B59F1 /* SearchDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E9B10FF48BA70073E7F2 /* SearchDisplayMgr.m */; };
 		05EF41610FFADF95007B59F1 /* SearchResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E9C30FF494390073E7F2 /* SearchResponseProcessor.m */; };
 		05EF41620FFADF95007B59F1 /* TwitchBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */; };
@@ -435,12 +432,6 @@
 		05B23C1A0FEEEFC700A6A2E6 /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tweet.m; path = tweets/Tweet.m; sourceTree = "<group>"; };
 		05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarDisplayMgr.h; path = search/SearchBarDisplayMgr.h; sourceTree = "<group>"; };
 		05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBarDisplayMgr.m; path = search/SearchBarDisplayMgr.m; sourceTree = "<group>"; };
-		05C5E6620FF434360073E7F2 /* TrendsDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendsDisplayMgr.h; path = trends/TrendsDisplayMgr.h; sourceTree = "<group>"; };
-		05C5E6630FF434360073E7F2 /* TrendsDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrendsDisplayMgr.m; path = trends/TrendsDisplayMgr.m; sourceTree = "<group>"; };
-		05C5E6650FF434730073E7F2 /* TrendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendsViewController.h; path = trends/TrendsViewController.h; sourceTree = "<group>"; };
-		05C5E6660FF434730073E7F2 /* TrendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrendsViewController.m; path = trends/TrendsViewController.m; sourceTree = "<group>"; };
-		05C5E6A80FF43CC10073E7F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TrendsView.xib; sourceTree = "<group>"; };
-		05C5E6AB0FF43D2F0073E7F2 /* TrendsViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendsViewControllerDelegate.h; path = trends/TrendsViewControllerDelegate.h; sourceTree = "<group>"; };
 		05C5E7B00FF455B00073E7F2 /* FetchTrendsResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTrendsResponseProcessor.h; path = twitter/processors/FetchTrendsResponseProcessor.h; sourceTree = "<group>"; };
 		05C5E7B10FF455B00073E7F2 /* FetchTrendsResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchTrendsResponseProcessor.m; path = twitter/processors/FetchTrendsResponseProcessor.m; sourceTree = "<group>"; };
 		05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYAJLIPhone.a; path = Classes/vendor/yajl/libYAJLIPhone.a; sourceTree = "<group>"; };
@@ -458,12 +449,12 @@
 		05C5E7FC0FF468F60073E7F2 /* MGTwitterUsersYAJLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTwitterUsersYAJLParser.m; path = "vendor/mg-twitter-engine/MGTwitterUsersYAJLParser.m"; sourceTree = "<group>"; };
 		05C5E80D0FF469B40073E7F2 /* MGTwitterYAJLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTwitterYAJLParser.h; path = "vendor/mg-twitter-engine/MGTwitterYAJLParser.h"; sourceTree = "<group>"; };
 		05C5E80E0FF469B40073E7F2 /* MGTwitterYAJLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTwitterYAJLParser.m; path = "vendor/mg-twitter-engine/MGTwitterYAJLParser.m"; sourceTree = "<group>"; };
-		05C5E8CC0FF473020073E7F2 /* Trend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trend.h; path = trends/Trend.h; sourceTree = "<group>"; };
-		05C5E8CD0FF473020073E7F2 /* Trend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trend.m; path = trends/Trend.m; sourceTree = "<group>"; };
 		05C5E9B00FF48BA70073E7F2 /* SearchDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchDisplayMgr.h; path = search/SearchDisplayMgr.h; sourceTree = "<group>"; };
 		05C5E9B10FF48BA70073E7F2 /* SearchDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchDisplayMgr.m; path = search/SearchDisplayMgr.m; sourceTree = "<group>"; };
 		05C5E9C20FF494390073E7F2 /* SearchResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchResponseProcessor.h; path = twitter/processors/SearchResponseProcessor.h; sourceTree = "<group>"; };
 		05C5E9C30FF494390073E7F2 /* SearchResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchResponseProcessor.m; path = twitter/processors/SearchResponseProcessor.m; sourceTree = "<group>"; };
+		05C6C9291028F7F000182B4A /* Trend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trend.h; path = search/Trend.h; sourceTree = "<group>"; };
+		05C6C92A1028F7F000182B4A /* Trend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trend.m; path = search/Trend.m; sourceTree = "<group>"; };
 		05C702800FF8359B00936E4C /* LogInDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogInDisplayMgr.h; path = "log-in/LogInDisplayMgr.h"; sourceTree = "<group>"; };
 		05C702810FF8359B00936E4C /* LogInDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogInDisplayMgr.m; path = "log-in/LogInDisplayMgr.m"; sourceTree = "<group>"; };
 		05C702820FF8359B00936E4C /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogInViewController.h; path = "log-in/LogInViewController.h"; sourceTree = "<group>"; };
@@ -1032,7 +1023,6 @@
 				918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */,
 				910BE2020FF2BA17005342EE /* UserListTableView.xib */,
 				910BE2050FF2BA3F005342EE /* UserSummaryTableViewCell.xib */,
-				05C5E6A70FF43CC10073E7F2 /* TrendsView.xib */,
 				91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */,
 				05340AB8101A3DAD0077E7C0 /* SearchBookmarksView.xib */,
 				057620320FF736D600392ADC /* OauthLogInView.xib */,
@@ -1168,13 +1158,6 @@
 		05C5E6600FF42F000073E7F2 /* trends */ = {
 			isa = PBXGroup;
 			children = (
-				05C5E6620FF434360073E7F2 /* TrendsDisplayMgr.h */,
-				05C5E6630FF434360073E7F2 /* TrendsDisplayMgr.m */,
-				05C5E6650FF434730073E7F2 /* TrendsViewController.h */,
-				05C5E6660FF434730073E7F2 /* TrendsViewController.m */,
-				05C5E6AB0FF43D2F0073E7F2 /* TrendsViewControllerDelegate.h */,
-				05C5E8CC0FF473020073E7F2 /* Trend.h */,
-				05C5E8CD0FF473020073E7F2 /* Trend.m */,
 			);
 			name = trends;
 			sourceTree = "<group>";
@@ -1209,6 +1192,8 @@
 				0524824A101D7883009ED4FA /* SavedSearch.m */,
 				051D7C67101D105A00B867C1 /* SavedSearchMgr.h */,
 				051D7C68101D105A00B867C1 /* SavedSearchMgr.m */,
+				05C6C9291028F7F000182B4A /* Trend.h */,
+				05C6C92A1028F7F000182B4A /* Trend.m */,
 			);
 			name = search;
 			sourceTree = "<group>";
@@ -1582,7 +1567,6 @@
 				05EF40F00FFADF95007B59F1 /* UserInfoLabelCell.xib in Resources */,
 				05EF40F10FFADF95007B59F1 /* UserListTableView.xib in Resources */,
 				05EF40F20FFADF95007B59F1 /* UserSummaryTableViewCell.xib in Resources */,
-				05EF40F30FFADF95007B59F1 /* TrendsView.xib in Resources */,
 				05EF40F40FFADF95007B59F1 /* TwitchBrowserView.xib in Resources */,
 				05EF40F50FFADF95007B59F1 /* ForwardButton.png in Resources */,
 				05EF40F60FFADF95007B59F1 /* BackButton.png in Resources */,
@@ -1719,8 +1703,6 @@
 				05EF41530FFADF95007B59F1 /* UIStatePersistenceStore.m in Sources */,
 				05EF41540FFADF95007B59F1 /* SendDirectMessageResponseProcessor.m in Sources */,
 				05EF41550FFADF95007B59F1 /* QueryIsFollowingResponseProcessor.m in Sources */,
-				05EF41560FFADF95007B59F1 /* TrendsDisplayMgr.m in Sources */,
-				05EF41570FFADF95007B59F1 /* TrendsViewController.m in Sources */,
 				05EF41580FFADF95007B59F1 /* FetchTrendsResponseProcessor.m in Sources */,
 				05EF41590FFADF95007B59F1 /* MGTwitterMessagesYAJLParser.m in Sources */,
 				05EF415A0FFADF95007B59F1 /* MGTwitterMiscYAJLParser.m in Sources */,
@@ -1728,7 +1710,6 @@
 				05EF415C0FFADF95007B59F1 /* MGTwitterStatusesYAJLParser.m in Sources */,
 				05EF415D0FFADF95007B59F1 /* MGTwitterUsersYAJLParser.m in Sources */,
 				05EF415E0FFADF95007B59F1 /* MGTwitterYAJLParser.m in Sources */,
-				05EF415F0FFADF95007B59F1 /* Trend.m in Sources */,
 				05EF41600FFADF95007B59F1 /* SearchDisplayMgr.m in Sources */,
 				05EF41610FFADF95007B59F1 /* SearchResponseProcessor.m in Sources */,
 				05EF41620FFADF95007B59F1 /* TwitchBrowserViewController.m in Sources */,
@@ -1798,6 +1779,7 @@
 				05DB973B1025107E00D06489 /* UIImage+DrawingAdditions.m in Sources */,
 				917245E91028B781007E0DF6 /* FindPeopleBookmarkViewController.m in Sources */,
 				05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */,
+				05C6C92B1028F7F000182B4A /* Trend.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1851,14 +1833,6 @@
 			);
 			name = Localizable.strings;
 			path = strings/en.lproj;
-			sourceTree = "<group>";
-		};
-		05C5E6A70FF43CC10073E7F2 /* TrendsView.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				05C5E6A80FF43CC10073E7F2 /* en */,
-			);
-			name = TrendsView.xib;
 			sourceTree = "<group>";
 		};
 		05C7051B0FF88C4100936E4C /* ExplainOauthView.xib */ = {

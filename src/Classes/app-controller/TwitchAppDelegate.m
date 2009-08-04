@@ -16,7 +16,6 @@
 #import "TwitPicImageSender.h"
 #import "ComposeTweetDisplayMgr.h"
 #import "UserTimelineDataSource.h"
-#import "TrendsDisplayMgr.h"
 #import "SearchBarDisplayMgr.h"
 #import "AccountsDisplayMgr.h"
 #import "ActiveTwitterCredentials.h"
@@ -48,7 +47,6 @@
 - (void)initMessagesTab;
 - (void)initProfileTab;
 - (void)initFindPeopleTab;
-- (void)initTrendsTab;
 - (void)initAccountsTab;
 - (void)initSearchTab;
 
@@ -103,7 +101,6 @@
     [homeNetAwareViewController release];
     [messagesNetAwareViewController release];
     [profileNetAwareViewController release];
-    [trendsNetAwareViewController release];
     [searchNetAwareViewController release];
     [findPeopleNetAwareViewController release];
 
@@ -118,7 +115,6 @@
 
     [composeTweetDisplayMgr release];
 
-    [trendsDisplayMgr release];
     [findPeopleSearchDisplayMgr release];
     [accountsDisplayMgr release];
 
@@ -168,7 +164,6 @@
     [self initMessagesTab];
     [self initProfileTab];
     [self initFindPeopleTab];
-    [self initTrendsTab];
     [self initSearchTab];
     [self initAccountsTab];
 
@@ -194,7 +189,6 @@
         [directMessageDisplayMgr setCredentials:c];
         [profileTimelineDisplayMgr setCredentials:c];
         [findPeopleTimelineDisplayMgr setCredentials:c];
-        [trendsDisplayMgr setCredentials:c];
         [searchBarDisplayMgr setCredentials:c];
         [self.composeTweetDisplayMgr setCredentials:c];
 
@@ -513,31 +507,6 @@
         dataSource:dataSource
         context:[self managedObjectContext]
         savedSearchMgr:findPeopleBookmarkMgr];
-}
-
-- (void)initTrendsTab
-{
-    TwitterService * trendsService =
-        [[[TwitterService alloc] initWithTwitterCredentials:nil
-        context:[self managedObjectContext]]
-        autorelease];
-
-    NetworkAwareViewController * navc =
-        [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:nil] autorelease];
-
-    TimelineDisplayMgr * displayMgr =
-        [timelineDisplayMgrFactory
-        createTimelineDisplayMgrWithWrapperController:navc
-        title:@"Trends"  // set programmatically later
-        composeTweetDisplayMgr:self.composeTweetDisplayMgr];
-    navc.delegate = displayMgr;
-
-    trendsDisplayMgr =
-        [[TrendsDisplayMgr alloc]
-        initWithTwitterService:trendsService
-            netAwareController:trendsNetAwareViewController
-            timelineDisplayMgr:displayMgr];
 }
 
 - (void)initSearchTab

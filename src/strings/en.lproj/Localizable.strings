@@ -90,10 +90,6 @@ userlisttableview.following = "%@ following, %@ followers";
 userlisttableview.followers.title = "Followers";
 userlisttableview.following.title = "Following";
 
-/* Trends */
-trends.view.title = "Trends";
-trends.fetch.failed = "Failed to Load Trends";
-
 /* Search */
 search.view.title = "Search";
 search.fetch.failed = "Search Failed";
@@ -105,6 +101,7 @@ searchbookmarks.recents.prompt = "Choose a recent search";
 savedsearch.save.title = "Save Search";
 savedsearch.remove.title = "Forget Saved Search";
 searchbookmarks.trends.prompt = "Choose a Twitter trend";
+trends.fetch.failed = "Failed to Load Trends";
 
 /* Find People Bookmarks */
 peoplebookmarks.savedsearches.prompt = "Choose a bookmark";

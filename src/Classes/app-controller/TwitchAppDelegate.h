@@ -14,7 +14,7 @@
 #import "FindPeopleSearchDisplayMgr.h"
 
 @class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
-@class TrendsDisplayMgr, SearchBarDisplayMgr;
+@class SearchBarDisplayMgr;
 @class AccountsViewController;
 @class DeviceRegistrar;
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
@@ -48,7 +48,6 @@
     IBOutlet NetworkAwareViewController * homeNetAwareViewController;
     IBOutlet NetworkAwareViewController * messagesNetAwareViewController;
     IBOutlet NetworkAwareViewController * profileNetAwareViewController;
-    IBOutlet NetworkAwareViewController * trendsNetAwareViewController;
     IBOutlet NetworkAwareViewController * searchNetAwareViewController;
     IBOutlet AccountsViewController * accountsViewController;
     IBOutlet NetworkAwareViewController * findPeopleNetAwareViewController;
@@ -64,7 +63,6 @@
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 
-    TrendsDisplayMgr * trendsDisplayMgr;
     SearchBarDisplayMgr * searchBarDisplayMgr;
     FindPeopleSearchDisplayMgr * findPeopleSearchDisplayMgr;
     AccountsDisplayMgr * accountsDisplayMgr;
