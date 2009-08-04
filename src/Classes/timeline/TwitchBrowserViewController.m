@@ -65,6 +65,13 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView
 {
+    // HACK: this allows links that should open in another window to load
+    [webView stringByEvaluatingJavaScriptFromString:@"{\
+        var a = document.getElementsByTagName(\"a\"); \
+    	for (var i=0; i<a.length; i++) \
+    	    a[i].target = \"_self\";\
+    	}"];
+
     backButton.enabled = [webView canGoBack];
     forwardButton.enabled = [webView canGoForward];
     if (!webView.loading)
