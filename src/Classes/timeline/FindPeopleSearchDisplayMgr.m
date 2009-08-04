@@ -12,12 +12,20 @@
 - (void)showError:(NSError *)error;
 - (void)showDarkTransparentView;
 - (void)hideDarkTransparentView;
+- (void)displayBookmarksView;
+
+- (void)searchForQuery:(NSString *)query;
+
+@property (nonatomic, readonly)
+    FindPeopleBookmarkViewController * bookmarkController;
+@property (nonatomic, retain) RecentSearchMgr * recentSearchMgr;
 
 @end
 
 @implementation FindPeopleSearchDisplayMgr
 
 @synthesize darkTransparentView;
+@synthesize recentSearchMgr;
 
 - (void)dealloc
 {
@@ -26,21 +34,32 @@
     [timelineDisplayMgr release];
     [dataSource release];
     [darkTransparentView release];
+    [bookmarkController release];
+    [recentSearchMgr release];
+    [savedSearchMgr release];
+    [context release];
     [super dealloc];
 }
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc
     timelineDisplayMgr:(TimelineDisplayMgr *)aTimelineDisplayMgr
     dataSource:(ArbUserTimelineDataSource *)aDataSource
+    context:(NSManagedObjectContext *)aContext
+    savedSearchMgr:(SavedSearchMgr *)aSavedSearchMgr
 {
     if (self = [super init]) {
         netAwareController = [navc retain];
         dataSource = [aDataSource retain];
-
+        context = [aContext retain];
+        savedSearchMgr = [aSavedSearchMgr retain];
+        
         searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
 
         searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
         searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        searchBar.showsBookmarkButton = YES;
+        searchBar.placeholder =
+            NSLocalizedString(@"findpeople.placeholder", @"");
         searchBar.delegate = self;
 
         UINavigationItem * navItem = netAwareController.navigationItem;
@@ -54,7 +73,7 @@
 
         timelineDisplayMgr = [aTimelineDisplayMgr retain];
         timelineDisplayMgr.suppressTimelineFailures = YES;
-        
+
         [netAwareController setUpdatingState:kDisconnected];
         [netAwareController setCachedDataAvailable:NO];
         [netAwareController setNoConnectionText:@""];
@@ -72,14 +91,21 @@
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:YES];
 
+    [self searchForQuery:searchBar.text];
+}
+
+// helper
+- (void)searchForQuery:(NSString *)query
+{
     [netAwareController setUpdatingState:kConnectedAndUpdating];
     [netAwareController setCachedDataAvailable:NO];
     NSCharacterSet * validUsernameCharSet =
         [[NSCharacterSet alphanumericCharacterSet] invertedSet];
     NSString * searchName =
-        [[searchBar.text stringByTrimmingCharactersInSet:validUsernameCharSet] 
+        [[query stringByTrimmingCharactersInSet:validUsernameCharSet] 
         stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSLog(@"Search name: %@", searchName);
+    [self.recentSearchMgr addRecentSearch:searchName];
+    searchBar.text = searchName;
     NSString * noConnFormatString =
         NSLocalizedString(@"findpeople.nouser", @"");
     NSString * noConnText =
@@ -120,6 +146,52 @@
     return YES;
 }
 
+- (void)searchBarBookmarkButtonClicked:(UISearchBar *)aSearchBar
+{
+    [self displayBookmarksView];
+}
+
+#pragma mark SearchBookmarksViewControllerDelegate implementation
+
+- (NSArray *)savedSearches
+{
+    return [savedSearchMgr savedSearches];
+}
+
+- (BOOL)removeSavedSearchWithQuery:(NSString *)query
+{
+    [savedSearchMgr removeSavedSearchForQuery:query];
+
+    return YES;
+}
+
+- (void)setSavedSearchOrder:(NSArray *)savedSearches
+{
+    [savedSearchMgr setSavedSearchOrder:savedSearches];
+}
+
+- (NSArray *)recentSearches
+{
+    return [self.recentSearchMgr recentSearches];
+}
+
+- (void)clearRecentSearches
+{
+    [self.recentSearchMgr clear];
+}
+
+- (void)userDidSelectSearchQuery:(NSString *)query
+{
+    [netAwareController dismissModalViewControllerAnimated:YES];
+
+    [self searchForQuery:query];
+}
+
+- (void)userDidCancel
+{
+    [netAwareController dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark UI helpers
 
 - (void)showError:(NSError *)error
@@ -128,7 +200,6 @@
     NSString * message = error.localizedDescription;
 
     [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
-    
 }
 
 - (void)showDarkTransparentView
@@ -139,11 +210,10 @@
     self.darkTransparentView.alpha = 0.0;
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationTransition:UIViewAnimationTransitionNone
-                           forView:self.darkTransparentView
-                             cache:YES];
+        forView:self.darkTransparentView cache:YES];
 
     self.darkTransparentView.alpha = 0.8;
-    
+
     [UIView commitAnimations];
 }
 
@@ -152,14 +222,19 @@
     self.darkTransparentView.alpha = 0.8;
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationTransition:UIViewAnimationTransitionNone
-                           forView:self.darkTransparentView
-                             cache:YES];
+        forView:self.darkTransparentView cache:YES];
 
     self.darkTransparentView.alpha = 0.0;
 
     [UIView commitAnimations];
 
     [self.darkTransparentView removeFromSuperview];
+}
+
+- (void)displayBookmarksView
+{
+    [netAwareController presentModalViewController:self.bookmarkController
+        animated:YES];
 }
 
 #pragma mark Accessors
@@ -176,5 +251,27 @@
     
     return darkTransparentView;
 }
- 
+
+- (FindPeopleBookmarkViewController *)bookmarkController
+{
+    if (!bookmarkController) {
+        bookmarkController =
+            [[FindPeopleBookmarkViewController alloc]
+            initWithNibName:@"FindPeopleBookmarkView" bundle:nil];
+        bookmarkController.delegate = self;
+    }
+
+    return bookmarkController;
+}
+
+- (RecentSearchMgr *)recentSearchMgr
+{
+    if (!recentSearchMgr)
+        recentSearchMgr =
+            [[RecentSearchMgr alloc] initWithAccountName:@"recent.people"
+            context:context];
+
+    return recentSearchMgr;
+}
+
 @end

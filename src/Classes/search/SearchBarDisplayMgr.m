@@ -261,7 +261,6 @@
     NSString * message = error.localizedDescription;
 
     [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
-    
 }
 
 - (void)showDarkTransparentView

@@ -125,6 +125,8 @@
     [homeSendingTweetProgressView release];
     [profileSendingTweetProgressView release];
 
+    [findPeopleBookmarkMgr release];
+
     [super dealloc];
 }
 
@@ -151,12 +153,17 @@
     // Add the tab bar controller's current view as a subview of the window
     [window addSubview:tabBarController.view];
 
+    findPeopleBookmarkMgr =
+        [[SavedSearchMgr alloc] initWithAccountName:@"saved.people"
+        context:[self managedObjectContext]];
     timelineDisplayMgrFactory =
         [[TimelineDisplayMgrFactory alloc]
-        initWithContext:[self managedObjectContext]];
+        initWithContext:[self managedObjectContext]
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr];
     directMessageDisplayMgrFactory =
         [[DirectMessageDisplayMgrFactory alloc]
         initWithContext:[self managedObjectContext]];
+
     [self initHomeTab];
     [self initMessagesTab];
     [self initProfileTab];
@@ -503,7 +510,9 @@
         [[FindPeopleSearchDisplayMgr alloc]
         initWithNetAwareController:findPeopleNetAwareViewController
         timelineDisplayMgr:findPeopleTimelineDisplayMgr
-        dataSource:dataSource];
+        dataSource:dataSource
+        context:[self managedObjectContext]
+        savedSearchMgr:findPeopleBookmarkMgr];
 }
 
 - (void)initTrendsTab

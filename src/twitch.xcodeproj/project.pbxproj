@@ -234,6 +234,8 @@
 		9152E239101557AC0033B63B /* NewMessagesDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9152E238101557AC0033B63B /* NewMessagesDot.png */; };
 		9152E2761015729D0033B63B /* DirectMessage+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E2751015729D0033B63B /* DirectMessage+UIAdditions.m */; };
 		917245521025046A007E0DF6 /* FavoriteMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 917245511025046A007E0DF6 /* FavoriteMark.png */; };
+		917245E61028B715007E0DF6 /* FindPeopleBookmarkView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 917245E41028B715007E0DF6 /* FindPeopleBookmarkView.xib */; };
+		917245E91028B781007E0DF6 /* FindPeopleBookmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 917245E81028B781007E0DF6 /* FindPeopleBookmarkViewController.m */; };
 		917FFF0F1010F7A700335C0F /* PhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF0C1010F7A700335C0F /* PhotoBrowser.m */; };
 		917FFF101010F7A700335C0F /* RemotePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF0E1010F7A700335C0F /* RemotePhoto.m */; };
 		917FFF1B1010F8B800335C0F /* CommonTwitterServicePhotoSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF1A1010F8B800335C0F /* CommonTwitterServicePhotoSource.m */; };
@@ -644,6 +646,9 @@
 		916BDA140FEF4E96007143A9 /* TweetDetailsViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailsViewDelegate.h; path = timeline/TweetDetailsViewDelegate.h; sourceTree = "<group>"; };
 		916BDA4D0FEF573A007143A9 /* tweet-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "tweet-style.css"; sourceTree = "<group>"; };
 		917245511025046A007E0DF6 /* FavoriteMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FavoriteMark.png; path = images/FavoriteMark.png; sourceTree = "<group>"; };
+		917245E51028B715007E0DF6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/FindPeopleBookmarkView.xib; sourceTree = "<group>"; };
+		917245E71028B781007E0DF6 /* FindPeopleBookmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FindPeopleBookmarkViewController.h; path = timeline/FindPeopleBookmarkViewController.h; sourceTree = "<group>"; };
+		917245E81028B781007E0DF6 /* FindPeopleBookmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindPeopleBookmarkViewController.m; path = timeline/FindPeopleBookmarkViewController.m; sourceTree = "<group>"; };
 		917FFF0B1010F7A700335C0F /* PhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBrowser.h; path = "photo-browser/PhotoBrowser.h"; sourceTree = "<group>"; };
 		917FFF0C1010F7A700335C0F /* PhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBrowser.m; path = "photo-browser/PhotoBrowser.m"; sourceTree = "<group>"; };
 		917FFF0D1010F7A700335C0F /* RemotePhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemotePhoto.h; path = "photo-browser/RemotePhoto.h"; sourceTree = "<group>"; };
@@ -1037,6 +1042,7 @@
 				9152E1581014F8850033B63B /* DirectMessageConversationView.xib */,
 				9152E189101509FE0033B63B /* DirectMessageInboxCell.xib */,
 				05948993101569D500C37C98 /* AccountSettingsView.xib */,
+				917245E41028B715007E0DF6 /* FindPeopleBookmarkView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -1454,6 +1460,8 @@
 				9180B7AD1012AA170096DFA1 /* TwitchBrowserViewControllerDelegate.h */,
 				91DEF17E101B7118001354D5 /* FindPeopleSearchDisplayMgr.h */,
 				91DEF17F101B7118001354D5 /* FindPeopleSearchDisplayMgr.m */,
+				917245E71028B781007E0DF6 /* FindPeopleBookmarkViewController.h */,
+				917245E81028B781007E0DF6 /* FindPeopleBookmarkViewController.m */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -1612,6 +1620,7 @@
 				91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */,
 				917245521025046A007E0DF6 /* FavoriteMark.png in Resources */,
 				054F3EF910243FAA005B6805 /* DefaultAvatar50x50.png in Resources */,
+				917245E61028B715007E0DF6 /* FindPeopleBookmarkView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1787,6 +1796,7 @@
 				05EE7C7D101E9C2E006663FD /* TimelineTableViewCellView.m in Sources */,
 				05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */,
 				05DB973B1025107E00D06489 /* UIImage+DrawingAdditions.m in Sources */,
+				917245E91028B781007E0DF6 /* FindPeopleBookmarkViewController.m in Sources */,
 				05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1937,6 +1947,14 @@
 				916BD9F50FEF46B1007143A9 /* en */,
 			);
 			name = TweetDetailsView.xib;
+			sourceTree = "<group>";
+		};
+		917245E41028B715007E0DF6 /* FindPeopleBookmarkView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				917245E51028B715007E0DF6 /* en */,
+			);
+			name = FindPeopleBookmarkView.xib;
 			sourceTree = "<group>";
 		};
 		918E89580FF1863C0042BBEE /* UserInfoView.xib */ = {

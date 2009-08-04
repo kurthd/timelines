@@ -13,13 +13,17 @@
 - (void)dealloc
 {
     [context release];
+    [findPeopleBookmarkMgr release];
     [super dealloc];
 }
 
 - (id)initWithContext:(NSManagedObjectContext *)someContext
+    findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr
 {
-    if (self = [super init])
+    if (self = [super init]) {
         context = [someContext retain];
+        findPeopleBookmarkMgr = [aFindPeopleBookmarkMgr retain];
+    }
 
     return self;
 }
@@ -53,7 +57,8 @@
         timelineController:timelineController timelineSource:dataSource
         service:timelineService title:title factory:self
         managedObjectContext:context
-        composeTweetDisplayMgr:composeTweetDisplayMgr]
+        composeTweetDisplayMgr:composeTweetDisplayMgr
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr]
         autorelease];
     dataSource.delegate = timelineDisplayMgr;
     timelineController.delegate = timelineDisplayMgr;

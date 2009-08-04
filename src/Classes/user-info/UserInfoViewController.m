@@ -30,7 +30,7 @@ enum {
 
 @implementation UserInfoViewController
 
-@synthesize delegate, followingEnabled;
+@synthesize delegate, followingEnabled, findPeopleBookmarkMgr;
 
 static UIImage * defaultAvatar;
 
@@ -49,9 +49,11 @@ static UIImage * defaultAvatar;
     [followingLoadingLabel release];
 
     [followButton release];
-    [sendMessageButton release];
+    [bookmarkButton release];
 
     [user release];
+
+    [findPeopleBookmarkMgr release];
 
     [super dealloc];
 }
@@ -72,6 +74,8 @@ static UIImage * defaultAvatar;
 {
     [super viewWillAppear:animated];
     [delegate showingUserInfoView];
+    bookmarkButton.enabled =
+        ![findPeopleBookmarkMgr isSearchSaved:user.username];
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -327,6 +331,13 @@ static UIImage * defaultAvatar;
 {
     NSLog(@"'Send message' selected");
     [delegate sendDirectMessageToUser:user.username];
+}
+
+- (IBAction)bookmark:(id)sender
+{
+    NSLog(@"Bookmarking user");
+    [findPeopleBookmarkMgr addSavedSearch:user.username];
+    bookmarkButton.enabled = NO;
 }
 
 - (void)updateDisplayForFollwoing:(BOOL)following

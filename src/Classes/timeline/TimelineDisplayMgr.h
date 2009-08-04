@@ -23,6 +23,7 @@
 #import "TwitchBrowserViewControllerDelegate.h"
 #import "TwitterService.h"
 #import "TwitterServiceDelegate.h"
+#import "SavedSearchMgr.h"
 
 @class TimelineDisplayMgrFactory;
 
@@ -42,6 +43,7 @@
     UserInfoViewController * userInfoController;
     TwitchBrowserViewController * browserController;
     PhotoBrowser * photoBrowser;
+    SavedSearchMgr * findPeopleBookmarkMgr;
 
     NSObject<TimelineDataSource> * timelineSource;
     TwitterService * service;
@@ -141,7 +143,8 @@
     service:(TwitterService *)service title:(NSString *)title
     factory:(TimelineDisplayMgrFactory *)factory
     managedObjectContext:(NSManagedObjectContext* )managedObjectContext
-    composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr;
+    composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
+    findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr;
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page
