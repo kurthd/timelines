@@ -5,13 +5,16 @@
 #import <Foundation/Foundation.h>
 #import "TimelineDisplayMgr.h"
 #import "ComposeTweetDisplayMgr.h"
+#import "SavedSearchMgr.h"
 
 @interface TimelineDisplayMgrFactory : NSObject
 {
     NSManagedObjectContext * context;
+    SavedSearchMgr * findPeopleBookmarkMgr;
 }
 
-- (id)initWithContext:(NSManagedObjectContext *)context;
+- (id)initWithContext:(NSManagedObjectContext *)someContext
+    findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr;
 
 - (TimelineDisplayMgr *)
     createTimelineDisplayMgrWithWrapperController:

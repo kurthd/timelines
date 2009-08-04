@@ -54,6 +54,7 @@ static NSInteger retweetFormatValueAlredyRead;
     [tweetDetailsController release];
     [browserController release];
     [photoBrowser release];
+    [findPeopleBookmarkMgr release];
 
     [timelineSource release];
     [service release];
@@ -90,6 +91,7 @@ static NSInteger retweetFormatValueAlredyRead;
     factory:(TimelineDisplayMgrFactory *)factory
     managedObjectContext:(NSManagedObjectContext* )aManagedObjectContext
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)aComposeTweetDisplayMgr
+    findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
@@ -99,6 +101,7 @@ static NSInteger retweetFormatValueAlredyRead;
         timelineDisplayMgrFactory = [factory retain];
         managedObjectContext = [aManagedObjectContext retain];
         composeTweetDisplayMgr = [aComposeTweetDisplayMgr retain];
+        findPeopleBookmarkMgr = [aFindPeopleBookmarkMgr retain];
 
         timeline = [[NSMutableDictionary dictionary] retain];
         followingUsers = [[NSMutableDictionary dictionary] retain];
@@ -943,6 +946,13 @@ static NSInteger retweetFormatValueAlredyRead;
 
         NSString * title = NSLocalizedString(@"userinfoview.title", @"");
         userInfoController.navigationItem.title = title;
+        userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
+
+        UIBarButtonItem * rightBarButton =
+            [[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self
+            action:@selector(sendDirectMessageToCurrentUser)];
+        userInfoController.navigationItem.rightBarButtonItem = rightBarButton;
 
         userInfoController.delegate = self;
     }

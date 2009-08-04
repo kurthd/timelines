@@ -71,6 +71,8 @@
 
     UIBarButtonItem * homeSendingTweetProgressView;
     UIBarButtonItem * profileSendingTweetProgressView;
+
+    SavedSearchMgr * findPeopleBookmarkMgr;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;
