@@ -135,3 +135,4 @@ directmessageinbox.nummessages = "%d received, %d sent";
 
 /* Find people */
 findpeople.nouser = "No exact matches for username '%@'";
+findpeople.placeholder = "Username";

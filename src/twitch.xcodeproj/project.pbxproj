@@ -27,6 +27,7 @@
 		0599416C0FFB32F100842518 /* twitch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0599416A0FFB32F100842518 /* twitch.xcdatamodeld */; };
 		059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */; };
 		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
+		05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A1F5C91028C06A009F5B3E /* RegexKitLite.m */; };
 		05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */; };
 		05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C8872810163DB90097FEFF /* AccountsTableViewCell.m */; };
 		05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */; };
@@ -173,7 +174,6 @@
 		05EF41610FFADF95007B59F1 /* SearchResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C5E9C30FF494390073E7F2 /* SearchResponseProcessor.m */; };
 		05EF41620FFADF95007B59F1 /* TwitchBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */; };
 		05EF41630FFADF95007B59F1 /* SearchBarDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */; };
-		05EF41640FFADF95007B59F1 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D1728B0FF67ED900DCB22D /* RegexKitLite.m */; };
 		05EF41650FFADF95007B59F1 /* TwitterCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D173E20FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m */; };
 		05EF41660FFADF95007B59F1 /* Mention.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D174060FF69FC500DCB22D /* Mention.m */; };
 		05EF41670FFADF95007B59F1 /* UserTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05761AFE0FF6ADD600392ADC /* UserTweet.m */; };
@@ -357,6 +357,8 @@
 		059F6EE51017EDD900B323D7 /* DirectMessageDraft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageDraft.h; path = tweets/DirectMessageDraft.h; sourceTree = "<group>"; };
 		059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageDraft.m; path = tweets/DirectMessageDraft.m; sourceTree = "<group>"; };
 		059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v1-to-v2.xcmappingmodel"; path = "data-model/v1-to-v2.xcmappingmodel"; sourceTree = "<group>"; };
+		05A1F5C81028C06A009F5B3E /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		05A1F5C91028C06A009F5B3E /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		05AE708C0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFavoritesForUserResponseProcessor.h; path = twitter/processors/FetchFavoritesForUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFavoritesForUserResponseProcessor.m; path = twitter/processors/FetchFavoritesForUserResponseProcessor.m; sourceTree = "<group>"; };
 		05AE71190FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkFavoriteResponseProcessor.h; path = twitter/processors/MarkFavoriteResponseProcessor.h; sourceTree = "<group>"; };
@@ -481,8 +483,6 @@
 		05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountSettingsChangedPublisher.m; path = publishers/AccountSettingsChangedPublisher.m; sourceTree = "<group>"; };
 		05C8872710163DB90097FEFF /* AccountsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsTableViewCell.h; path = accounts/AccountsTableViewCell.h; sourceTree = "<group>"; };
 		05C8872810163DB90097FEFF /* AccountsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsTableViewCell.m; path = accounts/AccountsTableViewCell.m; sourceTree = "<group>"; };
-		05D1728A0FF67ED900DCB22D /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
-		05D1728B0FF67ED900DCB22D /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		05D173E10FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TwitterCredentials+KeychainAdditions.h"; path = "twitter/TwitterCredentials+KeychainAdditions.h"; sourceTree = "<group>"; };
 		05D173E20FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TwitterCredentials+KeychainAdditions.m"; path = "twitter/TwitterCredentials+KeychainAdditions.m"; sourceTree = "<group>"; };
 		05D174050FF69FC500DCB22D /* Mention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mention.h; path = tweets/Mention.h; sourceTree = "<group>"; };
@@ -785,8 +785,8 @@
 				057621370FF7536800392ADC /* oauth-twitter-engine */,
 				05761F5B0FF72C1C00392ADC /* oath-consumer */,
 				05C5E7B70FF45EE10073E7F2 /* yajl */,
-				05D172890FF67ED900DCB22D /* regexkitlite */,
 				0524C3B90FF2A7D400A6099B /* sfh-keychain-utils */,
+				05A1F5C71028C06A009F5B3E /* regexkitlite */,
 			);
 			name = vendor;
 			sourceTree = "<group>";
@@ -847,6 +847,16 @@
 			);
 			name = "oauth-twitter-engine";
 			path = "vendor/oauth-twitter-engine";
+			sourceTree = "<group>";
+		};
+		05A1F5C71028C06A009F5B3E /* regexkitlite */ = {
+			isa = PBXGroup;
+			children = (
+				05A1F5C81028C06A009F5B3E /* RegexKitLite.h */,
+				05A1F5C91028C06A009F5B3E /* RegexKitLite.m */,
+			);
+			name = regexkitlite;
+			path = vendor/regexkitlite;
 			sourceTree = "<group>";
 		};
 		05AE72000FF2EEB90037D1D6 /* twitpic */ = {
@@ -1212,15 +1222,6 @@
 				05C705190FF88C1E00936E4C /* ExplainOauthViewController.m */,
 			);
 			path = "log-in-oauth";
-			sourceTree = "<group>";
-		};
-		05D172890FF67ED900DCB22D /* regexkitlite */ = {
-			isa = PBXGroup;
-			children = (
-				05D1728A0FF67ED900DCB22D /* RegexKitLite.h */,
-				05D1728B0FF67ED900DCB22D /* RegexKitLite.m */,
-			);
-			path = regexkitlite;
 			sourceTree = "<group>";
 		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
@@ -1730,7 +1731,6 @@
 				05EF41610FFADF95007B59F1 /* SearchResponseProcessor.m in Sources */,
 				05EF41620FFADF95007B59F1 /* TwitchBrowserViewController.m in Sources */,
 				05EF41630FFADF95007B59F1 /* SearchBarDisplayMgr.m in Sources */,
-				05EF41640FFADF95007B59F1 /* RegexKitLite.m in Sources */,
 				05EF41650FFADF95007B59F1 /* TwitterCredentials+KeychainAdditions.m in Sources */,
 				05EF41660FFADF95007B59F1 /* Mention.m in Sources */,
 				05EF41670FFADF95007B59F1 /* UserTweet.m in Sources */,
@@ -1795,6 +1795,7 @@
 				05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */,
 				05DB973B1025107E00D06489 /* UIImage+DrawingAdditions.m in Sources */,
 				917245E91028B781007E0DF6 /* FindPeopleBookmarkViewController.m in Sources */,
+				05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

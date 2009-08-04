@@ -58,6 +58,8 @@
         searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
         searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
         searchBar.showsBookmarkButton = YES;
+        searchBar.placeholder =
+            NSLocalizedString(@"findpeople.placeholder", @"");
         searchBar.delegate = self;
 
         UINavigationItem * navItem = netAwareController.navigationItem;
