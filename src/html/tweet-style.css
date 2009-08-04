@@ -3,6 +3,7 @@ body {
     font-family: "Helvetica";
     padding: 1px;
     font-size: 12pt;
+    word-wrap: break-word;
 }
 
 a {
