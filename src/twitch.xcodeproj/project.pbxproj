@@ -344,6 +344,7 @@
 		057E82DD0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QueryIsFollowingResponseProcessor.h; path = twitter/processors/QueryIsFollowingResponseProcessor.h; sourceTree = "<group>"; };
 		057E82DE0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QueryIsFollowingResponseProcessor.m; path = twitter/processors/QueryIsFollowingResponseProcessor.m; sourceTree = "<group>"; };
 		058207C01017744C00DFC051 /* ComposeRecipientGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ComposeRecipientGradient.png; path = images/ComposeRecipientGradient.png; sourceTree = "<group>"; };
+		058FCDE91028E01600BBD0ED /* TrendType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendType.h; path = search/TrendType.h; sourceTree = "<group>"; };
 		05948990101569B700C37C98 /* AccountSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountSettingsViewController.h; path = accounts/AccountSettingsViewController.h; sourceTree = "<group>"; };
 		05948991101569B700C37C98 /* AccountSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountSettingsViewController.m; path = accounts/AccountSettingsViewController.m; sourceTree = "<group>"; };
 		05948994101569D500C37C98 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/AccountSettingsView.xib; sourceTree = "<group>"; };
@@ -1185,6 +1186,7 @@
 		05C5E9AF0FF48B820073E7F2 /* search */ = {
 			isa = PBXGroup;
 			children = (
+				058FCDE91028E01600BBD0ED /* TrendType.h */,
 				05C5E9B00FF48BA70073E7F2 /* SearchDisplayMgr.h */,
 				05C5E9B10FF48BA70073E7F2 /* SearchDisplayMgr.m */,
 				05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */,

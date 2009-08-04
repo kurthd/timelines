@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SearchBookmarksViewController.h"
+#import "TwitterService.h"
 
 @class RecentSearchMgr, SavedSearchMgr;
 
@@ -15,7 +16,7 @@
 @end
 
 @interface SearchBookmarksDisplayMgr :
-    NSObject <SearchBookmarksViewControllerDelegate>
+    NSObject <SearchBookmarksViewControllerDelegate, TwitterServiceDelegate>
 {
     id<SearchBookmarksDisplayMgrDelegate> delegate;
 
@@ -25,6 +26,10 @@
     RecentSearchMgr * recentSearchMgr;
     SavedSearchMgr * savedSearchMgr;
 
+    // needed to fetch Twitter trends
+    TwitterService * service;
+    NSMutableArray * allTrends;  // indexed by trend type
+
     NSManagedObjectContext * context;
     NSString * accountName;
 }
@@ -33,6 +38,7 @@
 @property (nonatomic, copy, readonly) NSString * accountName;
 
 - (id)initWithAccountName:(NSString *)anAccountName
+                  service:(TwitterService *)aService
                   context:(NSManagedObjectContext *)aContext;
 
 - (void)displayBookmarksInRootView:(UIViewController *)aRootViewController;

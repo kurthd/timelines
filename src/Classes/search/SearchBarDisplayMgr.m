@@ -303,6 +303,7 @@
         NSString * accountName = self.service.credentials.username;
         searchBookmarksDisplayMgr =
             [[SearchBookmarksDisplayMgr alloc] initWithAccountName:accountName
+                                                           service:service
                                                            context:context];
         searchBookmarksDisplayMgr.delegate = self;
     }

@@ -5,12 +5,15 @@
 #import "SearchBookmarksViewController.h"
 #import "RecentSearch.h"
 #import "SavedSearch.h"
+#import "Trend.h"
 #import "NSDate+StringHelpers.h"
+#import "UIAlertView+InstantiationAdditions.h"
 
 typedef enum
 {
     kSavedSearchCategory,
-    kRecentsCategory
+    kRecentsCategory,
+    kTrendsCategory
 } BookmarkCategory;
 
 @interface SearchBookmarksViewController ()
@@ -24,6 +27,9 @@ typedef enum
 @property (nonatomic, retain) UIBarButtonItem * clearRecentsButton;
 @property (nonatomic, retain) UIBarButtonItem * editSavedSearchesButton;
 @property (nonatomic, retain) UIBarButtonItem * doneEditingSavedSearchesButton;
+@property (nonatomic, retain) UIBarButtonItem * refreshTrendsButton;
+@property (nonatomic, retain) UIBarButtonItem * activityButton;
+@property (nonatomic, retain) UISegmentedControl * trendsCategorySelector;
 
 @property (nonatomic, copy) NSArray * contents;
 
@@ -33,9 +39,16 @@ typedef enum
 - (void)configureViewForEditingSavedSearches;
 - (void)configureViewForNotEditingSavedSearches;
 
-- (BookmarkCategory)selectedCategory;
 - (UITableViewCell *)createCellForCategory:(BookmarkCategory)category
                            reuseIdentifier:(NSString *)reuseIdentifier;
+
+- (BookmarkCategory)selectedCategory;
+- (TrendType)selectedTrendsCategory;
+
+- (void)resetTableView;
+
+- (void)displayActivityView;
+- (void)hideActivityView;
 
 @end
 
@@ -47,6 +60,7 @@ typedef enum
 @synthesize doneButton;
 @synthesize clearRecentsButton;
 @synthesize editSavedSearchesButton, doneEditingSavedSearchesButton;
+@synthesize refreshTrendsButton, activityButton, trendsCategorySelector;
 @synthesize contents;
 
 - (void)dealloc
@@ -62,6 +76,9 @@ typedef enum
     self.clearRecentsButton = nil;
     self.editSavedSearchesButton = nil;
     self.doneEditingSavedSearchesButton = nil;
+    self.refreshTrendsButton = nil;
+    self.activityButton = nil;
+    self.trendsCategorySelector = nil;
 
     self.contents = nil;
 
@@ -75,6 +92,10 @@ typedef enum
     [self.bookmarkCategorySelector addTarget:self
                                       action:@selector(bookmarkCategoryChanged:)
                             forControlEvents:UIControlEventValueChanged];
+
+    [self.trendsCategorySelector addTarget:self
+                                    action:@selector(trendsCategoryChanged:)
+                          forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -82,8 +103,8 @@ typedef enum
     [super viewWillAppear:animated];
 
     BookmarkCategory category = [self selectedCategory];
-    [self loadDataForCategory:category];
     [self displayCategory:category];
+    [self loadDataForCategory:category];
 }
 
 #pragma mark Table view methods
@@ -104,29 +125,22 @@ typedef enum
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * BookmarkCellIdentifier = @"BookmarkCell";
-    static NSString * RecentSearchCellIdentifier = @"RecentSearchCell";
+    static NSString * ReuseIdentifier = @"SearchBookmarksTableViewCell";
 
     BookmarkCategory category = [self selectedCategory];
 
-    NSString * identifier =
-        category == kSavedSearchCategory ?
-        BookmarkCellIdentifier :
-        RecentSearchCellIdentifier;
-
-    UITableViewCell * cell = [tv dequeueReusableCellWithIdentifier:identifier];
-
+    UITableViewCell * cell =
+        [tv dequeueReusableCellWithIdentifier:ReuseIdentifier];
     if (cell == nil)
-        cell = [self createCellForCategory:category reuseIdentifier:identifier];
+        cell = [self createCellForCategory:category
+                           reuseIdentifier:ReuseIdentifier];
 
-    if (category == kSavedSearchCategory) {
-        SavedSearch * search = [self.contents objectAtIndex:indexPath.row];
-        cell.textLabel.text = search.query;
-    } else {
-        RecentSearch * search = [self.contents objectAtIndex:indexPath.row];
-        cell.textLabel.text = search.query;
-        cell.detailTextLabel.text = [search.timestamp shortDescription];
-    }
+    if (category == kTrendsCategory) {
+        Trend * trend = [self.contents objectAtIndex:indexPath.row];
+        cell.textLabel.text = trend.name;
+    } else
+        cell.textLabel.text =
+            [[self.contents objectAtIndex:indexPath.row] query];
 
     return cell;
 }
@@ -189,6 +203,29 @@ typedef enum
     [self.delegate setSavedSearchOrder:self.contents];
 }
 
+#pragma mark Receiving trends
+
+- (void)trends:(NSArray *)trends fetchedForType:(TrendType)trendType
+{
+    if ([self selectedCategory] == kTrendsCategory &&
+        [self selectedTrendsCategory] == trendType) {
+        self.contents = trends;
+
+        [self resetTableView];
+        [self hideActivityView];
+    }
+}
+
+- (void)failedToFetchTrendsForType:(TrendType)trendType error:(NSError *)error
+{
+    NSString * title = NSLocalizedString(@"trends.fetch.failed", @"");
+    NSString * message = error.localizedDescription;
+
+    [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
+
+    [self hideActivityView];
+}
+
 #pragma mark UI element actions
 
 - (IBAction)done
@@ -199,14 +236,25 @@ typedef enum
 - (IBAction)clearRecentSearches
 {
     [self.delegate clearRecentSearches];
-    [self loadDataForCategory:[self selectedCategory]];
     [self displayCategory:[self selectedCategory]];
+    [self loadDataForCategory:[self selectedCategory]];
 }
 
 - (void)bookmarkCategoryChanged:(id)sender
 {
-    [self loadDataForCategory:[self selectedCategory]];
     [self displayCategory:[self selectedCategory]];
+    [self loadDataForCategory:[self selectedCategory]];
+}
+
+- (void)trendsCategoryChanged:(id)sender
+{
+    TrendType trendType = [self selectedTrendsCategory];
+    self.contents = [self.delegate trendsOfType:trendType refresh:NO];
+
+    if (self.contents)
+        [self resetTableView];
+    else
+        [self displayActivityView];
 }
 
 - (IBAction)editSavedSearches
@@ -217,6 +265,13 @@ typedef enum
 - (IBAction)doneEditingSavedSearches
 {
     [self configureViewForNotEditingSavedSearches];
+}
+
+- (IBAction)refreshTrends
+{
+    TrendType trendType = [self selectedTrendsCategory];
+    [self.delegate trendsOfType:trendType refresh:YES];
+    [self displayActivityView];
 }
 
 #pragma mark Private implementation
@@ -231,40 +286,64 @@ typedef enum
         case kRecentsCategory:
             self.contents = [self.delegate recentSearches];
             break;
+        case kTrendsCategory:
+            self.contents =
+                [self.delegate trendsOfType:[self selectedTrendsCategory]
+                                    refresh:NO];
+            if (!self.contents)
+                [self displayActivityView];
+
+            break;
     }
 
-    [self.tableView reloadData];
-    [self.tableView flashScrollIndicators];
+    [self resetTableView];
 }
 
 - (void)displayCategory:(BookmarkCategory)category
 {
-    NSString * title =
-        [self.bookmarkCategorySelector titleForSegmentAtIndex:category];
-    self.navigationBar.topItem.title = title;
-
     switch (category) {
         case kSavedSearchCategory:
+            self.navigationBar.topItem.titleView = nil;
+            self.navigationBar.topItem.title =
+                [self.bookmarkCategorySelector titleForSegmentAtIndex:category];
+
+            self.navigationBar.topItem.prompt =
+                NSLocalizedString(@"searchbookmarks.savedsearches.prompt", @"");
+
             self.navigationBar.topItem.leftBarButtonItem =
                 self.editSavedSearchesButton;
             self.navigationBar.topItem.leftBarButtonItem.enabled =
                 [self.tableView numberOfRowsInSection:0] > 0;
-
-            self.navigationBar.topItem.prompt =
-                NSLocalizedString(@"searchbookmarks.savedsearches.prompt", @"");
 
             break;
         case kRecentsCategory:
             if (self.tableView.editing)
                 [self configureViewForNotEditingSavedSearches];
 
+            self.navigationBar.topItem.titleView = nil;
+            self.navigationBar.topItem.title =
+                [self.bookmarkCategorySelector titleForSegmentAtIndex:category];
+
+            self.navigationBar.topItem.prompt =
+                NSLocalizedString(@"searchbookmarks.recents.prompt", @"");
+
             self.navigationBar.topItem.leftBarButtonItem =
                 self.clearRecentsButton;
             self.navigationBar.topItem.leftBarButtonItem.enabled =
                 [self.tableView numberOfRowsInSection:0] > 0;
 
+            break;
+
+        case kTrendsCategory:
+            if (self.tableView.editing)
+                [self configureViewForNotEditingSavedSearches];
+
+            self.navigationBar.topItem.titleView = self.trendsCategorySelector;
+            self.navigationBar.topItem.leftBarButtonItem =
+                self.refreshTrendsButton;
+
             self.navigationBar.topItem.prompt =
-                NSLocalizedString(@"searchbookmarks.recents.prompt", @"");
+                NSLocalizedString(@"searchbookmarks.trends.prompt", @"");
 
             break;
     }
@@ -273,6 +352,11 @@ typedef enum
 - (BookmarkCategory)selectedCategory
 {
     return bookmarkCategorySelector.selectedSegmentIndex;
+}
+
+- (TrendType)selectedTrendsCategory
+{
+    return trendsCategorySelector.selectedSegmentIndex;
 }
 
 - (UITableViewCell *)createCellForCategory:(BookmarkCategory)category
@@ -308,6 +392,62 @@ typedef enum
 
     self.navigationBar.topItem.prompt =
         NSLocalizedString(@"searchbookmarks.savedsearches.prompt", @"");
+}
+
+- (void)resetTableView
+{
+    [self.tableView reloadData];
+    if (self.contents && self.contents.count > 0) {
+        NSIndexPath * firstRow = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView scrollToRowAtIndexPath:firstRow
+                              atScrollPosition:UITableViewScrollPositionTop
+                                      animated:NO];
+    }
+    [self.tableView flashScrollIndicators];
+}
+
+- (void)displayActivityView
+{
+    if ([self selectedCategory] == kTrendsCategory)
+        self.navigationBar.topItem.leftBarButtonItem = self.activityButton;
+}
+
+- (void)hideActivityView
+{
+    if ([self selectedCategory] == kTrendsCategory)
+        self.navigationBar.topItem.leftBarButtonItem = self.refreshTrendsButton;
+}
+
+#pragma mark Accessors
+
+
+- (UIBarButtonItem *)activityButton
+{
+    if (!activityButton) {
+        /*
+        UIActivityIndicatorView * view =
+            [[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        */
+
+        CGRect frame = CGRectMake(0.0, 0.0, 25.0, 25.0);
+        UIActivityIndicatorView * view =
+            [[UIActivityIndicatorView alloc] initWithFrame:frame];
+        [view startAnimating];
+        [view sizeToFit];
+
+        view.autoresizingMask =
+            UIViewAutoresizingFlexibleLeftMargin |
+            UIViewAutoresizingFlexibleRightMargin |
+            UIViewAutoresizingFlexibleTopMargin |
+            UIViewAutoresizingFlexibleBottomMargin;
+
+        activityButton = [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [view release];
+    }
+
+    return activityButton;
 }
 
 @end

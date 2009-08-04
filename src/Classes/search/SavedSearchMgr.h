@@ -21,7 +21,7 @@
 
 - (void)setSavedSearchOrder:(NSArray *)savedSearches;
 
-- (SavedSearch * )addSavedSearch:(NSString *)query;
+- (SavedSearch *)addSavedSearch:(NSString *)query;
 - (void)removeSavedSearchForQuery:(NSString *)query;
 
 - (BOOL)isSearchSaved:(NSString *)query;

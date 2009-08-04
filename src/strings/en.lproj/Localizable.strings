@@ -104,6 +104,7 @@ searchbookmarks.savedsearches.editing.prompt = "Organize saved searches";
 searchbookmarks.recents.prompt = "Choose a recent search";
 savedsearch.save.title = "Save Search";
 savedsearch.remove.title = "Forget Saved Search";
+searchbookmarks.trends.prompt = "Choose a Twitter trend";
 
 /* Persistence */
 persistence.initialization.failed.title = "Failed to Initialize Persistent Store";

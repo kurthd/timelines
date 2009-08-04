@@ -5,6 +5,7 @@
 #import "SearchBookmarksDisplayMgr.h"
 #import "RecentSearchMgr.h"
 #import "SavedSearchMgr.h"
+#import "TrendType.h"
 
 @interface SearchBookmarksDisplayMgr ()
 
@@ -15,8 +16,17 @@
 @property (nonatomic, retain) RecentSearchMgr * recentSearchMgr;
 @property (nonatomic, retain) SavedSearchMgr * savedSearchMgr;
 
+@property (nonatomic, retain) TwitterService * service;
+@property (nonatomic, retain) NSMutableArray * allTrends;
+
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, copy) NSString * accountName;
+
+- (void)fetchTrendsFromTwitterOfType:(TrendType)trendType;
+
+- (void)processFetchedTrends:(NSArray *)trends ofType:(TrendType)trendType;
+- (void)processFailureToFetchTrendsOfType:(TrendType)trendType
+                                    error:(NSError *)error;
 
 @end
 
@@ -25,6 +35,7 @@
 @synthesize delegate;
 @synthesize rootViewController, searchBookmarksViewController;
 @synthesize recentSearchMgr, savedSearchMgr;
+@synthesize service, allTrends;
 @synthesize context, accountName;
 
 - (void)dealloc
@@ -37,6 +48,9 @@
     self.recentSearchMgr = nil;
     self.savedSearchMgr = nil;
 
+    self.service = nil;
+    self.allTrends = nil;
+
     self.context = nil;
     self.accountName = nil;
 
@@ -44,11 +58,17 @@
 }
 
 - (id)initWithAccountName:(NSString *)anAccountName
+                  service:(TwitterService *)aService
                   context:(NSManagedObjectContext *)aContext
 {
     if (self = [super init]) {
         self.context = aContext;
+        self.service = aService;
+        self.service.delegate = self;
         self.accountName = anAccountName;
+
+        self.allTrends = [NSMutableArray arrayWithObjects:
+            [NSNull null], [NSNull null], [NSNull null], nil];
     }
 
     return self;
@@ -111,6 +131,16 @@
     [self.recentSearchMgr clear];
 }
 
+- (NSArray *)trendsOfType:(TrendType)trendType refresh:(BOOL)refresh
+{
+    NSArray * cachedTrends = [self.allTrends objectAtIndex:trendType];
+    if (refresh || [cachedTrends isEqual:[NSNull null]]) {
+        [self fetchTrendsFromTwitterOfType:trendType];
+        return nil;
+    } else
+        return cachedTrends;
+}
+
 - (void)userDidSelectSearchQuery:(NSString *)query
 {
     [self.rootViewController dismissModalViewControllerAnimated:YES];
@@ -123,6 +153,73 @@
 {
     [self.rootViewController dismissModalViewControllerAnimated:YES];
     self.rootViewController = nil;
+}
+
+#pragma mark Fetch trends
+
+- (void)fetchTrendsFromTwitterOfType:(TrendType)trendType
+{
+    switch (trendType) {
+        case kCurrentTrends:
+            NSLog(@"Fetching current trends.");
+            [self.service fetchCurrentTrends];
+            break;
+        case kDailyTrends:
+            NSLog(@"Fetching daily trends.");
+            [self.service fetchDailyTrends];
+            break;
+        case kWeeklyTrends:
+            NSLog(@"Fetching weekly trends.");
+            [self.service fetchWeeklyTrends];
+            break;
+    }
+}
+
+#pragma mark TwitterServiceDelegate implementation
+
+- (void)fetchedCurrentTrends:(NSArray *)trends
+{
+    [self processFetchedTrends:trends ofType:kCurrentTrends];
+}
+
+- (void)failedToFetchCurrentTrends:(NSError *)error
+{
+    [self processFailureToFetchTrendsOfType:kCurrentTrends error:error];
+}
+
+- (void)fetchedDailyTrends:(NSArray *)trends
+{
+    [self processFetchedTrends:trends ofType:kDailyTrends];
+}
+
+- (void)failedToFetchDailyTrends:(NSError *)error
+{
+    [self processFailureToFetchTrendsOfType:kDailyTrends error:error];
+}
+
+- (void)fetchedWeeklyTrends:(NSArray *)trends
+{
+    [self processFetchedTrends:trends ofType:kWeeklyTrends];
+}
+
+- (void)failedToFetchWeeklyTrends:(NSError *)error
+{
+    [self processFailureToFetchTrendsOfType:kWeeklyTrends error:error];
+}
+
+#pragma mark Private implementation
+
+- (void)processFetchedTrends:(NSArray *)trends ofType:(TrendType)trendType
+{
+    [self.allTrends replaceObjectAtIndex:trendType withObject:trends];
+    [self.searchBookmarksViewController trends:trends fetchedForType:trendType];
+}
+
+- (void)processFailureToFetchTrendsOfType:(TrendType)trendType
+                                    error:(NSError *)error
+{
+    [self.searchBookmarksViewController failedToFetchTrendsForType:trendType
+                                                             error:error];
 }
 
 #pragma mark Accessors
