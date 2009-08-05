@@ -35,6 +35,11 @@
     [service fetchFavoritesForUser:username page:page];
 }
 
+- (BOOL)readyForQuery
+{
+    return YES;
+}
+
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)favorites:(NSArray *)timeline fetchedForUser:(NSString *)aUsername

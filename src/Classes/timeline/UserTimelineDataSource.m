@@ -33,6 +33,11 @@
         sinceUpdateId:updateId page:page count:[NSNumber numberWithInt:0]];
 }
 
+- (BOOL)readyForQuery
+{
+    return YES;
+}
+
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)timeline:(NSArray *)timeline fetchedForUser:(NSString *)user

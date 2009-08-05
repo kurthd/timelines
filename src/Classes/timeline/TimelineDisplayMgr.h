@@ -136,6 +136,8 @@
 @property (nonatomic, copy) NSString * tweetIdToShow;
 
 @property (nonatomic, assign) BOOL suppressTimelineFailures;
+
+@property (nonatomic, readonly) TwitterCredentials * credentials;
     
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController

@@ -8,7 +8,8 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="17"/>
+			<integer value="3"/>
+			<integer value="46"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -41,7 +42,7 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{0, 74}, {320, 344}}</string>
 						<reference key="NSSuperview" ref="609791802"/>
-						<object class="NSColor" key="IBUIBackgroundColor">
+						<object class="NSColor" key="IBUIBackgroundColor" id="172252756">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
 						</object>
@@ -161,6 +162,42 @@
 				<int key="IBUIStyle">1</int>
 				<int key="IBUISystemItemIdentifier">0</int>
 			</object>
+			<object class="IBUIButton" id="843426204">
+				<reference key="NSNextResponder"/>
+				<int key="NSvFlags">292</int>
+				<string key="NSFrameSize">{320, 44}</string>
+				<reference key="NSSuperview"/>
+				<bool key="IBUIOpaque">NO</bool>
+				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+				<int key="IBUIContentVerticalAlignment">0</int>
+				<object class="NSFont" key="IBUIFont">
+					<string key="NSName">Helvetica-Bold</string>
+					<double key="NSSize">2.000000e+01</double>
+					<int key="NSfFlags">16</int>
+				</object>
+				<double key="IBUIContentEdgeInsets.top">0.000000e+00</double>
+				<double key="IBUIContentEdgeInsets.bottom">0.000000e+00</double>
+				<double key="IBUIContentEdgeInsets.left">1.000000e+01</double>
+				<double key="IBUIContentEdgeInsets.right">0.000000e+00</double>
+				<string key="IBUINormalTitle">Username</string>
+				<reference key="IBUIHighlightedTitleColor" ref="172252756"/>
+				<object class="NSColor" key="IBUINormalTitleColor">
+					<int key="NSColorSpace">1</int>
+					<bytes key="NSRGB">MC4xMzcyNTQ5MSAwLjQzMTM3MjU1IDAuODQ3MDU4ODMAA</bytes>
+				</object>
+				<object class="NSColor" key="IBUINormalTitleShadowColor">
+					<int key="NSColorSpace">3</int>
+					<bytes key="NSWhite">MC41AA</bytes>
+				</object>
+				<object class="NSCustomResource" key="IBUIHighlightedBackgroundImage">
+					<string key="NSClassName">NSImage</string>
+					<string key="NSResourceName">SelectedCellBackground.png</string>
+				</object>
+				<object class="NSCustomResource" key="IBUINormalBackgroundImage">
+					<string key="NSClassName">NSImage</string>
+					<string key="NSResourceName">CellBackground.png</string>
+				</object>
+			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
@@ -276,6 +313,31 @@
 						<reference key="destination" ref="64999381"/>
 					</object>
 					<int key="connectionID">38</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">headerView</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="843426204"/>
+					</object>
+					<int key="connectionID">47</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">headerButton</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="843426204"/>
+					</object>
+					<int key="connectionID">48</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">selectedUsername</string>
+						<reference key="source" ref="843426204"/>
+						<reference key="destination" ref="841351856"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">49</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -393,6 +455,11 @@
 						<reference key="parent" ref="243276057"/>
 						<string key="objectName">Done Editing Saved Searches Button</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">46</int>
+						<reference key="object" ref="843426204"/>
+						<reference key="parent" ref="243276057"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -415,12 +482,14 @@
 					<string>3.IBPluginDependency</string>
 					<string>32.IBPluginDependency</string>
 					<string>33.IBPluginDependency</string>
+					<string>46.IBEditorWindowLastContentRect</string>
+					<string>46.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>SearchBookmarksViewController</string>
+					<string>FindPeopleBookmarkViewController</string>
 					<string>UIResponder</string>
-					<string>{{302, 261}, {320, 460}}</string>
+					<string>{{91, 122}, {320, 460}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -433,6 +502,8 @@
 					<string>{{312, 662}, {320, 460}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>{{331, 643}, {320, 44}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
 			</object>
@@ -456,20 +527,13 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">38</int>
+			<int key="maxID">49</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/shared/NSObject+RuntimeAdditions.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">SearchBookmarksViewController</string>
+					<string key="className">FindPeopleBookmarkViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -479,9 +543,11 @@
 							<string>done</string>
 							<string>doneEditingSavedSearches</string>
 							<string>editSavedSearches</string>
+							<string>selectedUsername</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -498,6 +564,8 @@
 							<string>doneButton</string>
 							<string>doneEditingSavedSearchesButton</string>
 							<string>editSavedSearchesButton</string>
+							<string>headerButton</string>
+							<string>headerView</string>
 							<string>navigationBar</string>
 							<string>tableView</string>
 						</object>
@@ -509,13 +577,22 @@
 							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
+							<string>UIButton</string>
+							<string>UIView</string>
 							<string>UINavigationBar</string>
 							<string>UITableView</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/search/SearchBookmarksViewController.h</string>
+						<string key="minorKey">Classes/timeline/FindPeopleBookmarkViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/shared/NSObject+RuntimeAdditions.h</string>
 					</object>
 				</object>
 			</object>

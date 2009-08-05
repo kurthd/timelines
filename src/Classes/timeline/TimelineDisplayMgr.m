@@ -43,7 +43,7 @@ static NSInteger retweetFormatValueAlredyRead;
     lastFollowingUsername, lastTweetDetailsWrapperController,
     lastTweetDetailsController, currentTweetDetailsUser, currentUsername,
     allPagesLoaded, setUserToAuthenticatedUser, firstFetchReceived,
-    tweetIdToShow, suppressTimelineFailures;
+    tweetIdToShow, suppressTimelineFailures, credentials;
 
 - (void)dealloc
 {
@@ -563,8 +563,11 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)networkAwareViewWillAppear
 {
     NSLog(@"Timeline display manager: showing timeline view...");
-    if ((!hasBeenDisplayed && [timelineSource credentials]) || needsRefresh) {
+    if (((!hasBeenDisplayed && [timelineSource credentials]) || needsRefresh) &&
+        [timelineSource readyForQuery]) {
+
         NSLog(@"Timeline display manager: fetching new timeline when shown...");
+        [self.wrapperController setUpdatingState:kConnectedAndUpdating];
         [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
     }
@@ -1090,8 +1093,6 @@ static NSInteger retweetFormatValueAlredyRead;
 
         needsRefresh = YES;
         pagesShown = 1;
-
-        [self.wrapperController setUpdatingState:kConnectedAndUpdating];
     } else if (hasBeenDisplayed) {// set for first time and persisted data shown
         NSLog(@"Timeline display manager: setting account for first time");
         [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0]

@@ -88,6 +88,11 @@
     [service setCredentials:someCredentials];
 }
 
+- (BOOL)readyForQuery
+{
+    return YES;
+}
+
 #pragma mark TwitterServiceDelegate
 
 - (void)searchResultsReceived:(NSArray *)newSearchResults

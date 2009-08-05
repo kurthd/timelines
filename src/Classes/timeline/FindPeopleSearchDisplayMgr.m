@@ -131,6 +131,7 @@
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:YES];
     [self hideDarkTransparentView];
+    dataSource.username = nil;
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)aSearchBar
@@ -183,6 +184,11 @@
 - (void)userDidSelectSearchQuery:(NSString *)query
 {
     [netAwareController dismissModalViewControllerAnimated:YES];
+
+    [self hideDarkTransparentView];
+
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO animated:YES];
 
     [self searchForQuery:query];
 }
@@ -259,6 +265,13 @@
             [[FindPeopleBookmarkViewController alloc]
             initWithNibName:@"FindPeopleBookmarkView" bundle:nil];
         bookmarkController.delegate = self;
+
+        bookmarkController.username = timelineDisplayMgr.credentials.username;
+
+        // Don't autorelease
+        [[CredentialsActivatedPublisher alloc]
+            initWithListener:bookmarkController
+            action:@selector(setCredentials:)];
     }
 
     return bookmarkController;

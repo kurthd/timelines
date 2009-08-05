@@ -33,12 +33,17 @@
 
 - (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page
 {
-    if (username) {
+    if ([self readyForQuery]) {
         NSLog(@"Arbitraty user data source: fetching timeline for user %@",
             username);
         [service fetchTimelineForUser:username sinceUpdateId:updateId page:page
             count:[NSNumber numberWithInt:0]];
     }
+}
+
+- (BOOL)readyForQuery
+{
+    return username && ![username isEqual:@""];
 }
 
 #pragma mark TwitterServiceDelegate implementation
