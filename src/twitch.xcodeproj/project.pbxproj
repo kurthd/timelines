@@ -1155,13 +1155,6 @@
 			name = tweets;
 			sourceTree = "<group>";
 		};
-		05C5E6600FF42F000073E7F2 /* trends */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = trends;
-			sourceTree = "<group>";
-		};
 		05C5E7B70FF45EE10073E7F2 /* yajl */ = {
 			isa = PBXGroup;
 			children = (
@@ -1175,7 +1168,6 @@
 		05C5E9AF0FF48B820073E7F2 /* search */ = {
 			isa = PBXGroup;
 			children = (
-				058FCDE91028E01600BBD0ED /* TrendType.h */,
 				05C5E9B00FF48BA70073E7F2 /* SearchDisplayMgr.h */,
 				05C5E9B10FF48BA70073E7F2 /* SearchDisplayMgr.m */,
 				05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */,
@@ -1192,6 +1184,7 @@
 				0524824A101D7883009ED4FA /* SavedSearch.m */,
 				051D7C67101D105A00B867C1 /* SavedSearchMgr.h */,
 				051D7C68101D105A00B867C1 /* SavedSearchMgr.m */,
+				058FCDE91028E01600BBD0ED /* TrendType.h */,
 				05C6C9291028F7F000182B4A /* Trend.h */,
 				05C6C92A1028F7F000182B4A /* Trend.m */,
 			);
@@ -1221,7 +1214,6 @@
 				910BE1FA0FF2B8E4005342EE /* user-network */,
 				918E894C0FF182E20042BBEE /* user-info */,
 				916BD8130FEEBDF9007143A9 /* timeline */,
-				05C5E6600FF42F000073E7F2 /* trends */,
 				05C5E9AF0FF48B820073E7F2 /* search */,
 				05B2387E0FEDC25F00A6A2E6 /* log-in */,
 				05C702870FF835AE00936E4C /* log-in-oauth */,
