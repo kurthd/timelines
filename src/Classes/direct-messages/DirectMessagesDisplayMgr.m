@@ -10,6 +10,7 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #include <AudioToolbox/AudioToolbox.h>
 #import "InfoPlistConfigReader.h"
+#import "SearchDataSource.h"
 
 @interface DirectMessagesDisplayMgr ()
 
@@ -333,6 +334,56 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         forceRefresh:NO allPagesLoaded:NO];
     dataSource.delegate = self.tweetDetailsTimelineDisplayMgr;
     
+    [dataSource setCredentials:credentials];
+    [wrapperController.navigationController
+        pushViewController:self.tweetDetailsNetAwareViewController
+        animated:YES];
+}
+
+- (void)showResultsForSearch:(NSString *)query
+{
+    NSLog(@"Direct Message Manager: showing search results for '%@'", query);
+
+    self.tweetDetailsNetAwareViewController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    self.tweetDetailsTimelineDisplayMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:
+        tweetDetailsNetAwareViewController
+        title:query composeTweetDisplayMgr:composeTweetDisplayMgr];
+    self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
+    self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = NO;
+    self.tweetDetailsTimelineDisplayMgr.currentUsername = nil;
+    [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
+
+    self.tweetDetailsNetAwareViewController.navigationItem.rightBarButtonItem =
+        nil;
+
+    self.tweetDetailsNetAwareViewController.delegate =
+        self.tweetDetailsTimelineDisplayMgr;
+
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:managedObjectContext]
+        autorelease];
+
+    SearchDataSource * dataSource =
+        [[[SearchDataSource alloc]
+        initWithTwitterService:twitterService
+        query:query]
+        autorelease];
+
+    self.tweetDetailsCredentialsPublisher =
+        [[CredentialsActivatedPublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+
+    twitterService.delegate = dataSource;
+    [self.tweetDetailsTimelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO allPagesLoaded:NO];
+    dataSource.delegate = self.tweetDetailsTimelineDisplayMgr;
+
     [dataSource setCredentials:credentials];
     [wrapperController.navigationController
         pushViewController:self.tweetDetailsNetAwareViewController
