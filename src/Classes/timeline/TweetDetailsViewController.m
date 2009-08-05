@@ -9,6 +9,7 @@
 #import "AsynchronousNetworkFetcher.h"
 #import "RegexKitLite.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "NSString+HtmlEncodingAdditions.h"
 
 @interface TweetDetailsViewController ()
 
@@ -118,7 +119,8 @@ static UIImage * defaultAvatar;
         [self.selectedTweet.timestamp shortDateAndTimeDescription];
     NSString * footer = self.selectedTweet.source ?
         [NSString stringWithFormat:footerFormatString,
-        dateDesc ? dateDesc : @"", self.selectedTweet.source] :
+        dateDesc ? dateDesc : @"",
+        [self.selectedTweet.source stringByDecodingHtmlEntities]] :
         dateDesc;
     NSString * replyToString =
         NSLocalizedString(@"tweetdetailsview.replyto", @"");

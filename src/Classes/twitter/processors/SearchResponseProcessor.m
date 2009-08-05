@@ -118,11 +118,8 @@
             tweet = [Tweet createInstance:context];
 
         tweet.identifier = tweetId;
-        tweet.text =
-            [[tweetData safeObjectForKey:@"text"] stringByDecodingHtmlEntities];
-        tweet.source =
-            [[tweetData safeObjectForKey:@"source"]
-            stringByDecodingHtmlEntities];
+        tweet.text = [tweetData safeObjectForKey:@"text"];
+        tweet.source = [tweetData safeObjectForKey:@"source"];
         tweet.timestamp = [tweetData objectForKey:@"created_at"];
 
         // fill in the rest of the required tweet fields that are not

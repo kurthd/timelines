@@ -4,6 +4,7 @@
 
 #import "TweetInfo+UIAdditions.h"
 #import "User+UIAdditions.h"
+#import "NSString+HtmlEncodingAdditions.h"
 
 @interface TweetInfo (Private)
 
@@ -54,7 +55,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         self.user.name : self.user.username;
     [timelineCell setName:displayName];
     [timelineCell setDate:self.timestamp];
-    [timelineCell setTweetText:self.text];
+    [timelineCell setTweetText:[self.text stringByDecodingHtmlEntities]];
     timelineCell.avatarImageUrl = self.user.profileImageUrl;
 
     [[[self class] cellCache]
