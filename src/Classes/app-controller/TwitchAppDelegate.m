@@ -64,7 +64,6 @@
 - (void)loadHomeViewWithCachedData:(TwitterCredentials *)account;
 - (void)loadMessagesViewWithCachedData:(TwitterCredentials *)account;
 - (void)setUIStateFromPersistence;
-- (void)setSelectedTabFromPersistence;
 - (void)persistUIState;
 
 @end
@@ -1066,28 +1065,6 @@
         [[[UIStatePersistenceStore alloc] init] autorelease];
     UIState * uiState = [uiStatePersistenceStore load];
 
-    NSMutableArray * viewControllers = [NSMutableArray array];
-    [viewControllers addObjectsFromArray:tabBarController.viewControllers];
-    NSArray * tabOrder = uiState.tabOrder;
-    if (tabOrder) {
-        for (int i = [tabOrder count] - 1; i >= 0; i--) {
-            NSNumber * tabNumber = [tabOrder objectAtIndex:i];
-            for (UIViewController * viewController in
-                tabBarController.viewControllers)
-                    if (viewController.tabBarItem.tag == [tabNumber intValue]) {
-                        [viewControllers removeObject:viewController];
-                        [viewControllers insertObject:viewController
-                            atIndex:0];
-                        break;
-                    }
-        }
-        tabBarController.viewControllers = viewControllers;
-    }    
-
-    // HACK: see method for details
-    [self performSelector:@selector(setSelectedTabFromPersistence)
-        withObject:nil afterDelay:0.0];
-
     tabBarController.selectedIndex = uiState.selectedTab;
 
     UISegmentedControl * control = (UISegmentedControl *)
@@ -1112,17 +1089,6 @@
         [newDirectMessagesPersistenceStore load];
     [directMessageAcctMgr setWithDirectMessageCountsByAccount:
         [newDirectMessagesPersistenceStore loadNewMessageCountsForAllAccounts]];
-}
-
-// HACK: this forces tabs greater than 4 to be set properly (with a 'more' back
-// button and without any noticable animation quirks)
-- (void)setSelectedTabFromPersistence
-{
-    UIStatePersistenceStore * uiStatePersistenceStore =
-        [[[UIStatePersistenceStore alloc] init] autorelease];
-    UIState * uiState = [uiStatePersistenceStore load];
-    tabBarController.selectedIndex = 0;
-    tabBarController.selectedIndex = uiState.selectedTab;
 }
 
 - (void)persistUIState
