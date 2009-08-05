@@ -207,12 +207,12 @@ typedef enum
 
 - (void)trends:(NSArray *)trends fetchedForType:(TrendType)trendType
 {
-    if ([self selectedCategory] == kTrendsCategory &&
-        [self selectedTrendsCategory] == trendType) {
-        self.contents = trends;
-
-        [self resetTableView];
+    if ([self selectedCategory] == kTrendsCategory) {
         [self hideActivityView];
+        if ([self selectedTrendsCategory] == trendType) {
+            self.contents = trends;
+            [self resetTableView];
+        }
     }
 }
 
