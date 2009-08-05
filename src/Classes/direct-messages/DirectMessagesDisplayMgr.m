@@ -303,8 +303,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     UIBarButtonItem * sendDMButton =
         [[UIBarButtonItem alloc]
-        initWithImage:[UIImage imageNamed:@"Envelope.png"]
-        style:UIBarButtonItemStyleBordered
+        initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
         target:self.tweetDetailsTimelineDisplayMgr
         action:@selector(sendDirectMessageToCurrentUser)];
     
