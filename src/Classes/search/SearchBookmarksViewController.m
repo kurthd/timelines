@@ -424,17 +424,10 @@ typedef enum
 - (UIBarButtonItem *)activityButton
 {
     if (!activityButton) {
-        /*
-        UIActivityIndicatorView * view =
-            [[UIActivityIndicatorView alloc]
-            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        */
-
-        CGRect frame = CGRectMake(0.0, 0.0, 25.0, 25.0);
+        CGRect frame = CGRectMake(0.0, 0.0, 23.0, 23.0);
         UIActivityIndicatorView * view =
             [[UIActivityIndicatorView alloc] initWithFrame:frame];
         [view startAnimating];
-        [view sizeToFit];
 
         view.autoresizingMask =
             UIViewAutoresizingFlexibleLeftMargin |
