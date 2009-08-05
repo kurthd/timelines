@@ -6,9 +6,23 @@
 
 @interface UIImage (DrawingAdditions)
 
+//
+// Draw the image at the given point, with rounded corners of the provided
+// radius. Preserves the image's native height and width.
+//
 - (void)drawWithRoundedCornersAtPoint:(CGPoint)point withRadius:(CGFloat)radius;
 - (void)drawWithRoundedCornersAtPoint:(CGPoint)point
                            withRadius:(CGFloat)radius
                          usingContext:(CGContextRef)context;
+
+//
+// Draw the image within the bounds of the given rectangle, with rounded
+// corners of the provided radius. Scales the image as appropriate to fill
+// the contents of the rectangle.
+//
+
+- (void)drawInRect:(CGRect)rect withRoundedCornersWithRadius:(CGFloat)radius;
+- (void)drawInRect:(CGRect)rect withRoundedCornersWithRadius:(CGFloat)radius
+    usingContext:(CGContextRef)context;
 
 @end

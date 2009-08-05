@@ -9,6 +9,9 @@
 static const CGFloat TEXT_WIDTH_WITHOUT_AVATAR = 290.0;
 static const CGFloat TEXT_WIDTH_WITH_AVATAR = 235.0;
 
+static const CGFloat AVATAR_WIDTH = 50.0;
+static const CGFloat AVATAR_HEIGHT = 50.0;
+
 static UIImage * backgroundImage;
 
 @interface TimelineTableViewCellView ()
@@ -197,9 +200,10 @@ static UIImage * backgroundImage;
     //
     // Draw the avatar.
     //
-
-    point = CGPointMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN);
-    [avatar drawWithRoundedCornersAtPoint:point withRadius:6.0];
+    CGRect avatarRect =
+        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN,
+        AVATAR_WIDTH, AVATAR_HEIGHT);
+    [avatar drawInRect:avatarRect withRoundedCornersWithRadius:6.0];
 }
 
 - (void)drawRectInverted:(CGRect)rect
@@ -267,9 +271,10 @@ static UIImage * backgroundImage;
     //
     // Draw the avatar.
     //
-
-    point = CGPointMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN);
-    [avatar drawWithRoundedCornersAtPoint:point withRadius:6.0];
+    CGRect avatarRect =
+        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN,
+        AVATAR_WIDTH, AVATAR_HEIGHT);
+    [avatar drawInRect:avatarRect withRoundedCornersWithRadius:6.0];
 }
 
 - (void)drawRectNoAvatar:(CGRect)rect
@@ -395,9 +400,10 @@ static UIImage * backgroundImage;
     //
     // Draw the avatar.
     //
-
-    point = CGPointMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN);
-    [avatar drawWithRoundedCornersAtPoint:point withRadius:6.0];
+    CGRect avatarRect =
+        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN,
+        AVATAR_WIDTH, AVATAR_HEIGHT);
+    [avatar drawInRect:avatarRect withRoundedCornersWithRadius:6.0];
 }
 
 #pragma mark Accessors

@@ -6,6 +6,14 @@
 
 #define DEGREES_TO_RADIANS(degrees) ((degrees) / 57.2958)
 
+@interface UIImage (DrawingAdditionsPrivate)
+
+- (void)roundCornersInRect:(CGRect)imageRect
+                withRadius:(CGFloat)radius
+              usingContext:(CGContextRef)context;
+
+@end
+
 @implementation UIImage (DrawingAdditions)
 
 - (void)drawWithRoundedCornersAtPoint:(CGPoint)point withRadius:(CGFloat)radius
@@ -20,11 +28,37 @@
                            withRadius:(CGFloat)radius
                          usingContext:(CGContextRef)context
 {
+    CGRect rect =
+        CGRectMake(point.x, point.y, self.size.width, self.size.height);
+    [self roundCornersInRect:rect withRadius:radius usingContext:context];
+
+    // draw the actual image
+    [self drawAtPoint:point];
+}
+
+- (void)drawInRect:(CGRect)rect withRoundedCornersWithRadius:(CGFloat)radius
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [self drawInRect:rect
+        withRoundedCornersWithRadius:radius usingContext:context];
+}
+
+- (void)drawInRect:(CGRect)rect withRoundedCornersWithRadius:(CGFloat)radius
+    usingContext:(CGContextRef)context
+{
+    [self roundCornersInRect:rect withRadius:radius usingContext:context];
+
+    // draw the actual image
+    [self drawInRect:rect];
+}
+
+- (void)roundCornersInRect:(CGRect)imageRect
+                withRadius:(CGFloat)radius
+              usingContext:(CGContextRef)context
+{
     // round the corners
     CGMutablePathRef outlinePath = CGPathCreateMutable(); 
 
-    CGRect imageRect =
-        CGRectMake(point.x, point.y, self.size.width, self.size.height);
     CGRect interiorRect = CGRectInset(imageRect, radius, radius);
 
     CGPathAddArc(outlinePath, NULL,
@@ -59,9 +93,6 @@
     CGContextClip(context); 
 
     CGPathRelease(outlinePath);
-
-    // draw the actual image
-    [self drawAtPoint:point];
 }
 
 @end
