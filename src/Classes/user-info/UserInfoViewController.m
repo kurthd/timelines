@@ -7,6 +7,7 @@
 #import "UIColor+TwitchColors.h"
 #import "UserInfoLabelCell.h"
 #import "AsynchronousNetworkFetcher.h"
+#import "NSString+HtmlEncodingAdditions.h"
 
 enum {
     kUserInfoSectionDetails,
@@ -277,7 +278,7 @@ static UIImage * defaultAvatar;
         [avatarView setImage:avatarImage];
     nameLabel.text = aUser.name;
     usernameLabel.text = [NSString stringWithFormat:@"@%@", aUser.username];
-    bioLabel.text = aUser.bio;
+    bioLabel.text = [aUser.bio stringByDecodingHtmlEntities];
 
     [self layoutViews];
     [self.tableView reloadData];
