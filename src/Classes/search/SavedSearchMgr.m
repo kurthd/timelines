@@ -8,7 +8,6 @@
 @interface SavedSearchMgr ()
 
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, copy) NSString * accountName;
 
 - (NSString *)normalizeQuery:(NSString *)query;
 

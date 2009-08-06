@@ -91,6 +91,9 @@
     NSString * tweetIdToShow;
     
     BOOL suppressTimelineFailures;
+
+    SavedSearchMgr * savedSearchMgr;
+    NSString * currentSearch;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;

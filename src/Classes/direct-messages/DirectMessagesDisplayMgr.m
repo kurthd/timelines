@@ -28,7 +28,19 @@
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
 - (void)updateBadge;
 - (void)presentFailedDirectMessageOnTimer:(NSTimer *)timer;
+
+- (void)removeSearch:(NSString *)search;
+- (void)saveSearch:(NSString *)search;
+
+- (UIView *)saveSearchView;
+- (UIView *)removeSearchView;
+- (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
+    action:(SEL)action;
+
 + (BOOL)displayWithUsername;
+
+@property (nonatomic, retain) SavedSearchMgr * savedSearchMgr;
+@property (nonatomic, retain) NSString * currentSearch;
 
 @end
 
@@ -41,7 +53,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     tweetDetailsTimelineDisplayMgr, tweetDetailsNetAwareViewController,
     tweetDetailsCredentialsPublisher, userListNetAwareViewController,
     userListController, directMessageCache, newDirectMessages,
-    newDirectMessagesState, currentConversationUserId;
+    newDirectMessagesState, currentConversationUserId, currentSearch,
+    savedSearchMgr;
 
 - (void)dealloc
 {
@@ -299,6 +312,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
     self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = YES;
+    [self.tweetDetailsTimelineDisplayMgr
+        setTimelineHeaderView:nil];
     self.tweetDetailsTimelineDisplayMgr.currentUsername = username;
     [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
 
@@ -343,6 +358,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)showResultsForSearch:(NSString *)query
 {
     NSLog(@"Direct Message Manager: showing search results for '%@'", query);
+    self.currentSearch = query;
 
     self.tweetDetailsNetAwareViewController =
         [[[NetworkAwareViewController alloc]
@@ -356,6 +372,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
     self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = NO;
     self.tweetDetailsTimelineDisplayMgr.currentUsername = nil;
+    UIView * headerView =
+        [self.savedSearchMgr isSearchSaved:query] ?
+        [self removeSearchView] : [self saveSearchView];
+    [self.tweetDetailsTimelineDisplayMgr setTimelineHeaderView:headerView];
     [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
 
     self.tweetDetailsNetAwareViewController.navigationItem.rightBarButtonItem =
@@ -575,6 +595,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [service setCredentials:credentials];
 
     self.activeAcctUsername = credentials.username;
+    self.savedSearchMgr.accountName = credentials.username;
 
     self.conversationController.segregatedSenderUsername = credentials.username;
 
@@ -948,6 +969,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     self.tweetDetailsCredentialsPublisher = nil;
     self.tweetDetailsTimelineDisplayMgr = nil;
     self.tweetDetailsNetAwareViewController = nil;
+    self.currentSearch = nil;
 }
 
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error
@@ -971,6 +993,81 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         [NSString stringWithFormat:@"%d",
         newDirectMessagesState.numNewMessages] :
         nil;
+}
+
+- (void)removeSearch:(id)sender
+{
+    [self.tweetDetailsTimelineDisplayMgr
+        setTimelineHeaderView:[self saveSearchView]];
+    [self.savedSearchMgr removeSavedSearchForQuery:self.currentSearch];
+}
+
+- (void)saveSearch:(id)sender
+{
+    [self.tweetDetailsTimelineDisplayMgr
+        setTimelineHeaderView:[self removeSearchView]];
+    [self.savedSearchMgr addSavedSearch:self.currentSearch];
+}
+
+- (UIView *)saveSearchView
+{
+    NSString * title = NSLocalizedString(@"savedsearch.save.title", @"");
+    SEL action = @selector(saveSearch:);
+
+    return [self toggleSaveSearchViewWithTitle:title action:action];
+}
+
+- (UIView *)removeSearchView
+{
+    NSString * title = NSLocalizedString(@"savedsearch.remove.title", @"");
+    SEL action = @selector(removeSearch:);
+
+    return [self toggleSaveSearchViewWithTitle:title action:action];
+}
+
+- (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
+    action:(SEL)action
+{
+    CGRect viewFrame = CGRectMake(0, 0, 320, 51);
+    UIView * view = [[UIView alloc] initWithFrame:viewFrame];
+
+    CGRect buttonFrame = CGRectMake(20, 7, 280, 37);
+    UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = buttonFrame;
+
+    UIImage * background =
+        [UIImage imageNamed:@"SaveSearchButtonBackground.png"];
+    UIImage * selectedBackground =
+        [UIImage imageNamed:@"SaveSearchButtonBackgroundHighlighted.png"];
+    [button setBackgroundImage:background forState:UIControlStateNormal];
+    [button setBackgroundImage:selectedBackground
+                      forState:UIControlStateHighlighted];
+
+    [button setTitle:title forState:UIControlStateNormal];
+
+    UIColor * color = [UIColor colorWithRed:.353 green:.4 blue:.494 alpha:1.0];
+    [button setTitleColor:color forState:UIControlStateNormal];
+
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    button.titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
+
+    UIControlEvents events = UIControlEventTouchUpInside;
+    [button addTarget:self action:action forControlEvents:events];
+
+    [view addSubview:button];
+
+    return [view autorelease];
+}
+
+- (SavedSearchMgr *)savedSearchMgr
+{
+    if (!savedSearchMgr)
+        savedSearchMgr =
+            [[SavedSearchMgr alloc]
+            initWithAccountName:credentials.username
+            context:managedObjectContext];
+
+    return savedSearchMgr;
 }
 
 + (BOOL)displayWithUsername

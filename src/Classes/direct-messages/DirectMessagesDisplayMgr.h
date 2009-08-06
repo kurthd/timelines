@@ -111,6 +111,9 @@
     UIBarButtonItem * sendingTweetProgressView;
 
     NSNumber * currentConversationUserId;
+
+    SavedSearchMgr * savedSearchMgr;
+    NSString * currentSearch;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;

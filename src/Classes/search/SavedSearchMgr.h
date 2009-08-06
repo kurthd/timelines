@@ -11,7 +11,7 @@
     NSString * accountName;
 }
 
-@property (nonatomic, copy, readonly) NSString * accountName;
+@property (nonatomic, copy) NSString * accountName;
 @property (nonatomic, retain, readonly) NSManagedObjectContext * context;
 
 - (id)initWithAccountName:(NSString *)accountName

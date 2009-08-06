@@ -23,7 +23,18 @@
 - (void)replyToCurrentTweetDetailsUser;
 - (void)presentTweetActions;
 
+- (void)removeSearch:(NSString *)search;
+- (void)saveSearch:(NSString *)search;
+
+- (UIView *)saveSearchView;
+- (UIView *)removeSearchView;
+- (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
+    action:(SEL)action;
+
 + (NSInteger)retweetFormat;
+
+@property (nonatomic, retain) SavedSearchMgr * savedSearchMgr;
+@property (nonatomic, retain) NSString * currentSearch;
 
 @end
 
@@ -44,7 +55,8 @@ static NSInteger retweetFormatValueAlredyRead;
     lastFollowingUsername, lastTweetDetailsWrapperController,
     lastTweetDetailsController, currentTweetDetailsUser, currentUsername,
     allPagesLoaded, setUserToAuthenticatedUser, firstFetchReceived,
-    tweetIdToShow, suppressTimelineFailures, credentials;
+    tweetIdToShow, suppressTimelineFailures, credentials, savedSearchMgr,
+    currentSearch;
 
 - (void)dealloc
 {
@@ -81,6 +93,9 @@ static NSInteger retweetFormatValueAlredyRead;
     [userListController release];
 
     [composeTweetDisplayMgr release];
+
+    [savedSearchMgr release];
+    [currentSearch release];
 
     [super dealloc];
 }
@@ -438,6 +453,8 @@ static NSInteger retweetFormatValueAlredyRead;
         title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
     self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = YES;
+    [self.tweetDetailsTimelineDisplayMgr
+        setTimelineHeaderView:nil];
     self.tweetDetailsTimelineDisplayMgr.currentUsername = username;
     [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
     
@@ -482,6 +499,7 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)showResultsForSearch:(NSString *)query
 {
     NSLog(@"Timeline display manager: showing search results for '%@'", query);
+    self.currentSearch = query;
 
     self.tweetDetailsNetAwareViewController =
         [[[NetworkAwareViewController alloc]
@@ -495,8 +513,11 @@ static NSInteger retweetFormatValueAlredyRead;
     self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
     self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = NO;
     self.tweetDetailsTimelineDisplayMgr.currentUsername = nil;
+    UIView * headerView =
+        [self.savedSearchMgr isSearchSaved:query] ?
+        [self removeSearchView] : [self saveSearchView];
+    [self.tweetDetailsTimelineDisplayMgr setTimelineHeaderView:headerView];
     [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
-
     self.tweetDetailsNetAwareViewController.navigationItem.rightBarButtonItem =
         nil;
 
@@ -865,6 +886,7 @@ static NSInteger retweetFormatValueAlredyRead;
     self.tweetDetailsCredentialsPublisher = nil;
     self.tweetDetailsTimelineDisplayMgr = nil;
     self.tweetDetailsNetAwareViewController = nil;
+    self.currentSearch = nil;
 }
 
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error
@@ -1074,7 +1096,6 @@ static NSInteger retweetFormatValueAlredyRead;
     [timeline removeAllObjects];
     [timeline addEntriesFromDictionary:someTweets];
 
-
     BOOL cachedDataAvailable = [[timeline allKeys] count] > 0;
     if (cachedDataAvailable)
         NSLog(@"Setting cached data available");
@@ -1121,6 +1142,8 @@ static NSInteger retweetFormatValueAlredyRead;
 
     if (setUserToAuthenticatedUser)
         self.currentUsername = credentials.username;
+
+    self.savedSearchMgr.accountName = credentials.username;
 
     [service setCredentials:credentials];
     [timelineSource setCredentials:credentials];
@@ -1185,7 +1208,6 @@ static NSInteger retweetFormatValueAlredyRead;
     self.timelineController.invertedCellUsernames = invertedCellUsernames;
 }
 
-
 - (NSString *)mostRecentTweetId
 {
     return [self.timelineController mostRecentTweetId];
@@ -1207,6 +1229,81 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)setTimelineHeaderView:(UIView *)view
 {
     [timelineController setTimelineHeaderView:view];
+}
+
+- (void)removeSearch:(id)sender
+{
+    [self.tweetDetailsTimelineDisplayMgr
+        setTimelineHeaderView:[self saveSearchView]];
+    [self.savedSearchMgr removeSavedSearchForQuery:self.currentSearch];
+}
+
+- (void)saveSearch:(id)sender
+{
+    [self.tweetDetailsTimelineDisplayMgr
+        setTimelineHeaderView:[self removeSearchView]];
+    [self.savedSearchMgr addSavedSearch:self.currentSearch];
+}
+
+- (UIView *)saveSearchView
+{
+    NSString * title = NSLocalizedString(@"savedsearch.save.title", @"");
+    SEL action = @selector(saveSearch:);
+
+    return [self toggleSaveSearchViewWithTitle:title action:action];
+}
+
+- (UIView *)removeSearchView
+{
+    NSString * title = NSLocalizedString(@"savedsearch.remove.title", @"");
+    SEL action = @selector(removeSearch:);
+
+    return [self toggleSaveSearchViewWithTitle:title action:action];
+}
+
+- (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
+    action:(SEL)action
+{
+    CGRect viewFrame = CGRectMake(0, 0, 320, 51);
+    UIView * view = [[UIView alloc] initWithFrame:viewFrame];
+
+    CGRect buttonFrame = CGRectMake(20, 7, 280, 37);
+    UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = buttonFrame;
+
+    UIImage * background =
+        [UIImage imageNamed:@"SaveSearchButtonBackground.png"];
+    UIImage * selectedBackground =
+        [UIImage imageNamed:@"SaveSearchButtonBackgroundHighlighted.png"];
+    [button setBackgroundImage:background forState:UIControlStateNormal];
+    [button setBackgroundImage:selectedBackground
+                      forState:UIControlStateHighlighted];
+
+    [button setTitle:title forState:UIControlStateNormal];
+
+    UIColor * color = [UIColor colorWithRed:.353 green:.4 blue:.494 alpha:1.0];
+    [button setTitleColor:color forState:UIControlStateNormal];
+
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    button.titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
+
+    UIControlEvents events = UIControlEventTouchUpInside;
+    [button addTarget:self action:action forControlEvents:events];
+
+    [view addSubview:button];
+
+    return [view autorelease];
+}
+
+- (SavedSearchMgr *)savedSearchMgr
+{
+    if (!savedSearchMgr)
+        savedSearchMgr =
+            [[SavedSearchMgr alloc]
+            initWithAccountName:self.credentials.username
+            context:managedObjectContext];
+
+    return savedSearchMgr;
 }
 
 @end
