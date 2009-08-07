@@ -1044,7 +1044,6 @@
 		05B239440FEDD0E400A6A2E6 /* nibs */ = {
 			isa = PBXGroup;
 			children = (
-				91724999102CBAFB007E0DF6 /* TableViewCellTopGradient.png */,
 				05B238820FEDC34200A6A2E6 /* MainWindow.xib */,
 				916BD7ED0FEEB958007143A9 /* NoDataView.xib */,
 				05B238880FEDC35400A6A2E6 /* LogInView.xib */,
@@ -1386,6 +1385,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91724999102CBAFB007E0DF6 /* TableViewCellTopGradient.png */,
 				05DB2A09102CDEC0001E8C30 /* PublicReplyButtonIcon.png */,
 				05DB29FF102CDB6B001E8C30 /* RetweetButtonIcon.png */,
 				05DB29C8102CD879001E8C30 /* DirectMessageButtonIcon.png */,

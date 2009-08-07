@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="28"/>
+			<integer value="37"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -75,7 +75,7 @@
 						<reference key="NSSuperview" ref="585198063"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC45OTIxNTY4NiAwLjk5MjE1Njg2IDAuOTkyMTU2ODYAA</bytes>
+							<bytes key="NSRGB">MC45MDk4MDM5MyAwLjkwOTgwMzkzIDAuOTA5ODAzOTMAA</bytes>
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 					</object>
@@ -245,6 +245,17 @@
 								<reference key="NSNextResponder" ref="717978432"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{0, 74}, {320, 1}}</string>
+								<reference key="NSSuperview" ref="717978432"/>
+								<object class="NSColor" key="IBUIBackgroundColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC42NDc5NTkxNyAwLjY0Nzk1OTE3IDAuNjQ3OTU5MTcAA</bytes>
+								</object>
+								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+							</object>
+							<object class="IBUIView" id="579758285">
+								<reference key="NSNextResponder" ref="717978432"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{0, -1}, {320, 1}}</string>
 								<reference key="NSSuperview" ref="717978432"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
@@ -424,6 +435,7 @@
 							<reference ref="428293698"/>
 							<reference ref="967829520"/>
 							<reference ref="14086707"/>
+							<reference ref="579758285"/>
 						</object>
 						<reference key="parent" ref="585198063"/>
 					</object>
@@ -485,6 +497,12 @@
 						<reference key="parent" ref="717978432"/>
 						<string key="objectName">Dark Grey Line</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">60</int>
+						<reference key="object" ref="579758285"/>
+						<reference key="parent" ref="717978432"/>
+						<string key="objectName">Dark Grey Line</string>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -512,6 +530,7 @@
 					<string>53.IBEditorWindowLastContentRect</string>
 					<string>53.IBPluginDependency</string>
 					<string>58.IBPluginDependency</string>
+					<string>60.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -536,6 +555,7 @@
 					<string>{{312, 684}, {58, 58}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -554,7 +574,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">58</int>
+			<int key="maxID">60</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
