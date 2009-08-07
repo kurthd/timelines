@@ -6,70 +6,138 @@
 
 @implementation UIColor (TwitchColors)
 
+static UIColor * twitchBlueColor;
+static UIColor * twitchGrayColor;
+static UIColor * twitchLabelColor;
+static UIColor * twitchBackgroundColor;
+static UIColor * twitchResolvedColor;
+static UIColor * twitchNewColor;
+static UIColor * twitchOpenColor;
+static UIColor * twitchHoldColor;
+static UIColor * twitchInvalidColor;
+static UIColor * twitchRoundedRectBackgroundColor;
+static UIColor * twitchSelectedCellColor;
+static UIColor * twitchCheckedColor;
+
+static UIColor * selectedTableViewCellBackgroundColor;
+
 + (UIColor *)twitchBlueColor
 {
-    return [UIColor colorWithRed:0 green:.4 blue:.8 alpha:1];
+    if (!twitchBlueColor)
+        twitchBlueColor =
+            [[UIColor colorWithRed:0 green:.4 blue:.8 alpha:1] retain];
+
+    return twitchBlueColor;
 }
 
 + (UIColor *)twitchGrayColor
 {
-    return [UIColor colorWithRed:.4 green:.4 blue:.4 alpha:1];
+    if (!twitchGrayColor)
+        twitchGrayColor =
+            [[UIColor colorWithRed:.4 green:.4 blue:.4 alpha:1] retain];
+
+    return twitchGrayColor;
 }
 
 + (UIColor *)twitchLabelColor
 {
-    return [UIColor colorWithRed:.318 green:.4 blue:.569 alpha:1];
+    if (!twitchLabelColor)
+        twitchLabelColor =
+            [[UIColor colorWithRed:.318 green:.4 blue:.569 alpha:1] retain];
+
+    return twitchLabelColor;
 }
 
 + (UIColor *)twitchBackgroundColor
 {
-    return [UIColor colorWithRed:.909 green:.909 blue:.909 alpha:1];
-//    return [UIColor colorWithRed:.925 green:.933 blue:.953 alpha:1];
+    if (!twitchBackgroundColor)
+        twitchBackgroundColor =
+            [[UIColor colorWithRed:.909 green:.909 blue:.909 alpha:1] retain];
+
+    return twitchBackgroundColor;
 }
 
 + (UIColor *)twitchResolvedColor
 {
-    return [UIColor colorWithRed:.4 green:.667 blue:0 alpha:1];
+    if (!twitchResolvedColor)
+        twitchResolvedColor =
+            [[UIColor colorWithRed:.4 green:.667 blue:0 alpha:1] retain];
+
+    return twitchResolvedColor;
 }
 
 + (UIColor *)twitchNewColor
 {
-    return [UIColor colorWithRed:1 green:.067 blue:.467 alpha:1];
+    if (!twitchNewColor)
+        twitchNewColor =
+            [[UIColor colorWithRed:1 green:.067 blue:.467 alpha:1] retain];
+
+    return twitchNewColor;
 }
 
 + (UIColor *)twitchOpenColor
 {
-    return [UIColor colorWithRed:.667 green:.667 blue:.667 alpha:1];
+    if (!twitchOpenColor)
+        twitchOpenColor =
+            [[UIColor colorWithRed:.667 green:.667 blue:.667 alpha:1] retain];
+
+    return twitchOpenColor;
 }
 
 + (UIColor *)twitchHoldColor
 {
-    return [UIColor colorWithRed:.933 green:.733 blue:0 alpha:1];
+    if (!twitchHoldColor)
+        twitchHoldColor =
+            [[UIColor colorWithRed:.933 green:.733 blue:0 alpha:1] retain];
+
+    return twitchHoldColor;
 }
 
 + (UIColor *)twitchInvalidColor
 {
-    return [UIColor colorWithRed:.667 green:.2 blue:0 alpha:1];
+    if (!twitchInvalidColor)
+        twitchInvalidColor =
+            [[UIColor colorWithRed:.667 green:.2 blue:0 alpha:1] retain];
+
+    return twitchInvalidColor;
 }
 
 + (UIColor *)twitchRoundedRectBackgroundColor
 {
-    return [UIColor colorWithRed:.549 green:.6 blue:.706 alpha:1];
+    if (!twitchRoundedRectBackgroundColor)
+        twitchRoundedRectBackgroundColor =
+            [[UIColor colorWithRed:.549 green:.6 blue:.706 alpha:1] retain];
+
+    return twitchRoundedRectBackgroundColor;
 }
 
 + (UIColor *)twitchSelectedCellColor
 {
-    return [UIColor colorWithRed:0.008 green:0.427 blue:0.925 alpha:1.0];
+    if (!twitchSelectedCellColor)
+        twitchSelectedCellColor =
+            [[UIColor colorWithRed:0.008 green:0.427 blue:0.925 alpha:1.0]
+            retain];
+
+    return twitchSelectedCellColor;
 }
 
 + (UIColor *)twitchCheckedColor
 {
-    return [UIColor colorWithRed:0.196 green:0.310 blue:0.522 alpha:1.0];
+    if (!twitchCheckedColor)
+        twitchCheckedColor =
+            [[UIColor colorWithRed:0.196 green:0.310 blue:0.522 alpha:1.0]
+            retain];
+
+    return twitchCheckedColor;
 }
 
 + (UIColor *)selectedTableViewCellBackgroundColor
 {
-    return [UIColor colorWithRed:.4 green:.388 blue:.910 alpha:1.0];
+    if (!selectedTableViewCellBackgroundColor)
+        selectedTableViewCellBackgroundColor =
+            [[UIColor colorWithRed:.4 green:.388 blue:.910 alpha:1.0] retain];
+
+    return selectedTableViewCellBackgroundColor;
 }
 
 @end
