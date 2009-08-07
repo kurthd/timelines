@@ -48,7 +48,6 @@ static UIImage * defaultAvatar;
     [followingCheckMark release];
     [followingActivityIndicator release];
     [followingLoadingLabel release];
-    [starImageView release];
 
     [followButton release];
     [bookmarkButton release];
@@ -143,7 +142,11 @@ static UIImage * defaultAvatar;
                 if (indexPath.row == kUserInfoFavoritesRow) {
                     cell.textLabel.text =
                         NSLocalizedString(@"userinfoview.favorites", @"");
-                    cell.imageView.image = starImageView.image;
+                    cell.imageView.image =
+                        [UIImage imageNamed:@"FavoriteIconForUserView.png"];
+                    cell.imageView.highlightedImage =
+                        [UIImage
+                        imageNamed:@"FavoriteIconForUserViewHighlighted.png"];
                 } else {
                     if (indexPath.row == kUserInfoFollowersRow) {
                         if ([user.followersCount

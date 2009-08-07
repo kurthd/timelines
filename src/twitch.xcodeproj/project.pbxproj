@@ -228,6 +228,7 @@
 		9152E1D3101532C90033B63B /* ConversationPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E1D2101532C90033B63B /* ConversationPreview.m */; };
 		9152E239101557AC0033B63B /* NewMessagesDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9152E238101557AC0033B63B /* NewMessagesDot.png */; };
 		9152E2761015729D0033B63B /* DirectMessage+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E2751015729D0033B63B /* DirectMessage+UIAdditions.m */; };
+		916E3E49102CDC2700A879AC /* FavoriteIconForUserViewHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E3E48102CDC2700A879AC /* FavoriteIconForUserViewHighlighted.png */; };
 		917245521025046A007E0DF6 /* FavoriteMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 917245511025046A007E0DF6 /* FavoriteMark.png */; };
 		917245E61028B715007E0DF6 /* FindPeopleBookmarkView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 917245E41028B715007E0DF6 /* FindPeopleBookmarkView.xib */; };
 		917245E91028B781007E0DF6 /* FindPeopleBookmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 917245E81028B781007E0DF6 /* FindPeopleBookmarkViewController.m */; };
@@ -639,6 +640,7 @@
 		916BD9FB0FEF4986007143A9 /* TimelineViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineViewControllerDelegate.h; path = timeline/TimelineViewControllerDelegate.h; sourceTree = "<group>"; };
 		916BDA140FEF4E96007143A9 /* TweetDetailsViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailsViewDelegate.h; path = timeline/TweetDetailsViewDelegate.h; sourceTree = "<group>"; };
 		916BDA4D0FEF573A007143A9 /* tweet-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "tweet-style.css"; sourceTree = "<group>"; };
+		916E3E48102CDC2700A879AC /* FavoriteIconForUserViewHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FavoriteIconForUserViewHighlighted.png; path = images/FavoriteIconForUserViewHighlighted.png; sourceTree = "<group>"; };
 		917245511025046A007E0DF6 /* FavoriteMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FavoriteMark.png; path = images/FavoriteMark.png; sourceTree = "<group>"; };
 		917245E51028B715007E0DF6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/FindPeopleBookmarkView.xib; sourceTree = "<group>"; };
 		917245E71028B781007E0DF6 /* FindPeopleBookmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FindPeopleBookmarkViewController.h; path = timeline/FindPeopleBookmarkViewController.h; sourceTree = "<group>"; };
@@ -1365,6 +1367,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				916E3E48102CDC2700A879AC /* FavoriteIconForUserViewHighlighted.png */,
 				917249C4102CCEEE007E0DF6 /* FavoriteIconForUserView.png */,
 				917246E8102A02F2007E0DF6 /* CellBackground.png */,
 				917246E5102A0257007E0DF6 /* SelectedCellBackground.png */,
@@ -1620,6 +1623,7 @@
 				917246E9102A02F2007E0DF6 /* CellBackground.png in Resources */,
 				9172499A102CBAFB007E0DF6 /* TableViewCellTopGradient.png in Resources */,
 				917249C5102CCEEE007E0DF6 /* FavoriteIconForUserView.png in Resources */,
+				916E3E49102CDC2700A879AC /* FavoriteIconForUserViewHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
