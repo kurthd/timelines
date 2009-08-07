@@ -24,18 +24,22 @@
 }
 @end
 
+#define ROW_HEIGHT 72
+
 @interface UserListTableViewController ()
 
 - (UIImage *)getAvatarForUrl:(NSString *)url;
 - (NSArray *)sortedUsers;
 
 + (UIImage *)defaultAvatar;
++ (UIColor *)darkCellBackgroundColor;
 
 @end
 
 @implementation UserListTableViewController
 
 static UIImage * defaultAvatar;
+static UIColor * darkCellBackgroundColor;
 
 @synthesize delegate, sortedUserCache;
 
@@ -87,31 +91,34 @@ static UIImage * defaultAvatar;
 - (UITableViewCell *)tableView:(UITableView *)tableView
     cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * cellIdentifier = @"UserSummaryTableViewCell";
+    NSString * cellIdentifier =
+        indexPath.row % 2 == 0 ?
+        @"UserSummaryTableViewCellLight" :
+        @"UserSummaryTableViewCellDark";
 
     UserSummaryTableViewCell * cell =
         (UserSummaryTableViewCell *)
         [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        NSArray * nib =
-            [[NSBundle mainBundle] loadNibNamed:@"UserSummaryTableViewCell"
-            owner:self options:nil];
-
-        cell = [nib objectAtIndex:0];
+        UIColor * cellColor =
+            indexPath.row % 2 == 0 ?
+            [UIColor whiteColor] :
+            [[self class] darkCellBackgroundColor];
+        cell =
+            [[[UserSummaryTableViewCell alloc]
+            initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:cellIdentifier
+            backgroundColor:cellColor]
+            autorelease];
+		cell.frame = CGRectMake(0.0, 0.0, 320.0, ROW_HEIGHT);
     }
 
     User * user = [[self sortedUsers] objectAtIndex:indexPath.row];
-    [cell setAvatar:[self getAvatarForUrl:user.profileImageUrl]];
-    [cell setName:user.name];
-    NSString * username = [NSString stringWithFormat:@"@%@", user.username];
-    [cell setUsername:username];
-    NSString * followingFormatString =
-        NSLocalizedString(@"userlisttableview.following", @"");
-    NSString * followingText =
-        [NSString stringWithFormat:followingFormatString, user.friendsCount,
-        user.followersCount];
-    [cell setFollowingText:followingText];
-
+    [cell setUser:user];
+    
+    UIImage * avatarImage = [self getAvatarForUrl:user.profileImageUrl];
+    [cell setAvatarImage:avatarImage];
+    
     return cell;
 }
 
@@ -125,19 +132,24 @@ static UIImage * defaultAvatar;
 - (CGFloat)tableView:(UITableView *)aTableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 72;
+    return ROW_HEIGHT;
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
     didReceiveData:(NSData *)data fromUrl:(NSURL *)url
-{
+{   
     NSString * urlAsString = [url absoluteString];
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
         [avatarCache setObject:avatarImage forKey:urlAsString];
-        [self.tableView reloadData];
+
+        // avoid calling reloadData by setting the avatars of the visible cells
+        NSArray * visibleCells = self.tableView.visibleCells;
+        for (UserSummaryTableViewCell * cell in visibleCells)
+            if ([cell.avatarImageUrl isEqualToString:urlAsString])
+                [cell setAvatarImage:avatarImage];
     }
 }
 
@@ -214,9 +226,18 @@ static UIImage * defaultAvatar;
 + (UIImage *)defaultAvatar
 {
     if (!defaultAvatar)
-        defaultAvatar = [UIImage imageNamed:@"DefaultAvatar50x50.png"];
+        defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar50x50.png"] retain];
 
     return defaultAvatar;
+}
+
++ (UIColor *)darkCellBackgroundColor
+{
+    if (!darkCellBackgroundColor)
+        darkCellBackgroundColor =
+            [[UIColor colorWithRed:.965 green:.965 blue:.965 alpha:1] retain];
+
+    return darkCellBackgroundColor;
 }
 
 @end

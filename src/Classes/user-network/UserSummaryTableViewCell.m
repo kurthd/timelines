@@ -6,33 +6,50 @@
 
 @implementation UserSummaryTableViewCell
 
+@synthesize userSummaryView, avatarImageUrl;
+
 - (void)dealloc
 {
-    [avatarView release];
-    [nameLabel release];
-    [usernameLabel release];
-    [followingLabel release];
+    [userSummaryView release];
     [super dealloc];
 }
 
-- (void)setAvatar:(UIImage *)avatar
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier
+    backgroundColor:(UIColor *)aBackgroundColor
 {
-    [avatarView setImage:avatar];
+
+	if (self = [super initWithStyle:UITableViewCellStyleDefault
+	    reuseIdentifier:reuseIdentifier]) {
+
+		CGRect cellViewFrame =
+		    CGRectMake(0.0, 0.0, self.contentView.bounds.size.width,
+		    self.contentView.bounds.size.height);
+		userSummaryView =
+		    [[UserSummaryView alloc] initWithFrame:cellViewFrame
+		    backgroundColor:aBackgroundColor];
+		userSummaryView.autoresizingMask =
+		    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		[self.contentView addSubview:userSummaryView];
+	}
+
+	return self;
 }
 
-- (void)setName:(NSString *)name
+- (void)setUser:(User *)user
 {
-    nameLabel.text = name;
+    self.avatarImageUrl = user.profileImageUrl;
+    [userSummaryView setUser:user];
 }
 
-- (void)setUsername:(NSString *)username
+- (void)setAvatarImage:(UIImage *)avatarImage
 {
-    usernameLabel.text = username;
+    userSummaryView.avatar = avatarImage;
 }
 
-- (void)setFollowingText:(NSString *)followingText
+- (void)redisplay
 {
-    followingLabel.text = followingText;
+    [userSummaryView setNeedsDisplay];
 }
 
 @end

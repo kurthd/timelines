@@ -39,6 +39,11 @@
     [service fetchUserInfoForUsername:username];
 }
 
+- (BOOL)readyForQuery
+{
+    return YES;
+}
+
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)mentions:(NSArray *)mentions fetchedSinceUpdateId:(NSNumber *)updateId

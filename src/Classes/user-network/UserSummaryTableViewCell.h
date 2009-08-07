@@ -3,19 +3,25 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RoundedImage.h"
+#import "User.h"
+#import "UserSummaryView.h"
 
 @interface UserSummaryTableViewCell : UITableViewCell
 {
-    IBOutlet RoundedImage * avatarView;
-    IBOutlet UILabel * nameLabel;
-    IBOutlet UILabel * usernameLabel;
-    IBOutlet UILabel * followingLabel;
+    NSString * avatarImageUrl;
+    UserSummaryView * userSummaryView;
 }
 
-- (void)setAvatar:(UIImage *)avatar;
-- (void)setName:(NSString *)name;
-- (void)setUsername:(NSString *)username;
-- (void)setFollowingText:(NSString *)followingText;
+@property (nonatomic, copy) NSString * avatarImageUrl;
+@property (nonatomic, retain) UserSummaryView * userSummaryView;
+
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier
+    backgroundColor:(UIColor *)backgroundColor;
+
+- (void)setUser:(User *)user;
+- (void)setAvatarImage:(UIImage *)avatarImage;
+
+- (void)redisplay;
 
 @end

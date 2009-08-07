@@ -9,6 +9,7 @@
 @protocol TweetDetailsViewDelegate
 
 - (void)showTweetsForUser:(NSString *)username;
+- (void)showResultsForSearch:(NSString *)query;
 - (void)setFavorite:(BOOL)favorite;
 - (void)showLocationOnMap:(NSString *)location;
 - (void)visitWebpage:(NSString *)webpageUrl;

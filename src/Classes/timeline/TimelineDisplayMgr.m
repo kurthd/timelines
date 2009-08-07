@@ -8,6 +8,7 @@
 #import "FavoritesTimelineDataSource.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "TweetViewController.h"
+#import "SearchDataSource.h"
 
 @interface TimelineDisplayMgr ()
 
@@ -24,7 +25,18 @@
 - (void)replyToCurrentTweetDetailsUser;
 - (void)presentTweetActions;
 
+- (void)removeSearch:(NSString *)search;
+- (void)saveSearch:(NSString *)search;
+
+- (UIView *)saveSearchView;
+- (UIView *)removeSearchView;
+- (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
+    action:(SEL)action;
+
 + (NSInteger)retweetFormat;
+
+@property (nonatomic, retain) SavedSearchMgr * savedSearchMgr;
+@property (nonatomic, retain) NSString * currentSearch;
 
 @end
 
@@ -45,7 +57,8 @@ static NSInteger retweetFormatValueAlredyRead;
     lastFollowingUsername, lastTweetDetailsWrapperController,
     lastTweetDetailsController, currentTweetDetailsUser, currentUsername,
     allPagesLoaded, setUserToAuthenticatedUser, firstFetchReceived,
-    tweetIdToShow, suppressTimelineFailures;
+    tweetIdToShow, suppressTimelineFailures, credentials, savedSearchMgr,
+    currentSearch;
 
 - (void)dealloc
 {
@@ -82,6 +95,9 @@ static NSInteger retweetFormatValueAlredyRead;
     [userListController release];
 
     [composeTweetDisplayMgr release];
+
+    [savedSearchMgr release];
+    [currentSearch release];
 
     [super dealloc];
 }
@@ -439,13 +455,14 @@ static NSInteger retweetFormatValueAlredyRead;
         title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
     self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = YES;
+    [self.tweetDetailsTimelineDisplayMgr
+        setTimelineHeaderView:nil];
     self.tweetDetailsTimelineDisplayMgr.currentUsername = username;
     [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
     
     UIBarButtonItem * sendDMButton =
         [[UIBarButtonItem alloc]
-        initWithImage:[UIImage imageNamed:@"Envelope.png"]
-        style:UIBarButtonItemStyleBordered
+        initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
         target:self.tweetDetailsTimelineDisplayMgr
         action:@selector(sendDirectMessageToCurrentUser)];
 
@@ -464,6 +481,60 @@ static NSInteger retweetFormatValueAlredyRead;
         [[[ArbUserTimelineDataSource alloc]
         initWithTwitterService:twitterService
         username:username]
+        autorelease];
+
+    self.tweetDetailsCredentialsPublisher =
+        [[CredentialsActivatedPublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+
+    twitterService.delegate = dataSource;
+    [self.tweetDetailsTimelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO allPagesLoaded:NO];
+    dataSource.delegate = self.tweetDetailsTimelineDisplayMgr;
+
+    [dataSource setCredentials:credentials];
+    [self.wrapperController.navigationController
+        pushViewController:self.tweetDetailsNetAwareViewController
+        animated:YES];
+}
+
+- (void)showResultsForSearch:(NSString *)query
+{
+    NSLog(@"Timeline display manager: showing search results for '%@'", query);
+    self.currentSearch = query;
+
+    self.tweetDetailsNetAwareViewController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    self.tweetDetailsTimelineDisplayMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:
+        tweetDetailsNetAwareViewController
+        title:query composeTweetDisplayMgr:composeTweetDisplayMgr];
+    self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
+    self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = NO;
+    self.tweetDetailsTimelineDisplayMgr.currentUsername = nil;
+    UIView * headerView =
+        [self.savedSearchMgr isSearchSaved:query] ?
+        [self removeSearchView] : [self saveSearchView];
+    [self.tweetDetailsTimelineDisplayMgr setTimelineHeaderView:headerView];
+    [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
+    self.tweetDetailsNetAwareViewController.navigationItem.rightBarButtonItem =
+        nil;
+
+    self.tweetDetailsNetAwareViewController.delegate =
+        self.tweetDetailsTimelineDisplayMgr;
+
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:managedObjectContext]
+        autorelease];
+
+    SearchDataSource * dataSource =
+        [[[SearchDataSource alloc]
+        initWithTwitterService:twitterService
+        query:query]
         autorelease];
 
     self.tweetDetailsCredentialsPublisher =
@@ -565,8 +636,11 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)networkAwareViewWillAppear
 {
     NSLog(@"Timeline display manager: showing timeline view...");
-    if ((!hasBeenDisplayed && [timelineSource credentials]) || needsRefresh) {
+    if (((!hasBeenDisplayed && [timelineSource credentials]) || needsRefresh) &&
+        [timelineSource readyForQuery]) {
+
         NSLog(@"Timeline display manager: fetching new timeline when shown...");
+        [self.wrapperController setUpdatingState:kConnectedAndUpdating];
         [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
     }
@@ -814,6 +888,7 @@ static NSInteger retweetFormatValueAlredyRead;
     self.tweetDetailsCredentialsPublisher = nil;
     self.tweetDetailsTimelineDisplayMgr = nil;
     self.tweetDetailsNetAwareViewController = nil;
+    self.currentSearch = nil;
 }
 
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error
@@ -1041,7 +1116,6 @@ static NSInteger retweetFormatValueAlredyRead;
     [timeline removeAllObjects];
     [timeline addEntriesFromDictionary:someTweets];
 
-
     BOOL cachedDataAvailable = [[timeline allKeys] count] > 0;
     if (cachedDataAvailable)
         NSLog(@"Setting cached data available");
@@ -1089,6 +1163,8 @@ static NSInteger retweetFormatValueAlredyRead;
     if (setUserToAuthenticatedUser)
         self.currentUsername = credentials.username;
 
+    self.savedSearchMgr.accountName = credentials.username;
+
     [service setCredentials:credentials];
     [timelineSource setCredentials:credentials];
 
@@ -1110,8 +1186,6 @@ static NSInteger retweetFormatValueAlredyRead;
 
         needsRefresh = YES;
         pagesShown = 1;
-
-        [self.wrapperController setUpdatingState:kConnectedAndUpdating];
     } else if (hasBeenDisplayed) {// set for first time and persisted data shown
         NSLog(@"Timeline display manager: setting account for first time");
         [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0]
@@ -1154,7 +1228,6 @@ static NSInteger retweetFormatValueAlredyRead;
     self.timelineController.invertedCellUsernames = invertedCellUsernames;
 }
 
-
 - (NSString *)mostRecentTweetId
 {
     return [self.timelineController mostRecentTweetId];
@@ -1176,6 +1249,81 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)setTimelineHeaderView:(UIView *)view
 {
     [timelineController setTimelineHeaderView:view];
+}
+
+- (void)removeSearch:(id)sender
+{
+    [self.tweetDetailsTimelineDisplayMgr
+        setTimelineHeaderView:[self saveSearchView]];
+    [self.savedSearchMgr removeSavedSearchForQuery:self.currentSearch];
+}
+
+- (void)saveSearch:(id)sender
+{
+    [self.tweetDetailsTimelineDisplayMgr
+        setTimelineHeaderView:[self removeSearchView]];
+    [self.savedSearchMgr addSavedSearch:self.currentSearch];
+}
+
+- (UIView *)saveSearchView
+{
+    NSString * title = NSLocalizedString(@"savedsearch.save.title", @"");
+    SEL action = @selector(saveSearch:);
+
+    return [self toggleSaveSearchViewWithTitle:title action:action];
+}
+
+- (UIView *)removeSearchView
+{
+    NSString * title = NSLocalizedString(@"savedsearch.remove.title", @"");
+    SEL action = @selector(removeSearch:);
+
+    return [self toggleSaveSearchViewWithTitle:title action:action];
+}
+
+- (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
+    action:(SEL)action
+{
+    CGRect viewFrame = CGRectMake(0, 0, 320, 51);
+    UIView * view = [[UIView alloc] initWithFrame:viewFrame];
+
+    CGRect buttonFrame = CGRectMake(20, 7, 280, 37);
+    UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = buttonFrame;
+
+    UIImage * background =
+        [UIImage imageNamed:@"SaveSearchButtonBackground.png"];
+    UIImage * selectedBackground =
+        [UIImage imageNamed:@"SaveSearchButtonBackgroundHighlighted.png"];
+    [button setBackgroundImage:background forState:UIControlStateNormal];
+    [button setBackgroundImage:selectedBackground
+                      forState:UIControlStateHighlighted];
+
+    [button setTitle:title forState:UIControlStateNormal];
+
+    UIColor * color = [UIColor colorWithRed:.353 green:.4 blue:.494 alpha:1.0];
+    [button setTitleColor:color forState:UIControlStateNormal];
+
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    button.titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
+
+    UIControlEvents events = UIControlEventTouchUpInside;
+    [button addTarget:self action:action forControlEvents:events];
+
+    [view addSubview:button];
+
+    return [view autorelease];
+}
+
+- (SavedSearchMgr *)savedSearchMgr
+{
+    if (!savedSearchMgr)
+        savedSearchMgr =
+            [[SavedSearchMgr alloc]
+            initWithAccountName:self.credentials.username
+            context:managedObjectContext];
+
+    return savedSearchMgr;
 }
 
 @end

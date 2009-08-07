@@ -3,39 +3,43 @@
 //
 
 #import "DirectMessageInboxCell.h"
-#import "NSDate+StringHelpers.h"
-#import "UILabel+DrawingAdditions.h"
 
 @implementation DirectMessageInboxCell
 
+@synthesize cellView;
+
 - (void)dealloc
 {
-    [nameLabel release];
-    [dateLabel release];
-    [messagePreviewLabel release];
-    [newMessagesView release];
+    [cellView release];
     [super dealloc];
 }
 
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier {
 
-    CGFloat messagePreviewHeight =
-        [messagePreviewLabel heightForString:messagePreviewLabel.text];
-    messagePreviewHeight =
-        messagePreviewHeight > 34 ? 34 : messagePreviewHeight;
-    CGRect messagePreviewLabelFrame = messagePreviewLabel.frame;
-    messagePreviewLabelFrame.size.height = messagePreviewHeight;
-    messagePreviewLabel.frame = messagePreviewLabelFrame;
+	if (self = [super initWithStyle:UITableViewCellStyleDefault
+	    reuseIdentifier:reuseIdentifier]) {
+
+		CGRect cellViewFrame =
+		    CGRectMake(0.0, 0.0, self.contentView.bounds.size.width,
+		    self.contentView.bounds.size.height);
+		cellView =
+		    [[DirectMessageInboxCellView alloc] initWithFrame:cellViewFrame];
+		cellView.autoresizingMask =
+		    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		[self.contentView addSubview:cellView];
+	}
+
+	return self;
+}
+
+- (void)redisplay {
+	[cellView setNeedsDisplay];
 }
 
 - (void)setConversationPreview:(ConversationPreview *)preview
 {
-    nameLabel.text = preview.otherUserName;
-    dateLabel.text = [preview.mostRecentMessageDate shortDescription];
-    messagePreviewLabel.text = preview.mostRecentMessage;
-    newMessagesView.hidden = preview.numNewMessages == 0;
+    [cellView setConversationPreview:preview];
 }
 
 @end

@@ -10,12 +10,16 @@
 + (NSMutableDictionary *)avatarCache;
 + (NSMutableDictionary *)urlToUsersMapping;
 
++ (NSMutableDictionary *)followersDescriptionCache;
+
 @end
 
 @implementation User (UIAdditions)
 
 static NSMutableDictionary * avatars;
 static NSMutableDictionary * urlToUsers;
+
+static NSMutableDictionary * followersDescriptions;
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
 
@@ -73,6 +77,24 @@ static NSMutableDictionary * urlToUsers;
     return [self avatar].image;
 }
 
+- (NSString *)followersDescription
+{
+    NSString * followersDescription =
+        [[[self class] followersDescriptionCache] objectForKey:self.identifier];
+
+    if (!followersDescription) {
+        NSString * followingFormatString =
+            NSLocalizedString(@"userlisttableview.following", @"");
+        followersDescription =
+            [NSString stringWithFormat:followingFormatString, self.friendsCount,
+            self.followersCount];
+        [[[self class] followersDescriptionCache]
+            setObject:followersDescription forKey:self.identifier];
+    }
+
+    return followersDescription;
+}
+
 + (NSMutableDictionary *)avatarCache
 {
     if (!avatars)
@@ -87,6 +109,14 @@ static NSMutableDictionary * urlToUsers;
         urlToUsers = [[NSMutableDictionary dictionary] retain];
 
     return urlToUsers;
+}
+
++ (NSMutableDictionary *)followersDescriptionCache
+{
+    if (!followersDescriptions)
+        followersDescriptions = [[NSMutableDictionary dictionary] retain];
+
+    return followersDescriptions;
 }
 
 @end

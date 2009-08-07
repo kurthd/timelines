@@ -11,5 +11,6 @@
 
 - (RoundedImage *)avatar;
 - (UIImage *)avatarImage;
+- (NSString *)followersDescription;
 
 @end

@@ -7,6 +7,7 @@
 #import "TimelineTableViewCellView.h"
 
 static UIImage * backgroundImage;
+static UIImage * topGradientImage;
 
 @implementation TimelineTableViewCell
 
@@ -17,6 +18,8 @@ static UIImage * backgroundImage;
     NSAssert(!backgroundImage, @"backgroundImage should be nil.");
     backgroundImage =
         [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
+    topGradientImage =
+        [[UIImage imageNamed:@"TableViewCellTopGradient.png"] retain];
 }
 
 - (void)dealloc
@@ -55,6 +58,10 @@ static UIImage * backgroundImage;
         CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
         320.0, backgroundImage.size.height);
     [backgroundImage drawInRect:backgroundImageRect];
+
+    CGRect topGradientImageRect =
+        CGRectMake(0, 0, 320.0, topGradientImage.size.height);
+    [topGradientImage drawInRect:topGradientImageRect];
 }
 
 - (void)setAvatarImage:(UIImage *)image

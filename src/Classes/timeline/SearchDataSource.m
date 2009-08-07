@@ -2,27 +2,27 @@
 //  Copyright 2009 High Order Bit, Inc. All rights reserved.
 //
 
-#import "FavoritesTimelineDataSource.h"
+#import "SearchDataSource.h"
 #import "Tweet.h"
 #import "TweetInfo.h"
 
-@implementation FavoritesTimelineDataSource
+@implementation SearchDataSource
 
-@synthesize delegate;
+@synthesize delegate, query;
 
 - (void)dealloc
 {
     [service release];
-    [username release];
+    [query release];
     [super dealloc];
 }
 
 - (id)initWithTwitterService:(TwitterService *)aService
-    username:(NSString *)aUsername
+    query:(NSString *)aQuery
 {
     if (self = [super init]) {
         service = [aService retain];
-        username = [aUsername copy];
+        query = [aQuery copy];
     }
 
     return self;
@@ -32,31 +32,37 @@
 
 - (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page
 {
-    [service fetchFavoritesForUser:username page:page];
+    if ([self readyForQuery]) {
+        NSLog(@"Search data source: fetching timeline for user %@",
+            query);
+        [service searchFor:query page:page];
+    }
 }
 
 - (BOOL)readyForQuery
 {
-    return YES;
+    return query && ![query isEqual:@""];
 }
 
 #pragma mark TwitterServiceDelegate implementation
 
-- (void)favorites:(NSArray *)timeline fetchedForUser:(NSString *)aUsername
-    page:(NSNumber *)page
+- (void)searchResultsReceived:(NSArray *)newSearchResults
+    forQuery:(NSString *)query page:(NSNumber *)page
 {
     NSMutableArray * tweetInfoTimeline = [NSMutableArray array];
-    for (Tweet * tweet in timeline) {
+    for (Tweet * tweet in newSearchResults) {
         TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
         [tweetInfoTimeline addObject:tweetInfo];
     }
-    [delegate timeline:tweetInfoTimeline fetchedSinceUpdateId:nil page:page];
+    [delegate timeline:tweetInfoTimeline
+        fetchedSinceUpdateId:[NSNumber numberWithInt:0] page:page];
 }
 
-- (void)failedToFetchFavoritesForUser:(NSString *)user page:(NSNumber *)page
-    error:(NSError *)error
+- (void)failedToFetchSearchResultsForQuery:(NSString *)query
+    page:(NSNumber *)page error:(NSError *)error
 {
-    [delegate failedToFetchTimelineSinceUpdateId:nil page:page error:error];
+    [delegate failedToFetchTimelineSinceUpdateId:[NSNumber numberWithInt:0]
+        page:page error:error];
 }
 
 - (TwitterCredentials *)credentials

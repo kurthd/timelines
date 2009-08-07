@@ -33,6 +33,11 @@
         count:[NSNumber numberWithInt:0]];
 }
 
+- (BOOL)readyForQuery
+{
+    return YES;
+}
+
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)timeline:(NSArray *)timeline fetchedSinceUpdateId:(NSNumber *)updateId

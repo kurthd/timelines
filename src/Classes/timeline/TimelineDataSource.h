@@ -11,4 +11,6 @@
 - (TwitterCredentials *)credentials;
 - (void)setCredentials:(TwitterCredentials *)credentials;
 
+- (BOOL)readyForQuery;
+
 @end

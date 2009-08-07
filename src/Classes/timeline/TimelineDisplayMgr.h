@@ -94,6 +94,9 @@
     NSString * tweetIdToShow;
     
     BOOL suppressTimelineFailures;
+
+    SavedSearchMgr * savedSearchMgr;
+    NSString * currentSearch;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
@@ -141,6 +144,8 @@
 @property (nonatomic, copy) NSString * tweetIdToShow;
 
 @property (nonatomic, assign) BOOL suppressTimelineFailures;
+
+@property (nonatomic, readonly) TwitterCredentials * credentials;
     
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController

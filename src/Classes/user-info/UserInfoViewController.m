@@ -139,10 +139,15 @@ static UIImage * defaultAvatar;
                 cell.accessoryType =
                     UITableViewCellAccessoryDisclosureIndicator;
 
-                if (indexPath.row == kUserInfoFavoritesRow)
+                if (indexPath.row == kUserInfoFavoritesRow) {
                     cell.textLabel.text =
                         NSLocalizedString(@"userinfoview.favorites", @"");
-                else {
+                    cell.imageView.image =
+                        [UIImage imageNamed:@"FavoriteIconForUserView.png"];
+                    cell.imageView.highlightedImage =
+                        [UIImage
+                        imageNamed:@"FavoriteIconForUserViewHighlighted.png"];
+                } else {
                     if (indexPath.row == kUserInfoFollowersRow) {
                         if ([user.followersCount
                             isEqual:[NSNumber numberWithInt:0]]) {

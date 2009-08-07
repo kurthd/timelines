@@ -11,6 +11,8 @@
     NSString * mostRecentMessage;
     NSDate * mostRecentMessageDate;
     NSUInteger numNewMessages;
+    
+    NSString * dateDescription; // cache for fast display
 }
 
 @property (nonatomic, readonly) id otherUserId;
@@ -24,5 +26,7 @@
     mostRecentMessage:(NSString *)mostRecentMessage
     mostRecentMessageDate:(NSDate *)mostRecentMessageDate
     numNewMessages:(NSUInteger)numNewMessages;
+    
+- (NSString *)dateDescription;
 
 @end

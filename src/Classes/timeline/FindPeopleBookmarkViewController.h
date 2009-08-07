@@ -3,6 +3,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TwitterCredentials.h"
 
 @protocol FindPeopleBookmarkViewControllerDelegate
 
@@ -33,11 +34,18 @@
     IBOutlet UIBarButtonItem * editSavedSearchesButton;
     IBOutlet UIBarButtonItem * doneEditingSavedSearchesButton;
 
+    IBOutlet UIView * headerView;
+    IBOutlet UIButton * headerButton;
+
     NSArray * contents;
+
+    NSString * username;
 }
 
 @property (nonatomic, assign) id<FindPeopleBookmarkViewControllerDelegate>
     delegate;
+
+@property (nonatomic, copy) NSString * username;
 
 #pragma mark Button actions
 
@@ -45,5 +53,8 @@
 - (IBAction)clearRecentSearches;
 - (IBAction)editSavedSearches;
 - (IBAction)doneEditingSavedSearches;
+- (IBAction)selectedUsername;
+
+- (void)setCredentials:(TwitterCredentials *)credentials;
 
 @end
