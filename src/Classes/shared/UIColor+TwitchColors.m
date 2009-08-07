@@ -23,7 +23,8 @@
 
 + (UIColor *)twitchBackgroundColor
 {
-    return [UIColor colorWithRed:.925 green:.933 blue:.953 alpha:1];
+    return [UIColor colorWithRed:.909 green:.909 blue:.909 alpha:1];
+//    return [UIColor colorWithRed:.925 green:.933 blue:.953 alpha:1];
 }
 
 + (UIColor *)twitchResolvedColor

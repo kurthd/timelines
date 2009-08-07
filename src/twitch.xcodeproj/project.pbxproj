@@ -65,7 +65,6 @@
 		05EF40EF0FFADF95007B59F1 /* UserInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E89580FF1863C0042BBEE /* UserInfoView.xib */; };
 		05EF40F00FFADF95007B59F1 /* UserInfoLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */; };
 		05EF40F10FFADF95007B59F1 /* UserListTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910BE2020FF2BA17005342EE /* UserListTableView.xib */; };
-		05EF40F20FFADF95007B59F1 /* UserSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910BE2050FF2BA3F005342EE /* UserSummaryTableViewCell.xib */; };
 		05EF40F40FFADF95007B59F1 /* TwitchBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */; };
 		05EF40F50FFADF95007B59F1 /* ForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82A40FF5543E004D04D5 /* ForwardButton.png */; };
 		05EF40F60FFADF95007B59F1 /* BackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82AA0FF55536004D04D5 /* BackButton.png */; };
@@ -534,7 +533,6 @@
 		910BE1FE0FF2B948005342EE /* UserListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserListTableViewController.h; path = "user-network/UserListTableViewController.h"; sourceTree = "<group>"; };
 		910BE1FF0FF2B948005342EE /* UserListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserListTableViewController.m; path = "user-network/UserListTableViewController.m"; sourceTree = "<group>"; };
 		910BE2030FF2BA17005342EE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/UserListTableView.xib; sourceTree = "<group>"; };
-		910BE2060FF2BA3F005342EE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/UserSummaryTableViewCell.xib; sourceTree = "<group>"; };
 		910BE2090FF2BD7B005342EE /* UserListTableViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserListTableViewControllerDelegate.h; path = "user-network/UserListTableViewControllerDelegate.h"; sourceTree = "<group>"; };
 		910BE3190FF30296005342EE /* FavoritesTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoritesTimelineDataSource.h; path = timeline/FavoritesTimelineDataSource.h; sourceTree = "<group>"; };
 		910BE31A0FF30296005342EE /* FavoritesTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoritesTimelineDataSource.m; path = timeline/FavoritesTimelineDataSource.m; sourceTree = "<group>"; };
@@ -1033,7 +1031,6 @@
 				918E89580FF1863C0042BBEE /* UserInfoView.xib */,
 				918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */,
 				910BE2020FF2BA17005342EE /* UserListTableView.xib */,
-				910BE2050FF2BA3F005342EE /* UserSummaryTableViewCell.xib */,
 				91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */,
 				05340AB8101A3DAD0077E7C0 /* SearchBookmarksView.xib */,
 				057620320FF736D600392ADC /* OauthLogInView.xib */,
@@ -1576,7 +1573,6 @@
 				05EF40EF0FFADF95007B59F1 /* UserInfoView.xib in Resources */,
 				05EF40F00FFADF95007B59F1 /* UserInfoLabelCell.xib in Resources */,
 				05EF40F10FFADF95007B59F1 /* UserListTableView.xib in Resources */,
-				05EF40F20FFADF95007B59F1 /* UserSummaryTableViewCell.xib in Resources */,
 				05EF40F40FFADF95007B59F1 /* TwitchBrowserView.xib in Resources */,
 				05EF40F50FFADF95007B59F1 /* ForwardButton.png in Resources */,
 				05EF40F60FFADF95007B59F1 /* BackButton.png in Resources */,
@@ -1871,14 +1867,6 @@
 				910BE2030FF2BA17005342EE /* en */,
 			);
 			name = UserListTableView.xib;
-			sourceTree = "<group>";
-		};
-		910BE2050FF2BA3F005342EE /* UserSummaryTableViewCell.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				910BE2060FF2BA3F005342EE /* en */,
-			);
-			name = UserSummaryTableViewCell.xib;
 			sourceTree = "<group>";
 		};
 		9152E1551014F86C0033B63B /* DirectMessageInboxView.xib */ = {

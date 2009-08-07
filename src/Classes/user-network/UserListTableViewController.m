@@ -32,12 +32,14 @@
 - (NSArray *)sortedUsers;
 
 + (UIImage *)defaultAvatar;
++ (UIColor *)darkCellBackgroundColor;
 
 @end
 
 @implementation UserListTableViewController
 
 static UIImage * defaultAvatar;
+static UIColor * darkCellBackgroundColor;
 
 @synthesize delegate, sortedUserCache;
 
@@ -101,7 +103,7 @@ static UIImage * defaultAvatar;
         UIColor * cellColor =
             indexPath.row % 2 == 0 ?
             [UIColor whiteColor] :
-            [UIColor twitchBackgroundColor];
+            [[self class] darkCellBackgroundColor];
         cell =
             [[[UserSummaryTableViewCell alloc]
             initWithStyle:UITableViewCellStyleDefault
@@ -137,14 +139,7 @@ static UIImage * defaultAvatar;
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
     didReceiveData:(NSData *)data fromUrl:(NSURL *)url
-{
-    // NSString * urlAsString = [url absoluteString];
-    // UIImage * avatarImage = [UIImage imageWithData:data];
-    // if (avatarImage) {
-    //     [avatarCache setObject:avatarImage forKey:urlAsString];
-    //     [self.tableView reloadData];
-    // }
-    
+{   
     NSString * urlAsString = [url absoluteString];
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
@@ -231,9 +226,18 @@ static UIImage * defaultAvatar;
 + (UIImage *)defaultAvatar
 {
     if (!defaultAvatar)
-        defaultAvatar = [UIImage imageNamed:@"DefaultAvatar50x50.png"];
+        defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar50x50.png"] retain];
 
     return defaultAvatar;
+}
+
++ (UIColor *)darkCellBackgroundColor
+{
+    if (!darkCellBackgroundColor)
+        darkCellBackgroundColor =
+            [[UIColor colorWithRed:.965 green:.965 blue:.965 alpha:1] retain];
+
+    return darkCellBackgroundColor;
 }
 
 @end
