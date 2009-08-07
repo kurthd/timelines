@@ -68,7 +68,7 @@
 				<int key="NSvFlags">292</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="IBUIView" id="814434695">
+					<object class="IBUIView" id="292106082">
 						<reference key="NSNextResponder" ref="123950848"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrameSize">{320, 316}</string>
@@ -121,8 +121,8 @@
 							<int key="NSfFlags">16</int>
 						</object>
 						<object class="NSColor" key="IBUITextColor">
-							<int key="NSColorSpace">2</int>
-							<bytes key="NSRGB">MC4xMjE1Njg2NCAwLjE1Njg2Mjc1IDAuMjIzNTI5NDMAA</bytes>
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4zMDE5NjA4IDAuMzAxOTYwOCAwLjMwMTk2MDgAA</bytes>
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<reference key="IBUIShadowColor" ref="797388771"/>
@@ -190,8 +190,8 @@
 						<string key="IBUIText">@kurthd</string>
 						<reference key="IBUIFont" ref="62034490"/>
 						<object class="NSColor" key="IBUITextColor">
-							<int key="NSColorSpace">2</int>
-							<bytes key="NSRGB">MC4xMjE1Njg2NCAwLjE1Njg2Mjc1IDAuMjIzNTI5NDMAA</bytes>
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4zMDE5NjA4IDAuMzAxOTYwOCAwLjMwMTk2MDgAA</bytes>
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<reference key="IBUIShadowColor" ref="797388771"/>
@@ -210,7 +210,7 @@
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 					</object>
-					<object class="IBUIView" id="831997258">
+					<object class="IBUIView" id="922473039">
 						<reference key="NSNextResponder" ref="123950848"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, 316}, {320, 1}}</string>
@@ -516,8 +516,8 @@
 							<reference ref="675219408"/>
 							<reference ref="358145058"/>
 							<reference ref="576202686"/>
-							<reference ref="831997258"/>
-							<reference ref="814434695"/>
+							<reference ref="922473039"/>
+							<reference ref="292106082"/>
 						</object>
 						<reference key="parent" ref="188939961"/>
 						<string key="objectName">Header View</string>
@@ -607,13 +607,13 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">50</int>
-						<reference key="object" ref="831997258"/>
+						<reference key="object" ref="922473039"/>
 						<reference key="parent" ref="123950848"/>
 						<string key="objectName">Gray Line</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">51</int>
-						<reference key="object" ref="814434695"/>
+						<reference key="object" ref="292106082"/>
 						<reference key="parent" ref="123950848"/>
 					</object>
 				</object>

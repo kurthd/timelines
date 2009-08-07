@@ -82,11 +82,11 @@ static UIImage * avatarBackgroundImage;
 
 	UIColor * usernameLabelTextColor = nil;
 	UIFont * usernameLabelFont =
-	    [UIFont boldSystemFontOfSize:USERNAME_LABEL_FONT_SIZE];
+	    [UIFont systemFontOfSize:USERNAME_LABEL_FONT_SIZE];
 
 	UIColor * followersLabelTextColor = nil;
 	UIFont * followersLabelFont =
-	    [UIFont boldSystemFontOfSize:FOLLOWERS_LABEL_FONT_SIZE];
+	    [UIFont systemFontOfSize:FOLLOWERS_LABEL_FONT_SIZE];
 
     if (self.highlighted) {
 		nameLabelTextColor = [UIColor whiteColor];
@@ -157,7 +157,7 @@ static UIImage * avatarBackgroundImage;
         CGPointMake(boundsX + AVATAR_BACKGROUND_LEFT_MARGIN,
         AVATAR_BACKGROUND_TOP_MARGIN);
     [[[self class] avatarBackgroundImage] drawAtPoint:point];
-    
+
     CGRect avatarRect =
         CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN,
         AVATAR_WIDTH, AVATAR_HEIGHT);
