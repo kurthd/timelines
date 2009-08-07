@@ -26,6 +26,7 @@
 #import "SavedSearchMgr.h"
 
 @class TimelineDisplayMgrFactory;
+@class TweetViewController;
 
 @interface TimelineDisplayMgr :
     NSObject
@@ -38,8 +39,10 @@
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
     NetworkAwareViewController * lastTweetDetailsWrapperController;
-    TweetDetailsViewController * lastTweetDetailsController;
-    TweetDetailsViewController * tweetDetailsController;
+    //TweetDetailsViewController * lastTweetDetailsController;
+    //TweetDetailsViewController * tweetDetailsController;
+    TweetViewController * lastTweetDetailsController;
+    TweetViewController * tweetDetailsController;
     UserInfoViewController * userInfoController;
     TwitchBrowserViewController * browserController;
     PhotoBrowser * photoBrowser;
@@ -97,9 +100,11 @@
 @property (readonly) TimelineViewController * timelineController;
 @property (nonatomic, retain)
     NetworkAwareViewController * lastTweetDetailsWrapperController;
-@property (nonatomic, retain)
-    TweetDetailsViewController * lastTweetDetailsController;
-@property (readonly) TweetDetailsViewController * tweetDetailsController;
+//@property (nonatomic, retain)
+//    TweetDetailsViewController * lastTweetDetailsController;
+//@property (readonly) TweetDetailsViewController * tweetDetailsController;
+@property (nonatomic, retain) TweetViewController * lastTweetDetailsController;
+@property (readonly) TweetViewController * tweetDetailsController;
 @property (readonly) UserInfoViewController * userInfoController;
 @property (readonly) TwitchBrowserViewController * browserController;
 @property (readonly) PhotoBrowser * photoBrowser;

@@ -7,6 +7,7 @@
 #import "ArbUserTimelineDataSource.h"
 #import "FavoritesTimelineDataSource.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "TweetViewController.h"
 
 @interface TimelineDisplayMgr ()
 
@@ -18,7 +19,8 @@
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
 - (void)replyToTweetWithMessage;
 - (NetworkAwareViewController *)newTweetDetailsWrapperController;
-- (TweetDetailsViewController *)newTweetDetailsController;
+//- (TweetDetailsViewController *)newTweetDetailsController;
+- (TweetViewController *)newTweetDetailsController;
 - (void)replyToCurrentTweetDetailsUser;
 - (void)presentTweetActions;
 
@@ -903,8 +905,10 @@ static NSInteger retweetFormatValueAlredyRead;
         tweetDetailsWrapperController;
 }
 
-- (TweetDetailsViewController *)newTweetDetailsController
+//- (TweetDetailsViewController *)newTweetDetailsController
+- (TweetViewController *)newTweetDetailsController
 {
+    /*
     TweetDetailsViewController * newTweetDetailsController =
         [[TweetDetailsViewController alloc]
         initWithNibName:@"TweetDetailsView" bundle:nil];
@@ -912,14 +916,30 @@ static NSInteger retweetFormatValueAlredyRead;
     newTweetDetailsController.delegate = self;
 
     return self.lastTweetDetailsController = newTweetDetailsController;
+     */
+
+    TweetViewController * newTweetViewController =
+        [[TweetViewController alloc] initWithNibName:@"TweetView" bundle:nil];
+    newTweetViewController.delegate = self;
+    self.lastTweetDetailsController = newTweetViewController;
+    [newTweetViewController release];
+
+    return newTweetViewController;
 }
 
-- (TweetDetailsViewController *)tweetDetailsController
+//- (TweetDetailsViewController *)tweetDetailsController
+- (TweetViewController *)tweetDetailsController
 {
     if (!tweetDetailsController) {
+        /*
         tweetDetailsController =
             [[TweetDetailsViewController alloc]
             initWithNibName:@"TweetDetailsView" bundle:nil];
+         */
+
+        tweetDetailsController =
+            [[TweetViewController alloc]
+            initWithNibName:@"TweetView" bundle:nil];
 
         UIBarButtonItem * replyButton =
             [[[UIBarButtonItem alloc]

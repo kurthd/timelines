@@ -50,6 +50,12 @@ tweetdetailsview.replyto = "in reply to";
 tweetdetailsview.actions.cancel = "Cancel";
 tweetdetailsview.actions.browser = "Open in Browser";
 tweetdetailsview.actions.email = "Send in Email";
+tweetdetailsview.inreplyto.formatstring = "In reply to %@";
+tweetdetailsview.publicreply.label = "Public Reply";
+tweetdetailsview.directmessage.label = "Direct Message";
+tweetdetailsview.retweet.label = "Retweet";
+tweetdetailsview.favorite.label = "Favorite";
+tweetdetailsview.unfavorite.label = "Unfavorite";
 
 /* Sending tweets */
 sendtweet.failed.alert.title = "Failed to Send Tweet";
