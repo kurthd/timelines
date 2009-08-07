@@ -14,6 +14,7 @@ static const CGFloat AVATAR_HEIGHT = 50.0;
 static const CGFloat AVATAR_ROUNDED_CORNER_RADIUS = 6.0;
 
 static UIImage * backgroundImage;
+static UIImage * topGradientImage;
 
 @interface TimelineTableViewCellView ()
 
@@ -37,6 +38,8 @@ static UIImage * backgroundImage;
     NSAssert(!backgroundImage, @"backgroundImage should be nil.");
     backgroundImage =
         [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
+    topGradientImage =
+        [[UIImage imageNamed:@"TableViewCellTopGradient.png"] retain];
 }
 
 + (CGFloat)heightForContent:(NSString *)tweetText
@@ -146,9 +149,13 @@ static UIImage * backgroundImage;
         textColor = [UIColor blackColor];
 
         CGRect backgroundImageRect =
-        CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
+            CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
             320.0, backgroundImage.size.height);
         [backgroundImage drawInRect:backgroundImageRect];
+
+        CGRect topGradientImageRect =
+            CGRectMake(0, 0, 320.0, topGradientImage.size.height);
+        [topGradientImage drawInRect:topGradientImageRect];
     }
 
     //
@@ -239,6 +246,10 @@ static UIImage * backgroundImage;
         CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
             320.0, backgroundImage.size.height);
         [backgroundImage drawInRect:backgroundImageRect];
+
+        CGRect topGradientImageRect =
+            CGRectMake(0, 0, 320.0, topGradientImage.size.height);
+        [topGradientImage drawInRect:topGradientImageRect];
     }
 
     //
@@ -308,6 +319,10 @@ static UIImage * backgroundImage;
         CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
             320.0, backgroundImage.size.height);
         [backgroundImage drawInRect:backgroundImageRect];
+
+        CGRect topGradientImageRect =
+            CGRectMake(0, 0, 320.0, topGradientImage.size.height);
+        [topGradientImage drawInRect:topGradientImageRect];
     }
 
     //
@@ -369,6 +384,10 @@ static UIImage * backgroundImage;
         CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
             320.0, backgroundImage.size.height);
         [backgroundImage drawInRect:backgroundImageRect];
+
+        CGRect topGradientImageRect =
+            CGRectMake(0, 0, 320.0, topGradientImage.size.height);
+        [topGradientImage drawInRect:topGradientImageRect];
     }
 
     //
