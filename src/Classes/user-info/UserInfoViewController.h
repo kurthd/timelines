@@ -26,6 +26,7 @@
     IBOutlet UILabel * followingLoadingLabel;
     IBOutlet UIButton * followButton;
     IBOutlet UIButton * bookmarkButton;
+    IBOutlet UIImageView * starImageView;
 
     BOOL currentlyFollowing;
     BOOL followingEnabled;

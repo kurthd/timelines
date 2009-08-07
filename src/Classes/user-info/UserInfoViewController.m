@@ -48,6 +48,7 @@ static UIImage * defaultAvatar;
     [followingCheckMark release];
     [followingActivityIndicator release];
     [followingLoadingLabel release];
+    [starImageView release];
 
     [followButton release];
     [bookmarkButton release];
@@ -139,10 +140,11 @@ static UIImage * defaultAvatar;
                 cell.accessoryType =
                     UITableViewCellAccessoryDisclosureIndicator;
 
-                if (indexPath.row == kUserInfoFavoritesRow)
+                if (indexPath.row == kUserInfoFavoritesRow) {
                     cell.textLabel.text =
                         NSLocalizedString(@"userinfoview.favorites", @"");
-                else {
+                    cell.imageView.image = starImageView.image;
+                } else {
                     if (indexPath.row == kUserInfoFollowersRow) {
                         if ([user.followersCount
                             isEqual:[NSNumber numberWithInt:0]]) {
