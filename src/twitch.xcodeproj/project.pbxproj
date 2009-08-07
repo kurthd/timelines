@@ -236,6 +236,7 @@
 		917246E9102A02F2007E0DF6 /* CellBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 917246E8102A02F2007E0DF6 /* CellBackground.png */; };
 		9172475B102A4914007E0DF6 /* SearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172475A102A4914007E0DF6 /* SearchDataSource.m */; };
 		917247EA102B8FE3007E0DF6 /* DirectMessageInboxCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 917247E9102B8FE3007E0DF6 /* DirectMessageInboxCellView.m */; };
+		9172485C102BB666007E0DF6 /* UserSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172485B102BB666007E0DF6 /* UserSummaryView.m */; };
 		917FFF0F1010F7A700335C0F /* PhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF0C1010F7A700335C0F /* PhotoBrowser.m */; };
 		917FFF101010F7A700335C0F /* RemotePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF0E1010F7A700335C0F /* RemotePhoto.m */; };
 		917FFF1B1010F8B800335C0F /* CommonTwitterServicePhotoSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF1A1010F8B800335C0F /* CommonTwitterServicePhotoSource.m */; };
@@ -648,6 +649,8 @@
 		9172475A102A4914007E0DF6 /* SearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchDataSource.m; path = timeline/SearchDataSource.m; sourceTree = "<group>"; };
 		917247E8102B8FE3007E0DF6 /* DirectMessageInboxCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageInboxCellView.h; path = "direct-messages/DirectMessageInboxCellView.h"; sourceTree = "<group>"; };
 		917247E9102B8FE3007E0DF6 /* DirectMessageInboxCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageInboxCellView.m; path = "direct-messages/DirectMessageInboxCellView.m"; sourceTree = "<group>"; };
+		9172485A102BB666007E0DF6 /* UserSummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSummaryView.h; path = "user-network/UserSummaryView.h"; sourceTree = "<group>"; };
+		9172485B102BB666007E0DF6 /* UserSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSummaryView.m; path = "user-network/UserSummaryView.m"; sourceTree = "<group>"; };
 		917FFF0B1010F7A700335C0F /* PhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBrowser.h; path = "photo-browser/PhotoBrowser.h"; sourceTree = "<group>"; };
 		917FFF0C1010F7A700335C0F /* PhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBrowser.m; path = "photo-browser/PhotoBrowser.m"; sourceTree = "<group>"; };
 		917FFF0D1010F7A700335C0F /* RemotePhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemotePhoto.h; path = "photo-browser/RemotePhoto.h"; sourceTree = "<group>"; };
@@ -1307,6 +1310,8 @@
 				910BE1FE0FF2B948005342EE /* UserListTableViewController.h */,
 				910BE1FF0FF2B948005342EE /* UserListTableViewController.m */,
 				910BE2090FF2BD7B005342EE /* UserListTableViewControllerDelegate.h */,
+				9172485A102BB666007E0DF6 /* UserSummaryView.h */,
+				9172485B102BB666007E0DF6 /* UserSummaryView.m */,
 			);
 			name = "user-network";
 			sourceTree = "<group>";
@@ -1788,6 +1793,7 @@
 				05C6C92B1028F7F000182B4A /* Trend.m in Sources */,
 				9172475B102A4914007E0DF6 /* SearchDataSource.m in Sources */,
 				917247EA102B8FE3007E0DF6 /* DirectMessageInboxCellView.m in Sources */,
+				9172485C102BB666007E0DF6 /* UserSummaryView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -3,7 +3,6 @@
 //
 
 #import "DirectMessageInboxCell.h"
-#import "UILabel+DrawingAdditions.h"
 
 @implementation DirectMessageInboxCell
 

@@ -11,6 +11,7 @@ static const CGFloat TEXT_WIDTH_WITH_AVATAR = 235.0;
 
 static const CGFloat AVATAR_WIDTH = 50.0;
 static const CGFloat AVATAR_HEIGHT = 50.0;
+static const CGFloat AVATAR_ROUNDED_CORNER_RADIUS = 6.0;
 
 static UIImage * backgroundImage;
 
@@ -203,7 +204,8 @@ static UIImage * backgroundImage;
     CGRect avatarRect =
         CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN,
         AVATAR_WIDTH, AVATAR_HEIGHT);
-    [avatar drawInRect:avatarRect withRoundedCornersWithRadius:6.0];
+    [avatar drawInRect:avatarRect
+        withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
 }
 
 - (void)drawRectInverted:(CGRect)rect
@@ -274,7 +276,8 @@ static UIImage * backgroundImage;
     CGRect avatarRect =
         CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN,
         AVATAR_WIDTH, AVATAR_HEIGHT);
-    [avatar drawInRect:avatarRect withRoundedCornersWithRadius:6.0];
+    [avatar drawInRect:avatarRect
+        withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
 }
 
 - (void)drawRectNoAvatar:(CGRect)rect
@@ -403,7 +406,8 @@ static UIImage * backgroundImage;
     CGRect avatarRect =
         CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN,
         AVATAR_WIDTH, AVATAR_HEIGHT);
-    [avatar drawInRect:avatarRect withRoundedCornersWithRadius:6.0];
+    [avatar drawInRect:avatarRect
+        withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
 }
 
 #pragma mark Accessors
