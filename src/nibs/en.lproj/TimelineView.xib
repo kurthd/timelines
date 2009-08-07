@@ -8,8 +8,8 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="28"/>
 			<integer value="6"/>
+			<integer value="28"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -68,6 +68,17 @@
 				<int key="NSvFlags">292</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<object class="IBUIView" id="814434695">
+						<reference key="NSNextResponder" ref="123950848"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrameSize">{320, 316}</string>
+						<reference key="NSSuperview" ref="123950848"/>
+						<object class="NSColor" key="IBUIBackgroundColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC45NDExNzY0NyAwLjk0MTE3NjQ3IDAuOTQxMTc2NDcAA</bytes>
+						</object>
+						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+					</object>
 					<object class="IBUIImageView" id="392175655">
 						<reference key="NSNextResponder" ref="123950848"/>
 						<int key="NSvFlags">292</int>
@@ -195,7 +206,18 @@
 						<reference key="NSSuperview" ref="123950848"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC42NDc5NTkxNyAwLjY0Nzk1OTE3IDAuNjQ3OTU5MTcAA</bytes>
+							<bytes key="NSRGB">MC41ODgyMzUzMiAwLjU4ODIzNTMyIDAuNTg4MjM1MzIAA</bytes>
+						</object>
+						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+					</object>
+					<object class="IBUIView" id="831997258">
+						<reference key="NSNextResponder" ref="123950848"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{0, 316}, {320, 1}}</string>
+						<reference key="NSSuperview" ref="123950848"/>
+						<object class="NSColor" key="IBUIBackgroundColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC42NDcwNTg4NCAwLjY0NzA1ODg0IDAuNjQ3MDU4ODQAA</bytes>
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 					</object>
@@ -494,6 +516,8 @@
 							<reference ref="675219408"/>
 							<reference ref="358145058"/>
 							<reference ref="576202686"/>
+							<reference ref="831997258"/>
+							<reference ref="814434695"/>
 						</object>
 						<reference key="parent" ref="188939961"/>
 						<string key="objectName">Header View</string>
@@ -522,6 +546,7 @@
 						<int key="objectID">19</int>
 						<reference key="object" ref="585475107"/>
 						<reference key="parent" ref="123950848"/>
+						<string key="objectName">Gray Line</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">10</int>
@@ -580,6 +605,17 @@
 						<reference key="object" ref="576202686"/>
 						<reference key="parent" ref="123950848"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">50</int>
+						<reference key="object" ref="831997258"/>
+						<reference key="parent" ref="123950848"/>
+						<string key="objectName">Gray Line</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">51</int>
+						<reference key="object" ref="814434695"/>
+						<reference key="parent" ref="123950848"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -606,6 +642,8 @@
 					<string>36.IBPluginDependency</string>
 					<string>47.IBPluginDependency</string>
 					<string>49.IBPluginDependency</string>
+					<string>50.IBPluginDependency</string>
+					<string>51.IBPluginDependency</string>
 					<string>6.IBEditorWindowLastContentRect</string>
 					<string>6.IBPluginDependency</string>
 				</object>
@@ -625,6 +663,8 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{358, 443}, {320, 70}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -655,7 +695,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">49</int>
+			<int key="maxID">51</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
