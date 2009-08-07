@@ -224,7 +224,6 @@
 		9152E1571014F86C0033B63B /* DirectMessageInboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1551014F86C0033B63B /* DirectMessageInboxView.xib */; };
 		9152E15A1014F8850033B63B /* DirectMessageConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1581014F8850033B63B /* DirectMessageConversationView.xib */; };
 		9152E1631014FB000033B63B /* DirectMessageDisplayMgrFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E1621014FB000033B63B /* DirectMessageDisplayMgrFactory.m */; };
-		9152E18B101509FE0033B63B /* DirectMessageInboxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E189101509FE0033B63B /* DirectMessageInboxCell.xib */; };
 		9152E19210150FBA0033B63B /* DirectMessageInboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E19110150FBA0033B63B /* DirectMessageInboxCell.m */; };
 		9152E196101513F30033B63B /* DirectMessageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E195101513F30033B63B /* DirectMessageCache.m */; };
 		9152E1D3101532C90033B63B /* ConversationPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E1D2101532C90033B63B /* ConversationPreview.m */; };
@@ -236,6 +235,7 @@
 		917246E6102A0257007E0DF6 /* SelectedCellBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 917246E5102A0257007E0DF6 /* SelectedCellBackground.png */; };
 		917246E9102A02F2007E0DF6 /* CellBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 917246E8102A02F2007E0DF6 /* CellBackground.png */; };
 		9172475B102A4914007E0DF6 /* SearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172475A102A4914007E0DF6 /* SearchDataSource.m */; };
+		917247EA102B8FE3007E0DF6 /* DirectMessageInboxCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 917247E9102B8FE3007E0DF6 /* DirectMessageInboxCellView.m */; };
 		917FFF0F1010F7A700335C0F /* PhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF0C1010F7A700335C0F /* PhotoBrowser.m */; };
 		917FFF101010F7A700335C0F /* RemotePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF0E1010F7A700335C0F /* RemotePhoto.m */; };
 		917FFF1B1010F8B800335C0F /* CommonTwitterServicePhotoSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF1A1010F8B800335C0F /* CommonTwitterServicePhotoSource.m */; };
@@ -571,7 +571,6 @@
 		9152E1611014FB000033B63B /* DirectMessageDisplayMgrFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageDisplayMgrFactory.h; path = "direct-messages/DirectMessageDisplayMgrFactory.h"; sourceTree = "<group>"; };
 		9152E1621014FB000033B63B /* DirectMessageDisplayMgrFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageDisplayMgrFactory.m; path = "direct-messages/DirectMessageDisplayMgrFactory.m"; sourceTree = "<group>"; };
 		9152E1641014FE020033B63B /* DirectMessageInboxViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageInboxViewControllerDelegate.h; path = "direct-messages/DirectMessageInboxViewControllerDelegate.h"; sourceTree = "<group>"; };
-		9152E18A101509FE0033B63B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/DirectMessageInboxCell.xib; sourceTree = "<group>"; };
 		9152E19010150FBA0033B63B /* DirectMessageInboxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageInboxCell.h; path = "direct-messages/DirectMessageInboxCell.h"; sourceTree = "<group>"; };
 		9152E19110150FBA0033B63B /* DirectMessageInboxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageInboxCell.m; path = "direct-messages/DirectMessageInboxCell.m"; sourceTree = "<group>"; };
 		9152E194101513F30033B63B /* DirectMessageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageCache.h; path = "direct-messages/DirectMessageCache.h"; sourceTree = "<group>"; };
@@ -647,6 +646,8 @@
 		917246E8102A02F2007E0DF6 /* CellBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CellBackground.png; path = images/CellBackground.png; sourceTree = "<group>"; };
 		91724759102A4914007E0DF6 /* SearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchDataSource.h; path = timeline/SearchDataSource.h; sourceTree = "<group>"; };
 		9172475A102A4914007E0DF6 /* SearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchDataSource.m; path = timeline/SearchDataSource.m; sourceTree = "<group>"; };
+		917247E8102B8FE3007E0DF6 /* DirectMessageInboxCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageInboxCellView.h; path = "direct-messages/DirectMessageInboxCellView.h"; sourceTree = "<group>"; };
+		917247E9102B8FE3007E0DF6 /* DirectMessageInboxCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageInboxCellView.m; path = "direct-messages/DirectMessageInboxCellView.m"; sourceTree = "<group>"; };
 		917FFF0B1010F7A700335C0F /* PhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBrowser.h; path = "photo-browser/PhotoBrowser.h"; sourceTree = "<group>"; };
 		917FFF0C1010F7A700335C0F /* PhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBrowser.m; path = "photo-browser/PhotoBrowser.m"; sourceTree = "<group>"; };
 		917FFF0D1010F7A700335C0F /* RemotePhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemotePhoto.h; path = "photo-browser/RemotePhoto.h"; sourceTree = "<group>"; };
@@ -1037,7 +1038,6 @@
 				91BD11391006736F0082D209 /* PhotoBrowserView.xib */,
 				9152E1551014F86C0033B63B /* DirectMessageInboxView.xib */,
 				9152E1581014F8850033B63B /* DirectMessageConversationView.xib */,
-				9152E189101509FE0033B63B /* DirectMessageInboxCell.xib */,
 				05948993101569D500C37C98 /* AccountSettingsView.xib */,
 				917245E41028B715007E0DF6 /* FindPeopleBookmarkView.xib */,
 			);
@@ -1349,6 +1349,8 @@
 				910EFE821017F078002083D6 /* NewDirectMessagesPersistenceStore.m */,
 				91C4F25510192FDA00896046 /* DirectMessageAcctMgr.h */,
 				91C4F25610192FDA00896046 /* DirectMessageAcctMgr.m */,
+				917247E8102B8FE3007E0DF6 /* DirectMessageInboxCellView.h */,
+				917247E9102B8FE3007E0DF6 /* DirectMessageInboxCellView.m */,
 			);
 			name = "direct-messages";
 			sourceTree = "<group>";
@@ -1596,7 +1598,6 @@
 				9180B6C5101244CD0096DFA1 /* ButtonBackground-108x35.png in Resources */,
 				9152E1571014F86C0033B63B /* DirectMessageInboxView.xib in Resources */,
 				9152E15A1014F8850033B63B /* DirectMessageConversationView.xib in Resources */,
-				9152E18B101509FE0033B63B /* DirectMessageInboxCell.xib in Resources */,
 				9152E239101557AC0033B63B /* NewMessagesDot.png in Resources */,
 				05948995101569D500C37C98 /* AccountSettingsView.xib in Resources */,
 				058207C11017744C00DFC051 /* ComposeRecipientGradient.png in Resources */,
@@ -1786,6 +1787,7 @@
 				05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */,
 				05C6C92B1028F7F000182B4A /* Trend.m in Sources */,
 				9172475B102A4914007E0DF6 /* SearchDataSource.m in Sources */,
+				917247EA102B8FE3007E0DF6 /* DirectMessageInboxCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1887,14 +1889,6 @@
 				9152E1591014F8850033B63B /* en */,
 			);
 			name = DirectMessageConversationView.xib;
-			sourceTree = "<group>";
-		};
-		9152E189101509FE0033B63B /* DirectMessageInboxCell.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9152E18A101509FE0033B63B /* en */,
-			);
-			name = DirectMessageInboxCell.xib;
 			sourceTree = "<group>";
 		};
 		916BD7ED0FEEB958007143A9 /* NoDataView.xib */ = {

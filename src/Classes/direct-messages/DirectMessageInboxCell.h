@@ -4,15 +4,17 @@
 
 #import <Foundation/Foundation.h>
 #import "ConversationPreview.h"
+#import "DirectMessageInboxCellView.h"
 
 @interface DirectMessageInboxCell : UITableViewCell
 {
-    IBOutlet UILabel * nameLabel;
-    IBOutlet UILabel * dateLabel;
-    IBOutlet UILabel * messagePreviewLabel;
-    IBOutlet UIView * newMessagesView;
+    DirectMessageInboxCellView * cellView;
 }
 
+@property (nonatomic, retain) DirectMessageInboxCellView * cellView;
+
 - (void)setConversationPreview:(ConversationPreview *)preview;
+
+- (void)redisplay;
 
 @end

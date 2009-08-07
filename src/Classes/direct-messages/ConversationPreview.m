@@ -3,6 +3,7 @@
 //
 
 #import "ConversationPreview.h"
+#import "NSDate+StringHelpers.h"
 
 @implementation ConversationPreview
 
@@ -15,6 +16,9 @@
     [otherUserName release];
     [mostRecentMessage release];
     [mostRecentMessageDate release];
+
+    [dateDescription release];
+
     [super dealloc];
 }
 
@@ -45,6 +49,14 @@
     return [NSString stringWithFormat:@"{%@, %@, %@, %@, %d}", otherUserId,
         otherUserName, mostRecentMessage, mostRecentMessageDate,
         numNewMessages];
+}
+
+- (NSString *)dateDescription
+{
+    if (!dateDescription)
+        dateDescription = [[mostRecentMessageDate shortDescription] retain];
+
+    return dateDescription;
 }
 
 @end

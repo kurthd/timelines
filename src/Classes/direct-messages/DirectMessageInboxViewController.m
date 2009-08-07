@@ -9,6 +9,8 @@
 
 @implementation DirectMessageInboxViewController
 
+#define ROW_HEIGHT 62
+
 @synthesize delegate;
 
 - (void)dealloc
@@ -54,11 +56,12 @@
         (DirectMessageInboxCell *)
         [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        NSArray * nib =
-            [[NSBundle mainBundle] loadNibNamed:@"DirectMessageInboxCell"
-            owner:self options:nil];
-
-        cell = [nib objectAtIndex:0];
+        cell =
+            [[[DirectMessageInboxCell alloc]
+            initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:cellIdentifier]
+            autorelease];
+		cell.frame = CGRectMake(0.0, 0.0, 320.0, ROW_HEIGHT);
     }
 
     ConversationPreview * preview =
@@ -82,7 +85,7 @@
 - (CGFloat)tableView:(UITableView *)aTableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 62;
+    return ROW_HEIGHT;
 }
 
 #pragma mark DirectMessageInboxViewController implementation
