@@ -35,7 +35,7 @@
 @property (nonatomic, retain) UIImage * avatar;
 
 - (void)displayTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar
-   withPreConfiguredView:(UIView *)view;
+   withPreLoadedView:(UIView *)view;
 - (void)setUsersTweet:(BOOL)usersTweet;
 - (void)hideFavoriteButton:(BOOL)hide;
 

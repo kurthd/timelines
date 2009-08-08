@@ -90,10 +90,7 @@ enum TweetActionRows {
     tweetTextTableViewCell.webView.delegate = self;
 
     self.tableView.tableHeaderView = headerView;
-    //self.tableView.contentInset = UIEdgeInsetsMake(-300, 0, 0, 0);
     self.tableView.contentInset = UIEdgeInsetsMake(0, 300, 0, 0);
-    //self.tableView.contentOffset = CGPointMake(0, 0);
-    //[self.tableView setContentOffset:CGPointMake(0, -300) animated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -134,42 +131,11 @@ enum TweetActionRows {
 - (CGFloat)tableView:(UITableView *)tv
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    /*
-    CGFloat height;
-
-    if (indexPath.section == kTweetDetailsSection &&
-        indexPath.row == kTweetTextRow)
-        height = tweetTextTableViewCell.webView.frame.size.height > 1 ?
-            tweetTextTableViewCell.webView.frame.size.height : 44;
-    else
-        height = 44;
-
-    return height;
-    */
-
-    CGFloat height;
-
     BOOL tweetTextRow =
         indexPath.section == kTweetDetailsSection &&
         indexPath.row == kTweetTextRow;
 
-    if (tweetTextRow) {
-        /*
-        CGSize size = CGSizeMake(290, MAXFLOAT);
-        size = [selectedTweet.text sizeWithFont:[UIFont systemFontOfSize:19]
-                              constrainedToSize:size];
-        height = size.height;
-        height =  88;
-        NSLog(@"Height for string: %f, %@", height, selectedTweet.text);
-        */
-
-        //height = tweetTextCellHeight;
-
-        height = tweetContentView.frame.size.height;
-    } else
-        height = 44;
-
-    return height;
+    return tweetTextRow ? tweetContentView.frame.size.height : 44;
 }
 
 // Customize the appearance of table view cells.
@@ -192,7 +158,6 @@ enum TweetActionRows {
 
     if (indexPath.section == kTweetDetailsSection) {
         if (indexPath.row == kTweetTextRow) {
-            //tweetTextTableViewCell.tweetText = [selectedTweet textAsHtml];
             [tweetTextTableViewCell.contentView addSubview:tweetContentView];
             cell = tweetTextTableViewCell;
         } else if (indexPath.row == kConversationRow) {
@@ -235,7 +200,15 @@ enum TweetActionRows {
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == kComposeActionsSection) {
+    if (indexPath.section == kTweetDetailsSection) {
+        if (indexPath.row == kConversationRow) {
+            NSString * tweetId =
+                [selectedTweet.inReplyToTwitterTweetId description];
+            NSString * replyToUsername =
+                selectedTweet.inReplyToTwitterUsername;
+            [delegate loadNewTweetWithId:tweetId username:replyToUsername];
+        }
+    } else if (indexPath.section == kComposeActionsSection) {
         if (indexPath.row == kPublicReplyRow)
             [self sendPublicReply];
         else if (indexPath.row == kDirectMessageRow)
@@ -250,19 +223,6 @@ enum TweetActionRows {
 }
 
 #pragma mark UIWebViewDelegate implementation
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    /*[self performSelector:@selector(calculateWebViewSize)
-               withObject:nil
-               afterDelay:0.1];*/
-
-    [tweetTextTableViewCell.webView sizeToFit];
-
-    NSLog(@"Web view needs: (%f, %f)",
-        tweetTextTableViewCell.webView.frame.size.width,
-        tweetTextTableViewCell.webView.frame.size.height);
-}
 
 - (BOOL)webView:(UIWebView *)webView
     shouldStartLoadWithRequest:(NSURLRequest *)request
@@ -311,25 +271,10 @@ enum TweetActionRows {
     return navigationType != UIWebViewNavigationTypeLinkClicked;
 }
 
-- (void)calculateWebViewSize
-{
-    CGRect frame = tweetTextTableViewCell.webView.frame;
-    frame = tweetTextTableViewCell.webView.frame;
-    frame.size.height = 1.0;
-    tweetTextTableViewCell.webView.frame = frame;
-    [tweetTextTableViewCell.webView sizeToFit];
-
-    [self.tableView reloadData];
-}
-
 #pragma mark Public interface implementation
 
-/*
-- (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)anAvatar
-   contentHeight:(CGFloat)height
- */
 - (void)displayTweet:(TweetInfo *)tweet avatar:(UIImage *)anAvatar
-   withPreConfiguredView:(UIWebView *)view
+   withPreLoadedView:(UIWebView *)view
 {
     self.selectedTweet = tweet;
     self.avatar = anAvatar;
@@ -578,13 +523,6 @@ enum TweetActionRows {
         self.avatar = [[self class] defaultAvatar];
     }
     [avatarImage setImage:self.avatar];
-
-    // HACK: Setting the tweet text here because after a link in the tweet text
-    // is tapped, the table view cell is never updated via
-    // - tableView:cellForRowAtIndexPath:. - numberOfRows... is called, and
-    // - heightForRow... is called, but - cellForRow... is called for every row
-    // in the table view EXCEPT the tweet text row. I have no idea why.
-    //tweetTextTableViewCell.tweetText = [selectedTweet textAsHtml];
 
     [self.tableView reloadData];
     self.tableView.contentInset = UIEdgeInsetsMake(-300, 0, 0, 0);

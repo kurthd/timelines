@@ -44,26 +44,6 @@
     [super dealloc];
 }
 
-- (id)init
-{
-    if (self = [super init]) {
-        /*
-        CGRect frame = CGRectMake(5, 0, 290, 20);
-        webView = [[UIWebView alloc] initWithFrame:frame];
-        webView.delegate = self;
-
-        UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-        [window addSubview:webView];
-         */
-        //webView.backgroundColor = [UIColor clearColor];
-        //webView.opaque = NO;
-        //webView.hidden = YES;
-        //webView.dataDetectorTypes = UIDataDetectorTypeAll;
-    }
-
-    return self;
-}
-
 - (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)image
     intoController:(TweetViewController *)tvc
     navigationController:(UINavigationController *)navController
@@ -80,6 +60,10 @@
     webView.opaque = NO;
     webView.dataDetectorTypes = UIDataDetectorTypeAll;
 
+    // The view must be added as the subview of a visible view, otherwise the
+    // height will not be calculated when -sizeToFit: is called. Adding it here
+    // seems to have no effect on the display at all. Is there a better way to
+    // do this?
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
     [window addSubview:webView];
 
@@ -101,7 +85,7 @@
     if (navigationController)
         [navigationController pushViewController:controller animated:YES];
     [self.controller displayTweet:self.tweetInfo avatar:self.avatar
-        withPreConfiguredView:webView];
+        withPreLoadedView:webView];
 
     [webView removeFromSuperview];
     [webView autorelease];
