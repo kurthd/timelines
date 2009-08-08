@@ -215,6 +215,7 @@
 		910EFE1D1017E391002083D6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 910EFE1C1017E391002083D6 /* AudioToolbox.framework */; };
 		910EFE5F1017E78A002083D6 /* NewDirectMessagesState.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE5E1017E78A002083D6 /* NewDirectMessagesState.m */; };
 		910EFE831017F078002083D6 /* NewDirectMessagesPersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE821017F078002083D6 /* NewDirectMessagesPersistenceStore.m */; };
+		9112EAB5102E236E002715DC /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
 		9145EF5B1005073200C2E485 /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
 		9145EF5C1005073F00C2E485 /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
 		9145EF5D1005074A00C2E485 /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
@@ -565,6 +566,7 @@
 		910EFE5E1017E78A002083D6 /* NewDirectMessagesState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewDirectMessagesState.m; path = "direct-messages/NewDirectMessagesState.m"; sourceTree = "<group>"; };
 		910EFE811017F078002083D6 /* NewDirectMessagesPersistenceStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewDirectMessagesPersistenceStore.h; path = "direct-messages/NewDirectMessagesPersistenceStore.h"; sourceTree = "<group>"; };
 		910EFE821017F078002083D6 /* NewDirectMessagesPersistenceStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewDirectMessagesPersistenceStore.m; path = "direct-messages/NewDirectMessagesPersistenceStore.m"; sourceTree = "<group>"; };
+		9112EAB4102E236E002715DC /* ChatArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ChatArrow.png; path = images/ChatArrow.png; sourceTree = "<group>"; };
 		9115A8380FF03A6100D6A769 /* TimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDataSource.h; path = timeline/TimelineDataSource.h; sourceTree = "<group>"; };
 		9115A83B0FF03BA900D6A769 /* TimelineDataSourceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDataSourceDelegate.h; path = timeline/TimelineDataSourceDelegate.h; sourceTree = "<group>"; };
 		9115A83E0FF03C8300D6A769 /* AllTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllTimelineDataSource.h; path = timeline/AllTimelineDataSource.h; sourceTree = "<group>"; };
@@ -1385,6 +1387,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9112EAB4102E236E002715DC /* ChatArrow.png */,
 				91724999102CBAFB007E0DF6 /* TableViewCellTopGradient.png */,
 				05DB2A09102CDEC0001E8C30 /* PublicReplyButtonIcon.png */,
 				05DB29FF102CDB6B001E8C30 /* RetweetButtonIcon.png */,
@@ -1654,6 +1657,7 @@
 				9172499A102CBAFB007E0DF6 /* TableViewCellTopGradient.png in Resources */,
 				917249C5102CCEEE007E0DF6 /* FavoriteIconForUserView.png in Resources */,
 				916E3E49102CDC2700A879AC /* FavoriteIconForUserViewHighlighted.png in Resources */,
+				9112EAB5102E236E002715DC /* ChatArrow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
