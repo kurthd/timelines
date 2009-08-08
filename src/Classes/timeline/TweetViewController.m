@@ -248,6 +248,12 @@ enum TweetActionRows {
                 [[webpage stringByMatching:usernameRegex] substringFromIndex:1];
             NSLog(@"Showing tweets for user: %@", username);
             [delegate showTweetsForUser:username];
+        } else if ([webpage isMatchedByRegex:@"/\\B(#[\\w_]+)"]) {
+            NSString * query =
+                [[webpage stringByMatching:@"/\\B(#[\\w_]+)"]
+                substringFromIndex:1];
+            NSLog(@"Showing search results for '%@'", query);
+            [delegate showResultsForSearch:query];
         } else if (inReplyToString = [webpage stringByMatching:@"#\\d*"]) {
             NSString * tweetId = [inReplyToString substringFromIndex:1];
             NSString * replyToUsername =
