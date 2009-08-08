@@ -52,7 +52,7 @@ static UIColor * selectedTableViewCellBackgroundColor;
 {
     if (!twitchBackgroundColor)
         twitchBackgroundColor =
-            [[UIColor colorWithRed:.909 green:.909 blue:.909 alpha:1] retain];
+            [[UIColor groupTableViewBackgroundColor] retain];
 
     return twitchBackgroundColor;
 }

@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="40"/>
+			<integer value="4"/>
 			<integer value="5"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -64,9 +64,12 @@
 					<object class="IBUIImageView" id="229661645">
 						<reference key="NSNextResponder" ref="521307497"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, 300}, {320, 75}}</string>
+						<string key="NSFrame">{{0, 300}, {320, 76}}</string>
 						<reference key="NSSuperview" ref="521307497"/>
-						<bool key="IBUIOpaque">NO</bool>
+						<object class="NSColor" key="IBUIBackgroundColor">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MAA</bytes>
+						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<object class="NSCustomResource" key="IBUIImage">
@@ -262,7 +265,7 @@
 					<object class="IBUIView" id="362908434">
 						<reference key="NSNextResponder" ref="521307497"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, 374}, {320, 1}}</string>
+						<string key="NSFrame">{{0, 375}, {320, 1}}</string>
 						<reference key="NSSuperview" ref="521307497"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -322,7 +325,7 @@
 				<reference key="NSSuperview"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC45MDk4MDM5MyAwLjkwOTgwMzkzIDAuOTA5ODAzOTMAA</bytes>
+					<bytes key="NSRGB">MC45MDk4MDM5MyAwLjkwOTgwMzkzIDAuOTA5ODAzOTMgMAA</bytes>
 				</object>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 			</object>
@@ -375,7 +378,7 @@
 				<reference key="NSSuperview"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC45MDk4MDM5MyAwLjkwOTgwMzkzIDAuOTA5ODAzOTMAA</bytes>
+					<bytes key="NSRGB">MC45MDk4MDM5MyAwLjkwOTgwMzkzIDAuOTA5ODAzOTMgMAA</bytes>
 				</object>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 			</object>
