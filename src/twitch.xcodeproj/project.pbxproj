@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0511067F102A25FC00915638 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0511067E102A25FC00915638 /* Settings.bundle */; };
 		051D7C69101D105A00B867C1 /* SavedSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 051D7C68101D105A00B867C1 /* SavedSearchMgr.m */; };
 		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
 		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
@@ -28,12 +29,19 @@
 		059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */; };
 		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A1F5C91028C06A009F5B3E /* RegexKitLite.m */; };
+		05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05AC573C1029F0EF00F727A2 /* QuartzCore.framework */; };
 		05C6C92B1028F7F000182B4A /* Trend.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C6C92A1028F7F000182B4A /* Trend.m */; };
 		05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */; };
 		05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C8872810163DB90097FEFF /* AccountsTableViewCell.m */; };
 		05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */; };
+		05DB29C9102CD879001E8C30 /* DirectMessageButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29C8102CD879001E8C30 /* DirectMessageButtonIcon.png */; };
+		05DB2A00102CDB6B001E8C30 /* RetweetButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29FF102CDB6B001E8C30 /* RetweetButtonIcon.png */; };
+		05DB2A0A102CDEC0001E8C30 /* PublicReplyButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB2A09102CDEC0001E8C30 /* PublicReplyButtonIcon.png */; };
 		05DB973B1025107E00D06489 /* UIImage+DrawingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */; };
 		05E0271B101B983D00A97AC9 /* RecentSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */; };
+		05EDAEFC1029F6F500D0B62B /* TweetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EDAEFB1029F6F500D0B62B /* TweetViewController.m */; };
+		05EDAEFF1029F75600D0B62B /* TweetTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EDAEFE1029F75600D0B62B /* TweetTextTableViewCell.m */; };
+		05EDAF0C1029FAAB00D0B62B /* TweetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05EDAF0A1029FAAB00D0B62B /* TweetView.xib */; };
 		05EE7C7D101E9C2E006663FD /* TimelineTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7C7C101E9C2E006663FD /* TimelineTableViewCellView.m */; };
 		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		05EF40D50FFADF95007B59F1 /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
@@ -254,11 +262,11 @@
 		91D36965100D1CC900B59D12 /* ButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */; };
 		91D36976100D44D200B59D12 /* AvatarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36975100D44D200B59D12 /* AvatarBackground.png */; };
 		91DEF180101B7118001354D5 /* FindPeopleSearchDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DEF17F101B7118001354D5 /* FindPeopleSearchDisplayMgr.m */; };
-		91FC6B57101A339600354D67 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6B56101A339600354D67 /* Settings.bundle */; };
 		91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6C44101A51F800354D67 /* PersonSearch.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0511067E102A25FC00915638 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		051D7C67101D105A00B867C1 /* SavedSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearchMgr.h; path = search/SavedSearchMgr.h; sourceTree = "<group>"; };
 		051D7C68101D105A00B867C1 /* SavedSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearchMgr.m; path = search/SavedSearchMgr.m; sourceTree = "<group>"; };
 		052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackground.png; path = images/SaveSearchButtonBackground.png; sourceTree = "<group>"; };
@@ -363,6 +371,7 @@
 		059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v1-to-v2.xcmappingmodel"; path = "data-model/v1-to-v2.xcmappingmodel"; sourceTree = "<group>"; };
 		05A1F5C81028C06A009F5B3E /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		05A1F5C91028C06A009F5B3E /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		05AC573C1029F0EF00F727A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		05AE708C0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFavoritesForUserResponseProcessor.h; path = twitter/processors/FetchFavoritesForUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFavoritesForUserResponseProcessor.m; path = twitter/processors/FetchFavoritesForUserResponseProcessor.m; sourceTree = "<group>"; };
 		05AE71190FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkFavoriteResponseProcessor.h; path = twitter/processors/MarkFavoriteResponseProcessor.h; sourceTree = "<group>"; };
@@ -486,12 +495,20 @@
 		05D174050FF69FC500DCB22D /* Mention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mention.h; path = tweets/Mention.h; sourceTree = "<group>"; };
 		05D174060FF69FC500DCB22D /* Mention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mention.m; path = tweets/Mention.m; sourceTree = "<group>"; };
 		05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2-v1.1.xcmappingmodel"; path = "data-model/v2-v1.1.xcmappingmodel"; sourceTree = "<group>"; };
+		05DB29C8102CD879001E8C30 /* DirectMessageButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DirectMessageButtonIcon.png; path = images/DirectMessageButtonIcon.png; sourceTree = "<group>"; };
+		05DB29FF102CDB6B001E8C30 /* RetweetButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RetweetButtonIcon.png; path = images/RetweetButtonIcon.png; sourceTree = "<group>"; };
+		05DB2A09102CDEC0001E8C30 /* PublicReplyButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PublicReplyButtonIcon.png; path = images/PublicReplyButtonIcon.png; sourceTree = "<group>"; };
 		05DB97391025107E00D06489 /* UIImage+DrawingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+DrawingAdditions.h"; path = "shared/UIImage+DrawingAdditions.h"; sourceTree = "<group>"; };
 		05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+DrawingAdditions.m"; path = "shared/UIImage+DrawingAdditions.m"; sourceTree = "<group>"; };
 		05E02719101B983D00A97AC9 /* RecentSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecentSearchMgr.h; path = search/RecentSearchMgr.h; sourceTree = "<group>"; };
 		05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearchMgr.m; path = search/RecentSearchMgr.m; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
 		05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+TediousCodeAdditions.m"; path = "shared/NSManagedObject+TediousCodeAdditions.m"; sourceTree = "<group>"; };
+		05EDAEFA1029F6F500D0B62B /* TweetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetViewController.h; path = timeline/TweetViewController.h; sourceTree = "<group>"; };
+		05EDAEFB1029F6F500D0B62B /* TweetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetViewController.m; path = timeline/TweetViewController.m; sourceTree = "<group>"; };
+		05EDAEFD1029F75600D0B62B /* TweetTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetTextTableViewCell.h; path = timeline/TweetTextTableViewCell.h; sourceTree = "<group>"; };
+		05EDAEFE1029F75600D0B62B /* TweetTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetTextTableViewCell.m; path = timeline/TweetTextTableViewCell.m; sourceTree = "<group>"; };
+		05EDAF0B1029FAAB00D0B62B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TweetView.xib; sourceTree = "<group>"; };
 		05EE7C7B101E9C2E006663FD /* TimelineTableViewCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineTableViewCellView.h; path = timeline/TimelineTableViewCellView.h; sourceTree = "<group>"; };
 		05EE7C7C101E9C2E006663FD /* TimelineTableViewCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineTableViewCellView.m; path = timeline/TimelineTableViewCellView.m; sourceTree = "<group>"; };
 		05EF418F0FFADF95007B59F1 /* Twitbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -707,7 +724,6 @@
 		91E0004B0FEF786300BCE9BC /* NotFavorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NotFavorite.png; path = images/NotFavorite.png; sourceTree = "<group>"; };
 		91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsHeaderGradient.png; path = images/TweetDetailsHeaderGradient.png; sourceTree = "<group>"; };
 		91E000940FEFFCC700BCE9BC /* DropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadow.png; path = images/DropShadow.png; sourceTree = "<group>"; };
-		91FC6B56101A339600354D67 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		91FC6C44101A51F800354D67 /* PersonSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PersonSearch.png; path = images/PersonSearch.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -725,6 +741,7 @@
 				05EF41880FFADF95007B59F1 /* libYAJLIPhone.a in Frameworks */,
 				91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */,
 				910EFE1D1017E391002083D6 /* AudioToolbox.framework in Frameworks */,
+				05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1027,13 +1044,13 @@
 		05B239440FEDD0E400A6A2E6 /* nibs */ = {
 			isa = PBXGroup;
 			children = (
-				91724999102CBAFB007E0DF6 /* TableViewCellTopGradient.png */,
 				05B238820FEDC34200A6A2E6 /* MainWindow.xib */,
 				916BD7ED0FEEB958007143A9 /* NoDataView.xib */,
 				05B238880FEDC35400A6A2E6 /* LogInView.xib */,
 				916BD8020FEEBD56007143A9 /* TimelineView.xib */,
 				916BD9100FEEFB07007143A9 /* TimelineTableViewCell.xib */,
 				916BD9F40FEF46B1007143A9 /* TweetDetailsView.xib */,
+				05EDAF0A1029FAAB00D0B62B /* TweetView.xib */,
 				05F45CFF0FF059B400EBAFC7 /* ComposeTweetView.xib */,
 				918E89580FF1863C0042BBEE /* UserInfoView.xib */,
 				918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */,
@@ -1285,7 +1302,7 @@
 				0554E3EF0FFDB9EF00329FFA /* entitlements */,
 				05EF41970FFAE449007B59F1 /* twitbit-info.plist */,
 				05977A3B0FEF0C9700E37B9C /* Icon.png */,
-				91FC6B56101A339600354D67 /* Settings.bundle */,
+				0511067E102A25FC00915638 /* Settings.bundle */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1299,6 +1316,7 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765070DF74369002DB57D /* CoreGraphics.framework */,
+				05AC573C1029F0EF00F727A2 /* QuartzCore.framework */,
 				05B23A310FEEB29D00A6A2E6 /* CoreData.framework */,
 				05B238310FEDBA6600A6A2E6 /* libxml2.dylib */,
 				05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */,
@@ -1367,6 +1385,10 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91724999102CBAFB007E0DF6 /* TableViewCellTopGradient.png */,
+				05DB2A09102CDEC0001E8C30 /* PublicReplyButtonIcon.png */,
+				05DB29FF102CDB6B001E8C30 /* RetweetButtonIcon.png */,
+				05DB29C8102CD879001E8C30 /* DirectMessageButtonIcon.png */,
 				916E3E48102CDC2700A879AC /* FavoriteIconForUserViewHighlighted.png */,
 				917249C4102CCEEE007E0DF6 /* FavoriteIconForUserView.png */,
 				917246E8102A02F2007E0DF6 /* CellBackground.png */,
@@ -1432,6 +1454,10 @@
 				916BD9140FEEFB24007143A9 /* TimelineTableViewCell.m */,
 				05EE7C7B101E9C2E006663FD /* TimelineTableViewCellView.h */,
 				05EE7C7C101E9C2E006663FD /* TimelineTableViewCellView.m */,
+				05EDAEFA1029F6F500D0B62B /* TweetViewController.h */,
+				05EDAEFB1029F6F500D0B62B /* TweetViewController.m */,
+				05EDAEFD1029F75600D0B62B /* TweetTextTableViewCell.h */,
+				05EDAEFE1029F75600D0B62B /* TweetTextTableViewCell.m */,
 				916BD9F80FEF46E4007143A9 /* TweetDetailsViewController.h */,
 				916BD9F90FEF46E4007143A9 /* TweetDetailsViewController.m */,
 				916BD9FB0FEF4986007143A9 /* TimelineViewControllerDelegate.h */,
@@ -1614,11 +1640,15 @@
 				05340ABA101A3DAD0077E7C0 /* SearchBookmarksView.xib in Resources */,
 				052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */,
 				052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */,
-				91FC6B57101A339600354D67 /* Settings.bundle in Resources */,
 				91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */,
 				917245521025046A007E0DF6 /* FavoriteMark.png in Resources */,
 				054F3EF910243FAA005B6805 /* DefaultAvatar50x50.png in Resources */,
 				917245E61028B715007E0DF6 /* FindPeopleBookmarkView.xib in Resources */,
+				05EDAF0C1029FAAB00D0B62B /* TweetView.xib in Resources */,
+				0511067F102A25FC00915638 /* Settings.bundle in Resources */,
+				05DB29C9102CD879001E8C30 /* DirectMessageButtonIcon.png in Resources */,
+				05DB2A00102CDB6B001E8C30 /* RetweetButtonIcon.png in Resources */,
+				05DB2A0A102CDEC0001E8C30 /* PublicReplyButtonIcon.png in Resources */,
 				917246E6102A0257007E0DF6 /* SelectedCellBackground.png in Resources */,
 				917246E9102A02F2007E0DF6 /* CellBackground.png in Resources */,
 				9172499A102CBAFB007E0DF6 /* TableViewCellTopGradient.png in Resources */,
@@ -1799,6 +1829,8 @@
 				917245E91028B781007E0DF6 /* FindPeopleBookmarkViewController.m in Sources */,
 				05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */,
 				05C6C92B1028F7F000182B4A /* Trend.m in Sources */,
+				05EDAEFC1029F6F500D0B62B /* TweetViewController.m in Sources */,
+				05EDAEFF1029F75600D0B62B /* TweetTextTableViewCell.m in Sources */,
 				9172475B102A4914007E0DF6 /* SearchDataSource.m in Sources */,
 				917247EA102B8FE3007E0DF6 /* DirectMessageInboxCellView.m in Sources */,
 				9172485C102BB666007E0DF6 /* UserSummaryView.m in Sources */,
@@ -1863,6 +1895,14 @@
 				05C7051C0FF88C4100936E4C /* en */,
 			);
 			name = ExplainOauthView.xib;
+			sourceTree = "<group>";
+		};
+		05EDAF0A1029FAAB00D0B62B /* TweetView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				05EDAF0B1029FAAB00D0B62B /* en */,
+			);
+			name = TweetView.xib;
 			sourceTree = "<group>";
 		};
 		05F45CFF0FF059B400EBAFC7 /* ComposeTweetView.xib */ = {
@@ -1985,8 +2025,13 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
+					Classes/vendor/three20/src,
 				);
-				OTHER_LDFLAGS = "-licucore";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-licucore",
+				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BD30541-6CA6-4F48-B159-BC45D542BBD5";
 				SDKROOT = iphoneos3.0;
@@ -2032,8 +2077,13 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
+					Classes/vendor/three20/src,
 				);
-				OTHER_LDFLAGS = "-licucore";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-licucore",
+				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B52DB6FE-ED0F-47A7-8265-381FD8A93D00";
 				SDKROOT = iphoneos3.0;
@@ -2052,8 +2102,13 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
+					Classes/vendor/three20/src,
 				);
-				OTHER_LDFLAGS = "-licucore";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-licucore",
+				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "86370A6E-A17F-44DD-A7A3-E53062D55715";
 				SDKROOT = iphoneos3.0;
@@ -2072,8 +2127,13 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
+					Classes/vendor/three20/src,
 				);
-				OTHER_LDFLAGS = "-licucore";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-licucore",
+				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos3.0;
@@ -2188,8 +2248,13 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
+					Classes/vendor/three20/src,
 				);
-				OTHER_LDFLAGS = "-licucore";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-licucore",
+				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4D2CFC7-162B-42E3-8B03-4F8F61F670A4";
 				SDKROOT = iphoneos3.0;
@@ -2208,8 +2273,13 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
+					Classes/vendor/three20/src,
 				);
-				OTHER_LDFLAGS = "-licucore";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-licucore",
+				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4D2CFC7-162B-42E3-8B03-4F8F61F670A4";
 				SDKROOT = iphoneos3.0;

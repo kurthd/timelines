@@ -26,6 +26,8 @@
 #import "SavedSearchMgr.h"
 
 @class TimelineDisplayMgrFactory;
+@class TweetViewController;
+@class TweetDetailsViewLoader;
 
 @interface TimelineDisplayMgr :
     NSObject
@@ -33,13 +35,15 @@
     TweetDetailsViewDelegate, NetworkAwareViewControllerDelegate,
     UserInfoViewControllerDelegate, UserListTableViewControllerDelegate,
     PhotoBrowserDelegate, TwitchBrowserViewControllerDelegate,
-    TwitterServiceDelegate>
+    TwitterServiceDelegate, UIWebViewDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
     NetworkAwareViewController * lastTweetDetailsWrapperController;
-    TweetDetailsViewController * lastTweetDetailsController;
-    TweetDetailsViewController * tweetDetailsController;
+    //TweetDetailsViewController * lastTweetDetailsController;
+    //TweetDetailsViewController * tweetDetailsController;
+    TweetViewController * lastTweetDetailsController;
+    TweetViewController * tweetDetailsController;
     UserInfoViewController * userInfoController;
     TwitchBrowserViewController * browserController;
     PhotoBrowser * photoBrowser;
@@ -94,15 +98,19 @@
 
     SavedSearchMgr * savedSearchMgr;
     NSString * currentSearch;
+
+    TweetDetailsViewLoader * tweetDetailsViewLoader;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
 @property (readonly) TimelineViewController * timelineController;
 @property (nonatomic, retain)
     NetworkAwareViewController * lastTweetDetailsWrapperController;
-@property (nonatomic, retain)
-    TweetDetailsViewController * lastTweetDetailsController;
-@property (readonly) TweetDetailsViewController * tweetDetailsController;
+//@property (nonatomic, retain)
+//    TweetDetailsViewController * lastTweetDetailsController;
+//@property (readonly) TweetDetailsViewController * tweetDetailsController;
+@property (nonatomic, retain) TweetViewController * lastTweetDetailsController;
+@property (readonly) TweetViewController * tweetDetailsController;
 @property (readonly) UserInfoViewController * userInfoController;
 @property (readonly) TwitchBrowserViewController * browserController;
 @property (readonly) PhotoBrowser * photoBrowser;
