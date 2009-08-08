@@ -4,11 +4,9 @@
 
 #import "TweetViewController.h"
 #import "TweetTextTableViewCell.h"
-#import "RegexKitLite.h"
 #import "AsynchronousNetworkFetcher.h"
-#import "UIImage+DrawingAdditions.h"
 #import "UIAlertView+InstantiationAdditions.h"
-#import "NSString+HtmlEncodingAdditions.h"
+#import "RegexKitLite.h"
 
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 
@@ -55,16 +53,15 @@ enum TweetActionRows {
 
 - (void)configureCell:(UITableViewCell *)cell asFavorite:(BOOL)favorite;
 
-+ (NSString *)htmlForTweet:(TweetInfo *)tweet;
-+ (NSString *)bodyWithUserLinks:(NSString *)body;
-
 + (UIImage *)defaultAvatar;
+
+@property (nonatomic, retain) UIWebView * tweetContentView;
 
 @end
 
 @implementation TweetViewController
 
-@synthesize delegate, selectedTweet, avatar;
+@synthesize delegate, selectedTweet, avatar, tweetContentView;
 
 - (void)dealloc
 {
@@ -77,6 +74,7 @@ enum TweetActionRows {
 
     self.selectedTweet = nil;
     self.avatar = nil;
+    self.tweetContentView = nil;
 
     [super dealloc];
 }
@@ -136,6 +134,7 @@ enum TweetActionRows {
 - (CGFloat)tableView:(UITableView *)tv
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    /*
     CGFloat height;
 
     if (indexPath.section == kTweetDetailsSection &&
@@ -143,6 +142,31 @@ enum TweetActionRows {
         height = tweetTextTableViewCell.webView.frame.size.height > 1 ?
             tweetTextTableViewCell.webView.frame.size.height : 44;
     else
+        height = 44;
+
+    return height;
+    */
+
+    CGFloat height;
+
+    BOOL tweetTextRow =
+        indexPath.section == kTweetDetailsSection &&
+        indexPath.row == kTweetTextRow;
+
+    if (tweetTextRow) {
+        /*
+        CGSize size = CGSizeMake(290, MAXFLOAT);
+        size = [selectedTweet.text sizeWithFont:[UIFont systemFontOfSize:19]
+                              constrainedToSize:size];
+        height = size.height;
+        height =  88;
+        NSLog(@"Height for string: %f, %@", height, selectedTweet.text);
+        */
+
+        //height = tweetTextCellHeight;
+
+        height = tweetContentView.frame.size.height;
+    } else
         height = 44;
 
     return height;
@@ -168,8 +192,8 @@ enum TweetActionRows {
 
     if (indexPath.section == kTweetDetailsSection) {
         if (indexPath.row == kTweetTextRow) {
-            tweetTextTableViewCell.tweetText =
-                [[self class] htmlForTweet:selectedTweet];
+            //tweetTextTableViewCell.tweetText = [selectedTweet textAsHtml];
+            [tweetTextTableViewCell.contentView addSubview:tweetContentView];
             cell = tweetTextTableViewCell;
         } else if (indexPath.row == kConversationRow) {
             NSString * formatString =
@@ -229,9 +253,15 @@ enum TweetActionRows {
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [self performSelector:@selector(calculateWebViewSize)
+    /*[self performSelector:@selector(calculateWebViewSize)
                withObject:nil
-               afterDelay:0.1];
+               afterDelay:0.1];*/
+
+    [tweetTextTableViewCell.webView sizeToFit];
+
+    NSLog(@"Web view needs: (%f, %f)",
+        tweetTextTableViewCell.webView.frame.size.width,
+        tweetTextTableViewCell.webView.frame.size.height);
 }
 
 - (BOOL)webView:(UIWebView *)webView
@@ -294,10 +324,19 @@ enum TweetActionRows {
 
 #pragma mark Public interface implementation
 
+/*
 - (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)anAvatar
+   contentHeight:(CGFloat)height
+ */
+- (void)displayTweet:(TweetInfo *)tweet avatar:(UIImage *)anAvatar
+   withPreConfiguredView:(UIWebView *)view
 {
     self.selectedTweet = tweet;
     self.avatar = anAvatar;
+
+    [self.tweetContentView removeFromSuperview];
+    self.tweetContentView = view;
+    self.tweetContentView.delegate = self;
 
     [self displayTweet];
 }
@@ -480,11 +519,14 @@ enum TweetActionRows {
 
     switch (indexPath.section) {
         case kTweetDetailsSection:
-            /*identifier =
-                indexPath.row == kTweetTextRow ?
-                @"TweetTextTableViewCell" :
-                @"InReplyToTweetTableViewCell";*/
-            identifier = @"TweetTextTableViewCell";
+            switch (indexPath.row) {
+                case kTweetTextRow:
+                    identifier = @"TweetTextTableViewCell";
+                    break;
+                case kConversationRow:
+                    identifier = @"TweetConversationTableViewCell";
+                    break;
+            }
             break;
         case kComposeActionsSection:
             identifier = @"ComposeActionsTableViewCell";
@@ -533,17 +575,16 @@ enum TweetActionRows {
 
     if (!self.avatar) {
         [self fetchRemoteImage:selectedTweet.user.profileImageUrl];
-        avatar = [[self class] defaultAvatar];
+        self.avatar = [[self class] defaultAvatar];
     }
-    [avatarImage setImage:avatar];
+    [avatarImage setImage:self.avatar];
 
     // HACK: Setting the tweet text here because after a link in the tweet text
     // is tapped, the table view cell is never updated via
     // - tableView:cellForRowAtIndexPath:. - numberOfRows... is called, and
     // - heightForRow... is called, but - cellForRow... is called for every row
     // in the table view EXCEPT the tweet text row. I have no idea why.
-    tweetTextTableViewCell.tweetText =
-        [[self class] htmlForTweet:selectedTweet];
+    //tweetTextTableViewCell.tweetText = [selectedTweet textAsHtml];
 
     [self.tableView reloadData];
     self.tableView.contentInset = UIEdgeInsetsMake(-300, 0, 0, 0);
@@ -566,82 +607,6 @@ enum TweetActionRows {
             NSLocalizedString(@"tweetdetailsview.favorite.label", @"");
         cell.imageView.image = [UIImage imageNamed:@"NotFavorite.png"];
     }
-}
-
-+ (NSString *)htmlForTweet:(TweetInfo *)tweet
-{
-    NSString * body = [[self class] bodyWithUserLinks:tweet.text];
-    // some tweets have newlines -- convert them to HTML line breaks for
-    // display in the HTML tweet view
-    body = [body stringByReplacingOccurrencesOfString:@"\n"
-                                           withString:@"<br />"];
-
-    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateStyle:NSDateFormatterShortStyle];
-    [formatter setTimeStyle:NSDateFormatterShortStyle];
-    NSString * timestamp = [formatter stringFromDate:tweet.timestamp];
-    [formatter release];
-
-    NSString * html =
-        [NSString stringWithFormat:
-        @"<html>"
-        "  <head>"
-        "   <style media=\"screen\" type=\"text/css\" rel=\"stylesheet\">"
-        "     @import url(tweet-style.css);"
-        "   </style>"
-        "  </head>"
-        "  <body>"
-        "    <p class=\"text\">%@</p>"
-        "    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
-        "      width=\"100%%\" class=\"footer\">"
-        "      <tr>"
-        "        <td align=\"left\" valign=\"top\">from %@</td>"
-        "        <td align=\"right\" valign=\"top\">%@</td>"
-        "      </tr>"
-        "    </table>"
-        "  </body>"
-        "</html>",
-        body, [tweet.source stringByDecodingHtmlEntities], timestamp];
-
-    return html;
-}
-
-// This implementation is a bit of a hack to get around a RegexKitLite
-// limitation: there's a limit to how many strings can be replaced
-// If not for the bug, the implementation would be:
-//     return [body stringByReplacingOccurrencesOfRegex:usernameRegex
-//         withString:@"<a href=\"#$1\">$1</a>"];
-+ (NSString *)bodyWithUserLinks:(NSString *)body
-{
-    NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
-
-    NSMutableDictionary * uniqueMentions = [NSMutableDictionary dictionary];
-    NSRange currentRange = [body rangeOfRegex:usernameRegex];
-    while (!NSEqualRanges(currentRange, notFoundRange)) {
-        NSString * mention = [body substringWithRange:currentRange];
-        [uniqueMentions setObject:mention forKey:mention];
-
-        NSUInteger startingPosition =
-            currentRange.location + currentRange.length;
-        if (startingPosition < [body length]) {
-            NSRange remainingRange =
-                NSMakeRange(startingPosition, [body length] - startingPosition);
-            currentRange =
-                [body rangeOfRegex:usernameRegex inRange:remainingRange];
-        } else
-            currentRange = notFoundRange;
-    }
-
-    NSString * bodyWithUserLinks = [[body copy] autorelease];
-    for (NSString * mention in [uniqueMentions allKeys]) {
-        NSString * mentionRegex =
-            [NSString stringWithFormat:@"\\B(%@)\\b", mention];
-        bodyWithUserLinks =
-            [bodyWithUserLinks stringByReplacingOccurrencesOfRegex:mentionRegex
-            withString:@"<a href=\"#$1\">$1</a>"];
-    }
-
-    return bodyWithUserLinks;
 }
 
 + (UIImage *)defaultAvatar

@@ -27,6 +27,7 @@
 
 @class TimelineDisplayMgrFactory;
 @class TweetViewController;
+@class TweetDetailsViewLoader;
 
 @interface TimelineDisplayMgr :
     NSObject
@@ -34,7 +35,7 @@
     TweetDetailsViewDelegate, NetworkAwareViewControllerDelegate,
     UserInfoViewControllerDelegate, UserListTableViewControllerDelegate,
     PhotoBrowserDelegate, TwitchBrowserViewControllerDelegate,
-    TwitterServiceDelegate>
+    TwitterServiceDelegate, UIWebViewDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
@@ -97,6 +98,8 @@
 
     SavedSearchMgr * savedSearchMgr;
     NSString * currentSearch;
+
+    TweetDetailsViewLoader * tweetDetailsViewLoader;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;

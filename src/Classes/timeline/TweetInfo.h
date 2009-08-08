@@ -39,4 +39,6 @@
 + (TweetInfo *)createFromTweet:(Tweet *)tweet;
 + (TweetInfo *)createFromDirectMessage:(DirectMessage *)directMessage;
 
+- (NSString *)textAsHtml;
+
 @end

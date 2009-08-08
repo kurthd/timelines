@@ -27,13 +27,15 @@
 
     TweetInfo * selectedTweet;
     UIImage * avatar;
+    UIWebView * tweetContentView;
 }
 
 @property (nonatomic, assign) NSObject<TweetDetailsViewDelegate> * delegate;
 @property (nonatomic, retain) TweetInfo * selectedTweet;
 @property (nonatomic, retain) UIImage * avatar;
 
-- (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar;
+- (void)displayTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar
+   withPreConfiguredView:(UIView *)view;
 - (void)setUsersTweet:(BOOL)usersTweet;
 - (void)hideFavoriteButton:(BOOL)hide;
 

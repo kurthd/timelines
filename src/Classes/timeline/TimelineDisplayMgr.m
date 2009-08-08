@@ -9,6 +9,106 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "TweetViewController.h"
 #import "SearchDataSource.h"
+#import "UIWebView+FileLoadingAdditions.h"
+
+@interface TweetDetailsViewLoader : NSObject <UIWebViewDelegate>
+{
+    TweetInfo * tweetInfo;
+    UIImage * avatar;
+    TweetViewController * controller;
+    UINavigationController * navigationController;
+
+    UIWebView * webView;
+}
+
+@property (nonatomic, retain) TweetInfo * tweetInfo;
+@property (nonatomic, retain) UIImage * avatar;
+@property (nonatomic, retain) TweetViewController * controller;
+@property (nonatomic, retain) UINavigationController * navigationController;
+
+- (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)image
+   intoController:(TweetViewController *)tvc
+   navigationController:(UINavigationController *)navController;
+@end
+
+@implementation TweetDetailsViewLoader
+@synthesize tweetInfo, avatar, controller, navigationController;
+
+- (void)dealloc
+{
+    self.tweetInfo = nil;
+    self.avatar = nil;
+    self.controller = nil;
+    self.navigationController = nil;
+    [webView release];
+    [super dealloc];
+}
+
+- (id)init
+{
+    if (self = [super init]) {
+        /*
+        CGRect frame = CGRectMake(5, 0, 290, 20);
+        webView = [[UIWebView alloc] initWithFrame:frame];
+        webView.delegate = self;
+
+        UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+        [window addSubview:webView];
+         */
+        //webView.backgroundColor = [UIColor clearColor];
+        //webView.opaque = NO;
+        //webView.hidden = YES;
+        //webView.dataDetectorTypes = UIDataDetectorTypeAll;
+    }
+
+    return self;
+}
+
+- (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)image
+    intoController:(TweetViewController *)tvc
+    navigationController:(UINavigationController *)navController
+{
+    self.tweetInfo = tweet;
+    self.avatar = image;
+    self.controller = tvc;
+    self.navigationController = navController;
+
+    CGRect frame = CGRectMake(5, 0, 290, 20);
+    webView = [[UIWebView alloc] initWithFrame:frame];
+    webView.delegate = self;
+    webView.backgroundColor = [UIColor clearColor];
+    webView.opaque = NO;
+    webView.dataDetectorTypes = UIDataDetectorTypeAll;
+
+    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    [window addSubview:webView];
+
+    NSString * html = [self.tweetInfo textAsHtml];
+    [webView loadHTMLStringRelativeToMainBundle:html];
+}
+
+#pragma mark UIWebViewDelegate implementation
+
+- (void)webViewDidFinishLoad:(UIWebView *)view
+{
+    CGSize size = [webView sizeThatFits:CGSizeZero];
+
+    CGRect frame = webView.frame;
+    frame.size.width = size.width;
+    frame.size.height = size.height;
+    webView.frame = frame;
+
+    if (navigationController)
+        [navigationController pushViewController:controller animated:YES];
+    [self.controller displayTweet:self.tweetInfo avatar:self.avatar
+        withPreConfiguredView:webView];
+
+    [webView removeFromSuperview];
+    [webView autorelease];
+    webView = nil;
+}
+
+@end
 
 @interface TimelineDisplayMgr ()
 
@@ -99,6 +199,8 @@ static NSInteger retweetFormatValueAlredyRead;
     [savedSearchMgr release];
     [currentSearch release];
 
+    [tweetDetailsViewLoader release];
+
     [super dealloc];
 }
 
@@ -132,6 +234,8 @@ static NSInteger retweetFormatValueAlredyRead;
         [wrapperController setUpdatingState:kConnectedAndUpdating];
         [wrapperController setCachedDataAvailable:NO];
         wrapperController.title = title;
+
+        tweetDetailsViewLoader = [[TweetDetailsViewLoader alloc] init];
     }
 
     return self;
@@ -357,7 +461,11 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Timeline display mgr: fetched tweet: %@", tweet);
     TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
 
-    [self.lastTweetDetailsController setTweet:tweetInfo avatar:nil];
+    // jad
+    [tweetDetailsViewLoader setTweet:tweetInfo avatar:nil
+        intoController:self.lastTweetDetailsController
+        navigationController:nil];
+    //[self.lastTweetDetailsController setTweet:tweetInfo avatar:nil];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
     [self.lastTweetDetailsWrapperController
         setUpdatingState:kConnectedAndNotUpdating];
@@ -405,9 +513,13 @@ static NSInteger retweetFormatValueAlredyRead;
             NSLocalizedString(@"tweetdetailsview.title", @"");
     }
 
-    [self.wrapperController.navigationController
-        pushViewController:self.tweetDetailsController animated:YES];
-    [self.tweetDetailsController setTweet:tweet avatar:avatarImage];
+    // jad
+    [tweetDetailsViewLoader setTweet:tweet avatar:nil
+        intoController:self.tweetDetailsController
+        navigationController:self.wrapperController.navigationController];
+    //[self.wrapperController.navigationController
+    //  pushViewController:self.tweetDetailsController animated:YES];
+    //[self.tweetDetailsController setTweet:tweet avatar:avatarImage];
 }
 
 - (void)loadMoreTweets
