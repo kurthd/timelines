@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="37"/>
+			<integer value="28"/>
 			<integer value="53"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -224,7 +224,7 @@
 								<reference key="NSSuperview" ref="717978432"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC42NDc5NTkxNyAwLjY0Nzk1OTE3IDAuNjQ3OTU5MTcAA</bytes>
+									<bytes key="NSRGB">MC41Njg2Mjc0OCAwLjU2ODYyNzQ4IDAuNTY4NjI3NDgAA</bytes>
 								</object>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 							</object>

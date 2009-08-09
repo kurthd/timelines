@@ -183,7 +183,7 @@
 						<reference key="NSSuperview" ref="123950848"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC41ODgyMzUzMiAwLjU4ODIzNTMyIDAuNTg4MjM1MzIAA</bytes>
+							<bytes key="NSRGB">MC41Njg2Mjc0OCAwLjU2ODYyNzQ4IDAuNTY4NjI3NDgAA</bytes>
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 					</object>

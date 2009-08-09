@@ -41,6 +41,7 @@ static UIImage * defaultAvatar;
     [footerView release];
     [avatarView release];
     [nameLabel release];
+    [activeAcctLabel release];
     [bioLabel release];
 
     [followingLabel release];
@@ -254,6 +255,7 @@ static UIImage * defaultAvatar;
         followingCheckMark.hidden = YES;
         followingActivityIndicator.hidden = NO;
         followingLoadingLabel.hidden = NO;
+        activeAcctLabel.hidden = YES;
         followButton.enabled = NO;
         [followButton setTitleColor:[UIColor grayColor]
             forState:UIControlStateNormal];
@@ -266,6 +268,7 @@ static UIImage * defaultAvatar;
         followingCheckMark.hidden = YES;
         followingActivityIndicator.hidden = YES;
         followingLoadingLabel.hidden = YES;
+        activeAcctLabel.hidden = NO;
         followButton.enabled = NO;
         [followButton setTitleColor:[UIColor grayColor]
             forState:UIControlStateNormal];

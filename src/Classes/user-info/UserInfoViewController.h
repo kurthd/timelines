@@ -18,6 +18,7 @@
     IBOutlet UIView * footerView;
     IBOutlet RoundedImage * avatarView;
     IBOutlet UILabel * nameLabel;
+    IBOutlet UILabel * activeAcctLabel;
     IBOutlet UILabel * bioLabel;
     IBOutlet UILabel * followingLabel;
     IBOutlet UILabel * followingCheckMark;
