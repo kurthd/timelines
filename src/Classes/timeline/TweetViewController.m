@@ -95,7 +95,7 @@ enum TweetActionRows {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    [delegate showingTweetDetails];
     [self.tableView flashScrollIndicators];
 }
 
@@ -405,7 +405,9 @@ enum TweetActionRows {
 
 - (IBAction)showUserTweets:(id)sender
 {
-    [delegate showTweetsForUser:selectedTweet.user.username];
+    UIImage * actualAvatar =
+        self.avatar != [[self class] defaultAvatar] ? self.avatar : nil;
+    [delegate showUserInfoForUser:selectedTweet.user withAvatar:actualAvatar];
 }
 
 - (IBAction)showFullProfileImage:(id)sender

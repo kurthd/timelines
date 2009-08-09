@@ -12,6 +12,7 @@
 - (void)displayFollowingForUser:(NSString *)username;
 - (void)displayFollowersForUser:(NSString *)username;
 - (void)displayFavoritesForUser:(NSString *)username;
+- (void)showTweetsForUser:(NSString *)username;
 - (void)startFollowingUser:(NSString *)username;
 - (void)stopFollowingUser:(NSString *)username;
 - (void)showingUserInfoView;

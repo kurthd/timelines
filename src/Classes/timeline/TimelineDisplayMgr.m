@@ -522,17 +522,21 @@ static NSInteger retweetFormatValueAlredyRead;
 
 - (void)showUserInfoWithAvatar:(UIImage *)avatar
 {
-    NSLog(@"Timeline display manager: showing user info for %@", user);
-    userInfoController.navigationItem.title = user.name;
+    [self showUserInfoForUser:user withAvatar:avatar];
+}
+
+- (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar
+{
+    NSLog(@"Timeline display manager: showing user info for %@", aUser);
+    userInfoController = nil; // Forces to scroll to top
+    self.userInfoController.navigationItem.title = aUser.name;
     [self.wrapperController.navigationController
         pushViewController:self.userInfoController animated:YES];
     self.userInfoController.followingEnabled =
-        ![credentials.username isEqual:user.username];
-    [self.userInfoController setUser:user avatarImage:avatar];
+        ![credentials.username isEqual:aUser.username];
+    [self.userInfoController setUser:aUser avatarImage:avatar];
     if (self.userInfoController.followingEnabled)
-        [service isUser:credentials.username following:user.username];
-    // HACK: this is called twice to make sure it gets displayed the first time
-    userInfoController.navigationItem.title = user.name;
+        [service isUser:credentials.username following:aUser.username];
 }
 
 #pragma mark TweetDetailsViewDelegate implementation

@@ -164,7 +164,7 @@ static UIImage * defaultAvatar;
 
 - (IBAction)showUserTweets:(id)sender
 {
-    [delegate showTweetsForUser:selectedTweet.user.username];
+//    [delegate showTweetsForUser:selectedTweet.user.username];
 }
 
 - (IBAction)publicReply:(id)sender
@@ -250,7 +250,7 @@ static UIImage * defaultAvatar;
             NSString * username =
                 [[webpage stringByMatching:usernameRegex] substringFromIndex:1];
             NSLog(@"Showing tweets for user: %@", username);
-            [delegate showTweetsForUser:username];
+//            [delegate showTweetsForUser:username];
         } else if ([webpage isMatchedByRegex:@"/\\B(#[\\w_]+)"]) {
             NSString * query =
                 [[webpage stringByMatching:@"/\\B(#[\\w_]+)"]

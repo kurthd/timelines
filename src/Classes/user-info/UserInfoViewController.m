@@ -11,12 +11,17 @@
 
 enum {
     kUserInfoSectionDetails,
-    kUserInfoSectionNetwork
+    kUserInfoSectionNetwork,
+    kUserInfoSectionTweets
 };
 
 enum {
     kUserInfoFollowingRow,
-    kUserInfoFollowersRow,
+    kUserInfoFollowersRow
+};
+
+enum {
+    kUserInfoNumUpdatesRow,
     kUserInfoFavoritesRow
 };
 
@@ -83,7 +88,7 @@ static UIImage * defaultAvatar;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView 
@@ -97,7 +102,7 @@ static UIImage * defaultAvatar;
         if (user.webpage && ![user.webpage isEqual:@""])
             numRows++;
     } else
-        numRows = 3;
+        numRows = 2;
 
     return numRows;
 }
@@ -132,62 +137,84 @@ static UIImage * defaultAvatar;
             }
             break;
         case kUserInfoSectionNetwork:
-            cell =
-                [[[UITableViewCell alloc]
-                initWithFrame:CGRectZero reuseIdentifier:@"UITableViewCell"]
-                autorelease];
+                cell =
+                    [[[UITableViewCell alloc]
+                    initWithFrame:CGRectZero reuseIdentifier:@"UITableViewCell"]
+                    autorelease];
                 cell.accessoryType =
                     UITableViewCellAccessoryDisclosureIndicator;
 
-                if (indexPath.row == kUserInfoFavoritesRow) {
-                    cell.textLabel.text =
-                        NSLocalizedString(@"userinfoview.favorites", @"");
-                    cell.imageView.image =
-                        [UIImage imageNamed:@"FavoriteIconForUserView.png"];
-                    cell.imageView.highlightedImage =
-                        [UIImage
-                        imageNamed:@"FavoriteIconForUserViewHighlighted.png"];
-                } else {
-                    if (indexPath.row == kUserInfoFollowersRow) {
-                        if ([user.followersCount
-                            isEqual:[NSNumber numberWithInt:0]]) {
-                            cell.textLabel.textColor = [UIColor grayColor];
-                            cell.accessoryType = UITableViewCellAccessoryNone;
-                            cell.selectionStyle =
-                                UITableViewCellSelectionStyleNone;
-                        } else {
-                            cell.textLabel.textColor = [UIColor blackColor];
-                            cell.accessoryType =
-                                UITableViewCellAccessoryDisclosureIndicator;
-                            cell.selectionStyle =
-                                UITableViewCellSelectionStyleBlue;
-                        }
-                        formatString =
-                            NSLocalizedString(@"userinfoview.followers", @"");
-                        count = user.followersCount;
-                    } else {
-                        if ([user.friendsCount
-                            isEqual:[NSNumber numberWithInt:0]]) {
-                            cell.textLabel.textColor = [UIColor grayColor];
-                            cell.accessoryType = UITableViewCellAccessoryNone;
-                            cell.selectionStyle =
-                                UITableViewCellSelectionStyleNone;
-                        } else {
-                            cell.textLabel.textColor = [UIColor blackColor];
-                            cell.accessoryType =
-                                UITableViewCellAccessoryDisclosureIndicator;
-                            cell.selectionStyle =
-                                UITableViewCellSelectionStyleBlue;
-                        }
-                        formatString =
-                            NSLocalizedString(@"userinfoview.following", @"");
-                        count = user.friendsCount;
-                    }
+                if (indexPath.row == kUserInfoFollowersRow) {
+                    if ([user.followersCount
+                        isEqual:[NSNumber numberWithInt:0]]) {
 
-                    cell.textLabel.text =
-                        [NSString stringWithFormat:formatString, count];
+                        cell.textLabel.textColor = [UIColor grayColor];
+                        cell.accessoryType = UITableViewCellAccessoryNone;
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    } else {
+                        cell.textLabel.textColor = [UIColor blackColor];
+                        cell.accessoryType =
+                            UITableViewCellAccessoryDisclosureIndicator;
+                        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+                    }
+                    formatString =
+                        NSLocalizedString(@"userinfoview.followers", @"");
+                    count = user.followersCount;
+                } else {
+                    if ([user.friendsCount
+                        isEqual:[NSNumber numberWithInt:0]]) {
+
+                        cell.textLabel.textColor = [UIColor grayColor];
+                        cell.accessoryType = UITableViewCellAccessoryNone;
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    } else {
+                        cell.textLabel.textColor = [UIColor blackColor];
+                        cell.accessoryType =
+                            UITableViewCellAccessoryDisclosureIndicator;
+                        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+                    }
+                    formatString =
+                        NSLocalizedString(@"userinfoview.following", @"");
+                    count = user.friendsCount;
                 }
-            break;
+
+                cell.textLabel.text =
+                    [NSString stringWithFormat:formatString, count];
+                break;
+            case kUserInfoSectionTweets:
+                cell =
+                    [[[UITableViewCell alloc]
+                    initWithFrame:CGRectZero reuseIdentifier:@"UITableViewCell"]
+                    autorelease];
+                    cell.accessoryType =
+                        UITableViewCellAccessoryDisclosureIndicator;
+
+                    if (indexPath.row == kUserInfoFavoritesRow) {
+                        cell.textLabel.text =
+                            NSLocalizedString(@"userinfoview.favorites", @"");
+                        cell.imageView.image =
+                            [UIImage imageNamed:@"FavoriteIconForUserView.png"];
+                        cell.imageView.highlightedImage =
+                            [UIImage
+                            imageNamed:
+                            @"FavoriteIconForUserViewHighlighted.png"];
+                    } else {
+                        if (/* TEMPORARY: [user.numUpdates
+                            isEqual:[NSNumber numberWithInt:0]] */ NO) {
+                            cell.textLabel.textColor = [UIColor grayColor];
+                            cell.accessoryType = UITableViewCellAccessoryNone;
+                            cell.selectionStyle =
+                                UITableViewCellSelectionStyleNone;
+                        } else {
+                            cell.textLabel.textColor = [UIColor blackColor];
+                            cell.accessoryType =
+                                UITableViewCellAccessoryDisclosureIndicator;
+                            cell.selectionStyle =
+                                UITableViewCellSelectionStyleBlue;
+                        }
+                        cell.textLabel.text = @"1,200 updates";
+                    }
+                break;
     }
 
     return cell;
@@ -207,10 +234,14 @@ static UIImage * defaultAvatar;
         case kUserInfoSectionNetwork:
             if (indexPath.row == kUserInfoFollowingRow)
                 [delegate displayFollowingForUser:user.username];
-            else if (indexPath.row == kUserInfoFollowersRow)
-                [delegate displayFollowersForUser:user.username];
             else
+                [delegate displayFollowersForUser:user.username];
+            break;
+        case kUserInfoSectionTweets:
+            if (indexPath.row == kUserInfoFavoritesRow)
                 [delegate displayFavoritesForUser:user.username];
+            else
+                [delegate showTweetsForUser:user.username];
             break;
     }
 }
