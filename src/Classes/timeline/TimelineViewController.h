@@ -17,8 +17,7 @@
     IBOutlet UIView * footerView;
     IBOutlet RoundedImage * avatarView;
     IBOutlet UILabel * fullNameLabel;
-    IBOutlet UILabel * usernameLabel;
-    IBOutlet UILabel * followingLabel;
+    IBOutlet UILabel * numUpdatesLabel;
     IBOutlet UILabel * currentPagesLabel;
     IBOutlet UIButton * loadMoreButton;
     IBOutlet UILabel * noMorePagesLabel;

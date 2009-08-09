@@ -20,7 +20,6 @@
     IBOutlet UIView * headerView;
     IBOutlet UILabel * fullNameLabel;
     IBOutlet UILabel * usernameLabel;
-    IBOutlet UILabel * locationLabel;
     IBOutlet RoundedImage * avatarImage;
 
     TweetTextTableViewCell * tweetTextTableViewCell;

@@ -70,7 +70,6 @@ enum TweetActionRows {
     [headerView release];
     [fullNameLabel release];
     [usernameLabel release];
-    [locationLabel release];
 
     self.selectedTweet = nil;
     self.avatar = nil;
@@ -515,14 +514,12 @@ enum TweetActionRows {
 - (void)displayTweet
 {
     if (selectedTweet.user.name.length > 0) {
-        usernameLabel.text =
-            [NSString stringWithFormat:@"@%@", selectedTweet.user.username];
+        usernameLabel.text = selectedTweet.user.username;
         fullNameLabel.text = selectedTweet.user.name;
     } else {
         usernameLabel.text = @"";
         fullNameLabel.text = selectedTweet.user.username;
     }
-    locationLabel.text = selectedTweet.user.location;
 
     if (!self.avatar) {
         [self fetchRemoteImage:selectedTweet.user.profileImageUrl];

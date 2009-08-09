@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="28"/>
+			<integer value="37"/>
 			<integer value="53"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -156,21 +156,18 @@
 							<object class="IBUILabel" id="967829520">
 								<reference key="NSNextResponder" ref="717978432"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{90, 37}, {189, 23}}</string>
+								<string key="NSFrame">{{90, 38}, {189, 23}}</string>
 								<reference key="NSSuperview" ref="717978432"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="IBUIText">@kurthd</string>
+								<string key="IBUIText">kurthd</string>
 								<object class="NSFont" key="IBUIFont">
 									<string key="NSName">Helvetica-Bold</string>
-									<double key="NSSize">1.600000e+01</double>
+									<double key="NSSize">1.800000e+01</double>
 									<int key="NSfFlags">16</int>
 								</object>
-								<object class="NSColor" key="IBUITextColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC40MDAwMDAwMSAwLjQwMDAwMDAxIDAuNDAwMDAwMDEAA</bytes>
-								</object>
+								<reference key="IBUITextColor" ref="92372701"/>
 								<nil key="IBUIHighlightedColor"/>
 								<reference key="IBUIShadowColor" ref="1065121771"/>
 								<string key="IBUIShadowOffset">{0.5, 1}</string>
@@ -198,7 +195,7 @@
 							<object class="IBUILabel" id="639357514">
 								<reference key="NSNextResponder" ref="717978432"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{90, 16}, {189, 23}}</string>
+								<string key="NSFrame">{{90, 15}, {189, 23}}</string>
 								<reference key="NSSuperview" ref="717978432"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -206,7 +203,7 @@
 								<string key="IBUIText">Douglas Kurth</string>
 								<object class="NSFont" key="IBUIFont">
 									<string key="NSName">Helvetica-Bold</string>
-									<double key="NSSize">1.800000e+01</double>
+									<double key="NSSize">2.000000e+01</double>
 									<int key="NSfFlags">16</int>
 								</object>
 								<object class="NSColor" key="IBUITextColor">
@@ -242,7 +239,7 @@
 								</object>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 							</object>
-							<object class="IBUIImageView" id="153817808">
+							<object class="IBUIImageView" id="1013016521">
 								<reference key="NSNextResponder" ref="717978432"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{24, 61}, {50, 25}}</string>
@@ -422,7 +419,7 @@
 							<reference ref="967829520"/>
 							<reference ref="14086707"/>
 							<reference ref="579758285"/>
-							<reference ref="153817808"/>
+							<reference ref="1013016521"/>
 						</object>
 						<reference key="parent" ref="585198063"/>
 					</object>
@@ -486,7 +483,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">61</int>
-						<reference key="object" ref="153817808"/>
+						<reference key="object" ref="1013016521"/>
 						<reference key="parent" ref="717978432"/>
 						<string key="objectName">Chat Arrow</string>
 					</object>
@@ -612,7 +609,6 @@
 							<string>avatarImage</string>
 							<string>fullNameLabel</string>
 							<string>headerView</string>
-							<string>locationLabel</string>
 							<string>usernameLabel</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -620,7 +616,6 @@
 							<string>RoundedImage</string>
 							<string>UILabel</string>
 							<string>UIView</string>
-							<string>UILabel</string>
 							<string>UILabel</string>
 						</object>
 					</object>

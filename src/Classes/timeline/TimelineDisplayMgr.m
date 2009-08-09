@@ -523,6 +523,7 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)showUserInfoWithAvatar:(UIImage *)avatar
 {
     NSLog(@"Timeline display manager: showing user info for %@", user);
+    userInfoController.navigationItem.title = user.name;
     [self.wrapperController.navigationController
         pushViewController:self.userInfoController animated:YES];
     self.userInfoController.followingEnabled =
@@ -530,6 +531,8 @@ static NSInteger retweetFormatValueAlredyRead;
     [self.userInfoController setUser:user avatarImage:avatar];
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:user.username];
+    // HACK: this is called twice to make sure it gets displayed the first time
+    userInfoController.navigationItem.title = user.name;
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
@@ -1135,8 +1138,6 @@ static NSInteger retweetFormatValueAlredyRead;
             [[UserInfoViewController alloc]
             initWithNibName:@"UserInfoView" bundle:nil];
 
-        NSString * title = NSLocalizedString(@"userinfoview.title", @"");
-        userInfoController.navigationItem.title = title;
         userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
 
         UIBarButtonItem * rightBarButton =

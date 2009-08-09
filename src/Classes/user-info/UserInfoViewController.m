@@ -41,7 +41,6 @@ static UIImage * defaultAvatar;
     [footerView release];
     [avatarView release];
     [nameLabel release];
-    [usernameLabel release];
     [bioLabel release];
 
     [followingLabel release];
@@ -281,8 +280,7 @@ static UIImage * defaultAvatar;
         [avatarView setImage:[[self class] defaultAvatar]];
     } else
         [avatarView setImage:avatarImage];
-    nameLabel.text = aUser.name;
-    usernameLabel.text = [NSString stringWithFormat:@"@%@", aUser.username];
+    nameLabel.text = aUser.username;
     bioLabel.text = [aUser.bio stringByDecodingHtmlEntities];
 
     [self layoutViews];

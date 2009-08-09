@@ -19,12 +19,15 @@
 - (void)processDelayedRefresh;
 
 + (UIImage *)defaultAvatar;
++ (BOOL)displayWithUsername;
 
 @end
 
 @implementation TimelineViewController
 
 static UIImage * defaultAvatar;
+static BOOL displayWithUsername;
+static BOOL alreadyReadDisplayWithUsernameValue;
 
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
     showWithoutAvatars;
@@ -35,8 +38,7 @@ static UIImage * defaultAvatar;
     [footerView release];
     [avatarView release];
     [fullNameLabel release];
-    [usernameLabel release];
-    [followingLabel release];
+    [numUpdatesLabel release];
 
     [tweets release];
     [avatarCache release];
@@ -136,7 +138,6 @@ static UIImage * defaultAvatar;
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
         [avatarCache setObject:avatarImage forKey:urlAsString];
-        //[self triggerDelayedRefresh];
 
         // avoid calling reloadData by setting the avatars of the visible cells
         NSArray * visibleCells = self.tableView.visibleCells;
@@ -208,13 +209,15 @@ static UIImage * defaultAvatar;
     } else {
         self.tableView.contentInset = UIEdgeInsetsMake(-317, 0, 0, 0);
         self.tableView.tableHeaderView = headerView;
-        fullNameLabel.text = aUser.name;
-        usernameLabel.text = [NSString stringWithFormat:@"@%@", aUser.username];
-        NSString * followingFormatString =
-            NSLocalizedString(@"timelineview.userinfo.following", @"");
-        followingLabel.text =
-            [NSString stringWithFormat:followingFormatString,
-            aUser.friendsCount, aUser.followersCount];
+        fullNameLabel.text =
+            user.name && user.name.length > 0 &&
+            ![[self class] displayWithUsername] ?
+            user.name : user.username;
+//        NSString * followingFormatString =
+//            NSLocalizedString(@"timelineview.userinfo.following", @"");
+        // numUpdatesLabel.text =
+        //     [NSString stringWithFormat:followingFormatString,
+        //     aUser.friendsCount, aUser.followersCount];
         UIImage * avatarImage =
             [self getAvatarForUrl:aUser.profileImageUrl];
         [avatarView setImage:avatarImage];
@@ -367,6 +370,20 @@ static UIImage * defaultAvatar;
 - (void)setTimelineHeaderView:(UIView *)aView
 {
     self.tableView.tableHeaderView = aView;
+}
+
++ (BOOL)displayWithUsername
+{
+    if (!alreadyReadDisplayWithUsernameValue) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger displayNameValAsNumber =
+            [defaults integerForKey:@"display_name"];
+        displayWithUsername = displayNameValAsNumber;
+    }
+
+    alreadyReadDisplayWithUsernameValue = YES;
+
+    return displayWithUsername;
 }
 
 @end
