@@ -498,7 +498,7 @@ static NSInteger retweetFormatValueAlredyRead;
     }
 
     // jad
-    [tweetDetailsViewLoader setTweet:tweet avatar:nil
+    [tweetDetailsViewLoader setTweet:tweet avatar:avatarImage
         intoController:self.tweetDetailsController
         navigationController:self.wrapperController.navigationController];
     //[self.wrapperController.navigationController
