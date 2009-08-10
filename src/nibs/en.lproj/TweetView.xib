@@ -8,8 +8,8 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="28"/>
 			<integer value="53"/>
+			<integer value="28"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -214,8 +214,7 @@
 								<reference key="IBUIShadowColor" ref="1065121771"/>
 								<string key="IBUIShadowOffset">{0.5, 1}</string>
 								<int key="IBUIBaselineAdjustment">1</int>
-								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-								<float key="IBUIMinimumFontSize">1.000000e+01</float>
+								<float key="IBUIMinimumFontSize">1.800000e+01</float>
 							</object>
 							<object class="IBUIView" id="14086707">
 								<reference key="NSNextResponder" ref="717978432"/>
