@@ -60,7 +60,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     [wrapperController release];
     [inboxController release];
-    [tweetDetailsController release];
+    [tweetViewController release];
     [browserController release];
     [photoBrowser release];
     [service release];
@@ -271,26 +271,24 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     self.selectedMessage = message;
 
     BOOL tweetByUser = [message.sender.username isEqual:activeAcctUsername];
-    self.tweetDetailsController.navigationItem.rightBarButtonItem.enabled =
+    self.tweetViewController.navigationItem.rightBarButtonItem.enabled =
         !tweetByUser;
-    [self.tweetDetailsController setUsersTweet:tweetByUser];
+    [self.tweetViewController setUsersTweet:tweetByUser];
 
     UIBarButtonItem * rightBarButtonItem =
         [[UIBarButtonItem alloc]
         initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self
         action:@selector(sendDirectMessageToOtherUserInConversation)];
-    self.tweetDetailsController.navigationItem.rightBarButtonItem =
+    self.tweetViewController.navigationItem.rightBarButtonItem =
         rightBarButtonItem;
-    self.tweetDetailsController.navigationItem.title =
+    self.tweetViewController.navigationItem.title =
         NSLocalizedString(@"tweetdetailsview.title.directmessage", @"");
-    [self.tweetDetailsController setUsersTweet:YES];
-    [self.tweetDetailsController hideFavoriteButton:YES];
-
-    [wrapperController.navigationController
-        pushViewController:self.tweetDetailsController animated:YES];
+    [self.tweetViewController setUsersTweet:YES];
+    [self.tweetViewController hideFavoriteButton:YES];
 
     TweetInfo * tweetInfo = [TweetInfo createFromDirectMessage:message];
-    [self.tweetDetailsController setTweet:tweetInfo avatar:avatarImage];
+    [self.tweetViewController displayTweet:tweetInfo avatar:avatarImage
+        onNavigationController:wrapperController.navigationController];
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
@@ -713,27 +711,27 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     return conversationController;
 }
 
-- (TweetDetailsViewController *)tweetDetailsController
+- (TweetViewController *)tweetViewController
 {
-    if (!tweetDetailsController) {
-        tweetDetailsController =
-            [[TweetDetailsViewController alloc]
-            initWithNibName:@"TweetDetailsView" bundle:nil];
+    if (!tweetViewController) {
+        tweetViewController =
+            [[TweetViewController alloc]
+            initWithNibName:@"TweetView" bundle:nil];
 
         UIBarButtonItem * replyButton =
             [[[UIBarButtonItem alloc]
             initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
             action:@selector(presentTweetActions)]
             autorelease];
-        [tweetDetailsController.navigationItem
+        [tweetViewController.navigationItem
             setRightBarButtonItem:replyButton];
 
         NSString * title = NSLocalizedString(@"tweetdetailsview.title", @"");
-        tweetDetailsController.navigationItem.title = title;
-        tweetDetailsController.delegate = self;
+        tweetViewController.navigationItem.title = title;
+        tweetViewController.delegate = self;
     }
 
-    return tweetDetailsController;
+    return tweetViewController;
 }
 
 - (TwitchBrowserViewController *)browserController
