@@ -215,9 +215,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             user.name : user.username;
 //        NSString * followingFormatString =
 //            NSLocalizedString(@"timelineview.userinfo.following", @"");
-        // numUpdatesLabel.text =
-        //     [NSString stringWithFormat:followingFormatString,
-        //     aUser.friendsCount, aUser.followersCount];
+         numUpdatesLabel.text =
+            [NSString stringWithFormat:
+            NSLocalizedString(@"userinfoview.statusescount.formatstring", @""),
+            user.statusesCount];
         UIImage * avatarImage =
             [self getAvatarForUrl:aUser.profileImageUrl];
         [avatarView setImage:avatarImage];

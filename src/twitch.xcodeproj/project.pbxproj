@@ -266,6 +266,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		050F7DE810323394007C6F04 /* twitch-v2.0.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.0.xcdatamodel"; sourceTree = "<group>"; };
 		0511067E102A25FC00915638 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		051D7C67101D105A00B867C1 /* SavedSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearchMgr.h; path = search/SavedSearchMgr.h; sourceTree = "<group>"; };
 		051D7C68101D105A00B867C1 /* SavedSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearchMgr.m; path = search/SavedSearchMgr.m; sourceTree = "<group>"; };
@@ -2310,8 +2311,9 @@
 				05B239F00FEEABBB00A6A2E6 /* twitch-v1.xcdatamodel */,
 				0599416D0FFB32F100842518 /* twitch-v2.xcdatamodel */,
 				05340B32101A5B0D0077E7C0 /* twitch-v1.1.xcdatamodel */,
+				050F7DE810323394007C6F04 /* twitch-v2.0.xcdatamodel */,
 			);
-			currentVersion = 05340B32101A5B0D0077E7C0 /* twitch-v1.1.xcdatamodel */;
+			currentVersion = 050F7DE810323394007C6F04 /* twitch-v2.0.xcdatamodel */;
 			name = twitch.xcdatamodeld;
 			path = "data-model/twitch.xcdatamodeld";
 			sourceTree = "<group>";

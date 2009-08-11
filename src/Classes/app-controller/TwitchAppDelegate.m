@@ -634,8 +634,9 @@
 	NSError *error;
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     NSDictionary * pscOptions =
-        [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
-                                    forKey:NSMigratePersistentStoresAutomaticallyOption];
+        [NSDictionary dictionaryWithObjectsAndKeys:
+        [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+        [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
     if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:pscOptions error:&error]) {
         NSLog(@"Failed to created persistent store coordinator: '%@'.", error);
 

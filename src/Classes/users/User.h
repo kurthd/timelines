@@ -21,6 +21,7 @@
 @property (nonatomic, retain) NSDate * created;
 @property (nonatomic, retain) NSString * username;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSNumber * statusesCount;
 @property (nonatomic, retain) NSSet* tweets;
 @property (nonatomic, retain) NSSet* receivedDirectMessages;
 @property (nonatomic, retain) NSSet* sentDirectMessages;

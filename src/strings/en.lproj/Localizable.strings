@@ -86,6 +86,7 @@ userinfoview.startfollowing = "Start following";
 userinfoview.stopfollowing = "Stop following";
 userinfoview.followinglabel.following = "Following";
 userinfoview.followinglabel.notfollowing = "Not following";
+userinfoview.statusescount.formatstring = "%@ updates";
 
 /* AccountsViewController */
 account.deletion.failed.alert.title = "Failed to Remove %@";
