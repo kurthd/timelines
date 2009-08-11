@@ -4,7 +4,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
-#import "TweetDetailsViewDelegate.h"
+#import "TweetViewControllerDelegate.h"
 #import "TweetInfo.h"
 #import "RoundedImage.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
@@ -13,7 +13,7 @@
     UITableViewController <UIActionSheetDelegate, UIWebViewDelegate,
     AsynchronousNetworkFetcherDelegate, MFMailComposeViewControllerDelegate>
 {
-    NSObject<TweetDetailsViewDelegate> * delegate;
+    NSObject<TweetViewControllerDelegate> * delegate;
 
     UINavigationController * navigationController;
 
@@ -33,7 +33,7 @@
     BOOL showsExtendedActions;
 }
 
-@property (nonatomic, assign) NSObject<TweetDetailsViewDelegate> * delegate;
+@property (nonatomic, assign) NSObject<TweetViewControllerDelegate> * delegate;
 @property (nonatomic, retain, readonly) TweetInfo * tweet;
 @property (nonatomic, retain, readonly) UIImage * avatar;
 @property (nonatomic, assign) BOOL showsExtendedActions;

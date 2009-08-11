@@ -14,7 +14,7 @@
 #import "DirectMessageCache.h"
 #import "ComposeTweetDisplayMgr.h"
 #import "TweetViewController.h"
-#import "TweetDetailsViewDelegate.h"
+#import "TweetViewControllerDelegate.h"
 #import "TwitchBrowserViewController.h"
 #import "PhotoBrowser.h"
 #import "PhotoBrowserDelegate.h"
@@ -59,7 +59,7 @@
 @interface DirectMessagesDisplayMgr :
     NSObject <TwitterServiceDelegate, NetworkAwareViewControllerDelegate,
     DirectMessageInboxViewControllerDelegate,
-    DirectMessageConversationViewControllerDelegate, TweetDetailsViewDelegate,
+    DirectMessageConversationViewControllerDelegate, TweetViewControllerDelegate,
     PhotoBrowserDelegate, TwitchBrowserViewControllerDelegate,
     ComposeTweetDisplayMgrDelegate, MFMailComposeViewControllerDelegate,
     UIActionSheetDelegate>
