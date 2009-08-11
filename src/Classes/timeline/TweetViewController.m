@@ -6,6 +6,7 @@
 #import "TweetTextTableViewCell.h"
 #import "AsynchronousNetworkFetcher.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "UIWebView+FileLoadingAdditions.h"
 #import "RegexKitLite.h"
 
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
@@ -112,7 +113,7 @@ enum TweetActionRows {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv
 {
-    return NUM_SECTIONS;
+    return showsFavoriteButton ? NUM_SECTIONS : NUM_SECTIONS - 1;
 }
 
 // Customize the number of rows in the table view.
@@ -321,7 +322,7 @@ enum TweetActionRows {
 
 - (void)hideFavoriteButton:(BOOL)hide
 {
-    // ignore for now
+    showsFavoriteButton = !hide;
 } 
 
 #pragma mark UIActionSheetDelegate implementation

@@ -11,6 +11,7 @@
 #include <AudioToolbox/AudioToolbox.h>
 #import "InfoPlistConfigReader.h"
 #import "SearchDataSource.h"
+#import "RegexKitLite.h"
 
 @interface DirectMessagesDisplayMgr ()
 
@@ -36,6 +37,8 @@
 - (UIView *)removeSearchView;
 - (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
     action:(SEL)action;
+
+- (void)displayComposerMailSheet;
 
 + (BOOL)displayWithUsername;
 
@@ -275,12 +278,23 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         !tweetByUser;
     [self.tweetViewController setUsersTweet:tweetByUser];
 
+    /*
     UIBarButtonItem * rightBarButtonItem =
         [[UIBarButtonItem alloc]
         initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self
         action:@selector(sendDirectMessageToOtherUserInConversation)];
     self.tweetViewController.navigationItem.rightBarButtonItem =
         rightBarButtonItem;
+     */
+
+    UIBarButtonItem * rightBarButtonItem =
+        [[UIBarButtonItem alloc]
+        initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
+        action:@selector(presentDirectMessageActions)];
+    self.tweetViewController.navigationItem.rightBarButtonItem =
+        rightBarButtonItem;
+    [rightBarButtonItem release];
+
     self.tweetViewController.navigationItem.title =
         NSLocalizedString(@"tweetdetailsview.title.directmessage", @"");
     [self.tweetViewController setUsersTweet:YES];
@@ -598,6 +612,55 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     [self.composeMessageDisplayMgr composeDirectMessageTo:username withText:dm];
 }
+
+#pragma mark UIActionSheetDelegate implementation
+
+- (void)actionSheet:(UIActionSheet *)sheet
+    clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"User clicked button at index: %d.", buttonIndex);
+
+    NSString * title =
+        NSLocalizedString(@"photobrowser.unabletosendmail.title", @"");
+    NSString * message =
+        NSLocalizedString(@"photobrowser.unabletosendmail.message", @"");
+
+    switch (buttonIndex) {
+        case 0:
+            NSLog(@"Sending tweet in email...");
+            if ([MFMailComposeViewController canSendMail])
+                [self displayComposerMailSheet];
+            else {     
+                UIAlertView * alert =
+                    [UIAlertView simpleAlertViewWithTitle:title
+                    message:message];
+                [alert show];
+            }
+            break;
+    }
+
+    [sheet autorelease];
+}
+
+#pragma mark MFMailComposeViewControllerDelegate implementation
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+    didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    
+    if (result == MFMailComposeResultFailed) {
+        NSString * title =
+            NSLocalizedString(@"photobrowser.emailerror.title", @"");
+        UIAlertView * alert =
+            [UIAlertView simpleAlertViewWithTitle:title
+            message:[error description]];
+        [alert show];
+    }
+
+    [controller dismissModalViewControllerAnimated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
+}
+
 
 #pragma mark Public DirectMessagesDisplayMgr implementation
 
@@ -1075,6 +1138,54 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [view addSubview:button];
 
     return [view autorelease];
+}
+
+- (void)presentDirectMessageActions
+{
+    NSString * cancel =
+        NSLocalizedString(@"tweetdetailsview.actions.cancel", @"");
+    NSString * email =
+        NSLocalizedString(@"tweetdetailsview.actions.email", @"");
+
+    UIActionSheet * sheet =
+        [[UIActionSheet alloc]
+        initWithTitle:nil delegate:self
+        cancelButtonTitle:cancel destructiveButtonTitle:nil
+        otherButtonTitles:email, nil];
+
+    // The alert sheet needs to be displayed in the UITabBarController's view.
+    // If it's displayed in a child view, the action sheet will appear to be
+    // modal on top of the tab bar, but it will not intercept any touches that
+    // occur within the tab bar's bounds. Thus about 3/4 of the 'Cancel' button
+    // becomes unusable. Reaching for the UITabBarController in this way is
+    // definitely a hack, but fixes the problem for now.
+    UIView * rootView =
+        wrapperController.parentViewController.parentViewController.view;
+    [sheet showInView:rootView];
+}
+
+- (void)displayComposerMailSheet
+{
+    MFMailComposeViewController * picker =
+        [[MFMailComposeViewController alloc] init];
+    picker.mailComposeDelegate = self;
+
+    static NSString * subjectRegex = @"\\S+\\s\\S+\\s\\S+\\s\\S+\\s\\S+";
+    NSString * subject =
+        [self.selectedMessage.text stringByMatching:subjectRegex];
+    if (subject && ![subject isEqual:@""])
+        subject = [NSString stringWithFormat:@"%@...", subject];
+    else
+        subject = self.selectedMessage.text;
+    [picker setSubject:subject];
+
+    NSString * body =
+        [NSString stringWithFormat:@"%@", self.selectedMessage.text];
+    [picker setMessageBody:body isHTML:NO];
+
+    [self.tweetViewController presentModalViewController:picker animated:YES];
+
+    [picker release];
 }
 
 - (SavedSearchMgr *)savedSearchMgr

@@ -3,6 +3,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MessageUI/MFMailComposeViewController.h>
 #import "NetworkAwareViewController.h"
 #import "DirectMessageInboxViewController.h"
 #import "DirectMessageConversationViewController.h"
@@ -60,7 +61,8 @@
     DirectMessageInboxViewControllerDelegate,
     DirectMessageConversationViewControllerDelegate, TweetDetailsViewDelegate,
     PhotoBrowserDelegate, TwitchBrowserViewControllerDelegate,
-    ComposeTweetDisplayMgrDelegate>
+    ComposeTweetDisplayMgrDelegate, MFMailComposeViewControllerDelegate,
+    UIActionSheetDelegate>
 {
     NetworkAwareViewController * wrapperController;
     DirectMessageInboxViewController * inboxController;

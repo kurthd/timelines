@@ -8,9 +8,6 @@
 #import "TweetInfo.h"
 #import "RoundedImage.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
-#import "UIWebView+FileLoadingAdditions.h"
-
-@class TweetTextTableViewCell;
 
 @interface TweetViewController :
     UITableViewController <UIActionSheetDelegate, UIWebViewDelegate,
@@ -27,10 +24,12 @@
 
     UITableViewCell * tweetTextTableViewCell;
     UIWebView * tweetContentView;
-    //TweetTextTableViewCell * tweetTextTableViewCell;
 
     TweetInfo * tweet;
     UIImage * avatar;
+
+    // configure the display
+    BOOL showsFavoriteButton;
 }
 
 @property (nonatomic, assign) NSObject<TweetDetailsViewDelegate> * delegate;
@@ -39,8 +38,6 @@
 
 - (void)displayTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar
     onNavigationController:(UINavigationController *)navController;
-//- (void)displayTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar
-//    withPreLoadedView:(UIView *)view;
 - (void)setUsersTweet:(BOOL)usersTweet;
 - (void)hideFavoriteButton:(BOOL)hide;
 

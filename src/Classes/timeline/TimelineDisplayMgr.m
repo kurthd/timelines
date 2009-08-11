@@ -98,8 +98,6 @@ static NSInteger retweetFormatValueAlredyRead;
     [savedSearchMgr release];
     [currentSearch release];
 
-    //[tweetDetailsViewLoader release];
-
     [super dealloc];
 }
 
@@ -133,8 +131,6 @@ static NSInteger retweetFormatValueAlredyRead;
         [wrapperController setUpdatingState:kConnectedAndUpdating];
         [wrapperController setCachedDataAvailable:NO];
         wrapperController.title = title;
-
-        //tweetDetailsViewLoader = [[TweetDetailsViewLoader alloc] init];
     }
 
     return self;
@@ -1016,12 +1012,6 @@ static NSInteger retweetFormatValueAlredyRead;
 - (TweetViewController *)tweetDetailsController
 {
     if (!tweetDetailsController) {
-        /*
-        tweetDetailsController =
-            [[TweetDetailsViewController alloc]
-            initWithNibName:@"TweetDetailsView" bundle:nil];
-         */
-
         tweetDetailsController =
             [[TweetViewController alloc]
             initWithNibName:@"TweetView" bundle:nil];
