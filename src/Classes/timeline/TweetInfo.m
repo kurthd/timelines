@@ -109,6 +109,12 @@ static NSString * hashRegex = @"\\B(#[\\w_]+)";
     NSString * timestampAsString = [formatter stringFromDate:self.timestamp];
     [formatter release];
 
+    NSString * sourceString =
+        self.source ?
+        [NSString stringWithFormat:@"from %@",
+        [self.source stringByDecodingHtmlEntities]] :
+        @"&nbsp;";
+
     NSString * html =
         [NSString stringWithFormat:
         @"<html>"
@@ -122,13 +128,13 @@ static NSString * hashRegex = @"\\B(#[\\w_]+)";
         "    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
         "      width=\"100%%\" class=\"footer\">"
         "      <tr>"
-        "        <td align=\"left\" valign=\"top\">from %@</td>"
+        "        <td align=\"left\" valign=\"top\">%@</td>"
         "        <td align=\"right\" valign=\"top\">%@</td>"
         "      </tr>"
         "    </table>"
         "  </body>"
         "</html>",
-        body, [self.source stringByDecodingHtmlEntities], timestampAsString];
+        body, sourceString, timestampAsString];
 
     return html;
 }
