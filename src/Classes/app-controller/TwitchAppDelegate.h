@@ -58,7 +58,6 @@
     DirectMessageAcctMgr * directMessageAcctMgr;
     TimelineDisplayMgr * timelineDisplayMgr;
     TimelineDisplayMgr * profileTimelineDisplayMgr;
-    TimelineDisplayMgr * findPeopleTimelineDisplayMgr;
     PersonalFeedSelectionMgr * personalFeedSelectionMgr;
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;

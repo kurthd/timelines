@@ -27,14 +27,17 @@
 
 @class TimelineDisplayMgrFactory;
 @class TweetViewController;
+@class TweetDetailsViewLoader;
+@class UserListDisplayMgrFactory;
+@class UserListDisplayMgr;
 
 @interface TimelineDisplayMgr :
     NSObject
     <TimelineDataSourceDelegate, TimelineViewControllerDelegate,
     TweetDetailsViewDelegate, NetworkAwareViewControllerDelegate,
-    UserInfoViewControllerDelegate, UserListTableViewControllerDelegate,
-    PhotoBrowserDelegate, TwitchBrowserViewControllerDelegate,
-    TwitterServiceDelegate, UIWebViewDelegate>
+    UserInfoViewControllerDelegate, PhotoBrowserDelegate,
+    TwitchBrowserViewControllerDelegate, TwitterServiceDelegate,
+    UIWebViewDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
@@ -45,6 +48,7 @@
     TwitchBrowserViewController * browserController;
     PhotoBrowser * photoBrowser;
     SavedSearchMgr * findPeopleBookmarkMgr;
+    UserListDisplayMgrFactory * userListDisplayMgrFactory;
 
     NSObject<TimelineDataSource> * timelineSource;
     TwitterService * service;
@@ -56,13 +60,6 @@
     NSNumber * updateId;
     NSUInteger pagesShown;
     BOOL allPagesLoaded;
-
-    NSMutableDictionary * followingUsers;
-    NSUInteger followingUsersPagesShown;
-    NSMutableDictionary * followers;
-    NSUInteger followersPagesShown;
-    BOOL showingFollowing;
-    NSString * lastFollowingUsername;
 
     TwitterCredentials * credentials;
 
@@ -80,15 +77,15 @@
     CredentialsActivatedPublisher * tweetDetailsCredentialsPublisher;
     NSManagedObjectContext * managedObjectContext;
 
+    UserListDisplayMgr * userListDisplayMgr;
     NetworkAwareViewController * userListNetAwareViewController;
-    UserListTableViewController * userListController;
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
-    
+
     BOOL failedState;
-    
+
     NSString * currentTweetDetailsUser;
-    
+
     NSString * tweetIdToShow;
     
     BOOL suppressTimelineFailures;
@@ -115,7 +112,7 @@
 @property (nonatomic, readonly) NSMutableDictionary * timeline;
 @property (nonatomic, readonly) NSUInteger pagesShown;
 @property (nonatomic, readonly) BOOL allPagesLoaded;
-@property (nonatomic, copy) NSString * lastFollowingUsername;
+// @property (nonatomic, copy) NSString * lastFollowingUsername;
 
 @property (nonatomic, assign) BOOL displayAsConversation;
 @property (nonatomic, assign) BOOL setUserToFirstTweeter;
@@ -129,10 +126,9 @@
 @property (nonatomic, retain)
     CredentialsActivatedPublisher * tweetDetailsCredentialsPublisher;
 
-@property (nonatomic, readonly)
+@property (nonatomic, retain) UserListDisplayMgr * userListDisplayMgr;
+@property (nonatomic, retain)
     NetworkAwareViewController * userListNetAwareViewController;
-@property (nonatomic, readonly)
-    UserListTableViewController * userListController;
 
 @property (nonatomic, copy) NSString * currentTweetDetailsUser;
     
@@ -149,7 +145,8 @@
     factory:(TimelineDisplayMgrFactory *)factory
     managedObjectContext:(NSManagedObjectContext* )managedObjectContext
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
-    findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr;
+    findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
+    userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry;
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page

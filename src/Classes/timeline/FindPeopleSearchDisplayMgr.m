@@ -4,6 +4,8 @@
 
 #import "FindPeopleSearchDisplayMgr.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "FavoritesTimelineDataSource.h"
+#import "ArbUserTimelineDataSource.h"
 
 @interface FindPeopleSearchDisplayMgr ()
 
@@ -20,39 +22,71 @@
     FindPeopleBookmarkViewController * bookmarkController;
 @property (nonatomic, retain) RecentSearchMgr * recentSearchMgr;
 
+@property (readonly) TwitchBrowserViewController * browserController;
+@property (readonly) PhotoBrowser * photoBrowser;
+
+@property (nonatomic, retain) TimelineDisplayMgr * timelineDisplayMgr;
+@property (nonatomic, retain)
+    NetworkAwareViewController * nextWrapperController;
+@property (nonatomic, retain)
+    CredentialsActivatedPublisher * credentialsPublisher;
+@property (nonatomic, retain) UserListDisplayMgr * nextUserListDisplayMgr;
+
 @end
 
 @implementation FindPeopleSearchDisplayMgr
 
 @synthesize darkTransparentView;
 @synthesize recentSearchMgr;
+@synthesize timelineDisplayMgr, nextWrapperController, credentialsPublisher,
+    nextUserListDisplayMgr;
 
 - (void)dealloc
 {
     [netAwareController release];
+    [userInfoController release];
     [searchBar release];
-    [timelineDisplayMgr release];
-    [dataSource release];
+    [service release];
+    [timelineDisplayMgrFactory release];
+    [userListDisplayMgrFactory release];
     [darkTransparentView release];
     [bookmarkController release];
     [recentSearchMgr release];
     [savedSearchMgr release];
     [context release];
+
+    [browserController release];
+    [photoBrowser release];
+    [composeTweetDisplayMgr release];
+
+    [timelineDisplayMgr release];
+    [nextWrapperController release];
+    [credentials release];
+    [credentialsPublisher release];
+    [nextUserListDisplayMgr release];
+
     [super dealloc];
 }
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc
-    timelineDisplayMgr:(TimelineDisplayMgr *)aTimelineDisplayMgr
-    dataSource:(ArbUserTimelineDataSource *)aDataSource
+    userInfoController:(UserInfoViewController *)aUserInfoController
+    service:(TwitterService *)aService
     context:(NSManagedObjectContext *)aContext
     savedSearchMgr:(SavedSearchMgr *)aSavedSearchMgr
+    composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)aComposeTweetDisplayMgr
+    timelineFactory:(TimelineDisplayMgrFactory *)aTimelineFactory
+    userListFactory:(UserListDisplayMgrFactory *)aUserListFactory
 {
     if (self = [super init]) {
         netAwareController = [navc retain];
-        dataSource = [aDataSource retain];
+        userInfoController = [aUserInfoController retain];
+        service = [aService retain];
         context = [aContext retain];
         savedSearchMgr = [aSavedSearchMgr retain];
-        
+        composeTweetDisplayMgr = [aComposeTweetDisplayMgr retain];
+        timelineDisplayMgrFactory = [aTimelineFactory retain];
+        userListDisplayMgrFactory = [aUserListFactory retain];
+
         searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
 
         searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -71,15 +105,235 @@
             barHeight);
         searchBar.bounds = searchBarRect;
 
-        timelineDisplayMgr = [aTimelineDisplayMgr retain];
-        timelineDisplayMgr.suppressTimelineFailures = YES;
-
         [netAwareController setUpdatingState:kDisconnected];
         [netAwareController setCachedDataAvailable:NO];
         [netAwareController setNoConnectionText:@""];
     }
 
     return self;
+}
+
+#pragma mark TwitterServiceDelegate implementation
+
+- (void)userInfo:(User *)user fetchedForUsername:(NSString *)username
+{
+    NSLog(@"Fetched user info for '%@'", username);
+    [netAwareController setCachedDataAvailable:YES];
+    [netAwareController setUpdatingState:kConnectedAndNotUpdating];
+    [userInfoController setUser:user avatarImage:nil];
+}
+
+- (void)failedToFetchUserInfoForUsername:(NSString *)username
+    error:(NSError *)error
+{
+    NSLog(@"Unable to find user '%@'", username);
+    [netAwareController setUpdatingState:kDisconnected];
+    [netAwareController setCachedDataAvailable:NO];
+}
+
+#pragma mark UserInfoViewControllerDelegate implementation
+
+- (void)showTweetsForUser:(NSString *)aUsername
+{
+    NSLog(@"Find people display manager: showing tweets for %@", aUsername);
+
+    NSString * title =
+        NSLocalizedString(@"timelineview.usertweets.title", @"");
+    self.nextWrapperController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+    
+    self.timelineDisplayMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:self.nextWrapperController
+        title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
+    self.timelineDisplayMgr.displayAsConversation = NO;
+    self.timelineDisplayMgr.setUserToFirstTweeter = YES;
+    [self.timelineDisplayMgr setTimelineHeaderView:nil];
+    self.timelineDisplayMgr.currentUsername = aUsername;
+    [self.timelineDisplayMgr setCredentials:credentials];
+    
+    UIBarButtonItem * sendDMButton =
+        [[UIBarButtonItem alloc]
+        initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+        target:self.timelineDisplayMgr
+        action:@selector(sendDirectMessageToCurrentUser)];
+
+    self.nextWrapperController.navigationItem.rightBarButtonItem = sendDMButton;
+
+    netAwareController.delegate = self.timelineDisplayMgr;
+    
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:context] autorelease];
+    
+    ArbUserTimelineDataSource * dataSource =
+        [[[ArbUserTimelineDataSource alloc]
+        initWithTwitterService:twitterService
+        username:aUsername]
+        autorelease];
+    
+    self.credentialsPublisher =
+        [[CredentialsActivatedPublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+    
+    twitterService.delegate = dataSource;
+    [self.timelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO allPagesLoaded:NO];
+    dataSource.delegate = self.timelineDisplayMgr;
+    
+    [dataSource setCredentials:credentials];
+    [netAwareController.navigationController
+        pushViewController:self.nextWrapperController animated:YES];
+}
+
+- (void)showLocationOnMap:(NSString *)locationString
+{
+    NSLog(@"Find people display manager: showing %@ on map", locationString);
+    NSString * locationWithoutCommas =
+        [locationString stringByReplacingOccurrencesOfString:@"iPhone:"
+        withString:@""];
+    NSString * urlString =
+        [[NSString
+        stringWithFormat:@"http://maps.google.com/maps?q=%@",
+        locationWithoutCommas]
+        stringByAddingPercentEscapesUsingEncoding:
+        NSUTF8StringEncoding];
+    NSURL * url = [NSURL URLWithString:urlString];
+    [[UIApplication sharedApplication] openURL:url];
+}
+
+- (void)visitWebpage:(NSString *)webpageUrl
+{
+    NSLog(@"Find people display manager: visiting webpage: %@", webpageUrl);
+    [netAwareController presentModalViewController:self.browserController
+        animated:YES];
+    [self.browserController setUrl:webpageUrl];
+}
+
+- (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto
+{
+    NSLog(@"Find people display manager: showing photo: %@", remotePhoto);
+
+    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
+    [[UIApplication sharedApplication]
+        setStatusBarStyle:UIStatusBarStyleBlackTranslucent
+        animated:YES];
+    
+    [netAwareController presentModalViewController:self.photoBrowser
+        animated:YES];
+    [self.photoBrowser addRemotePhoto:remotePhoto];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
+}
+
+- (void)displayFollowingForUser:(NSString *)aUsername
+{
+    NSLog(@"Find people display manager: displaying 'following' list for %@",
+        aUsername);
+
+    self.nextWrapperController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    self.nextUserListDisplayMgr =
+        [userListDisplayMgrFactory
+        createUserListDisplayMgrWithWrapperController:
+        self.nextWrapperController
+        composeTweetDisplayMgr:composeTweetDisplayMgr
+        showFollowing:YES
+        username:aUsername];
+    [self.nextUserListDisplayMgr setCredentials:credentials];
+
+    [netAwareController.navigationController
+        pushViewController:self.nextWrapperController animated:YES];
+}
+
+- (void)displayFollowersForUser:(NSString *)aUsername
+{
+    NSLog(@"Find people display manager: displaying 'followers' list for %@",
+        aUsername);
+
+    self.nextWrapperController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    self.nextUserListDisplayMgr =
+        [userListDisplayMgrFactory
+        createUserListDisplayMgrWithWrapperController:
+        self.nextWrapperController
+        composeTweetDisplayMgr:composeTweetDisplayMgr
+        showFollowing:NO
+        username:aUsername];
+    [self.nextUserListDisplayMgr setCredentials:credentials];
+
+    [netAwareController.navigationController
+        pushViewController:self.nextWrapperController animated:YES];
+}
+
+- (void)displayFavoritesForUser:(NSString *)aUsername
+{
+    NSLog(@"Find people display manager: displaying favorites for user %@",
+        aUsername);
+    NSString * title =
+        NSLocalizedString(@"timelineview.favorites.title", @"");
+    self.nextWrapperController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    self.timelineDisplayMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:nextWrapperController
+        title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
+    self.timelineDisplayMgr.displayAsConversation = YES;
+    self.timelineDisplayMgr.setUserToFirstTweeter = NO;
+    [self.timelineDisplayMgr setCredentials:credentials];
+
+    self.nextWrapperController.delegate = self.timelineDisplayMgr;
+
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil context:context]
+        autorelease];
+
+    FavoritesTimelineDataSource * dataSource =
+        [[[FavoritesTimelineDataSource alloc]
+        initWithTwitterService:twitterService username:aUsername]
+        autorelease];
+
+    self.credentialsPublisher =
+        [[CredentialsActivatedPublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+
+    twitterService.delegate = dataSource;
+    [self.timelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO allPagesLoaded:NO];
+    dataSource.delegate = self.timelineDisplayMgr;
+
+    [dataSource setCredentials:credentials];
+    [netAwareController.navigationController
+        pushViewController:self.nextWrapperController animated:YES];
+}
+
+- (void)startFollowingUser:(NSString *)aUsername
+{
+    [service followUser:aUsername];
+}
+
+- (void)stopFollowingUser:(NSString *)aUsername
+{
+    [service stopFollowingUser:aUsername];
+}
+
+- (void)showingUserInfoView
+{
+    self.nextWrapperController = nil;
+    self.timelineDisplayMgr = nil;
+    self.credentialsPublisher = nil;
+    self.nextUserListDisplayMgr = nil;
+}
+
+- (void)sendDirectMessageToUser:(NSString *)aUsername
+{
+    [composeTweetDisplayMgr composeDirectMessageTo:aUsername];
 }
 
 #pragma mark UISearchBarDelegate implementation
@@ -114,16 +368,7 @@
     NSLog(@"No conn text: %@", noConnText);
     [netAwareController setNoConnectionText:noConnText];
 
-    dataSource.username = searchName;
-    timelineDisplayMgr.currentUsername = searchName;
-    [timelineDisplayMgr setService:dataSource tweets:[NSDictionary dictionary]
-        page:1 forceRefresh:YES allPagesLoaded:NO];
-    [timelineDisplayMgr refreshWithCurrentPages];
-
-    UITableViewController * tvc =
-        (UITableViewController *)netAwareController.targetViewController;
-    tvc.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    tvc.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    [service fetchUserInfoForUsername:searchName];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar
@@ -131,7 +376,6 @@
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:YES];
     [self hideDarkTransparentView];
-    dataSource.username = nil;
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)aSearchBar
@@ -196,6 +440,28 @@
 - (void)userDidCancel
 {
     [netAwareController dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark TwitchBrowserViewControllerDelegate implementation
+
+- (void)composeTweetWithText:(NSString *)text
+{
+    NSLog(@"Find people display manager: composing tweet with text'%@'", text);
+    [composeTweetDisplayMgr composeTweetWithText:text];
+}
+
+#pragma mark FindPeopleSearchDisplayMgr implementation
+
+- (void)setCredentials:(TwitterCredentials *)someCredentials
+{
+    NSLog(@"Find people display manager: setting credentials: %@",
+        someCredentials);
+
+    [someCredentials retain];
+    [credentials release];
+    credentials = someCredentials;
+
+    [service setCredentials:someCredentials];
 }
 
 #pragma mark UI helpers
@@ -266,7 +532,7 @@
             initWithNibName:@"FindPeopleBookmarkView" bundle:nil];
         bookmarkController.delegate = self;
 
-        bookmarkController.username = timelineDisplayMgr.credentials.username;
+        bookmarkController.username = service.credentials.username;
 
         // Don't autorelease
         [[CredentialsActivatedPublisher alloc]
@@ -285,6 +551,30 @@
             context:context];
 
     return recentSearchMgr;
+}
+
+- (TwitchBrowserViewController *)browserController
+{
+    if (!browserController) {
+        browserController =
+            [[TwitchBrowserViewController alloc]
+            initWithNibName:@"TwitchBrowserView" bundle:nil];
+        browserController.delegate = self;
+    }
+
+    return browserController;
+}
+
+- (PhotoBrowser *)photoBrowser
+{
+    if (!photoBrowser) {
+        photoBrowser =
+            [[PhotoBrowser alloc]
+            initWithNibName:@"PhotoBrowserView" bundle:nil];
+        photoBrowser.delegate = self;
+    }
+
+    return photoBrowser;
 }
 
 @end

@@ -33,6 +33,7 @@
 #import "RecentSearchMgr.h"
 #import "SavedSearchMgr.h"
 #import "ArbUserTimelineDataSource.h"
+#import "UserListDisplayMgrFactory.h"
 
 @interface TwitchAppDelegate ()
 
@@ -109,7 +110,6 @@
     [directMessageDisplayMgr release];
     [directMessageAcctMgr release];
     [profileTimelineDisplayMgr release];
-    [findPeopleTimelineDisplayMgr release];
     [personalFeedSelectionMgr release];
 
     [composeTweetDisplayMgr release];
@@ -187,8 +187,8 @@
         [timelineDisplayMgr setCredentials:c];
         [directMessageDisplayMgr setCredentials:c];
         [profileTimelineDisplayMgr setCredentials:c];
-        [findPeopleTimelineDisplayMgr setCredentials:c];
         [searchBarDisplayMgr setCredentials:c];
+        [findPeopleSearchDisplayMgr setCredentials:c];
         [self.composeTweetDisplayMgr setCredentials:c];
 
         [self loadHomeViewWithCachedData:c];
@@ -464,47 +464,45 @@
 
 - (void)initFindPeopleTab
 {
-    NSString * findPeopleTabTitle =
-        NSLocalizedString(@"appdelegate.findpeopletabtitle", @"");
-    findPeopleTimelineDisplayMgr =
-        [[timelineDisplayMgrFactory
-        createTimelineDisplayMgrWithWrapperController:
-        findPeopleNetAwareViewController title:findPeopleTabTitle
-        composeTweetDisplayMgr:self.composeTweetDisplayMgr]
-        retain];
-    findPeopleTimelineDisplayMgr.displayAsConversation = NO;
-    findPeopleTimelineDisplayMgr.setUserToFirstTweeter = YES;
-    findPeopleTimelineDisplayMgr.setUserToAuthenticatedUser = NO;
     UIBarButtonItem * refreshButton =
         findPeopleNetAwareViewController.navigationItem.leftBarButtonItem;
-    refreshButton.target = findPeopleTimelineDisplayMgr;
     refreshButton.action = @selector(refreshWithLatest);
 
     TwitterService * twitterService =
         [[[TwitterService alloc] initWithTwitterCredentials:nil
         context:[self managedObjectContext]]
         autorelease];
-    ArbUserTimelineDataSource * dataSource =
-        [[[ArbUserTimelineDataSource alloc]
-        initWithTwitterService:twitterService username:nil]
+
+    UserInfoViewController * userInfoController =
+        [[UserInfoViewController alloc]
+        initWithNibName:@"UserInfoView" bundle:nil];
+
+    findPeopleNetAwareViewController.targetViewController = userInfoController;
+
+    UserListDisplayMgrFactory * userListFactory =
+        [[[UserListDisplayMgrFactory alloc]
+        initWithContext:[self managedObjectContext]
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr]
         autorelease];
-
-    // Don't autorelease
-    [[CredentialsActivatedPublisher alloc]
-        initWithListener:dataSource action:@selector(setCredentials:)];
-
-    twitterService.delegate = dataSource;
-    [findPeopleTimelineDisplayMgr setService:dataSource tweets:nil page:1
-        forceRefresh:NO allPagesLoaded:NO];
-    dataSource.delegate = findPeopleTimelineDisplayMgr;
 
     findPeopleSearchDisplayMgr =
         [[FindPeopleSearchDisplayMgr alloc]
         initWithNetAwareController:findPeopleNetAwareViewController
-        timelineDisplayMgr:findPeopleTimelineDisplayMgr
-        dataSource:dataSource
+        userInfoController:userInfoController
+        service:twitterService
         context:[self managedObjectContext]
-        savedSearchMgr:findPeopleBookmarkMgr];
+        savedSearchMgr:findPeopleBookmarkMgr
+        composeTweetDisplayMgr:composeTweetDisplayMgr
+        timelineFactory:timelineDisplayMgrFactory
+        userListFactory:userListFactory];
+
+    twitterService.delegate = findPeopleSearchDisplayMgr;
+    userInfoController.delegate = findPeopleSearchDisplayMgr;
+
+    // Don't autorelease
+    [[CredentialsActivatedPublisher alloc]
+        initWithListener:findPeopleSearchDisplayMgr
+        action:@selector(setCredentials:)];
 }
 
 - (void)initSearchTab

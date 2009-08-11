@@ -6,7 +6,7 @@
 #import "TwitterService.h"
 #import "CredentialsActivatedPublisher.h"
 #import "AllTimelineDataSource.h"
-#import "AllTimelineDataSource.h"
+#import "UserListDisplayMgrFactory.h"
 
 @implementation TimelineDisplayMgrFactory
 
@@ -52,13 +52,19 @@
         context:context]
         autorelease];
 
+    UserListDisplayMgrFactory * userListDisplayMgrFactory =
+        [[[UserListDisplayMgrFactory alloc]
+        initWithContext:context findPeopleBookmarkMgr:findPeopleBookmarkMgr]
+        autorelease];
+
     TimelineDisplayMgr * timelineDisplayMgr =
         [[[TimelineDisplayMgr alloc] initWithWrapperController:wrapperController
         timelineController:timelineController timelineSource:dataSource
         service:timelineService title:title factory:self
         managedObjectContext:context
         composeTweetDisplayMgr:composeTweetDisplayMgr
-        findPeopleBookmarkMgr:findPeopleBookmarkMgr]
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr
+        userListDisplayMgrFactory:userListDisplayMgrFactory]
         autorelease];
     dataSource.delegate = timelineDisplayMgr;
     timelineController.delegate = timelineDisplayMgr;
