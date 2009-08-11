@@ -8,6 +8,7 @@
 #import "TweetInfo.h"
 #import "RoundedImage.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
+#import "UIWebView+FileLoadingAdditions.h"
 
 @class TweetTextTableViewCell;
 
@@ -17,24 +18,29 @@
 {
     NSObject<TweetDetailsViewDelegate> * delegate;
 
+    UINavigationController * navigationController;
+
     IBOutlet UIView * headerView;
     IBOutlet UILabel * fullNameLabel;
     IBOutlet UILabel * usernameLabel;
     IBOutlet RoundedImage * avatarImage;
 
-    TweetTextTableViewCell * tweetTextTableViewCell;
-
-    TweetInfo * selectedTweet;
-    UIImage * avatar;
+    UITableViewCell * tweetTextTableViewCell;
     UIWebView * tweetContentView;
+    //TweetTextTableViewCell * tweetTextTableViewCell;
+
+    TweetInfo * tweet;
+    UIImage * avatar;
 }
 
 @property (nonatomic, assign) NSObject<TweetDetailsViewDelegate> * delegate;
-@property (nonatomic, retain) TweetInfo * selectedTweet;
-@property (nonatomic, retain) UIImage * avatar;
+@property (nonatomic, retain, readonly) TweetInfo * tweet;
+@property (nonatomic, retain, readonly) UIImage * avatar;
 
 - (void)displayTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar
-   withPreLoadedView:(UIView *)view;
+    onNavigationController:(UINavigationController *)navController;
+//- (void)displayTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar
+//    withPreLoadedView:(UIView *)view;
 - (void)setUsersTweet:(BOOL)usersTweet;
 - (void)hideFavoriteButton:(BOOL)hide;
 

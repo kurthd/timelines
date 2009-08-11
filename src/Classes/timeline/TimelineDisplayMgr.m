@@ -9,90 +9,6 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "TweetViewController.h"
 #import "SearchDataSource.h"
-#import "UIWebView+FileLoadingAdditions.h"
-
-@interface TweetDetailsViewLoader : NSObject <UIWebViewDelegate>
-{
-    TweetInfo * tweetInfo;
-    UIImage * avatar;
-    TweetViewController * controller;
-    UINavigationController * navigationController;
-
-    UIWebView * webView;
-}
-
-@property (nonatomic, retain) TweetInfo * tweetInfo;
-@property (nonatomic, retain) UIImage * avatar;
-@property (nonatomic, retain) TweetViewController * controller;
-@property (nonatomic, retain) UINavigationController * navigationController;
-
-- (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)image
-   intoController:(TweetViewController *)tvc
-   navigationController:(UINavigationController *)navController;
-@end
-
-@implementation TweetDetailsViewLoader
-@synthesize tweetInfo, avatar, controller, navigationController;
-
-- (void)dealloc
-{
-    self.tweetInfo = nil;
-    self.avatar = nil;
-    self.controller = nil;
-    self.navigationController = nil;
-    [webView release];
-    [super dealloc];
-}
-
-- (void)setTweet:(TweetInfo *)tweet avatar:(UIImage *)image
-    intoController:(TweetViewController *)tvc
-    navigationController:(UINavigationController *)navController
-{
-    self.tweetInfo = tweet;
-    self.avatar = image;
-    self.controller = tvc;
-    self.navigationController = navController;
-
-    CGRect frame = CGRectMake(5, 0, 290, 20);
-    webView = [[UIWebView alloc] initWithFrame:frame];
-    webView.delegate = self;
-    webView.backgroundColor = [UIColor clearColor];
-    webView.opaque = NO;
-    webView.dataDetectorTypes = UIDataDetectorTypeAll;
-
-    // The view must be added as the subview of a visible view, otherwise the
-    // height will not be calculated when -sizeToFit: is called. Adding it here
-    // seems to have no effect on the display at all. Is there a better way to
-    // do this?
-    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-    [window addSubview:webView];
-
-    NSString * html = [self.tweetInfo textAsHtml];
-    [webView loadHTMLStringRelativeToMainBundle:html];
-}
-
-#pragma mark UIWebViewDelegate implementation
-
-- (void)webViewDidFinishLoad:(UIWebView *)view
-{
-    CGSize size = [webView sizeThatFits:CGSizeZero];
-
-    CGRect frame = webView.frame;
-    frame.size.width = size.width;
-    frame.size.height = size.height;
-    webView.frame = frame;
-
-    if (navigationController)
-        [navigationController pushViewController:controller animated:YES];
-    [self.controller displayTweet:self.tweetInfo avatar:self.avatar
-        withPreLoadedView:webView];
-
-    [webView removeFromSuperview];
-    [webView autorelease];
-    webView = nil;
-}
-
-@end
 
 @interface TimelineDisplayMgr ()
 
@@ -104,7 +20,6 @@
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
 - (void)replyToTweetWithMessage;
 - (NetworkAwareViewController *)newTweetDetailsWrapperController;
-//- (TweetDetailsViewController *)newTweetDetailsController;
 - (TweetViewController *)newTweetDetailsController;
 - (void)replyToCurrentTweetDetailsUser;
 - (void)presentTweetActions;
@@ -183,7 +98,7 @@ static NSInteger retweetFormatValueAlredyRead;
     [savedSearchMgr release];
     [currentSearch release];
 
-    [tweetDetailsViewLoader release];
+    //[tweetDetailsViewLoader release];
 
     [super dealloc];
 }
@@ -219,7 +134,7 @@ static NSInteger retweetFormatValueAlredyRead;
         [wrapperController setCachedDataAvailable:NO];
         wrapperController.title = title;
 
-        tweetDetailsViewLoader = [[TweetDetailsViewLoader alloc] init];
+        //tweetDetailsViewLoader = [[TweetDetailsViewLoader alloc] init];
     }
 
     return self;
@@ -445,11 +360,8 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Timeline display mgr: fetched tweet: %@", tweet);
     TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
 
-    // jad
-    [tweetDetailsViewLoader setTweet:tweetInfo avatar:nil
-        intoController:self.lastTweetDetailsController
-        navigationController:nil];
-    //[self.lastTweetDetailsController setTweet:tweetInfo avatar:nil];
+    [self.lastTweetDetailsController displayTweet:tweetInfo avatar:nil
+         onNavigationController:nil];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
     [self.lastTweetDetailsWrapperController
         setUpdatingState:kConnectedAndNotUpdating];
@@ -497,13 +409,8 @@ static NSInteger retweetFormatValueAlredyRead;
             NSLocalizedString(@"tweetdetailsview.title", @"");
     }
 
-    // jad
-    [tweetDetailsViewLoader setTweet:tweet avatar:avatarImage
-        intoController:self.tweetDetailsController
-        navigationController:self.wrapperController.navigationController];
-    //[self.wrapperController.navigationController
-    //  pushViewController:self.tweetDetailsController animated:YES];
-    //[self.tweetDetailsController setTweet:tweet avatar:avatarImage];
+    [self.tweetDetailsController displayTweet:tweet avatar:avatarImage
+        onNavigationController:self.wrapperController.navigationController];
 }
 
 - (void)loadMoreTweets
