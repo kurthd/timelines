@@ -254,7 +254,6 @@
         homeNetAwareViewController.navigationItem.titleView;
     if (control.selectedSegmentIndex == 0)
         [timelineDisplayMgr addTweet:tweet];
-    [profileTimelineDisplayMgr addTweet:tweet];
 
     [homeNetAwareViewController.navigationItem
         setRightBarButtonItem:[self newTweetButtonItem]
