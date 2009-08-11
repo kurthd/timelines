@@ -356,6 +356,7 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Timeline display mgr: fetched tweet: %@", tweet);
     TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
 
+    [self.lastTweetDetailsController hideFavoriteButton:NO];
     self.lastTweetDetailsController.showsExtendedActions = YES;
     [self.lastTweetDetailsController displayTweet:tweetInfo avatar:nil
          onNavigationController:nil];
@@ -406,6 +407,7 @@ static NSInteger retweetFormatValueAlredyRead;
             NSLocalizedString(@"tweetdetailsview.title", @"");
     }
 
+    [self.tweetDetailsController hideFavoriteButton:NO];
     self.tweetDetailsController.showsExtendedActions = YES;
     [self.tweetDetailsController displayTweet:tweet avatar:avatarImage
         onNavigationController:self.wrapperController.navigationController];
