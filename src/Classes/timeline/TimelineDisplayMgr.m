@@ -10,6 +10,7 @@
 #import "TweetViewController.h"
 #import "SearchDataSource.h"
 #import "UIWebView+FileLoadingAdditions.h"
+#import "UserListDisplayMgrFactory.h"
 
 @interface TweetDetailsViewLoader : NSObject <UIWebViewDelegate>
 {
@@ -97,8 +98,6 @@
 @interface TimelineDisplayMgr ()
 
 - (BOOL)cachedDataAvailable;
-- (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page
-    cache:(NSMutableDictionary *)cache;
 - (void)deallocateTweetDetailsNode;
 - (void)displayErrorWithTitle:(NSString *)title;
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
@@ -138,11 +137,11 @@ static NSInteger retweetFormatValueAlredyRead;
     selectedTweet, updateId, user, timeline, pagesShown, displayAsConversation,
     setUserToFirstTweeter, tweetDetailsTimelineDisplayMgr,
     tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher,
-    lastFollowingUsername, lastTweetDetailsWrapperController,
-    lastTweetDetailsController, currentTweetDetailsUser, currentUsername,
-    allPagesLoaded, setUserToAuthenticatedUser, firstFetchReceived,
-    tweetIdToShow, suppressTimelineFailures, credentials, savedSearchMgr,
-    currentSearch;
+    lastTweetDetailsWrapperController, lastTweetDetailsController,
+    currentTweetDetailsUser, currentUsername, allPagesLoaded,
+    setUserToAuthenticatedUser, firstFetchReceived, tweetIdToShow,
+    suppressTimelineFailures, credentials, savedSearchMgr, currentSearch,
+    userListDisplayMgr, userListNetAwareViewController;
 
 - (void)dealloc
 {
@@ -154,6 +153,7 @@ static NSInteger retweetFormatValueAlredyRead;
     [browserController release];
     [photoBrowser release];
     [findPeopleBookmarkMgr release];
+    [userListDisplayMgrFactory release];
 
     [timelineSource release];
     [service release];
@@ -164,10 +164,6 @@ static NSInteger retweetFormatValueAlredyRead;
     [timeline release];
     [updateId release];
 
-    [followingUsers release];
-    [followers release];
-    [lastFollowingUsername release];
-
     [credentials release];
 
     [timelineDisplayMgrFactory release];
@@ -175,8 +171,8 @@ static NSInteger retweetFormatValueAlredyRead;
     [tweetDetailsNetAwareViewController release];
     [managedObjectContext release];
 
+    [userListDisplayMgr release];
     [userListNetAwareViewController release];
-    [userListController release];
 
     [composeTweetDisplayMgr release];
 
@@ -196,6 +192,7 @@ static NSInteger retweetFormatValueAlredyRead;
     managedObjectContext:(NSManagedObjectContext* )aManagedObjectContext
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)aComposeTweetDisplayMgr
     findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr
+    userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
@@ -206,14 +203,10 @@ static NSInteger retweetFormatValueAlredyRead;
         managedObjectContext = [aManagedObjectContext retain];
         composeTweetDisplayMgr = [aComposeTweetDisplayMgr retain];
         findPeopleBookmarkMgr = [aFindPeopleBookmarkMgr retain];
-
+        userListDisplayMgrFactory = [userListDispMgrFctry retain];
         timeline = [[NSMutableDictionary dictionary] retain];
-        followingUsers = [[NSMutableDictionary dictionary] retain];
-        followers = [[NSMutableDictionary dictionary] retain];
 
         pagesShown = 1;
-        followingUsersPagesShown = 1;
-        followersPagesShown = 1;
 
         [wrapperController setUpdatingState:kConnectedAndUpdating];
         [wrapperController setCachedDataAvailable:NO];
@@ -321,67 +314,6 @@ static NSInteger retweetFormatValueAlredyRead;
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchuserinfo", @"");
     [self displayErrorWithTitle:errorMessage error:error];
-}
-
-- (void)friends:(NSArray *)friends fetchedForUsername:(NSString *)username
-    page:(NSNumber *)page
-{
-    NSLog(@"Timeline display manager received friends list of size %d",
-        [friends count]);
-    if (showingFollowing)
-        [self updateUserListViewWithUsers:friends page:page
-            cache:followingUsers];
-}
-
-- (void)failedToFetchFriendsForUsername:(NSString *)username
-    page:(NSNumber *)page error:(NSError *)error
-{
-    NSLog(@"Timeline display manager: failed to fetch friends for %@",
-        username);
-    NSLog(@"Error: %@", error);
-    NSString * errorMessage =
-        NSLocalizedString(@"timelinedisplaymgr.error.fetchfriends", @"");
-    [self displayErrorWithTitle:errorMessage error:error];
-    [self.userListNetAwareViewController setUpdatingState:kDisconnected];
-}
-
-- (void)followers:(NSArray *)friends fetchedForUsername:(NSString *)username
-    page:(NSNumber *)page
-{
-    NSLog(@"Timeline display manager received followers list of size %d",
-        [friends count]);
-    if (!showingFollowing)
-        [self updateUserListViewWithUsers:friends page:page cache:followers];
-}
-
-- (void)failedToFetchFollowersForUsername:(NSString *)username
-    page:(NSNumber *)page error:(NSError *)error
-{
-    NSLog(@"Timeline display manager: failed to fetch followers for %@",
-        username);
-    NSLog(@"Error: %@", error);
-    NSString * errorMessage =
-        NSLocalizedString(@"timelinedisplaymgr.error.fetchfollowers", @"");
-    [self displayErrorWithTitle:errorMessage error:error];
-    [self.userListNetAwareViewController setUpdatingState:kDisconnected];
-}
-
-- (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page
-    cache:(NSMutableDictionary *)cache
-{
-    NSLog(@"Timeline display manager received user list of size %d",
-        [users count]);
-    NSInteger oldCacheSize = [[cache allKeys] count];
-    for (User * friend in users)
-        [cache setObject:friend forKey:friend.username];
-    NSInteger newCacheSize = [[cache allKeys] count];
-    BOOL allLoaded = oldCacheSize == newCacheSize;
-    [self.userListController setAllPagesLoaded:allLoaded];
-    [self.userListController setUsers:[cache allValues] page:[page intValue]];
-    [self.userListNetAwareViewController setCachedDataAvailable:YES];
-    [self.userListNetAwareViewController
-        setUpdatingState:kConnectedAndNotUpdating];
-    failedState = NO;
 }
 
 - (void)startedFollowingUsername:(NSString *)username
@@ -798,28 +730,21 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Timeline display manager: displaying 'following' list for %@",
         username);
 
-    [self.wrapperController.navigationController
+    self.userListNetAwareViewController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    self.userListDisplayMgr =
+        [userListDisplayMgrFactory
+        createUserListDisplayMgrWithWrapperController:
+        self.userListNetAwareViewController
+        composeTweetDisplayMgr:composeTweetDisplayMgr
+        showFollowing:YES
+        username:username];
+    [self.userListDisplayMgr setCredentials:credentials];
+
+    [wrapperController.navigationController
         pushViewController:self.userListNetAwareViewController animated:YES];
-    [self.userListController.tableView
-        scrollRectToVisible:self.userListController.tableView.frame
-        animated:NO];
-    NSString * title =
-        NSLocalizedString(@"userlisttableview.following.title", @"");
-    self.userListNetAwareViewController.navigationItem.title = title;
-
-    if (![username isEqual:lastFollowingUsername] || !showingFollowing) {
-        [followingUsers removeAllObjects];
-        followingUsersPagesShown = 1;
-
-        [service fetchFriendsForUser:username
-            page:[NSNumber numberWithInt:followingUsersPagesShown]];
-        [self.userListNetAwareViewController setCachedDataAvailable:NO];
-        [self.userListNetAwareViewController
-            setUpdatingState:kConnectedAndUpdating];
-    }
-
-    self.lastFollowingUsername = username;
-    showingFollowing = YES;
 }
 
 - (void)displayFollowersForUser:(NSString *)username
@@ -827,36 +752,27 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Timeline display manager: displaying 'followers' list for %@",
         username);
 
-    [self.wrapperController.navigationController
+    self.userListNetAwareViewController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    self.userListDisplayMgr =
+        [userListDisplayMgrFactory
+        createUserListDisplayMgrWithWrapperController:
+        self.userListNetAwareViewController
+        composeTweetDisplayMgr:composeTweetDisplayMgr
+        showFollowing:NO
+        username:username];
+    [self.userListDisplayMgr setCredentials:credentials];
+
+    [wrapperController.navigationController
         pushViewController:self.userListNetAwareViewController animated:YES];
-    [self.userListController.tableView
-        scrollRectToVisible:self.userListController.tableView.frame
-        animated:NO];
-    NSString * title =
-        NSLocalizedString(@"userlisttableview.followers.title", @"");
-    self.userListNetAwareViewController.navigationItem.title = title;
-
-    if (![username isEqual:lastFollowingUsername] || showingFollowing) {
-        [followers removeAllObjects];
-        followersPagesShown = 1;
-
-        [self.userListNetAwareViewController setCachedDataAvailable:NO];
-        [self.userListNetAwareViewController
-            setUpdatingState:kConnectedAndUpdating];
-        [service fetchFollowersForUser:username
-            page:[NSNumber numberWithInt:followersPagesShown]];
-    }
-
-    self.lastFollowingUsername = username;
-    showingFollowing = NO;
 }
 
 - (void)displayFavoritesForUser:(NSString *)username
 {
     NSLog(@"Timeline display manager: displaying favorites for user %@",
         username);
-    // create a tweetDetailsTimelineDisplayMgr
-    // push corresponding view controller for tweet details timeline display mgr
     NSString * title =
         NSLocalizedString(@"timelineview.favorites.title", @"");
     self.tweetDetailsNetAwareViewController =
@@ -921,27 +837,6 @@ static NSInteger retweetFormatValueAlredyRead;
     [self deallocateTweetDetailsNode];
 }
 
-#pragma mark UserListTableViewControllerDelegate implementation
-
-- (void)loadMoreUsers
-{
-    NSLog(@"Timeline display manager: loading more users...");
-    if (showingFollowing)
-        [service fetchFriendsForUser:user.username
-            page:[NSNumber numberWithInt:++followingUsersPagesShown]];
-    else
-        [service fetchFollowersForUser:user.username
-            page:[NSNumber numberWithInt:++followersPagesShown]];
-    [self.userListNetAwareViewController
-        setUpdatingState:kConnectedAndUpdating];
-}
-
-- (void)userListViewWillAppear
-{
-    NSLog(@"Timeline display manager: user list view will appear...");
-    [self deallocateTweetDetailsNode];
-}
-
 #pragma mark TimelineDisplayMgr implementation
 
 - (void)refreshWithLatest
@@ -992,6 +887,8 @@ static NSInteger retweetFormatValueAlredyRead;
     self.tweetDetailsTimelineDisplayMgr = nil;
     self.tweetDetailsNetAwareViewController = nil;
     self.currentSearch = nil;
+    self.userListDisplayMgr = nil;
+    self.userListNetAwareViewController = nil;
 }
 
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error
@@ -1154,29 +1051,6 @@ static NSInteger retweetFormatValueAlredyRead;
     }
 
     return userInfoController;
-}
-
-- (NetworkAwareViewController *)userListNetAwareViewController
-{
-    if (!userListNetAwareViewController) {
-        userListNetAwareViewController =
-            [[NetworkAwareViewController alloc]
-            initWithTargetViewController:self.userListController];
-    }
-
-    return userListNetAwareViewController;
-}
-
-- (UserListTableViewController *)userListController
-{
-    if (!userListController) {
-        userListController =
-            [[UserListTableViewController alloc]
-            initWithNibName:@"UserListTableView" bundle:nil];
-        userListController.delegate = self;
-    }
-
-    return userListController;
 }
 
 - (TwitchBrowserViewController *)browserController

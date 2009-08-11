@@ -126,7 +126,9 @@ static UIColor * darkCellBackgroundColor;
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     User * user = [[self sortedUsers] objectAtIndex:indexPath.row];
-    [delegate showTweetsForUser:user.username];
+    UIImage * avatar = [avatarCache objectForKey:user.profileImageUrl];
+    avatar = avatar == [[self class ] defaultAvatar] ? nil : avatar;
+    [delegate showUserInfoForUser:user withAvatar:avatar];
 }
 
 - (CGFloat)tableView:(UITableView *)aTableView

@@ -3,10 +3,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "User.h"
 
 @protocol UserListTableViewControllerDelegate
 
-- (void)showTweetsForUser:(NSString *)username;
+- (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar;
 - (void)loadMoreUsers;
 - (void)userListViewWillAppear;
 
