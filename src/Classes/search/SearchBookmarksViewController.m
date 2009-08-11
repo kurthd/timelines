@@ -173,6 +173,8 @@ typedef enum
             NSMutableArray * mutableContents = [self.contents mutableCopy];
             [mutableContents removeObjectAtIndex:indexPath.row];
             self.contents = mutableContents;
+            [mutableContents release];
+
             [self.delegate setSavedSearchOrder:self.contents];
 
             NSArray * row = [NSArray arrayWithObject:indexPath];
@@ -199,6 +201,7 @@ typedef enum
     [searches insertObject:movedSearch atIndex:toIndexPath.row];
     [movedSearch release];
     self.contents = searches;
+    [searches release];
 
     [self.delegate setSavedSearchOrder:self.contents];
 }

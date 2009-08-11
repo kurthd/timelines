@@ -202,6 +202,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
             NSMutableArray * mc = [self.accounts mutableCopy];
             [mc removeObjectAtIndex:indexPath.row];
             self.accounts = mc;
+            [mc release];
 
             // Delete the row from the data source
             [self.tableView

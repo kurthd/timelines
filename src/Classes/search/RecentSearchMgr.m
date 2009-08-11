@@ -57,7 +57,8 @@
 {
     query = [self normalizeQuery:query];
 
-    NSMutableArray * recentSearches = [[self recentSearches] mutableCopy];
+    NSMutableArray * recentSearches =
+        [[[self recentSearches] mutableCopy] autorelease];
 
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:@"accountName == %@ && query == %@", 

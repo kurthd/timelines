@@ -64,7 +64,7 @@
     if ([targets containsObject:elementName])
         self.value = [NSMutableString string];
     else if ([elementName isEqualToString:@"err"])
-        self.error = [[attributes objectForKey:@"msg"] mutableCopy];
+        self.error = [attributes objectForKey:@"msg"];
 }
 
 - (void)parser:(NSXMLParser *)aParser
