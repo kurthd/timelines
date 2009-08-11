@@ -191,10 +191,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         [NSIndexPath indexPathForRow:0 inSection:0]
         atScrollPosition:UITableViewScrollPositionNone animated:YES];
 
-    NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
-    [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
-    
-    [self.tableView reloadData];
+    if (![self getAvatarForUrl:tweet.user.profileImageUrl]) {
+        NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
+        [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+    }
 }
 
 - (void)setUser:(User *)aUser
