@@ -52,7 +52,7 @@ enum TweetActionRows {
 - (void)loadTweetWebView;
 
 - (void)retweet;
-- (void)sendPublicReply;
+- (void)sendReply;
 - (void)sendDirectMessage;
 - (void)toggleFavoriteValue;
 
@@ -69,6 +69,7 @@ enum TweetActionRows {
 @implementation TweetViewController
 
 @synthesize delegate, navigationController, tweetContentView, tweet, avatar;
+@synthesize showsExtendedActions;
 
 - (void)dealloc
 {
@@ -127,7 +128,7 @@ enum TweetActionRows {
                 NUM_TWEET_DETAILS_ROWS : NUM_TWEET_DETAILS_ROWS - 1;
             break;
         case kComposeActionsSection:
-            nrows = NUM_COMPOSE_ACTION_ROWS;
+            nrows = showsExtendedActions ? NUM_COMPOSE_ACTION_ROWS : 1;
             break;
         case kTweetActionsSection:
             nrows = NUM_TWEET_ACTION_ROWS;
@@ -218,7 +219,7 @@ enum TweetActionRows {
         }
     } else if (indexPath.section == kComposeActionsSection) {
         if (indexPath.row == kPublicReplyRow)
-            [self sendPublicReply];
+            [self sendReply];
         else if (indexPath.row == kDirectMessageRow)
             [self sendDirectMessage];
         else if (indexPath.row == kRetweetRow)
@@ -458,7 +459,7 @@ enum TweetActionRows {
     [delegate reTweetSelected];
 }
 
-- (void)sendPublicReply
+- (void)sendReply
 {
     [delegate replyToTweet];
 }

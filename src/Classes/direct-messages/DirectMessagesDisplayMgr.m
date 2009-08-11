@@ -277,15 +277,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     self.tweetViewController.navigationItem.rightBarButtonItem.enabled =
         !tweetByUser;
     [self.tweetViewController setUsersTweet:tweetByUser];
-
-    /*
-    UIBarButtonItem * rightBarButtonItem =
-        [[UIBarButtonItem alloc]
-        initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self
-        action:@selector(sendDirectMessageToOtherUserInConversation)];
-    self.tweetViewController.navigationItem.rightBarButtonItem =
-        rightBarButtonItem;
-     */
+    self.tweetViewController.showsExtendedActions = NO;
 
     UIBarButtonItem * rightBarButtonItem =
         [[UIBarButtonItem alloc]
@@ -504,7 +496,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)replyToTweet
 {
-    // not supported for direct messages
+    [self sendDirectMessageToOtherUserInConversation];
 }
 
 - (void)sendDirectMessageToUser:(NSString *)username
@@ -1143,9 +1135,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)presentDirectMessageActions
 {
     NSString * cancel =
-        NSLocalizedString(@"tweetdetailsview.actions.cancel", @"");
+        NSLocalizedString(@"directmessage.actions.cancel", @"");
     NSString * email =
-        NSLocalizedString(@"tweetdetailsview.actions.email", @"");
+        NSLocalizedString(@"directmessage.actions.email", @"");
 
     UIActionSheet * sheet =
         [[UIActionSheet alloc]

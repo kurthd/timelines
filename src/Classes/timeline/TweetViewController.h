@@ -30,11 +30,13 @@
 
     // configure the display
     BOOL showsFavoriteButton;
+    BOOL showsExtendedActions;
 }
 
 @property (nonatomic, assign) NSObject<TweetDetailsViewDelegate> * delegate;
 @property (nonatomic, retain, readonly) TweetInfo * tweet;
 @property (nonatomic, retain, readonly) UIImage * avatar;
+@property (nonatomic, assign) BOOL showsExtendedActions;
 
 - (void)displayTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar
     onNavigationController:(UINavigationController *)navController;
