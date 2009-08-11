@@ -3,6 +3,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MessageUI/MFMailComposeViewController.h>
 #import "NetworkAwareViewController.h"
 #import "DirectMessageInboxViewController.h"
 #import "DirectMessageConversationViewController.h"
@@ -12,7 +13,7 @@
 #import "DirectMessageInboxViewControllerDelegate.h"
 #import "DirectMessageCache.h"
 #import "ComposeTweetDisplayMgr.h"
-#import "TweetDetailsViewController.h"
+#import "TweetViewController.h"
 #import "TweetDetailsViewDelegate.h"
 #import "TwitchBrowserViewController.h"
 #import "PhotoBrowser.h"
@@ -60,12 +61,13 @@
     DirectMessageInboxViewControllerDelegate,
     DirectMessageConversationViewControllerDelegate, TweetDetailsViewDelegate,
     PhotoBrowserDelegate, TwitchBrowserViewControllerDelegate,
-    ComposeTweetDisplayMgrDelegate>
+    ComposeTweetDisplayMgrDelegate, MFMailComposeViewControllerDelegate,
+    UIActionSheetDelegate>
 {
     NetworkAwareViewController * wrapperController;
     DirectMessageInboxViewController * inboxController;
     DirectMessageConversationViewController * conversationController;
-    TweetDetailsViewController * tweetDetailsController;
+    TweetViewController * tweetViewController;
     TwitchBrowserViewController * browserController;
     PhotoBrowser * photoBrowser;
 
@@ -120,7 +122,7 @@
 
 @property (readonly)
     DirectMessageConversationViewController * conversationController;
-@property (readonly) TweetDetailsViewController * tweetDetailsController;
+@property (readonly) TweetViewController * tweetViewController;
 @property (readonly) TwitchBrowserViewController * browserController;
 @property (readonly) PhotoBrowser * photoBrowser;
 

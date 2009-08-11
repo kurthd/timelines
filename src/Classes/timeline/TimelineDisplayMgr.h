@@ -92,17 +92,12 @@
 
     SavedSearchMgr * savedSearchMgr;
     NSString * currentSearch;
-
-    TweetDetailsViewLoader * tweetDetailsViewLoader;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
 @property (readonly) TimelineViewController * timelineController;
 @property (nonatomic, retain)
     NetworkAwareViewController * lastTweetDetailsWrapperController;
-//@property (nonatomic, retain)
-//    TweetDetailsViewController * lastTweetDetailsController;
-//@property (readonly) TweetDetailsViewController * tweetDetailsController;
 @property (nonatomic, retain) TweetViewController * lastTweetDetailsController;
 @property (readonly) TweetViewController * tweetDetailsController;
 @property (readonly) UserInfoViewController * userInfoController;

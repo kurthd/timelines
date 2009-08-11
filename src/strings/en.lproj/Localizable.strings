@@ -41,6 +41,10 @@ timelinedisplaymgr.error.stopfollowing = "Failed to stop following '%@'";
 timelinedisplaymgr.error.userquery = "Failed to fetch user info for '%@'";
 timelinedisplaymgr.error.fetchtweet = "Failed to fetch tweet";
 
+/* DirectMessageDisplayMgr */
+directmessage.actions.cancel = "Cancel";
+directmessage.actions.email = "Email This Message";
+
 /* TweetDetailsViewController */
 tweetdetailsview.title = "Tweet";
 tweetdetailsview.title.directmessage = "Direct Message";
@@ -49,9 +53,9 @@ tweetdetailsview.tweetheader = "To: %@";
 tweetdetailsview.replyto = "in reply to";
 tweetdetailsview.actions.cancel = "Cancel";
 tweetdetailsview.actions.browser = "Open in Browser";
-tweetdetailsview.actions.email = "Send in Email";
+tweetdetailsview.actions.email = "Email Link to This Tweet";
 tweetdetailsview.inreplyto.formatstring = "In reply to %@";
-tweetdetailsview.publicreply.label = "Public Reply";
+tweetdetailsview.publicreply.label = "Reply";
 tweetdetailsview.directmessage.label = "Direct Message";
 tweetdetailsview.retweet.label = "Retweet";
 tweetdetailsview.favorite.label = "Favorite";

@@ -30,6 +30,9 @@
 
 - (void)displayComposerMailSheet;
 
+- (void)configureViewForInterfaceOrientation:
+    (UIInterfaceOrientation)orientation;
+
 @end
 
 @implementation PhotoBrowser
@@ -69,65 +72,22 @@
     toolbar.alpha = 1;
     barsFaded = NO;
     isDisplayed = YES;
+
+    // Calling this here fixes a bug where rotating the interface to
+    // landscape, closing the photo browser (which forces the orientation back
+    // to portrait), and then opening a picture while still in portrait
+    // orientation has the view elements still laid out as if they're in
+    // landscape mode. This is because the various rotation methods are called
+    // before isDisplayed is set to YES (e.g. this method is called), but
+    // isDisplayed seems to fix a UI bug of its own.
+    [self configureViewForInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
     (UIInterfaceOrientation)orientation
 {
-
-    if (isDisplayed) {
-        if (orientation == UIInterfaceOrientationPortrait ||
-            orientation == UIInterfaceOrientationPortraitUpsideDown) {
-
-            CGRect navigationBarFrame = navigationBar.frame;
-            navigationBarFrame.size.width = 320;
-            navigationBar.frame = navigationBarFrame;
-
-            CGRect photoViewFrame = photoView.frame;
-            photoViewFrame.size.width = 320;
-            photoViewFrame.size.height = 480;
-            photoView.frame = photoViewFrame;
-
-            CGRect toolbarFrame = toolbar.frame;
-            toolbarFrame.size.width = 320;
-            toolbarFrame.origin.y = 436;
-            toolbar.frame = toolbarFrame;
-
-            CGRect loadingViewFrame = loadingView.frame;
-            loadingViewFrame.size.width = 320;
-            loadingViewFrame.size.height = 480;
-            loadingView.frame = loadingViewFrame;
-
-            CGRect loadingIndicatorFrame = loadingIndicator.frame;
-            loadingIndicatorFrame.origin.x = 141;
-            loadingIndicatorFrame.origin.y = 221;
-            loadingIndicator.frame = loadingIndicatorFrame;
-        } else {
-            CGRect navigationBarFrame = navigationBar.frame;
-            navigationBarFrame.size.width = 480;
-            navigationBar.frame = navigationBarFrame;
-
-            CGRect photoViewFrame = photoView.frame;
-            photoViewFrame.size.width = 480;
-            photoViewFrame.size.height = 320;
-            photoView.frame = photoViewFrame;
-
-            CGRect toolbarFrame = toolbar.frame;
-            toolbarFrame.size.width = 480;
-            toolbarFrame.origin.y = 276;
-            toolbar.frame = toolbarFrame;
-
-            CGRect loadingViewFrame = loadingView.frame;
-            loadingViewFrame.size.width = 480;
-            loadingViewFrame.size.height = 320;
-            loadingView.frame = loadingViewFrame;
-
-            CGRect loadingIndicatorFrame = loadingIndicator.frame;
-            loadingIndicatorFrame.origin.x = 221;
-            loadingIndicatorFrame.origin.y = 141;
-            loadingIndicator.frame = loadingIndicatorFrame;
-        }
-    }
+    if (isDisplayed)
+        [self configureViewForInterfaceOrientation:orientation];
 
     previousOrientation = orientation;
 
@@ -616,6 +576,61 @@
     }
 
     return photoSource;
+}
+
+- (void)configureViewForInterfaceOrientation:(UIInterfaceOrientation)orientation
+{
+    if (orientation == UIInterfaceOrientationPortrait ||
+        orientation == UIInterfaceOrientationPortraitUpsideDown) {
+
+        CGRect navigationBarFrame = navigationBar.frame;
+        navigationBarFrame.size.width = 320;
+        navigationBar.frame = navigationBarFrame;
+
+        CGRect photoViewFrame = photoView.frame;
+        photoViewFrame.size.width = 320;
+        photoViewFrame.size.height = 480;
+        photoView.frame = photoViewFrame;
+
+        CGRect toolbarFrame = toolbar.frame;
+        toolbarFrame.size.width = 320;
+        toolbarFrame.origin.y = 436;
+        toolbar.frame = toolbarFrame;
+
+        CGRect loadingViewFrame = loadingView.frame;
+        loadingViewFrame.size.width = 320;
+        loadingViewFrame.size.height = 480;
+        loadingView.frame = loadingViewFrame;
+
+        CGRect loadingIndicatorFrame = loadingIndicator.frame;
+        loadingIndicatorFrame.origin.x = 141;
+        loadingIndicatorFrame.origin.y = 221;
+        loadingIndicator.frame = loadingIndicatorFrame;
+    } else {
+        CGRect navigationBarFrame = navigationBar.frame;
+        navigationBarFrame.size.width = 480;
+        navigationBar.frame = navigationBarFrame;
+
+        CGRect photoViewFrame = photoView.frame;
+        photoViewFrame.size.width = 480;
+        photoViewFrame.size.height = 320;
+        photoView.frame = photoViewFrame;
+
+        CGRect toolbarFrame = toolbar.frame;
+        toolbarFrame.size.width = 480;
+        toolbarFrame.origin.y = 276;
+        toolbar.frame = toolbarFrame;
+
+        CGRect loadingViewFrame = loadingView.frame;
+        loadingViewFrame.size.width = 480;
+        loadingViewFrame.size.height = 320;
+        loadingView.frame = loadingViewFrame;
+
+        CGRect loadingIndicatorFrame = loadingIndicator.frame;
+        loadingIndicatorFrame.origin.x = 221;
+        loadingIndicatorFrame.origin.y = 141;
+        loadingIndicator.frame = loadingIndicatorFrame;
+    }
 }
 
 @end

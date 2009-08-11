@@ -6,6 +6,7 @@
 #import "TweetTextTableViewCell.h"
 #import "AsynchronousNetworkFetcher.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "UIWebView+FileLoadingAdditions.h"
 #import "RegexKitLite.h"
 
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
@@ -36,14 +37,22 @@ enum TweetActionRows {
 };
 
 @interface TweetViewController ()
+
+@property (nonatomic, retain) UINavigationController * navigationController;
+
+@property (nonatomic, retain) TweetInfo * tweet;
+@property (nonatomic, retain) UIImage * avatar;
+@property (nonatomic, retain) UIWebView * tweetContentView;
+
 - (NSString *)reuseIdentifierForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (UITableViewCell *)createCellForRowAtIndexPath:(NSIndexPath *)indexPath
                                  reuseIdentifier:(NSString *)reuseIdentifier;
 
 - (void)displayTweet;
+- (void)loadTweetWebView;
 
 - (void)retweet;
-- (void)sendPublicReply;
+- (void)sendReply;
 - (void)sendDirectMessage;
 - (void)toggleFavoriteValue;
 
@@ -55,25 +64,28 @@ enum TweetActionRows {
 
 + (UIImage *)defaultAvatar;
 
-@property (nonatomic, retain) UIWebView * tweetContentView;
-
 @end
 
 @implementation TweetViewController
 
-@synthesize delegate, selectedTweet, avatar, tweetContentView;
+@synthesize delegate, navigationController, tweetContentView, tweet, avatar;
+@synthesize showsExtendedActions;
 
 - (void)dealloc
 {
     self.delegate = nil;
 
+    self.navigationController = nil;
+
     [headerView release];
     [fullNameLabel release];
     [usernameLabel release];
 
-    self.selectedTweet = nil;
-    self.avatar = nil;
+    [tweetTextTableViewCell release];
     self.tweetContentView = nil;
+
+    self.tweet = nil;
+    self.avatar = nil;
 
     [super dealloc];
 }
@@ -86,7 +98,6 @@ enum TweetActionRows {
         [[TweetTextTableViewCell alloc]
         initWithStyle:UITableViewCellStyleDefault
         reuseIdentifier:@"TweetTextTableViewCell"];
-    tweetTextTableViewCell.webView.delegate = self;
 
     self.tableView.tableHeaderView = headerView;
     self.tableView.contentInset = UIEdgeInsetsMake(0, 300, 0, 0);
@@ -103,7 +114,7 @@ enum TweetActionRows {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv
 {
-    return NUM_SECTIONS;
+    return showsFavoriteButton ? NUM_SECTIONS : NUM_SECTIONS - 1;
 }
 
 // Customize the number of rows in the table view.
@@ -113,11 +124,11 @@ enum TweetActionRows {
     NSInteger nrows = 0;
     switch (section) {
         case kTweetDetailsSection:
-            nrows = selectedTweet.inReplyToTwitterTweetId ?
+            nrows = tweet.inReplyToTwitterTweetId ?
                 NUM_TWEET_DETAILS_ROWS : NUM_TWEET_DETAILS_ROWS - 1;
             break;
         case kComposeActionsSection:
-            nrows = NUM_COMPOSE_ACTION_ROWS;
+            nrows = showsExtendedActions ? NUM_COMPOSE_ACTION_ROWS : 1;
             break;
         case kTweetActionsSection:
             nrows = NUM_TWEET_ACTION_ROWS;
@@ -165,7 +176,7 @@ enum TweetActionRows {
                 @"");
             cell.textLabel.text =
                 [NSString stringWithFormat:formatString,
-                selectedTweet.inReplyToTwitterUsername];
+                tweet.inReplyToTwitterUsername];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     } else if (indexPath.section == kComposeActionsSection) {
@@ -189,7 +200,7 @@ enum TweetActionRows {
         cell.imageView.image = image;
     } else if (indexPath.section == kTweetActionsSection)
         if (indexPath.row == kFavoriteRow) {
-            BOOL favorite = [selectedTweet.favorited boolValue];
+            BOOL favorite = [tweet.favorited boolValue];
             [self configureCell:cell asFavorite:favorite];
         }
 
@@ -202,14 +213,13 @@ enum TweetActionRows {
     if (indexPath.section == kTweetDetailsSection) {
         if (indexPath.row == kConversationRow) {
             NSString * tweetId =
-                [selectedTweet.inReplyToTwitterTweetId description];
-            NSString * replyToUsername =
-                selectedTweet.inReplyToTwitterUsername;
+                [tweet.inReplyToTwitterTweetId description];
+            NSString * replyToUsername = tweet.inReplyToTwitterUsername;
             [delegate loadNewTweetWithId:tweetId username:replyToUsername];
         }
     } else if (indexPath.section == kComposeActionsSection) {
         if (indexPath.row == kPublicReplyRow)
-            [self sendPublicReply];
+            [self sendReply];
         else if (indexPath.row == kDirectMessageRow)
             [self sendDirectMessage];
         else if (indexPath.row == kRetweetRow)
@@ -222,6 +232,25 @@ enum TweetActionRows {
 }
 
 #pragma mark UIWebViewDelegate implementation
+
+- (void)webViewDidFinishLoad:(UIWebView *)view
+{
+    CGSize size = [tweetContentView sizeThatFits:CGSizeZero];
+
+    CGRect frame = tweetContentView.frame;
+    frame.size.width = size.width;
+    frame.size.height = size.height;
+    tweetContentView.frame = frame;
+
+    // remove from UIWindow's key window
+    [tweetContentView removeFromSuperview];
+    [tweetTextTableViewCell.contentView addSubview:tweetContentView];
+
+    if (navigationController)
+        [navigationController pushViewController:self animated:YES];
+
+    [self displayTweet];
+}
 
 - (BOOL)webView:(UIWebView *)webView
     shouldStartLoadWithRequest:(NSURLRequest *)request
@@ -255,8 +284,7 @@ enum TweetActionRows {
             [delegate showResultsForSearch:query];
         } else if (inReplyToString = [webpage stringByMatching:@"#\\d*"]) {
             NSString * tweetId = [inReplyToString substringFromIndex:1];
-            NSString * replyToUsername =
-                self.selectedTweet.inReplyToTwitterUsername;
+            NSString * replyToUsername = self.tweet.inReplyToTwitterUsername;
             [delegate loadNewTweetWithId:tweetId username:replyToUsername];
         } else if ([webpage isMatchedByRegex:@"^mailto:"]) {
             NSLog(@"Opening 'Mail' with url: %@", webpage);
@@ -278,17 +306,14 @@ enum TweetActionRows {
 
 #pragma mark Public interface implementation
 
-- (void)displayTweet:(TweetInfo *)tweet avatar:(UIImage *)anAvatar
-   withPreLoadedView:(UIWebView *)view
+- (void)displayTweet:(TweetInfo *)aTweet avatar:(UIImage *)anAvatar
+    onNavigationController:(UINavigationController *)navController
 {
-    self.selectedTweet = tweet;
+    self.tweet = aTweet;
     self.avatar = anAvatar;
+    self.navigationController = navController;
 
-    [self.tweetContentView removeFromSuperview];
-    self.tweetContentView = view;
-    self.tweetContentView.delegate = self;
-
-    [self displayTweet];
+    [self loadTweetWebView];
 }
 
 - (void)setUsersTweet:(BOOL)usersTweet
@@ -298,7 +323,7 @@ enum TweetActionRows {
 
 - (void)hideFavoriteButton:(BOOL)hide
 {
-    // ignore for now
+    showsFavoriteButton = !hide;
 } 
 
 #pragma mark UIActionSheetDelegate implementation
@@ -318,7 +343,7 @@ enum TweetActionRows {
         case 0:
            webAddress =
                 [NSString stringWithFormat:@"http://twitter.com/%@/status/%@",
-                self.selectedTweet.user, self.selectedTweet.identifier];
+                self.tweet.user, self.tweet.identifier];
             NSLog(@"Opening tweet in browser (%@)...", webAddress);
             [delegate visitWebpage:webAddress];
             break;
@@ -367,18 +392,18 @@ enum TweetActionRows {
 
     static NSString * subjectRegex = @"\\S+\\s\\S+\\s\\S+\\s\\S+\\s\\S+";
     NSString * subject =
-        [self.selectedTweet.text stringByMatching:subjectRegex];
+        [self.tweet.text stringByMatching:subjectRegex];
     if (subject && ![subject isEqual:@""])
         subject = [NSString stringWithFormat:@"%@...", subject];
     else
-        subject = self.selectedTweet.text;
+        subject = self.tweet.text;
     [picker setSubject:subject];
 
     NSString * webAddress =
          [NSString stringWithFormat:@"http://twitter.com/%@/status/%@",
-         self.selectedTweet.user, self.selectedTweet.identifier];
+         self.tweet.user, self.tweet.identifier];
     NSString * body =
-        [NSString stringWithFormat:@"%@\n\n%@", self.selectedTweet.text,
+        [NSString stringWithFormat:@"%@\n\n%@", self.tweet.text,
         webAddress];
     [picker setMessageBody:body isHTML:NO];
 
@@ -407,12 +432,12 @@ enum TweetActionRows {
 {
     UIImage * actualAvatar =
         self.avatar != [[self class] defaultAvatar] ? self.avatar : nil;
-    [delegate showUserInfoForUser:selectedTweet.user withAvatar:actualAvatar];
+    [delegate showUserInfoForUser:tweet.user withAvatar:actualAvatar];
 }
 
 - (IBAction)showFullProfileImage:(id)sender
 {
-    User * selectedUser = selectedTweet.user;
+    User * selectedUser = tweet.user;
 
     NSString * url =
         [selectedUser.profileImageUrl
@@ -434,22 +459,22 @@ enum TweetActionRows {
     [delegate reTweetSelected];
 }
 
-- (void)sendPublicReply
+- (void)sendReply
 {
     [delegate replyToTweet];
 }
 
 - (void)sendDirectMessage
 {
-    [delegate sendDirectMessageToUser:selectedTweet.user.username];
+    [delegate sendDirectMessageToUser:tweet.user.username];
 }
 
 - (void)toggleFavoriteValue
 {
-    BOOL favorite = [selectedTweet.favorited boolValue];
+    BOOL favorite = [tweet.favorited boolValue];
     favorite = !favorite;
     [delegate setFavorite:favorite];
-    selectedTweet.favorited = [NSNumber numberWithBool:favorite];
+    tweet.favorited = [NSNumber numberWithBool:favorite];
 
     NSArray * visibleCells = self.tableView.visibleCells;
     for (UITableViewCell * cell in visibleCells) {
@@ -496,15 +521,12 @@ enum TweetActionRows {
 {
     UITableViewCell * cell = nil;
 
-    if (indexPath.section == kTweetDetailsSection &&
-        indexPath.row == kTweetTextRow) {
-        tweetTextTableViewCell =
-            [[TweetTextTableViewCell alloc]
-            initWithStyle:UITableViewCellStyleDefault
-          reuseIdentifier:reuseIdentifier];
-        tweetTextTableViewCell.webView.delegate = self;
+    BOOL tweetTextRow =
+        indexPath.section == kTweetDetailsSection &&
+        indexPath.row == kTweetTextRow;
+    if (tweetTextRow)
         cell = tweetTextTableViewCell;
-    } else
+    else
         cell =
             [[[UITableViewCell alloc]
             initWithStyle:UITableViewCellStyleDefault
@@ -513,18 +535,43 @@ enum TweetActionRows {
     return cell;
 }
 
+- (void)loadTweetWebView
+{
+    CGRect frame = CGRectMake(5, 0, 290, 20);
+    UIWebView * contentView = [[UIWebView alloc] initWithFrame:frame];
+    contentView.delegate = self;
+    contentView.backgroundColor = [UIColor clearColor];
+    contentView.opaque = NO;
+    contentView.dataDetectorTypes = UIDataDetectorTypeAll;
+
+    [self.tweetContentView removeFromSuperview];
+    self.tweetContentView = contentView;
+    [contentView release];
+
+    // The view must be added as the subview of a visible view, otherwise the
+    // height will not be calculated when -sizeToFit: is called in the
+    // -webViewDidFinishLoad delegate method. Adding it here seems to have
+    // no effect on the display at all, but the view does calculate its frame
+    // correctly. Is there a better way to do this?
+    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    [window addSubview:tweetContentView];
+
+    NSString * html = [self.tweet textAsHtml];
+    [tweetContentView loadHTMLStringRelativeToMainBundle:html];
+}
+
 - (void)displayTweet
 {
-    if (selectedTweet.user.name.length > 0) {
-        usernameLabel.text = selectedTweet.user.username;
-        fullNameLabel.text = selectedTweet.user.name;
+    if (tweet.user.name.length > 0) {
+        usernameLabel.text = tweet.user.username;
+        fullNameLabel.text = tweet.user.name;
     } else {
         usernameLabel.text = @"";
-        fullNameLabel.text = selectedTweet.user.username;
+        fullNameLabel.text = tweet.user.username;
     }
 
     if (!self.avatar) {
-        [self fetchRemoteImage:selectedTweet.user.profileImageUrl];
+        [self fetchRemoteImage:tweet.user.profileImageUrl];
         self.avatar = [[self class] defaultAvatar];
     }
     [avatarImage setImage:self.avatar];
