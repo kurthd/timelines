@@ -352,7 +352,9 @@ static UIImage * defaultAvatar;
     bioLabel.frame = bioLabelFrame;
 
     CGRect headerViewFrame = headerView.frame;
-    headerViewFrame.size.height = bioLabelFrame.size.height + 390.0;
+    headerViewFrame.size.height =
+        bioLabel.text.length > 0 ?
+        bioLabelFrame.size.height + 390.0 : 376.0;
     headerView.frame = headerViewFrame;
 
     // force the header view to redraw
