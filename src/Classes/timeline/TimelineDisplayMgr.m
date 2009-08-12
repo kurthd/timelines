@@ -312,6 +312,12 @@ static NSInteger retweetFormatValueAlredyRead;
 
 - (void)selectedTweet:(TweetInfo *)tweet avatarImage:(UIImage *)avatarImage
 {
+    // HACK: Release and then re-recreate the view for every tweet so the view
+    // is properly scrolled to top when it appears. I have not been able to get
+    // the view to scroll to top programmatically.
+    [tweetDetailsController release];
+    tweetDetailsController = nil;
+
     NSLog(@"Timeline display manager: selected tweet: %@", tweet);
     self.selectedTweet = tweet;
 
@@ -888,19 +894,8 @@ static NSInteger retweetFormatValueAlredyRead;
         tweetDetailsWrapperController;
 }
 
-//- (TweetDetailsViewController *)newTweetDetailsController
 - (TweetViewController *)newTweetDetailsController
 {
-    /*
-    TweetDetailsViewController * newTweetDetailsController =
-        [[TweetDetailsViewController alloc]
-        initWithNibName:@"TweetDetailsView" bundle:nil];
-
-    newTweetDetailsController.delegate = self;
-
-    return self.lastTweetDetailsController = newTweetDetailsController;
-     */
-
     TweetViewController * newTweetViewController =
         [[TweetViewController alloc] initWithNibName:@"TweetView" bundle:nil];
     newTweetViewController.delegate = self;
@@ -910,7 +905,6 @@ static NSInteger retweetFormatValueAlredyRead;
     return newTweetViewController;
 }
 
-//- (TweetDetailsViewController *)tweetDetailsController
 - (TweetViewController *)tweetDetailsController
 {
     if (!tweetDetailsController) {
