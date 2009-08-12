@@ -103,8 +103,8 @@ typedef enum
     [super viewWillAppear:animated];
 
     BookmarkCategory category = [self selectedCategory];
-    [self displayCategory:category];
     [self loadDataForCategory:category];
+    [self displayCategory:category];
 }
 
 #pragma mark Table view methods
@@ -239,14 +239,14 @@ typedef enum
 - (IBAction)clearRecentSearches
 {
     [self.delegate clearRecentSearches];
-    [self displayCategory:[self selectedCategory]];
     [self loadDataForCategory:[self selectedCategory]];
+    [self displayCategory:[self selectedCategory]];
 }
 
 - (void)bookmarkCategoryChanged:(id)sender
 {
-    [self displayCategory:[self selectedCategory]];
     [self loadDataForCategory:[self selectedCategory]];
+    [self displayCategory:[self selectedCategory]];
 }
 
 - (void)trendsCategoryChanged:(id)sender
@@ -254,9 +254,10 @@ typedef enum
     TrendType trendType = [self selectedTrendsCategory];
     self.contents = [self.delegate trendsOfType:trendType refresh:NO];
 
-    if (self.contents)
+    if (self.contents) {
         [self resetTableView];
-    else
+        [self hideActivityView];
+    } else
         [self displayActivityView];
 }
 
@@ -293,9 +294,6 @@ typedef enum
             self.contents =
                 [self.delegate trendsOfType:[self selectedTrendsCategory]
                                     refresh:NO];
-            if (!self.contents)
-                [self displayActivityView];
-
             break;
     }
 
@@ -342,8 +340,12 @@ typedef enum
                 [self configureViewForNotEditingSavedSearches];
 
             self.navigationBar.topItem.titleView = self.trendsCategorySelector;
-            self.navigationBar.topItem.leftBarButtonItem =
-                self.refreshTrendsButton;
+
+            if (self.contents)
+                self.navigationBar.topItem.leftBarButtonItem =
+                    self.refreshTrendsButton;
+            else
+                [self displayActivityView];
 
             self.navigationBar.topItem.prompt =
                 NSLocalizedString(@"searchbookmarks.trends.prompt", @"");
