@@ -58,7 +58,7 @@ tweetdetailsview.inreplyto.formatstring = "In reply to %@";
 tweetdetailsview.publicreply.label = "Reply";
 tweetdetailsview.directmessage.label = "Direct Message";
 tweetdetailsview.retweet.label = "Retweet";
-tweetdetailsview.favorite.label = "Favorite";
+tweetdetailsview.favorite.label = "Mark as Favorite";
 tweetdetailsview.unfavorite.label = "Unfavorite";
 
 /* Sending tweets */
