@@ -156,12 +156,15 @@
     NSString * sender = service.credentials.username;
     NSString * text = draft ? draft.text : @"";
 
-    [self.composeTweetViewController composeDirectMessage:text
-                                                     from:sender
-                                                       to:recipient];
+    // Present the view before calling 'composeDirectMessage:...' because
+    // otherwise the view elements aren't wired up (they're nil).
     [self.rootViewController
         presentModalViewController:self.composeTweetViewController
                           animated:YES];
+
+    [self.composeTweetViewController composeDirectMessage:text
+                                                     from:sender
+                                                       to:recipient];
 }
 
 - (void)composeDirectMessageTo:(NSString *)username
@@ -183,14 +186,16 @@
 
     fromHomeScreen = NO;
 
+    // Present the view before calling 'composeDirectMessage:...' because
+    // otherwise the view elements aren't wired up (they're nil).
+    [self.rootViewController
+        presentModalViewController:self.composeTweetViewController
+                          animated:YES];
+
     NSString * sender = service.credentials.username;
     [self.composeTweetViewController composeDirectMessage:text
                                                      from:sender
                                                        to:username];
-
-    [self.rootViewController
-        presentModalViewController:self.composeTweetViewController
-                          animated:YES];
 }
 
 #pragma mark Credentials notifications
@@ -564,7 +569,6 @@
     imagePicker.allowsImageEditing = YES;
     imagePicker.sourceType = source;
 
-    //[self.composeTweetViewController
     [controller presentModalViewController:imagePicker animated:YES];
     [imagePicker release];
 }
