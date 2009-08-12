@@ -223,7 +223,7 @@ static UIImage * topGradientImage;
     static const CGFloat TEXT_LEFT_MARGIN = 7.0;
     static const CGFloat TEXT_TOP_MARGIN = 28.0;
 
-    static const CGFloat AVATAR_LEFT_MARGIN = 250.0;
+    static const CGFloat AVATAR_LEFT_MARGIN = 246.0;
     static const CGFloat AVATAR_TOP_MARGIN = 7.0;
 
     UIColor * timestampColor = nil;
