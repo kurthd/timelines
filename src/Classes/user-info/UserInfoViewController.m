@@ -318,7 +318,7 @@ static UIImage * defaultAvatar;
         [avatarView setImage:[[self class] defaultAvatar]];
     } else
         [avatarView setImage:avatarImage];
-    nameLabel.text = aUser.username;
+    nameLabel.text = aUser.name;
     bioLabel.text = [aUser.bio stringByDecodingHtmlEntities];
 
     [self layoutViews];

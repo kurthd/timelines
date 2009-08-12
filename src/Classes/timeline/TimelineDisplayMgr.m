@@ -377,7 +377,7 @@ static NSInteger retweetFormatValueAlredyRead;
     // Forces to scroll to top
     [userInfoController release];
     userInfoController = nil;
-    self.userInfoController.navigationItem.title = aUser.name;
+    self.userInfoController.navigationItem.title = aUser.username;
     [self.wrapperController.navigationController
         pushViewController:self.userInfoController animated:YES];
     self.userInfoController.followingEnabled =
