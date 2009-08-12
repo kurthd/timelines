@@ -182,22 +182,29 @@ enum TweetActionRows {
     } else if (indexPath.section == kComposeActionsSection) {
         NSString * text = nil;
         UIImage * image = nil;
+        UIImage * highlightedImage = nil;
 
         if (indexPath.row == kPublicReplyRow) {
             text =
                 NSLocalizedString(@"tweetdetailsview.publicreply.label", @"");
             image = [UIImage imageNamed:@"PublicReplyButtonIcon.png"];
+            highlightedImage =
+                [UIImage imageNamed:@"PublicReplyButtonIconHighlighted.png"];
         } else if (indexPath.row == kDirectMessageRow) {
             text =
                 NSLocalizedString(@"tweetdetailsview.directmessage.label", @"");
             image = [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
+            highlightedImage = [UIImage imageNamed:@"Envelope.png"];
         } else if (indexPath.row == kRetweetRow) {
             text = NSLocalizedString(@"tweetdetailsview.retweet.label", @"");
             image = [UIImage imageNamed:@"RetweetButtonIcon.png"];
+            highlightedImage =
+                [UIImage imageNamed:@"RetweetButtonIconHighlighted.png"];
         }
 
         cell.textLabel.text = text;
         cell.imageView.image = image;
+        cell.imageView.highlightedImage = highlightedImage;
     } else if (indexPath.section == kTweetActionsSection)
         if (indexPath.row == kFavoriteRow) {
             BOOL favorite = [tweet.favorited boolValue];
