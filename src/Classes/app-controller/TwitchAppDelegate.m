@@ -157,7 +157,8 @@
         findPeopleBookmarkMgr:findPeopleBookmarkMgr];
     directMessageDisplayMgrFactory =
         [[DirectMessageDisplayMgrFactory alloc]
-        initWithContext:[self managedObjectContext]];
+        initWithContext:[self managedObjectContext]
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr];
 
     [self initHomeTab];
     [self initMessagesTab];

@@ -6,19 +6,24 @@
 #import "DirectMessageInboxViewController.h"
 #import "TwitterService.h"
 #import "CredentialsActivatedPublisher.h"
+#import "UserListDisplayMgrFactory.h"
 
 @implementation DirectMessageDisplayMgrFactory
 
 - (void)dealloc
 {
     [context release];
+    [findPeopleBookmarkMgr release];
     [super dealloc];
 }
 
 - (id)initWithContext:(NSManagedObjectContext *)someContext
+    findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr
 {
-    if (self = [super init])
+    if (self = [super init]) {
         context = [someContext retain];
+        findPeopleBookmarkMgr = [aFindPeopleBookmarkMgr retain];
+    }
 
     return self;
 }
@@ -40,13 +45,20 @@
         context:context]
         autorelease];
 
+    UserListDisplayMgrFactory * userListDisplayMgrFactory =
+        [[[UserListDisplayMgrFactory alloc]
+        initWithContext:context findPeopleBookmarkMgr:findPeopleBookmarkMgr]
+        autorelease];
+
     DirectMessagesDisplayMgr * directMessageDisplayMgr =
         [[[DirectMessagesDisplayMgr alloc]
         initWithWrapperController:wrapperController
         inboxController:inboxController service:service initialCache:nil
         factory:timelineDisplayMgrFactory
         managedObjectContext:context
-        composeTweetDisplayMgr:composeTweetDisplayMgr]
+        composeTweetDisplayMgr:composeTweetDisplayMgr
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr
+        userListDisplayMgrFactory:userListDisplayMgrFactory]
         autorelease];
     service.delegate = directMessageDisplayMgr;
     inboxController.delegate = directMessageDisplayMgr;

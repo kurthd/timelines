@@ -12,6 +12,8 @@
 #import "InfoPlistConfigReader.h"
 #import "SearchDataSource.h"
 #import "RegexKitLite.h"
+#import "FavoritesTimelineDataSource.h"
+#import "UserListDisplayMgrFactory.h"
 
 @interface DirectMessagesDisplayMgr ()
 
@@ -40,10 +42,18 @@
 
 - (void)displayComposerMailSheet;
 
+- (void)sendDirectMessageToCurrentUser;
+
 + (BOOL)displayWithUsername;
 
 @property (nonatomic, retain) SavedSearchMgr * savedSearchMgr;
 @property (nonatomic, retain) NSString * currentSearch;
+
+@property (readonly) UserInfoViewController * userInfoController;
+
+@property (nonatomic, retain) UserListDisplayMgr * userListDisplayMgr;
+@property (nonatomic, retain)
+    NetworkAwareViewController * userListNetAwareViewController;
 
 @end
 
@@ -55,9 +65,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 @synthesize activeAcctUsername, otherUserInConversation, selectedMessage,
     tweetDetailsTimelineDisplayMgr, tweetDetailsNetAwareViewController,
     tweetDetailsCredentialsPublisher, userListNetAwareViewController,
-    userListController, directMessageCache, newDirectMessages,
+    userListDisplayMgr, directMessageCache, newDirectMessages,
     newDirectMessagesState, currentConversationUserId, currentSearch,
-    savedSearchMgr;
+    savedSearchMgr, userInfoController;
 
 - (void)dealloc
 {
@@ -77,6 +87,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [newDirectMessages release];
     [newDirectMessagesState release];
     [sendingTweetProgressView release];
+    [findPeopleBookmarkMgr release];
+    [userListDisplayMgr release];
+    [userListNetAwareViewController release];
+    [userListDisplayMgrFactory release];
     [super dealloc];
 }
 
@@ -87,6 +101,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     factory:(TimelineDisplayMgrFactory *)factory
     managedObjectContext:(NSManagedObjectContext* )aManagedObjectContext
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)aComposeTweetDisplayMgr
+    findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr
+    userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
@@ -95,6 +111,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         timelineDisplayMgrFactory = [factory retain];
         managedObjectContext = [aManagedObjectContext retain];
         composeTweetDisplayMgr = [aComposeTweetDisplayMgr retain];
+        findPeopleBookmarkMgr = [aFindPeopleBookmarkMgr retain];
+        userListDisplayMgrFactory = [userListDispMgrFctry retain];
 
         if (initialCache) {
             directMessageCache = [initialCache retain];
@@ -323,6 +341,19 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 //        [service isUser:credentials.username following:aUser.username];
 //    // HACK: this is called twice to make sure it gets displayed the first time
 //    userInfoController.navigationItem.title = aUser.name;
+
+    NSLog(@"Direct message display manager: showing user info for %@", aUser);
+    // Forces to scroll to top
+    [userInfoController release];
+    userInfoController = nil;
+    self.userInfoController.navigationItem.title = aUser.username;
+    [wrapperController.navigationController
+        pushViewController:self.userInfoController animated:YES];
+    self.userInfoController.followingEnabled =
+        ![credentials.username isEqual:aUser.username];
+    [self.userInfoController setUser:aUser avatarImage:avatar];
+    if (self.userInfoController.followingEnabled)
+        [service isUser:credentials.username following:aUser.username];
 }
 
 - (void)showTweetsForUser:(NSString *)username
@@ -513,6 +544,120 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)setFavorite:(BOOL)favorite
 {
     // not supported for direct messages
+}
+
+#pragma mark UserInfoViewControllerDelegate implementation
+
+- (void)showingUserInfoView
+{
+    NSLog(@"Direct message display manager: showing user info view");
+    [self deallocateTweetDetailsNode];
+}
+
+- (void)startFollowingUser:(NSString *)username
+{
+    NSLog(@"Timeline display manager: sending 'follow user' request for %@",
+        username);
+    [service followUser:username];
+}
+
+- (void)stopFollowingUser:(NSString *)username
+{
+    NSLog(@"Timeline display manager: sending 'stop following' request for %@",
+        username);
+    [service stopFollowingUser:username];
+}
+
+- (void)displayFavoritesForUser:(NSString *)username
+{
+    NSLog(@"Direct message display manager: displaying favorites for user %@",
+        username);
+    NSString * title =
+        NSLocalizedString(@"timelineview.favorites.title", @"");
+    self.tweetDetailsNetAwareViewController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    self.tweetDetailsTimelineDisplayMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:
+        tweetDetailsNetAwareViewController
+        title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
+    self.tweetDetailsTimelineDisplayMgr.displayAsConversation = YES;
+    self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = NO;
+    [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
+
+    self.tweetDetailsNetAwareViewController.delegate =
+        self.tweetDetailsTimelineDisplayMgr;
+
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:managedObjectContext]
+        autorelease];
+
+    FavoritesTimelineDataSource * dataSource =
+        [[[FavoritesTimelineDataSource alloc]
+        initWithTwitterService:twitterService
+        username:username]
+        autorelease];
+
+    self.tweetDetailsCredentialsPublisher =
+        [[CredentialsActivatedPublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+
+    twitterService.delegate = dataSource;
+    [self.tweetDetailsTimelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO allPagesLoaded:NO];
+    dataSource.delegate = self.tweetDetailsTimelineDisplayMgr;
+
+    [dataSource setCredentials:credentials];
+    [wrapperController.navigationController
+        pushViewController:self.tweetDetailsNetAwareViewController
+        animated:YES];
+}
+
+- (void)displayFollowingForUser:(NSString *)username
+{
+    NSLog(@"Direct message display manager: displaying 'following' list for %@",
+        username);
+
+    self.userListNetAwareViewController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    self.userListDisplayMgr =
+        [userListDisplayMgrFactory
+        createUserListDisplayMgrWithWrapperController:
+        self.userListNetAwareViewController
+        composeTweetDisplayMgr:composeTweetDisplayMgr
+        showFollowing:YES
+        username:username];
+    [self.userListDisplayMgr setCredentials:credentials];
+
+    [wrapperController.navigationController
+        pushViewController:self.userListNetAwareViewController animated:YES];
+}
+
+- (void)displayFollowersForUser:(NSString *)username
+{
+    NSLog(@"Direct message display manager: displaying 'followers' list for %@",
+        username);
+
+    self.userListNetAwareViewController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    self.userListDisplayMgr =
+        [userListDisplayMgrFactory
+        createUserListDisplayMgrWithWrapperController:
+        self.userListNetAwareViewController
+        composeTweetDisplayMgr:composeTweetDisplayMgr
+        showFollowing:NO
+        username:username];
+    [self.userListDisplayMgr setCredentials:credentials];
+
+    [wrapperController.navigationController
+        pushViewController:self.userListNetAwareViewController animated:YES];
 }
 
 #pragma mark TwitchBrowserViewControllerDelegate implementation
@@ -1195,6 +1340,35 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             context:managedObjectContext];
 
     return savedSearchMgr;
+}
+
+- (UserInfoViewController *)userInfoController
+{
+    if (!userInfoController) {
+        userInfoController =
+            [[UserInfoViewController alloc]
+            initWithNibName:@"UserInfoView" bundle:nil];
+
+        userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
+
+        UIBarButtonItem * rightBarButton =
+            [[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self
+            action:@selector(sendDirectMessageToCurrentUser)];
+        userInfoController.navigationItem.rightBarButtonItem = rightBarButton;
+
+        userInfoController.delegate = self;
+    }
+
+    return userInfoController;
+}
+
+- (void)sendDirectMessageToCurrentUser
+{
+    NSLog(@"Direct message display manager: sending direct message to %@",
+        otherUserInConversation.username);
+    [composeTweetDisplayMgr
+        composeDirectMessageTo:otherUserInConversation.username];
 }
 
 + (BOOL)displayWithUsername
