@@ -570,7 +570,8 @@ enum TweetActionRows {
 - (void)displayTweet
 {
     if (tweet.user.name.length > 0) {
-        usernameLabel.text = tweet.user.username;
+        usernameLabel.text =
+            [NSString stringWithFormat:@"@%@", tweet.user.username];
         fullNameLabel.text = tweet.user.name;
     } else {
         usernameLabel.text = @"";
