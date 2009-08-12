@@ -59,13 +59,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [self enableSendButtonFromInterface];
 
-    if (!displayingActivity) {
-        if (!recipientView.hidden && recipientTextField.text.length == 0)
-            [recipientTextField becomeFirstResponder];
-        else
-            [textView becomeFirstResponder];
-    }
-
     [self updateCharacterCountFromText:textView.text];
 
     CGRect characterCountFrame = characterCount.frame;
