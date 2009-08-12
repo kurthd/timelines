@@ -374,7 +374,9 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar
 {
     NSLog(@"Timeline display manager: showing user info for %@", aUser);
-    userInfoController = nil; // Forces to scroll to top
+    // Forces to scroll to top
+    [userInfoController release];
+    userInfoController = nil;
     self.userInfoController.navigationItem.title = aUser.name;
     [self.wrapperController.navigationController
         pushViewController:self.userInfoController animated:YES];
