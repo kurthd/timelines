@@ -6,7 +6,7 @@
 #import "User.h"
 #import "RemotePhoto.h"
 
-@protocol TweetDetailsViewDelegate
+@protocol TweetViewControllerDelegate
 
 - (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar;
 - (void)showTweetsForUser:(NSString *)username;

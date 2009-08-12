@@ -199,8 +199,8 @@ static UIImage * defaultAvatar;
                             imageNamed:
                             @"FavoriteIconForUserViewHighlighted.png"];
                     } else {
-                        if (/* TEMPORARY: [user.numUpdates
-                            isEqual:[NSNumber numberWithInt:0]] */ NO) {
+                        if ([user.statusesCount
+                            isEqual:[NSNumber numberWithInt:0]]) {
                             cell.textLabel.textColor = [UIColor grayColor];
                             cell.accessoryType = UITableViewCellAccessoryNone;
                             cell.selectionStyle =
@@ -212,7 +212,11 @@ static UIImage * defaultAvatar;
                             cell.selectionStyle =
                                 UITableViewCellSelectionStyleBlue;
                         }
-                        cell.textLabel.text = @"1,200 updates";
+                        cell.textLabel.text =
+                            [NSString stringWithFormat:
+                            NSLocalizedString(
+                            @"userinfoview.statusescount.formatstring", @""),
+                            user.statusesCount];
                     }
                 break;
     }

@@ -20,6 +20,7 @@
 @dynamic username;
 @dynamic name;
 @dynamic tweets;
+@dynamic statusesCount;
 @dynamic receivedDirectMessages;
 @dynamic sentDirectMessages;
 

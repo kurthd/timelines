@@ -26,7 +26,6 @@
     user.bio = [data safeObjectForKey:@"description"];
     user.location = [data safeObjectForKey:@"location"];
 
-    // use key-value coding to convert strings to nsnumbers
     NSNumber * friendsCount =
         [NSNumber numberWithLongLong:
         [[data safeObjectForKey:@"friends_count"] longLongValue]];
@@ -42,6 +41,9 @@
     user.webpage = [data safeObjectForKey:@"url"];
     user.identifier = [[data safeObjectForKey:@"id"] description];
     user.profileImageUrl = [data safeObjectForKey:@"profile_image_url"];
+
+    [user setValue:[data objectForKey:@"statuses_count"]
+            forKey:@"statusesCount"];
 }
 
 - (void)populateTweet:(Tweet *)tweet fromData:(NSDictionary *)data

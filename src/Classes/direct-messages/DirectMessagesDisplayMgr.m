@@ -270,6 +270,12 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)selectedTweet:(DirectMessage *)message
     avatarImage:(UIImage *)avatarImage
 {
+    // HACK: Release and then re-recreate the view for every tweet so the view
+    // is properly scrolled to top when it appears. I have not been able to get
+    // the view to scroll to top programmatically.
+    [tweetViewController release];
+    tweetViewController = nil;
+
     NSLog(@"Message display manager: selected message: %@", message);
     self.selectedMessage = message;
 

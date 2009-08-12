@@ -177,12 +177,12 @@ enum PushSettings
 + (NSMutableDictionary *)allAccountSettings
 {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary * allAccountSettings =
+    NSMutableDictionary * allAccountSettings =
         [[defaults objectForKey:[[self class] allAccountSettingsKey]]
         mutableCopy];
 
     return allAccountSettings ?
-        allAccountSettings : [NSMutableDictionary dictionary];
+        [allAccountSettings autorelease] : [NSMutableDictionary dictionary];
 }
 
 + (void)setAllAccountSettings:(NSDictionary *)allAccountSettings

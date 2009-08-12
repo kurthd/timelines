@@ -8,7 +8,7 @@
 #import "TimelineDataSource.h"
 #import "TimelineViewControllerDelegate.h"
 #import "TimelineDataSourceDelegate.h"
-#import "TweetDetailsViewController.h"
+#import "TweetViewControllerDelegate.h"
 #import "TwitterCredentials.h"
 #import "TweetInfo.h"
 #import "UserInfoViewController.h"
@@ -34,7 +34,7 @@
 @interface TimelineDisplayMgr :
     NSObject
     <TimelineDataSourceDelegate, TimelineViewControllerDelegate,
-    TweetDetailsViewDelegate, NetworkAwareViewControllerDelegate,
+    TweetViewControllerDelegate, NetworkAwareViewControllerDelegate,
     UserInfoViewControllerDelegate, PhotoBrowserDelegate,
     TwitchBrowserViewControllerDelegate, TwitterServiceDelegate,
     UIWebViewDelegate>

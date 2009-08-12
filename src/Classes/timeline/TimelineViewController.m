@@ -191,10 +191,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         [NSIndexPath indexPathForRow:0 inSection:0]
         atScrollPosition:UITableViewScrollPositionNone animated:YES];
 
-    NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
-    [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
-    
-    [self.tableView reloadData];
+    if (![self getAvatarForUrl:tweet.user.profileImageUrl]) {
+        NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
+        [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+    }
 }
 
 - (void)setUser:(User *)aUser
@@ -215,9 +215,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             user.name : user.username;
 //        NSString * followingFormatString =
 //            NSLocalizedString(@"timelineview.userinfo.following", @"");
-        // numUpdatesLabel.text =
-        //     [NSString stringWithFormat:followingFormatString,
-        //     aUser.friendsCount, aUser.followersCount];
+         numUpdatesLabel.text =
+            [NSString stringWithFormat:
+            NSLocalizedString(@"userinfoview.statusescount.formatstring", @""),
+            user.statusesCount];
         UIImage * avatarImage =
             [self getAvatarForUrl:aUser.profileImageUrl];
         [avatarView setImage:avatarImage];
