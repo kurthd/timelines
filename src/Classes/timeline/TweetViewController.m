@@ -70,6 +70,7 @@ enum TweetActionRows {
 
 @synthesize delegate, navigationController, tweetContentView, tweet, avatar;
 @synthesize showsExtendedActions;
+@synthesize realParentViewController;
 
 - (void)dealloc
 {
@@ -414,7 +415,8 @@ enum TweetActionRows {
         webAddress];
     [picker setMessageBody:body isHTML:NO];
 
-    [self presentModalViewController:picker animated:YES];
+    [self.realParentViewController presentModalViewController:picker
+        animated:YES];
 
     [picker release];
 }
@@ -605,6 +607,12 @@ enum TweetActionRows {
             NSLocalizedString(@"tweetdetailsview.favorite.label", @"");
         cell.imageView.image = [UIImage imageNamed:@"NotFavorite.png"];
     }
+}
+
+- (UIViewController *)realParentViewController
+{
+    return self.parentViewController ?
+        self.parentViewController : realParentViewController;
 }
 
 + (UIImage *)defaultAvatar

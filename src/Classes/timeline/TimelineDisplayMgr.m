@@ -21,8 +21,11 @@
 - (void)replyToTweetWithMessage;
 - (NetworkAwareViewController *)newTweetDetailsWrapperController;
 - (TweetViewController *)newTweetDetailsController;
-- (void)replyToCurrentTweetDetailsUser;
+- (void)presentActionsForCurrentTweetDetailsUser;
+
 - (void)presentTweetActions;
+- (void)presentActionsForCurrentTweetDetailsUser;
+- (void)presentTweetActionsForTarget:(id)target;
 
 - (void)removeSearch:(NSString *)search;
 - (void)saveSearch:(NSString *)search;
@@ -54,10 +57,10 @@ static NSInteger retweetFormatValueAlredyRead;
     setUserToFirstTweeter, tweetDetailsTimelineDisplayMgr,
     tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher,
     lastTweetDetailsWrapperController, lastTweetDetailsController,
-    currentTweetDetailsUser, currentUsername, allPagesLoaded,
-    setUserToAuthenticatedUser, firstFetchReceived, tweetIdToShow,
-    suppressTimelineFailures, credentials, savedSearchMgr, currentSearch,
-    userListDisplayMgr, userListNetAwareViewController;
+    currentUsername, allPagesLoaded,setUserToAuthenticatedUser,
+    firstFetchReceived, tweetIdToShow, suppressTimelineFailures, credentials,
+    savedSearchMgr, currentSearch, userListDisplayMgr,
+    userListNetAwareViewController;
 
 - (void)dealloc
 {
@@ -522,6 +525,21 @@ static NSInteger retweetFormatValueAlredyRead;
 }
 
 - (void)presentTweetActions
+{   
+    [self presentTweetActionsForTarget:self.tweetDetailsController];
+}
+
+- (void)presentActionsForCurrentTweetDetailsUser
+{
+    NSLog(@"Presenting actions for current tweet details user");
+    NetworkAwareViewController * topNetworkAwareViewController =
+        (NetworkAwareViewController *)
+        [wrapperController.navigationController topViewController];
+    [self presentTweetActionsForTarget:
+        topNetworkAwareViewController.targetViewController];
+}
+
+- (void)presentTweetActionsForTarget:(id)target
 {
     NSString * cancel =
         NSLocalizedString(@"tweetdetailsview.actions.cancel", @"");
@@ -532,7 +550,7 @@ static NSInteger retweetFormatValueAlredyRead;
 
     UIActionSheet * sheet =
         [[UIActionSheet alloc]
-        initWithTitle:nil delegate:self.tweetDetailsController
+        initWithTitle:nil delegate:target
         cancelButtonTitle:cancel destructiveButtonTitle:nil
         otherButtonTitles:browser, email, nil];
 
@@ -571,8 +589,6 @@ static NSInteger retweetFormatValueAlredyRead;
 {
     NSLog(@"Timeline display manager: showing tweet details for tweet %@",
         tweetId);
-
-    self.currentTweetDetailsUser = replyToUsername;
 
     [service fetchTweet:tweetId];
     [self.wrapperController.navigationController
@@ -836,14 +852,6 @@ static NSInteger retweetFormatValueAlredyRead;
     [composeTweetDisplayMgr composeDirectMessageTo:selectedTweet.user.username];
 }
 
-- (void)replyToCurrentTweetDetailsUser
-{
-    NSLog(@"Timeline display manager: reply to tweet selected");
-    [composeTweetDisplayMgr
-        composeReplyToTweet:selectedTweet.identifier
-        fromUser:self.currentTweetDetailsUser];
-}
-
 - (void)reTweetSelected
 {
     NSLog(@"Timeline display manager: composing retweet");
@@ -876,15 +884,19 @@ static NSInteger retweetFormatValueAlredyRead;
 
 - (NetworkAwareViewController *)newTweetDetailsWrapperController
 {
+    TweetViewController * tempTweetDetailsController =
+        self.newTweetDetailsController;
     NetworkAwareViewController * tweetDetailsWrapperController =
         [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:self.newTweetDetailsController]
+        initWithTargetViewController:tempTweetDetailsController]
         autorelease];
+    tempTweetDetailsController.realParentViewController =
+        tweetDetailsWrapperController;
 
     UIBarButtonItem * replyButton =
         [[[UIBarButtonItem alloc]
-        initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self
-        action:@selector(replyToCurrentTweetDetailsUser)]
+        initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
+        action:@selector(presentActionsForCurrentTweetDetailsUser)]
         autorelease];
     [tweetDetailsWrapperController.navigationItem
         setRightBarButtonItem:replyButton];
