@@ -5,14 +5,17 @@
 #import <Foundation/Foundation.h>
 #import "DirectMessagesDisplayMgr.h"
 #import "NetworkAwareViewController.h"
-
 #import "TimelineDisplayMgrFactory.h"
+#import "SavedSearchMgr.h"
+
 @interface DirectMessageDisplayMgrFactory : NSObject
 {
     NSManagedObjectContext * context;
+    SavedSearchMgr * findPeopleBookmarkMgr;
 }
 
-- (id)initWithContext:(NSManagedObjectContext *)context;
+- (id)initWithContext:(NSManagedObjectContext *)someContext
+    findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr;
 
 - (DirectMessagesDisplayMgr *)
     createDirectMessageDisplayMgrWithWrapperController:

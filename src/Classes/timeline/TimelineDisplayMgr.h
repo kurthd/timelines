@@ -25,6 +25,7 @@
 #import "TwitterServiceDelegate.h"
 #import "SavedSearchMgr.h"
 #import "ConversationDisplayMgr.h"
+#import "UserInfoRequestAdapter.h"
 
 @class TimelineDisplayMgrFactory;
 @class TweetViewController;
@@ -45,6 +46,9 @@
     NetworkAwareViewController * lastTweetDetailsWrapperController;
     TweetViewController * lastTweetDetailsController;
     TweetViewController * tweetDetailsController;
+    NetworkAwareViewController * userInfoControllerWrapper;
+    UserInfoRequestAdapter * userInfoRequestAdapter;
+    TwitterService * userInfoTwitterService;
     UserInfoViewController * userInfoController;
     TwitchBrowserViewController * browserController;
     PhotoBrowser * photoBrowser;
@@ -83,12 +87,8 @@
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 
-    BOOL failedState;
-
-    NSString * currentTweetDetailsUser;
-
     NSString * tweetIdToShow;
-    
+
     BOOL suppressTimelineFailures;
 
     SavedSearchMgr * savedSearchMgr;
@@ -111,6 +111,9 @@
 @property (nonatomic, retain) TweetViewController * lastTweetDetailsController;
 @property (readonly) TweetViewController * tweetDetailsController;
 @property (readonly) UserInfoViewController * userInfoController;
+@property (readonly) NetworkAwareViewController * userInfoControllerWrapper;
+@property (readonly) UserInfoRequestAdapter * userInfoRequestAdapter;
+@property (readonly) TwitterService * userInfoTwitterService;
 @property (readonly) TwitchBrowserViewController * browserController;
 @property (readonly) PhotoBrowser * photoBrowser;
 
@@ -140,8 +143,6 @@
 @property (nonatomic, retain)
     NetworkAwareViewController * userListNetAwareViewController;
 
-@property (nonatomic, copy) NSString * currentTweetDetailsUser;
-    
 @property (nonatomic, copy) NSString * tweetIdToShow;
 
 @property (nonatomic, assign) BOOL suppressTimelineFailures;

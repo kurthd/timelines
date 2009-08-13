@@ -216,6 +216,8 @@
 		910EFE5F1017E78A002083D6 /* NewDirectMessagesState.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE5E1017E78A002083D6 /* NewDirectMessagesState.m */; };
 		910EFE831017F078002083D6 /* NewDirectMessagesPersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE821017F078002083D6 /* NewDirectMessagesPersistenceStore.m */; };
 		9112EAB5102E236E002715DC /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
+		9130FCA410337EA1004E3030 /* UserInfoRequestAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FCA310337EA1004E3030 /* UserInfoRequestAdapter.m */; };
+		9130FE0E1034C792004E3030 /* ErrorState.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FE0D1034C792004E3030 /* ErrorState.m */; };
 		9145EF5B1005073200C2E485 /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
 		9145EF5C1005073F00C2E485 /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
 		9145EF5D1005074A00C2E485 /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
@@ -587,6 +589,10 @@
 		9115A92D0FF06AA100D6A769 /* TweetInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetInfo.m; path = timeline/TweetInfo.m; sourceTree = "<group>"; };
 		9115A97F0FF0874700D6A769 /* MentionsTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionsTimelineDataSource.h; path = timeline/MentionsTimelineDataSource.h; sourceTree = "<group>"; };
 		9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionsTimelineDataSource.m; path = timeline/MentionsTimelineDataSource.m; sourceTree = "<group>"; };
+		9130FCA210337EA1004E3030 /* UserInfoRequestAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoRequestAdapter.h; path = timeline/UserInfoRequestAdapter.h; sourceTree = "<group>"; };
+		9130FCA310337EA1004E3030 /* UserInfoRequestAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoRequestAdapter.m; path = timeline/UserInfoRequestAdapter.m; sourceTree = "<group>"; };
+		9130FE0C1034C792004E3030 /* ErrorState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorState.h; path = shared/ErrorState.h; sourceTree = "<group>"; };
+		9130FE0D1034C792004E3030 /* ErrorState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ErrorState.m; path = shared/ErrorState.m; sourceTree = "<group>"; };
 		9145EFC91005276100C2E485 /* Re-tweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweetDisabled.png"; path = "images/Re-tweetDisabled.png"; sourceTree = "<group>"; };
 		9145EFFA10054D9400C2E485 /* BlueEnvelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueEnvelope.png; path = images/BlueEnvelope.png; sourceTree = "<group>"; };
 		9145F022100573AF00C2E485 /* User+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "User+UIAdditions.h"; path = "users/User+UIAdditions.h"; sourceTree = "<group>"; };
@@ -1051,6 +1057,8 @@
 				054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */,
 				05DB97391025107E00D06489 /* UIImage+DrawingAdditions.h */,
 				05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */,
+				9130FE0C1034C792004E3030 /* ErrorState.h */,
+				9130FE0D1034C792004E3030 /* ErrorState.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -1519,6 +1527,8 @@
 				917245E81028B781007E0DF6 /* FindPeopleBookmarkViewController.m */,
 				91724759102A4914007E0DF6 /* SearchDataSource.h */,
 				9172475A102A4914007E0DF6 /* SearchDataSource.m */,
+				9130FCA210337EA1004E3030 /* UserInfoRequestAdapter.h */,
+				9130FCA310337EA1004E3030 /* UserInfoRequestAdapter.m */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -1869,6 +1879,8 @@
 				9176A2B91030FEF8001656E0 /* UserListDisplayMgrFactory.m in Sources */,
 				05F9CF20103335200010409B /* ConversationDisplayMgr.m in Sources */,
 				05F9CF23103335310010409B /* ConversationViewController.m in Sources */,
+				9130FCA410337EA1004E3030 /* UserInfoRequestAdapter.m in Sources */,
+				9130FE0E1034C792004E3030 /* ErrorState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

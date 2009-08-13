@@ -64,7 +64,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)conn
 {
     SEL sel = @selector(fetcher:didReceiveData:fromUrl:);
-    if ([delegate respondsToSelector:sel])
+    if (delegate && [delegate respondsToSelector:sel])
         [delegate fetcher:self didReceiveData:data fromUrl:url];
 
     // HACK

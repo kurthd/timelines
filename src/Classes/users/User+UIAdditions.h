@@ -13,4 +13,9 @@
 - (UIImage *)avatarImage;
 - (NSString *)followersDescription;
 
++ (void)setAvatar:(UIImage *)avatar forUrl:(NSString *)url;
++ (UIImage *)avatarForUrl:(NSString *)url;
+
++ (NSString *)largeAvatarUrlForUrl:(NSString *)url;
+
 @end

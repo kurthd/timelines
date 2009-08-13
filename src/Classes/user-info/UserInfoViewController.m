@@ -8,6 +8,7 @@
 #import "UserInfoLabelCell.h"
 #import "AsynchronousNetworkFetcher.h"
 #import "NSString+HtmlEncodingAdditions.h"
+#import "User+UIAdditions.h"
 
 enum {
     kUserInfoSectionDetails,
@@ -66,6 +67,7 @@ static UIImage * defaultAvatar;
 
 - (void)viewDidLoad
 {
+    NSLog(@"Loading new user info view controller");
     [super viewDidLoad];
 
     self.tableView.backgroundColor = [UIColor twitchBackgroundColor];
@@ -270,7 +272,11 @@ static UIImage * defaultAvatar;
 {
     NSLog(@"Received avatar for url: %@", url);
     UIImage * avatarImage = [UIImage imageWithData:data];
-    [avatarView setImage:avatarImage];
+    NSString * urlAsString = [url absoluteString];
+    [User setAvatar:avatarImage forUrl:urlAsString];
+    NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
+    if (NSEqualRanges([urlAsString rangeOfString:@"_normal."], notFoundRange))
+        [avatarView setImage:avatarImage];
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
@@ -279,19 +285,23 @@ static UIImage * defaultAvatar;
 
 #pragma mark UserInfoViewController implementation
 
-- (void)setUser:(User *)aUser avatarImage:(UIImage *)avatarImage
+- (void)setUser:(User *)aUser
 {
     [aUser retain];
     [user release];
     user = aUser;
 
     if (followingEnabled) {
-        followingLabel.hidden = YES;
-        followingCheckMark.hidden = YES;
-        followingActivityIndicator.hidden = NO;
-        followingLoadingLabel.hidden = NO;
-        activeAcctLabel.hidden = YES;
-        followButton.enabled = NO;
+        if (!followingStateSet) {
+            followingLabel.hidden = YES;
+            followingCheckMark.hidden = YES;
+            followingActivityIndicator.hidden = NO;
+            followingLoadingLabel.hidden = NO;
+        } else {
+            NSLog(@"Not updating following elements in header");
+            [self updateDisplayForFollwoing:currentlyFollowing];
+        }
+
         [followButton setTitleColor:[UIColor grayColor]
             forState:UIControlStateNormal];
         NSString * startFollowingText =
@@ -304,29 +314,52 @@ static UIImage * defaultAvatar;
         followingActivityIndicator.hidden = YES;
         followingLoadingLabel.hidden = YES;
         activeAcctLabel.hidden = NO;
-        followButton.enabled = NO;
         [followButton setTitleColor:[UIColor grayColor]
             forState:UIControlStateNormal];
         NSString * followingBtnText =
             NSLocalizedString(@"userinfoview.startfollowing", @"");
         [followButton setTitle:followingBtnText forState:UIControlStateNormal];
     }
+    activeAcctLabel.hidden = followingEnabled;
 
-    if (!avatarImage) {
-        NSURL * avatarUrl = [NSURL URLWithString:user.profileImageUrl];
-        [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
-        [avatarView setImage:[[self class] defaultAvatar]];
-    } else
+    NSString * largeAvatarUrlAsString =
+        [User largeAvatarUrlForUrl:user.profileImageUrl];
+
+    UIImage * avatar = [User avatarForUrl:largeAvatarUrlAsString];
+    if (!avatar)
+        avatar = [User avatarForUrl:user.profileImageUrl];
+    if (!avatar)
+        avatar = [[self class] defaultAvatar];
+
+    [avatarView setImage:avatar];
+
+    NSURL * largeAvatarUrl =
+        [NSURL URLWithString:
+        [User largeAvatarUrlForUrl:largeAvatarUrlAsString]];
+    NSURL * avatarUrl =
+        [NSURL URLWithString:[User largeAvatarUrlForUrl:user.profileImageUrl]];
+    [AsynchronousNetworkFetcher fetcherWithUrl:largeAvatarUrl delegate:self];
+    [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+
+    UIImage * avatarImage = [User avatarForUrl:user.profileImageUrl];
+    if (avatarImage)
         [avatarView setImage:avatarImage];
-    nameLabel.text = aUser.username;
+
+    nameLabel.text = aUser.name;
     bioLabel.text = [aUser.bio stringByDecodingHtmlEntities];
 
     [self layoutViews];
     [self.tableView reloadData];
 }
 
+- (void)showingNewUser
+{
+    followingStateSet = NO;
+}
+
 - (void)setFollowing:(BOOL)following
 {
+    followingStateSet = YES;
     currentlyFollowing = following;
 
     if (followingEnabled)
@@ -352,7 +385,9 @@ static UIImage * defaultAvatar;
     bioLabel.frame = bioLabelFrame;
 
     CGRect headerViewFrame = headerView.frame;
-    headerViewFrame.size.height = bioLabelFrame.size.height + 390.0;
+    headerViewFrame.size.height =
+        bioLabel.text.length > 0 ?
+        bioLabelFrame.size.height + 390.0 : 376.0;
     headerView.frame = headerViewFrame;
 
     // force the header view to redraw
@@ -360,7 +395,8 @@ static UIImage * defaultAvatar;
 }
 
 - (IBAction)toggleFollowing:(id)sender
-{   
+{
+    NSLog(@"Toggling following state");
     currentlyFollowing = !currentlyFollowing;
     if (currentlyFollowing)
         [delegate startFollowingUser:user.username];
@@ -384,6 +420,12 @@ static UIImage * defaultAvatar;
 
 - (void)updateDisplayForFollwoing:(BOOL)following
 {
+    NSLog(@"User info view: updating display for following");
+    if (following)
+        NSLog(@"Following");
+    else
+        NSLog(@"Not following");
+
     followingLabel.hidden = NO;
     followingLabel.text =
         following ?

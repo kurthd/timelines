@@ -15,8 +15,6 @@
 @property (nonatomic, retain) ConversationViewController *
     conversationViewController;
 
-@property (nonatomic, copy) NSString * firstTweetId;
-
 @end
 
 @implementation ConversationDisplayMgr

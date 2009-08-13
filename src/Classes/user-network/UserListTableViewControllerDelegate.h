@@ -7,7 +7,7 @@
 
 @protocol UserListTableViewControllerDelegate
 
-- (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar;
+- (void)showUserInfoForUser:(User *)aUser;
 - (void)loadMoreUsers;
 - (void)userListViewWillAppear;
 

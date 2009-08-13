@@ -4,8 +4,8 @@
 
 #import "UserListDisplayMgr.h"
 #import "ArbUserTimelineDataSource.h"
-#import "UIAlertView+InstantiationAdditions.h"
 #import "FavoritesTimelineDataSource.h"
+#import "ErrorState.h"
 
 @interface UserListDisplayMgr ()
 
@@ -21,8 +21,6 @@
 @property (nonatomic, copy) NSString * userInfoUsername;
 
 - (void)deallocateNode;
-- (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
-- (void)displayErrorWithTitle:(NSString *)title;
 - (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page;
 - (void)sendDirectMessageToCurrentUser;
 
@@ -116,16 +114,17 @@
 
 #pragma mark UserListTableViewControllerDelegate implementation
 
-- (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar
+- (void)showUserInfoForUser:(User *)aUser
 {
     self.userInfoUsername = aUser.username;
+    [userInfoController release];
     userInfoController = nil; // Forces to scroll to top
     self.userInfoController.navigationItem.title = aUser.name;
     [wrapperController.navigationController
         pushViewController:self.userInfoController animated:YES];
     self.userInfoController.followingEnabled =
         ![credentials.username isEqual:aUser.username];
-    [self.userInfoController setUser:aUser avatarImage:avatar];
+    [self.userInfoController setUser:aUser];
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUser.username];
 }
@@ -162,7 +161,7 @@
         NSLocalizedString(@"timelinedisplaymgr.error.startfollowing", @"");
     NSString * errorMessage =
         [NSString stringWithFormat:errorMessageFormatString, aUsername];
-    [self displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
 - (void)stoppedFollowingUsername:(NSString *)aUsername
@@ -177,7 +176,7 @@
         NSLocalizedString(@"timelinedisplaymgr.error.stopfollowing", @"");
     NSString * errorMessage =
         [NSString stringWithFormat:errorMessageFormatString, aUsername];
-    [self displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
 - (void)friends:(NSArray *)friends fetchedForUsername:(NSString *)username
@@ -194,7 +193,7 @@
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchfriends", @"");
-    [self displayErrorWithTitle:errorMessage error:error];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
     [wrapperController setUpdatingState:kDisconnected];
 }
 
@@ -212,7 +211,7 @@
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchfollowers", @"");
-    [self displayErrorWithTitle:errorMessage error:error];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
     [wrapperController setUpdatingState:kDisconnected];
 }
 
@@ -236,7 +235,7 @@
         NSLocalizedString(@"timelinedisplaymgr.error.userquery", @"");
     NSString * errorMessage =
         [NSString stringWithFormat:errorMessageFormatString, aUsername];
-    [self displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
 #pragma mark UserInfoViewControllerDelegate implementation
@@ -493,28 +492,6 @@
     self.nextUserListDisplayMgr = nil;
     self.nextWrapperController = nil;
     self.credentialsPublisher = nil;
-}
-
-- (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error
-{
-    if (!failedState) {
-        NSString * message = error.localizedDescription;
-        UIAlertView * alertView =
-            [UIAlertView simpleAlertViewWithTitle:title message:message];
-        [alertView show];
-
-        failedState = YES;
-    }
-    [wrapperController setUpdatingState:kDisconnected];
-}
-
-- (void)displayErrorWithTitle:(NSString *)title
-{
-    NSLog(@"User list display manager: displaying error with title: %@", title);
-
-    UIAlertView * alertView =
-        [UIAlertView simpleAlertViewWithTitle:title message:nil];
-    [alertView show];
 }
 
 - (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page

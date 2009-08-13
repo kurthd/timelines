@@ -7,6 +7,7 @@
 #import "User.h"
 #import "AsynchronousNetworkFetcher.h"
 #import "UIColor+TwitchColors.h"
+#import "User+UIAdditions.h"
 
 @interface User (Sorting)
 - (NSComparisonResult)compare:(User *)user;
@@ -51,7 +52,6 @@ static UIColor * darkCellBackgroundColor;
     [noMorePagesLabel release];
 
     [users release];
-    [avatarCache release];
     [alreadySent release];
 
     [sortedUserCache release];
@@ -65,7 +65,6 @@ static UIColor * darkCellBackgroundColor;
 
     self.tableView.tableFooterView = footerView;
 
-    avatarCache = [[NSMutableDictionary dictionary] retain];
     alreadySent = [[NSMutableDictionary dictionary] retain];
 }
 
@@ -126,9 +125,7 @@ static UIColor * darkCellBackgroundColor;
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     User * user = [[self sortedUsers] objectAtIndex:indexPath.row];
-    UIImage * avatar = [avatarCache objectForKey:user.profileImageUrl];
-    avatar = avatar == [[self class ] defaultAvatar] ? nil : avatar;
-    [delegate showUserInfoForUser:user withAvatar:avatar];
+    [delegate showUserInfoForUser:user];
 }
 
 - (CGFloat)tableView:(UITableView *)aTableView
@@ -145,7 +142,7 @@ static UIColor * darkCellBackgroundColor;
     NSString * urlAsString = [url absoluteString];
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
-        [avatarCache setObject:avatarImage forKey:urlAsString];
+        [User setAvatar:avatarImage forUrl:urlAsString];
 
         // avoid calling reloadData by setting the avatars of the visible cells
         NSArray * visibleCells = self.tableView.visibleCells;
@@ -194,7 +191,7 @@ static UIColor * darkCellBackgroundColor;
 
 - (UIImage *)getAvatarForUrl:(NSString *)url
 {
-    UIImage * avatarImage = [avatarCache objectForKey:url];
+    UIImage * avatarImage = [User avatarForUrl:url];
     if (!avatarImage) {
         avatarImage = [[self class] defaultAvatar];
         if (![alreadySent objectForKey:url]) {

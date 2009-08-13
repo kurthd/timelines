@@ -6,23 +6,24 @@
 #import "TimelineDisplayMgrFactory.h"
 #import "ArbUserTimelineDataSource.h"
 #import "FavoritesTimelineDataSource.h"
-#import "UIAlertView+InstantiationAdditions.h"
 #import "TweetViewController.h"
 #import "SearchDataSource.h"
 #import "UIWebView+FileLoadingAdditions.h"
 #import "UserListDisplayMgrFactory.h"
+#import "ErrorState.h"
 
 @interface TimelineDisplayMgr ()
 
 - (BOOL)cachedDataAvailable;
 - (void)deallocateTweetDetailsNode;
-- (void)displayErrorWithTitle:(NSString *)title;
-- (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
 - (void)replyToTweetWithMessage;
 - (NetworkAwareViewController *)newTweetDetailsWrapperController;
 - (TweetViewController *)newTweetDetailsController;
-- (void)replyToCurrentTweetDetailsUser;
+- (void)presentActionsForCurrentTweetDetailsUser;
+
 - (void)presentTweetActions;
+- (void)presentActionsForCurrentTweetDetailsUser;
+- (void)presentTweetActionsForTarget:(id)target;
 
 - (void)removeSearch:(NSString *)search;
 - (void)saveSearch:(NSString *)search;
@@ -54,10 +55,10 @@ static NSInteger retweetFormatValueAlredyRead;
     setUserToFirstTweeter, tweetDetailsTimelineDisplayMgr,
     tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher,
     lastTweetDetailsWrapperController, lastTweetDetailsController,
-    currentTweetDetailsUser, currentUsername, allPagesLoaded,
-    setUserToAuthenticatedUser, firstFetchReceived, tweetIdToShow,
-    suppressTimelineFailures, credentials, savedSearchMgr, currentSearch,
-    userListDisplayMgr, userListNetAwareViewController;
+    currentUsername, allPagesLoaded,setUserToAuthenticatedUser,
+    firstFetchReceived, tweetIdToShow, suppressTimelineFailures, credentials,
+    savedSearchMgr, currentSearch, userListDisplayMgr,
+    userListNetAwareViewController;
 
 - (void)dealloc
 {
@@ -94,6 +95,10 @@ static NSInteger retweetFormatValueAlredyRead;
 
     [savedSearchMgr release];
     [currentSearch release];
+
+    [userInfoControllerWrapper release];
+    [userInfoRequestAdapter release];
+    [userInfoTwitterService release];
 
     [conversationDisplayMgrs release];
 
@@ -192,7 +197,7 @@ static NSInteger retweetFormatValueAlredyRead;
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
     [wrapperController setCachedDataAvailable:YES];
     refreshingTweets = NO;
-    failedState = NO;
+    [[ErrorState instance] exitErrorState];
     firstFetchReceived = YES;
     self.tweetIdToShow = nil;
 }
@@ -206,7 +211,8 @@ static NSInteger retweetFormatValueAlredyRead;
     if (!suppressTimelineFailures) {
         NSString * errorMessage =
             NSLocalizedString(@"timelinedisplaymgr.error.fetchtimeline", @"");
-        [self displayErrorWithTitle:errorMessage error:error];
+        [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+        [self.wrapperController setUpdatingState:kDisconnected];
     } else
         [wrapperController setUpdatingState:kDisconnected];
 }
@@ -218,7 +224,7 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Timeline display manager received user info for %@", username);
     [timelineController setUser:aUser];
     self.user = aUser;
-    failedState = NO;
+    [[ErrorState instance] exitErrorState];
 }
 
 - (void)failedToFetchUserInfoForUsername:(NSString *)username
@@ -229,7 +235,8 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchuserinfo", @"");
-    [self displayErrorWithTitle:errorMessage error:error];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+    [self.wrapperController setUpdatingState:kDisconnected];
 }
 
 - (void)startedFollowingUsername:(NSString *)username
@@ -244,7 +251,7 @@ static NSInteger retweetFormatValueAlredyRead;
         NSLocalizedString(@"timelinedisplaymgr.error.startfollowing", @"");
     NSString * errorMessage =
         [NSString stringWithFormat:errorMessageFormatString, username];
-    [self displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
 - (void)stoppedFollowingUsername:(NSString *)username
@@ -259,7 +266,7 @@ static NSInteger retweetFormatValueAlredyRead;
         NSLocalizedString(@"timelinedisplaymgr.error.stopfollowing", @"");
     NSString * errorMessage =
         [NSString stringWithFormat:errorMessageFormatString, username];
-    [self displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
 - (void)user:(NSString *)username isFollowing:(NSString *)followee
@@ -285,7 +292,7 @@ static NSInteger retweetFormatValueAlredyRead;
         NSLocalizedString(@"timelinedisplaymgr.error.userquery", @"");
     NSString * errorMessage =
         [NSString stringWithFormat:errorMessageFormatString, username];
-    [self displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
@@ -295,7 +302,7 @@ static NSInteger retweetFormatValueAlredyRead;
 
     [self.lastTweetDetailsController hideFavoriteButton:NO];
     self.lastTweetDetailsController.showsExtendedActions = YES;
-    [self.lastTweetDetailsController displayTweet:tweetInfo avatar:nil
+    [self.lastTweetDetailsController displayTweet:tweetInfo
          onNavigationController:nil];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
     [self.lastTweetDetailsWrapperController
@@ -308,13 +315,13 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchtweet", @"");
-    [self displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
     [self.lastTweetDetailsWrapperController setUpdatingState:kDisconnected];
 }
 
 #pragma mark TimelineViewControllerDelegate implementation
 
-- (void)selectedTweet:(TweetInfo *)tweet avatarImage:(UIImage *)avatarImage
+- (void)selectedTweet:(TweetInfo *)tweet
 {
     // HACK: Release and then re-recreate the view for every tweet so the view
     // is properly scrolled to top when it appears. I have not been able to get
@@ -352,7 +359,7 @@ static NSInteger retweetFormatValueAlredyRead;
 
     [self.tweetDetailsController hideFavoriteButton:NO];
     self.tweetDetailsController.showsExtendedActions = YES;
-    [self.tweetDetailsController displayTweet:tweet avatar:avatarImage
+    [self.tweetDetailsController displayTweet:tweet
         onNavigationController:self.wrapperController.navigationController];
 }
 
@@ -370,25 +377,52 @@ static NSInteger retweetFormatValueAlredyRead;
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 
-- (void)showUserInfoWithAvatar:(UIImage *)avatar
+- (void)showUserInfo
 {
-    [self showUserInfoForUser:user withAvatar:avatar];
+    [self showUserInfoForUser:user];
 }
 
-- (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar
+- (void)showUserInfoForUser:(User *)aUser
 {
-    NSLog(@"Timeline display manager: showing user info for %@", aUser);
-    // Forces to scroll to top
+    // HACK: forces to scroll to top
     [userInfoController release];
     userInfoController = nil;
-    self.userInfoController.navigationItem.title = aUser.name;
+    self.userInfoController.navigationItem.title = aUser.username;
     [self.wrapperController.navigationController
         pushViewController:self.userInfoController animated:YES];
     self.userInfoController.followingEnabled =
         ![credentials.username isEqual:aUser.username];
-    [self.userInfoController setUser:aUser avatarImage:avatar];
+    [self.userInfoController setUser:aUser];
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUser.username];
+}
+
+- (void)showUserInfoForUsername:(NSString *)aUsername
+{
+    // HACK: forces to scroll to top
+    // All dependencies must also be recreated
+    [userInfoController release];
+    userInfoController = nil;
+    [userInfoControllerWrapper release];
+    userInfoControllerWrapper = nil;
+    [userInfoRequestAdapter release];
+    userInfoRequestAdapter = nil;
+    [userInfoTwitterService release];
+    userInfoTwitterService = nil;
+
+    [self.userInfoController showingNewUser];
+    self.userInfoControllerWrapper.navigationItem.title = aUsername;
+    [self.userInfoControllerWrapper setCachedDataAvailable:NO];
+    [self.userInfoControllerWrapper setUpdatingState:kConnectedAndUpdating];
+    [self.wrapperController.navigationController
+        pushViewController:self.userInfoControllerWrapper animated:YES];
+    self.userInfoController.followingEnabled =
+        ![credentials.username isEqual:aUsername];
+
+    if (self.userInfoController.followingEnabled)
+        [service isUser:credentials.username following:aUsername];
+
+    [self.userInfoTwitterService fetchUserInfoForUsername:aUsername];
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
@@ -526,6 +560,21 @@ static NSInteger retweetFormatValueAlredyRead;
 }
 
 - (void)presentTweetActions
+{   
+    [self presentTweetActionsForTarget:self.tweetDetailsController];
+}
+
+- (void)presentActionsForCurrentTweetDetailsUser
+{
+    NSLog(@"Presenting actions for current tweet details user");
+    NetworkAwareViewController * topNetworkAwareViewController =
+        (NetworkAwareViewController *)
+        [wrapperController.navigationController topViewController];
+    [self presentTweetActionsForTarget:
+        topNetworkAwareViewController.targetViewController];
+}
+
+- (void)presentTweetActionsForTarget:(id)target
 {
     NSString * cancel =
         NSLocalizedString(@"tweetdetailsview.actions.cancel", @"");
@@ -536,7 +585,7 @@ static NSInteger retweetFormatValueAlredyRead;
 
     UIActionSheet * sheet =
         [[UIActionSheet alloc]
-        initWithTitle:nil delegate:self.tweetDetailsController
+        initWithTitle:nil delegate:target
         cancelButtonTitle:cancel destructiveButtonTitle:nil
         otherButtonTitles:browser, email, nil];
 
@@ -577,8 +626,6 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Timeline display manager: showing tweet details for tweet %@",
         tweetId);
 
-    self.currentTweetDetailsUser = replyToUsername;
-
     [service fetchTweet:tweetId];
     [self.wrapperController.navigationController
         pushViewController:self.newTweetDetailsWrapperController animated:YES];
@@ -613,7 +660,7 @@ static NSInteger retweetFormatValueAlredyRead;
 
     [controller hideFavoriteButton:NO];
     controller.showsExtendedActions = YES;
-    [controller displayTweet:tweet avatar:nil
+    [controller displayTweet:tweet
         onNavigationController:self.wrapperController.navigationController];
 }
 
@@ -844,41 +891,10 @@ static NSInteger retweetFormatValueAlredyRead;
     self.userListNetAwareViewController = nil;
 }
 
-- (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error
-{
-    NSLog(@"Timeline display manager: displaying error: %@", error);
-    if (!failedState) {
-        NSString * message = error.localizedDescription;
-        UIAlertView * alertView =
-            [UIAlertView simpleAlertViewWithTitle:title message:message];
-        [alertView show];
-
-        failedState = YES;
-    }
-    [self.wrapperController setUpdatingState:kDisconnected];
-}
-
-- (void)displayErrorWithTitle:(NSString *)title
-{
-    NSLog(@"Timeline display manager: displaying error with title: %@", title);
-
-    UIAlertView * alertView =
-        [UIAlertView simpleAlertViewWithTitle:title message:nil];
-    [alertView show];
-}
-
 - (void)replyToTweetWithMessage
 {
     NSLog(@"Timeline display manager: replying to tweet with direct message");
     [composeTweetDisplayMgr composeDirectMessageTo:selectedTweet.user.username];
-}
-
-- (void)replyToCurrentTweetDetailsUser
-{
-    NSLog(@"Timeline display manager: reply to tweet selected");
-    [composeTweetDisplayMgr
-        composeReplyToTweet:selectedTweet.identifier
-        fromUser:self.currentTweetDetailsUser];
 }
 
 - (void)reTweetSelected
@@ -913,15 +929,19 @@ static NSInteger retweetFormatValueAlredyRead;
 
 - (NetworkAwareViewController *)newTweetDetailsWrapperController
 {
+    TweetViewController * tempTweetDetailsController =
+        self.newTweetDetailsController;
     NetworkAwareViewController * tweetDetailsWrapperController =
         [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:self.newTweetDetailsController]
+        initWithTargetViewController:tempTweetDetailsController]
         autorelease];
+    tempTweetDetailsController.realParentViewController =
+        tweetDetailsWrapperController;
 
     UIBarButtonItem * replyButton =
         [[[UIBarButtonItem alloc]
-        initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self
-        action:@selector(replyToCurrentTweetDetailsUser)]
+        initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
+        action:@selector(presentActionsForCurrentTweetDetailsUser)]
         autorelease];
     [tweetDetailsWrapperController.navigationItem
         setRightBarButtonItem:replyButton];
@@ -970,6 +990,7 @@ static NSInteger retweetFormatValueAlredyRead;
 - (UserInfoViewController *)userInfoController
 {
     if (!userInfoController) {
+        NSLog(@"Timeline display manager: creating new user info display mgr");
         userInfoController =
             [[UserInfoViewController alloc]
             initWithNibName:@"UserInfoView" bundle:nil];
@@ -986,6 +1007,48 @@ static NSInteger retweetFormatValueAlredyRead;
     }
 
     return userInfoController;
+}
+
+- (NetworkAwareViewController *)userInfoControllerWrapper
+{
+    if (!userInfoControllerWrapper) {
+        userInfoControllerWrapper =
+            [[NetworkAwareViewController alloc]
+            initWithTargetViewController:self.userInfoController];
+
+        UIBarButtonItem * rightBarButton =
+            [[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self
+            action:@selector(sendDirectMessageToCurrentUser)];
+        userInfoControllerWrapper.navigationItem.rightBarButtonItem =
+            rightBarButton;
+    }
+
+    return userInfoControllerWrapper;
+}
+
+- (UserInfoRequestAdapter *)userInfoRequestAdapter
+{
+    if (!userInfoRequestAdapter) {
+        userInfoRequestAdapter =
+            [[UserInfoRequestAdapter alloc]
+            initWithTarget:self.userInfoController action:@selector(setUser:)
+            wrapperController:self.userInfoControllerWrapper];
+    }
+
+    return userInfoRequestAdapter;
+}
+
+- (TwitterService *)userInfoTwitterService
+{
+    if (!userInfoTwitterService) {
+        userInfoTwitterService =
+            [[TwitterService alloc] initWithTwitterCredentials:credentials
+            context:managedObjectContext];
+        userInfoTwitterService.delegate = self.userInfoRequestAdapter;
+    }
+    
+    return userInfoTwitterService;
 }
 
 - (TwitchBrowserViewController *)browserController
@@ -1076,6 +1139,7 @@ static NSInteger retweetFormatValueAlredyRead;
     self.savedSearchMgr.accountName = credentials.username;
 
     [service setCredentials:credentials];
+    [userInfoTwitterService setCredentials:credentials];
     [timelineSource setCredentials:credentials];
 
     // check for pointer equality rather than string equality against username

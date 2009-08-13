@@ -26,19 +26,20 @@
     UIWebView * tweetContentView;
 
     TweetInfo * tweet;
-    UIImage * avatar;
 
     // configure the display
     BOOL showsFavoriteButton;
     BOOL showsExtendedActions;
+    
+    UIViewController * realParentViewController;
 }
 
 @property (nonatomic, assign) NSObject<TweetViewControllerDelegate> * delegate;
 @property (nonatomic, retain, readonly) TweetInfo * tweet;
-@property (nonatomic, retain, readonly) UIImage * avatar;
 @property (nonatomic, assign) BOOL showsExtendedActions;
+@property (nonatomic, retain) UIViewController * realParentViewController;
 
-- (void)displayTweet:(TweetInfo *)tweet avatar:(UIImage *)avatar
+- (void)displayTweet:(TweetInfo *)tweet
     onNavigationController:(UINavigationController *)navController;
 - (void)setUsersTweet:(BOOL)usersTweet;
 - (void)hideFavoriteButton:(BOOL)hide;

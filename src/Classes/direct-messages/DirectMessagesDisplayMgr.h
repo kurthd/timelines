@@ -26,6 +26,8 @@
 #import "UserListTableViewController.h"
 #import "NewDirectMessagesState.h"
 #import "ComposeTweetDisplayMgrDelegate.h"
+#import "SavedSearchMgr.h"
+#import "UserInfoRequestAdapter.h"
 
 /*  This class is responsible for managing the display of the direct messages
     tab.  It will function very similarly to the timeline display, re-using many
@@ -62,7 +64,7 @@
     DirectMessageConversationViewControllerDelegate, TweetViewControllerDelegate,
     PhotoBrowserDelegate, TwitchBrowserViewControllerDelegate,
     ComposeTweetDisplayMgrDelegate, MFMailComposeViewControllerDelegate,
-    UIActionSheetDelegate>
+    UIActionSheetDelegate, UserInfoViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     DirectMessageInboxViewController * inboxController;
@@ -70,6 +72,8 @@
     TweetViewController * tweetViewController;
     TwitchBrowserViewController * browserController;
     PhotoBrowser * photoBrowser;
+    SavedSearchMgr * findPeopleBookmarkMgr;
+    UserListDisplayMgrFactory * userListDisplayMgrFactory;
 
     TwitterService * service;
 
@@ -94,12 +98,11 @@
     CredentialsActivatedPublisher * tweetDetailsCredentialsPublisher;
     NSManagedObjectContext * managedObjectContext;
 
+    UserListDisplayMgr * userListDisplayMgr;
     NetworkAwareViewController * userListNetAwareViewController;
-    UserListTableViewController * userListController;
 
     TwitterCredentials * credentials;
 
-    BOOL failedState;
     BOOL refreshingMessages;
     BOOL receivedQueryResponse;
     NSArray * newDirectMessages;
@@ -116,6 +119,12 @@
 
     SavedSearchMgr * savedSearchMgr;
     NSString * currentSearch;
+
+    UserInfoViewController * userInfoController;
+
+    NetworkAwareViewController * userInfoControllerWrapper;
+    UserInfoRequestAdapter * userInfoRequestAdapter;
+    TwitterService * userInfoTwitterService;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;
@@ -137,11 +146,6 @@
 @property (nonatomic, retain)
     CredentialsActivatedPublisher * tweetDetailsCredentialsPublisher;
 
-@property (nonatomic, readonly)
-    NetworkAwareViewController * userListNetAwareViewController;
-@property (nonatomic, readonly)
-    UserListTableViewController * userListController;
-
 @property (nonatomic, readonly) UITabBarItem * tabBarItem;
 
 @property (nonatomic, copy) NSArray * newDirectMessages;
@@ -155,13 +159,19 @@
 
 @property (nonatomic, copy) NSNumber * currentConversationUserId;
 
+@property (readonly) NetworkAwareViewController * userInfoControllerWrapper;
+@property (readonly) UserInfoRequestAdapter * userInfoRequestAdapter;
+@property (readonly) TwitterService * userInfoTwitterService;
+
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     inboxController:(DirectMessageInboxViewController *)anInboxController
     service:(TwitterService *)aService
     initialCache:(DirectMessageCache *)initialCache
     factory:(TimelineDisplayMgrFactory *)factory
     managedObjectContext:(NSManagedObjectContext* )managedObjectContext
-    composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr;
+    composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
+    findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
+    userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)clearState;

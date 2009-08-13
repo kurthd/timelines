@@ -9,7 +9,8 @@
 
 @protocol TweetViewControllerDelegate
 
-- (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar;
+- (void)showUserInfoForUser:(User *)aUser;
+- (void)showUserInfoForUsername:(NSString *)aUsername;
 - (void)showTweetsForUser:(NSString *)username;
 - (void)showResultsForSearch:(NSString *)query;
 - (void)setFavorite:(BOOL)favorite;
@@ -17,7 +18,6 @@
 - (void)visitWebpage:(NSString *)webpageUrl;
 - (void)showingTweetDetails:(TweetInfo *)tweet;
 - (void)loadNewTweetWithId:(NSString *)tweetId username:(NSString *)username;
-- (void)setCurrentTweetDetailsUser:(NSString *)username;
 - (void)reTweetSelected;
 - (void)replyToTweet;
 - (void)sendDirectMessageToUser:(NSString *)username;
