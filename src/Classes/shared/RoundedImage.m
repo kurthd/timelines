@@ -39,7 +39,7 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext(); 
     CGMutablePathRef outlinePath = CGPathCreateMutable(); 
 
-    float w = [self bounds].size.width; 
+    float w = [self bounds].size.width;
     float h = [self bounds].size.height;
 
     // Making the path and the rounded corners
@@ -61,9 +61,27 @@
     
     CGContextAddPath(ctx, outlinePath); 
     CGContextClip(ctx); 
-    
-    // Drawing the image
-    [imageView.image drawInRect:CGRectMake(0, 0, w, h)];
+
+    CGSize imageSize = imageView.image.size;
+    if (imageSize.height > h || imageSize.width > w) {
+        CGFloat heightToWidthRatio =
+            (CGFloat)imageSize.height / imageSize.width;
+        if (heightToWidthRatio > 1.0) {
+            imageSize.height = h;
+            imageSize.width = h / heightToWidthRatio;
+        } else {
+            imageSize.height = heightToWidthRatio * w;
+            imageSize.width = w;
+        }
+    } else if (imageSize.height <= h || imageSize.width <= w) {
+        imageSize.height = h;
+        imageSize.width = w;
+    }
+
+    [imageView.image drawInRect:CGRectMake(
+        (w - imageSize.width) / 2,
+        (h - imageSize.height) / 2, imageSize.width,
+        imageSize.height)];
 }
 
 - (void)setImage:(UIImage *)image
