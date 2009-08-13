@@ -67,11 +67,11 @@
         CGFloat heightToWidthRatio =
             (CGFloat)imageSize.height / imageSize.width;
         if (heightToWidthRatio > 1.0) {
-            imageSize.height = h;
-            imageSize.width = h / heightToWidthRatio;
-        } else {
             imageSize.height = heightToWidthRatio * w;
             imageSize.width = w;
+        } else {
+            imageSize.height = h;
+            imageSize.width = h / heightToWidthRatio;
         }
     } else if (imageSize.height <= h || imageSize.width <= w) {
         imageSize.height = h;
