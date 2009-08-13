@@ -23,7 +23,6 @@
     IBOutlet UILabel * noMorePagesLabel;
 
     NSArray * tweets;
-//    NSMutableDictionary * avatarCache;
     NSMutableDictionary * alreadySent;
     NSArray * invertedCellUsernames;
     BOOL showWithoutAvatars;

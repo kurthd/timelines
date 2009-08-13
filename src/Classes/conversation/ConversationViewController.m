@@ -6,10 +6,14 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "TweetInfo.h"
 #import "TimelineTableViewCell.h"
+#import "User+UIAdditions.h"
 
 @interface ConversationViewController ()
 
 @property (nonatomic, retain) NSMutableArray * conversation;
+
+- (UIImage *)getAvatarForUrl:(NSString *)url;
++ (UIImage *)defaultAvatar;
 
 @end
 
@@ -143,6 +147,8 @@
     [cell setDate:tweet.timestamp];
     [cell setTweetText:tweet.text];
     [cell setDisplayType:kTimelineTableViewCellTypeNormal];
+    [cell setAvatarImage:[self getAvatarForUrl:tweet.user.profileImageUrl]];
+    cell.avatarImageUrl = tweet.user.profileImageUrl;
 
     return cell;
 }
@@ -163,6 +169,54 @@
 {
     TweetInfo * info = [conversation objectAtIndex:indexPath.row];
     [self.delegate displayTweetWithId:info.identifier];
+}
+
+#pragma mark AsynchronousNetworkFetcherDelegate implementation
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    didReceiveData:(NSData *)data fromUrl:(NSURL *)url
+{
+    NSString * urlAsString = [url absoluteString];
+    UIImage * avatarImage = [UIImage imageWithData:data];
+    if (avatarImage) {
+        [User setAvatar:avatarImage forUrl:urlAsString];
+
+        // avoid calling reloadData by setting the avatars of the visible cells
+        NSArray * visibleCells = self.tableView.visibleCells;
+        for (TimelineTableViewCell * cell in visibleCells)
+            if ([cell.avatarImageUrl isEqualToString:urlAsString])
+                [cell setAvatarImage:avatarImage];
+    }
+}
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
+{}
+
+#pragma mark Private implementation
+
+- (UIImage *)getAvatarForUrl:(NSString *)url
+{
+    UIImage * avatarImage = [User avatarForUrl:url];
+    if (!avatarImage) {
+        avatarImage = [[self class] defaultAvatar];
+        if (![alreadySent objectForKey:url]) {
+            NSURL * avatarUrl = [NSURL URLWithString:url];
+            [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+            [alreadySent setObject:url forKey:url];
+        }
+    }
+
+    return avatarImage;
+}
+
++ (UIImage *)defaultAvatar
+{
+    static UIImage * defaultAvatar = nil;
+    if (!defaultAvatar)
+        defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar50x50.png"] retain];
+
+    return defaultAvatar;
 }
 
 @end

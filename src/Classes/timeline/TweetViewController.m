@@ -223,13 +223,8 @@ enum TweetActionRows {
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == kTweetDetailsSection) {
-        if (indexPath.row == kConversationRow) {
-            //NSString * tweetId =
-            //    [tweet.inReplyToTwitterTweetId description];
-            //NSString * replyToUsername = tweet.inReplyToTwitterUsername;
-            //[delegate loadNewTweetWithId:tweetId username:replyToUsername];
+        if (indexPath.row == kConversationRow)
             [delegate loadConversationFromTweetId:tweet.identifier];
-        }
     } else if (indexPath.section == kComposeActionsSection) {
         if (indexPath.row == kPublicReplyRow)
             [self sendReply];

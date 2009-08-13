@@ -3,6 +3,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AsynchronousNetworkFetcher.h"
 
 @protocol ConversationViewControllerDelegate
 
@@ -11,7 +12,8 @@
 
 @end
 
-@interface ConversationViewController : UITableViewController
+@interface ConversationViewController :
+    UITableViewController <AsynchronousNetworkFetcherDelegate>
 {
     id<ConversationViewControllerDelegate> delegate;
 
@@ -19,6 +21,8 @@
     NSNumber * batchSize;
 
     NSUInteger waitingFor;
+
+    NSMutableDictionary * alreadySent;
 }
 
 @property (nonatomic, assign) id<ConversationViewControllerDelegate> delegate;
