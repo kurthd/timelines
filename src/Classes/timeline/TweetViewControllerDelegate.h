@@ -5,6 +5,7 @@
 #import <Foundation/Foundation.h>
 #import "User.h"
 #import "RemotePhoto.h"
+#import "TweetInfo.h"
 
 @protocol TweetViewControllerDelegate
 
@@ -14,12 +15,16 @@
 - (void)setFavorite:(BOOL)favorite;
 - (void)showLocationOnMap:(NSString *)location;
 - (void)visitWebpage:(NSString *)webpageUrl;
-- (void)showingTweetDetails;
+- (void)showingTweetDetails:(TweetInfo *)tweet;
 - (void)loadNewTweetWithId:(NSString *)tweetId username:(NSString *)username;
 - (void)setCurrentTweetDetailsUser:(NSString *)username;
 - (void)reTweetSelected;
 - (void)replyToTweet;
 - (void)sendDirectMessageToUser:(NSString *)username;
 - (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto;
+
+@optional
+
+- (void)loadConversationFromTweetId:(NSString *)tweetId;
 
 @end

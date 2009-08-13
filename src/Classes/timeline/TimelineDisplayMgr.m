@@ -95,6 +95,8 @@ static NSInteger retweetFormatValueAlredyRead;
     [savedSearchMgr release];
     [currentSearch release];
 
+    [conversationDisplayMgrs release];
+
     [super dealloc];
 }
 
@@ -125,6 +127,8 @@ static NSInteger retweetFormatValueAlredyRead;
         [wrapperController setUpdatingState:kConnectedAndUpdating];
         [wrapperController setCachedDataAvailable:NO];
         wrapperController.title = title;
+
+        conversationDisplayMgrs = [[NSMutableArray alloc] init];
     }
 
     return self;
@@ -547,9 +551,10 @@ static NSInteger retweetFormatValueAlredyRead;
     [sheet showInView:rootView];
 }
 
-- (void)showingTweetDetails
+- (void)showingTweetDetails:(TweetInfo *)tweet
 {
     NSLog(@"Timeline display manager: showing tweet details...");
+    self.selectedTweet = tweet;
     [self deallocateTweetDetailsNode];
 }
 
@@ -582,6 +587,36 @@ static NSInteger retweetFormatValueAlredyRead;
         setUpdatingState:kConnectedAndNotUpdating];
 }
 
+- (void)loadConversationFromTweetId:(NSString *)tweetId
+{
+    UINavigationController * navController =
+        self.wrapperController.navigationController;
+
+    ConversationDisplayMgr * mgr =
+        [[ConversationDisplayMgr alloc]
+        initWithTwitterService:[service clone]
+        context:managedObjectContext];
+    [conversationDisplayMgrs addObject:mgr];
+    [mgr release];
+
+    mgr.delegate = self;
+    [mgr displayConversationFrom:tweetId navigationController:navController];
+}
+
+#pragma mark ConversationDisplayMgrDelegate implementation
+
+- (void)displayTweetFromConversation:(TweetInfo *)tweet
+{
+    TweetViewController * controller = [self newTweetDetailsController];
+
+    self.selectedTweet = tweet;
+
+    [controller hideFavoriteButton:NO];
+    controller.showsExtendedActions = YES;
+    [controller displayTweet:tweet avatar:nil
+        onNavigationController:self.wrapperController.navigationController];
+}
+
 #pragma mark NetworkAwareViewControllerDelegate implementation
 
 - (void)networkAwareViewWillAppear
@@ -598,6 +633,8 @@ static NSInteger retweetFormatValueAlredyRead;
 
     hasBeenDisplayed = YES;
     needsRefresh = NO;
+
+    [conversationDisplayMgrs removeAllObjects];
 }
 
 #pragma mark UserInfoViewControllerDelegate implementation

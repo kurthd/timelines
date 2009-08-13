@@ -101,12 +101,17 @@ enum TweetActionRows {
 
     self.tableView.tableHeaderView = headerView;
     self.tableView.contentInset = UIEdgeInsetsMake(0, 300, 0, 0);
+
+    if (self.navigationItem && self.navigationItem.title.length == 0)
+        self.navigationItem.title =
+            NSLocalizedString(@"tweetdetailsview.title", @"");
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [delegate showingTweetDetails];
+
+    [delegate showingTweetDetails:self.tweet];
     [self.tableView flashScrollIndicators];
 }
 
@@ -219,10 +224,11 @@ enum TweetActionRows {
 {
     if (indexPath.section == kTweetDetailsSection) {
         if (indexPath.row == kConversationRow) {
-            NSString * tweetId =
-                [tweet.inReplyToTwitterTweetId description];
-            NSString * replyToUsername = tweet.inReplyToTwitterUsername;
-            [delegate loadNewTweetWithId:tweetId username:replyToUsername];
+            //NSString * tweetId =
+            //    [tweet.inReplyToTwitterTweetId description];
+            //NSString * replyToUsername = tweet.inReplyToTwitterUsername;
+            //[delegate loadNewTweetWithId:tweetId username:replyToUsername];
+            [delegate loadConversationFromTweetId:tweet.identifier];
         }
     } else if (indexPath.section == kComposeActionsSection) {
         if (indexPath.row == kPublicReplyRow)

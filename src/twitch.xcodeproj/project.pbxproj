@@ -209,6 +209,9 @@
 		05EF41860FFADF95007B59F1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B23A310FEEB29D00A6A2E6 /* CoreData.framework */; };
 		05EF41870FFADF95007B59F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0524C4510FF2AEEE00A6099B /* Security.framework */; };
 		05EF41880FFADF95007B59F1 /* libYAJLIPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */; };
+		05F9CF20103335200010409B /* ConversationDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F9CF1F103335200010409B /* ConversationDisplayMgr.m */; };
+		05F9CF23103335310010409B /* ConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F9CF22103335310010409B /* ConversationViewController.m */; };
+		05F9CF26103335490010409B /* ConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05F9CF24103335490010409B /* ConversationView.xib */; };
 		910EFE1D1017E391002083D6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 910EFE1C1017E391002083D6 /* AudioToolbox.framework */; };
 		910EFE5F1017E78A002083D6 /* NewDirectMessagesState.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE5E1017E78A002083D6 /* NewDirectMessagesState.m */; };
 		910EFE831017F078002083D6 /* NewDirectMessagesPersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE821017F078002083D6 /* NewDirectMessagesPersistenceStore.m */; };
@@ -544,6 +547,11 @@
 		05F45D320FF05B9400EBAFC7 /* ComposeTweetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComposeTweetViewController.m; path = tweets/ComposeTweetViewController.m; sourceTree = "<group>"; };
 		05F45D830FF06BD100EBAFC7 /* ComposeTweetViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetViewControllerDelegate.h; path = tweets/ComposeTweetViewControllerDelegate.h; sourceTree = "<group>"; };
 		05F45E8A0FF08D9400EBAFC7 /* ComposeTweetDisplayMgrDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetDisplayMgrDelegate.h; path = tweets/ComposeTweetDisplayMgrDelegate.h; sourceTree = "<group>"; };
+		05F9CF1E103335200010409B /* ConversationDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConversationDisplayMgr.h; path = conversation/ConversationDisplayMgr.h; sourceTree = "<group>"; };
+		05F9CF1F103335200010409B /* ConversationDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationDisplayMgr.m; path = conversation/ConversationDisplayMgr.m; sourceTree = "<group>"; };
+		05F9CF21103335310010409B /* ConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConversationViewController.h; path = conversation/ConversationViewController.h; sourceTree = "<group>"; };
+		05F9CF22103335310010409B /* ConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationViewController.m; path = conversation/ConversationViewController.m; sourceTree = "<group>"; };
+		05F9CF25103335490010409B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/ConversationView.xib; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1055,6 +1063,7 @@
 				05B238880FEDC35400A6A2E6 /* LogInView.xib */,
 				916BD8020FEEBD56007143A9 /* TimelineView.xib */,
 				05EDAF0A1029FAAB00D0B62B /* TweetView.xib */,
+				05F9CF24103335490010409B /* ConversationView.xib */,
 				05F45CFF0FF059B400EBAFC7 /* ComposeTweetView.xib */,
 				918E89580FF1863C0042BBEE /* UserInfoView.xib */,
 				918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */,
@@ -1239,6 +1248,17 @@
 			path = "log-in-oauth";
 			sourceTree = "<group>";
 		};
+		05F9CF1C103335020010409B /* conversation */ = {
+			isa = PBXGroup;
+			children = (
+				05F9CF1E103335200010409B /* ConversationDisplayMgr.h */,
+				05F9CF1F103335200010409B /* ConversationDisplayMgr.m */,
+				05F9CF21103335310010409B /* ConversationViewController.h */,
+				05F9CF22103335310010409B /* ConversationViewController.m */,
+			);
+			name = conversation;
+			sourceTree = "<group>";
+		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1249,6 +1269,7 @@
 				910BE1FA0FF2B8E4005342EE /* user-network */,
 				918E894C0FF182E20042BBEE /* user-info */,
 				916BD8130FEEBDF9007143A9 /* timeline */,
+				05F9CF1C103335020010409B /* conversation */,
 				05C5E9AF0FF48B820073E7F2 /* search */,
 				05B2387E0FEDC25F00A6A2E6 /* log-in */,
 				05C702870FF835AE00936E4C /* log-in-oauth */,
@@ -1664,6 +1685,7 @@
 				9112EAB5102E236E002715DC /* ChatArrow.png in Resources */,
 				9176A47610321999001656E0 /* PublicReplyButtonIconHighlighted.png in Resources */,
 				9176A478103219F5001656E0 /* RetweetButtonIconHighlighted.png in Resources */,
+				05F9CF26103335490010409B /* ConversationView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1845,6 +1867,8 @@
 				9172485C102BB666007E0DF6 /* UserSummaryView.m in Sources */,
 				9176A2581030CF0C001656E0 /* UserListDisplayMgr.m in Sources */,
 				9176A2B91030FEF8001656E0 /* UserListDisplayMgrFactory.m in Sources */,
+				05F9CF20103335200010409B /* ConversationDisplayMgr.m in Sources */,
+				05F9CF23103335310010409B /* ConversationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1922,6 +1946,14 @@
 				05F45D000FF059B400EBAFC7 /* en */,
 			);
 			name = ComposeTweetView.xib;
+			sourceTree = "<group>";
+		};
+		05F9CF24103335490010409B /* ConversationView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				05F9CF25103335490010409B /* en */,
+			);
+			name = ConversationView.xib;
 			sourceTree = "<group>";
 		};
 		910BE2020FF2BA17005342EE /* UserListTableView.xib */ = {

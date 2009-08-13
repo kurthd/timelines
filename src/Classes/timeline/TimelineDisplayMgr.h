@@ -24,6 +24,7 @@
 #import "TwitterService.h"
 #import "TwitterServiceDelegate.h"
 #import "SavedSearchMgr.h"
+#import "ConversationDisplayMgr.h"
 
 @class TimelineDisplayMgrFactory;
 @class TweetViewController;
@@ -37,7 +38,7 @@
     TweetViewControllerDelegate, NetworkAwareViewControllerDelegate,
     UserInfoViewControllerDelegate, PhotoBrowserDelegate,
     TwitchBrowserViewControllerDelegate, TwitterServiceDelegate,
-    UIWebViewDelegate>
+    UIWebViewDelegate, ConversationDisplayMgrDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
@@ -92,6 +93,15 @@
 
     SavedSearchMgr * savedSearchMgr;
     NSString * currentSearch;
+
+    // A new conversation display mgr instance is created for every
+    // conversation that is viewed. Indeed, we must create a new one, as we
+    // must push a unique view controller instance onto the nav stack for
+    // each one, adn the display mgr owns the view controller.
+    //
+    // Every conversation display mgr is added to this array. When the
+    // timeline view is displayed, the array is emptied.
+    NSMutableArray * conversationDisplayMgrs;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;

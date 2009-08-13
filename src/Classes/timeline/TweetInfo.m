@@ -9,11 +9,15 @@
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 static NSString * hashRegex = @"\\B(#[\\w_]+)";
 
+static BOOL displayWithUsername;
+static BOOL alreadyReadDisplayWithUsernameValue;
+
 @interface TweetInfo ()
 
 + (NSString *)bodyWithLinks:(NSString *)body;
 + (NSString *)bodyWithUserLinks:(NSString *)body;
 + (NSString *)bodyWithHashLinks:(NSString *)body;
++ (BOOL)displayWithUsername;
 
 @end
 
@@ -139,6 +143,14 @@ static NSString * hashRegex = @"\\B(#[\\w_]+)";
     return html;
 }
 
+- (NSString *)displayName
+{
+    return
+        self.user.name && self.user.name.length > 0 &&
+        ![[self class] displayWithUsername] ?
+        self.user.name : self.user.username;
+}
+
 + (NSString *)bodyWithLinks:(NSString *)body
 {
     return
@@ -216,5 +228,18 @@ static NSString * hashRegex = @"\\B(#[\\w_]+)";
     return bodyWithHashLinks;
 }
 
++ (BOOL)displayWithUsername
+{
+    if (!alreadyReadDisplayWithUsernameValue) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger displayNameValAsNumber =
+            [defaults integerForKey:@"display_name"];
+        displayWithUsername = displayNameValAsNumber;
+    }
+
+    alreadyReadDisplayWithUsernameValue = YES;
+
+    return displayWithUsername;
+}
 
 @end

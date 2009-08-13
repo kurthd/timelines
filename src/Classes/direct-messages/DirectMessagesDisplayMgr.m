@@ -479,7 +479,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
 }
 
-- (void)showingTweetDetails
+- (void)showingTweetDetails:(TweetInfo *)tweet
 {
     NSLog(@"Messages Display Manager: showing tweet details...");
     [self deallocateTweetDetailsNode];
