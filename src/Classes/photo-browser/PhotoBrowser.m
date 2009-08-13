@@ -6,6 +6,7 @@
 #import "UIWebView+FileLoadingAdditions.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "CommonTwitterServicePhotoSource.h"
+#import "TwitchWebBrowserDisplayMgr.h"
 
 @interface PhotoBrowser ()
 
@@ -36,8 +37,6 @@
 @end
 
 @implementation PhotoBrowser
-
-@synthesize delegate;
 
 - (void)dealloc
 {
@@ -558,7 +557,8 @@
     [self done:nil];
     RemotePhoto * selectedPhoto = [self.photoList objectAtIndex:selectedIndex];
     NSString * selectedUrl = selectedPhoto.url;
-    [delegate performSelector:@selector(visitWebpage:) withObject:selectedUrl
+    [[TwitchWebBrowserDisplayMgr instance]
+        performSelector:@selector(visitWebpage:) withObject:selectedUrl
         afterDelay:0.7];
 }
 

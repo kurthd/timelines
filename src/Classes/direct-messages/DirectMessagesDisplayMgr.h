@@ -17,7 +17,6 @@
 #import "TweetViewControllerDelegate.h"
 #import "TwitchBrowserViewController.h"
 #import "PhotoBrowser.h"
-#import "PhotoBrowserDelegate.h"
 #import "TwitchBrowserViewControllerDelegate.h"
 #import "TimelineDisplayMgrFactory.h"
 #import "TimelineDisplayMgr.h"
@@ -62,15 +61,14 @@
     NSObject <TwitterServiceDelegate, NetworkAwareViewControllerDelegate,
     DirectMessageInboxViewControllerDelegate,
     DirectMessageConversationViewControllerDelegate, TweetViewControllerDelegate,
-    PhotoBrowserDelegate, TwitchBrowserViewControllerDelegate,
-    ComposeTweetDisplayMgrDelegate, MFMailComposeViewControllerDelegate,
-    UIActionSheetDelegate, UserInfoViewControllerDelegate>
+    TwitchBrowserViewControllerDelegate, ComposeTweetDisplayMgrDelegate,
+    MFMailComposeViewControllerDelegate, UIActionSheetDelegate,
+    UserInfoViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     DirectMessageInboxViewController * inboxController;
     DirectMessageConversationViewController * conversationController;
     TweetViewController * tweetViewController;
-    TwitchBrowserViewController * browserController;
     PhotoBrowser * photoBrowser;
     SavedSearchMgr * findPeopleBookmarkMgr;
     UserListDisplayMgrFactory * userListDisplayMgrFactory;
@@ -132,7 +130,6 @@
 @property (readonly)
     DirectMessageConversationViewController * conversationController;
 @property (readonly) TweetViewController * tweetViewController;
-@property (readonly) TwitchBrowserViewController * browserController;
 @property (readonly) PhotoBrowser * photoBrowser;
 
 @property (nonatomic, copy) NSString * activeAcctUsername;

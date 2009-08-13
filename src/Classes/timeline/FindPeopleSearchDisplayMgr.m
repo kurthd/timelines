@@ -23,7 +23,6 @@
     FindPeopleBookmarkViewController * bookmarkController;
 @property (nonatomic, retain) RecentSearchMgr * recentSearchMgr;
 
-@property (readonly) TwitchBrowserViewController * browserController;
 @property (readonly) PhotoBrowser * photoBrowser;
 
 @property (nonatomic, retain) TimelineDisplayMgr * timelineDisplayMgr;
@@ -56,7 +55,6 @@
     [savedSearchMgr release];
     [context release];
 
-    [browserController release];
     [photoBrowser release];
     [composeTweetDisplayMgr release];
 
@@ -229,14 +227,6 @@
         NSUTF8StringEncoding];
     NSURL * url = [NSURL URLWithString:urlString];
     [[UIApplication sharedApplication] openURL:url];
-}
-
-- (void)visitWebpage:(NSString *)webpageUrl
-{
-    NSLog(@"Find people display manager: visiting webpage: %@", webpageUrl);
-    [netAwareController presentModalViewController:self.browserController
-        animated:YES];
-    [self.browserController setUrl:webpageUrl];
 }
 
 - (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto
@@ -586,25 +576,12 @@
     return recentSearchMgr;
 }
 
-- (TwitchBrowserViewController *)browserController
-{
-    if (!browserController) {
-        browserController =
-            [[TwitchBrowserViewController alloc]
-            initWithNibName:@"TwitchBrowserView" bundle:nil];
-        browserController.delegate = self;
-    }
-
-    return browserController;
-}
-
 - (PhotoBrowser *)photoBrowser
 {
     if (!photoBrowser) {
         photoBrowser =
             [[PhotoBrowser alloc]
             initWithNibName:@"PhotoBrowserView" bundle:nil];
-        photoBrowser.delegate = self;
     }
 
     return photoBrowser;

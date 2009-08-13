@@ -14,7 +14,6 @@
 - (void)showResultsForSearch:(NSString *)query;
 - (void)setFavorite:(BOOL)favorite;
 - (void)showLocationOnMap:(NSString *)location;
-- (void)visitWebpage:(NSString *)webpageUrl;
 - (void)showingTweetDetails;
 - (void)loadNewTweetWithId:(NSString *)tweetId username:(NSString *)username;
 - (void)reTweetSelected;

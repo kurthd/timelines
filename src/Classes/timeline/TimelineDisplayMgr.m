@@ -67,7 +67,6 @@ static NSInteger retweetFormatValueAlredyRead;
     [lastTweetDetailsWrapperController release];
     [lastTweetDetailsController release];
     [tweetDetailsController release];
-    [browserController release];
     [photoBrowser release];
     [findPeopleBookmarkMgr release];
     [userListDisplayMgrFactory release];
@@ -665,14 +664,6 @@ static NSInteger retweetFormatValueAlredyRead;
     [[UIApplication sharedApplication] openURL:url];
 }
 
-- (void)visitWebpage:(NSString *)webpageUrl
-{
-    NSLog(@"Timeline display manager: visiting webpage: %@", webpageUrl);
-    [self.wrapperController presentModalViewController:self.browserController
-        animated:YES];
-    [self.browserController setUrl:webpageUrl];
-}
-
 - (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto
 {
     NSLog(@"Timeline display manager: showing photo: %@", remotePhoto);
@@ -1014,25 +1005,12 @@ static NSInteger retweetFormatValueAlredyRead;
     return userInfoTwitterService;
 }
 
-- (TwitchBrowserViewController *)browserController
-{
-    if (!browserController) {
-        browserController =
-            [[TwitchBrowserViewController alloc]
-            initWithNibName:@"TwitchBrowserView" bundle:nil];
-        browserController.delegate = self;
-    }
-
-    return browserController;
-}
-
 - (PhotoBrowser *)photoBrowser
 {
     if (!photoBrowser) {
         photoBrowser =
             [[PhotoBrowser alloc]
             initWithNibName:@"PhotoBrowserView" bundle:nil];
-        photoBrowser.delegate = self;
     }
 
     return photoBrowser;

@@ -11,12 +11,12 @@ static ErrorState * gInstance = NULL;
 
 + (ErrorState *)instance
 {
-    @synchronized(self) {
+    @synchronized (self) {
         if (gInstance == NULL)
             gInstance = [[self alloc] init];
     }
 
-    return(gInstance);
+    return gInstance;
 }
 
 - (void)exitErrorState
