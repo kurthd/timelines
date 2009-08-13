@@ -330,18 +330,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar
 {
-//    NSLog(@"Timeline display manager: showing user info for %@", aUser);
-//    userInfoController.navigationItem.title = aUser.name;
-//    [self.wrapperController.navigationController
-//        pushViewController:self.userInfoController animated:YES];
-//    self.userInfoController.followingEnabled =
-//        ![credentials.username isEqual:aUser.username];
-//    [self.userInfoController setUser:aUser avatarImage:avatar];
-//    if (self.userInfoController.followingEnabled)
-//        [service isUser:credentials.username following:aUser.username];
-//    // HACK: this is called twice to make sure it gets displayed the first time
-//    userInfoController.navigationItem.title = aUser.name;
-
     NSLog(@"Direct message display manager: showing user info for %@", aUser);
     // Forces to scroll to top
     [userInfoController release];
@@ -354,6 +342,11 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [self.userInfoController setUser:aUser avatarImage:avatar];
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUser.username];
+}
+
+- (void)showUserInfoForUsername:(NSString *)aUsername
+{
+    
 }
 
 - (void)showTweetsForUser:(NSString *)username

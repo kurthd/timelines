@@ -9,6 +9,7 @@
 @protocol TweetViewControllerDelegate
 
 - (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar;
+- (void)showUserInfoForUsername:(NSString *)aUsername;
 - (void)showTweetsForUser:(NSString *)username;
 - (void)showResultsForSearch:(NSString *)query;
 - (void)setFavorite:(BOOL)favorite;

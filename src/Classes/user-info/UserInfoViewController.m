@@ -66,6 +66,7 @@ static UIImage * defaultAvatar;
 
 - (void)viewDidLoad
 {
+    NSLog(@"Loading new user info view controller");
     [super viewDidLoad];
 
     self.tableView.backgroundColor = [UIColor twitchBackgroundColor];
@@ -279,6 +280,11 @@ static UIImage * defaultAvatar;
 
 #pragma mark UserInfoViewController implementation
 
+- (void)setUser:(User *)aUser
+{
+    [self setUser:aUser avatarImage:nil];
+}
+
 - (void)setUser:(User *)aUser avatarImage:(UIImage *)avatarImage
 {
     [aUser retain];
@@ -286,12 +292,16 @@ static UIImage * defaultAvatar;
     user = aUser;
 
     if (followingEnabled) {
-        followingLabel.hidden = YES;
-        followingCheckMark.hidden = YES;
-        followingActivityIndicator.hidden = NO;
-        followingLoadingLabel.hidden = NO;
-        activeAcctLabel.hidden = YES;
-        followButton.enabled = NO;
+        if (!followingStateSet) {
+            followingLabel.hidden = YES;
+            followingCheckMark.hidden = YES;
+            followingActivityIndicator.hidden = NO;
+            followingLoadingLabel.hidden = NO;
+        } else {
+            NSLog(@"Not updating following elements in header");
+            [self updateDisplayForFollwoing:currentlyFollowing];
+        }
+
         [followButton setTitleColor:[UIColor grayColor]
             forState:UIControlStateNormal];
         NSString * startFollowingText =
@@ -304,13 +314,13 @@ static UIImage * defaultAvatar;
         followingActivityIndicator.hidden = YES;
         followingLoadingLabel.hidden = YES;
         activeAcctLabel.hidden = NO;
-        followButton.enabled = NO;
         [followButton setTitleColor:[UIColor grayColor]
             forState:UIControlStateNormal];
         NSString * followingBtnText =
             NSLocalizedString(@"userinfoview.startfollowing", @"");
         [followButton setTitle:followingBtnText forState:UIControlStateNormal];
     }
+    activeAcctLabel.hidden = followingEnabled;
 
     if (!avatarImage) {
         NSURL * avatarUrl = [NSURL URLWithString:user.profileImageUrl];
@@ -325,8 +335,14 @@ static UIImage * defaultAvatar;
     [self.tableView reloadData];
 }
 
+- (void)showingNewUser
+{
+    followingStateSet = NO;
+}
+
 - (void)setFollowing:(BOOL)following
 {
+    followingStateSet = YES;
     currentlyFollowing = following;
 
     if (followingEnabled)
@@ -362,7 +378,8 @@ static UIImage * defaultAvatar;
 }
 
 - (IBAction)toggleFollowing:(id)sender
-{   
+{
+    NSLog(@"Toggling following state");
     currentlyFollowing = !currentlyFollowing;
     if (currentlyFollowing)
         [delegate startFollowingUser:user.username];
@@ -386,6 +403,12 @@ static UIImage * defaultAvatar;
 
 - (void)updateDisplayForFollwoing:(BOOL)following
 {
+    NSLog(@"User info view: updating display for following");
+    if (following)
+        NSLog(@"Following");
+    else
+        NSLog(@"Not following");
+
     followingLabel.hidden = NO;
     followingLabel.text =
         following ?

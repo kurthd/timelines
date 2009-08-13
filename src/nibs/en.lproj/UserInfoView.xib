@@ -8,8 +8,8 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="5"/>
 			<integer value="4"/>
+			<integer value="5"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -276,15 +276,15 @@
 					<object class="IBUILabel" id="316327267">
 						<reference key="NSNextResponder" ref="521307497"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{119, 339}, {185, 21}}</string>
+						<string key="NSFrame">{{119, 340}, {185, 21}}</string>
 						<reference key="NSSuperview" ref="521307497"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string type="base64-UTF8" key="IBUIText">TG9hZGluZyAnZm9sbG93aW5nJyBzdGF0dXMuLi4</string>
-						<object class="NSFont" key="IBUIFont" id="135816306">
+						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Helvetica</string>
-							<double key="NSSize">1.600000e+01</double>
+							<double key="NSSize">1.400000e+01</double>
 							<int key="NSfFlags">16</int>
 						</object>
 						<object class="NSColor" key="IBUITextColor">
@@ -306,7 +306,11 @@
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="IBUIText">Active account</string>
-						<reference key="IBUIFont" ref="135816306"/>
+						<object class="NSFont" key="IBUIFont">
+							<string key="NSName">Helvetica</string>
+							<double key="NSSize">1.600000e+01</double>
+							<int key="NSfFlags">16</int>
+						</object>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC40MDAwMDAwMSAwLjQwMDAwMDAxIDAuNDAwMDAwMDEAA</bytes>
@@ -734,7 +738,7 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{365, 212}, {320, 420}}</string>
+					<string>{{350, 146}, {320, 420}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>

@@ -282,8 +282,8 @@ enum TweetActionRows {
         if ([webpage isMatchedByRegex:usernameRegex]) {
             NSString * username =
                 [[webpage stringByMatching:usernameRegex] substringFromIndex:1];
-            NSLog(@"Showing tweets for user: %@", username);
-            [delegate showTweetsForUser:username];
+            NSLog(@"Showing user info for user: %@", username);
+            [delegate showUserInfoForUsername:username];
         } else if ([webpage isMatchedByRegex:@"/\\B(#[\\w_]+)"]) {
             NSString * query =
                 [[webpage stringByMatching:@"/\\B(#[\\w_]+)"]

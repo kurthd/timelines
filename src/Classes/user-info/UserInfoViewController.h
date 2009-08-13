@@ -29,6 +29,7 @@
 
     BOOL currentlyFollowing;
     BOOL followingEnabled;
+    BOOL followingStateSet;
 
     User * user;
 
@@ -41,7 +42,9 @@
 @property (nonatomic, retain) SavedSearchMgr * findPeopleBookmarkMgr;
 
 - (void)setUser:(User *)user avatarImage:(UIImage *)avatarImage;
+- (void)setUser:(User *)user;
 - (void)setFollowing:(BOOL)enabled;
+- (void)showingNewUser;
 - (IBAction)toggleFollowing:(id)sender;
 - (IBAction)sendMessage:(id)sender;
 - (IBAction)bookmark:(id)sender;

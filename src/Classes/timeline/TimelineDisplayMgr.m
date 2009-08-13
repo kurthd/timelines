@@ -98,6 +98,10 @@ static NSInteger retweetFormatValueAlredyRead;
     [savedSearchMgr release];
     [currentSearch release];
 
+    [userInfoControllerWrapper release];
+    [userInfoRequestAdapter release];
+    [userInfoTwitterService release];
+
     [super dealloc];
 }
 
@@ -376,8 +380,7 @@ static NSInteger retweetFormatValueAlredyRead;
 
 - (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar
 {
-    NSLog(@"Timeline display manager: showing user info for %@", aUser);
-    // Forces to scroll to top
+    // HACK: forces to scroll to top
     [userInfoController release];
     userInfoController = nil;
     self.userInfoController.navigationItem.title = aUser.username;
@@ -388,6 +391,34 @@ static NSInteger retweetFormatValueAlredyRead;
     [self.userInfoController setUser:aUser avatarImage:avatar];
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUser.username];
+}
+
+- (void)showUserInfoForUsername:(NSString *)aUsername
+{
+    // HACK: forces to scroll to top
+    // All dependencies must also be recreated
+    [userInfoController release];
+    userInfoController = nil;
+    [userInfoControllerWrapper release];
+    userInfoControllerWrapper = nil;
+    [userInfoRequestAdapter release];
+    userInfoRequestAdapter = nil;
+    [userInfoTwitterService release];
+    userInfoTwitterService = nil;
+
+    [self.userInfoController showingNewUser];
+    self.userInfoControllerWrapper.navigationItem.title = aUsername;
+    [self.userInfoControllerWrapper setCachedDataAvailable:NO];
+    [self.userInfoControllerWrapper setUpdatingState:kConnectedAndUpdating];
+    [self.wrapperController.navigationController
+        pushViewController:self.userInfoControllerWrapper animated:YES];
+    self.userInfoController.followingEnabled =
+        ![credentials.username isEqual:aUsername];
+
+    if (self.userInfoController.followingEnabled)
+        [service isUser:credentials.username following:aUsername];
+
+    [self.userInfoTwitterService fetchUserInfoForUsername:aUsername];
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
@@ -945,6 +976,7 @@ static NSInteger retweetFormatValueAlredyRead;
 - (UserInfoViewController *)userInfoController
 {
     if (!userInfoController) {
+        NSLog(@"Timeline display manager: creating new user info display mgr");
         userInfoController =
             [[UserInfoViewController alloc]
             initWithNibName:@"UserInfoView" bundle:nil];
@@ -961,6 +993,48 @@ static NSInteger retweetFormatValueAlredyRead;
     }
 
     return userInfoController;
+}
+
+- (NetworkAwareViewController *)userInfoControllerWrapper
+{
+    if (!userInfoControllerWrapper) {
+        userInfoControllerWrapper =
+            [[NetworkAwareViewController alloc]
+            initWithTargetViewController:self.userInfoController];
+
+        UIBarButtonItem * rightBarButton =
+            [[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self
+            action:@selector(sendDirectMessageToCurrentUser)];
+        userInfoControllerWrapper.navigationItem.rightBarButtonItem =
+            rightBarButton;
+    }
+
+    return userInfoControllerWrapper;
+}
+
+- (UserInfoRequestAdapter *)userInfoRequestAdapter
+{
+    if (!userInfoRequestAdapter) {
+        userInfoRequestAdapter =
+            [[UserInfoRequestAdapter alloc]
+            initWithTarget:self.userInfoController action:@selector(setUser:)
+            wrapperController:self.userInfoControllerWrapper];
+    }
+
+    return userInfoRequestAdapter;
+}
+
+- (TwitterService *)userInfoTwitterService
+{
+    if (!userInfoTwitterService) {
+        userInfoTwitterService =
+            [[TwitterService alloc] initWithTwitterCredentials:credentials
+            context:managedObjectContext];
+        userInfoTwitterService.delegate = self.userInfoRequestAdapter;
+    }
+    
+    return userInfoTwitterService;
 }
 
 - (TwitchBrowserViewController *)browserController
@@ -1051,6 +1125,7 @@ static NSInteger retweetFormatValueAlredyRead;
     self.savedSearchMgr.accountName = credentials.username;
 
     [service setCredentials:credentials];
+    [userInfoTwitterService setCredentials:credentials];
     [timelineSource setCredentials:credentials];
 
     // check for pointer equality rather than string equality against username

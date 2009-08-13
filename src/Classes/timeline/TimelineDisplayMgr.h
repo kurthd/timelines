@@ -24,6 +24,7 @@
 #import "TwitterService.h"
 #import "TwitterServiceDelegate.h"
 #import "SavedSearchMgr.h"
+#import "UserInfoRequestAdapter.h"
 
 @class TimelineDisplayMgrFactory;
 @class TweetViewController;
@@ -44,6 +45,9 @@
     NetworkAwareViewController * lastTweetDetailsWrapperController;
     TweetViewController * lastTweetDetailsController;
     TweetViewController * tweetDetailsController;
+    NetworkAwareViewController * userInfoControllerWrapper;
+    UserInfoRequestAdapter * userInfoRequestAdapter;
+    TwitterService * userInfoTwitterService;
     UserInfoViewController * userInfoController;
     TwitchBrowserViewController * browserController;
     PhotoBrowser * photoBrowser;
@@ -99,6 +103,9 @@
 @property (nonatomic, retain) TweetViewController * lastTweetDetailsController;
 @property (readonly) TweetViewController * tweetDetailsController;
 @property (readonly) UserInfoViewController * userInfoController;
+@property (readonly) NetworkAwareViewController * userInfoControllerWrapper;
+@property (readonly) UserInfoRequestAdapter * userInfoRequestAdapter;
+@property (readonly) TwitterService * userInfoTwitterService;
 @property (readonly) TwitchBrowserViewController * browserController;
 @property (readonly) PhotoBrowser * photoBrowser;
 
