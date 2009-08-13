@@ -103,7 +103,6 @@
 
     TwitterCredentials * credentials;
 
-    BOOL failedState;
     BOOL refreshingMessages;
     BOOL receivedQueryResponse;
     NSArray * newDirectMessages;

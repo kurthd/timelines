@@ -86,10 +86,8 @@
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 
-    BOOL failedState;
-
     NSString * tweetIdToShow;
-    
+
     BOOL suppressTimelineFailures;
 
     SavedSearchMgr * savedSearchMgr;

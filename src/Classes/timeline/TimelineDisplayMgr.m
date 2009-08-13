@@ -6,18 +6,16 @@
 #import "TimelineDisplayMgrFactory.h"
 #import "ArbUserTimelineDataSource.h"
 #import "FavoritesTimelineDataSource.h"
-#import "UIAlertView+InstantiationAdditions.h"
 #import "TweetViewController.h"
 #import "SearchDataSource.h"
 #import "UIWebView+FileLoadingAdditions.h"
 #import "UserListDisplayMgrFactory.h"
+#import "ErrorState.h"
 
 @interface TimelineDisplayMgr ()
 
 - (BOOL)cachedDataAvailable;
 - (void)deallocateTweetDetailsNode;
-- (void)displayErrorWithTitle:(NSString *)title;
-- (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
 - (void)replyToTweetWithMessage;
 - (NetworkAwareViewController *)newTweetDetailsWrapperController;
 - (TweetViewController *)newTweetDetailsController;
@@ -195,7 +193,7 @@ static NSInteger retweetFormatValueAlredyRead;
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
     [wrapperController setCachedDataAvailable:YES];
     refreshingTweets = NO;
-    failedState = NO;
+    [[ErrorState instance] exitErrorState];
     firstFetchReceived = YES;
     self.tweetIdToShow = nil;
 }
@@ -209,7 +207,8 @@ static NSInteger retweetFormatValueAlredyRead;
     if (!suppressTimelineFailures) {
         NSString * errorMessage =
             NSLocalizedString(@"timelinedisplaymgr.error.fetchtimeline", @"");
-        [self displayErrorWithTitle:errorMessage error:error];
+        [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+        [self.wrapperController setUpdatingState:kDisconnected];
     } else
         [wrapperController setUpdatingState:kDisconnected];
 }
@@ -221,7 +220,7 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Timeline display manager received user info for %@", username);
     [timelineController setUser:aUser];
     self.user = aUser;
-    failedState = NO;
+    [[ErrorState instance] exitErrorState];
 }
 
 - (void)failedToFetchUserInfoForUsername:(NSString *)username
@@ -232,7 +231,8 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchuserinfo", @"");
-    [self displayErrorWithTitle:errorMessage error:error];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+    [self.wrapperController setUpdatingState:kDisconnected];
 }
 
 - (void)startedFollowingUsername:(NSString *)username
@@ -247,7 +247,7 @@ static NSInteger retweetFormatValueAlredyRead;
         NSLocalizedString(@"timelinedisplaymgr.error.startfollowing", @"");
     NSString * errorMessage =
         [NSString stringWithFormat:errorMessageFormatString, username];
-    [self displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
 - (void)stoppedFollowingUsername:(NSString *)username
@@ -262,7 +262,7 @@ static NSInteger retweetFormatValueAlredyRead;
         NSLocalizedString(@"timelinedisplaymgr.error.stopfollowing", @"");
     NSString * errorMessage =
         [NSString stringWithFormat:errorMessageFormatString, username];
-    [self displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
 - (void)user:(NSString *)username isFollowing:(NSString *)followee
@@ -288,7 +288,7 @@ static NSInteger retweetFormatValueAlredyRead;
         NSLocalizedString(@"timelinedisplaymgr.error.userquery", @"");
     NSString * errorMessage =
         [NSString stringWithFormat:errorMessageFormatString, username];
-    [self displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
@@ -311,7 +311,7 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchtweet", @"");
-    [self displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
     [self.lastTweetDetailsWrapperController setUpdatingState:kDisconnected];
 }
 
@@ -852,29 +852,6 @@ static NSInteger retweetFormatValueAlredyRead;
     self.currentSearch = nil;
     self.userListDisplayMgr = nil;
     self.userListNetAwareViewController = nil;
-}
-
-- (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error
-{
-    NSLog(@"Timeline display manager: displaying error: %@", error);
-    if (!failedState) {
-        NSString * message = error.localizedDescription;
-        UIAlertView * alertView =
-            [UIAlertView simpleAlertViewWithTitle:title message:message];
-        [alertView show];
-
-        failedState = YES;
-    }
-    [self.wrapperController setUpdatingState:kDisconnected];
-}
-
-- (void)displayErrorWithTitle:(NSString *)title
-{
-    NSLog(@"Timeline display manager: displaying error with title: %@", title);
-
-    UIAlertView * alertView =
-        [UIAlertView simpleAlertViewWithTitle:title message:nil];
-    [alertView show];
 }
 
 - (void)replyToTweetWithMessage

@@ -14,6 +14,7 @@
 #import "RegexKitLite.h"
 #import "FavoritesTimelineDataSource.h"
 #import "UserListDisplayMgrFactory.h"
+#import "ErrorState.h"
 
 @interface DirectMessagesDisplayMgr ()
 
@@ -28,8 +29,6 @@
 - (void)composeNewDirectMessage;
 - (void)sendDirectMessageToOtherUserInConversation;
 - (void)deallocateTweetDetailsNode;
-- (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
-- (void)displayErrorWithTitle:(NSString *)title;
 - (void)updateBadge;
 - (void)presentFailedDirectMessageOnTimer:(NSTimer *)timer;
 
@@ -184,6 +183,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         loadMoreReceivedNextPage = [page intValue] + 1;
 
     [self updateViewsWithNewMessages];
+    [[ErrorState instance] exitErrorState];
 }
 
 - (void)failedToFetchDirectMessagesSinceUpdateId:(NSNumber *)updateId
@@ -194,7 +194,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchmessages", @"");
-    [self displayErrorWithTitle:errorMessage error:error];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+    [wrapperController setUpdatingState:kDisconnected];
 
     outstandingReceivedRequests--;
 }
@@ -225,6 +226,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         loadMoreSentNextPage = [page intValue] + 1;
 
     [self updateViewsWithNewMessages];
+    [[ErrorState instance] exitErrorState];
 }
 
 - (void)failedToFetchSentDirectMessagesSinceUpdateId:(NSNumber *)updateId
@@ -235,7 +237,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchmessages", @"");
-    [self displayErrorWithTitle:errorMessage error:error];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+    [wrapperController setUpdatingState:kDisconnected];
 
     outstandingSentRequests--;
 }
@@ -245,6 +248,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSLog(@"Direct message display manager: %@ is following %@", username,
         followee);
     [self.userInfoController setFollowing:YES];
+    [[ErrorState instance] exitErrorState];
 }
 
 - (void)user:(NSString *)username isNotFollowing:(NSString *)followee
@@ -252,6 +256,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSLog(@"Direct message display manager: %@ is not following %@", username,
         followee);
     [self.userInfoController setFollowing:NO];
+    [[ErrorState instance] exitErrorState];
 }
 
 - (void)failedToQueryIfUser:(NSString *)username
@@ -264,7 +269,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         NSLocalizedString(@"timelinedisplaymgr.error.userquery", @"");
     NSString * errorMessage =
         [NSString stringWithFormat:errorMessageFormatString, username];
-    [self displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation
@@ -1241,30 +1246,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     self.tweetDetailsTimelineDisplayMgr = nil;
     self.tweetDetailsNetAwareViewController = nil;
     self.currentSearch = nil;
-}
-
-- (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error
-{
-    NSLog(@"Message Display Manager: displaying error: %@", error);
-    if (!failedState) {
-        NSString * message = error.localizedDescription;
-        UIAlertView * alertView =
-            [UIAlertView simpleAlertViewWithTitle:title message:message];
-        [alertView show];
-
-        failedState = YES;
-    }
-    [wrapperController setUpdatingState:kDisconnected];
-}
-
-- (void)displayErrorWithTitle:(NSString *)title
-{
-    NSLog(@"Direct message display manager: displaying error with title: %@",
-        title);
-
-    UIAlertView * alertView =
-        [UIAlertView simpleAlertViewWithTitle:title message:nil];
-    [alertView show];
 }
 
 - (void)updateBadge
