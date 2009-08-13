@@ -119,6 +119,7 @@
 - (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar
 {
     self.userInfoUsername = aUser.username;
+    [userInfoController release];
     userInfoController = nil; // Forces to scroll to top
     self.userInfoController.navigationItem.title = aUser.name;
     [wrapperController.navigationController

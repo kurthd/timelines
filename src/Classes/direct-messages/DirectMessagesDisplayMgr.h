@@ -27,6 +27,7 @@
 #import "NewDirectMessagesState.h"
 #import "ComposeTweetDisplayMgrDelegate.h"
 #import "SavedSearchMgr.h"
+#import "UserInfoRequestAdapter.h"
 
 /*  This class is responsible for managing the display of the direct messages
     tab.  It will function very similarly to the timeline display, re-using many
@@ -121,6 +122,10 @@
     NSString * currentSearch;
 
     UserInfoViewController * userInfoController;
+
+    NetworkAwareViewController * userInfoControllerWrapper;
+    UserInfoRequestAdapter * userInfoRequestAdapter;
+    TwitterService * userInfoTwitterService;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;
@@ -154,6 +159,10 @@
 @property (nonatomic, readonly) UIBarButtonItem * newMessageButtonItem;
 
 @property (nonatomic, copy) NSNumber * currentConversationUserId;
+
+@property (readonly) NetworkAwareViewController * userInfoControllerWrapper;
+@property (readonly) UserInfoRequestAdapter * userInfoRequestAdapter;
+@property (readonly) TwitterService * userInfoTwitterService;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     inboxController:(DirectMessageInboxViewController *)anInboxController

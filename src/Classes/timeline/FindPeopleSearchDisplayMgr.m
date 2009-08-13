@@ -6,6 +6,7 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "FavoritesTimelineDataSource.h"
 #import "ArbUserTimelineDataSource.h"
+#import "UIAlertView+InstantiationAdditions.h"
 
 @interface FindPeopleSearchDisplayMgr ()
 
@@ -15,8 +16,8 @@
 - (void)showDarkTransparentView;
 - (void)hideDarkTransparentView;
 - (void)displayBookmarksView;
-
 - (void)searchForQuery:(NSString *)query;
+- (void)displayErrorWithTitle:(NSString *)title;
 
 @property (nonatomic, readonly)
     FindPeopleBookmarkViewController * bookmarkController;
@@ -118,8 +119,8 @@
 - (void)userInfo:(User *)user fetchedForUsername:(NSString *)username
 {
     NSLog(@"Fetched user info for '%@'", username);
-    [netAwareController setCachedDataAvailable:YES];
     [netAwareController setUpdatingState:kConnectedAndNotUpdating];
+    [netAwareController setCachedDataAvailable:YES];
     [userInfoController setUser:user avatarImage:nil];
 }
 
@@ -129,6 +130,33 @@
     NSLog(@"Unable to find user '%@'", username);
     [netAwareController setUpdatingState:kDisconnected];
     [netAwareController setCachedDataAvailable:NO];
+}
+
+- (void)user:(NSString *)username isFollowing:(NSString *)followee
+{
+    NSLog(@"Find people display manager: %@ is following %@", username,
+        followee);
+    [userInfoController setFollowing:YES];
+}
+
+- (void)user:(NSString *)username isNotFollowing:(NSString *)followee
+{
+    NSLog(@"Find people display manager: %@ is not following %@", username,
+        followee);
+    [userInfoController setFollowing:NO];
+}
+
+- (void)failedToQueryIfUser:(NSString *)username
+    isFollowing:(NSString *)followee error:(NSError *)error
+{
+    NSLog(@"Find people display manager: failed to query if %@ is following %@",
+        username, followee);
+    NSLog(@"Error: %@", error);
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.userquery", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, username];
+    [self displayErrorWithTitle:errorMessage];
 }
 
 #pragma mark UserInfoViewControllerDelegate implementation
@@ -368,7 +396,12 @@
     NSLog(@"No conn text: %@", noConnText);
     [netAwareController setNoConnectionText:noConnText];
 
+    [userInfoController showingNewUser];
     [service fetchUserInfoForUsername:searchName];
+    userInfoController.followingEnabled =
+        ![credentials.username isEqual:searchName];
+    if (userInfoController.followingEnabled)
+        [service isUser:credentials.username following:searchName];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar
@@ -575,6 +608,15 @@
     }
 
     return photoBrowser;
+}
+
+- (void)displayErrorWithTitle:(NSString *)title
+{
+    NSLog(@"Timeline display manager: displaying error with title: %@", title);
+
+    UIAlertView * alertView =
+        [UIAlertView simpleAlertViewWithTitle:title message:nil];
+    [alertView show];
 }
 
 @end

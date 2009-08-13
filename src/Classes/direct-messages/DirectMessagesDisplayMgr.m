@@ -29,6 +29,7 @@
 - (void)sendDirectMessageToOtherUserInConversation;
 - (void)deallocateTweetDetailsNode;
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error;
+- (void)displayErrorWithTitle:(NSString *)title;
 - (void)updateBadge;
 - (void)presentFailedDirectMessageOnTimer:(NSTimer *)timer;
 
@@ -91,6 +92,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [userListDisplayMgr release];
     [userListNetAwareViewController release];
     [userListDisplayMgrFactory release];
+    [userInfoControllerWrapper release];
+    [userInfoRequestAdapter release];
+    [userInfoTwitterService release];
     [super dealloc];
 }
 
@@ -236,6 +240,33 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     outstandingSentRequests--;
 }
 
+- (void)user:(NSString *)username isFollowing:(NSString *)followee
+{
+    NSLog(@"Direct message display manager: %@ is following %@", username,
+        followee);
+    [self.userInfoController setFollowing:YES];
+}
+
+- (void)user:(NSString *)username isNotFollowing:(NSString *)followee
+{
+    NSLog(@"Direct message display manager: %@ is not following %@", username,
+        followee);
+    [self.userInfoController setFollowing:NO];
+}
+
+- (void)failedToQueryIfUser:(NSString *)username
+    isFollowing:(NSString *)followee error:(NSError *)error
+{
+    NSLog(@"Direct message display mgr: failed to query if %@ is following %@",
+        username, followee);
+    NSLog(@"Error: %@", error);
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.userquery", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, username];
+    [self displayErrorWithTitle:errorMessage];
+}
+
 #pragma mark NetworkAwareViewControllerDelegate implementation
 
 - (void)networkAwareViewWillAppear
@@ -346,7 +377,30 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)showUserInfoForUsername:(NSString *)aUsername
 {
-    
+    // HACK: forces to scroll to top
+    // All dependencies must also be recreated
+    [userInfoController release];
+    userInfoController = nil;
+    [userInfoControllerWrapper release];
+    userInfoControllerWrapper = nil;
+    [userInfoRequestAdapter release];
+    userInfoRequestAdapter = nil;
+    [userInfoTwitterService release];
+    userInfoTwitterService = nil;
+
+    [self.userInfoController showingNewUser];
+    self.userInfoControllerWrapper.navigationItem.title = aUsername;
+    [self.userInfoControllerWrapper setCachedDataAvailable:NO];
+    [self.userInfoControllerWrapper setUpdatingState:kConnectedAndUpdating];
+    [wrapperController.navigationController
+        pushViewController:self.userInfoControllerWrapper animated:YES];
+    self.userInfoController.followingEnabled =
+        ![credentials.username isEqual:aUsername];
+
+    if (self.userInfoController.followingEnabled)
+        [service isUser:credentials.username following:aUsername];
+
+    [self.userInfoTwitterService fetchUserInfoForUsername:aUsername];
 }
 
 - (void)showTweetsForUser:(NSString *)username
@@ -1203,6 +1257,16 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [wrapperController setUpdatingState:kDisconnected];
 }
 
+- (void)displayErrorWithTitle:(NSString *)title
+{
+    NSLog(@"Direct message display manager: displaying error with title: %@",
+        title);
+
+    UIAlertView * alertView =
+        [UIAlertView simpleAlertViewWithTitle:title message:nil];
+    [alertView show];
+}
+
 - (void)updateBadge
 {
     self.tabBarItem.badgeValue =
@@ -1354,6 +1418,48 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     }
 
     return userInfoController;
+}
+
+- (NetworkAwareViewController *)userInfoControllerWrapper
+{
+    if (!userInfoControllerWrapper) {
+        userInfoControllerWrapper =
+            [[NetworkAwareViewController alloc]
+            initWithTargetViewController:self.userInfoController];
+
+        UIBarButtonItem * rightBarButton =
+            [[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self
+            action:@selector(sendDirectMessageToCurrentUser)];
+        userInfoControllerWrapper.navigationItem.rightBarButtonItem =
+            rightBarButton;
+    }
+
+    return userInfoControllerWrapper;
+}
+
+- (UserInfoRequestAdapter *)userInfoRequestAdapter
+{
+    if (!userInfoRequestAdapter) {
+        userInfoRequestAdapter =
+            [[UserInfoRequestAdapter alloc]
+            initWithTarget:self.userInfoController action:@selector(setUser:)
+            wrapperController:self.userInfoControllerWrapper];
+    }
+
+    return userInfoRequestAdapter;
+}
+
+- (TwitterService *)userInfoTwitterService
+{
+    if (!userInfoTwitterService) {
+        userInfoTwitterService =
+            [[TwitterService alloc] initWithTwitterCredentials:credentials
+            context:managedObjectContext];
+        userInfoTwitterService.delegate = self.userInfoRequestAdapter;
+    }
+    
+    return userInfoTwitterService;
 }
 
 - (void)sendDirectMessageToCurrentUser
