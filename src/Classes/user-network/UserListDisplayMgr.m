@@ -116,7 +116,7 @@
 
 #pragma mark UserListTableViewControllerDelegate implementation
 
-- (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar
+- (void)showUserInfoForUser:(User *)aUser
 {
     self.userInfoUsername = aUser.username;
     [userInfoController release];
@@ -126,7 +126,7 @@
         pushViewController:self.userInfoController animated:YES];
     self.userInfoController.followingEnabled =
         ![credentials.username isEqual:aUser.username];
-    [self.userInfoController setUser:aUser avatarImage:avatar];
+    [self.userInfoController setUser:aUser];
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUser.username];
 }

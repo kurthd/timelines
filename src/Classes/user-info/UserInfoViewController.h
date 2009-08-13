@@ -41,7 +41,6 @@
 @property (nonatomic, assign) BOOL followingEnabled;
 @property (nonatomic, retain) SavedSearchMgr * findPeopleBookmarkMgr;
 
-- (void)setUser:(User *)user avatarImage:(UIImage *)avatarImage;
 - (void)setUser:(User *)user;
 - (void)setFollowing:(BOOL)enabled;
 - (void)showingNewUser;

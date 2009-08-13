@@ -298,7 +298,7 @@ static NSInteger retweetFormatValueAlredyRead;
 
     [self.lastTweetDetailsController hideFavoriteButton:NO];
     self.lastTweetDetailsController.showsExtendedActions = YES;
-    [self.lastTweetDetailsController displayTweet:tweetInfo avatar:nil
+    [self.lastTweetDetailsController displayTweet:tweetInfo
          onNavigationController:nil];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
     [self.lastTweetDetailsWrapperController
@@ -317,7 +317,7 @@ static NSInteger retweetFormatValueAlredyRead;
 
 #pragma mark TimelineViewControllerDelegate implementation
 
-- (void)selectedTweet:(TweetInfo *)tweet avatarImage:(UIImage *)avatarImage
+- (void)selectedTweet:(TweetInfo *)tweet
 {
     // HACK: Release and then re-recreate the view for every tweet so the view
     // is properly scrolled to top when it appears. I have not been able to get
@@ -355,7 +355,7 @@ static NSInteger retweetFormatValueAlredyRead;
 
     [self.tweetDetailsController hideFavoriteButton:NO];
     self.tweetDetailsController.showsExtendedActions = YES;
-    [self.tweetDetailsController displayTweet:tweet avatar:avatarImage
+    [self.tweetDetailsController displayTweet:tweet
         onNavigationController:self.wrapperController.navigationController];
 }
 
@@ -373,12 +373,12 @@ static NSInteger retweetFormatValueAlredyRead;
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 
-- (void)showUserInfoWithAvatar:(UIImage *)avatar
+- (void)showUserInfo
 {
-    [self showUserInfoForUser:user withAvatar:avatar];
+    [self showUserInfoForUser:user];
 }
 
-- (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar
+- (void)showUserInfoForUser:(User *)aUser
 {
     // HACK: forces to scroll to top
     [userInfoController release];
@@ -388,7 +388,7 @@ static NSInteger retweetFormatValueAlredyRead;
         pushViewController:self.userInfoController animated:YES];
     self.userInfoController.followingEnabled =
         ![credentials.username isEqual:aUser.username];
-    [self.userInfoController setUser:aUser avatarImage:avatar];
+    [self.userInfoController setUser:aUser];
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUser.username];
 }

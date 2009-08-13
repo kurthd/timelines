@@ -348,18 +348,18 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [self.tweetViewController hideFavoriteButton:YES];
 
     TweetInfo * tweetInfo = [TweetInfo createFromDirectMessage:message];
-    [self.tweetViewController displayTweet:tweetInfo avatar:avatarImage
+    [self.tweetViewController displayTweet:tweetInfo
         onNavigationController:wrapperController.navigationController];
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
 
-- (void)showUserInfoWithAvatar:(UIImage *)avatar
+- (void)showUserInfo
 {
-    [self showUserInfoForUser:otherUserInConversation withAvatar:avatar];
+    [self showUserInfoForUser:otherUserInConversation];
 }
 
-- (void)showUserInfoForUser:(User *)aUser withAvatar:(UIImage *)avatar
+- (void)showUserInfoForUser:(User *)aUser
 {
     NSLog(@"Direct message display manager: showing user info for %@", aUser);
     // Forces to scroll to top
@@ -370,7 +370,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         pushViewController:self.userInfoController animated:YES];
     self.userInfoController.followingEnabled =
         ![credentials.username isEqual:aUser.username];
-    [self.userInfoController setUser:aUser avatarImage:avatar];
+    [self.userInfoController setUser:aUser];
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUser.username];
 }

@@ -95,6 +95,24 @@ static NSMutableDictionary * followersDescriptions;
     return followersDescription;
 }
 
++ (void)setAvatar:(UIImage *)avatar forUrl:(NSString *)url
+{
+    [[[self class] avatarCache] setObject:avatar forKey:url];
+}
+
++ (UIImage *)avatarForUrl:(NSString *)url
+{
+    return [[[self class] avatarCache] objectForKey:url];
+}
+
++ (NSString *)largeAvatarUrlForUrl:(NSString *)url
+{
+    NSString * largeAvatarUrl =
+        [url stringByReplacingOccurrencesOfString:@"_normal." withString:@"."];
+
+    return largeAvatarUrl;
+}
+
 + (NSMutableDictionary *)avatarCache
 {
     if (!avatars)

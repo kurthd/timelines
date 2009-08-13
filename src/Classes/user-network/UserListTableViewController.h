@@ -17,7 +17,6 @@
     IBOutlet UILabel * noMorePagesLabel;
 
     NSArray * users;
-    NSMutableDictionary * avatarCache;
     NSMutableDictionary * alreadySent;
     
     NSArray * sortedUserCache;

@@ -121,7 +121,7 @@
     NSLog(@"Fetched user info for '%@'", username);
     [netAwareController setUpdatingState:kConnectedAndNotUpdating];
     [netAwareController setCachedDataAvailable:YES];
-    [userInfoController setUser:user avatarImage:nil];
+    [userInfoController setUser:user];
 }
 
 - (void)failedToFetchUserInfoForUsername:(NSString *)username

@@ -8,6 +8,7 @@
 #import "UserInfoLabelCell.h"
 #import "AsynchronousNetworkFetcher.h"
 #import "NSString+HtmlEncodingAdditions.h"
+#import "User+UIAdditions.h"
 
 enum {
     kUserInfoSectionDetails,
@@ -271,7 +272,11 @@ static UIImage * defaultAvatar;
 {
     NSLog(@"Received avatar for url: %@", url);
     UIImage * avatarImage = [UIImage imageWithData:data];
-    [avatarView setImage:avatarImage];
+    NSString * urlAsString = [url absoluteString];
+    [User setAvatar:avatarImage forUrl:urlAsString];
+    NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
+    if (NSEqualRanges([urlAsString rangeOfString:@"_normal."], notFoundRange))
+        [avatarView setImage:avatarImage];
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
@@ -281,11 +286,6 @@ static UIImage * defaultAvatar;
 #pragma mark UserInfoViewController implementation
 
 - (void)setUser:(User *)aUser
-{
-    [self setUser:aUser avatarImage:nil];
-}
-
-- (void)setUser:(User *)aUser avatarImage:(UIImage *)avatarImage
 {
     [aUser retain];
     [user release];
@@ -322,12 +322,29 @@ static UIImage * defaultAvatar;
     }
     activeAcctLabel.hidden = followingEnabled;
 
-    if (!avatarImage) {
-        NSURL * avatarUrl = [NSURL URLWithString:user.profileImageUrl];
-        [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
-        [avatarView setImage:[[self class] defaultAvatar]];
-    } else
+    NSString * largeAvatarUrlAsString =
+        [User largeAvatarUrlForUrl:user.profileImageUrl];
+
+    UIImage * avatar = [User avatarForUrl:largeAvatarUrlAsString];
+    if (!avatar)
+        avatar = [User avatarForUrl:user.profileImageUrl];
+    if (!avatar)
+        avatar = [[self class] defaultAvatar];
+
+    [avatarView setImage:avatar];
+
+    NSURL * largeAvatarUrl =
+        [NSURL URLWithString:
+        [User largeAvatarUrlForUrl:largeAvatarUrlAsString]];
+    NSURL * avatarUrl =
+        [NSURL URLWithString:[User largeAvatarUrlForUrl:user.profileImageUrl]];
+    [AsynchronousNetworkFetcher fetcherWithUrl:largeAvatarUrl delegate:self];
+    [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+
+    UIImage * avatarImage = [User avatarForUrl:user.profileImageUrl];
+    if (avatarImage)
         [avatarView setImage:avatarImage];
+
     nameLabel.text = aUser.name;
     bioLabel.text = [aUser.bio stringByDecodingHtmlEntities];
 

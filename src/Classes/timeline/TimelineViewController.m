@@ -9,6 +9,7 @@
 #import "AsynchronousNetworkFetcher.h"
 #import "UIColor+TwitchColors.h"
 #import "TweetInfo+UIAdditions.h"
+#import "User+UIAdditions.h"
 
 @interface TimelineViewController ()
 
@@ -41,7 +42,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [numUpdatesLabel release];
 
     [tweets release];
-    [avatarCache release];
     [alreadySent release];
     [user release];
 
@@ -58,7 +58,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     [super viewDidLoad];
     self.tableView.tableFooterView = footerView;
-    avatarCache = [[NSMutableDictionary dictionary] retain];
     alreadySent = [[NSMutableDictionary dictionary] retain];
     showInbox = YES;
 }
@@ -109,8 +108,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
-    [delegate selectedTweet:tweet
-        avatarImage:[avatarCache objectForKey:tweet.user.profileImageUrl]];
+    [delegate selectedTweet:tweet];
 }
 
 #pragma mark UITableViewDelegate implementation
@@ -137,7 +135,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSString * urlAsString = [url absoluteString];
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
-        [avatarCache setObject:avatarImage forKey:urlAsString];
+        [User setAvatar:avatarImage forUrl:urlAsString];
 
         // avoid calling reloadData by setting the avatars of the visible cells
         NSArray * visibleCells = self.tableView.visibleCells;
@@ -145,7 +143,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             if ([cell.avatarImageUrl isEqualToString:urlAsString])
                 [cell setAvatarImage:avatarImage];
 
-        if ([urlAsString isEqual:user.profileImageUrl])
+        NSString * largeProfileUrl =
+            [User largeAvatarUrlForUrl:user.profileImageUrl];
+        if ([urlAsString isEqual:largeProfileUrl])
             [avatarView setImage:avatarImage];
     }
 }
@@ -168,9 +168,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (IBAction)showUserInfo:(id)sender
 {
     NSLog(@"'Show user info' selected");
-    UIImage * avatar =
-        user ? [avatarCache objectForKey:user.profileImageUrl] : nil;
-    [delegate showUserInfoWithAvatar:avatar];
+    [delegate showUserInfo];
 }
 
 - (void)addTweet:(TweetInfo *)tweet
@@ -213,14 +211,13 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             user.name && user.name.length > 0 &&
             ![[self class] displayWithUsername] ?
             user.name : user.username;
-//        NSString * followingFormatString =
-//            NSLocalizedString(@"timelineview.userinfo.following", @"");
          numUpdatesLabel.text =
             [NSString stringWithFormat:
             NSLocalizedString(@"userinfoview.statusescount.formatstring", @""),
             user.statusesCount];
-        UIImage * avatarImage =
-            [self getAvatarForUrl:aUser.profileImageUrl];
+        NSString * largeProfileUrl =
+            [User largeAvatarUrlForUrl:aUser.profileImageUrl];
+        UIImage * avatarImage = [self getAvatarForUrl:largeProfileUrl];
         [avatarView setImage:avatarImage];
     }
 }
@@ -281,7 +278,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (UIImage *)getAvatarForUrl:(NSString *)url
 {
-    UIImage * avatarImage = [avatarCache objectForKey:url];
+    UIImage * avatarImage = [User avatarForUrl:url];
     if (!avatarImage) {
         avatarImage = [[self class] defaultAvatar];
         if (![alreadySent objectForKey:url]) {

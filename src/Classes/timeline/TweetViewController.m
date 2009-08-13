@@ -8,6 +8,7 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "UIWebView+FileLoadingAdditions.h"
 #import "RegexKitLite.h"
+#import "User+UIAdditions.h"
 
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 
@@ -41,7 +42,6 @@ enum TweetActionRows {
 @property (nonatomic, retain) UINavigationController * navigationController;
 
 @property (nonatomic, retain) TweetInfo * tweet;
-@property (nonatomic, retain) UIImage * avatar;
 @property (nonatomic, retain) UIWebView * tweetContentView;
 
 - (NSString *)reuseIdentifierForRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -68,7 +68,7 @@ enum TweetActionRows {
 
 @implementation TweetViewController
 
-@synthesize delegate, navigationController, tweetContentView, tweet, avatar;
+@synthesize delegate, navigationController, tweetContentView, tweet;
 @synthesize showsExtendedActions;
 @synthesize realParentViewController;
 
@@ -86,7 +86,6 @@ enum TweetActionRows {
     self.tweetContentView = nil;
 
     self.tweet = nil;
-    self.avatar = nil;
 
     [super dealloc];
 }
@@ -314,11 +313,10 @@ enum TweetActionRows {
 
 #pragma mark Public interface implementation
 
-- (void)displayTweet:(TweetInfo *)aTweet avatar:(UIImage *)anAvatar
+- (void)displayTweet:(TweetInfo *)aTweet
     onNavigationController:(UINavigationController *)navController
 {
     self.tweet = aTweet;
-    self.avatar = anAvatar;
     self.navigationController = navController;
 
     [self loadTweetWebView];
@@ -427,8 +425,12 @@ enum TweetActionRows {
     didReceiveData:(NSData *)data fromUrl:(NSURL *)url
 {
     NSLog(@"Received avatar for url: %@", url);
-    self.avatar = [UIImage imageWithData:data];
-    [avatarImage setImage:self.avatar];
+    UIImage * avatar = [UIImage imageWithData:data];
+    NSString * urlAsString = [url absoluteString];
+    [User setAvatar:avatar forUrl:urlAsString];
+    NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
+    if (NSEqualRanges([urlAsString rangeOfString:@"_normal."], notFoundRange))
+        [avatarImage setImage:avatar];
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
@@ -439,9 +441,7 @@ enum TweetActionRows {
 
 - (IBAction)showUserTweets:(id)sender
 {
-    UIImage * actualAvatar =
-        self.avatar != [[self class] defaultAvatar] ? self.avatar : nil;
-    [delegate showUserInfoForUser:tweet.user withAvatar:actualAvatar];
+    [delegate showUserInfoForUser:tweet.user];
 }
 
 - (IBAction)showFullProfileImage:(id)sender
@@ -580,11 +580,19 @@ enum TweetActionRows {
         fullNameLabel.text = tweet.user.username;
     }
 
-    if (!self.avatar) {
-        [self fetchRemoteImage:tweet.user.profileImageUrl];
-        self.avatar = [[self class] defaultAvatar];
-    }
-    [avatarImage setImage:self.avatar];
+    NSString * largeAvatarUrl =
+        [User largeAvatarUrlForUrl:tweet.user.profileImageUrl];
+
+    UIImage * avatar = [User avatarForUrl:largeAvatarUrl];
+    if (!avatar)
+        avatar = [User avatarForUrl:tweet.user.profileImageUrl];
+    if (!avatar)
+        avatar = [[self class] defaultAvatar];
+
+    [avatarImage setImage:avatar];
+
+    [self fetchRemoteImage:largeAvatarUrl];
+    [self fetchRemoteImage:tweet.user.profileImageUrl];
 
     [self.tableView reloadData];
     self.tableView.contentInset = UIEdgeInsetsMake(-300, 0, 0, 0);

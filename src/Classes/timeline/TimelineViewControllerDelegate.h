@@ -8,9 +8,9 @@
 
 @protocol TimelineViewControllerDelegate
 
-- (void)selectedTweet:(TweetInfo *)tweet avatarImage:(UIImage *)avatarImage;
+- (void)selectedTweet:(TweetInfo *)tweet;
 - (void)loadMoreTweets;
-- (void)showUserInfoWithAvatar:(UIImage *)avatar;
+- (void)showUserInfo;
 - (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto;
 
 @end
