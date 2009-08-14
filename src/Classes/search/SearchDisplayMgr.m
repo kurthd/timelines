@@ -72,10 +72,8 @@
 
 - (void)fetchTimelineSince:(NSNumber *)anUpdateId page:(NSNumber *)page
 {
-    if (self.queryString) {
-        self.updateId = anUpdateId;
-        [service searchFor:self.queryString page:page];
-    }
+    self.updateId = anUpdateId;
+    [service searchFor:self.queryString page:page];
 }
 
 - (TwitterCredentials *)credentials
@@ -90,7 +88,7 @@
 
 - (BOOL)readyForQuery
 {
-    return YES;
+    return !!self.queryString;
 }
 
 #pragma mark TwitterServiceDelegate
