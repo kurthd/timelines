@@ -23,6 +23,8 @@
 - (BOOL)canLoadMoreTweets;
 - (BOOL)waitingForTweets;
 
+- (void)loadConversationFromTweetId:(NSString *)tweetId;
+
 @end
 
 @implementation ConversationViewController
@@ -62,11 +64,8 @@
     if (tweets.count < self.batchSize.integerValue + 1) {
         TweetInfo * oldestTweet = [conversation lastObject];
         NSString * tweetId = oldestTweet.inReplyToTwitterTweetId;
-        if (tweetId) { // there's still more to load
-            [delegate fetchTweetWithId:tweetId];
-            waitingFor = [batchSize integerValue];
-
-            //[self displayLoadingView];
+        if (tweetId) {  // there's still more to load
+            [self loadConversationFromTweetId:tweetId];
             [self configureFooterForCurrentState];
         }
     }
@@ -97,12 +96,6 @@
         [delegate fetchTweetWithId:nextId];
     else {
         waitingFor = 0;
-        //NSNumber * canLoadMore = [NSNumber numberWithBool:!!nextId];
-        //[self hideLoadingViewAndShowLoadMoreView:canLoadMore];
-        //[self performSelector:@selector(hideLoadingViewAndShowLoadMoreView:)
-        //           withObject:canLoadMore
-        //           afterDelay:0.5];
-
         [self configureFooterForCurrentState];
     }
 
@@ -117,13 +110,7 @@
 
     [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
 
-    //NSNumber * loadMore =
-    //    [NSNumber numberWithBool:
-    //    !![[conversation lastObject] inReplyToTwitterTweetId]];
-    //[self hideLoadingViewAndShowLoadMoreView:loadMore];
-
     waitingFor = 0;
-
     [self configureFooterForCurrentState];
 }
 
@@ -221,6 +208,11 @@
 
 - (IBAction)loadNextBatch:(id)sender
 {
+    TweetInfo * tweet = [conversation lastObject];
+    if (tweet.inReplyToTwitterTweetId) {
+        [self loadConversationFromTweetId:tweet.inReplyToTwitterTweetId];
+        [self configureFooterForCurrentState];
+    }
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -338,6 +330,12 @@
 - (BOOL)waitingForTweets
 {
     return waitingFor > 0;
+}
+
+- (void)loadConversationFromTweetId:(NSString *)tweetId
+{
+    [delegate fetchTweetWithId:tweetId];
+    waitingFor = [batchSize integerValue];
 }
 
 + (UIImage *)defaultAvatar
