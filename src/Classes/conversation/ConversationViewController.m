@@ -18,9 +18,6 @@
 - (UIImage *)getAvatarForUrl:(NSString *)url;
 + (UIImage *)defaultAvatar;
 
-- (void)displayLoadingView;
-- (void)hideLoadingViewAndShowLoadMoreView:(NSNumber *)showLoadMoreView;
-
 - (void)configureFooterForCurrentState;
 
 - (BOOL)canLoadMoreTweets;
@@ -150,17 +147,7 @@
 {
     [super viewWillAppear:animated];
 
-    /*
-    if ([self waitingForTweets]) {
-        // The footer view is always there, and we toggle its alpha from 0 to 1
-        // as we hide and show it. We animate hiding it, and removing it from
-        // the table view when hiding cuts off the animation.
-        self.loadingView.alpha = 1;
-        self.tableView.tableFooterView = self.loadingView;
-        NSLog(@"Set table view footer to loading view: %@",
-            self.tableView.tableFooterView);
-    }
-    */
+    [self configureFooterForCurrentState];
 }
 
 - (void)didReceiveMemoryWarning
@@ -283,63 +270,14 @@
     self.tableView.tableFooterView = self.footerView;
 }
 
-- (void)hideLoadingViewAndShowLoadMoreView:(NSNumber *)showLoadMoreView
-{
-    //NSTimeInterval animationDuration = 2.0; // 0.4;
-
-    self.loadMoreView.alpha = 0;
-
-    [UIView beginAnimations:nil context:NULL];
-    /*
-    [UIView setAnimationTransition:UIViewAnimationTransitionNone
-        forView:self.loadMoreView cache:NO];
-     */
-    //[UIView setAnimationDuration:animationDuration];
-
-    self.loadingView.alpha = 0;
-
-    /*
-    if (showLoadMoreView)
-        self.tableView.tableFooterView = self.loadMoreView;
-    else
-        self.tableView.tableFooterView = nil;
-    */
-
-    [UIView commitAnimations];
-
-    if (showLoadMoreView.boolValue) {
-        [self.footerView addSubview:self.loadMoreView];
-        self.tableView.tableFooterView = self.footerView;
-
-        [UIView beginAnimations:nil context:NULL];
-        self.loadMoreView.alpha = 1;
-        [UIView commitAnimations];
-    }
-
-    [self.loadingView removeFromSuperview];
-    if (showLoadMoreView.boolValue) {
-        [self.footerView addSubview:self.loadMoreView];
-        self.tableView.tableFooterView = self.footerView;
-    }
-
-    /*
-    NSNumber * b = [NSNumber numberWithBool:showLoadMoreView];
-    [self performSelector:@selector(loadingAnimationDidFinish:)
-               withObject:b
-               afterDelay:animationDuration];
-     */
-}
-
-- (void)loadingAnimationDidFinish:(NSNumber *)showLoadMoreView
-{
-    if (showLoadMoreView.boolValue)
-        self.tableView.tableFooterView = self.loadMoreView;
-    else
-        self.tableView.tableFooterView = nil;
-}
-
 - (void)configureFooterForCurrentState
 {
+    //
+    // The general strategy here is to see what the view should look like
+    // based on the current state, and update the table footer view as
+    // appropriate. It only updates the view if something has changed.
+    //
+
     CGFloat loadMoreAlpha = 0, loadingAlpha = 0;
     UIView * footer = self.tableView.tableFooterView;
 
