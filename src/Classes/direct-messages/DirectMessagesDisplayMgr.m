@@ -573,6 +573,11 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     // not supported for direct messages
 }
 
+- (void)loadConversationFromTweetId:(NSString *)tweetId
+{
+    // not supported for direct messages
+}
+
 #pragma mark UserInfoViewControllerDelegate implementation
 
 - (void)showingUserInfoView

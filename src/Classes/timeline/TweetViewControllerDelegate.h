@@ -20,9 +20,6 @@
 - (void)reTweetSelected;
 - (void)replyToTweet;
 - (void)sendDirectMessageToUser:(NSString *)username;
-
-@optional
-
 - (void)loadConversationFromTweetId:(NSString *)tweetId;
 
 @end
