@@ -537,7 +537,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [[UIApplication sharedApplication] openURL:url];
 }
 
-- (void)showingTweetDetails:(TweetInfo *)tweet
+- (void)showingTweetDetails:(TweetViewController *)tweetController
 {
     NSLog(@"Messages Display Manager: showing tweet details...");
     [self deallocateTweetDetailsNode];

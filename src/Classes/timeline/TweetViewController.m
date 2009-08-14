@@ -45,6 +45,7 @@ enum TweetActionRows {
 
 @property (nonatomic, retain) TweetInfo * tweet;
 @property (nonatomic, retain) UIWebView * tweetContentView;
+@property (readonly) MarkAsFavoriteCell * favoriteCell;
 
 - (NSString *)reuseIdentifierForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (UITableViewCell *)createCellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -61,8 +62,6 @@ enum TweetActionRows {
 - (void)displayComposerMailSheet;
 
 - (void)fetchRemoteImage:(NSString *)avatarUrlString;
-
-- (void)configureCell:(UITableViewCell *)cell asFavorite:(BOOL)favorite;
 
 + (UIImage *)defaultAvatar;
 
@@ -83,6 +82,7 @@ enum TweetActionRows {
     [headerView release];
     [fullNameLabel release];
     [usernameLabel release];
+    [favoriteCell release];
 
     [tweetTextTableViewCell release];
     self.tweetContentView = nil;
@@ -113,7 +113,7 @@ enum TweetActionRows {
 {
     [super viewWillAppear:animated];
 
-    [delegate showingTweetDetails:self.tweet];
+    [delegate showingTweetDetails:self];
     [self.tableView flashScrollIndicators];
 }
 
@@ -214,8 +214,9 @@ enum TweetActionRows {
         cell.imageView.highlightedImage = highlightedImage;
     } else if (indexPath.section == kTweetActionsSection)
         if (indexPath.row == kFavoriteRow) {
-            BOOL favorite = [tweet.favorited boolValue];
-            [self configureCell:cell asFavorite:favorite];
+            cell = self.favoriteCell;
+            [self.favoriteCell setMarkedState:[tweet.favorited boolValue]];
+            [self.favoriteCell setUpdatingState:markingFavorite];
         }
 
     return cell;
@@ -323,6 +324,13 @@ enum TweetActionRows {
     self.navigationController = navController;
 
     [self loadTweetWebView];
+}
+
+- (void)setFavorited:(BOOL)favorited
+{
+    [self.favoriteCell setMarkedState:favorited];
+    [self.favoriteCell setUpdatingState:NO];
+    markingFavorite = NO;
 }
 
 - (void)setUsersTweet:(BOOL)usersTweet
@@ -483,20 +491,10 @@ enum TweetActionRows {
 
 - (void)toggleFavoriteValue
 {
-    BOOL favorite = [tweet.favorited boolValue];
-    favorite = !favorite;
-    [delegate setFavorite:favorite];
-    tweet.favorited = [NSNumber numberWithBool:favorite];
-
-    NSArray * visibleCells = self.tableView.visibleCells;
-    for (UITableViewCell * cell in visibleCells) {
-        NSString * favoriteString =
-            !favorite ?  // the value before we toggled it
-            NSLocalizedString(@"tweetdetailsview.unfavorite.label", @"") :
-            NSLocalizedString(@"tweetdetailsview.favorite.label", @"");
-
-        if ([cell.textLabel.text isEqualToString:favoriteString])
-            [self configureCell:cell asFavorite:favorite];
+    if (!markingFavorite) {
+        markingFavorite = YES;
+        [self.favoriteCell setUpdatingState:YES];
+        [delegate setFavorite:![tweet.favorited boolValue]];
     }
 }
 
@@ -607,23 +605,23 @@ enum TweetActionRows {
     [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];
 }
 
-- (void)configureCell:(UITableViewCell *)cell asFavorite:(BOOL)favorite
-{
-    if (favorite) {
-        cell.textLabel.text =
-            NSLocalizedString(@"tweetdetailsview.unfavorite.label", @"");
-        cell.imageView.image = [UIImage imageNamed:@"Favorite.png"];
-    } else {
-        cell.textLabel.text =
-            NSLocalizedString(@"tweetdetailsview.favorite.label", @"");
-        cell.imageView.image = [UIImage imageNamed:@"NotFavorite.png"];
-    }
-}
-
 - (UIViewController *)realParentViewController
 {
     return self.parentViewController ?
         self.parentViewController : realParentViewController;
+}
+
+- (MarkAsFavoriteCell *)favoriteCell
+{
+    if (!favoriteCell) {
+        NSArray * nib =
+            [[[NSBundle mainBundle] loadNibNamed:@"MarkAsFavoriteCell"
+            owner:self options:nil] retain];
+
+         favoriteCell = [nib objectAtIndex:0];
+    }
+
+    return favoriteCell;
 }
 
 + (UIImage *)defaultAvatar

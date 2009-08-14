@@ -220,6 +220,8 @@
 		9130FE0E1034C792004E3030 /* ErrorState.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FE0D1034C792004E3030 /* ErrorState.m */; };
 		9130FE501034D334004E3030 /* TwitchWebBrowserDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FE4F1034D334004E3030 /* TwitchWebBrowserDisplayMgr.m */; };
 		9130FEAD1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FEAC1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m */; };
+		9130FF221035E07B004E3030 /* MarkAsFavoriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9130FF201035E07B004E3030 /* MarkAsFavoriteCell.xib */; };
+		9130FF261035E1F6004E3030 /* MarkAsFavoriteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FF251035E1F6004E3030 /* MarkAsFavoriteCell.m */; };
 		9145EF5B1005073200C2E485 /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
 		9145EF5C1005073F00C2E485 /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
 		9145EF5D1005074A00C2E485 /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
@@ -599,6 +601,9 @@
 		9130FE4F1034D334004E3030 /* TwitchWebBrowserDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchWebBrowserDisplayMgr.m; path = shared/TwitchWebBrowserDisplayMgr.m; sourceTree = "<group>"; };
 		9130FEAB1034DDBA004E3030 /* PhotoBrowserDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBrowserDisplayMgr.h; path = "photo-browser/PhotoBrowserDisplayMgr.h"; sourceTree = "<group>"; };
 		9130FEAC1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBrowserDisplayMgr.m; path = "photo-browser/PhotoBrowserDisplayMgr.m"; sourceTree = "<group>"; };
+		9130FF211035E07B004E3030 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/MarkAsFavoriteCell.xib; sourceTree = "<group>"; };
+		9130FF241035E1F6004E3030 /* MarkAsFavoriteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkAsFavoriteCell.h; path = "user-info/MarkAsFavoriteCell.h"; sourceTree = "<group>"; };
+		9130FF251035E1F6004E3030 /* MarkAsFavoriteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkAsFavoriteCell.m; path = "user-info/MarkAsFavoriteCell.m"; sourceTree = "<group>"; };
 		9145EFC91005276100C2E485 /* Re-tweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweetDisabled.png"; path = "images/Re-tweetDisabled.png"; sourceTree = "<group>"; };
 		9145EFFA10054D9400C2E485 /* BlueEnvelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueEnvelope.png; path = images/BlueEnvelope.png; sourceTree = "<group>"; };
 		9145F022100573AF00C2E485 /* User+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "User+UIAdditions.h"; path = "users/User+UIAdditions.h"; sourceTree = "<group>"; };
@@ -1092,6 +1097,7 @@
 				9152E1581014F8850033B63B /* DirectMessageConversationView.xib */,
 				05948993101569D500C37C98 /* AccountSettingsView.xib */,
 				917245E41028B715007E0DF6 /* FindPeopleBookmarkView.xib */,
+				9130FF201035E07B004E3030 /* MarkAsFavoriteCell.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -1573,6 +1579,8 @@
 				918E89E90FF1B2D50042BBEE /* UserInfoViewControllerDelegate.h */,
 				918E8AA20FF1C69D0042BBEE /* UserInfoLabelCell.h */,
 				918E8AA30FF1C69D0042BBEE /* UserInfoLabelCell.m */,
+				9130FF241035E1F6004E3030 /* MarkAsFavoriteCell.h */,
+				9130FF251035E1F6004E3030 /* MarkAsFavoriteCell.m */,
 			);
 			name = "user-info";
 			sourceTree = "<group>";
@@ -1704,6 +1712,7 @@
 				9176A47610321999001656E0 /* PublicReplyButtonIconHighlighted.png in Resources */,
 				9176A478103219F5001656E0 /* RetweetButtonIconHighlighted.png in Resources */,
 				05F9CF26103335490010409B /* ConversationView.xib in Resources */,
+				9130FF221035E07B004E3030 /* MarkAsFavoriteCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1891,6 +1900,7 @@
 				9130FE0E1034C792004E3030 /* ErrorState.m in Sources */,
 				9130FE501034D334004E3030 /* TwitchWebBrowserDisplayMgr.m in Sources */,
 				9130FEAD1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m in Sources */,
+				9130FF261035E1F6004E3030 /* MarkAsFavoriteCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1984,6 +1994,14 @@
 				910BE2030FF2BA17005342EE /* en */,
 			);
 			name = UserListTableView.xib;
+			sourceTree = "<group>";
+		};
+		9130FF201035E07B004E3030 /* MarkAsFavoriteCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9130FF211035E07B004E3030 /* en */,
+			);
+			name = MarkAsFavoriteCell.xib;
 			sourceTree = "<group>";
 		};
 		9152E1551014F86C0033B63B /* DirectMessageInboxView.xib */ = {

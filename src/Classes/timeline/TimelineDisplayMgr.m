@@ -317,6 +317,30 @@ static NSInteger retweetFormatValueAlredyRead;
     [self.lastTweetDetailsWrapperController setUpdatingState:kDisconnected];
 }
 
+- (void)tweet:(Tweet *)tweet markedAsFavorite:(BOOL)favorite
+{
+    NSLog(@"Timeline display manager: set favorite value for tweet");
+    TweetInfo * tweetInfo = [timeline objectForKey:tweet.identifier];
+    tweetInfo.favorited = [NSNumber numberWithBool:favorite];
+    if ([self.lastTweetDetailsController.tweet.identifier
+        isEqual:tweet.identifier])
+        [self.lastTweetDetailsController setFavorited:favorite];
+}
+
+- (void)failedToMarkTweet:(NSString *)tweetId asFavorite:(BOOL)favorite
+    error:(NSError *)error
+{
+    NSLog(@"Timeline display manager: failed to set favorite");
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.setfavorite", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+    if ([self.lastTweetDetailsController.tweet.identifier isEqual:tweetId])
+        [self.lastTweetDetailsController
+        setFavorited:
+        [self.lastTweetDetailsController.tweet.favorited boolValue]];
+}
+
 #pragma mark TimelineViewControllerDelegate implementation
 
 - (void)selectedTweet:(TweetInfo *)tweet
@@ -598,10 +622,11 @@ static NSInteger retweetFormatValueAlredyRead;
     [sheet showInView:rootView];
 }
 
-- (void)showingTweetDetails:(TweetInfo *)tweet
+- (void)showingTweetDetails:(TweetViewController *)tweetController
 {
     NSLog(@"Timeline display manager: showing tweet details...");
-    self.selectedTweet = tweet;
+    self.selectedTweet = tweetController.tweet;
+    self.lastTweetDetailsController = tweetController;
     [self deallocateTweetDetailsNode];
 }
 
