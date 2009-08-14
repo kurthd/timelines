@@ -9,6 +9,8 @@
 #import "AsynchronousNetworkFetcher.h"
 #import "NSString+HtmlEncodingAdditions.h"
 #import "User+UIAdditions.h"
+#import "TwitchWebBrowserDisplayMgr.h"
+#import "PhotoBrowserDisplayMgr.h"
 
 enum {
     kUserInfoSectionDetails,
@@ -235,7 +237,7 @@ static UIImage * defaultAvatar;
                 indexPath.row == 0)
                 [delegate showLocationOnMap:user.location];
             else
-                [delegate visitWebpage:user.webpage];
+                [[TwitchWebBrowserDisplayMgr instance] visitWebpage:user.webpage];
             break;
         case kUserInfoSectionNetwork:
             if (indexPath.row == kUserInfoFollowingRow)
@@ -461,7 +463,7 @@ static UIImage * defaultAvatar;
     RemotePhoto * remotePhoto =
         [[RemotePhoto alloc]
         initWithImage:avatarImage url:url name:user.name];
-    [delegate showPhotoInBrowser:remotePhoto];
+    [[PhotoBrowserDisplayMgr instance] showPhotoInBrowser:remotePhoto];
 }
 
 + (UIImage *)defaultAvatar

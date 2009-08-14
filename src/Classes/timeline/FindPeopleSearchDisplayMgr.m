@@ -23,9 +23,6 @@
     FindPeopleBookmarkViewController * bookmarkController;
 @property (nonatomic, retain) RecentSearchMgr * recentSearchMgr;
 
-@property (readonly) TwitchBrowserViewController * browserController;
-@property (readonly) PhotoBrowser * photoBrowser;
-
 @property (nonatomic, retain) TimelineDisplayMgr * timelineDisplayMgr;
 @property (nonatomic, retain)
     NetworkAwareViewController * nextWrapperController;
@@ -55,11 +52,7 @@
     [recentSearchMgr release];
     [savedSearchMgr release];
     [context release];
-
-    [browserController release];
-    [photoBrowser release];
     [composeTweetDisplayMgr release];
-
     [timelineDisplayMgr release];
     [nextWrapperController release];
     [credentials release];
@@ -229,29 +222,6 @@
         NSUTF8StringEncoding];
     NSURL * url = [NSURL URLWithString:urlString];
     [[UIApplication sharedApplication] openURL:url];
-}
-
-- (void)visitWebpage:(NSString *)webpageUrl
-{
-    NSLog(@"Find people display manager: visiting webpage: %@", webpageUrl);
-    [netAwareController presentModalViewController:self.browserController
-        animated:YES];
-    [self.browserController setUrl:webpageUrl];
-}
-
-- (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto
-{
-    NSLog(@"Find people display manager: showing photo: %@", remotePhoto);
-
-    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
-    [[UIApplication sharedApplication]
-        setStatusBarStyle:UIStatusBarStyleBlackTranslucent
-        animated:YES];
-    
-    [netAwareController presentModalViewController:self.photoBrowser
-        animated:YES];
-    [self.photoBrowser addRemotePhoto:remotePhoto];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
 }
 
 - (void)displayFollowingForUser:(NSString *)aUsername
@@ -584,30 +554,6 @@
             context:context];
 
     return recentSearchMgr;
-}
-
-- (TwitchBrowserViewController *)browserController
-{
-    if (!browserController) {
-        browserController =
-            [[TwitchBrowserViewController alloc]
-            initWithNibName:@"TwitchBrowserView" bundle:nil];
-        browserController.delegate = self;
-    }
-
-    return browserController;
-}
-
-- (PhotoBrowser *)photoBrowser
-{
-    if (!photoBrowser) {
-        photoBrowser =
-            [[PhotoBrowser alloc]
-            initWithNibName:@"PhotoBrowserView" bundle:nil];
-        photoBrowser.delegate = self;
-    }
-
-    return photoBrowser;
 }
 
 - (void)displayErrorWithTitle:(NSString *)title

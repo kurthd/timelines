@@ -9,6 +9,8 @@
 #import "UIWebView+FileLoadingAdditions.h"
 #import "RegexKitLite.h"
 #import "User+UIAdditions.h"
+#import "TwitchWebBrowserDisplayMgr.h"
+#import "PhotoBrowserDisplayMgr.h"
 
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 
@@ -304,9 +306,9 @@ enum TweetActionRows {
             RemotePhoto * remotePhoto =
                 [[RemotePhoto alloc]
                 initWithImage:nil url:webpage name:webpage];
-            [delegate showPhotoInBrowser:remotePhoto];
+            [[PhotoBrowserDisplayMgr instance] showPhotoInBrowser:remotePhoto];
         } else
-            [delegate visitWebpage:webpage];
+            [[TwitchWebBrowserDisplayMgr instance] visitWebpage:webpage];
     }
 
     return navigationType != UIWebViewNavigationTypeLinkClicked;
@@ -352,7 +354,7 @@ enum TweetActionRows {
                 [NSString stringWithFormat:@"http://twitter.com/%@/status/%@",
                 self.tweet.user, self.tweet.identifier];
             NSLog(@"Opening tweet in browser (%@)...", webAddress);
-            [delegate visitWebpage:webAddress];
+            [[TwitchWebBrowserDisplayMgr instance] visitWebpage:webAddress];
             break;
         case 1:
             NSLog(@"Sending tweet in email...");
@@ -461,7 +463,7 @@ enum TweetActionRows {
     RemotePhoto * remotePhoto =
         [[RemotePhoto alloc]
         initWithImage:remoteAvatar url:url name:selectedUser.name];
-    [delegate showPhotoInBrowser:remotePhoto];
+    [[PhotoBrowserDisplayMgr instance] showPhotoInBrowser:remotePhoto];
 }
 
 - (void)retweet

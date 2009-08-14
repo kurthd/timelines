@@ -218,6 +218,8 @@
 		9112EAB5102E236E002715DC /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
 		9130FCA410337EA1004E3030 /* UserInfoRequestAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FCA310337EA1004E3030 /* UserInfoRequestAdapter.m */; };
 		9130FE0E1034C792004E3030 /* ErrorState.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FE0D1034C792004E3030 /* ErrorState.m */; };
+		9130FE501034D334004E3030 /* TwitchWebBrowserDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FE4F1034D334004E3030 /* TwitchWebBrowserDisplayMgr.m */; };
+		9130FEAD1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FEAC1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m */; };
 		9145EF5B1005073200C2E485 /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
 		9145EF5C1005073F00C2E485 /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
 		9145EF5D1005074A00C2E485 /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
@@ -593,6 +595,10 @@
 		9130FCA310337EA1004E3030 /* UserInfoRequestAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoRequestAdapter.m; path = timeline/UserInfoRequestAdapter.m; sourceTree = "<group>"; };
 		9130FE0C1034C792004E3030 /* ErrorState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorState.h; path = shared/ErrorState.h; sourceTree = "<group>"; };
 		9130FE0D1034C792004E3030 /* ErrorState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ErrorState.m; path = shared/ErrorState.m; sourceTree = "<group>"; };
+		9130FE4E1034D334004E3030 /* TwitchWebBrowserDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchWebBrowserDisplayMgr.h; path = shared/TwitchWebBrowserDisplayMgr.h; sourceTree = "<group>"; };
+		9130FE4F1034D334004E3030 /* TwitchWebBrowserDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchWebBrowserDisplayMgr.m; path = shared/TwitchWebBrowserDisplayMgr.m; sourceTree = "<group>"; };
+		9130FEAB1034DDBA004E3030 /* PhotoBrowserDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBrowserDisplayMgr.h; path = "photo-browser/PhotoBrowserDisplayMgr.h"; sourceTree = "<group>"; };
+		9130FEAC1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBrowserDisplayMgr.m; path = "photo-browser/PhotoBrowserDisplayMgr.m"; sourceTree = "<group>"; };
 		9145EFC91005276100C2E485 /* Re-tweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweetDisabled.png"; path = "images/Re-tweetDisabled.png"; sourceTree = "<group>"; };
 		9145EFFA10054D9400C2E485 /* BlueEnvelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueEnvelope.png; path = images/BlueEnvelope.png; sourceTree = "<group>"; };
 		9145F022100573AF00C2E485 /* User+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "User+UIAdditions.h"; path = "users/User+UIAdditions.h"; sourceTree = "<group>"; };
@@ -700,7 +706,6 @@
 		917FFF151010F7E500335C0F /* PhotoSourceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSourceDelegate.h; path = "photo-browser/PhotoSourceDelegate.h"; sourceTree = "<group>"; };
 		917FFF191010F8B800335C0F /* CommonTwitterServicePhotoSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonTwitterServicePhotoSource.h; path = "photo-browser/CommonTwitterServicePhotoSource.h"; sourceTree = "<group>"; };
 		917FFF1A1010F8B800335C0F /* CommonTwitterServicePhotoSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonTwitterServicePhotoSource.m; path = "photo-browser/CommonTwitterServicePhotoSource.m"; sourceTree = "<group>"; };
-		917FFFC710112B1200335C0F /* PhotoBrowserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBrowserDelegate.h; path = "photo-browser/PhotoBrowserDelegate.h"; sourceTree = "<group>"; };
 		9180B6BE101240B60096DFA1 /* ButtonBackground-92x35.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ButtonBackground-92x35.png"; path = "images/ButtonBackground-92x35.png"; sourceTree = "<group>"; };
 		9180B6C4101244CD0096DFA1 /* ButtonBackground-108x35.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ButtonBackground-108x35.png"; path = "images/ButtonBackground-108x35.png"; sourceTree = "<group>"; };
 		9180B7AD1012AA170096DFA1 /* TwitchBrowserViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchBrowserViewControllerDelegate.h; path = timeline/TwitchBrowserViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -1059,6 +1064,8 @@
 				05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */,
 				9130FE0C1034C792004E3030 /* ErrorState.h */,
 				9130FE0D1034C792004E3030 /* ErrorState.m */,
+				9130FE4E1034D334004E3030 /* TwitchWebBrowserDisplayMgr.h */,
+				9130FE4F1034D334004E3030 /* TwitchWebBrowserDisplayMgr.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -1552,7 +1559,8 @@
 				917FFF151010F7E500335C0F /* PhotoSourceDelegate.h */,
 				917FFF191010F8B800335C0F /* CommonTwitterServicePhotoSource.h */,
 				917FFF1A1010F8B800335C0F /* CommonTwitterServicePhotoSource.m */,
-				917FFFC710112B1200335C0F /* PhotoBrowserDelegate.h */,
+				9130FEAB1034DDBA004E3030 /* PhotoBrowserDisplayMgr.h */,
+				9130FEAC1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m */,
 			);
 			name = "photo-browser";
 			sourceTree = "<group>";
@@ -1881,6 +1889,8 @@
 				05F9CF23103335310010409B /* ConversationViewController.m in Sources */,
 				9130FCA410337EA1004E3030 /* UserInfoRequestAdapter.m in Sources */,
 				9130FE0E1034C792004E3030 /* ErrorState.m in Sources */,
+				9130FE501034D334004E3030 /* TwitchWebBrowserDisplayMgr.m in Sources */,
+				9130FEAD1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

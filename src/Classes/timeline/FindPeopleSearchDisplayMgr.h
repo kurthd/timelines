@@ -21,7 +21,7 @@
     NSObject
     <TwitterServiceDelegate, UISearchBarDelegate,
     FindPeopleBookmarkViewControllerDelegate, UserInfoViewControllerDelegate,
-    PhotoBrowserDelegate, TwitchBrowserViewControllerDelegate>
+    TwitchBrowserViewControllerDelegate>
 {
     NetworkAwareViewController * netAwareController;
     UserInfoViewController * userInfoController;
@@ -39,8 +39,6 @@
     FindPeopleBookmarkViewController * bookmarkController;
     NSManagedObjectContext * context;
 
-    TwitchBrowserViewController * browserController;
-    PhotoBrowser * photoBrowser;
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 
     NetworkAwareViewController * nextWrapperController;

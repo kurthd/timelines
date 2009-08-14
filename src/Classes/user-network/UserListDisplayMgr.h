@@ -24,7 +24,7 @@
     NSObject
     <UserListTableViewControllerDelegate, TwitterServiceDelegate,
     UserInfoViewControllerDelegate, TwitchBrowserViewControllerDelegate,
-    PhotoBrowserDelegate, NetworkAwareViewControllerDelegate>
+    NetworkAwareViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     UserListTableViewController * userListController;
@@ -46,8 +46,6 @@
     BOOL failedState;
     NSMutableDictionary * cache;
     UserInfoViewController * userInfoController;
-    TwitchBrowserViewController * browserController;
-    PhotoBrowser * photoBrowser;
     BOOL alreadyBeenDisplayed;
     NSString * userInfoUsername;
 }

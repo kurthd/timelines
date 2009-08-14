@@ -34,6 +34,8 @@
 #import "SavedSearchMgr.h"
 #import "ArbUserTimelineDataSource.h"
 #import "UserListDisplayMgrFactory.h"
+#import "TwitchWebBrowserDisplayMgr.h"
+#import "PhotoBrowserDisplayMgr.h"
 
 @interface TwitchAppDelegate ()
 
@@ -195,6 +197,16 @@
         [self loadHomeViewWithCachedData:c];
         [self loadMessagesViewWithCachedData:c];
     }
+
+    TwitchWebBrowserDisplayMgr * webDispMgr =
+        [TwitchWebBrowserDisplayMgr instance];
+    webDispMgr.composeTweetDisplayMgr = self.composeTweetDisplayMgr;
+    webDispMgr.hostViewController = tabBarController;
+    
+    PhotoBrowserDisplayMgr * photoBrowserDispMgr =
+        [PhotoBrowserDisplayMgr instance];
+    photoBrowserDispMgr.composeTweetDisplayMgr = self.composeTweetDisplayMgr;
+    photoBrowserDispMgr.hostViewController = tabBarController;
 
     [self setUIStateFromPersistence];
 }

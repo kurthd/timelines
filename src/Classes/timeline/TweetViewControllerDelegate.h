@@ -15,13 +15,11 @@
 - (void)showResultsForSearch:(NSString *)query;
 - (void)setFavorite:(BOOL)favorite;
 - (void)showLocationOnMap:(NSString *)location;
-- (void)visitWebpage:(NSString *)webpageUrl;
 - (void)showingTweetDetails:(TweetInfo *)tweet;
 - (void)loadNewTweetWithId:(NSString *)tweetId username:(NSString *)username;
 - (void)reTweetSelected;
 - (void)replyToTweet;
 - (void)sendDirectMessageToUser:(NSString *)username;
-- (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto;
 
 @optional
 

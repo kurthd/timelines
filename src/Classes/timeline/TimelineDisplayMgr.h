@@ -19,7 +19,6 @@
 #import "ComposeTweetDisplayMgr.h"
 #import "TwitchBrowserViewController.h"
 #import "PhotoBrowser.h"
-#import "PhotoBrowserDelegate.h"
 #import "TwitchBrowserViewControllerDelegate.h"
 #import "TwitterService.h"
 #import "TwitterServiceDelegate.h"
@@ -37,9 +36,8 @@
     NSObject
     <TimelineDataSourceDelegate, TimelineViewControllerDelegate,
     TweetViewControllerDelegate, NetworkAwareViewControllerDelegate,
-    UserInfoViewControllerDelegate, PhotoBrowserDelegate,
-    TwitchBrowserViewControllerDelegate, TwitterServiceDelegate,
-    UIWebViewDelegate, ConversationDisplayMgrDelegate>
+    UserInfoViewControllerDelegate, TwitchBrowserViewControllerDelegate,
+    TwitterServiceDelegate, UIWebViewDelegate, ConversationDisplayMgrDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
@@ -50,8 +48,6 @@
     UserInfoRequestAdapter * userInfoRequestAdapter;
     TwitterService * userInfoTwitterService;
     UserInfoViewController * userInfoController;
-    TwitchBrowserViewController * browserController;
-    PhotoBrowser * photoBrowser;
     SavedSearchMgr * findPeopleBookmarkMgr;
     UserListDisplayMgrFactory * userListDisplayMgrFactory;
 
@@ -114,8 +110,6 @@
 @property (readonly) NetworkAwareViewController * userInfoControllerWrapper;
 @property (readonly) UserInfoRequestAdapter * userInfoRequestAdapter;
 @property (readonly) TwitterService * userInfoTwitterService;
-@property (readonly) TwitchBrowserViewController * browserController;
-@property (readonly) PhotoBrowser * photoBrowser;
 
 @property (nonatomic, retain) TweetInfo * selectedTweet;
 @property (nonatomic, retain) NSString * currentUsername;

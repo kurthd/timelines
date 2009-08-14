@@ -74,8 +74,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [wrapperController release];
     [inboxController release];
     [tweetViewController release];
-    [browserController release];
-    [photoBrowser release];
     [service release];
     [directMessageCache release];
     [conversations release];
@@ -539,29 +537,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [[UIApplication sharedApplication] openURL:url];
 }
 
-- (void)visitWebpage:(NSString *)webpageUrl
-{
-    NSLog(@"Messages Display Manager: visiting webpage: %@", webpageUrl);
-    [wrapperController presentModalViewController:self.browserController
-        animated:YES];
-    [self.browserController setUrl:webpageUrl];
-}
-
-- (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto
-{
-    NSLog(@"Messages Display Manager: showing photo: %@", remotePhoto);
-
-    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
-    [[UIApplication sharedApplication]
-        setStatusBarStyle:UIStatusBarStyleBlackTranslucent
-        animated:YES];
-
-    [wrapperController presentModalViewController:self.photoBrowser
-        animated:YES];
-    [self.photoBrowser addRemotePhoto:remotePhoto];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
-}
-
 - (void)showingTweetDetails:(TweetInfo *)tweet
 {
     NSLog(@"Messages Display Manager: showing tweet details...");
@@ -990,30 +965,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     }
 
     return tweetViewController;
-}
-
-- (TwitchBrowserViewController *)browserController
-{
-    if (!browserController) {
-        browserController =
-            [[TwitchBrowserViewController alloc]
-            initWithNibName:@"TwitchBrowserView" bundle:nil];
-        browserController.delegate = self;
-    }
-
-    return browserController;
-}
-
-- (PhotoBrowser *)photoBrowser
-{
-    if (!photoBrowser) {
-        photoBrowser =
-            [[PhotoBrowser alloc]
-            initWithNibName:@"PhotoBrowserView" bundle:nil];
-        photoBrowser.delegate = self;
-    }
-
-    return photoBrowser;
 }
 
 - (void)setDirectMessageCache:(DirectMessageCache *)aMessageCache

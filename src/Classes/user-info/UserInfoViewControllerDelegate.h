@@ -8,7 +8,6 @@
 @protocol UserInfoViewControllerDelegate
 
 - (void)showLocationOnMap:(NSString *)location;
-- (void)visitWebpage:(NSString *)webpageUrl;
 - (void)displayFollowingForUser:(NSString *)username;
 - (void)displayFollowersForUser:(NSString *)username;
 - (void)displayFavoritesForUser:(NSString *)username;
@@ -17,6 +16,5 @@
 - (void)stopFollowingUser:(NSString *)username;
 - (void)showingUserInfoView;
 - (void)sendDirectMessageToUser:(NSString *)username;
-- (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto;
 
 @end

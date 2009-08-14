@@ -7,7 +7,6 @@
 #import "PhotoSource.h"
 #import "PhotoSourceDelegate.h"
 #import <MessageUI/MFMailComposeViewController.h>
-#import "PhotoBrowserDelegate.h"
 
 @interface PhotoBrowser :
     UIViewController <PhotoSourceDelegate, UIActionSheetDelegate,
@@ -37,15 +36,11 @@
 
     NSObject<PhotoSource> * photoSource;
 
-    NSObject<PhotoBrowserDelegate> * delegate;
-    
     NSInteger previousOrientation;
 }
 
 @property (nonatomic, readonly) NSMutableArray * photoList;
 @property (nonatomic, readonly) NSObject<PhotoSource> * photoSource;
-
-@property (nonatomic, assign) NSObject<PhotoBrowserDelegate> * delegate;
 
 - (IBAction)done:(id)sender;
 - (IBAction)showActions:(id)sender;
