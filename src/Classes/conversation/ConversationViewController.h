@@ -17,6 +17,8 @@
 {
     id<ConversationViewControllerDelegate> delegate;
 
+    IBOutlet UIView * loadingView;
+
     NSMutableArray * conversation;
     NSNumber * batchSize;
 

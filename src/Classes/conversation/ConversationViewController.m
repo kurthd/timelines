@@ -10,20 +10,26 @@
 
 @interface ConversationViewController ()
 
+@property (nonatomic, retain) UIView * loadingView;
 @property (nonatomic, retain) NSMutableArray * conversation;
 
 - (UIImage *)getAvatarForUrl:(NSString *)url;
 + (UIImage *)defaultAvatar;
 
+- (void)displayLoadingView;
+- (void)hideLoadingView;
+
 @end
 
 @implementation ConversationViewController
 
-@synthesize delegate, conversation, batchSize;
+@synthesize delegate, loadingView, conversation, batchSize;
 
 - (void)dealloc
 {
     self.delegate = nil;
+
+    self.loadingView = nil;
 
     self.conversation = nil;
     self.batchSize = nil;
@@ -51,11 +57,11 @@
     if (tweetId) { // there's still more to load
         [delegate fetchTweetWithId:tweetId];
         waitingFor = [batchSize integerValue];
+
+        [self displayLoadingView];
     }
 
     [self.tableView reloadData];
-
-    // TODO: Start any animations/loading indicators
 }
 
 - (void)addTweetsToConversation:(NSArray *)tweets
@@ -79,8 +85,10 @@
 
     if (waitingFor > 0 && nextId)
         [delegate fetchTweetWithId:nextId];
-    else
+    else {
         waitingFor = 0;
+        [self hideLoadingView];
+    }
 
     // TODO: stop any animations
 }
@@ -88,10 +96,12 @@
 - (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error
 {
     NSString * title =
-        NSLocalizedString(@"conversation.load.failed.title", @"");
+        NSLocalizedString(@"conversationview.load.failed.title", @"");
     NSString * message = error.localizedDescription;
 
     [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
+
+    [self hideLoadingView];
 }
 
 #pragma mark UIViewController overrides
@@ -208,6 +218,27 @@
     }
 
     return avatarImage;
+}
+
+- (void)displayLoadingView
+{
+    NSLog(@"Setting the header view from %@ to %@.",
+        self.tableView.tableFooterView, self.loadingView);
+    self.tableView.tableFooterView = self.loadingView;
+}
+
+- (void)hideLoadingView
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone
+        forView:self.loadingView cache:NO];
+
+    self.loadingView.alpha = 0;
+
+    [UIView commitAnimations];
+
+    self.tableView.tableFooterView = nil;
+    self.loadingView.alpha = 1.0;
 }
 
 + (UIImage *)defaultAvatar

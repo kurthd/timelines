@@ -147,3 +147,4 @@ findpeople.placeholder = "Username";
 
 /* Conversation View */
 conversationview.title = "Conversation";
+conversationview.load.failed.title = "Failed to Load Conversation";
