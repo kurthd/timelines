@@ -67,7 +67,6 @@ static NSInteger retweetFormatValueAlredyRead;
     [lastTweetDetailsWrapperController release];
     [lastTweetDetailsController release];
     [tweetDetailsController release];
-    [photoBrowser release];
     [findPeopleBookmarkMgr release];
     [userListDisplayMgrFactory release];
 
@@ -664,21 +663,6 @@ static NSInteger retweetFormatValueAlredyRead;
     [[UIApplication sharedApplication] openURL:url];
 }
 
-- (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto
-{
-    NSLog(@"Timeline display manager: showing photo: %@", remotePhoto);
-
-    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
-    [[UIApplication sharedApplication]
-        setStatusBarStyle:UIStatusBarStyleBlackTranslucent
-        animated:YES];
-
-    [self.wrapperController presentModalViewController:self.photoBrowser
-        animated:YES];
-    [self.photoBrowser addRemotePhoto:remotePhoto];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
-}
-
 - (void)displayFollowingForUser:(NSString *)username
 {
     NSLog(@"Timeline display manager: displaying 'following' list for %@",
@@ -1003,17 +987,6 @@ static NSInteger retweetFormatValueAlredyRead;
     }
     
     return userInfoTwitterService;
-}
-
-- (PhotoBrowser *)photoBrowser
-{
-    if (!photoBrowser) {
-        photoBrowser =
-            [[PhotoBrowser alloc]
-            initWithNibName:@"PhotoBrowserView" bundle:nil];
-    }
-
-    return photoBrowser;
 }
 
 - (void)setService:(NSObject<TimelineDataSource> *)aTimelineSource

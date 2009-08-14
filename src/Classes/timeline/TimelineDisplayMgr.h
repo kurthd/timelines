@@ -47,7 +47,6 @@
     UserInfoRequestAdapter * userInfoRequestAdapter;
     TwitterService * userInfoTwitterService;
     UserInfoViewController * userInfoController;
-    PhotoBrowser * photoBrowser;
     SavedSearchMgr * findPeopleBookmarkMgr;
     UserListDisplayMgrFactory * userListDisplayMgrFactory;
 
@@ -101,7 +100,6 @@
 @property (readonly) NetworkAwareViewController * userInfoControllerWrapper;
 @property (readonly) UserInfoRequestAdapter * userInfoRequestAdapter;
 @property (readonly) TwitterService * userInfoTwitterService;
-@property (readonly) PhotoBrowser * photoBrowser;
 
 @property (nonatomic, retain) TweetInfo * selectedTweet;
 @property (nonatomic, retain) NSString * currentUsername;

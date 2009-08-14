@@ -26,6 +26,14 @@ static TwitchWebBrowserDisplayMgr * gInstance = NULL;
     return gInstance;
 }
 
+- (void)dealloc
+{
+    [browserController release];
+    [composeTweetDisplayMgr release];
+    [hostViewController release];
+    [super dealloc];
+}
+
 - (void)visitWebpage:(NSString *)webpageUrl
 {
     NSLog(@"Visiting webpage: %@", webpageUrl);

@@ -39,7 +39,6 @@
     FindPeopleBookmarkViewController * bookmarkController;
     NSManagedObjectContext * context;
 
-    PhotoBrowser * photoBrowser;
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 
     NetworkAwareViewController * nextWrapperController;

@@ -11,6 +11,5 @@
 - (void)selectedTweet:(TweetInfo *)tweet;
 - (void)loadMoreTweets;
 - (void)showUserInfo;
-- (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto;
 
 @end

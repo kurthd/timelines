@@ -74,7 +74,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [wrapperController release];
     [inboxController release];
     [tweetViewController release];
-    [photoBrowser release];
     [service release];
     [directMessageCache release];
     [conversations release];
@@ -538,21 +537,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [[UIApplication sharedApplication] openURL:url];
 }
 
-- (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto
-{
-    NSLog(@"Messages Display Manager: showing photo: %@", remotePhoto);
-
-    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
-    [[UIApplication sharedApplication]
-        setStatusBarStyle:UIStatusBarStyleBlackTranslucent
-        animated:YES];
-
-    [wrapperController presentModalViewController:self.photoBrowser
-        animated:YES];
-    [self.photoBrowser addRemotePhoto:remotePhoto];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
-}
-
 - (void)showingTweetDetails
 {
     NSLog(@"Messages Display Manager: showing tweet details...");
@@ -981,17 +965,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     }
 
     return tweetViewController;
-}
-
-- (PhotoBrowser *)photoBrowser
-{
-    if (!photoBrowser) {
-        photoBrowser =
-            [[PhotoBrowser alloc]
-            initWithNibName:@"PhotoBrowserView" bundle:nil];
-    }
-
-    return photoBrowser;
 }
 
 - (void)setDirectMessageCache:(DirectMessageCache *)aMessageCache

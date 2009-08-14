@@ -10,6 +10,7 @@
 #import "RegexKitLite.h"
 #import "User+UIAdditions.h"
 #import "TwitchWebBrowserDisplayMgr.h"
+#import "PhotoBrowserDisplayMgr.h"
 
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 
@@ -304,7 +305,7 @@ enum TweetActionRows {
             RemotePhoto * remotePhoto =
                 [[RemotePhoto alloc]
                 initWithImage:nil url:webpage name:webpage];
-            [delegate showPhotoInBrowser:remotePhoto];
+            [[PhotoBrowserDisplayMgr instance] showPhotoInBrowser:remotePhoto];
         } else
             [[TwitchWebBrowserDisplayMgr instance] visitWebpage:webpage];
     }
@@ -461,7 +462,7 @@ enum TweetActionRows {
     RemotePhoto * remotePhoto =
         [[RemotePhoto alloc]
         initWithImage:remoteAvatar url:url name:selectedUser.name];
-    [delegate showPhotoInBrowser:remotePhoto];
+    [[PhotoBrowserDisplayMgr instance] showPhotoInBrowser:remotePhoto];
 }
 
 - (void)retweet

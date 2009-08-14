@@ -46,7 +46,6 @@
     BOOL failedState;
     NSMutableDictionary * cache;
     UserInfoViewController * userInfoController;
-    PhotoBrowser * photoBrowser;
     BOOL alreadyBeenDisplayed;
     NSString * userInfoUsername;
 }

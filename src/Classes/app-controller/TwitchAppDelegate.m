@@ -35,6 +35,7 @@
 #import "ArbUserTimelineDataSource.h"
 #import "UserListDisplayMgrFactory.h"
 #import "TwitchWebBrowserDisplayMgr.h"
+#import "PhotoBrowserDisplayMgr.h"
 
 @interface TwitchAppDelegate ()
 
@@ -201,6 +202,11 @@
         [TwitchWebBrowserDisplayMgr instance];
     webDispMgr.composeTweetDisplayMgr = self.composeTweetDisplayMgr;
     webDispMgr.hostViewController = tabBarController;
+    
+    PhotoBrowserDisplayMgr * photoBrowserDispMgr =
+        [PhotoBrowserDisplayMgr instance];
+    photoBrowserDispMgr.composeTweetDisplayMgr = self.composeTweetDisplayMgr;
+    photoBrowserDispMgr.hostViewController = tabBarController;
 
     [self setUIStateFromPersistence];
 }

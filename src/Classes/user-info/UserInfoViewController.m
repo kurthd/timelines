@@ -10,6 +10,7 @@
 #import "NSString+HtmlEncodingAdditions.h"
 #import "User+UIAdditions.h"
 #import "TwitchWebBrowserDisplayMgr.h"
+#import "PhotoBrowserDisplayMgr.h"
 
 enum {
     kUserInfoSectionDetails,
@@ -462,7 +463,7 @@ static UIImage * defaultAvatar;
     RemotePhoto * remotePhoto =
         [[RemotePhoto alloc]
         initWithImage:avatarImage url:url name:user.name];
-    [delegate showPhotoInBrowser:remotePhoto];
+    [[PhotoBrowserDisplayMgr instance] showPhotoInBrowser:remotePhoto];
 }
 
 + (UIImage *)defaultAvatar

@@ -69,7 +69,6 @@
     DirectMessageInboxViewController * inboxController;
     DirectMessageConversationViewController * conversationController;
     TweetViewController * tweetViewController;
-    PhotoBrowser * photoBrowser;
     SavedSearchMgr * findPeopleBookmarkMgr;
     UserListDisplayMgrFactory * userListDisplayMgrFactory;
 
@@ -130,7 +129,6 @@
 @property (readonly)
     DirectMessageConversationViewController * conversationController;
 @property (readonly) TweetViewController * tweetViewController;
-@property (readonly) PhotoBrowser * photoBrowser;
 
 @property (nonatomic, copy) NSString * activeAcctUsername;
 @property (nonatomic, retain) User * otherUserInConversation;

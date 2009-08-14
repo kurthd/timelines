@@ -19,6 +19,5 @@
 - (void)reTweetSelected;
 - (void)replyToTweet;
 - (void)sendDirectMessageToUser:(NSString *)username;
-- (void)showPhotoInBrowser:(RemotePhoto *)remotePhoto;
 
 @end

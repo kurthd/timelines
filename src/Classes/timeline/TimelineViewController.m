@@ -10,6 +10,7 @@
 #import "UIColor+TwitchColors.h"
 #import "TweetInfo+UIAdditions.h"
 #import "User+UIAdditions.h"
+#import "PhotoBrowserDisplayMgr.h"
 
 @interface TimelineViewController ()
 
@@ -348,7 +349,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     RemotePhoto * remotePhoto =
         [[RemotePhoto alloc]
         initWithImage:avatarImage url:url name:user.name];
-    [delegate showPhotoInBrowser:remotePhoto];
+    [[PhotoBrowserDisplayMgr instance] showPhotoInBrowser:remotePhoto];
 }
 
 - (NSString *)mostRecentTweetId
