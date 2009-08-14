@@ -101,6 +101,11 @@
     [self.delegate displayTweetFromConversation:info];
 }
 
+- (BOOL)isCurrentUser:(NSString *)username
+{
+    return [username isEqualToString:self.service.credentials.username];
+}
+
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId

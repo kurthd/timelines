@@ -10,6 +10,8 @@
 - (void)fetchTweetWithId:(NSString *)tweetId;
 - (void)displayTweetWithId:(NSString *)tweetId;
 
+- (BOOL)isCurrentUser:(NSString *)username;
+
 @end
 
 @interface ConversationViewController :

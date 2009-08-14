@@ -179,7 +179,12 @@
     [cell setName:[tweet displayName]];
     [cell setDate:tweet.timestamp];
     [cell setTweetText:tweet.text];
-    [cell setDisplayType:kTimelineTableViewCellTypeNormal];
+
+    if ([delegate isCurrentUser:tweet.user.username])
+        [cell setDisplayType:kTimelineTableViewCellTypeInverted];
+    else
+        [cell setDisplayType:kTimelineTableViewCellTypeNormal];
+
     [cell setAvatarImage:[self getAvatarForUrl:tweet.user.profileImageUrl]];
     cell.avatarImageUrl = tweet.user.profileImageUrl;
 
