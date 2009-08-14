@@ -46,6 +46,8 @@
     TwitterCredentials * credentials;
     CredentialsActivatedPublisher * credentialsPublisher;
     UserListDisplayMgr * nextUserListDisplayMgr;
+
+    NSString * currentSearchUsername;
 }
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc

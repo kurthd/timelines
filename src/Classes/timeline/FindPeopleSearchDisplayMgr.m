@@ -18,6 +18,7 @@
 - (void)displayBookmarksView;
 - (void)searchForQuery:(NSString *)query;
 - (void)displayErrorWithTitle:(NSString *)title;
+- (void)sendDirectMessageToCurrentUser;
 
 @property (nonatomic, readonly)
     FindPeopleBookmarkViewController * bookmarkController;
@@ -29,6 +30,7 @@
 @property (nonatomic, retain)
     CredentialsActivatedPublisher * credentialsPublisher;
 @property (nonatomic, retain) UserListDisplayMgr * nextUserListDisplayMgr;
+@property (nonatomic, retain) NSString * currentSearchUsername;
 
 @end
 
@@ -38,6 +40,7 @@
 @synthesize recentSearchMgr;
 @synthesize timelineDisplayMgr, nextWrapperController, credentialsPublisher,
     nextUserListDisplayMgr;
+@synthesize currentSearchUsername;
 
 - (void)dealloc
 {
@@ -58,6 +61,7 @@
     [credentials release];
     [credentialsPublisher release];
     [nextUserListDisplayMgr release];
+    [currentSearchUsername release];
 
     [super dealloc];
 }
@@ -92,6 +96,14 @@
 
         UINavigationItem * navItem = netAwareController.navigationItem;
         navItem.titleView = searchBar;
+
+        UIBarButtonItem * composeButton =
+            [[[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self
+            action:@selector(sendDirectMessageToCurrentUser)] autorelease];
+        composeButton.enabled = NO;
+        navItem.rightBarButtonItem = composeButton;
+
         CGFloat barHeight = navItem.titleView.superview.bounds.size.height;
         CGRect searchBarRect =
             CGRectMake(0.0, 0.0,
@@ -112,6 +124,11 @@
 - (void)userInfo:(User *)user fetchedForUsername:(NSString *)username
 {
     NSLog(@"Fetched user info for '%@'", username);
+    self.currentSearchUsername = username;
+    UIBarButtonItem * composeButton =
+        netAwareController.navigationItem.rightBarButtonItem;
+    composeButton.enabled = YES;
+    
     [netAwareController setUpdatingState:kConnectedAndNotUpdating];
     [netAwareController setCachedDataAvailable:YES];
     [userInfoController setUser:user];
@@ -121,6 +138,11 @@
     error:(NSError *)error
 {
     NSLog(@"Unable to find user '%@'", username);
+    self.currentSearchUsername = nil;
+    UIBarButtonItem * composeButton =
+        netAwareController.navigationItem.rightBarButtonItem;
+    composeButton.enabled = NO;
+
     [netAwareController setUpdatingState:kDisconnected];
     [netAwareController setCachedDataAvailable:NO];
 }
@@ -329,6 +351,11 @@
     self.nextUserListDisplayMgr = nil;
 }
 
+- (void)sendDirectMessageToCurrentUser
+{
+    [composeTweetDisplayMgr composeDirectMessageTo:self.currentSearchUsername];
+}
+
 - (void)sendDirectMessageToUser:(NSString *)aUsername
 {
     [composeTweetDisplayMgr composeDirectMessageTo:aUsername];
@@ -372,6 +399,11 @@
         ![credentials.username isEqual:searchName];
     if (userInfoController.followingEnabled)
         [service isUser:credentials.username following:searchName];
+
+    UITableViewController * tvc = (UITableViewController *)
+        netAwareController.targetViewController;
+    tvc.tableView.contentInset = UIEdgeInsetsMake(-300.0, 0, 0, 0);
+    tvc.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar

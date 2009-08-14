@@ -7,6 +7,8 @@
 #import "RemotePhoto.h"
 #import "TweetInfo.h"
 
+@class TweetViewController;
+
 @protocol TweetViewControllerDelegate
 
 - (void)showUserInfoForUser:(User *)aUser;
@@ -15,7 +17,7 @@
 - (void)showResultsForSearch:(NSString *)query;
 - (void)setFavorite:(BOOL)favorite;
 - (void)showLocationOnMap:(NSString *)location;
-- (void)showingTweetDetails:(TweetInfo *)tweet;
+- (void)showingTweetDetails:(TweetViewController *)tweetController;
 - (void)loadNewTweetWithId:(NSString *)tweetId username:(NSString *)username;
 - (void)reTweetSelected;
 - (void)replyToTweet;

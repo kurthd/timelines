@@ -33,6 +33,7 @@ timelineview.directmessage.name = "To: %@";
 /* TimelineDisplayMgr */
 timelinedisplaymgr.error.fetchtimeline = "Failed to update timeline";
 timelinedisplaymgr.error.fetchmessages = "Failed to update direct messages";
+timelinedisplaymgr.error.setfavorite = "Failed to update favorite state";
 timelinedisplaymgr.error.fetchuserinfo = "Failed to fetch user info";
 timelinedisplaymgr.error.fetchfriends = "Failed to fetch friends list";
 timelinedisplaymgr.error.fetchfollowers = "Failed to fetch followers";

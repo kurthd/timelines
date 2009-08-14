@@ -489,6 +489,7 @@
     UserInfoViewController * userInfoController =
         [[UserInfoViewController alloc]
         initWithNibName:@"UserInfoView" bundle:nil];
+    userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
 
     findPeopleNetAwareViewController.targetViewController = userInfoController;
 

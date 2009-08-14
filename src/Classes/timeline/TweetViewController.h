@@ -8,6 +8,7 @@
 #import "TweetInfo.h"
 #import "RoundedImage.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
+#import "MarkAsFavoriteCell.h"
 
 @interface TweetViewController :
     UITableViewController <UIActionSheetDelegate, UIWebViewDelegate,
@@ -30,8 +31,11 @@
     // configure the display
     BOOL showsFavoriteButton;
     BOOL showsExtendedActions;
-    
+
     UIViewController * realParentViewController;
+
+    MarkAsFavoriteCell * favoriteCell;
+    BOOL markingFavorite;
 }
 
 @property (nonatomic, assign) NSObject<TweetViewControllerDelegate> * delegate;
@@ -41,6 +45,7 @@
 
 - (void)displayTweet:(TweetInfo *)tweet
     onNavigationController:(UINavigationController *)navController;
+- (void)setFavorited:(BOOL)favorited;
 - (void)setUsersTweet:(BOOL)usersTweet;
 - (void)hideFavoriteButton:(BOOL)hide;
 
