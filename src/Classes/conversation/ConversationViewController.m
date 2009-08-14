@@ -112,6 +112,12 @@
 
     self.navigationItem.title =
         NSLocalizedString(@"conversationview.title", @"");
+
+    // The footer view is always there, and we toggle its alpha from 0 to 1
+    // as we hide and show it. We animate hiding it, and removing it from
+    // the table view when hiding cuts off the animation.
+    self.loadingView.alpha = 0;
+    self.tableView.tableFooterView = self.loadingView;
 }
 
 - (void)didReceiveMemoryWarning
@@ -222,9 +228,7 @@
 
 - (void)displayLoadingView
 {
-    NSLog(@"Setting the header view from %@ to %@.",
-        self.tableView.tableFooterView, self.loadingView);
-    self.tableView.tableFooterView = self.loadingView;
+    self.loadingView.alpha = 1;
 }
 
 - (void)hideLoadingView
@@ -236,9 +240,6 @@
     self.loadingView.alpha = 0;
 
     [UIView commitAnimations];
-
-    self.tableView.tableFooterView = nil;
-    self.loadingView.alpha = 1.0;
 }
 
 + (UIImage *)defaultAvatar
