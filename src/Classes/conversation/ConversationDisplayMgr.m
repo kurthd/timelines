@@ -126,7 +126,7 @@
             [[ConversationViewController alloc]
             initWithNibName:@"ConversationView" bundle:nil];
         conversationViewController.delegate = self;
-        conversationViewController.batchSize = [NSNumber numberWithInteger:1];
+        conversationViewController.batchSize = [NSNumber numberWithInteger:3];
     }
 
     return conversationViewController;
