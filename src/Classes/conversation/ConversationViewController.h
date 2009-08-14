@@ -10,6 +10,8 @@
 - (void)fetchTweetWithId:(NSString *)tweetId;
 - (void)displayTweetWithId:(NSString *)tweetId;
 
+- (BOOL)isCurrentUser:(NSString *)username;
+
 @end
 
 @interface ConversationViewController :
@@ -17,7 +19,10 @@
 {
     id<ConversationViewControllerDelegate> delegate;
 
+    IBOutlet UIView * footerView;
+
     IBOutlet UIView * loadingView;
+    IBOutlet UIView * loadMoreView;
 
     NSMutableArray * conversation;
     NSNumber * batchSize;
@@ -33,5 +38,7 @@
 - (void)loadConversationStartingWithTweets:(NSArray *)tweets;
 - (void)addTweetsToConversation:(NSArray *)tweets;
 - (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error;
+
+- (IBAction)loadNextBatch:(id)sender;
 
 @end

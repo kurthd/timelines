@@ -84,7 +84,11 @@
 
 - (void)fetchTweetWithId:(NSString *)tweetId
 {
-    [self.service fetchTweet:tweetId];
+    // jad: Temporary while testing animations
+    //[self.service fetchTweet:tweetId];
+    [self.service performSelector:@selector(fetchTweet:)
+                       withObject:tweetId
+                       afterDelay:1.0];
 }
 
 - (void)displayTweetWithId:(NSString *)tweetId
@@ -95,6 +99,11 @@
     TweetInfo * info = [TweetInfo createFromTweet:tweet];
 
     [self.delegate displayTweetFromConversation:info];
+}
+
+- (BOOL)isCurrentUser:(NSString *)username
+{
+    return [username isEqualToString:self.service.credentials.username];
 }
 
 #pragma mark TwitterServiceDelegate implementation
@@ -122,7 +131,7 @@
             [[ConversationViewController alloc]
             initWithNibName:@"ConversationView" bundle:nil];
         conversationViewController.delegate = self;
-        conversationViewController.batchSize = [NSNumber numberWithInteger:4];
+        conversationViewController.batchSize = [NSNumber numberWithInteger:3];
     }
 
     return conversationViewController;
