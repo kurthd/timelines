@@ -84,7 +84,11 @@
 
 - (void)fetchTweetWithId:(NSString *)tweetId
 {
-    [self.service fetchTweet:tweetId];
+    // jad: Temporary while testing animations
+    //[self.service fetchTweet:tweetId];
+    [self.service performSelector:@selector(fetchTweet:)
+                       withObject:tweetId
+                       afterDelay:1.0];
 }
 
 - (void)displayTweetWithId:(NSString *)tweetId
@@ -122,7 +126,7 @@
             [[ConversationViewController alloc]
             initWithNibName:@"ConversationView" bundle:nil];
         conversationViewController.delegate = self;
-        conversationViewController.batchSize = [NSNumber numberWithInteger:4];
+        conversationViewController.batchSize = [NSNumber numberWithInteger:1];
     }
 
     return conversationViewController;
