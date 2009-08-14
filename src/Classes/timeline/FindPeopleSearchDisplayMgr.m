@@ -372,6 +372,11 @@
         ![credentials.username isEqual:searchName];
     if (userInfoController.followingEnabled)
         [service isUser:credentials.username following:searchName];
+
+    UITableViewController * tvc = (UITableViewController *)
+        netAwareController.targetViewController;
+    tvc.tableView.contentInset = UIEdgeInsetsMake(-300.0, 0, 0, 0);
+    tvc.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar
