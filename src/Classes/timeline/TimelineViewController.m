@@ -108,10 +108,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [cell setDisplayType:displayType];
 
     BOOL highlightForMention =
-        self.mentionRegex ? [tweet.text isMatchedByRegex:self.mentionRegex] :
-        NO;
-    NSLog(@"Mention username: %@, regex: %@", self.mentionUsername,
-        self.mentionRegex);
+        self.mentionRegex ?
+        [tweet.text isMatchedByRegex:self.mentionRegex] : NO;
     [cell setHighlightForMention:highlightForMention];
 
     return cell;
