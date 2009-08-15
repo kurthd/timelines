@@ -11,9 +11,12 @@
 #import "TweetInfo+UIAdditions.h"
 #import "User+UIAdditions.h"
 #import "PhotoBrowserDisplayMgr.h"
+#import "RegexKitLite.h"
 
 @interface TimelineViewController ()
 
+@property (nonatomic, retain) NSString * mentionRegex;
+    
 - (UIImage *)getAvatarForUrl:(NSString *)url;
 - (UIImage *)convertUrlToImage:(NSString *)url;
 - (NSArray *)sortedTweets;
@@ -32,7 +35,7 @@ static BOOL displayWithUsername;
 static BOOL alreadyReadDisplayWithUsernameValue;
 
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
-    showWithoutAvatars;
+    showWithoutAvatars, mentionUsername, mentionRegex;
 
 - (void)dealloc
 {
@@ -51,6 +54,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [loadMoreButton release];
     [noMorePagesLabel release];
     [currentPagesLabel release];
+
+    [mentionUsername release];
 
     [super dealloc];
 }
@@ -101,6 +106,13 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         displayType = kTimelineTableViewCellTypeNormal;
 
     [cell setDisplayType:displayType];
+
+    BOOL highlightForMention =
+        self.mentionRegex ? [tweet.text isMatchedByRegex:self.mentionRegex] :
+        NO;
+    NSLog(@"Mention username: %@, regex: %@", self.mentionUsername,
+        self.mentionRegex);
+    [cell setHighlightForMention:highlightForMention];
 
     return cell;
 }
@@ -369,6 +381,16 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)setTimelineHeaderView:(UIView *)aView
 {
     self.tableView.tableHeaderView = aView;
+}
+
+- (void)setMentionUsername:(NSString *)aMentionUsername
+{
+    NSString * tempUsername = [aMentionUsername copy];
+    [mentionUsername release];
+    mentionUsername = tempUsername;
+    
+    self.mentionRegex =
+        [NSString stringWithFormat:@"\\B@%@", mentionUsername];
 }
 
 + (BOOL)displayWithUsername

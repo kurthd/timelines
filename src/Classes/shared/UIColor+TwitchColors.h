@@ -18,7 +18,7 @@
 + (UIColor *)twitchRoundedRectBackgroundColor;
 + (UIColor *)twitchSelectedCellColor;
 + (UIColor *)twitchCheckedColor;
-
 + (UIColor *)selectedTableViewCellBackgroundColor;
++ (UIColor *)darkCellBackgroundColor;
 
 @end

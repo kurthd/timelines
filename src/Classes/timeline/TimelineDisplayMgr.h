@@ -71,6 +71,7 @@
     BOOL refreshingTweets;
     BOOL setUserToAuthenticatedUser;
     BOOL firstFetchReceived;
+    BOOL showMentions;
 
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     TimelineDisplayMgr * tweetDetailsTimelineDisplayMgr;
@@ -142,6 +143,8 @@
 @property (nonatomic, assign) BOOL suppressTimelineFailures;
 
 @property (nonatomic, readonly) TwitterCredentials * credentials;
+
+@property (nonatomic, assign) BOOL showMentions;
     
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     timelineController:(TimelineViewController *)aTimelineController

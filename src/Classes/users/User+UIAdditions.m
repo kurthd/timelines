@@ -97,7 +97,8 @@ static NSMutableDictionary * followersDescriptions;
 
 + (void)setAvatar:(UIImage *)avatar forUrl:(NSString *)url
 {
-    [[[self class] avatarCache] setObject:avatar forKey:url];
+    if (avatar)
+        [[[self class] avatarCache] setObject:avatar forKey:url];
 }
 
 + (UIImage *)avatarForUrl:(NSString *)url

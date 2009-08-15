@@ -216,12 +216,15 @@
 		910EFE5F1017E78A002083D6 /* NewDirectMessagesState.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE5E1017E78A002083D6 /* NewDirectMessagesState.m */; };
 		910EFE831017F078002083D6 /* NewDirectMessagesPersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE821017F078002083D6 /* NewDirectMessagesPersistenceStore.m */; };
 		9112EAB5102E236E002715DC /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
+		9130002210363177004E3030 /* MentionBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9130002010363177004E3030 /* MentionBottomGradient.png */; };
+		9130002310363177004E3030 /* MentionTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9130002110363177004E3030 /* MentionTopGradient.png */; };
 		9130FCA410337EA1004E3030 /* UserInfoRequestAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FCA310337EA1004E3030 /* UserInfoRequestAdapter.m */; };
 		9130FE0E1034C792004E3030 /* ErrorState.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FE0D1034C792004E3030 /* ErrorState.m */; };
 		9130FE501034D334004E3030 /* TwitchWebBrowserDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FE4F1034D334004E3030 /* TwitchWebBrowserDisplayMgr.m */; };
 		9130FEAD1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FEAC1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m */; };
 		9130FF221035E07B004E3030 /* MarkAsFavoriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9130FF201035E07B004E3030 /* MarkAsFavoriteCell.xib */; };
 		9130FF261035E1F6004E3030 /* MarkAsFavoriteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FF251035E1F6004E3030 /* MarkAsFavoriteCell.m */; };
+		9130FFD9103623DA004E3030 /* TimelineTableViewCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FFD8103623DA004E3030 /* TimelineTableViewCellBackground.m */; };
 		9145EF5B1005073200C2E485 /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
 		9145EF5C1005073F00C2E485 /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
 		9145EF5D1005074A00C2E485 /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
@@ -593,6 +596,8 @@
 		9115A92D0FF06AA100D6A769 /* TweetInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetInfo.m; path = timeline/TweetInfo.m; sourceTree = "<group>"; };
 		9115A97F0FF0874700D6A769 /* MentionsTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionsTimelineDataSource.h; path = timeline/MentionsTimelineDataSource.h; sourceTree = "<group>"; };
 		9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionsTimelineDataSource.m; path = timeline/MentionsTimelineDataSource.m; sourceTree = "<group>"; };
+		9130002010363177004E3030 /* MentionBottomGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MentionBottomGradient.png; path = images/MentionBottomGradient.png; sourceTree = "<group>"; };
+		9130002110363177004E3030 /* MentionTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MentionTopGradient.png; path = images/MentionTopGradient.png; sourceTree = "<group>"; };
 		9130FCA210337EA1004E3030 /* UserInfoRequestAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoRequestAdapter.h; path = timeline/UserInfoRequestAdapter.h; sourceTree = "<group>"; };
 		9130FCA310337EA1004E3030 /* UserInfoRequestAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoRequestAdapter.m; path = timeline/UserInfoRequestAdapter.m; sourceTree = "<group>"; };
 		9130FE0C1034C792004E3030 /* ErrorState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorState.h; path = shared/ErrorState.h; sourceTree = "<group>"; };
@@ -604,6 +609,8 @@
 		9130FF211035E07B004E3030 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/MarkAsFavoriteCell.xib; sourceTree = "<group>"; };
 		9130FF241035E1F6004E3030 /* MarkAsFavoriteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkAsFavoriteCell.h; path = "user-info/MarkAsFavoriteCell.h"; sourceTree = "<group>"; };
 		9130FF251035E1F6004E3030 /* MarkAsFavoriteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkAsFavoriteCell.m; path = "user-info/MarkAsFavoriteCell.m"; sourceTree = "<group>"; };
+		9130FFD7103623DA004E3030 /* TimelineTableViewCellBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineTableViewCellBackground.h; path = timeline/TimelineTableViewCellBackground.h; sourceTree = "<group>"; };
+		9130FFD8103623DA004E3030 /* TimelineTableViewCellBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineTableViewCellBackground.m; path = timeline/TimelineTableViewCellBackground.m; sourceTree = "<group>"; };
 		9145EFC91005276100C2E485 /* Re-tweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweetDisabled.png"; path = "images/Re-tweetDisabled.png"; sourceTree = "<group>"; };
 		9145EFFA10054D9400C2E485 /* BlueEnvelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueEnvelope.png; path = images/BlueEnvelope.png; sourceTree = "<group>"; };
 		9145F022100573AF00C2E485 /* User+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "User+UIAdditions.h"; path = "users/User+UIAdditions.h"; sourceTree = "<group>"; };
@@ -1435,6 +1442,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9130002010363177004E3030 /* MentionBottomGradient.png */,
+				9130002110363177004E3030 /* MentionTopGradient.png */,
 				9176A477103219F5001656E0 /* RetweetButtonIconHighlighted.png */,
 				9176A47510321999001656E0 /* PublicReplyButtonIconHighlighted.png */,
 				9112EAB4102E236E002715DC /* ChatArrow.png */,
@@ -1542,6 +1551,8 @@
 				9172475A102A4914007E0DF6 /* SearchDataSource.m */,
 				9130FCA210337EA1004E3030 /* UserInfoRequestAdapter.h */,
 				9130FCA310337EA1004E3030 /* UserInfoRequestAdapter.m */,
+				9130FFD7103623DA004E3030 /* TimelineTableViewCellBackground.h */,
+				9130FFD8103623DA004E3030 /* TimelineTableViewCellBackground.m */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -1713,6 +1724,8 @@
 				9176A478103219F5001656E0 /* RetweetButtonIconHighlighted.png in Resources */,
 				05F9CF26103335490010409B /* ConversationView.xib in Resources */,
 				9130FF221035E07B004E3030 /* MarkAsFavoriteCell.xib in Resources */,
+				9130002210363177004E3030 /* MentionBottomGradient.png in Resources */,
+				9130002310363177004E3030 /* MentionTopGradient.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1901,6 +1914,7 @@
 				9130FE501034D334004E3030 /* TwitchWebBrowserDisplayMgr.m in Sources */,
 				9130FEAD1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m in Sources */,
 				9130FF261035E1F6004E3030 /* MarkAsFavoriteCell.m in Sources */,
+				9130FFD9103623DA004E3030 /* TimelineTableViewCellBackground.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

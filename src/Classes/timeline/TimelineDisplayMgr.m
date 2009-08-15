@@ -58,7 +58,7 @@ static NSInteger retweetFormatValueAlredyRead;
     currentUsername, allPagesLoaded,setUserToAuthenticatedUser,
     firstFetchReceived, tweetIdToShow, suppressTimelineFailures, credentials,
     savedSearchMgr, currentSearch, userListDisplayMgr,
-    userListNetAwareViewController;
+    userListNetAwareViewController, showMentions;
 
 - (void)dealloc
 {
@@ -1111,6 +1111,8 @@ static NSInteger retweetFormatValueAlredyRead;
 
     if (setUserToAuthenticatedUser)
         self.currentUsername = credentials.username;
+    if (showMentions)
+        self.timelineController.mentionUsername = credentials.username;
 
     self.savedSearchMgr.accountName = credentials.username;
 
@@ -1274,6 +1276,12 @@ static NSInteger retweetFormatValueAlredyRead;
             context:managedObjectContext];
 
     return savedSearchMgr;
+}
+
+- (void)setShowMentions:(BOOL)show
+{
+    showMentions = show;
+    self.timelineController.mentionUsername = show ? credentials.username : nil;
 }
 
 @end
