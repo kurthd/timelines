@@ -156,7 +156,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
         NSString * largeProfileUrl =
             [User largeAvatarUrlForUrl:user.profileImageUrl];
-        if ([urlAsString isEqual:largeProfileUrl])
+        if ([urlAsString isEqual:largeProfileUrl] && avatarImage)
+            [avatarView setImage:avatarImage];
+        else if ([urlAsString isEqual:user.profileImageUrl] &&
+            !avatarView.image)
             [avatarView setImage:avatarImage];
     }
 }

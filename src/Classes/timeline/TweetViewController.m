@@ -440,7 +440,8 @@ enum TweetActionRows {
     NSString * urlAsString = [url absoluteString];
     [User setAvatar:avatar forUrl:urlAsString];
     NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
-    if (NSEqualRanges([urlAsString rangeOfString:@"_normal."], notFoundRange))
+    if (NSEqualRanges([urlAsString rangeOfString:@"_normal."], notFoundRange) &&
+        avatar)
         [avatarImage setImage:avatar];
 }
 
