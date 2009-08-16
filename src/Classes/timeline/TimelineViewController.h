@@ -32,6 +32,9 @@
 
     BOOL showInbox;
     BOOL delayedRefreshTriggered;
+
+    NSString * mentionUsername;
+    NSString * mentionRegex;
 }
 
 @property (nonatomic, assign)
@@ -41,6 +44,8 @@
 
 @property (nonatomic, copy) NSArray * invertedCellUsernames;
 @property (nonatomic, assign) BOOL showWithoutAvatars;
+
+@property (nonatomic, retain) NSString * mentionUsername;
 
 - (void)setUser:(User *)user;
 - (void)setTweets:(NSArray *)tweets page:(NSUInteger)page

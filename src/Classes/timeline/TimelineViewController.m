@@ -11,9 +11,12 @@
 #import "TweetInfo+UIAdditions.h"
 #import "User+UIAdditions.h"
 #import "PhotoBrowserDisplayMgr.h"
+#import "RegexKitLite.h"
 
 @interface TimelineViewController ()
 
+@property (nonatomic, retain) NSString * mentionRegex;
+    
 - (UIImage *)getAvatarForUrl:(NSString *)url;
 - (UIImage *)convertUrlToImage:(NSString *)url;
 - (NSArray *)sortedTweets;
@@ -32,7 +35,7 @@ static BOOL displayWithUsername;
 static BOOL alreadyReadDisplayWithUsernameValue;
 
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
-    showWithoutAvatars;
+    showWithoutAvatars, mentionUsername, mentionRegex;
 
 - (void)dealloc
 {
@@ -51,6 +54,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [loadMoreButton release];
     [noMorePagesLabel release];
     [currentPagesLabel release];
+
+    [mentionUsername release];
 
     [super dealloc];
 }
@@ -103,6 +108,11 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     [cell setDisplayType:displayType];
 
+    BOOL highlightForMention =
+        self.mentionRegex ?
+        [tweet.text isMatchedByRegex:self.mentionRegex] : NO;
+    [cell setHighlightForMention:highlightForMention];
+
     return cell;
 }
 
@@ -145,9 +155,12 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             if ([cell.avatarImageUrl isEqualToString:urlAsString])
                 [cell setAvatarImage:avatarImage];
 
-        NSString * largeProfileUrl =
-            [User largeAvatarUrlForUrl:user.avatar.thumbnailImageUrl];
-        if ([urlAsString isEqual:largeProfileUrl])
+        NSString * largeProfileUrl = user.avatar.fullImageUrl;
+            [User largeAvatarUrlForUrl:user.profileImageUrl];
+        if ([urlAsString isEqual:largeProfileUrl] && avatarImage)
+            [avatarView setImage:avatarImage];
+        else if ([urlAsString isEqual:user.profileImageUrl] &&
+            !avatarView.image)
             [avatarView setImage:avatarImage];
     }
 }
@@ -364,6 +377,16 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)setTimelineHeaderView:(UIView *)aView
 {
     self.tableView.tableHeaderView = aView;
+}
+
+- (void)setMentionUsername:(NSString *)aMentionUsername
+{
+    NSString * tempUsername = [aMentionUsername copy];
+    [mentionUsername release];
+    mentionUsername = tempUsername;
+    
+    self.mentionRegex =
+        [NSString stringWithFormat:@"\\B@%@", mentionUsername];
 }
 
 + (BOOL)displayWithUsername

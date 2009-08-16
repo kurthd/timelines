@@ -393,6 +393,7 @@
         composeTweetDisplayMgr:self.composeTweetDisplayMgr]
         retain];
     timelineDisplayMgr.displayAsConversation = YES;
+    timelineDisplayMgr.showMentions = YES;
     UIBarButtonItem * refreshButton =
         homeNetAwareViewController.navigationItem.leftBarButtonItem;
     refreshButton.target = timelineDisplayMgr;

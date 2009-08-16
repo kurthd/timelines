@@ -28,6 +28,7 @@
 		cellView.autoresizingMask =
 		    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[self.contentView addSubview:cellView];
+		self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
 
 	return self;

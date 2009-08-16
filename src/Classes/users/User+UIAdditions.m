@@ -110,6 +110,8 @@ static NSMutableDictionary * followersDescriptions;
         if (avatar)
             avatar.fullImage = UIImagePNGRepresentation(image);
     }
+    if (avatar)
+        [[[self class] avatarCache] setObject:avatar forKey:url];
 }
 
 + (UIImage *)avatarForUrl:(NSString *)url

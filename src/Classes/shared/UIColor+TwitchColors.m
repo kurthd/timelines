@@ -18,8 +18,8 @@ static UIColor * twitchInvalidColor;
 static UIColor * twitchRoundedRectBackgroundColor;
 static UIColor * twitchSelectedCellColor;
 static UIColor * twitchCheckedColor;
-
 static UIColor * selectedTableViewCellBackgroundColor;
+static UIColor * darkCellBackgroundColor;
 
 + (UIColor *)twitchBlueColor
 {
@@ -138,6 +138,15 @@ static UIColor * selectedTableViewCellBackgroundColor;
             [[UIColor colorWithRed:.4 green:.388 blue:.910 alpha:1.0] retain];
 
     return selectedTableViewCellBackgroundColor;
+}
+
++ (UIColor *)darkCellBackgroundColor
+{
+    if (!darkCellBackgroundColor)
+        darkCellBackgroundColor =
+            [[UIColor colorWithRed:.965 green:.965 blue:.965 alpha:1] retain];
+    
+    return darkCellBackgroundColor;
 }
 
 @end

@@ -15,6 +15,8 @@ static const CGFloat AVATAR_ROUNDED_CORNER_RADIUS = 6.0;
 
 static UIImage * backgroundImage;
 static UIImage * topGradientImage;
+static UIImage * mentionBottomImage;
+static UIImage * mentionTopImage;
 
 @interface TimelineTableViewCellView ()
 
@@ -30,7 +32,7 @@ static UIImage * topGradientImage;
 
 @implementation TimelineTableViewCellView
 
-@synthesize text, author, timestamp, avatar, cellType;
+@synthesize text, author, timestamp, avatar, cellType, highlightForMention;
 @synthesize highlighted;
 
 + (void)initialize
@@ -40,6 +42,10 @@ static UIImage * topGradientImage;
         [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
     topGradientImage =
         [[UIImage imageNamed:@"TableViewCellTopGradient.png"] retain];
+    mentionBottomImage =
+        [[UIImage imageNamed:@"MentionBottomGradient.png"] retain];
+    mentionTopImage =
+        [[UIImage imageNamed:@"MentionTopGradient.png"] retain];
 }
 
 + (CGFloat)heightForContent:(NSString *)tweetText
@@ -80,7 +86,10 @@ static UIImage * topGradientImage;
 {
     if (self = [super initWithFrame:frame]) {
         self.opaque = YES;
-        self.backgroundColor = [UIColor whiteColor];
+        
+        self.backgroundColor =
+            highlightForMention ?
+            [UIColor darkCellBackgroundColor] : [UIColor whiteColor];
     }
 
     return self;
@@ -148,14 +157,23 @@ static UIImage * topGradientImage;
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
 
+        UIImage * bottomImage;
+        UIImage * topImage;
+        if (highlightForMention) {
+            bottomImage = mentionBottomImage;
+            topImage = mentionTopImage;
+        } else {
+            bottomImage = backgroundImage;
+            topImage = topGradientImage;
+        }
         CGRect backgroundImageRect =
-            CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
+            CGRectMake(0, self.bounds.size.height - bottomImage.size.height,
             320.0, backgroundImage.size.height);
-        [backgroundImage drawInRect:backgroundImageRect];
+        [bottomImage drawInRect:backgroundImageRect];
 
         CGRect topGradientImageRect =
-            CGRectMake(0, 0, 320.0, topGradientImage.size.height);
-        [topGradientImage drawInRect:topGradientImageRect];
+            CGRectMake(0, 0, 320.0, topImage.size.height);
+        [topImage drawInRect:topGradientImageRect];
     }
 
     //
@@ -242,14 +260,23 @@ static UIImage * topGradientImage;
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
 
+        UIImage * bottomImage;
+        UIImage * topImage;
+        if (highlightForMention) {
+            bottomImage = mentionBottomImage;
+            topImage = mentionTopImage;
+        } else {
+            bottomImage = backgroundImage;
+            topImage = topGradientImage;
+        }
         CGRect backgroundImageRect =
-        CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
+            CGRectMake(0, self.bounds.size.height - bottomImage.size.height,
             320.0, backgroundImage.size.height);
-        [backgroundImage drawInRect:backgroundImageRect];
+        [bottomImage drawInRect:backgroundImageRect];
 
         CGRect topGradientImageRect =
-            CGRectMake(0, 0, 320.0, topGradientImage.size.height);
-        [topGradientImage drawInRect:topGradientImageRect];
+            CGRectMake(0, 0, 320.0, topImage.size.height);
+        [topImage drawInRect:topGradientImageRect];
     }
 
     //
@@ -315,14 +342,23 @@ static UIImage * topGradientImage;
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
 
+        UIImage * bottomImage;
+        UIImage * topImage;
+        if (highlightForMention) {
+            bottomImage = mentionBottomImage;
+            topImage = mentionTopImage;
+        } else {
+            bottomImage = backgroundImage;
+            topImage = topGradientImage;
+        }
         CGRect backgroundImageRect =
-        CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
+            CGRectMake(0, self.bounds.size.height - bottomImage.size.height,
             320.0, backgroundImage.size.height);
-        [backgroundImage drawInRect:backgroundImageRect];
+        [bottomImage drawInRect:backgroundImageRect];
 
         CGRect topGradientImageRect =
-            CGRectMake(0, 0, 320.0, topGradientImage.size.height);
-        [topGradientImage drawInRect:topGradientImageRect];
+            CGRectMake(0, 0, 320.0, topImage.size.height);
+        [topImage drawInRect:topGradientImageRect];
     }
 
     //
@@ -380,14 +416,23 @@ static UIImage * topGradientImage;
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
 
+        UIImage * bottomImage;
+        UIImage * topImage;
+        if (highlightForMention) {
+            bottomImage = mentionBottomImage;
+            topImage = mentionTopImage;
+        } else {
+            bottomImage = backgroundImage;
+            topImage = topGradientImage;
+        }
         CGRect backgroundImageRect =
-        CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
+            CGRectMake(0, self.bounds.size.height - bottomImage.size.height,
             320.0, backgroundImage.size.height);
-        [backgroundImage drawInRect:backgroundImageRect];
+        [bottomImage drawInRect:backgroundImageRect];
 
         CGRect topGradientImageRect =
-            CGRectMake(0, 0, 320.0, topGradientImage.size.height);
-        [topGradientImage drawInRect:topGradientImageRect];
+            CGRectMake(0, 0, 320.0, topImage.size.height);
+        [topImage drawInRect:topGradientImageRect];
     }
 
     //
@@ -470,6 +515,33 @@ static UIImage * topGradientImage;
         cellType = type;
         [self setNeedsDisplay];
     }
+}
+
+- (void)setHighlightForMention:(BOOL)hfm
+{
+    if (highlightForMention != hfm) {
+        highlightForMention = hfm;
+        self.backgroundColor =
+            highlightForMention ?
+            [TimelineTableViewCellView mentionCellColor] :
+            [TimelineTableViewCellView defaultTimelineCellColor];
+    }
+}
+
+static UIColor * mentionCellColor;
++ (UIColor *)mentionCellColor
+{
+    if (!mentionCellColor)
+        mentionCellColor =
+            [[UIColor colorWithRed:0.886 green:0.988 blue:0.886 alpha:1.0]
+            retain];
+
+    return mentionCellColor;
+}
+
++ (UIColor *)defaultTimelineCellColor
+{
+    return [UIColor whiteColor];
 }
 
 #pragma mark Private helpers

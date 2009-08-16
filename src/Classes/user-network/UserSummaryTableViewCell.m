@@ -31,6 +31,12 @@
 		userSummaryView.autoresizingMask =
 		    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[self.contentView addSubview:userSummaryView];
+
+		self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+		self.backgroundView = [[[UIView alloc] init] autorelease];
+        self.backgroundView.backgroundColor = aBackgroundColor;
+        self.backgroundColor = [UIColor clearColor];
 	}
 
 	return self;

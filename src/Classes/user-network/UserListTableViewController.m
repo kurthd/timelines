@@ -33,14 +33,12 @@
 - (NSArray *)sortedUsers;
 
 + (UIImage *)defaultAvatar;
-+ (UIColor *)darkCellBackgroundColor;
 
 @end
 
 @implementation UserListTableViewController
 
 static UIImage * defaultAvatar;
-static UIColor * darkCellBackgroundColor;
 
 @synthesize delegate, sortedUserCache;
 
@@ -102,7 +100,7 @@ static UIColor * darkCellBackgroundColor;
         UIColor * cellColor =
             indexPath.row % 2 == 0 ?
             [UIColor whiteColor] :
-            [[self class] darkCellBackgroundColor];
+            [UIColor darkCellBackgroundColor];
         cell =
             [[[UserSummaryTableViewCell alloc]
             initWithStyle:UITableViewCellStyleDefault
@@ -229,15 +227,6 @@ static UIColor * darkCellBackgroundColor;
         defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar50x50.png"] retain];
 
     return defaultAvatar;
-}
-
-+ (UIColor *)darkCellBackgroundColor
-{
-    if (!darkCellBackgroundColor)
-        darkCellBackgroundColor =
-            [[UIColor colorWithRed:.965 green:.965 blue:.965 alpha:1] retain];
-
-    return darkCellBackgroundColor;
 }
 
 @end

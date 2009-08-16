@@ -5,6 +5,8 @@
 #import "TimelineTableViewCell.h"
 #import "NSDate+StringHelpers.h"
 #import "TimelineTableViewCellView.h"
+#import "UIColor+TwitchColors.h"
+#import "TimelineTableViewCellBackground.h"
 
 static UIImage * backgroundImage;
 static UIImage * topGradientImage;
@@ -43,25 +45,14 @@ static UIImage * topGradientImage;
         [self.contentView addSubview:timelineView];
 
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+        self.backgroundView =
+            [[[TimelineTableViewCellBackground alloc] init] autorelease];
+        self.backgroundColor = [UIColor clearColor];
+        [self setHighlightForMention:NO];
     }
 
     return self;
-}
-
-- (void)drawRect:(CGRect)rect
-{
-    //
-    // Draw the cell's background here, as well as in the contentView's
-    // drawRect, so we can draw over the accessory view's space, too.
-    //
-    CGRect backgroundImageRect =
-        CGRectMake(0, self.bounds.size.height - backgroundImage.size.height,
-        320.0, backgroundImage.size.height);
-    [backgroundImage drawInRect:backgroundImageRect];
-
-    CGRect topGradientImageRect =
-        CGRectMake(0, 0, 320.0, topGradientImage.size.height);
-    [topGradientImage drawInRect:topGradientImageRect];
 }
 
 - (void)setAvatarImage:(UIImage *)image
@@ -87,6 +78,17 @@ static UIImage * topGradientImage;
 - (void)setDisplayType:(TimelineTableViewCellType)displayType
 {
     timelineView.cellType = displayType;
+}
+
+- (void)setHighlightForMention:(BOOL)hfm
+{
+    timelineView.highlightForMention = hfm;
+    ((TimelineTableViewCellBackground *)self.backgroundView).
+        highlightForMention =
+        hfm;
+    self.backgroundView.backgroundColor = hfm ?
+         [TimelineTableViewCellView mentionCellColor] :
+         [TimelineTableViewCellView defaultTimelineCellColor];
 }
 
 + (NSString *)reuseIdentifier
