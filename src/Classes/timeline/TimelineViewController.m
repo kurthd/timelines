@@ -156,10 +156,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
                 [cell setAvatarImage:avatarImage];
 
         NSString * largeProfileUrl = user.avatar.fullImageUrl;
-            [User largeAvatarUrlForUrl:user.profileImageUrl];
         if ([urlAsString isEqual:largeProfileUrl] && avatarImage)
             [avatarView setImage:avatarImage];
-        else if ([urlAsString isEqual:user.profileImageUrl] &&
+        else if ([urlAsString isEqual:user.avatar.thumbnailImageUrl] &&
             !avatarView.image)
             [avatarView setImage:avatarImage];
     }
