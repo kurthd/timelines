@@ -115,7 +115,8 @@ static UIColor * darkCellBackgroundColor;
     User * user = [[self sortedUsers] objectAtIndex:indexPath.row];
     [cell setUser:user];
     
-    UIImage * avatarImage = [self getAvatarForUrl:user.profileImageUrl];
+    UIImage * avatarImage =
+        [self getAvatarForUrl:user.avatar.thumbnailImageUrl];
     [cell setAvatarImage:avatarImage];
     
     return cell;

@@ -9,7 +9,7 @@
 
 @interface User (UIAdditions) <AsynchronousNetworkFetcherDelegate>
 
-- (RoundedImage *)avatar;
+- (RoundedImage *)roundedAvatarImage;
 - (UIImage *)avatarImage;
 - (NSString *)followersDescription;
 

@@ -125,10 +125,7 @@
             continue;
 
         NSString * userId = [[userData objectForKey:@"id"] description];
-        User * tweetAuthor = [User userWithId:userId context:context];
-
-        if (!tweetAuthor)
-            tweetAuthor = [User createInstance:context];
+        User * tweetAuthor = [User findOrCreateWithId:userId context:context];
 
         // only set user data the first time we see it, so we are saving
         // the freshest data

@@ -89,7 +89,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     TimelineTableViewCell * cell = [tweet cell];
 
-    UIImage * avatarImage = [self getAvatarForUrl:tweet.user.profileImageUrl];
+    UIImage * avatarImage =
+        [self getAvatarForUrl:tweet.user.avatar.thumbnailImageUrl];
     [cell setAvatarImage:avatarImage];
 
     TimelineTableViewCellType displayType;
@@ -145,7 +146,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
                 [cell setAvatarImage:avatarImage];
 
         NSString * largeProfileUrl =
-            [User largeAvatarUrlForUrl:user.profileImageUrl];
+            [User largeAvatarUrlForUrl:user.avatar.thumbnailImageUrl];
         if ([urlAsString isEqual:largeProfileUrl])
             [avatarView setImage:avatarImage];
     }
@@ -190,8 +191,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         [NSIndexPath indexPathForRow:0 inSection:0]
         atScrollPosition:UITableViewScrollPositionNone animated:YES];
 
-    if (![self getAvatarForUrl:tweet.user.profileImageUrl]) {
-        NSURL * avatarUrl = [NSURL URLWithString:tweet.user.profileImageUrl];
+    if (![self getAvatarForUrl:tweet.user.avatar.thumbnailImageUrl]) {
+        NSURL * avatarUrl =
+            [NSURL URLWithString:tweet.user.avatar.thumbnailImageUrl];
         [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
     }
 }
@@ -217,7 +219,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             NSLocalizedString(@"userinfoview.statusescount.formatstring", @""),
             user.statusesCount];
         NSString * largeProfileUrl =
-            [User largeAvatarUrlForUrl:aUser.profileImageUrl];
+            [User largeAvatarUrlForUrl:aUser.avatar.thumbnailImageUrl];
         UIImage * avatarImage = [self getAvatarForUrl:largeProfileUrl];
         [avatarView setImage:avatarImage];
     }
@@ -336,15 +338,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     NSLog(@"Profile image selected");
 
-    NSString * url =
-        [user.profileImageUrl
-        stringByReplacingOccurrencesOfString:@"_normal."
-        withString:@"."];
-    UIImage * avatarImage =
-        [url isEqualToString:user.profileImageUrl] ?
-        (avatarView.image != [[self class] defaultAvatar] ?
-        avatarView.image : nil) :
-        nil;
+    NSString * url = user.avatar.fullImageUrl;
+    UIImage * avatarImage = [UIImage imageWithData:user.avatar.fullImage];
 
     RemotePhoto * remotePhoto =
         [[RemotePhoto alloc]

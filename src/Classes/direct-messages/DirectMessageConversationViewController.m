@@ -74,7 +74,7 @@ static UIImage * defaultAvatar;
     TimelineTableViewCell * cell = [message cell];
 
     UIImage * avatarImage =
-        [self getAvatarForUrl:message.sender.profileImageUrl];
+        [self getAvatarForUrl:message.sender.avatar.thumbnailImageUrl];
     [cell setAvatarImage:avatarImage];
 
     [cell setName:@""];
@@ -93,8 +93,9 @@ static UIImage * defaultAvatar;
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DirectMessage * message = [[self sortedTweets] objectAtIndex:indexPath.row];
-    [delegate selectedTweet:message
-        avatarImage:[avatarCache objectForKey:message.sender.profileImageUrl]];
+    UIImage * avatar =
+        [avatarCache objectForKey:message.sender.avatar.thumbnailImageUrl];
+    [delegate selectedTweet:message avatarImage:avatar];
 }
 
 #pragma mark UITableViewDelegate implementation
@@ -146,7 +147,8 @@ static UIImage * defaultAvatar;
         [NSIndexPath indexPathForRow:0 inSection:0]
         atScrollPosition:UITableViewScrollPositionNone animated:YES];
 
-    NSURL * avatarUrl = [NSURL URLWithString:tweet.sender.profileImageUrl];
+    NSURL * avatarUrl =
+        [NSURL URLWithString:tweet.sender.avatar.thumbnailImageUrl];
     [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
     
     [self.tableView reloadData];

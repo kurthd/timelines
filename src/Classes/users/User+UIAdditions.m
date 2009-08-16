@@ -4,10 +4,11 @@
 
 #import "User+UIAdditions.h"
 #import "AsynchronousNetworkFetcher.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @interface User (Private)
 
-+ (NSMutableDictionary *)avatarCache;
+//+ (NSMutableDictionary *)avatarCache;
 + (NSMutableDictionary *)urlToUsersMapping;
 
 + (NSMutableDictionary *)followersDescriptionCache;
@@ -16,7 +17,6 @@
 
 @implementation User (UIAdditions)
 
-static NSMutableDictionary * avatars;
 static NSMutableDictionary * urlToUsers;
 
 static NSMutableDictionary * followersDescriptions;
@@ -29,13 +29,10 @@ static NSMutableDictionary * followersDescriptions;
     NSString * urlAsString = [url absoluteString];
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
-        NSArray * identifiers =
+        NSArray * users =
             [[[self class] urlToUsersMapping] objectForKey:urlAsString];
-        for (NSString * userIdentifier in identifiers) {
-            RoundedImage * roundedImage =
-                [[[self class] avatarCache] objectForKey:userIdentifier];
-            [roundedImage setImage:avatarImage];
-        }
+        for (User * user in users)
+            user.avatar.thumbnailImage = data;
     }
 }
 
@@ -45,36 +42,36 @@ static NSMutableDictionary * followersDescriptions;
 
 #pragma mark User (UIAdditions) implementation
 
-- (RoundedImage *)avatar
+- (RoundedImage *)roundedAvatarImage
 {
-    RoundedImage * userAvatar =
-        [[[self class] avatarCache] objectForKey:self.identifier];
-    if (!userAvatar) {
-        NSURL * avatarUrl = [NSURL URLWithString:self.profileImageUrl];
+    RoundedImage * roundedAvatarImage =
+        [[[RoundedImage alloc] init] autorelease];
+    UIImage * userAvatar = [UIImage imageWithData:self.avatar.thumbnailImage];
+
+    if (userAvatar)
+        [roundedAvatarImage setImage:userAvatar];
+    else {
+        NSURL * avatarUrl = [NSURL URLWithString:self.avatar.thumbnailImageUrl];
         [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
 
-        NSMutableArray * userIdentifiers =
+        NSMutableArray * users =
             [[[self class] urlToUsersMapping]
-            objectForKey:self.profileImageUrl];
-        if (!userIdentifiers) {
-            userIdentifiers = [NSMutableArray array];
+            objectForKey:self.avatar.thumbnailImageUrl];
+        if (!users) {
+            users = [NSMutableArray array];
             [[[self class] urlToUsersMapping]
-                setObject:userIdentifiers forKey:self.profileImageUrl];
+                setObject:users forKey:self.avatar.thumbnailImageUrl];
         }
-        if (![userIdentifiers containsObject:self.identifier])
-            [userIdentifiers addObject:self.identifier];
-
-        userAvatar = [[[RoundedImage alloc] init] autorelease];
-        [[[self class] avatarCache]
-            setObject:userAvatar forKey:self.identifier];
+        if (![users containsObject:self])
+            [users addObject:self];
     }
 
-    return userAvatar;
+    return roundedAvatarImage;
 }
 
 - (UIImage *)avatarImage
 {
-    return [self avatar].image;
+    return [self roundedAvatarImage].image;
 }
 
 - (NSString *)followersDescription
@@ -95,14 +92,48 @@ static NSMutableDictionary * followersDescriptions;
     return followersDescription;
 }
 
-+ (void)setAvatar:(UIImage *)avatar forUrl:(NSString *)url
++ (void)setAvatar:(UIImage *)image forUrl:(NSString *)url
 {
-    [[[self class] avatarCache] setObject:avatar forKey:url];
+    id delegate = [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext * context = [delegate managedObjectContext];
+
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:@"thumbnailImageUrl == %@", url];
+    Avatar * avatar = [Avatar findFirst:predicate context:context];
+    if (avatar)
+        avatar.thumbnailImage = UIImagePNGRepresentation(image);
+    else {
+        predicate =
+            [NSPredicate predicateWithFormat:@"fullImageUrl == %@", url];
+        avatar = [Avatar findFirst:predicate context:context];
+
+        if (avatar)
+            avatar.fullImage = UIImagePNGRepresentation(image);
+    }
 }
 
 + (UIImage *)avatarForUrl:(NSString *)url
 {
-    return [[[self class] avatarCache] objectForKey:url];
+    UIImage * image = nil;
+
+    id delegate = [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext * context = [delegate managedObjectContext];
+
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:@"thumbnailImageUrl == %@", url];
+    Avatar * avatar = [Avatar findFirst:predicate context:context];
+    if (avatar)
+        image = [UIImage imageWithData:avatar.thumbnailImage];
+    else {
+        predicate =
+            [NSPredicate predicateWithFormat:@"fullImageUrl == %@", url];
+        avatar = [Avatar findFirst:predicate context:context];
+
+        if (avatar)
+            image = [UIImage imageWithData:avatar.fullImage];
+    }
+
+    return image;
 }
 
 + (NSString *)largeAvatarUrlForUrl:(NSString *)url
@@ -111,14 +142,6 @@ static NSMutableDictionary * followersDescriptions;
         [url stringByReplacingOccurrencesOfString:@"_normal." withString:@"."];
 
     return largeAvatarUrl;
-}
-
-+ (NSMutableDictionary *)avatarCache
-{
-    if (!avatars)
-        avatars = [[NSMutableDictionary dictionary] retain];
-
-    return avatars;
 }
 
 + (NSMutableDictionary *)urlToUsersMapping

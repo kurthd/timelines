@@ -38,7 +38,7 @@
 
 - (void)setUser:(User *)user
 {
-    self.avatarImageUrl = user.profileImageUrl;
+    self.avatarImageUrl = user.avatar.thumbnailImageUrl;
     [userSummaryView setUser:user];
 }
 

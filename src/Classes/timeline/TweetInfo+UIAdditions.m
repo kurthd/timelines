@@ -49,7 +49,7 @@ static NSMutableDictionary * cells;
     [timelineCell setName:[self displayName]];
     [timelineCell setDate:self.timestamp];
     [timelineCell setTweetText:[self.text stringByDecodingHtmlEntities]];
-    timelineCell.avatarImageUrl = self.user.profileImageUrl;
+    timelineCell.avatarImageUrl = self.user.avatar.thumbnailImageUrl;
 
     [[[self class] cellCache]
         setObject:timelineCell forKey:self.identifier];

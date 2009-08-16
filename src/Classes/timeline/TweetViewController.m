@@ -459,14 +459,9 @@ enum TweetActionRows {
 {
     User * selectedUser = tweet.user;
 
-    NSString * url =
-        [selectedUser.profileImageUrl
-        stringByReplacingOccurrencesOfString:@"_normal."
-        withString:@"."];
+    NSString * url = selectedUser.avatar.fullImageUrl;
     UIImage * remoteAvatar =
-        [url isEqualToString:selectedUser.profileImageUrl] ?
-        (avatarImage.image != [[self class] defaultAvatar] ?
-        avatarImage.image : nil) : nil;
+        [UIImage imageWithData:selectedUser.avatar.fullImage];
 
     RemotePhoto * remotePhoto =
         [[RemotePhoto alloc]
@@ -582,18 +577,18 @@ enum TweetActionRows {
     }
 
     NSString * largeAvatarUrl =
-        [User largeAvatarUrlForUrl:tweet.user.profileImageUrl];
+        [User largeAvatarUrlForUrl:tweet.user.avatar.thumbnailImageUrl];
 
     UIImage * avatar = [User avatarForUrl:largeAvatarUrl];
     if (!avatar)
-        avatar = [User avatarForUrl:tweet.user.profileImageUrl];
+        avatar = [User avatarForUrl:tweet.user.avatar.thumbnailImageUrl];
     if (!avatar)
         avatar = [[self class] defaultAvatar];
 
     [avatarImage setImage:avatar];
 
     [self fetchRemoteImage:largeAvatarUrl];
-    [self fetchRemoteImage:tweet.user.profileImageUrl];
+    [self fetchRemoteImage:tweet.user.avatar.thumbnailImageUrl];
 
     [self.tableView reloadData];
     self.tableView.contentInset = UIEdgeInsetsMake(-300, 0, 0, 0);

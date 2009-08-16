@@ -1,8 +1,13 @@
 //
-//  Copyright High Order Bit, Inc. 2009. All rights reserved.
+//  User.h
+//  twitch
+//
+//  Created by John A. Debay on 8/14/09.
+//  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
 #import <CoreData/CoreData.h>
+#import "Avatar.h"
 
 @class DirectMessage;
 @class Tweet;
@@ -12,7 +17,6 @@
 }
 
 @property (nonatomic, retain) NSNumber * followersCount;
-@property (nonatomic, retain) NSString * profileImageUrl;
 @property (nonatomic, retain) NSString * webpage;
 @property (nonatomic, retain) NSNumber * friendsCount;
 @property (nonatomic, retain) NSString * bio;
@@ -22,13 +26,20 @@
 @property (nonatomic, retain) NSString * username;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * statusesCount;
+@property (nonatomic, retain) NSSet* sentDirectMessages;
 @property (nonatomic, retain) NSSet* tweets;
 @property (nonatomic, retain) NSSet* receivedDirectMessages;
-@property (nonatomic, retain) NSSet* sentDirectMessages;
+@property (nonatomic, retain) Avatar * avatar;
 
 @end
 
+
 @interface User (CoreDataGeneratedAccessors)
+- (void)addSentDirectMessagesObject:(DirectMessage *)value;
+- (void)removeSentDirectMessagesObject:(DirectMessage *)value;
+- (void)addSentDirectMessages:(NSSet *)value;
+- (void)removeSentDirectMessages:(NSSet *)value;
+
 - (void)addTweetsObject:(Tweet *)value;
 - (void)removeTweetsObject:(Tweet *)value;
 - (void)addTweets:(NSSet *)value;
@@ -39,9 +50,5 @@
 - (void)addReceivedDirectMessages:(NSSet *)value;
 - (void)removeReceivedDirectMessages:(NSSet *)value;
 
-- (void)addSentDirectMessagesObject:(DirectMessage *)value;
-- (void)removeSentDirectMessagesObject:(DirectMessage *)value;
-- (void)addSentDirectMessages:(NSSet *)value;
-- (void)removeSentDirectMessages:(NSSet *)value;
-
 @end
+

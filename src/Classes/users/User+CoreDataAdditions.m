@@ -8,6 +8,19 @@
 
 @implementation User (CoreDataAdditions)
 
++ (id)findOrCreateWithId:(NSString *)anIdentifier
+                 context:(NSManagedObjectContext *)context
+{
+    User * user = [[self class] userWithId:anIdentifier context:context];
+    if (!user) {
+        user = [[self class] createInstance:context];
+        Avatar * avatar = [Avatar createInstance:context];
+        user.avatar = avatar;
+    }
+
+    return user;
+}
+
 + (id)userWithId:(NSString *)targetId
          context:(NSManagedObjectContext *)context
 {

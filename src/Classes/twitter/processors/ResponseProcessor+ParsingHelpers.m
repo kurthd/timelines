@@ -4,6 +4,8 @@
 
 #import "ResponseProcessor+ParsingHelpers.h"
 #import "NSDate+TwitterStringHelpers.h"
+#import "Avatar.h"
+#import "User+UIAdditions.h"
 
 @interface NSDictionary (ParsingHelpers)
 - (id)safeObjectForKey:(id)key;
@@ -40,7 +42,10 @@
 
     user.webpage = [data safeObjectForKey:@"url"];
     user.identifier = [[data safeObjectForKey:@"id"] description];
-    user.profileImageUrl = [data safeObjectForKey:@"profile_image_url"];
+    user.avatar.thumbnailImageUrl =
+        [data safeObjectForKey:@"profile_image_url"];
+    user.avatar.fullImageUrl =
+        [User largeAvatarUrlForUrl:user.avatar.thumbnailImageUrl];
 
     [user setValue:[data objectForKey:@"statuses_count"]
             forKey:@"statusesCount"];
