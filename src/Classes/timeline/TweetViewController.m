@@ -358,9 +358,7 @@ enum TweetActionRows {
 
     switch (buttonIndex) {
         case 0:
-           webAddress =
-                [NSString stringWithFormat:@"http://twitter.com/%@/status/%@",
-                self.tweet.user, self.tweet.identifier];
+           webAddress = [tweet tweetUrl];
             NSLog(@"Opening tweet in browser (%@)...", webAddress);
             [[TwitchWebBrowserDisplayMgr instance] visitWebpage:webAddress];
             break;
@@ -416,12 +414,9 @@ enum TweetActionRows {
         subject = self.tweet.text;
     [picker setSubject:subject];
 
-    NSString * webAddress =
-         [NSString stringWithFormat:@"http://twitter.com/%@/status/%@",
-         self.tweet.user, self.tweet.identifier];
     NSString * body =
         [NSString stringWithFormat:@"%@\n\n%@", self.tweet.text,
-        webAddress];
+        [tweet tweetUrl]];
     [picker setMessageBody:body isHTML:NO];
 
     [self.realParentViewController presentModalViewController:picker
