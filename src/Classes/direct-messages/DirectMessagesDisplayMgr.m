@@ -1,3 +1,4 @@
+
 //
 //  Copyright 2009 High Order Bit, Inc. All rights reserved.
 //
@@ -267,6 +268,38 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         NSLocalizedString(@"timelinedisplaymgr.error.userquery", @"");
     NSString * errorMessage =
         [NSString stringWithFormat:errorMessageFormatString, username];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+}
+
+- (void)startedFollowingUsername:(NSString *)aUsername
+{
+    NSLog(@"Direct message display manager: started following '%@'", aUsername);
+    [userInfoController setFollowing:YES];
+}
+
+- (void)failedToStartFollowingUsername:(NSString *)aUsername
+    error:(NSError *)error
+{
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.startfollowing", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, aUsername];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+}
+
+- (void)stoppedFollowingUsername:(NSString *)aUsername
+{
+    NSLog(@"Direct message display manager: stopped following '%@'", aUsername);
+    [userInfoController setFollowing:NO];
+}
+
+- (void)failedToStopFollowingUsername:(NSString *)aUsername
+    error:(NSError *)error
+{
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.stopfollowing", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, aUsername];
     [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
@@ -563,9 +596,19 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [self sendDirectMessageToOtherUserInConversation];
 }
 
-- (void)sendDirectMessageToUser:(NSString *)username
+- (void)sendDirectMessageToUser:(NSString *)aUsername
 {
-    // not supported for direct messages    
+    NSLog(@"Direct message display manager: sending direct message to %@",
+        aUsername);
+    [composeTweetDisplayMgr composeDirectMessageTo:aUsername];
+}
+
+- (void)sendPublicMessageToUser:(NSString *)aUsername
+{
+    NSLog(@"Direct message display manager: sending public message to %@",
+        aUsername);
+    [composeTweetDisplayMgr
+        composeTweetWithText:[NSString stringWithFormat:@"@%@ ", aUsername]];
 }
 
 - (void)setFavorite:(BOOL)favorite
@@ -1344,13 +1387,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             initWithNibName:@"UserInfoView" bundle:nil];
 
         userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
-
-        UIBarButtonItem * rightBarButton =
-            [[UIBarButtonItem alloc]
-            initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self
-            action:@selector(sendDirectMessageToCurrentUser)];
-        userInfoController.navigationItem.rightBarButtonItem = rightBarButton;
-
         userInfoController.delegate = self;
     }
 

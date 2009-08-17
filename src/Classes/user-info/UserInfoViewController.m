@@ -15,23 +15,29 @@
 enum {
     kUserInfoSectionDetails,
     kUserInfoSectionNetwork,
-    kUserInfoSectionTweets
+    kUserInfoSectionFavorites,
+    kUserInfoSectionActions
 };
 
 enum {
     kUserInfoFollowingRow,
-    kUserInfoFollowersRow
+    kUserInfoFollowersRow,
+    kUserInfoNumUpdatesRow,
+    kUserInfoFavoritesRow
 };
 
 enum {
-    kUserInfoNumUpdatesRow,
-    kUserInfoFavoritesRow
+    kUserInfoPublicMessage,
+    kUserInfoDirectMessage,
+    kUserInfoSearchForUser
 };
 
 @interface UserInfoViewController ()
 
 - (void)layoutViews;
 - (void)updateDisplayForFollwoing:(BOOL)following;
+- (void)updateDisplayForProcessingFollowingRequest:(BOOL)following;
+- (UITableViewCell *)getBasicCell;
 
 + (UIImage *)defaultAvatar;
 
@@ -51,13 +57,14 @@ static UIImage * defaultAvatar;
     [nameLabel release];
     [activeAcctLabel release];
     [bioLabel release];
+    [processingFollowingIndicator release];
+    [webAddressButton release];
 
-    [followingLabel release];
-    [followingCheckMark release];
     [followingActivityIndicator release];
     [followingLoadingLabel release];
 
     [followButton release];
+    [stopFollowingButton release];
     [bookmarkButton release];
 
     [user release];
@@ -92,7 +99,7 @@ static UIImage * defaultAvatar;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView 
@@ -103,10 +110,12 @@ static UIImage * defaultAvatar;
         numRows = 0;
         if (user.location && ![user.location isEqual:@""])
             numRows++;
-        if (user.webpage && ![user.webpage isEqual:@""])
-            numRows++;
-    } else
-        numRows = 2;
+    } else if (section == kUserInfoSectionActions)
+        numRows = 3;
+    else if (section == kUserInfoSectionFavorites)
+        numRows = 1;
+    else
+        numRows = 3;
 
     return numRows;
 }
@@ -116,7 +125,6 @@ static UIImage * defaultAvatar;
 {
     UITableViewCell * cell;
     NSString * formatString;
-    NSNumber * count;
     NSArray * nib;
     switch (indexPath.section) {
         case kUserInfoSectionDetails:
@@ -133,96 +141,113 @@ static UIImage * defaultAvatar;
                     NSLocalizedString(@"userinfoview.location", @"");
                 [userInfoLabelCell setKeyText:locationString];
                 [userInfoLabelCell setValueText:user.location];
-            } else {
-                NSString * webpageString =
-                    NSLocalizedString(@"userinfoview.webpage", @"");
-                [userInfoLabelCell setKeyText:webpageString];
-                [userInfoLabelCell setValueText:user.webpage];
             }
             break;
         case kUserInfoSectionNetwork:
-                cell =
-                    [[[UITableViewCell alloc]
-                    initWithFrame:CGRectZero reuseIdentifier:@"UITableViewCell"]
-                    autorelease];
-                cell.accessoryType =
-                    UITableViewCellAccessoryDisclosureIndicator;
+            cell = [self getBasicCell];
+            cell.accessoryType =
+                UITableViewCellAccessoryDisclosureIndicator;
 
-                if (indexPath.row == kUserInfoFollowersRow) {
-                    if ([user.followersCount
-                        isEqual:[NSNumber numberWithInt:0]]) {
+            if (indexPath.row == kUserInfoFollowersRow) {
+                if ([user.followersCount
+                    isEqual:[NSNumber numberWithInt:0]]) {
 
-                        cell.textLabel.textColor = [UIColor grayColor];
-                        cell.accessoryType = UITableViewCellAccessoryNone;
-                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    } else {
-                        cell.textLabel.textColor = [UIColor blackColor];
-                        cell.accessoryType =
-                            UITableViewCellAccessoryDisclosureIndicator;
-                        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-                    }
-                    formatString =
-                        NSLocalizedString(@"userinfoview.followers", @"");
-                    count = user.followersCount;
+                    cell.textLabel.textColor = [UIColor grayColor];
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 } else {
-                    if ([user.friendsCount
-                        isEqual:[NSNumber numberWithInt:0]]) {
-
-                        cell.textLabel.textColor = [UIColor grayColor];
-                        cell.accessoryType = UITableViewCellAccessoryNone;
-                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    } else {
-                        cell.textLabel.textColor = [UIColor blackColor];
-                        cell.accessoryType =
-                            UITableViewCellAccessoryDisclosureIndicator;
-                        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-                    }
-                    formatString =
-                        NSLocalizedString(@"userinfoview.following", @"");
-                    count = user.friendsCount;
-                }
-
-                cell.textLabel.text =
-                    [NSString stringWithFormat:formatString, count];
-                break;
-            case kUserInfoSectionTweets:
-                cell =
-                    [[[UITableViewCell alloc]
-                    initWithFrame:CGRectZero reuseIdentifier:@"UITableViewCell"]
-                    autorelease];
+                    cell.textLabel.textColor = [UIColor blackColor];
                     cell.accessoryType =
                         UITableViewCellAccessoryDisclosureIndicator;
+                    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+                }
+                formatString =
+                    NSLocalizedString(@"userinfoview.followers", @"");
+                cell.textLabel.text =
+                    [NSString stringWithFormat:formatString,
+                    user.followersCount];
+            } else if (indexPath.row == kUserInfoFollowingRow) {
+                if ([user.friendsCount
+                    isEqual:[NSNumber numberWithInt:0]]) {
 
-                    if (indexPath.row == kUserInfoFavoritesRow) {
-                        cell.textLabel.text =
-                            NSLocalizedString(@"userinfoview.favorites", @"");
-                        cell.imageView.image =
-                            [UIImage imageNamed:@"FavoriteIconForUserView.png"];
-                        cell.imageView.highlightedImage =
-                            [UIImage
-                            imageNamed:
-                            @"FavoriteIconForUserViewHighlighted.png"];
-                    } else {
-                        if ([user.statusesCount
-                            isEqual:[NSNumber numberWithInt:0]]) {
-                            cell.textLabel.textColor = [UIColor grayColor];
-                            cell.accessoryType = UITableViewCellAccessoryNone;
-                            cell.selectionStyle =
-                                UITableViewCellSelectionStyleNone;
-                        } else {
-                            cell.textLabel.textColor = [UIColor blackColor];
-                            cell.accessoryType =
-                                UITableViewCellAccessoryDisclosureIndicator;
-                            cell.selectionStyle =
-                                UITableViewCellSelectionStyleBlue;
-                        }
-                        cell.textLabel.text =
-                            [NSString stringWithFormat:
-                            NSLocalizedString(
-                            @"userinfoview.statusescount.formatstring", @""),
-                            user.statusesCount];
-                    }
-                break;
+                    cell.textLabel.textColor = [UIColor grayColor];
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                } else {
+                    cell.textLabel.textColor = [UIColor blackColor];
+                    cell.accessoryType =
+                        UITableViewCellAccessoryDisclosureIndicator;
+                    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+                }
+                formatString =
+                    NSLocalizedString(@"userinfoview.following", @"");
+                cell.textLabel.text =
+                    [NSString stringWithFormat:formatString,
+                    user.friendsCount];
+            } else {
+                if ([user.statusesCount
+                    isEqual:[NSNumber numberWithInt:0]]) {
+                    cell.textLabel.textColor = [UIColor grayColor];
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                    cell.selectionStyle =
+                        UITableViewCellSelectionStyleNone;
+                } else {
+                    cell.textLabel.textColor = [UIColor blackColor];
+                    cell.accessoryType =
+                        UITableViewCellAccessoryDisclosureIndicator;
+                    cell.selectionStyle =
+                        UITableViewCellSelectionStyleBlue;
+                }
+                cell.textLabel.text =
+                    [NSString stringWithFormat:
+                    NSLocalizedString(
+                    @"userinfoview.statusescount.formatstring", @""),
+                    user.statusesCount];
+            }
+            break;
+        case kUserInfoSectionFavorites:
+            cell = [self getBasicCell];
+            cell.accessoryType =
+                UITableViewCellAccessoryDisclosureIndicator;
+            cell.textLabel.text =
+                NSLocalizedString(@"userinfoview.favorites", @"");
+            cell.imageView.image =
+                [UIImage imageNamed:@"FavoriteIconForUserView.png"];
+            cell.imageView.highlightedImage =
+                [UIImage
+                imageNamed:@"FavoriteIconForUserViewHighlighted.png"];
+            break;
+        case kUserInfoSectionActions:
+            cell = cell = [self getBasicCell];
+
+            if (indexPath.row == kUserInfoSearchForUser) {
+                cell.accessoryType =
+                    UITableViewCellAccessoryDisclosureIndicator;
+                cell.textLabel.text =
+                    NSLocalizedString(@"userinfoview.searchforuser",
+                    @"");
+                cell.imageView.image =
+                    [UIImage imageNamed:@"MagnifyingGlass.png"];
+                cell.imageView.highlightedImage =
+                    [UIImage
+                    imageNamed:@"MagnifyingGlassHighlighted.png"];
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.textLabel.text =
+                    indexPath.row == kUserInfoPublicMessage ?
+                    NSLocalizedString(@"userinfo.publicmessage", @"") :
+                    NSLocalizedString(@"userinfo.directmessage", @"");
+                cell.imageView.image =
+                    indexPath.row == kUserInfoPublicMessage ?
+                    [UIImage imageNamed:@"PublicReplyButtonIcon.png"] :
+                    [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
+                cell.imageView.highlightedImage =
+                    indexPath.row == kUserInfoPublicMessage ?
+                    [UIImage
+                    imageNamed:@"PublicReplyButtonIconHighlighted.png"] :
+                    [UIImage imageNamed:@"Envelope.png"];
+            }
+        break;
     }
 
     return cell;
@@ -233,23 +258,27 @@ static UIImage * defaultAvatar;
 {
     switch (indexPath.section) {
         case kUserInfoSectionDetails:
-            if (user.location && ![user.location isEqual:@""] &&
-                indexPath.row == 0)
-                [delegate showLocationOnMap:user.location];
-            else
-                [[TwitchWebBrowserDisplayMgr instance] visitWebpage:user.webpage];
+            [delegate showLocationOnMap:user.location];
             break;
         case kUserInfoSectionNetwork:
             if (indexPath.row == kUserInfoFollowingRow)
                 [delegate displayFollowingForUser:user.username];
+            else if (indexPath.row == kUserInfoNumUpdatesRow)
+                [delegate showTweetsForUser:user.username];
             else
                 [delegate displayFollowersForUser:user.username];
             break;
-        case kUserInfoSectionTweets:
-            if (indexPath.row == kUserInfoFavoritesRow)
-                [delegate displayFavoritesForUser:user.username];
+        case kUserInfoSectionFavorites:
+            [delegate displayFavoritesForUser:user.username];
+        case kUserInfoSectionActions:
+            if (indexPath.row == kUserInfoPublicMessage)
+                [delegate sendPublicMessageToUser:user.username];
+            else if (indexPath.row == kUserInfoDirectMessage)
+                [delegate sendDirectMessageToUser:user.username];
             else
-                [delegate showTweetsForUser:user.username];
+                [delegate
+                    showResultsForSearch:
+                    [NSString stringWithFormat:@"@%@", user.username]];
             break;
     }
 }
@@ -258,10 +287,16 @@ static UIImage * defaultAvatar;
     willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == kUserInfoFollowingRow &&
+        indexPath.section == kUserInfoSectionNetwork &&
         [user.friendsCount isEqual:[NSNumber numberWithInt:0]])
         return nil;
     if (indexPath.row == kUserInfoFollowersRow &&
+        indexPath.section == kUserInfoSectionNetwork &&
         [user.followersCount isEqual:[NSNumber numberWithInt:0]])
+        return nil;
+    if (indexPath.row == kUserInfoNumUpdatesRow &&
+        indexPath.section == kUserInfoSectionNetwork &&
+        [user.statusesCount isEqual:[NSNumber numberWithInt:0]])
         return nil;
 
     return indexPath;
@@ -296,32 +331,20 @@ static UIImage * defaultAvatar;
 
     if (followingEnabled) {
         if (!followingStateSet) {
-            followingLabel.hidden = YES;
-            followingCheckMark.hidden = YES;
             followingActivityIndicator.hidden = NO;
             followingLoadingLabel.hidden = NO;
+            followButton.hidden = YES;
+            stopFollowingButton.hidden = YES;
         } else {
             NSLog(@"Not updating following elements in header");
             [self updateDisplayForFollwoing:currentlyFollowing];
         }
-
-        [followButton setTitleColor:[UIColor grayColor]
-            forState:UIControlStateNormal];
-        NSString * startFollowingText =
-            NSLocalizedString(@"userinfoview.startfollowing", @"");
-        [followButton setTitle:startFollowingText
-            forState:UIControlStateNormal];
     } else {
-        followingLabel.hidden = YES;
-        followingCheckMark.hidden = YES;
         followingActivityIndicator.hidden = YES;
         followingLoadingLabel.hidden = YES;
         activeAcctLabel.hidden = NO;
-        [followButton setTitleColor:[UIColor grayColor]
-            forState:UIControlStateNormal];
-        NSString * followingBtnText =
-            NSLocalizedString(@"userinfoview.startfollowing", @"");
-        [followButton setTitle:followingBtnText forState:UIControlStateNormal];
+        followButton.hidden = YES;
+        stopFollowingButton.hidden = YES;
     }
     activeAcctLabel.hidden = followingEnabled;
 
@@ -350,6 +373,12 @@ static UIImage * defaultAvatar;
 
     nameLabel.text = aUser.name;
     bioLabel.text = [aUser.bio stringByDecodingHtmlEntities];
+    
+    if (user.webpage) {
+        [webAddressButton setTitle:user.webpage forState:UIControlStateNormal];
+        [webAddressButton setTitle:user.webpage
+            forState:UIControlStateHighlighted];
+    }
 
     [self layoutViews];
     [self.tableView reloadData];
@@ -368,16 +397,10 @@ static UIImage * defaultAvatar;
     if (followingEnabled)
         [self updateDisplayForFollwoing:following];
     else {
-        followingLabel.hidden = YES;
-        followingCheckMark.hidden = YES;
         followingActivityIndicator.hidden = YES;
         followingLoadingLabel.hidden = YES;
-        followButton.enabled = NO;
-        [followButton setTitleColor:[UIColor grayColor]
-            forState:UIControlStateNormal];
-        NSString * followingBtnText =
-            NSLocalizedString(@"userinfoview.startfollowing", @"");
-        [followButton setTitle:followingBtnText forState:UIControlStateNormal];
+        followButton.hidden = YES;
+        stopFollowingButton.hidden = YES;
     }
 }
 
@@ -387,25 +410,32 @@ static UIImage * defaultAvatar;
     bioLabelFrame.size.height = [bioLabel heightForString:bioLabel.text];
     bioLabel.frame = bioLabelFrame;
 
+    webAddressButton.hidden = !user.webpage;
+    CGRect webAddressFrame = webAddressButton.frame;
+    webAddressFrame.origin.y =
+        bioLabel.text.length > 0 ?
+        bioLabelFrame.size.height + 388.0 : 388.0;
+    webAddressButton.frame = webAddressFrame;
+
     CGRect headerViewFrame = headerView.frame;
     headerViewFrame.size.height =
-        bioLabel.text.length > 0 ?
-        bioLabelFrame.size.height + 390.0 : 376.0;
+        user.webpage ? webAddressFrame.origin.y + 24 : webAddressFrame.origin.y;
     headerView.frame = headerViewFrame;
 
     // force the header view to redraw
     self.tableView.tableHeaderView = headerView;
 }
 
-- (IBAction)toggleFollowing:(id)sender
+- (IBAction)follow:(id)sender
 {
-    NSLog(@"Toggling following state");
-    currentlyFollowing = !currentlyFollowing;
-    if (currentlyFollowing)
-        [delegate startFollowingUser:user.username];
-    else
-        [delegate stopFollowingUser:user.username];
-    [self updateDisplayForFollwoing:currentlyFollowing];
+    [delegate startFollowingUser:user.username];
+    [self updateDisplayForProcessingFollowingRequest:YES];
+}
+
+- (IBAction)stopFollowing:(id)sender
+{
+    [delegate stopFollowingUser:user.username];
+    [self updateDisplayForProcessingFollowingRequest:NO];
 }
 
 - (IBAction)sendMessage:(id)sender
@@ -429,22 +459,26 @@ static UIImage * defaultAvatar;
     else
         NSLog(@"Not following");
 
-    followingLabel.hidden = NO;
-    followingLabel.text =
-        following ?
-        NSLocalizedString(@"userinfoview.followinglabel.following", @"") :
-        NSLocalizedString(@"userinfoview.followinglabel.notfollowing", @"");
-    followingCheckMark.hidden = !following;
     followingActivityIndicator.hidden = YES;
     followingLoadingLabel.hidden = YES;
-    followButton.enabled = YES;
-    [followButton setTitleColor:[UIColor twitchCheckedColor]
-        forState:UIControlStateNormal];
-    NSString * followingBtnText =
-        following ?
-        NSLocalizedString(@"userinfoview.stopfollowing", @"") :
-        NSLocalizedString(@"userinfoview.startfollowing", @"");
-    [followButton setTitle:followingBtnText forState:UIControlStateNormal];
+    followButton.enabled = !following;
+    stopFollowingButton.enabled = following;
+    followButton.hidden = following;
+    stopFollowingButton.hidden = !following;
+    [processingFollowingIndicator stopAnimating];
+}
+
+- (void)updateDisplayForProcessingFollowingRequest:(BOOL)following
+{
+    followButton.hidden = !following;
+    followButton.enabled = NO;
+    stopFollowingButton.hidden = following;
+    stopFollowingButton.enabled = NO;
+    
+    CGRect indicatorFrame = processingFollowingIndicator.frame;
+    indicatorFrame.origin.x = following ? 168 : 221;
+    processingFollowingIndicator.frame = indicatorFrame;
+    [processingFollowingIndicator startAnimating];
 }
 
 - (IBAction)showFullProfileImage:(id)sender
@@ -465,6 +499,27 @@ static UIImage * defaultAvatar;
         [[RemotePhoto alloc]
         initWithImage:avatarImage url:url name:user.name];
     [[PhotoBrowserDisplayMgr instance] showPhotoInBrowser:remotePhoto];
+}
+
+- (IBAction)visitWebpage:(id)sender
+{
+    [[TwitchWebBrowserDisplayMgr instance] visitWebpage:user.webpage];
+}
+
+- (UITableViewCell *)getBasicCell
+{
+    static NSString * cellIdentifier = @"UITableViewCell";
+
+    UITableViewCell * cell =
+        [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+
+    if (!cell)
+        cell =
+            [[[UITableViewCell alloc]
+            initWithFrame:CGRectZero reuseIdentifier:cellIdentifier]
+            autorelease];
+
+    return cell;
 }
 
 + (UIImage *)defaultAvatar

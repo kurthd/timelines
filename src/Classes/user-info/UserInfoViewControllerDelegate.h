@@ -16,5 +16,7 @@
 - (void)stopFollowingUser:(NSString *)username;
 - (void)showingUserInfoView;
 - (void)sendDirectMessageToUser:(NSString *)username;
+- (void)sendPublicMessageToUser:(NSString *)username;
+- (void)showResultsForSearch:(NSString *)query;
 
 @end

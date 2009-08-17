@@ -19,6 +19,7 @@
 #import "UserInfoViewController.h"
 #import "TwitchBrowserViewController.h"
 #import "PhotoBrowser.h"
+#import "SavedSearchMgr.h"
 
 @interface UserListDisplayMgr :
     NSObject
@@ -48,6 +49,8 @@
     UserInfoViewController * userInfoController;
     BOOL alreadyBeenDisplayed;
     NSString * userInfoUsername;
+    NSString * currentSearch;
+    SavedSearchMgr * savedSearchMgr;
 }
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController

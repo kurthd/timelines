@@ -6,6 +6,7 @@
 #import "ArbUserTimelineDataSource.h"
 #import "FavoritesTimelineDataSource.h"
 #import "ErrorState.h"
+#import "SearchDataSource.h"
 
 @interface UserListDisplayMgr ()
 
@@ -17,17 +18,25 @@
     CredentialsActivatedPublisher * credentialsPublisher;
 @property (readonly) UserInfoViewController * userInfoController;
 @property (nonatomic, copy) NSString * userInfoUsername;
+@property (nonatomic, copy) NSString * currentSearch;
+@property (nonatomic, retain) SavedSearchMgr * savedSearchMgr;
 
 - (void)deallocateNode;
 - (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page;
 - (void)sendDirectMessageToCurrentUser;
+- (void)removeSearch:(id)sender;
+- (void)saveSearch:(id)sender;
+- (UIView *)saveSearchView;
+- (UIView *)removeSearchView;
+- (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
+    action:(SEL)action;
 
 @end
 
 @implementation UserListDisplayMgr
 
 @synthesize timelineDisplayMgr, nextUserListDisplayMgr, nextWrapperController,
-    credentialsPublisher, userInfoUsername;
+    credentialsPublisher, userInfoUsername, currentSearch, savedSearchMgr;
 
 - (void)dealloc
 {
@@ -48,6 +57,8 @@
     [credentials release];
     [cache release];
     [userInfoController release];
+    [currentSearch release];
+    [savedSearchMgr release];
 
     [super dealloc];
 }
@@ -150,6 +161,7 @@
 - (void)startedFollowingUsername:(NSString *)aUsername
 {
     NSLog(@"Started following %@", aUsername);
+    [userInfoController setFollowing:YES];
 }
 
 - (void)failedToStartFollowingUsername:(NSString *)aUsername
@@ -165,6 +177,7 @@
 - (void)stoppedFollowingUsername:(NSString *)aUsername
 {
     NSLog(@"Stopped following %@", aUsername);
+    [userInfoController setFollowing:NO];
 }
 
 - (void)failedToStopFollowingUsername:(NSString *)aUsername
@@ -421,6 +434,65 @@
     [composeTweetDisplayMgr composeDirectMessageTo:aUsername];
 }
 
+- (void)sendPublicMessageToUser:(NSString *)aUsername
+{
+    NSLog(@"User list display manager: sending public message to %@",
+        aUsername);
+    [composeTweetDisplayMgr
+        composeTweetWithText:[NSString stringWithFormat:@"@%@ ", aUsername]];
+}
+
+- (void)showResultsForSearch:(NSString *)query
+{
+    NSLog(@"User list display manager: showing search results for '%@'", query);
+    self.currentSearch = query;
+    
+    self.nextWrapperController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+    
+    self.timelineDisplayMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:
+        self.nextWrapperController
+        title:query composeTweetDisplayMgr:composeTweetDisplayMgr];
+    self.timelineDisplayMgr.displayAsConversation = NO;
+    self.timelineDisplayMgr.setUserToFirstTweeter = NO;
+    self.timelineDisplayMgr.currentUsername = nil;
+    UIView * headerView =
+        [self.savedSearchMgr isSearchSaved:query] ?
+        [self removeSearchView] : [self saveSearchView];
+    [self.timelineDisplayMgr setTimelineHeaderView:headerView];
+    [self.timelineDisplayMgr setCredentials:credentials];
+    self.nextWrapperController.navigationItem.rightBarButtonItem = nil;
+    
+    self.nextWrapperController.delegate = self.timelineDisplayMgr;
+    
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:context]
+        autorelease];
+    
+    SearchDataSource * dataSource =
+        [[[SearchDataSource alloc]
+        initWithTwitterService:twitterService
+        query:query]
+        autorelease];
+    
+    self.credentialsPublisher =
+        [[CredentialsActivatedPublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+    
+    twitterService.delegate = dataSource;
+    [self.timelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO allPagesLoaded:NO];
+    dataSource.delegate = self.timelineDisplayMgr;
+    
+    [dataSource setCredentials:credentials];
+    [wrapperController.navigationController
+        pushViewController:self.nextWrapperController animated:YES];
+}
+
 #pragma mark TwitchBrowserViewControllerDelegate implementation
 
 - (void)composeTweetWithText:(NSString *)text
@@ -441,6 +513,8 @@
     credentials = someCredentials;
 
     [service setCredentials:someCredentials];
+
+    self.savedSearchMgr.accountName = credentials.username;
 }
 
 - (void)refreshWithCurrentPages
@@ -467,6 +541,7 @@
     self.nextUserListDisplayMgr = nil;
     self.nextWrapperController = nil;
     self.credentialsPublisher = nil;
+    self.currentSearch = nil;
 }
 
 - (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page
@@ -492,13 +567,6 @@
             initWithNibName:@"UserInfoView" bundle:nil];
 
         userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
-
-        UIBarButtonItem * rightBarButton =
-            [[UIBarButtonItem alloc]
-            initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self
-            action:@selector(sendDirectMessageToCurrentUser)];
-        userInfoController.navigationItem.rightBarButtonItem = rightBarButton;
-
         userInfoController.delegate = self;
     }
 
@@ -510,6 +578,80 @@
     NSLog(@"User list display manager: sending direct message to %@",
         self.userInfoUsername);
     [composeTweetDisplayMgr composeDirectMessageTo:self.userInfoUsername];
+}
+
+- (void)removeSearch:(id)sender
+{
+    [self.timelineDisplayMgr
+        setTimelineHeaderView:[self saveSearchView]];
+    [self.savedSearchMgr removeSavedSearchForQuery:self.currentSearch];
+}
+
+- (void)saveSearch:(id)sender
+{
+    [self.timelineDisplayMgr
+        setTimelineHeaderView:[self removeSearchView]];
+    [self.savedSearchMgr addSavedSearch:self.currentSearch];
+}
+
+- (UIView *)saveSearchView
+{
+    NSString * title = NSLocalizedString(@"savedsearch.save.title", @"");
+    SEL action = @selector(saveSearch:);
+
+    return [self toggleSaveSearchViewWithTitle:title action:action];
+}
+
+- (UIView *)removeSearchView
+{
+    NSString * title = NSLocalizedString(@"savedsearch.remove.title", @"");
+    SEL action = @selector(removeSearch:);
+
+    return [self toggleSaveSearchViewWithTitle:title action:action];
+}
+
+- (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
+    action:(SEL)action
+{
+    CGRect viewFrame = CGRectMake(0, 0, 320, 51);
+    UIView * view = [[UIView alloc] initWithFrame:viewFrame];
+
+    CGRect buttonFrame = CGRectMake(20, 7, 280, 37);
+    UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = buttonFrame;
+
+    UIImage * background =
+        [UIImage imageNamed:@"SaveSearchButtonBackground.png"];
+    UIImage * selectedBackground =
+        [UIImage imageNamed:@"SaveSearchButtonBackgroundHighlighted.png"];
+    [button setBackgroundImage:background forState:UIControlStateNormal];
+    [button setBackgroundImage:selectedBackground
+                      forState:UIControlStateHighlighted];
+
+    [button setTitle:title forState:UIControlStateNormal];
+
+    UIColor * color = [UIColor colorWithRed:.353 green:.4 blue:.494 alpha:1.0];
+    [button setTitleColor:color forState:UIControlStateNormal];
+
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    button.titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
+
+    UIControlEvents events = UIControlEventTouchUpInside;
+    [button addTarget:self action:action forControlEvents:events];
+
+    [view addSubview:button];
+
+    return [view autorelease];
+}
+
+- (SavedSearchMgr *)savedSearchMgr
+{
+    if (!savedSearchMgr)
+        savedSearchMgr =
+            [[SavedSearchMgr alloc]
+            initWithAccountName:credentials.username context:context];
+
+    return savedSearchMgr;
 }
 
 @end

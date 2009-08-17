@@ -240,6 +240,7 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)startedFollowingUsername:(NSString *)username
 {
     NSLog(@"Timeline display manager: started following %@", username);
+    [self.userInfoController setFollowing:YES];
 }
 
 - (void)failedToStartFollowingUsername:(NSString *)username
@@ -255,6 +256,7 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)stoppedFollowingUsername:(NSString *)username
 {
     NSLog(@"Timeline display manager: stopped following %@", username);
+    [userInfoController setFollowing:NO];
 }
 
 - (void)failedToStopFollowingUsername:(NSString *)username
@@ -636,6 +638,13 @@ static NSInteger retweetFormatValueAlredyRead;
     [composeTweetDisplayMgr composeDirectMessageTo:username];
 }
 
+- (void)sendPublicMessageToUser:(NSString *)username
+{
+    NSLog(@"Timeline display manager: sending public message to %@", username);
+    [composeTweetDisplayMgr
+        composeTweetWithText:[NSString stringWithFormat:@"@%@ ", username]];
+}
+
 - (void)sendDirectMessageToCurrentUser
 {
     NSLog(@"Timeline display manager: sending direct message to %@",
@@ -996,12 +1005,6 @@ static NSInteger retweetFormatValueAlredyRead;
             initWithNibName:@"UserInfoView" bundle:nil];
 
         userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
-
-        UIBarButtonItem * rightBarButton =
-            [[UIBarButtonItem alloc]
-            initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self
-            action:@selector(sendDirectMessageToCurrentUser)];
-        userInfoController.navigationItem.rightBarButtonItem = rightBarButton;
 
         userInfoController.delegate = self;
     }

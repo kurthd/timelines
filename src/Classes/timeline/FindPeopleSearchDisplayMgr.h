@@ -47,7 +47,9 @@
     CredentialsActivatedPublisher * credentialsPublisher;
     UserListDisplayMgr * nextUserListDisplayMgr;
 
-    NSString * currentSearchUsername;
+    NSString * currentSearchUsername; // main user search value
+    NSString * currentSearch; // mention search value
+    SavedSearchMgr * generalSavedSearchMgr;
 }
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc
