@@ -78,8 +78,8 @@ imagepicker.choose.photos = "Choose Existing Photo";
 imageupload.failed.title = "Failed to Upload Photo";
 
 /* UserInfoViewController */
-userinfoview.followers = "%@ Followers";
-userinfoview.following = "%@ Following";
+userinfoview.followers = "followers";
+userinfoview.following = "following";
 userinfoview.favorites = "Favorites";
 userinfoview.searchforuser = "Search for User Mentions";
 userinfoview.webpage = "webpage";
@@ -88,7 +88,7 @@ userinfoview.startfollowing = "Start following";
 userinfoview.stopfollowing = "Stop following";
 userinfoview.followinglabel.following = "Following";
 userinfoview.followinglabel.notfollowing = "Not following";
-userinfoview.statusescount.formatstring = "%@ Updates";
+userinfoview.statusescount = "updates";
 userinfo.publicmessage = "Public Message";
 userinfo.directmessage = "Direct Message";
 

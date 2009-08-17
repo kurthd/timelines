@@ -38,6 +38,7 @@ enum {
 - (void)updateDisplayForFollwoing:(BOOL)following;
 - (void)updateDisplayForProcessingFollowingRequest:(BOOL)following;
 - (UITableViewCell *)getBasicCell;
+- (UITableViewCell *)getLabelCell;
 
 + (UIImage *)defaultAvatar;
 
@@ -125,15 +126,11 @@ static UIImage * defaultAvatar;
 {
     UITableViewCell * cell;
     NSString * formatString;
-    NSArray * nib;
+    UserInfoLabelCell * userInfoLabelCell;
     switch (indexPath.section) {
         case kUserInfoSectionDetails:
-            nib =
-                [[NSBundle mainBundle] loadNibNamed:@"UserInfoLabelCell"
-                owner:self options:nil];
-
-            cell = [nib objectAtIndex:0];
-            UserInfoLabelCell * userInfoLabelCell = (UserInfoLabelCell *)cell;
+            cell = [self getLabelCell];
+            userInfoLabelCell = (UserInfoLabelCell *)cell;
             if (user.location && ![user.location isEqual:@""] &&
                 indexPath.row == 0) {
 
@@ -144,7 +141,8 @@ static UIImage * defaultAvatar;
             }
             break;
         case kUserInfoSectionNetwork:
-            cell = [self getBasicCell];
+            cell = [self getLabelCell];
+            userInfoLabelCell = (UserInfoLabelCell *)cell;
             cell.accessoryType =
                 UITableViewCellAccessoryDisclosureIndicator;
 
@@ -152,57 +150,51 @@ static UIImage * defaultAvatar;
                 if ([user.followersCount
                     isEqual:[NSNumber numberWithInt:0]]) {
 
-                    cell.textLabel.textColor = [UIColor grayColor];
                     cell.accessoryType = UITableViewCellAccessoryNone;
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 } else {
-                    cell.textLabel.textColor = [UIColor blackColor];
                     cell.accessoryType =
                         UITableViewCellAccessoryDisclosureIndicator;
                     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 }
                 formatString =
                     NSLocalizedString(@"userinfoview.followers", @"");
-                cell.textLabel.text =
-                    [NSString stringWithFormat:formatString,
-                    user.followersCount];
+                [userInfoLabelCell setKeyText:formatString];
+                [userInfoLabelCell
+                    setValueText:[user.followersCount description]];
             } else if (indexPath.row == kUserInfoFollowingRow) {
                 if ([user.friendsCount
                     isEqual:[NSNumber numberWithInt:0]]) {
 
-                    cell.textLabel.textColor = [UIColor grayColor];
                     cell.accessoryType = UITableViewCellAccessoryNone;
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 } else {
-                    cell.textLabel.textColor = [UIColor blackColor];
                     cell.accessoryType =
                         UITableViewCellAccessoryDisclosureIndicator;
                     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 }
                 formatString =
                     NSLocalizedString(@"userinfoview.following", @"");
-                cell.textLabel.text =
-                    [NSString stringWithFormat:formatString,
-                    user.friendsCount];
+                [userInfoLabelCell setKeyText:formatString];
+                [userInfoLabelCell
+                    setValueText:[user.friendsCount description]];
             } else {
                 if ([user.statusesCount
                     isEqual:[NSNumber numberWithInt:0]]) {
-                    cell.textLabel.textColor = [UIColor grayColor];
                     cell.accessoryType = UITableViewCellAccessoryNone;
                     cell.selectionStyle =
                         UITableViewCellSelectionStyleNone;
                 } else {
-                    cell.textLabel.textColor = [UIColor blackColor];
                     cell.accessoryType =
                         UITableViewCellAccessoryDisclosureIndicator;
                     cell.selectionStyle =
                         UITableViewCellSelectionStyleBlue;
                 }
-                cell.textLabel.text =
-                    [NSString stringWithFormat:
-                    NSLocalizedString(
-                    @"userinfoview.statusescount.formatstring", @""),
-                    user.statusesCount];
+                formatString =
+                    NSLocalizedString(@"userinfoview.statusescount", @"");
+                [userInfoLabelCell setKeyText:formatString];
+                [userInfoLabelCell
+                    setValueText:[user.statusesCount description]];
             }
             break;
         case kUserInfoSectionFavorites:
@@ -513,6 +505,24 @@ static UIImage * defaultAvatar;
             [[[UITableViewCell alloc]
             initWithFrame:CGRectZero reuseIdentifier:cellIdentifier]
             autorelease];
+
+    return cell;
+}
+
+- (UITableViewCell *)getLabelCell
+{
+    static NSString * cellIdentifier = @"UserInfoLabelCell";
+
+    UITableViewCell * cell =
+        [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+
+    if (!cell) {
+        NSArray * nib =
+            [[NSBundle mainBundle]
+            loadNibNamed:cellIdentifier owner:self options:nil];
+
+        cell = [nib objectAtIndex:0];
+    }
 
     return cell;
 }

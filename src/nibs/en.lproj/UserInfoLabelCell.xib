@@ -38,7 +38,7 @@
 							<object class="IBUILabel" id="1043450739">
 								<reference key="NSNextResponder" ref="66794914"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{81, 11}, {205, 21}}</string>
+								<string key="NSFrame">{{96, 11}, {197, 21}}</string>
 								<reference key="NSSuperview" ref="66794914"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -63,7 +63,7 @@
 							<object class="IBUILabel" id="325820539">
 								<reference key="NSNextResponder" ref="66794914"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{7, 11}, {66, 21}}</string>
+								<string key="NSFrame">{{7, 11}, {81, 21}}</string>
 								<reference key="NSSuperview" ref="66794914"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -189,7 +189,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>UIResponder</string>
 					<string>UserInfoLabelCell</string>
-					<string>{{541, 565}, {320, 44}}</string>
+					<string>{{440, 565}, {320, 44}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
