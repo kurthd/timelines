@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0511067F102A25FC00915638 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0511067E102A25FC00915638 /* Settings.bundle */; };
+		051975FA103A119100883FAC /* AccountSelectedCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 051975F9103A119100883FAC /* AccountSelectedCheckmark.png */; };
+		0519760E103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */; };
+		05197620103A168600883FAC /* AccountNotSelectedFiller.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519761F103A168600883FAC /* AccountNotSelectedFiller.png */; };
 		051D7C69101D105A00B867C1 /* SavedSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 051D7C68101D105A00B867C1 /* SavedSearchMgr.m */; };
 		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
 		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
@@ -34,7 +37,6 @@
 		05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05AC573C1029F0EF00F727A2 /* QuartzCore.framework */; };
 		05C6C92B1028F7F000182B4A /* Trend.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C6C92A1028F7F000182B4A /* Trend.m */; };
 		05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */; };
-		05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C8872810163DB90097FEFF /* AccountsTableViewCell.m */; };
 		05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */; };
 		05DB29C9102CD879001E8C30 /* DirectMessageButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29C8102CD879001E8C30 /* DirectMessageButtonIcon.png */; };
 		05DB2A00102CDB6B001E8C30 /* RetweetButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29FF102CDB6B001E8C30 /* RetweetButtonIcon.png */; };
@@ -291,6 +293,9 @@
 /* Begin PBXFileReference section */
 		050F7DE810323394007C6F04 /* twitch-v2.0.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.0.xcdatamodel"; sourceTree = "<group>"; };
 		0511067E102A25FC00915638 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		051975F9103A119100883FAC /* AccountSelectedCheckmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountSelectedCheckmark.png; path = images/AccountSelectedCheckmark.png; sourceTree = "<group>"; };
+		0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountSelectedCheckmarkHighlighted.png; path = images/AccountSelectedCheckmarkHighlighted.png; sourceTree = "<group>"; };
+		0519761F103A168600883FAC /* AccountNotSelectedFiller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountNotSelectedFiller.png; path = images/AccountNotSelectedFiller.png; sourceTree = "<group>"; };
 		051D7C67101D105A00B867C1 /* SavedSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearchMgr.h; path = search/SavedSearchMgr.h; sourceTree = "<group>"; };
 		051D7C68101D105A00B867C1 /* SavedSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearchMgr.m; path = search/SavedSearchMgr.m; sourceTree = "<group>"; };
 		052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackground.png; path = images/SaveSearchButtonBackground.png; sourceTree = "<group>"; };
@@ -516,8 +521,6 @@
 		05C7051C0FF88C4100936E4C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/ExplainOauthView.xib; sourceTree = "<group>"; };
 		05C886D2101639050097FEFF /* AccountSettingsChangedPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountSettingsChangedPublisher.h; path = publishers/AccountSettingsChangedPublisher.h; sourceTree = "<group>"; };
 		05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountSettingsChangedPublisher.m; path = publishers/AccountSettingsChangedPublisher.m; sourceTree = "<group>"; };
-		05C8872710163DB90097FEFF /* AccountsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsTableViewCell.h; path = accounts/AccountsTableViewCell.h; sourceTree = "<group>"; };
-		05C8872810163DB90097FEFF /* AccountsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsTableViewCell.m; path = accounts/AccountsTableViewCell.m; sourceTree = "<group>"; };
 		05D173E10FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TwitterCredentials+KeychainAdditions.h"; path = "twitter/TwitterCredentials+KeychainAdditions.h"; sourceTree = "<group>"; };
 		05D173E20FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TwitterCredentials+KeychainAdditions.m"; path = "twitter/TwitterCredentials+KeychainAdditions.m"; sourceTree = "<group>"; };
 		05D174050FF69FC500DCB22D /* Mention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mention.h; path = tweets/Mention.h; sourceTree = "<group>"; };
@@ -815,8 +818,6 @@
 				05948991101569B700C37C98 /* AccountSettingsViewController.m */,
 				05948A0310157B6400C37C98 /* AccountSettings.h */,
 				05948A0410157B6400C37C98 /* AccountSettings.m */,
-				05C8872710163DB90097FEFF /* AccountsTableViewCell.h */,
-				05C8872810163DB90097FEFF /* AccountsTableViewCell.m */,
 			);
 			name = accounts;
 			sourceTree = "<group>";
@@ -1463,6 +1464,9 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				051975F9103A119100883FAC /* AccountSelectedCheckmark.png */,
+				0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */,
+				0519761F103A168600883FAC /* AccountNotSelectedFiller.png */,
 				914CA0F61039C62C00421C60 /* StopFollowingButton.png */,
 				914CA0F71039C62C00421C60 /* StopFollowingButtonHighlighted.png */,
 				914CA0C21038D04F00421C60 /* MagnifyingGlassHighlighted.png */,
@@ -1763,6 +1767,9 @@
 				914CA0C31038D04F00421C60 /* MagnifyingGlassHighlighted.png in Resources */,
 				914CA0F81039C62C00421C60 /* StopFollowingButton.png in Resources */,
 				914CA0F91039C62C00421C60 /* StopFollowingButtonHighlighted.png in Resources */,
+				051975FA103A119100883FAC /* AccountSelectedCheckmark.png in Resources */,
+				0519760E103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png in Resources */,
+				05197620103A168600883FAC /* AccountNotSelectedFiller.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1916,7 +1923,6 @@
 				05948992101569B700C37C98 /* AccountSettingsViewController.m in Sources */,
 				05948A0510157B6400C37C98 /* AccountSettings.m in Sources */,
 				05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */,
-				05C8872910163DB90097FEFF /* AccountsTableViewCell.m in Sources */,
 				910EFE5F1017E78A002083D6 /* NewDirectMessagesState.m in Sources */,
 				910EFE831017F078002083D6 /* NewDirectMessagesPersistenceStore.m in Sources */,
 				059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */,
