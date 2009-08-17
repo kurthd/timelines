@@ -10,6 +10,7 @@
 #import "ResponseProcessor+ParsingHelpers.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
 #import "NSString+HtmlEncodingAdditions.h"
+#import "User+UIAdditions.h"
 
 @interface NSDictionary (CopyAndPastedParsingHelpers)
 - (id)safeObjectForKey:(id)key;
@@ -93,16 +94,14 @@
         if (!userId)
             continue;  // something is malformed - be defensive and just move on
 
-        User * tweetAuthor = [User userWithId:userId context:context];
-
-        if (!tweetAuthor)
-            tweetAuthor = [User createInstance:context];
-
+        User * tweetAuthor = [User findOrCreateWithId:userId context:context];
         tweetAuthor.created = [NSDate date];
         tweetAuthor.username = [userData objectForKey:@"from_user"];
         tweetAuthor.identifier = userId;
-        tweetAuthor.profileImageUrl =
+        tweetAuthor.avatar.thumbnailImageUrl =
             [userData objectForKey:@"profile_image_url"];
+        tweetAuthor.avatar.fullImageUrl =
+            [User largeAvatarUrlForUrl:tweetAuthor.avatar.thumbnailImageUrl];
 
         // fill in the rest of the required user fields that are not
         // provided as part of the search results

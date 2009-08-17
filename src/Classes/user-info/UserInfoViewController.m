@@ -349,11 +349,11 @@ static UIImage * defaultAvatar;
     activeAcctLabel.hidden = followingEnabled;
 
     NSString * largeAvatarUrlAsString =
-        [User largeAvatarUrlForUrl:user.profileImageUrl];
+        [User largeAvatarUrlForUrl:user.avatar.thumbnailImageUrl];
 
     UIImage * avatar = [User avatarForUrl:largeAvatarUrlAsString];
     if (!avatar)
-        avatar = [User avatarForUrl:user.profileImageUrl];
+        avatar = [User avatarForUrl:user.avatar.thumbnailImageUrl];
     if (!avatar)
         avatar = [[self class] defaultAvatar];
 
@@ -363,11 +363,13 @@ static UIImage * defaultAvatar;
         [NSURL URLWithString:
         [User largeAvatarUrlForUrl:largeAvatarUrlAsString]];
     NSURL * avatarUrl =
-        [NSURL URLWithString:[User largeAvatarUrlForUrl:user.profileImageUrl]];
+        [NSURL URLWithString:
+        [User largeAvatarUrlForUrl:user.avatar.thumbnailImageUrl]];
     [AsynchronousNetworkFetcher fetcherWithUrl:largeAvatarUrl delegate:self];
     [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
 
-    UIImage * avatarImage = [User avatarForUrl:user.profileImageUrl];
+    UIImage * avatarImage =
+        [User avatarForUrl:user.avatar.thumbnailImageUrl];
     if (avatarImage)
         [avatarView setImage:avatarImage];
 
@@ -485,15 +487,8 @@ static UIImage * defaultAvatar;
 {
     NSLog(@"Profile image selected");
 
-    NSString * url =
-        [user.profileImageUrl
-        stringByReplacingOccurrencesOfString:@"_normal."
-        withString:@"."];
-    UIImage * avatarImage =
-        [url isEqualToString:user.profileImageUrl] ?
-        (avatarView.image != [[self class] defaultAvatar] ?
-        avatarView.image : nil) :
-        nil;
+    NSString * url = user.avatar.fullImageUrl;
+    UIImage * avatarImage = [UIImage imageWithData:user.avatar.fullImage];
 
     RemotePhoto * remotePhoto =
         [[RemotePhoto alloc]

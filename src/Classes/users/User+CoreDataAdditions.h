@@ -7,6 +7,9 @@
 
 @interface User (CoreDataAdditions)
 
++ (id)findOrCreateWithId:(NSString *)anIdentifier
+                 context:(NSManagedObjectContext *)context;
+
 + (id)userWithId:(NSString *)anIdentifier
          context:(NSManagedObjectContext *)context;
 

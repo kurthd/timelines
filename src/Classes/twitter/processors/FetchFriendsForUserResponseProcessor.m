@@ -70,11 +70,7 @@
             // dictionary with one element named 'friends'
             continue;
 
-        User * user = [User userWithId:userId context:context];
-
-        if (!user)
-            user = [User createInstance:context];
-
+        User * user = [User findOrCreateWithId:userId context:context];
         [self populateUser:user fromData:info];
         [users addObject:user];
     }

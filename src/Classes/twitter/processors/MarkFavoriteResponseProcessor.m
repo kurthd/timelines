@@ -70,11 +70,7 @@
 
     NSDictionary * userData = [status objectForKey:@"user"];
     NSString * userId = [[userData objectForKey:@"id"] description];
-    User * user = [User userWithId:userId context:context];
-
-    if (!user)
-        user = [User createInstance:context];
-
+    User * user = [User findOrCreateWithId:userId context:context];
     [self populateUser:user fromData:userData];
 
     NSDictionary * tweetData = status;

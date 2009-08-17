@@ -151,6 +151,14 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         self.user.name : self.user.username;
 }
 
+- (NSString *)tweetUrl
+{
+    return
+        self.recipient ? nil :
+        [NSString stringWithFormat:@"http://twitter.com/%@/status/%@",
+        self.user.username, self.identifier];
+}
+
 + (NSString *)bodyWithLinks:(NSString *)body
 {
     return

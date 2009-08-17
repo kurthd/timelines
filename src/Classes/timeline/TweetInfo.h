@@ -45,4 +45,7 @@
 // user's preferences.
 - (NSString *)displayName;
 
+// The unique URL for this tweet, or nil for Direct Messages.
+- (NSString *)tweetUrl;
+
 @end

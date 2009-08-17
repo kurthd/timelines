@@ -21,6 +21,8 @@
 		053A11A4100CDBA5008DD2F6 /* TweetDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 053A11A2100CDBA5008DD2F6 /* TweetDraft.m */; };
 		054B6A20101E153600882C19 /* NSString+HtmlEncodingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */; };
 		054F3EF910243FAA005B6805 /* DefaultAvatar50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */; };
+		055C92E210362DC2000B9A00 /* Avatar.m in Sources */ = {isa = PBXBuildFile; fileRef = 055C92E110362DC2000B9A00 /* Avatar.m */; };
+		055C92E710362E1D000B9A00 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 055C92E610362E1D000B9A00 /* User.m */; };
 		058207C11017744C00DFC051 /* ComposeRecipientGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 058207C01017744C00DFC051 /* ComposeRecipientGradient.png */; };
 		05948992101569B700C37C98 /* AccountSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05948991101569B700C37C98 /* AccountSettingsViewController.m */; };
 		05948995101569D500C37C98 /* AccountSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05948993101569D500C37C98 /* AccountSettingsView.xib */; };
@@ -127,7 +129,6 @@
 		05EF412C0FFADF95007B59F1 /* DirectMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A2F0FF0181600EBAFC7 /* DirectMessage.m */; };
 		05EF412D0FFADF95007B59F1 /* User+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A500FF01D5E00EBAFC7 /* User+CoreDataAdditions.m */; };
 		05EF412E0FFADF95007B59F1 /* Tweet+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A530FF01DE000EBAFC7 /* Tweet+CoreDataAdditions.m */; };
-		05EF412F0FFADF95007B59F1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A5C0FF01E3F00EBAFC7 /* User.m */; };
 		05EF41300FFADF95007B59F1 /* ResponseProcessor+ParsingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45A6A0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m */; };
 		05EF41310FFADF95007B59F1 /* DirectMessage+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45B400FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m */; };
 		05EF41330FFADF95007B59F1 /* FetchMentionsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F45BA10FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m */; };
@@ -334,6 +335,10 @@
 		054B6A1E101E153600882C19 /* NSString+HtmlEncodingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HtmlEncodingAdditions.h"; path = "shared/NSString+HtmlEncodingAdditions.h"; sourceTree = "<group>"; };
 		054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HtmlEncodingAdditions.m"; path = "shared/NSString+HtmlEncodingAdditions.m"; sourceTree = "<group>"; };
 		054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DefaultAvatar50x50.png; path = images/DefaultAvatar50x50.png; sourceTree = "<group>"; };
+		055C92E010362DC2000B9A00 /* Avatar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Avatar.h; path = users/Avatar.h; sourceTree = "<group>"; };
+		055C92E110362DC2000B9A00 /* Avatar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Avatar.m; path = users/Avatar.m; sourceTree = "<group>"; };
+		055C92E510362E1D000B9A00 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = users/User.h; sourceTree = "<group>"; };
+		055C92E610362E1D000B9A00 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = users/User.m; sourceTree = "<group>"; };
 		0562BE2D0FF6AB6B005DA549 /* FetchTweetResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTweetResponseProcessor.h; path = twitter/processors/FetchTweetResponseProcessor.h; sourceTree = "<group>"; };
 		0562BE2E0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchTweetResponseProcessor.m; path = twitter/processors/FetchTweetResponseProcessor.m; sourceTree = "<group>"; };
 		05761AFD0FF6ADD600392ADC /* UserTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTweet.h; path = tweets/UserTweet.h; sourceTree = "<group>"; };
@@ -544,8 +549,6 @@
 		05F45A500FF01D5E00EBAFC7 /* User+CoreDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "User+CoreDataAdditions.m"; path = "users/User+CoreDataAdditions.m"; sourceTree = "<group>"; };
 		05F45A520FF01DE000EBAFC7 /* Tweet+CoreDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Tweet+CoreDataAdditions.h"; path = "tweets/Tweet+CoreDataAdditions.h"; sourceTree = "<group>"; };
 		05F45A530FF01DE000EBAFC7 /* Tweet+CoreDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Tweet+CoreDataAdditions.m"; path = "tweets/Tweet+CoreDataAdditions.m"; sourceTree = "<group>"; };
-		05F45A5B0FF01E3F00EBAFC7 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = users/User.h; sourceTree = "<group>"; };
-		05F45A5C0FF01E3F00EBAFC7 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = users/User.m; sourceTree = "<group>"; };
 		05F45A690FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ResponseProcessor+ParsingHelpers.h"; path = "twitter/processors/ResponseProcessor+ParsingHelpers.h"; sourceTree = "<group>"; };
 		05F45A6A0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ResponseProcessor+ParsingHelpers.m"; path = "twitter/processors/ResponseProcessor+ParsingHelpers.m"; sourceTree = "<group>"; };
 		05F45B3F0FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DirectMessage+CoreDataAdditions.h"; path = "tweets/DirectMessage+CoreDataAdditions.h"; sourceTree = "<group>"; };
@@ -1018,8 +1021,10 @@
 		05B238F30FEDC85300A6A2E6 /* users */ = {
 			isa = PBXGroup;
 			children = (
-				05F45A5B0FF01E3F00EBAFC7 /* User.h */,
-				05F45A5C0FF01E3F00EBAFC7 /* User.m */,
+				055C92E510362E1D000B9A00 /* User.h */,
+				055C92E610362E1D000B9A00 /* User.m */,
+				055C92E010362DC2000B9A00 /* Avatar.h */,
+				055C92E110362DC2000B9A00 /* Avatar.m */,
 				05F45A4F0FF01D5E00EBAFC7 /* User+CoreDataAdditions.h */,
 				05F45A500FF01D5E00EBAFC7 /* User+CoreDataAdditions.m */,
 				9145F022100573AF00C2E485 /* User+UIAdditions.h */,
@@ -1818,7 +1823,6 @@
 				05EF412C0FFADF95007B59F1 /* DirectMessage.m in Sources */,
 				05EF412D0FFADF95007B59F1 /* User+CoreDataAdditions.m in Sources */,
 				05EF412E0FFADF95007B59F1 /* Tweet+CoreDataAdditions.m in Sources */,
-				05EF412F0FFADF95007B59F1 /* User.m in Sources */,
 				05EF41300FFADF95007B59F1 /* ResponseProcessor+ParsingHelpers.m in Sources */,
 				05EF41310FFADF95007B59F1 /* DirectMessage+CoreDataAdditions.m in Sources */,
 				05EF41330FFADF95007B59F1 /* FetchMentionsResponseProcessor.m in Sources */,
@@ -1946,6 +1950,8 @@
 				9130FE501034D334004E3030 /* TwitchWebBrowserDisplayMgr.m in Sources */,
 				9130FEAD1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m in Sources */,
 				9130FF261035E1F6004E3030 /* MarkAsFavoriteCell.m in Sources */,
+				055C92E210362DC2000B9A00 /* Avatar.m in Sources */,
+				055C92E710362E1D000B9A00 /* User.m in Sources */,
 				9130FFD9103623DA004E3030 /* TimelineTableViewCellBackground.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

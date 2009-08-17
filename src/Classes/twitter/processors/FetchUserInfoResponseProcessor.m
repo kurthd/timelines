@@ -62,11 +62,7 @@
     NSDictionary * info = [infos objectAtIndex:0];
 
     NSString * userId = [[info objectForKey:@"id"] description];
-    User * user = [User userWithId:userId context:context];
-
-    if (!user)
-        user = [User createInstance:context];
-
+    User * user = [User findOrCreateWithId:userId context:context];
     [self populateUser:user fromData:info];
 
     SEL sel = @selector(userInfo:fetchedForUsername:);

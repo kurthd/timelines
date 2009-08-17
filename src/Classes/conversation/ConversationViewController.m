@@ -185,8 +185,9 @@
     else
         [cell setDisplayType:kTimelineTableViewCellTypeNormal];
 
-    [cell setAvatarImage:[self getAvatarForUrl:tweet.user.profileImageUrl]];
-    cell.avatarImageUrl = tweet.user.profileImageUrl;
+    [cell setAvatarImage:
+        [self getAvatarForUrl:tweet.user.avatar.thumbnailImageUrl]];
+    cell.avatarImageUrl = tweet.user.avatar.thumbnailImageUrl;
 
     return cell;
 }
