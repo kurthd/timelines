@@ -262,6 +262,7 @@ static UIImage * defaultAvatar;
             break;
         case kUserInfoSectionFavorites:
             [delegate displayFavoritesForUser:user.username];
+            break;
         case kUserInfoSectionActions:
             if (indexPath.row == kUserInfoPublicMessage)
                 [delegate sendPublicMessageToUser:user.username];

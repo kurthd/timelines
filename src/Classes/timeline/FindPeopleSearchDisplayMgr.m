@@ -163,10 +163,8 @@
 - (void)failedToQueryIfUser:(NSString *)username
     isFollowing:(NSString *)followee error:(NSError *)error
 {
-    NSString * errorMessageFormatString =
-        NSLocalizedString(@"timelinedisplaymgr.error.userquery", @"");
     NSString * errorMessage =
-        [NSString stringWithFormat:errorMessageFormatString, username];
+        NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
     [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 

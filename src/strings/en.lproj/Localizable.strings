@@ -40,6 +40,7 @@ timelinedisplaymgr.error.fetchfollowers = "Failed to fetch followers";
 timelinedisplaymgr.error.startfollowing = "Failed to start following '%@'";
 timelinedisplaymgr.error.stopfollowing = "Failed to stop following '%@'";
 timelinedisplaymgr.error.userquery = "Failed to fetch user info for '%@'";
+timelinedisplaymgr.error.followingstatus = "Failed to query following status";
 timelinedisplaymgr.error.fetchtweet = "Failed to fetch tweet";
 
 /* DirectMessageDisplayMgr */
@@ -89,6 +90,7 @@ userinfoview.stopfollowing = "Stop following";
 userinfoview.followinglabel.following = "Following";
 userinfoview.followinglabel.notfollowing = "Not following";
 userinfoview.statusescount = "updates";
+userinfoview.statusescount.formatstring = "%@ Updates";
 userinfo.publicmessage = "Public Message";
 userinfo.directmessage = "Direct Message";
 

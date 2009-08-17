@@ -43,7 +43,7 @@ static UIImage * dotImage;
 - (void)drawRect:(CGRect)rect
 {
 #define LEFT_MARGIN 32
-#define RIGHT_MARGIN 29
+#define RIGHT_MARGIN 3
 
 #define TOP_MARGIN 2
 
