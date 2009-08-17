@@ -242,10 +242,9 @@
     isFollowing:(NSString *)followee error:(NSError *)error
 {
     NSLog(@"Error: %@", error);
-    NSString * errorMessageFormatString =
-        NSLocalizedString(@"timelinedisplaymgr.error.userquery", @"");
     NSString * errorMessage =
-        [NSString stringWithFormat:errorMessageFormatString, aUsername];
+        NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
+    [self.userInfoController setFollowing:NO];
     [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
