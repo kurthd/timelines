@@ -6,6 +6,9 @@
 #import "TwitterCredentials.h"
 
 @protocol PhotoServicesViewControllerDelegate
+
+- (NSArray *)servicesForAccount:(TwitterCredentials *)credentials;
+
 @end
 
 @interface PhotoServicesViewController : UITableViewController
@@ -13,10 +16,10 @@
     id<PhotoServicesViewControllerDelegate> delegate;
 
     TwitterCredentials * credentials;
+    NSArray * services;
 }
 
-@property (nonatomic, retain) TwitterCredentials * credentials;
-
 @property (nonatomic, assign) id<PhotoServicesViewControllerDelegate> delegate;
+@property (nonatomic, retain) TwitterCredentials * credentials;
 
 @end

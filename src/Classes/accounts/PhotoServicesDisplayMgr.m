@@ -52,6 +52,13 @@
         pushViewController:self.photoServicesViewController animated:YES];
 }
 
+#pragma mark PhotoServicesViewControllerDelegate implementation
+
+- (NSArray *)servicesForAccount:(TwitterCredentials *)credentials
+{
+    return [NSArray arrayWithObjects:@"TwitPic", @"Flickr", nil];
+}
+
 #pragma mark Accessors
 
 - (PhotoServicesViewController *)photoServicesViewController

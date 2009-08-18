@@ -104,6 +104,9 @@ accountsettings.photo.header = "Photo & Video";
 accountsettings.photo.integration.label = "Photo & Video Services";
 accountsettings.photo.compression.label = "Compression";
 
+/* PhotoServicesViewController */
+photoservices.view.title = "Services";
+photoservices.addaccount.label = "Add Service...";
 
 /* UserListTableViewController */
 userlisttableview.following = "%@ following, %@ followers";
