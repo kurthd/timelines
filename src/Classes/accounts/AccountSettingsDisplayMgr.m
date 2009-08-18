@@ -12,6 +12,8 @@
 @property (nonatomic, retain) AccountSettingsViewController *
     accountSettingsViewController;
 
+@property (nonatomic, retain) PhotoServicesDisplayMgr * photoServicesDisplayMgr;
+
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
 @end
@@ -20,6 +22,7 @@
 
 @synthesize delegate;
 @synthesize navigationController, accountSettingsViewController;
+@synthesize photoServicesDisplayMgr;
 @synthesize context;
 
 - (void)dealloc
@@ -27,6 +30,10 @@
     self.delegate = nil;
 
     self.navigationController = nil;
+    self.accountSettingsViewController = nil;
+
+    self.photoServicesDisplayMgr = nil;
+
     self.context = nil;
 
     [super dealloc];
@@ -75,8 +82,11 @@
         NSLog(@"User did not change settings for account: '%@'", settings);
 }
 
-- (void)userWantsToConfigurePhotoIntegration
+- (void)userWantsToConfigurePhotoServicesForAccount:
+    (TwitterCredentials *)credentials
 {
+    [self.photoServicesDisplayMgr
+        configurePhotoServicesForAccount:credentials];
 }
 
 #pragma mark Accessors
@@ -91,6 +101,19 @@
     }
 
     return accountSettingsViewController;
+}
+
+- (PhotoServicesDisplayMgr *)photoServicesDisplayMgr
+{
+    if (!photoServicesDisplayMgr) {
+        photoServicesDisplayMgr =
+            [[PhotoServicesDisplayMgr alloc]
+            initWithNavigationController:self.navigationController
+                                 context:self.context];
+        photoServicesDisplayMgr.delegate = self;
+    }
+
+    return photoServicesDisplayMgr;
 }
 
 @end

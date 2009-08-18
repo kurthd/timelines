@@ -179,7 +179,8 @@ enum {
 {
     if (indexPath.section == kPhotoSection)
         if (indexPath.row == kIntegrationRow)
-            [self.delegate userWantsToConfigurePhotoIntegration];
+            [self.delegate
+                userWantsToConfigurePhotoServicesForAccount:self.credentials];
         else {
             [[UIAlertView simpleAlertViewWithTitle:@"Not Implemented"
                                            message:nil] show];

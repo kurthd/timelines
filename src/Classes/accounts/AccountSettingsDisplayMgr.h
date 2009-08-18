@@ -5,17 +5,21 @@
 #import <Foundation/Foundation.h>
 #import "TwitterCredentials.h"
 #import "AccountSettingsViewController.h"
+#import "PhotoServicesDisplayMgr.h"
 
 @protocol AccountSettingsDisplayMgrDelegate
 @end
 
 @interface AccountSettingsDisplayMgr :
-    NSObject <AccountSettingsViewControllerDelegate>
+    NSObject <AccountSettingsViewControllerDelegate,
+    PhotoServicesDisplayMgrDelegate>
 {
     id<AccountSettingsDisplayMgrDelegate> delegate;
 
     UINavigationController * navigationController;
     AccountSettingsViewController * accountSettingsViewController;
+
+    PhotoServicesDisplayMgr * photoServicesDisplayMgr;
 
     NSManagedObjectContext * context;
 }

@@ -11,7 +11,8 @@
 - (void)userDidCommitSettings:(AccountSettings *)settings
                    forAccount:(TwitterCredentials *)credentials;
 
-- (void)userWantsToConfigurePhotoIntegration;
+- (void)userWantsToConfigurePhotoServicesForAccount:
+    (TwitterCredentials *)credentials;
 
 @end
 
