@@ -98,8 +98,12 @@ userinfo.directmessage = "Direct Message";
 account.deletion.failed.alert.title = "Failed to Remove %@";
 
 /* AccountSettingsViewController */
-accountsettings.push.header = "Push Notification Settings";
+accountsettings.push.header = "Push Notifications";
 accountsettings.push.footer = "Twitbit can send push notifications for\nmentions and direct messages.";
+accountsettings.photo.header = "Photo & Video";
+accountsettings.photo.integration.label = "Photo & Video Services";
+accountsettings.photo.compression.label = "Compression";
+
 
 /* UserListTableViewController */
 userlisttableview.following = "%@ following, %@ followers";
