@@ -3,6 +3,7 @@
 //
 
 #import "AccountSettingsViewController.h"
+#import "UIAlertView+InstantiationAdditions.h"
 
 static const NSInteger NUM_SECTIONS = 2;
 enum {
@@ -65,6 +66,8 @@ enum {
     [super dealloc];
 }
 
+#pragma mark UIViewController overrides
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -91,7 +94,7 @@ enum {
                          forAccount:self.credentials];
 }
 
-#pragma mark Table view methods
+#pragma mark UITableViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv
 {
@@ -167,6 +170,22 @@ enum {
     }
 
     return cell;
+}
+
+#pragma mark UITableViewDelegate implementation
+
+- (void)tableView:(UITableView *)tableView
+    didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == kPhotoSection)
+        if (indexPath.row == kIntegrationRow)
+            [self.delegate userWantsToConfigurePhotoIntegration];
+        else {
+            [[UIAlertView simpleAlertViewWithTitle:@"Not Implemented"
+                                           message:nil] show];
+            [self.tableView deselectRowAtIndexPath:indexPath
+                                          animated:YES];
+        }
 }
 
 #pragma mark Public interface to update the display

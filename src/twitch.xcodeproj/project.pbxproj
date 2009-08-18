@@ -11,6 +11,7 @@
 		051975FA103A119100883FAC /* AccountSelectedCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 051975F9103A119100883FAC /* AccountSelectedCheckmark.png */; };
 		0519760E103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */; };
 		05197620103A168600883FAC /* AccountNotSelectedFiller.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519761F103A168600883FAC /* AccountNotSelectedFiller.png */; };
+		0519767B103A291E00883FAC /* AccountSettingsDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519767A103A291E00883FAC /* AccountSettingsDisplayMgr.m */; };
 		051D7C69101D105A00B867C1 /* SavedSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 051D7C68101D105A00B867C1 /* SavedSearchMgr.m */; };
 		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
 		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
@@ -296,6 +297,8 @@
 		051975F9103A119100883FAC /* AccountSelectedCheckmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountSelectedCheckmark.png; path = images/AccountSelectedCheckmark.png; sourceTree = "<group>"; };
 		0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountSelectedCheckmarkHighlighted.png; path = images/AccountSelectedCheckmarkHighlighted.png; sourceTree = "<group>"; };
 		0519761F103A168600883FAC /* AccountNotSelectedFiller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountNotSelectedFiller.png; path = images/AccountNotSelectedFiller.png; sourceTree = "<group>"; };
+		05197679103A291E00883FAC /* AccountSettingsDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountSettingsDisplayMgr.h; path = accounts/AccountSettingsDisplayMgr.h; sourceTree = "<group>"; };
+		0519767A103A291E00883FAC /* AccountSettingsDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountSettingsDisplayMgr.m; path = accounts/AccountSettingsDisplayMgr.m; sourceTree = "<group>"; };
 		051D7C67101D105A00B867C1 /* SavedSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearchMgr.h; path = search/SavedSearchMgr.h; sourceTree = "<group>"; };
 		051D7C68101D105A00B867C1 /* SavedSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearchMgr.m; path = search/SavedSearchMgr.m; sourceTree = "<group>"; };
 		052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackground.png; path = images/SaveSearchButtonBackground.png; sourceTree = "<group>"; };
@@ -814,6 +817,8 @@
 				0524BDFA0FF16E2200A6099B /* AccountsDisplayMgr.m */,
 				0524BDF50FF16E0500A6099B /* AccountsViewController.h */,
 				0524BDF60FF16E0500A6099B /* AccountsViewController.m */,
+				05197679103A291E00883FAC /* AccountSettingsDisplayMgr.h */,
+				0519767A103A291E00883FAC /* AccountSettingsDisplayMgr.m */,
 				05948990101569B700C37C98 /* AccountSettingsViewController.h */,
 				05948991101569B700C37C98 /* AccountSettingsViewController.m */,
 				05948A0310157B6400C37C98 /* AccountSettings.h */,
@@ -1959,6 +1964,7 @@
 				055C92E210362DC2000B9A00 /* Avatar.m in Sources */,
 				055C92E710362E1D000B9A00 /* User.m in Sources */,
 				9130FFD9103623DA004E3030 /* TimelineTableViewCellBackground.m in Sources */,
+				0519767B103A291E00883FAC /* AccountSettingsDisplayMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
