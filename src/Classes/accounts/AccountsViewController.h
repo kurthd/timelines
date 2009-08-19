@@ -24,8 +24,6 @@
 
     NSArray * accounts;
     TwitterCredentials * selectedAccount;
-
-    BOOL remainInEditingMode;
 }
 
 @property (nonatomic, assign) id<AccountsViewControllerDelegate> delegate;

@@ -3,7 +3,6 @@
 //
 
 #import "AccountsViewController.h"
-#import "AccountsTableViewCell.h"
 #import "TwitterCredentials.h"
 #import "UIColor+TwitchColors.h"
 
@@ -17,6 +16,9 @@ NSInteger usernameSort(TwitterCredentials * user1,
 @interface AccountsViewController ()
 
 @property (nonatomic, copy) NSArray * accounts;
+
++ (void)configureSelectedAccountCell:(UITableViewCell *)cell;
++ (void)configureNormalAccountCell:(UITableViewCell *)cell;
 
 @end
 
@@ -36,9 +38,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
     [super viewDidLoad];
 
     [self.navigationItem setLeftBarButtonItem:self.editButtonItem animated:NO];
-    self.tableView.allowsSelectionDuringEditing = YES;
-
-    remainInEditingMode = NO;
+    self.tableView.allowsSelectionDuringEditing = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -49,15 +49,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
         sortedArrayUsingFunction:usernameSort context:NULL];
     self.selectedAccount = [self.delegate currentActiveAccount];
 
-    remainInEditingMode = NO;
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-
-    if (!remainInEditingMode)
-        [self setEditing:NO animated:animated];
+    [self setEditing:NO animated:animated];
 }
 
 #pragma mark Button actions
@@ -101,8 +93,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
     if (self.accounts.count == 1) {
         UITableViewCell * cell =
             [self.tableView cellForRowAtIndexPath:indexPath];
-        cell.textLabel.textColor = [UIColor twitchCheckedColor];
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        [[self class] configureSelectedAccountCell:cell];
     }
 }
 
@@ -126,28 +117,25 @@ NSInteger usernameSort(TwitterCredentials * user1,
 {
     static NSString * CellIdentifier = @"AccountsTableViewCell";
 
-    AccountsTableViewCell * cell = (AccountsTableViewCell *)
+    UITableViewCell * cell =
         [tv dequeueReusableCellWithIdentifier:CellIdentifier];
 
     if (cell == nil)
-        cell = [[[AccountsTableViewCell alloc]
+        cell = [[[UITableViewCell alloc]
             initWithStyle:UITableViewCellStyleDefault
           reuseIdentifier:CellIdentifier] autorelease];
 
     TwitterCredentials * account = [self.accounts objectAtIndex:indexPath.row];
     cell.textLabel.text = account.username;
 
-    if ([account.username isEqualToString:self.selectedAccount.username]) {
-        cell.textLabel.textColor = [UIColor twitchCheckedColor];
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        cell.accountSelected = YES;
-    } else {
-        cell.textLabel.textColor = [UIColor blackColor];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.accountSelected = NO;
-    }
-    cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if ([account.username isEqualToString:self.selectedAccount.username])
+        [[self class] configureSelectedAccountCell:cell];
+    else
+        [[self class] configureNormalAccountCell:cell];
+
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    cell.editingAccessoryType = UITableViewCellAccessoryNone;
 
     return cell;
 }
@@ -155,40 +143,34 @@ NSInteger usernameSort(TwitterCredentials * user1,
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.tableView.editing) {
-        TwitterCredentials * account =
-            [self.accounts objectAtIndex:indexPath.row];
-        [self.delegate userWantsToEditAccount:account];
-        remainInEditingMode = YES;
-    } else {
-        // toggle the active account
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSAssert(!self.tableView.editing, @"Should never be called while editing.");
 
-        NSInteger accountIndex =
-            [self.accounts indexOfObject:self.selectedAccount];
-        if (accountIndex == indexPath.row)
-            return;  // nothing changed
+    // toggle the active account
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-        NSIndexPath * oldIndexPath =
-            [NSIndexPath indexPathForRow:accountIndex inSection:0];
+    NSInteger accountIndex =
+        [self.accounts indexOfObject:self.selectedAccount];
+    if (accountIndex == indexPath.row)
+        return;  // nothing changed
+
+    NSIndexPath * oldIndexPath =
+        [NSIndexPath indexPathForRow:accountIndex inSection:0];
  
-        AccountsTableViewCell * newCell = (AccountsTableViewCell *)
-            [self.tableView cellForRowAtIndexPath:indexPath];
-        if (newCell.accessoryType == UITableViewCellAccessoryNone) {
-            newCell.accessoryType = UITableViewCellAccessoryCheckmark;
-            self.selectedAccount = [self.accounts objectAtIndex:indexPath.row];
-            newCell.textLabel.textColor = [UIColor twitchCheckedColor];
-            newCell.accountSelected = YES;
-        }
+    UITableViewCell * newCell =
+        [self.tableView cellForRowAtIndexPath:indexPath];
+    [[self class] configureSelectedAccountCell:newCell];
+    self.selectedAccount = [self.accounts objectAtIndex:indexPath.row];
 
-        AccountsTableViewCell * oldCell = (AccountsTableViewCell *)
-            [self.tableView cellForRowAtIndexPath:oldIndexPath];
-        if (oldCell.accessoryType == UITableViewCellAccessoryCheckmark) {
-            oldCell.accessoryType = UITableViewCellAccessoryNone;
-            oldCell.textLabel.textColor = [UIColor blackColor];
-            oldCell.accountSelected = NO;
-        }
-    }
+    UITableViewCell * oldCell =
+        [self.tableView cellForRowAtIndexPath:oldIndexPath];
+    [[self class] configureNormalAccountCell:oldCell];
+}
+
+- (void)tableView:(UITableView *)tableView
+    accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    TwitterCredentials * c = [self.accounts objectAtIndex:indexPath.row];
+    [self.delegate userWantsToEditAccount:c];
 }
 
 // Override to support editing the table view.
@@ -196,40 +178,56 @@ NSInteger usernameSort(TwitterCredentials * user1,
     commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
      forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        TwitterCredentials * c = [self.accounts objectAtIndex:indexPath.row];
-        if ([delegate userDeletedAccount:c]) {
-            NSMutableArray * mc = [self.accounts mutableCopy];
-            [mc removeObjectAtIndex:indexPath.row];
-            self.accounts = mc;
-            [mc release];
+    if (editingStyle != UITableViewCellEditingStyleDelete)
+        return;  // nothing to do
 
-            // Delete the row from the data source
-            [self.tableView
-             deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-                   withRowAnimation:YES];
+    TwitterCredentials * c = [self.accounts objectAtIndex:indexPath.row];
+    if ([delegate userDeletedAccount:c]) {
+        NSMutableArray * mc = [self.accounts mutableCopy];
+        [mc removeObjectAtIndex:indexPath.row];
+        self.accounts = mc;
+        [mc release];
 
-            if (self.accounts.count == 0)
-                remainInEditingMode = NO;
+        // Delete the row from the data source
+        [self.tableView
+            deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                  withRowAnimation:YES];
 
-            if (c == self.selectedAccount) {  // deleted the active account
-                if (self.accounts.count == 0)
-                    self.selectedAccount = nil;
-                else {
-                    NSInteger index =
-                        indexPath.row == 0 ? 0 : indexPath.row - 1;
-                    self.selectedAccount = [self.accounts objectAtIndex:index];
+        if (self.accounts.count == 0)
+            self.selectedAccount = nil;
+        else if (c == self.selectedAccount) {
+            // deleted the active account; make the next one active
+            NSInteger index = indexPath.row == 0 ? 0 : indexPath.row - 1;
+            self.selectedAccount = [self.accounts objectAtIndex:index];
 
-                    NSIndexPath * newIndexPath =
-                        [NSIndexPath indexPathForRow:index inSection:0];
-                    AccountsTableViewCell * cell = (AccountsTableViewCell *)
-                        [self.tableView cellForRowAtIndexPath:newIndexPath];
+            NSIndexPath * newIndexPath =
+                [NSIndexPath indexPathForRow:index inSection:0];
+            UITableViewCell * cell =
+                [self.tableView cellForRowAtIndexPath:newIndexPath];
 
-                    cell.accountSelected = YES;
-                }
-            }
+            [[self class] configureSelectedAccountCell:cell];
         }
-    }   
+    }
+}
+
+#pragma mark Private implementation
+
++ (void)configureSelectedAccountCell:(UITableViewCell *)cell
+{
+    cell.textLabel.textColor = [UIColor twitchCheckedColor];
+    cell.imageView.image =
+        [UIImage imageNamed:@"AccountSelectedCheckmark.png"];
+    cell.imageView.highlightedImage =
+        [UIImage imageNamed:@"AccountSelectedCheckmarkHighlighted.png"];
+}
+
++ (void)configureNormalAccountCell:(UITableViewCell *)cell
+{
+    cell.textLabel.textColor = [UIColor blackColor];
+    cell.imageView.image =
+        [UIImage imageNamed:@"AccountNotSelectedFiller.png"];
+    cell.imageView.highlightedImage =
+        [UIImage imageNamed:@"AccountNotSelectedFiller.png"];
 }
 
 @end
