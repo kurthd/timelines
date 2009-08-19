@@ -69,8 +69,9 @@
     if (cell == nil) {
         cell =
             [[[UITableViewCell alloc]
-              initWithFrame:CGRectZero reuseIdentifier:CellIdentifier]
-             autorelease];
+            initWithStyle:UITableViewCellStyleValue1
+            reuseIdentifier:CellIdentifier]
+            autorelease];
     }
 
     if (indexPath.row == self.services.count) {
@@ -82,6 +83,7 @@
         PhotoServiceCredentials * psc =
             [self.services objectAtIndex:indexPath.row];
         cell.textLabel.text = [psc serviceName];
+        cell.detailTextLabel.text = [psc accountDisplayName];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.editingAccessoryType = UITableViewCellAccessoryNone;
     }

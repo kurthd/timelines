@@ -17,5 +17,6 @@
 @property (nonatomic, retain) TwitterCredentials * credentials;
 
 - (NSString *)serviceName;
+- (NSString *)accountDisplayName;
 
 @end

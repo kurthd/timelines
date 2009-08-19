@@ -18,4 +18,9 @@
     return @"TwitPic";
 }
 
+- (NSString *)accountDisplayName
+{
+    return self.username;
+}
+
 @end

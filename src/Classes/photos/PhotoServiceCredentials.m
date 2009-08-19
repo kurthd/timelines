@@ -20,4 +20,10 @@
     return nil;
 }
 
+- (NSString *)accountDisplayName
+{
+    // to be overridden by subclasses
+    return nil;
+}
+
 @end
