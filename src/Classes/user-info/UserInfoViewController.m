@@ -71,7 +71,7 @@ static UIImage * defaultAvatar;
     [user release];
 
     [findPeopleBookmarkMgr release];
-
+    
     [super dealloc];
 }
 
@@ -121,6 +121,12 @@ static UIImage * defaultAvatar;
     return numRows;
 }
 
+- (CGFloat)tableView:(UITableView *)tv
+    heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath.section == kUserInfoSectionDetails ? 64 : 44;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView
     cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -129,16 +135,17 @@ static UIImage * defaultAvatar;
     UserInfoLabelCell * userInfoLabelCell;
     switch (indexPath.section) {
         case kUserInfoSectionDetails:
-            cell = [self getLabelCell];
-            userInfoLabelCell = (UserInfoLabelCell *)cell;
-            if (user.location && ![user.location isEqual:@""] &&
-                indexPath.row == 0) {
-
-                NSString * locationString =
-                    NSLocalizedString(@"userinfoview.location", @"");
-                [userInfoLabelCell setKeyText:locationString];
-                [userInfoLabelCell setValueText:user.location];
-            }
+            // cell = [self getLabelCell];
+            // userInfoLabelCell = (UserInfoLabelCell *)cell;
+            // if (user.location && ![user.location isEqual:@""] &&
+            //     indexPath.row == 0) {
+            // 
+            //     NSString * locationString =
+            //         NSLocalizedString(@"userinfoview.location", @"");
+            //     [userInfoLabelCell setKeyText:locationString];
+            //     [userInfoLabelCell setValueText:user.location];
+            // }
+            cell = self.locationCell;
             break;
         case kUserInfoSectionNetwork:
             cell = [self getLabelCell];
@@ -368,12 +375,14 @@ static UIImage * defaultAvatar;
 
     nameLabel.text = aUser.name;
     bioLabel.text = [aUser.bio stringByDecodingHtmlEntities];
-    
+
     if (user.webpage) {
         [webAddressButton setTitle:user.webpage forState:UIControlStateNormal];
         [webAddressButton setTitle:user.webpage
             forState:UIControlStateHighlighted];
     }
+
+    [self.locationCell setLocationText:user.location];
 
     [self layoutViews];
     [self.tableView reloadData];
@@ -526,6 +535,16 @@ static UIImage * defaultAvatar;
     }
 
     return cell;
+}
+
+- (LocationCell *)locationCell
+{
+    if (!locationCell)
+        locationCell =
+            [[LocationCell alloc] initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:@"LocationCell"];
+
+    return locationCell;
 }
 
 + (UIImage *)defaultAvatar

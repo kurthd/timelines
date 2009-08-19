@@ -34,5 +34,7 @@
 	<string>https://twitpic.com/api/upload</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
+	<key>GoogleMapsApiKey</key>
+	<string>ABQIAAAA4YcfyY-S4O3XZADw6XUrMBS__PqgG_j9kacaPeRd_7KkjCUsGRTyQMdIBpkodQoLI--P6eyACiiv7g</string>
 </dict>
 </plist>
