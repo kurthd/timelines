@@ -10,6 +10,9 @@
 @property (nonatomic, retain) PhotoServicesViewController *
     photoServicesViewController;
 
+@property (nonatomic, retain) AddPhotoServiceDisplayMgr *
+    addPhotoServiceDisplayMgr;
+
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
 @end
@@ -18,6 +21,7 @@
 
 @synthesize delegate;
 @synthesize navigationController, photoServicesViewController;
+@synthesize addPhotoServiceDisplayMgr;
 @synthesize context;
 
 - (void)dealloc
@@ -26,6 +30,8 @@
 
     self.navigationController = nil;
     self.photoServicesViewController = nil;
+
+    self.addPhotoServiceDisplayMgr = nil;
 
     self.context = nil;
 
@@ -56,7 +62,13 @@
 
 - (NSArray *)servicesForAccount:(TwitterCredentials *)credentials
 {
-    return [NSArray arrayWithObjects:@"TwitPic", @"Flickr", nil];
+    return [credentials.photoServiceCredentials allObjects];
+}
+
+- (void)userWantsToAddNewPhotoService:(TwitterCredentials *)credentials
+{
+    NSLog(@"'%@': adding a new photo service.", credentials.username);
+    [self.addPhotoServiceDisplayMgr addPhotoService:credentials];
 }
 
 #pragma mark Accessors
@@ -71,6 +83,17 @@
     }
 
     return photoServicesViewController;
+}
+
+- (AddPhotoServiceDisplayMgr *)addPhotoServiceDisplayMgr
+{
+    if (!addPhotoServiceDisplayMgr)
+        addPhotoServiceDisplayMgr =
+            [[AddPhotoServiceDisplayMgr alloc]
+            initWithNavigationController:self.navigationController
+                                 context:context];
+
+    return addPhotoServiceDisplayMgr;
 }
 
 @end

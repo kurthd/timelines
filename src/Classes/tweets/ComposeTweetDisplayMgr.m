@@ -379,11 +379,13 @@
 
 - (void)userWantsToSelectPhoto
 {
+    /*
     TwitterCredentials * credentials = self.service.credentials;
     if (credentials.twitPicCredentials == nil)
         [self.logInDisplayMgr logInForUser:credentials.username animated:YES];
     else
         [self promptForPhotoSource:self.composeTweetViewController];
+     */
 }
 
 #pragma mark TwitterServiceDelegate implementation
@@ -479,12 +481,14 @@
     if (!image)
          image = [info valueForKey:UIImagePickerControllerOriginalImage];
 
+    /*
     TwitPicCredentials * c = service.credentials.twitPicCredentials;
     NSAssert(c, @"Unexpected nil value for TwitPic credentials while uploading "
         "image.");
     [imageSender sendImage:image withCredentials:c];
     [self.composeTweetViewController displayActivityView];
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
+     */
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

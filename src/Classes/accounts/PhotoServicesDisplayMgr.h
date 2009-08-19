@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PhotoServicesViewController.h"
+#import "AddPhotoServiceDisplayMgr.h"
 #import "TwitterCredentials.h"
 
 @protocol PhotoServicesDisplayMgrDelegate
@@ -16,6 +17,8 @@
 
     UINavigationController * navigationController;
     PhotoServicesViewController * photoServicesViewController;
+
+    AddPhotoServiceDisplayMgr * addPhotoServiceDisplayMgr;
 
     NSManagedObjectContext * context;
 }

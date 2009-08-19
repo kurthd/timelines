@@ -3,6 +3,7 @@
 //
 
 #import "PhotoServicesViewController.h"
+#import "PhotoServiceCredentials.h"
 
 @interface PhotoServicesViewController ()
 
@@ -78,8 +79,9 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.editingAccessoryType = UITableViewCellAccessoryNone;
     } else {
-        cell.textLabel.text =
-            [[self.services objectAtIndex:indexPath.row] description];
+        PhotoServiceCredentials * psc =
+            [self.services objectAtIndex:indexPath.row];
+        cell.textLabel.text = [psc serviceName];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.editingAccessoryType = UITableViewCellAccessoryNone;
     }
@@ -89,15 +91,11 @@
 
 #pragma mark UITableViewDelegate implementation
 
-- (BOOL)tableView:(UITableView *)tv
-    shouldSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return NO;
-}
-
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == self.services.count)  // adding a new account
+        [self.delegate userWantsToAddNewPhotoService:self.credentials];
 }
 
 @end

@@ -2,19 +2,21 @@
 //  TwitPicCredentials.h
 //  twitch
 //
-//  Created by John A. Debay on 6/28/09.
+//  Created by John A. Debay on 8/18/09.
 //  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
 #import <CoreData/CoreData.h>
+#import "PhotoServiceCredentials.h"
 
-@class TwitterCredentials;
 
-@interface TwitPicCredentials :  NSManagedObject  
+@interface TwitPicCredentials :  PhotoServiceCredentials  
 {
 }
 
 @property (nonatomic, retain) NSString * username;
-@property (nonatomic, retain) TwitterCredentials * twitterCredentials;
 
 @end
+
+
+

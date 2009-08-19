@@ -147,7 +147,7 @@
                      inManagedObjectContext:context];
         twitPicCredentials.username = self.username;
         twitPicCredentials.password = self.password;
-        twitPicCredentials.twitterCredentials = twitterCredentials;
+        twitPicCredentials.credentials = twitterCredentials;
 
         NSError * error;
         if ([context save:&error])

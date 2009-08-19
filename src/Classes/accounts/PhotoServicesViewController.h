@@ -8,6 +8,7 @@
 @protocol PhotoServicesViewControllerDelegate
 
 - (NSArray *)servicesForAccount:(TwitterCredentials *)credentials;
+- (void)userWantsToAddNewPhotoService:(TwitterCredentials *)credentials;
 
 @end
 

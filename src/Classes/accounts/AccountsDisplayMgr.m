@@ -137,7 +137,7 @@
 
 - (void)userWantsToEditAccount:(TwitterCredentials *)credentials
 {
-    NSLog(@"Editing settings for account: '%@'.", credentials);
+    NSLog(@"Editing settings for account: '%@'.", credentials.username);
     [self.accountSettingsDisplayMgr editSettingsForAccount:credentials];
 }
 
