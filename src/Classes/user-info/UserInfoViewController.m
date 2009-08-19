@@ -135,16 +135,6 @@ static UIImage * defaultAvatar;
     UserInfoLabelCell * userInfoLabelCell;
     switch (indexPath.section) {
         case kUserInfoSectionDetails:
-            // cell = [self getLabelCell];
-            // userInfoLabelCell = (UserInfoLabelCell *)cell;
-            // if (user.location && ![user.location isEqual:@""] &&
-            //     indexPath.row == 0) {
-            // 
-            //     NSString * locationString =
-            //         NSLocalizedString(@"userinfoview.location", @"");
-            //     [userInfoLabelCell setKeyText:locationString];
-            //     [userInfoLabelCell setValueText:user.location];
-            // }
             cell = self.locationCell;
             break;
         case kUserInfoSectionNetwork:
@@ -153,6 +143,9 @@ static UIImage * defaultAvatar;
             cell.accessoryType =
                 UITableViewCellAccessoryDisclosureIndicator;
 
+            NSNumberFormatter * formatter =
+                [[[NSNumberFormatter alloc] init] autorelease];
+            [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
             if (indexPath.row == kUserInfoFollowersRow) {
                 if ([user.followersCount
                     isEqual:[NSNumber numberWithInt:0]]) {
@@ -168,7 +161,8 @@ static UIImage * defaultAvatar;
                     NSLocalizedString(@"userinfoview.followers", @"");
                 [userInfoLabelCell setKeyText:formatString];
                 [userInfoLabelCell
-                    setValueText:[user.followersCount description]];
+                    setValueText:
+                    [formatter stringFromNumber:user.followersCount]];
             } else if (indexPath.row == kUserInfoFollowingRow) {
                 if ([user.friendsCount
                     isEqual:[NSNumber numberWithInt:0]]) {
@@ -184,7 +178,8 @@ static UIImage * defaultAvatar;
                     NSLocalizedString(@"userinfoview.following", @"");
                 [userInfoLabelCell setKeyText:formatString];
                 [userInfoLabelCell
-                    setValueText:[user.friendsCount description]];
+                    setValueText:
+                    [formatter stringFromNumber:user.friendsCount]];
             } else {
                 if ([user.statusesCount
                     isEqual:[NSNumber numberWithInt:0]]) {
@@ -201,7 +196,8 @@ static UIImage * defaultAvatar;
                     NSLocalizedString(@"userinfoview.statusescount", @"");
                 [userInfoLabelCell setKeyText:formatString];
                 [userInfoLabelCell
-                    setValueText:[user.statusesCount description]];
+                    setValueText:
+                    [formatter stringFromNumber:user.statusesCount]];
             }
             break;
         case kUserInfoSectionFavorites:
