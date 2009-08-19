@@ -11,7 +11,9 @@
 @end
 
 @interface PhotoServicesDisplayMgr :
-    NSObject <PhotoServicesViewControllerDelegate>
+    NSObject
+    <PhotoServicesViewControllerDelegate,
+    AddPhotoServiceDisplayMgrDelegate>
 {
     id<PhotoServicesDisplayMgrDelegate> delegate;
 

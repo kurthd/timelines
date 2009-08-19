@@ -3,6 +3,7 @@
 //
 
 #import "PhotoServiceSelectorViewController.h"
+#import "UIAlertView+InstantiationAdditions.h"
 
 @interface PhotoServiceSelectorViewController ()
 
@@ -119,12 +120,14 @@
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    // AnotherViewController *anotherViewController =
-    //     [[AnotherViewController alloc]
-    //      initWithNibName:@"AnotherView" bundle:nil];
-    // [self.navigationController pushViewController:anotherViewController];
-    // [anotherViewController release];
+    if (indexPath.row == 1) {
+        NSString * serviceName = [self.names objectAtIndex:indexPath.row];
+        [self.delegate userSelectedServiceNamed:serviceName];
+    } else {
+        [[UIAlertView simpleAlertViewWithTitle:@"Not Implemented"
+                                       message:nil] show];
+        [tv deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 @end

@@ -106,7 +106,7 @@ accountsettings.photo.compression.label = "Compression";
 
 /* PhotoServicesViewController */
 photoservices.view.title = "Services";
-photoservices.addaccount.label = "Add Service...";
+photoservices.addaccount.label = "Add a New Service...";
 
 /* UserListTableViewController */
 userlisttableview.following = "%@ following, %@ followers";

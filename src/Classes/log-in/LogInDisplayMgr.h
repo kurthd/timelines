@@ -15,7 +15,7 @@
 
 - (BOOL)isUsernameValid:(NSString *)username;
 
-- (void)logInCompleted;
+- (void)logInCompleted:(TwitPicCredentials *)credentials;
 - (void)logInCancelled;
 
 @end

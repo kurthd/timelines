@@ -31,6 +31,8 @@
 		05948995101569D500C37C98 /* AccountSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05948993101569D500C37C98 /* AccountSettingsView.xib */; };
 		05948A0510157B6400C37C98 /* AccountSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 05948A0410157B6400C37C98 /* AccountSettings.m */; };
 		0599416C0FFB32F100842518 /* twitch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0599416A0FFB32F100842518 /* twitch.xcdatamodeld */; };
+		059A6DA4103C80AF00B7500C /* TwitPicLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A6DA3103C80AF00B7500C /* TwitPicLogInDisplayMgr.m */; };
+		059A6DAC103C812000B7500C /* PhotoServiceLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A6DAB103C812000B7500C /* PhotoServiceLogInDisplayMgr.m */; };
 		059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */; };
 		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A1F5C91028C06A009F5B3E /* RegexKitLite.m */; };
@@ -411,6 +413,10 @@
 		05977A3B0FEF0C9700E37B9C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		0599416D0FFB32F100842518 /* twitch-v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.xcdatamodel"; sourceTree = "<group>"; };
 		059942300FFB6CE800842518 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		059A6DA2103C80AF00B7500C /* TwitPicLogInDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitPicLogInDisplayMgr.h; path = photos/twitpic/TwitPicLogInDisplayMgr.h; sourceTree = "<group>"; };
+		059A6DA3103C80AF00B7500C /* TwitPicLogInDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitPicLogInDisplayMgr.m; path = photos/twitpic/TwitPicLogInDisplayMgr.m; sourceTree = "<group>"; };
+		059A6DAA103C812000B7500C /* PhotoServiceLogInDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoServiceLogInDisplayMgr.h; path = photos/PhotoServiceLogInDisplayMgr.h; sourceTree = "<group>"; };
+		059A6DAB103C812000B7500C /* PhotoServiceLogInDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoServiceLogInDisplayMgr.m; path = photos/PhotoServiceLogInDisplayMgr.m; sourceTree = "<group>"; };
 		059F6EE51017EDD900B323D7 /* DirectMessageDraft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageDraft.h; path = tweets/DirectMessageDraft.h; sourceTree = "<group>"; };
 		059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageDraft.m; path = tweets/DirectMessageDraft.m; sourceTree = "<group>"; };
 		059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v1-to-v2.xcmappingmodel"; path = "data-model/v1-to-v2.xcmappingmodel"; sourceTree = "<group>"; };
@@ -1339,6 +1345,8 @@
 				05C7B93B103B72FC0017874C /* AddPhotoServiceDisplayMgr.m */,
 				05C7B954103B75510017874C /* PhotoServiceSelectorViewController.h */,
 				05C7B955103B75510017874C /* PhotoServiceSelectorViewController.m */,
+				059A6DAA103C812000B7500C /* PhotoServiceLogInDisplayMgr.h */,
+				059A6DAB103C812000B7500C /* PhotoServiceLogInDisplayMgr.m */,
 				05C7B892103B59BA0017874C /* twitpic */,
 			);
 			name = photos;
@@ -1351,6 +1359,8 @@
 				05C7B904103B6E8E0017874C /* TwitPicCredentials.m */,
 				05C7B895103B59D70017874C /* TwitPicCredentials+KeychainAdditions.h */,
 				05C7B896103B59D70017874C /* TwitPicCredentials+KeychainAdditions.m */,
+				059A6DA2103C80AF00B7500C /* TwitPicLogInDisplayMgr.h */,
+				059A6DA3103C80AF00B7500C /* TwitPicLogInDisplayMgr.m */,
 				05C7B897103B59D70017874C /* TwitPicImageSender.h */,
 				05C7B898103B59D70017874C /* TwitPicImageSender.m */,
 				05C7B899103B59D70017874C /* TwitPicImageSenderDelegate.h */,
@@ -2039,6 +2049,8 @@
 				05C7B94A103B74920017874C /* PhotoService+ServiceAdditions.m in Sources */,
 				05C7B94D103B74C40017874C /* PhotoService.m in Sources */,
 				05C7B956103B75510017874C /* PhotoServiceSelectorViewController.m in Sources */,
+				059A6DA4103C80AF00B7500C /* TwitPicLogInDisplayMgr.m in Sources */,
+				059A6DAC103C812000B7500C /* PhotoServiceLogInDisplayMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

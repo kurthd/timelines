@@ -150,9 +150,10 @@
         twitPicCredentials.credentials = twitterCredentials;
 
         NSError * error;
-        if ([context save:&error])
-            [self.delegate logInCompleted];
-        else {  // handle the error
+        if ([context save:&error]) {
+            [self.rootViewController dismissModalViewControllerAnimated:YES];
+            [self.delegate logInCompleted:twitPicCredentials];
+        } else {  // handle the error
             [self displayErrorWithMessage:error.localizedDescription];
             // HACK: Hardcoding the call to the username here
             [self.logInViewController

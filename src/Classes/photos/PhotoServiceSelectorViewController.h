@@ -7,6 +7,7 @@
 @protocol PhotoServiceSelectorViewControllerDelegate
 
 - (NSDictionary *)photoServices;
+- (void)userSelectedServiceNamed:(NSString *)serviceName;
 
 @end
 

@@ -71,6 +71,18 @@
     [self.addPhotoServiceDisplayMgr addPhotoService:credentials];
 }
 
+#pragma mark AddPhotoServiceDisplayMgrDelegate implementation
+
+- (void)photoServiceAdded:(PhotoServiceCredentials *)credentials
+{
+    [self.navigationController
+        popToViewController:self.photoServicesViewController animated:NO];
+}
+
+- (void)addingPhotoServiceCancelled
+{
+}
+
 #pragma mark Accessors
 
 - (PhotoServicesViewController *)photoServicesViewController
@@ -87,11 +99,13 @@
 
 - (AddPhotoServiceDisplayMgr *)addPhotoServiceDisplayMgr
 {
-    if (!addPhotoServiceDisplayMgr)
+    if (!addPhotoServiceDisplayMgr) {
         addPhotoServiceDisplayMgr =
             [[AddPhotoServiceDisplayMgr alloc]
             initWithNavigationController:self.navigationController
                                  context:context];
+        addPhotoServiceDisplayMgr.delegate = self;
+    }
 
     return addPhotoServiceDisplayMgr;
 }
