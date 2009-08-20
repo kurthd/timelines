@@ -92,8 +92,6 @@ static UIImage * defaultAvatar;
 {
     [super viewWillAppear:animated];
     [delegate showingUserInfoView];
-    bookmarkButton.enabled =
-        ![findPeopleBookmarkMgr isSearchSaved:user.username];
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -379,6 +377,9 @@ static UIImage * defaultAvatar;
     }
 
     [self.locationCell setLocationText:user.location];
+
+    bookmarkButton.enabled =
+        ![findPeopleBookmarkMgr isSearchSaved:user.username];
 
     [self layoutViews];
     [self.tableView reloadData];

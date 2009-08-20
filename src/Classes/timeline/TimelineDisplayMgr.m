@@ -879,7 +879,6 @@ static NSInteger retweetFormatValueAlredyRead;
     TweetInfo * info = [TweetInfo createFromTweet:tweet];
     [timeline setObject:info forKey:info.identifier];
 
-
     [timelineController addTweet:info];
 }
 
