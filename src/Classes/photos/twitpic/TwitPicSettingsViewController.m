@@ -173,6 +173,19 @@
     return YES;
 }
 
+#pragma mark UIActionSheetDelegate implementation
+
+- (void)actionSheet:(UIActionSheet *)actionSheet
+    clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"index presssed: %d", buttonIndex);
+
+    if (buttonIndex == 0)  // delete button was pressed
+      [self.delegate deleteServiceWithCredentials:self.credentials];
+
+    [actionSheet autorelease];
+}
+
 #pragma mark Button actions
 
 - (IBAction)userDidSave:(id)sender
@@ -190,7 +203,26 @@
 
 - (void)deleteService:(id)sender
 {
-    [self.delegate deleteServiceWithCredentials:self.credentials];
+    // the sheet is autoreleased in the delegate method
+
+    NSString * title =
+        NSLocalizedString(@"twitpicsettingsview.delete.alert.title", @"");
+    NSString * cancelButtonTitle =
+        NSLocalizedString(@"twitpicsettingsview.delete.alert.cancel.title", @"");
+    NSString * destructiveButtonTitle =
+        NSLocalizedString(@"twitpicsettingsview.delete.alert.delete.title", @"");
+
+    UIActionSheet * sheet =
+        [[UIActionSheet alloc] initWithTitle:title
+                                    delegate:self
+                           cancelButtonTitle:cancelButtonTitle
+                      destructiveButtonTitle:destructiveButtonTitle
+                           otherButtonTitles:nil];
+
+    // HACK: Display the sheet in the key window so will appear over the tab bar.
+    // Even though the sheet is always visible over the tab bar, the portion
+    // of the sheet on top of the tab bar does not respond touch events.
+    [sheet showInView:[UIApplication sharedApplication].keyWindow];
 }
 
 #pragma Private implementation

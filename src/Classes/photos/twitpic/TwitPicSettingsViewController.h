@@ -14,7 +14,7 @@
 @end
 
 @interface TwitPicSettingsViewController :
-    UITableViewController <UITextFieldDelegate>
+    UITableViewController <UITextFieldDelegate, UIActionSheetDelegate>
 {
     id<TwitPicSettingsViewControllerDelegate> delegate;
 
