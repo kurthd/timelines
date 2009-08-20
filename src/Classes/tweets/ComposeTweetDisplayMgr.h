@@ -9,6 +9,7 @@
 #import "TwitPicImageSender.h"
 #import "TwitterCredentials.h"
 #import "LogInDisplayMgr.h"
+#import "AddPhotoServiceDisplayMgr.h"
 
 @class ComposeTweetViewController;
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
@@ -20,7 +21,7 @@
     <ComposeTweetViewControllerDelegate, TwitterServiceDelegate,
     TwitPicImageSenderDelegate, LogInDisplayMgrDelegate,
     UIImagePickerControllerDelegate, UINavigationControllerDelegate,
-    UIActionSheetDelegate>
+    UIActionSheetDelegate, AddPhotoServiceDisplayMgrDelegate>
 {
     id<ComposeTweetDisplayMgrDelegate> delegate;
 
@@ -43,6 +44,8 @@
 
     CredentialsActivatedPublisher * credentialsUpdatePublisher;
     CredentialsSetChangedPublisher * credentialsSetChangedPublisher;
+
+    AddPhotoServiceDisplayMgr * addPhotoServiceDisplayMgr;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;

@@ -7,6 +7,8 @@
 
 @interface PhotoServiceSelectorViewController ()
 
+@property (nonatomic, retain) UIBarButtonItem * cancelButton;
+
 @property (nonatomic, copy) NSArray * names;
 @property (nonatomic, copy) NSArray * logos;
 
@@ -14,11 +16,13 @@
 
 @implementation PhotoServiceSelectorViewController
 
-@synthesize delegate, names, logos;
+@synthesize delegate, cancelButton, names, logos, allowCancel;
 
 - (void)dealloc
 {
     self.delegate = nil;
+
+    self.cancelButton = nil;
 
     self.names = nil;
     self.logos = nil;
@@ -39,6 +43,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    self.navigationItem.leftBarButtonItem =
+        self.allowCancel?
+        self.cancelButton :
+        nil;
 
     NSDictionary * services = [self.delegate photoServices];
     self.names =
@@ -133,6 +142,13 @@
                                        message:nil] show];
         [tv deselectRowAtIndexPath:indexPath animated:YES];
     }
+}
+
+#pragma mark Button actions
+
+- (IBAction)userDidCancel:(id)sender
+{
+    [self.delegate userDidCancel];
 }
 
 @end

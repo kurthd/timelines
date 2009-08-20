@@ -7,7 +7,9 @@
 @protocol PhotoServiceSelectorViewControllerDelegate
 
 - (NSDictionary *)photoServices;
+
 - (void)userSelectedServiceNamed:(NSString *)serviceName;
+- (void)userDidCancel;
 
 @end
 
@@ -15,11 +17,19 @@
 {
     id<PhotoServiceSelectorViewControllerDelegate> delegate;
 
+    IBOutlet UIBarButtonItem * cancelButton;
+
     NSArray * names;
     NSArray * logos;
+
+    BOOL allowCancel;
 }
 
 @property (nonatomic, assign) id<PhotoServiceSelectorViewControllerDelegate>
     delegate;
+
+@property (nonatomic, assign) BOOL allowCancel;
+
+- (IBAction)userDidCancel:(id)sender;
 
 @end

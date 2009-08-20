@@ -22,6 +22,7 @@
 {
     id<AddPhotoServiceDisplayMgrDelegate> delegate;
 
+    UIViewController * rootViewController;
     UINavigationController * navigationController;
     PhotoServiceSelectorViewController * photoServiceSelectorViewController;
 
@@ -29,13 +30,20 @@
 
     TwitterCredentials * credentials;
     NSManagedObjectContext * context;
+
+    BOOL displayModally;
 }
 
 @property (nonatomic, assign) id<AddPhotoServiceDisplayMgrDelegate> delegate;
 
-- (id)initWithNavigationController:(UINavigationController *)aNavController
-                           context:(NSManagedObjectContext *)aContext;
+- (id)initWithContext:(NSManagedObjectContext *)aContext;
+
+- (void)displayWithNavigationController:(UINavigationController *)aController;
+- (void)displayModally:(UIViewController *)aController;
 
 - (void)addPhotoService:(TwitterCredentials *)someCredentials;
+
+// default is no
+- (void)selectorAllowsCancel:(BOOL)allow;
 
 @end

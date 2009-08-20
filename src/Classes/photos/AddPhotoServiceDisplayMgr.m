@@ -9,6 +9,7 @@
 
 @interface AddPhotoServiceDisplayMgr ()
 
+@property (nonatomic, retain) UIViewController * rootViewController;
 @property (nonatomic, retain) UINavigationController * navigationController;
 @property (nonatomic, retain) PhotoServiceSelectorViewController *
     photoServiceSelectorViewController;
@@ -24,7 +25,8 @@
 @implementation AddPhotoServiceDisplayMgr
 
 @synthesize delegate;
-@synthesize navigationController, photoServiceSelectorViewController;
+@synthesize rootViewController, navigationController;
+@synthesize photoServiceSelectorViewController;
 @synthesize photoServiceLogInDisplayMgr;
 @synthesize credentials, context;
 
@@ -32,6 +34,7 @@
 {
     self.delegate = nil;
 
+    self.rootViewController = nil;
     self.navigationController = nil;
     self.photoServiceSelectorViewController = nil;
 
@@ -43,25 +46,53 @@
     [super dealloc];
 }
 
-- (id)initWithNavigationController:(UINavigationController *)aNavController
-                           context:(NSManagedObjectContext *)aContext
+- (id)initWithContext:(NSManagedObjectContext *)aContext
 {
-    if (self = [super init]) {
-        self.navigationController = aNavController;
+    if (self = [super init])
         self.context = aContext;
-    }
 
     return self;
 }
 
 #pragma mark Public implementaion
 
+- (void)displayWithNavigationController:(UINavigationController *)aController
+{
+    self.navigationController = aController;
+    self.rootViewController = nil;
+    displayModally = NO;
+}
+
+- (void)displayModally:(UIViewController *)aController
+{
+    self.navigationController = nil;
+    self.rootViewController = aController;
+    displayModally = YES;
+}
+
 - (void)addPhotoService:(TwitterCredentials *)someCredentials
 {
     self.credentials = someCredentials;
-    [self.navigationController
-        pushViewController:self.photoServiceSelectorViewController
-                  animated:YES];
+
+    if (displayModally) {
+        UINavigationController * navController =
+            [[UINavigationController alloc]
+            initWithRootViewController:self.photoServiceSelectorViewController];
+        self.navigationController = navController;
+        [navController release];
+
+        [self.rootViewController
+            presentModalViewController:self.navigationController
+                              animated:YES];
+    } else
+        [self.navigationController
+            pushViewController:self.photoServiceSelectorViewController
+                      animated:YES];
+}
+
+- (void)selectorAllowsCancel:(BOOL)allow
+{
+    self.photoServiceSelectorViewController.allowCancel = allow;
 }
 
 #pragma mark PhotoServiceSelectorViewControllerDelegate implementation
@@ -104,6 +135,15 @@
                             context:self.context];
 }
 
+- (void)userDidCancel
+{
+    [self.delegate addingPhotoServiceCancelled];
+    if (displayModally)
+        [self.rootViewController dismissModalViewControllerAnimated:YES];
+    else
+        [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark PhotoServiceLogInDisplayMgrDelegate implementation
 
 - (void)logInCompleted:(PhotoServiceCredentials *)newCredentials
@@ -125,6 +165,7 @@
             [[PhotoServiceSelectorViewController alloc]
             initWithNibName:@"PhotoServiceSelectorView" bundle:nil];
         photoServiceSelectorViewController.delegate = self;
+        photoServiceSelectorViewController.allowCancel = NO;
     }
 
     return photoServiceSelectorViewController;

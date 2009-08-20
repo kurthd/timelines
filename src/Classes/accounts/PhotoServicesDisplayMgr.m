@@ -338,9 +338,9 @@
 {
     if (!addPhotoServiceDisplayMgr) {
         addPhotoServiceDisplayMgr =
-            [[AddPhotoServiceDisplayMgr alloc]
-            initWithNavigationController:self.navigationController
-                                 context:context];
+            [[AddPhotoServiceDisplayMgr alloc] initWithContext:self.context];
+        [addPhotoServiceDisplayMgr
+            displayWithNavigationController:self.navigationController];
         addPhotoServiceDisplayMgr.delegate = self;
     }
 

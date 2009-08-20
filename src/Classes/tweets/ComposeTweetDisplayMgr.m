@@ -11,6 +11,7 @@
 #import "TweetDraft.h"
 #import "DirectMessageDraft.h"
 #import "TweetDraftMgr.h"
+#import "TwitterCredentials+PhotoServiceAdditions.h"
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -26,6 +27,9 @@
     credentialsUpdatePublisher;
 @property (nonatomic, retain) CredentialsSetChangedPublisher *
     credentialsSetChangedPublisher;
+
+@property (nonatomic, retain) AddPhotoServiceDisplayMgr *
+    addPhotoServiceDisplayMgr;
 
 //@property (nonatomic, copy) NSString * recipient;
 @property (nonatomic, copy) NSString * origUsername;
@@ -50,6 +54,7 @@
 @synthesize delegate;
 @synthesize /*recipient,*/ origUsername, origTweetId;
 @synthesize draftMgr;
+@synthesize addPhotoServiceDisplayMgr;
 
 - (void)dealloc
 {
@@ -60,6 +65,7 @@
     self.imageSender = nil;
     self.credentialsUpdatePublisher = nil;
     self.credentialsSetChangedPublisher = nil;
+    self.addPhotoServiceDisplayMgr = nil;
     //self.recipient = nil;
     self.origUsername = nil;
     self.origTweetId = nil;
@@ -379,13 +385,13 @@
 
 - (void)userWantsToSelectPhoto
 {
-    /*
     TwitterCredentials * credentials = self.service.credentials;
-    if (credentials.twitPicCredentials == nil)
-        [self.logInDisplayMgr logInForUser:credentials.username animated:YES];
-    else
+    PhotoServiceCredentials * photoCredentials =
+        [credentials defaultPhotoServiceCredentials];
+    if (photoCredentials)
         [self promptForPhotoSource:self.composeTweetViewController];
-     */
+    else
+        [self.addPhotoServiceDisplayMgr addPhotoService:credentials];
 }
 
 #pragma mark TwitterServiceDelegate implementation
@@ -494,6 +500,16 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark AddPhotoServiceDisplayMgrDelegate implementation
+
+- (void)photoServiceAdded:(PhotoServiceCredentials *)credentials
+{
+}
+
+- (void)addingPhotoServiceCancelled
+{
 }
 
 #pragma mark UIActionSheetDelegate implementation
@@ -610,6 +626,20 @@
             [[TweetDraftMgr alloc] initWithManagedObjectContext:self.context];
 
     return draftMgr;
+}
+
+- (AddPhotoServiceDisplayMgr *)addPhotoServiceDisplayMgr
+{
+    if (!addPhotoServiceDisplayMgr) {
+        addPhotoServiceDisplayMgr =
+            [[AddPhotoServiceDisplayMgr alloc] initWithContext:context];
+        [addPhotoServiceDisplayMgr
+            displayModally:self.composeTweetViewController];
+        [addPhotoServiceDisplayMgr selectorAllowsCancel:YES];
+        addPhotoServiceDisplayMgr.delegate = self;
+    }
+
+    return addPhotoServiceDisplayMgr;
 }
 
 @end
