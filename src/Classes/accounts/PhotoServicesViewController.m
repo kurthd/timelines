@@ -78,7 +78,8 @@ enum {
     if (section == kDefaultsSection)
         nrows = NUM_DEFAULTS_ROWS;
     else if (section == kAccountsSection)
-        nrows = self.services.count + 1;
+        nrows = [self.delegate areMoreServicesAvailable] ?
+            self.services.count + 1 : self.services.count;
 
     return nrows;
 }

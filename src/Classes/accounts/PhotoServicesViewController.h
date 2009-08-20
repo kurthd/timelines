@@ -16,6 +16,8 @@
 - (void)selectServiceForPhotos;
 - (void)selectServiceForVideos;
 
+- (BOOL)areMoreServicesAvailable;
+
 - (NSArray *)servicesForAccount:(TwitterCredentials *)credentials;
 - (void)userWantsToAddNewPhotoService:(TwitterCredentials *)credentials;
 - (void)userWantsToEditAccountAtIndex:(NSUInteger)index

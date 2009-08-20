@@ -120,7 +120,12 @@
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 1) {
+    static NSSet * supported = nil;
+    if (!supported)
+        supported = [[NSSet alloc] initWithObjects:@"TwitPic", nil];
+
+    NSString * name = [self.names objectAtIndex:indexPath.row];
+    if ([supported containsObject:name]) {
         NSString * serviceName = [self.names objectAtIndex:indexPath.row];
         [self.delegate userSelectedServiceNamed:serviceName];
     } else {

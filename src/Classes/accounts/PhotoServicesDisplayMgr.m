@@ -3,6 +3,8 @@
 //
 
 #import "PhotoServicesDisplayMgr.h"
+#import "PhotoService.h"
+#import "PhotoService+ServiceAdditions.h"
 #import "NSArray+IterationAdditions.h"
 
 @interface PhotoServicesDisplayMgr ()
@@ -110,6 +112,15 @@
     [self.navigationController
         pushViewController:self.videoServiceSelectionViewController
                   animated:YES];
+}
+
+- (BOOL)areMoreServicesAvailable
+{
+    /*
+    return self.credentials.photoServiceCredentials.count <
+        [PhotoService photoServiceNamesAndLogos].count;
+    */
+    return self.credentials.photoServiceCredentials.count != 1;
 }
 
 - (NSArray *)servicesForAccount:(TwitterCredentials *)someCredentials

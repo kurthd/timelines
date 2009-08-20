@@ -5,6 +5,7 @@
 #import "AddPhotoServiceDisplayMgr.h"
 #import "PhotoService.h"
 #import "PhotoService+ServiceAdditions.h"
+#import "NSArray+IterationAdditions.h"
 
 @interface AddPhotoServiceDisplayMgr ()
 
@@ -67,7 +68,27 @@
 
 - (NSDictionary *)photoServices
 {
-    return [PhotoService photoServiceNamesAndLogos];
+    // Supply the list of services, with the user's currently installed
+    // services removed.
+
+    NSMutableDictionary * remainingServices =
+        [[PhotoService photoServiceNamesAndLogos] mutableCopy];
+
+    NSSet * userServices = self.credentials.photoServiceCredentials;
+    NSSet * userServiceNames =
+        [NSSet setWithArray:
+        [[userServices allObjects]
+        arrayByTransformingObjectsUsingSelector:@selector(serviceName)]];
+
+    for (NSString * serviceName in [remainingServices allKeys]) {
+        if ([userServiceNames containsObject:serviceName])
+            [remainingServices removeObjectForKey:serviceName];
+
+        if (![serviceName isEqualToString:@"TwitPic"])
+            [remainingServices removeObjectForKey:serviceName];
+    }
+
+    return remainingServices;
 }
 
 - (void)userSelectedServiceNamed:(NSString *)serviceName
