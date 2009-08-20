@@ -143,8 +143,20 @@
 
 #pragma mark AddPhotoServiceDisplayMgrDelegate implementation
 
-- (void)photoServiceAdded:(PhotoServiceCredentials *)credentials
+- (void)photoServiceAdded:(PhotoServiceCredentials *)ctls
 {
+    NSString * serviceName = [ctls serviceName];
+
+    NSString * photoService = [self currentlySelectedPhotoServiceName];
+    if (!photoService && [ctls supportsPhotos])
+        [self.delegate userDidSelectPhotoServiceWithName:serviceName
+                                             credentials:self.credentials];
+
+    NSString * videoService = [self currentlySelectedVideoServiceName];
+    if (!videoService && [ctls supportsVideo])
+        [self.delegate userDidSelectVideoServiceWithName:serviceName
+                                             credentials:self.credentials];
+
     [self.navigationController
         popToViewController:self.photoServicesViewController animated:NO];
 }
@@ -157,6 +169,48 @@
 
 - (void)userWillDeleteAccountWithCredentials:(PhotoServiceCredentials *)ctls
 {
+    NSString * serviceName = [ctls serviceName];
+    NSString * currentPhotoService = [self currentlySelectedPhotoServiceName];
+    NSString * currentVideoService = [self currentlySelectedVideoServiceName];
+
+    if ([serviceName isEqualToString:currentPhotoService]) {
+        // pick a new default
+        BOOL newDefaultSet = NO;
+        NSSet * photoServices = self.credentials.photoServiceCredentials;
+        for (PhotoServiceCredentials * service in photoServices) {
+            if (![service isEqual:ctls] && [service supportsPhotos]) {
+                NSString * newServiceName = [service serviceName];
+                [self.delegate
+                    userDidSelectPhotoServiceWithName:newServiceName
+                                          credentials:self.credentials];
+                newDefaultSet = YES;
+            }
+        }
+
+        if (!newDefaultSet)  // no valid options remain
+            [self.delegate userDidSelectPhotoServiceWithName:nil
+                                                 credentials:self.credentials];
+    }
+
+    if ([serviceName isEqualToString:currentVideoService]) {
+        // pick a new default
+        BOOL newDefaultSet = NO;
+        NSSet * photoServices = self.credentials.photoServiceCredentials;
+        for (PhotoServiceCredentials * service in photoServices) {
+            if (![service isEqual:ctls] && [service supportsVideo]) {
+                NSString * newServiceName = [service serviceName];
+                [self.delegate
+                    userDidSelectVideoServiceWithName:newServiceName
+                                          credentials:self.credentials];
+                newDefaultSet = YES;
+            }
+        }
+
+        if (!newDefaultSet)  // no valid service installed
+            [self.delegate
+                userDidSelectVideoServiceWithName:nil
+                                      credentials:self.credentials];
+    }
 }
 
 - (void)userDidDeleteAccount
