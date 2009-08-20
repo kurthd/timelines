@@ -6,6 +6,7 @@
 #import "PhotoServicesViewController.h"
 #import "AddPhotoServiceDisplayMgr.h"
 #import "TwitterCredentials.h"
+#import "EditPhotoServiceDisplayMgr.h"
 
 @protocol PhotoServicesDisplayMgrDelegate
 @end
@@ -13,13 +14,14 @@
 @interface PhotoServicesDisplayMgr :
     NSObject
     <PhotoServicesViewControllerDelegate,
-    AddPhotoServiceDisplayMgrDelegate>
+    EditPhotoServiceDisplayMgrDelegate, AddPhotoServiceDisplayMgrDelegate>
 {
     id<PhotoServicesDisplayMgrDelegate> delegate;
 
     UINavigationController * navigationController;
     PhotoServicesViewController * photoServicesViewController;
 
+    EditPhotoServiceDisplayMgr * editPhotoServiceDisplayMgr;
     AddPhotoServiceDisplayMgr * addPhotoServiceDisplayMgr;
 
     NSManagedObjectContext * context;

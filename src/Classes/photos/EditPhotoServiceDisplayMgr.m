@@ -2,20 +2,20 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import "PhotoServiceLogInDisplayMgr.h"
+#import "EditPhotoServiceDisplayMgr.h"
 #import "NSObject+RuntimeAdditions.h"
 
-@implementation PhotoServiceLogInDisplayMgr
+@implementation EditPhotoServiceDisplayMgr
 
 @synthesize delegate;
 
-+ (id)logInDisplayMgrWithServiceName:(NSString *)serviceName
++ (id)editServiceDisplayMgrWithServiceName:(NSString *)serviceName
 {
     static NSDictionary * services = nil;
     if (!services) {
         services =
             [[NSDictionary alloc] initWithObjectsAndKeys:
-            @"TwitPicLogInDisplayMgr", @"TwitPic",
+            @"TwitPicEditPhotoServiceDisplayMgr", @"TwitPic",
             nil];
     }
 
@@ -33,9 +33,9 @@
     [super dealloc];
 }
 
-- (void)logInWithRootViewController:(UIViewController *)aController
-                        credentials:(TwitterCredentials *)someCredentials
-                            context:(NSManagedObjectContext *)aContext
+- (void)editServiceWithCredentials:(PhotoServiceCredentials *)credentials
+              navigationController:(UINavigationController *)controller
+                           context:(NSManagedObjectContext *)context
 {
     NSAssert(NO, @"This method must be implemented by subclasses.");
 }

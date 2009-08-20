@@ -10,6 +10,8 @@
 @property (nonatomic, retain) PhotoServicesViewController *
     photoServicesViewController;
 
+@property (nonatomic, retain) EditPhotoServiceDisplayMgr *
+    editPhotoServiceDisplayMgr;
 @property (nonatomic, retain) AddPhotoServiceDisplayMgr *
     addPhotoServiceDisplayMgr;
 
@@ -21,7 +23,7 @@
 
 @synthesize delegate;
 @synthesize navigationController, photoServicesViewController;
-@synthesize addPhotoServiceDisplayMgr;
+@synthesize editPhotoServiceDisplayMgr, addPhotoServiceDisplayMgr;
 @synthesize context;
 
 - (void)dealloc
@@ -31,6 +33,7 @@
     self.navigationController = nil;
     self.photoServicesViewController = nil;
 
+    self.editPhotoServiceDisplayMgr = nil;
     self.addPhotoServiceDisplayMgr = nil;
 
     self.context = nil;
@@ -65,6 +68,24 @@
     return [credentials.photoServiceCredentials allObjects];
 }
 
+- (void)userWantsToEditAccountAtIndex:(NSUInteger)index
+                          credentials:(TwitterCredentials *)credentials
+{
+    NSArray * services = [self servicesForAccount:credentials];
+    PhotoServiceCredentials * service = [services objectAtIndex:index];
+
+    EditPhotoServiceDisplayMgr * mgr =
+        [EditPhotoServiceDisplayMgr
+        editServiceDisplayMgrWithServiceName:[service serviceName]];
+    mgr.delegate = self;
+
+    [mgr editServiceWithCredentials:service
+               navigationController:self.navigationController
+                            context:self.context];
+
+    self.editPhotoServiceDisplayMgr = mgr;
+}
+
 - (void)userWantsToAddNewPhotoService:(TwitterCredentials *)credentials
 {
     NSLog(@"'%@': adding a new photo service.", credentials.username);
@@ -81,6 +102,17 @@
 
 - (void)addingPhotoServiceCancelled
 {
+}
+
+#pragma mark EditPhotoServiceDisplayMgrDelegate implementation
+
+- (void)userWillDeleteAccountWithCredentials:(PhotoServiceCredentials *)ctls
+{
+}
+
+- (void)userDidDeleteAccount
+{
+    [self.photoServicesViewController reloadDisplay];
 }
 
 #pragma mark Accessors

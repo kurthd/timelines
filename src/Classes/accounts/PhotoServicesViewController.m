@@ -25,6 +25,14 @@
     [super dealloc];
 }
 
+#pragma mark Public implementation
+
+- (void)reloadDisplay
+{
+    self.services = [self.delegate servicesForAccount:self.credentials];
+    [self.tableView reloadData];
+}
+
 #pragma mark UIViewController overrides
 
 - (void)viewDidLoad
@@ -39,8 +47,7 @@
 {
     [super viewWillAppear:animated];
 
-    self.services = [self.delegate servicesForAccount:self.credentials];
-    [self.tableView reloadData];
+    [self reloadDisplay];
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -77,6 +84,7 @@
     if (indexPath.row == self.services.count) {
         cell.textLabel.text =
             NSLocalizedString(@"photoservices.addaccount.label", @"");
+        cell.detailTextLabel.text = nil;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.editingAccessoryType = UITableViewCellAccessoryNone;
     } else {
@@ -98,6 +106,9 @@
 {
     if (indexPath.row == self.services.count)  // adding a new account
         [self.delegate userWantsToAddNewPhotoService:self.credentials];
+    else
+        [self.delegate userWantsToEditAccountAtIndex:indexPath.row
+                                         credentials:self.credentials];
 }
 
 @end

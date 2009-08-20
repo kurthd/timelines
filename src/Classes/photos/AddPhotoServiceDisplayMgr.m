@@ -73,7 +73,8 @@
 - (void)userSelectedServiceNamed:(NSString *)serviceName
 {
     self.photoServiceLogInDisplayMgr =
-        [PhotoServiceLogInDisplayMgr serviceWithServiceName:serviceName];
+        [PhotoServiceLogInDisplayMgr
+        logInDisplayMgrWithServiceName:serviceName];
     self.photoServiceLogInDisplayMgr.delegate = self;
 
     [self.photoServiceLogInDisplayMgr

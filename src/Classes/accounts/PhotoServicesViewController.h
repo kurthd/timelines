@@ -9,6 +9,8 @@
 
 - (NSArray *)servicesForAccount:(TwitterCredentials *)credentials;
 - (void)userWantsToAddNewPhotoService:(TwitterCredentials *)credentials;
+- (void)userWantsToEditAccountAtIndex:(NSUInteger)index
+                          credentials:(TwitterCredentials *)credentials;
 
 @end
 
@@ -22,5 +24,7 @@
 
 @property (nonatomic, assign) id<PhotoServicesViewControllerDelegate> delegate;
 @property (nonatomic, retain) TwitterCredentials * credentials;
+
+- (void)reloadDisplay;
 
 @end

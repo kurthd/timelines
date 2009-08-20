@@ -20,7 +20,7 @@
 
 @property (nonatomic, assign) id<PhotoServiceLogInDisplayMgrDelegate> delegate;
 
-+ (id)serviceWithServiceName:(NSString *)serviceName;
++ (id)logInDisplayMgrWithServiceName:(NSString *)serviceName;
 
 - (void)logInWithRootViewController:(UIViewController *)aController
                         credentials:(TwitterCredentials *)someCredentials
