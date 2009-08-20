@@ -10,6 +10,9 @@
 - (NSString *)currentlySelectedPhotoServiceName;
 - (NSString *)currentlySelectedVideoServiceName;
 
+- (BOOL)canSelectPhotoService;
+- (BOOL)canSelectVideoService;
+
 - (void)selectServiceForPhotos;
 - (void)selectServiceForVideos;
 

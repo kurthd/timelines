@@ -88,6 +88,16 @@
     return [self.delegate currentlySelectedVideoServiceName:self.credentials];
 }
 
+- (BOOL)canSelectPhotoService
+{
+    return [self availablePhotoServices].count > 0;
+}
+
+- (BOOL)canSelectVideoService
+{
+    return [self availableVideoServices].count > 0;
+}
+
 - (void)selectServiceForPhotos
 {
     [self.navigationController
@@ -97,6 +107,9 @@
 
 - (void)selectServiceForVideos
 {
+    [self.navigationController
+        pushViewController:self.videoServiceSelectionViewController
+                  animated:YES];
 }
 
 - (NSArray *)servicesForAccount:(TwitterCredentials *)someCredentials
@@ -205,7 +218,13 @@
 
 - (NSArray *)availableVideoServices
 {
-    return [NSArray array];
+    NSArray * allCredentials =
+        [self.credentials.photoServiceCredentials allObjects];
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:@"supportsVideo == YES"];
+    NSArray * filtered = [allCredentials filteredArrayUsingPredicate:predicate];
+
+    return filtered;
 }
 
 #pragma mark Accessors

@@ -114,15 +114,18 @@ enum {
     if (indexPath.section == kDefaultsSection) {
         NSString * label = nil;
         NSString * detail = nil;
+        BOOL canSelect = NO;
 
         if (indexPath.row == kPhotoDefaults) {
             label =
                 NSLocalizedString(@"photoservicesview.photoservice.label", @"");
             detail = [self.delegate currentlySelectedPhotoServiceName];
+            canSelect = [self.delegate canSelectPhotoService];
         } else if (indexPath.row == kVideoDefaults) {
             label =
                 NSLocalizedString(@"photoservicesview.videoservice.label", @"");
             detail = [self.delegate currentlySelectedVideoServiceName];
+            canSelect = [self.delegate canSelectVideoService];
         }
 
         if (!detail)
@@ -131,19 +134,27 @@ enum {
 
         cell.textLabel.text = label;
         cell.detailTextLabel.text = detail;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if (canSelect) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
     } else if (indexPath.section == kAccountsSection)
         if (indexPath.row == self.services.count) {
             cell.textLabel.text =
                 NSLocalizedString(@"photoservices.addaccount.label", @"");
             cell.detailTextLabel.text = nil;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         } else {
             PhotoServiceCredentials * psc =
                 [self.services objectAtIndex:indexPath.row];
             cell.textLabel.text = [psc serviceName];
             cell.detailTextLabel.text = [psc accountDisplayName];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         }
 
     return cell;
@@ -155,10 +166,13 @@ enum {
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == kDefaultsSection) {
-        if (indexPath.row == kPhotoDefaults)
-            [self.delegate selectServiceForPhotos];
-        else if (indexPath.row == kAccountsSection)
-            [self.delegate selectServiceForVideos];
+        if (indexPath.row == kPhotoDefaults) {
+            if ([self.delegate canSelectPhotoService])
+                [self.delegate selectServiceForPhotos];
+        } else if (indexPath.row == kAccountsSection) {
+            if ([self.delegate canSelectVideoService])
+                [self.delegate selectServiceForVideos];
+        }
     } else if (indexPath.section == kAccountsSection)
         if (indexPath.row == self.services.count)  // adding a new account
             [self.delegate userWantsToAddNewPhotoService:self.credentials];
