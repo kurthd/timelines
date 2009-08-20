@@ -148,11 +148,13 @@ enum TweetActionRows {
 - (CGFloat)tableView:(UITableView *)tv
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BOOL tweetTextRow =
-        indexPath.section == kTweetDetailsSection &&
-        indexPath.row == kTweetTextRow;
-
-    return tweetTextRow ? tweetContentView.frame.size.height : 44;
+    CGFloat rowHeight = 44;
+    
+    if (indexPath.section == kTweetDetailsSection &&
+        indexPath.row == kTweetTextRow)
+        rowHeight = tweetContentView.frame.size.height;
+    
+    return rowHeight;
 }
 
 // Customize the appearance of table view cells.
@@ -160,13 +162,14 @@ enum TweetActionRows {
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell * cell = nil;
-    NSString * identifier = [self reuseIdentifierForRowAtIndexPath:indexPath];
 
     BOOL tweetTextRow =
         indexPath.section == kTweetDetailsSection &&
         indexPath.row == kTweetTextRow;
 
     if (!tweetTextRow) {
+        NSString * identifier =
+            [self reuseIdentifierForRowAtIndexPath:indexPath];
         cell = [tv dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil)
             cell = [self createCellForRowAtIndexPath:indexPath

@@ -226,10 +226,13 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             user.name && user.name.length > 0 &&
             ![[self class] displayWithUsername] ?
             user.name : user.username;
-         numUpdatesLabel.text =
+        NSNumberFormatter * formatter =
+            [[[NSNumberFormatter alloc] init] autorelease];
+        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        numUpdatesLabel.text =
             [NSString stringWithFormat:
             NSLocalizedString(@"userinfoview.statusescount.formatstring", @""),
-            user.statusesCount];
+            [formatter stringFromNumber:user.statusesCount]];
         NSString * largeProfileUrl =
             [User largeAvatarUrlForUrl:aUser.avatar.thumbnailImageUrl];
         UIImage * avatarImage = [self getAvatarForUrl:largeProfileUrl];

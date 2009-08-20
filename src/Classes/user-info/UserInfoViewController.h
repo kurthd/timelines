@@ -8,6 +8,7 @@
 #import "UserInfoViewControllerDelegate.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
 #import "SavedSearchMgr.h"
+#import "LocationCell.h"
 
 @interface UserInfoViewController :
     UITableViewController <AsynchronousNetworkFetcherDelegate>
@@ -35,12 +36,14 @@
     User * user;
 
     SavedSearchMgr * findPeopleBookmarkMgr;
+    LocationCell * locationCell;
 }
 
 @property (nonatomic, assign)
     NSObject<UserInfoViewControllerDelegate> * delegate;
 @property (nonatomic, assign) BOOL followingEnabled;
 @property (nonatomic, retain) SavedSearchMgr * findPeopleBookmarkMgr;
+@property (nonatomic, readonly) LocationCell * locationCell;
 
 - (void)setUser:(User *)user;
 - (void)setFollowing:(BOOL)enabled;

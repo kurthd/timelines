@@ -273,6 +273,12 @@
 		914CA0C31038D04F00421C60 /* MagnifyingGlassHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA0C21038D04F00421C60 /* MagnifyingGlassHighlighted.png */; };
 		914CA0F81039C62C00421C60 /* StopFollowingButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA0F61039C62C00421C60 /* StopFollowingButton.png */; };
 		914CA0F91039C62C00421C60 /* StopFollowingButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA0F71039C62C00421C60 /* StopFollowingButtonHighlighted.png */; };
+		914CA261103A1AB200421C60 /* LocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 914CA260103A1AB200421C60 /* LocationCell.m */; };
+		914CA284103A1DC300421C60 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914CA283103A1DC300421C60 /* MapKit.framework */; };
+		914CA2F1103A3E7200421C60 /* Geocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 914CA2F0103A3E7200421C60 /* Geocoder.m */; };
+		914CA331103A444000421C60 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914CA330103A444000421C60 /* CoreLocation.framework */; };
+		914CA4D7103B646700421C60 /* LocationCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 914CA4D6103B646700421C60 /* LocationCellView.m */; };
+		914CA6CA103CA2A300421C60 /* BasicMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 914CA6C9103CA2A300421C60 /* BasicMapAnnotation.m */; };
 		9152E14E1014F6B70033B63B /* DirectMessagesDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E14D1014F6B70033B63B /* DirectMessagesDisplayMgr.m */; };
 		9152E1511014F8260033B63B /* DirectMessageInboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E1501014F8260033B63B /* DirectMessageInboxViewController.m */; };
 		9152E1541014F8430033B63B /* DirectMessageConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E1531014F8430033B63B /* DirectMessageConversationViewController.m */; };
@@ -708,6 +714,17 @@
 		914CA0C21038D04F00421C60 /* MagnifyingGlassHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MagnifyingGlassHighlighted.png; path = images/MagnifyingGlassHighlighted.png; sourceTree = "<group>"; };
 		914CA0F61039C62C00421C60 /* StopFollowingButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StopFollowingButton.png; path = images/StopFollowingButton.png; sourceTree = "<group>"; };
 		914CA0F71039C62C00421C60 /* StopFollowingButtonHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StopFollowingButtonHighlighted.png; path = images/StopFollowingButtonHighlighted.png; sourceTree = "<group>"; };
+		914CA25F103A1AB200421C60 /* LocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationCell.h; path = "user-info/LocationCell.h"; sourceTree = "<group>"; };
+		914CA260103A1AB200421C60 /* LocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationCell.m; path = "user-info/LocationCell.m"; sourceTree = "<group>"; };
+		914CA283103A1DC300421C60 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		914CA2EF103A3E7200421C60 /* Geocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geocoder.h; path = shared/Geocoder.h; sourceTree = "<group>"; };
+		914CA2F0103A3E7200421C60 /* Geocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Geocoder.m; path = shared/Geocoder.m; sourceTree = "<group>"; };
+		914CA2F3103A402E00421C60 /* GeocoderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeocoderDelegate.h; path = shared/GeocoderDelegate.h; sourceTree = "<group>"; };
+		914CA330103A444000421C60 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		914CA4D5103B646700421C60 /* LocationCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationCellView.h; path = "user-info/LocationCellView.h"; sourceTree = "<group>"; };
+		914CA4D6103B646700421C60 /* LocationCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationCellView.m; path = "user-info/LocationCellView.m"; sourceTree = "<group>"; };
+		914CA6C8103CA2A300421C60 /* BasicMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicMapAnnotation.h; sourceTree = "<group>"; };
+		914CA6C9103CA2A300421C60 /* BasicMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicMapAnnotation.m; sourceTree = "<group>"; };
 		9152E14C1014F6B70033B63B /* DirectMessagesDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessagesDisplayMgr.h; path = "direct-messages/DirectMessagesDisplayMgr.h"; sourceTree = "<group>"; };
 		9152E14D1014F6B70033B63B /* DirectMessagesDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessagesDisplayMgr.m; path = "direct-messages/DirectMessagesDisplayMgr.m"; sourceTree = "<group>"; };
 		9152E14F1014F8260033B63B /* DirectMessageInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageInboxViewController.h; path = "direct-messages/DirectMessageInboxViewController.h"; sourceTree = "<group>"; };
@@ -872,6 +889,8 @@
 				91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */,
 				910EFE1D1017E391002083D6 /* AudioToolbox.framework in Frameworks */,
 				05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */,
+				914CA284103A1DC300421C60 /* MapKit.framework in Frameworks */,
+				914CA331103A444000421C60 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1167,6 +1186,11 @@
 				9130FE4F1034D334004E3030 /* TwitchWebBrowserDisplayMgr.m */,
 				059A6F27103CD02700B7500C /* UIButton+StandardButtonAdditions.h */,
 				059A6F28103CD02700B7500C /* UIButton+StandardButtonAdditions.m */,
+				914CA2EF103A3E7200421C60 /* Geocoder.h */,
+				914CA2F0103A3E7200421C60 /* Geocoder.m */,
+				914CA2F3103A402E00421C60 /* GeocoderDelegate.h */,
+				914CA6C8103CA2A300421C60 /* BasicMapAnnotation.h */,
+				914CA6C9103CA2A300421C60 /* BasicMapAnnotation.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -1502,6 +1526,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				914CA330103A444000421C60 /* CoreLocation.framework */,
+				914CA283103A1DC300421C60 /* MapKit.framework */,
 				910EFE1C1017E391002083D6 /* AudioToolbox.framework */,
 				91AD5A3C100FED36009C2179 /* MessageUI.framework */,
 				0524C4510FF2AEEE00A6099B /* Security.framework */,
@@ -1748,6 +1774,10 @@
 				918E8AA30FF1C69D0042BBEE /* UserInfoLabelCell.m */,
 				9130FF241035E1F6004E3030 /* MarkAsFavoriteCell.h */,
 				9130FF251035E1F6004E3030 /* MarkAsFavoriteCell.m */,
+				914CA25F103A1AB200421C60 /* LocationCell.h */,
+				914CA260103A1AB200421C60 /* LocationCell.m */,
+				914CA4D5103B646700421C60 /* LocationCellView.h */,
+				914CA4D6103B646700421C60 /* LocationCellView.m */,
 			);
 			name = "user-info";
 			sourceTree = "<group>";
@@ -2109,6 +2139,10 @@
 				059A6FF1103CE12600B7500C /* TwitterBasicAuthAuthenticator.m in Sources */,
 				059A708E103DAE2E00B7500C /* SelectionViewController.m in Sources */,
 				059A718C103E019F00B7500C /* TwitterCredentials+PhotoServiceAdditions.m in Sources */,
+				914CA261103A1AB200421C60 /* LocationCell.m in Sources */,
+				914CA2F1103A3E7200421C60 /* Geocoder.m in Sources */,
+				914CA4D7103B646700421C60 /* LocationCellView.m in Sources */,
+				914CA6CA103CA2A300421C60 /* BasicMapAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

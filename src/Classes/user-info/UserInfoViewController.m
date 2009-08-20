@@ -71,7 +71,7 @@ static UIImage * defaultAvatar;
     [user release];
 
     [findPeopleBookmarkMgr release];
-
+    
     [super dealloc];
 }
 
@@ -92,8 +92,6 @@ static UIImage * defaultAvatar;
 {
     [super viewWillAppear:animated];
     [delegate showingUserInfoView];
-    bookmarkButton.enabled =
-        ![findPeopleBookmarkMgr isSearchSaved:user.username];
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -121,6 +119,12 @@ static UIImage * defaultAvatar;
     return numRows;
 }
 
+- (CGFloat)tableView:(UITableView *)tv
+    heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath.section == kUserInfoSectionDetails ? 64 : 44;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView
     cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -129,16 +133,7 @@ static UIImage * defaultAvatar;
     UserInfoLabelCell * userInfoLabelCell;
     switch (indexPath.section) {
         case kUserInfoSectionDetails:
-            cell = [self getLabelCell];
-            userInfoLabelCell = (UserInfoLabelCell *)cell;
-            if (user.location && ![user.location isEqual:@""] &&
-                indexPath.row == 0) {
-
-                NSString * locationString =
-                    NSLocalizedString(@"userinfoview.location", @"");
-                [userInfoLabelCell setKeyText:locationString];
-                [userInfoLabelCell setValueText:user.location];
-            }
+            cell = self.locationCell;
             break;
         case kUserInfoSectionNetwork:
             cell = [self getLabelCell];
@@ -146,6 +141,9 @@ static UIImage * defaultAvatar;
             cell.accessoryType =
                 UITableViewCellAccessoryDisclosureIndicator;
 
+            NSNumberFormatter * formatter =
+                [[[NSNumberFormatter alloc] init] autorelease];
+            [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
             if (indexPath.row == kUserInfoFollowersRow) {
                 if ([user.followersCount
                     isEqual:[NSNumber numberWithInt:0]]) {
@@ -161,7 +159,8 @@ static UIImage * defaultAvatar;
                     NSLocalizedString(@"userinfoview.followers", @"");
                 [userInfoLabelCell setKeyText:formatString];
                 [userInfoLabelCell
-                    setValueText:[user.followersCount description]];
+                    setValueText:
+                    [formatter stringFromNumber:user.followersCount]];
             } else if (indexPath.row == kUserInfoFollowingRow) {
                 if ([user.friendsCount
                     isEqual:[NSNumber numberWithInt:0]]) {
@@ -177,7 +176,8 @@ static UIImage * defaultAvatar;
                     NSLocalizedString(@"userinfoview.following", @"");
                 [userInfoLabelCell setKeyText:formatString];
                 [userInfoLabelCell
-                    setValueText:[user.friendsCount description]];
+                    setValueText:
+                    [formatter stringFromNumber:user.friendsCount]];
             } else {
                 if ([user.statusesCount
                     isEqual:[NSNumber numberWithInt:0]]) {
@@ -194,7 +194,8 @@ static UIImage * defaultAvatar;
                     NSLocalizedString(@"userinfoview.statusescount", @"");
                 [userInfoLabelCell setKeyText:formatString];
                 [userInfoLabelCell
-                    setValueText:[user.statusesCount description]];
+                    setValueText:
+                    [formatter stringFromNumber:user.statusesCount]];
             }
             break;
         case kUserInfoSectionFavorites:
@@ -368,12 +369,17 @@ static UIImage * defaultAvatar;
 
     nameLabel.text = aUser.name;
     bioLabel.text = [aUser.bio stringByDecodingHtmlEntities];
-    
+
     if (user.webpage) {
         [webAddressButton setTitle:user.webpage forState:UIControlStateNormal];
         [webAddressButton setTitle:user.webpage
             forState:UIControlStateHighlighted];
     }
+
+    [self.locationCell setLocationText:user.location];
+
+    bookmarkButton.enabled =
+        ![findPeopleBookmarkMgr isSearchSaved:user.username];
 
     [self layoutViews];
     [self.tableView reloadData];
@@ -526,6 +532,16 @@ static UIImage * defaultAvatar;
     }
 
     return cell;
+}
+
+- (LocationCell *)locationCell
+{
+    if (!locationCell)
+        locationCell =
+            [[LocationCell alloc] initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:@"LocationCell"];
+
+    return locationCell;
 }
 
 + (UIImage *)defaultAvatar
