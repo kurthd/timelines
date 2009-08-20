@@ -16,7 +16,11 @@
 
 @property (nonatomic, retain) TwitterCredentials * credentials;
 
+// these attributes should be moved somewhere else, maybe into a category
 - (NSString *)serviceName;
 - (NSString *)accountDisplayName;
+- (BOOL)supportsPhotos;
+- (BOOL)supportsVideo;
+
 
 @end

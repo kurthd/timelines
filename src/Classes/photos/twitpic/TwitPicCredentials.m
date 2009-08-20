@@ -23,4 +23,14 @@
     return self.username;
 }
 
+- (BOOL)supportsPhotos
+{
+    return YES;
+}
+
+- (BOOL)supportsVideo
+{
+    return NO;
+}
+
 @end

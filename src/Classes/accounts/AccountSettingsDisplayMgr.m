@@ -89,6 +89,40 @@
         configurePhotoServicesForAccount:credentials];
 }
 
+#pragma mark PhotoServiceDisplayMgrDelegate implementation
+
+- (NSString *)currentlySelectedPhotoServiceName:(TwitterCredentials *)ctls
+{
+    AccountSettings * settings =
+        [AccountSettings settingsForKey:ctls.username];
+    return [settings photoServiceName];
+}
+
+- (NSString *)currentlySelectedVideoServiceName:(TwitterCredentials *)ctls
+{
+    AccountSettings * settings =
+        [AccountSettings settingsForKey:ctls.username];
+    return [settings videoServiceName];
+}
+
+- (void)userDidSelectPhotoServiceWithName:(NSString *)name
+                              credentials:(TwitterCredentials *)ctls
+{
+    AccountSettings * settings =
+        [AccountSettings settingsForKey:ctls.username];
+    [settings setPhotoServiceName:name];
+    [AccountSettings setSettings:settings forKey:ctls.username];
+}
+
+- (void)userDidSelectVideoServiceWithName:(NSString *)name
+                              credentials:(TwitterCredentials *)ctls
+{
+    AccountSettings * settings =
+        [AccountSettings settingsForKey:ctls.username];
+    [settings setVideoServiceName:name];
+    [AccountSettings setSettings:settings forKey:ctls.username];
+}
+
 #pragma mark Accessors
 
 - (AccountSettingsViewController *)accountSettingsViewController

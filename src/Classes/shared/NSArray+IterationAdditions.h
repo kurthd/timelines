@@ -6,6 +6,8 @@
 
 @interface NSArray (IterationAdditions)
 
+- (NSArray *)arrayByTransformingObjectsUsingSelector:(SEL)sel;
+
 - (NSArray *)arrayByFilteringObjectsUsingSelector:(SEL)sel;
 - (NSArray *)arrayByFilteringObjectsUsingSelector:(SEL)sel withObject:(id)obj;
 

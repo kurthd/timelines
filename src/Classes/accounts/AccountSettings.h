@@ -8,6 +8,9 @@
 {
     NSNumber * pushMentions;
     NSNumber * pushDirectMessages;
+
+    NSString * photoServiceName;
+    NSString * videoServiceName;
 }
 
 - (BOOL)pushMentions;
@@ -15,6 +18,12 @@
 
 - (BOOL)pushDirectMessages;
 - (void)setPushDirectMessages:(BOOL)pushDirectMessages;
+
+- (NSString *)photoServiceName;
+- (void)setPhotoServiceName:(NSString *)name;
+
+- (NSString *)videoServiceName;
+- (void)setVideoServiceName:(NSString *)name;
 
 // returns all push settings masked together in an integer
 - (NSNumber *)pushSettings;

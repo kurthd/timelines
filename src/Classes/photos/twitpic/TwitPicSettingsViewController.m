@@ -87,6 +87,9 @@
 {
     [super viewDidLoad];
 
+    self.navigationItem.title =
+        NSLocalizedString(@"twitpicsettings.view.title", @"");
+
     self.navigationItem.leftBarButtonItem = self.cancelButton;
     self.navigationItem.rightBarButtonItem = self.saveButton;
 

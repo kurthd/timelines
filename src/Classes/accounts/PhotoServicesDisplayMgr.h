@@ -7,23 +7,39 @@
 #import "AddPhotoServiceDisplayMgr.h"
 #import "TwitterCredentials.h"
 #import "EditPhotoServiceDisplayMgr.h"
+#import "SelectionViewController.h"
 
 @protocol PhotoServicesDisplayMgrDelegate
+
+- (NSString *)currentlySelectedPhotoServiceName:(TwitterCredentials *)ctls;
+- (NSString *)currentlySelectedVideoServiceName:(TwitterCredentials *)ctls;
+
+- (void)userDidSelectPhotoServiceWithName:(NSString *)name
+                              credentials:(TwitterCredentials *)ctls;
+- (void)userDidSelectVideoServiceWithName:(NSString *)name
+                              credentials:(TwitterCredentials *)ctls;
+
 @end
 
 @interface PhotoServicesDisplayMgr :
     NSObject
     <PhotoServicesViewControllerDelegate,
-    EditPhotoServiceDisplayMgrDelegate, AddPhotoServiceDisplayMgrDelegate>
+    EditPhotoServiceDisplayMgrDelegate,
+    AddPhotoServiceDisplayMgrDelegate,
+    SelectionViewControllerDelegate>
 {
     id<PhotoServicesDisplayMgrDelegate> delegate;
 
     UINavigationController * navigationController;
     PhotoServicesViewController * photoServicesViewController;
 
+    SelectionViewController * photoServiceSelectionViewController;
+    SelectionViewController * videoServiceSelectionViewController;
+
     EditPhotoServiceDisplayMgr * editPhotoServiceDisplayMgr;
     AddPhotoServiceDisplayMgr * addPhotoServiceDisplayMgr;
 
+    TwitterCredentials * credentials;
     NSManagedObjectContext * context;
 }
 

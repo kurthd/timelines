@@ -41,6 +41,8 @@
 		059A6F26103CCE3D00B7500C /* DeleteButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 059A6F24103CCE3D00B7500C /* DeleteButtonPressed.png */; };
 		059A6F29103CD02700B7500C /* UIButton+StandardButtonAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A6F28103CD02700B7500C /* UIButton+StandardButtonAdditions.m */; };
 		059A6FF1103CE12600B7500C /* TwitterBasicAuthAuthenticator.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A6FF0103CE12600B7500C /* TwitterBasicAuthAuthenticator.m */; };
+		059A708E103DAE2E00B7500C /* SelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A708D103DAE2E00B7500C /* SelectionViewController.m */; };
+		059A7091103DAE4A00B7500C /* SelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A708F103DAE4A00B7500C /* SelectionView.xib */; };
 		059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */; };
 		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A1F5C91028C06A009F5B3E /* RegexKitLite.m */; };
@@ -438,6 +440,9 @@
 		059A6F28103CD02700B7500C /* UIButton+StandardButtonAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+StandardButtonAdditions.m"; path = "shared/UIButton+StandardButtonAdditions.m"; sourceTree = "<group>"; };
 		059A6FEF103CE12600B7500C /* TwitterBasicAuthAuthenticator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterBasicAuthAuthenticator.h; path = twitter/TwitterBasicAuthAuthenticator.h; sourceTree = "<group>"; };
 		059A6FF0103CE12600B7500C /* TwitterBasicAuthAuthenticator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterBasicAuthAuthenticator.m; path = twitter/TwitterBasicAuthAuthenticator.m; sourceTree = "<group>"; };
+		059A708C103DAE2E00B7500C /* SelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectionViewController.h; path = shared/SelectionViewController.h; sourceTree = "<group>"; };
+		059A708D103DAE2E00B7500C /* SelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectionViewController.m; path = shared/SelectionViewController.m; sourceTree = "<group>"; };
+		059A7090103DAE4A00B7500C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/SelectionView.xib; sourceTree = "<group>"; };
 		059F6EE51017EDD900B323D7 /* DirectMessageDraft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageDraft.h; path = tweets/DirectMessageDraft.h; sourceTree = "<group>"; };
 		059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageDraft.m; path = tweets/DirectMessageDraft.m; sourceTree = "<group>"; };
 		059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v1-to-v2.xcmappingmodel"; path = "data-model/v1-to-v2.xcmappingmodel"; sourceTree = "<group>"; };
@@ -1109,6 +1114,8 @@
 		05B2393C0FEDD05E00A6A2E6 /* shared */ = {
 			isa = PBXGroup;
 			children = (
+				059A708C103DAE2E00B7500C /* SelectionViewController.h */,
+				059A708D103DAE2E00B7500C /* SelectionViewController.m */,
 				916BD9D10FEF3D05007143A9 /* UILabel+DrawingAdditions.h */,
 				916BD9D20FEF3D05007143A9 /* UILabel+DrawingAdditions.m */,
 				916BD7BC0FEEAF13007143A9 /* NSObject+RuntimeAdditions.h */,
@@ -1187,6 +1194,7 @@
 				05C7B8B8103B5FAF0017874C /* PhotoServicesView.xib */,
 				05C7B960103B791A0017874C /* PhotoServiceSelectorView.xib */,
 				059A6E9C103CA27400B7500C /* TwitPicSettingsView.xib */,
+				059A708F103DAE4A00B7500C /* SelectionView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -1889,6 +1897,7 @@
 				059A6E9E103CA27400B7500C /* TwitPicSettingsView.xib in Resources */,
 				059A6F25103CCE3D00B7500C /* DeleteButtonNormal.png in Resources */,
 				059A6F26103CCE3D00B7500C /* DeleteButtonPressed.png in Resources */,
+				059A7091103DAE4A00B7500C /* SelectionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2093,6 +2102,7 @@
 				059A6E9B103CA25900B7500C /* TwitPicSettingsViewController.m in Sources */,
 				059A6F29103CD02700B7500C /* UIButton+StandardButtonAdditions.m in Sources */,
 				059A6FF1103CE12600B7500C /* TwitterBasicAuthAuthenticator.m in Sources */,
+				059A708E103DAE2E00B7500C /* SelectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2129,6 +2139,14 @@
 				059A6E9D103CA27400B7500C /* en */,
 			);
 			name = TwitPicSettingsView.xib;
+			sourceTree = "<group>";
+		};
+		059A708F103DAE4A00B7500C /* SelectionView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				059A7090103DAE4A00B7500C /* en */,
+			);
+			name = SelectionView.xib;
 			sourceTree = "<group>";
 		};
 		05B238820FEDC34200A6A2E6 /* MainWindow.xib */ = {

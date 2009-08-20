@@ -7,6 +7,12 @@
 
 @protocol PhotoServicesViewControllerDelegate
 
+- (NSString *)currentlySelectedPhotoServiceName;
+- (NSString *)currentlySelectedVideoServiceName;
+
+- (void)selectServiceForPhotos;
+- (void)selectServiceForVideos;
+
 - (NSArray *)servicesForAccount:(TwitterCredentials *)credentials;
 - (void)userWantsToAddNewPhotoService:(TwitterCredentials *)credentials;
 - (void)userWantsToEditAccountAtIndex:(NSUInteger)index

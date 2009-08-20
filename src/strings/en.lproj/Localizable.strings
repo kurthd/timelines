@@ -162,5 +162,17 @@ findpeople.placeholder = "Username";
 conversationview.title = "Conversation";
 conversationview.load.failed.title = "Failed to Load Conversation";
 
+/* PhotoServicesView */
+photoservicesview.photoservice.label = "Photos";
+photoservicesview.videoservice.label = "Videos";
+photoservicesview.defaults.title = "Settings";
+photoservicesview.accounts.title = "Added Services";
+selectphotoserviceview.view.title = "Select Service";
+selectvideoserviceview.view.title = "Select Service";
+photoserviceview.service.notselected = "None";
+
 /* PhotoServiceSelectorView */
 photoserviceselector.view.title = "Select a Service";
+
+/* TwitPicSettingsView */
+twitpicsettings.view.title = "TwitPic Settings";

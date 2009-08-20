@@ -3,6 +3,7 @@
 //
 
 #import "PhotoServicesDisplayMgr.h"
+#import "NSArray+IterationAdditions.h"
 
 @interface PhotoServicesDisplayMgr ()
 
@@ -14,8 +15,16 @@
     editPhotoServiceDisplayMgr;
 @property (nonatomic, retain) AddPhotoServiceDisplayMgr *
     addPhotoServiceDisplayMgr;
+@property (nonatomic, retain) SelectionViewController *
+    photoServiceSelectionViewController;
+@property (nonatomic, retain) SelectionViewController *
+    videoServiceSelectionViewController;
 
+@property (nonatomic, retain) TwitterCredentials * credentials;
 @property (nonatomic, retain) NSManagedObjectContext * context;
+
+- (NSArray *)availablePhotoServices;
+- (NSArray *)availableVideoServices;
 
 @end
 
@@ -23,8 +32,10 @@
 
 @synthesize delegate;
 @synthesize navigationController, photoServicesViewController;
+@synthesize photoServiceSelectionViewController;
+@synthesize videoServiceSelectionViewController;
 @synthesize editPhotoServiceDisplayMgr, addPhotoServiceDisplayMgr;
-@synthesize context;
+@synthesize credentials, context;
 
 - (void)dealloc
 {
@@ -32,10 +43,13 @@
 
     self.navigationController = nil;
     self.photoServicesViewController = nil;
+    self.photoServiceSelectionViewController = nil;
+    self.videoServiceSelectionViewController = nil;
 
     self.editPhotoServiceDisplayMgr = nil;
     self.addPhotoServiceDisplayMgr = nil;
 
+    self.credentials = nil;
     self.context = nil;
 
     [super dealloc];
@@ -54,24 +68,46 @@
 
 #pragma mark Public implementation
 
-- (void)configurePhotoServicesForAccount:(TwitterCredentials *)credentials
+- (void)configurePhotoServicesForAccount:(TwitterCredentials *)someCredentials
 {
-    self.photoServicesViewController.credentials = credentials;
+    self.credentials = someCredentials;
+    self.photoServicesViewController.credentials = self.credentials;
     [self.navigationController
         pushViewController:self.photoServicesViewController animated:YES];
 }
 
 #pragma mark PhotoServicesViewControllerDelegate implementation
 
-- (NSArray *)servicesForAccount:(TwitterCredentials *)credentials
+- (NSString *)currentlySelectedPhotoServiceName
 {
-    return [credentials.photoServiceCredentials allObjects];
+    return [self.delegate currentlySelectedPhotoServiceName:self.credentials];
+}
+
+- (NSString *)currentlySelectedVideoServiceName
+{
+    return [self.delegate currentlySelectedVideoServiceName:self.credentials];
+}
+
+- (void)selectServiceForPhotos
+{
+    [self.navigationController
+        pushViewController:self.photoServiceSelectionViewController
+                  animated:YES];
+}
+
+- (void)selectServiceForVideos
+{
+}
+
+- (NSArray *)servicesForAccount:(TwitterCredentials *)someCredentials
+{
+    return [someCredentials.photoServiceCredentials allObjects];
 }
 
 - (void)userWantsToEditAccountAtIndex:(NSUInteger)index
-                          credentials:(TwitterCredentials *)credentials
+                          credentials:(TwitterCredentials *)someCredentials
 {
-    NSArray * services = [self servicesForAccount:credentials];
+    NSArray * services = [self servicesForAccount:someCredentials];
     PhotoServiceCredentials * service = [services objectAtIndex:index];
 
     EditPhotoServiceDisplayMgr * mgr =
@@ -86,10 +122,10 @@
     self.editPhotoServiceDisplayMgr = mgr;
 }
 
-- (void)userWantsToAddNewPhotoService:(TwitterCredentials *)credentials
+- (void)userWantsToAddNewPhotoService:(TwitterCredentials *)someCredentials
 {
-    NSLog(@"'%@': adding a new photo service.", credentials.username);
-    [self.addPhotoServiceDisplayMgr addPhotoService:credentials];
+    NSLog(@"'%@': adding a new photo service.", someCredentials.username);
+    [self.addPhotoServiceDisplayMgr addPhotoService:someCredentials];
 }
 
 #pragma mark AddPhotoServiceDisplayMgrDelegate implementation
@@ -115,6 +151,63 @@
     [self.photoServicesViewController reloadDisplay];
 }
 
+#pragma mark SelectionViewControllerDelegate implementation
+
+- (NSArray *)allChoices:(SelectionViewController *)controller
+{
+    NSArray * photoCredentials = nil;
+
+    if (controller == self.photoServiceSelectionViewController)
+        photoCredentials = [self availablePhotoServices];
+    else if (controller == self.videoServiceSelectionViewController)
+        photoCredentials = [self availableVideoServices];
+
+    SEL sel = @selector(serviceName);
+    return [photoCredentials arrayByTransformingObjectsUsingSelector:sel];
+}
+
+- (NSInteger)initialSelectedIndex:(SelectionViewController *)controller
+{
+    NSString * selection = [self currentlySelectedPhotoServiceName];
+    NSArray * choices = [self allChoices:controller];
+
+    return [choices indexOfObject:selection];
+}
+
+- (void)selectionViewController:(SelectionViewController *)controller
+       userDidSelectItemAtIndex:(NSInteger)index
+{
+    NSArray * choices = [self allChoices:controller];
+
+    if (controller == self.photoServiceSelectionViewController) {
+        NSString * name = [choices objectAtIndex:index];
+        [self.delegate userDidSelectPhotoServiceWithName:name
+                                             credentials:self.credentials];
+    } else if (controller == self.videoServiceSelectionViewController) {
+        NSString * name = [choices objectAtIndex:index];
+        [self.delegate userDidSelectVideoServiceWithName:name
+                                             credentials:self.credentials];
+    }
+}
+
+#pragma mark Private implementation
+
+- (NSArray *)availablePhotoServices
+{
+    NSArray * allCredentials =
+        [self.credentials.photoServiceCredentials allObjects];
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:@"supportsPhotos == YES"];
+    NSArray * filtered = [allCredentials filteredArrayUsingPredicate:predicate];
+
+    return filtered;
+}
+
+- (NSArray *)availableVideoServices
+{
+    return [NSArray array];
+}
+
 #pragma mark Accessors
 
 - (PhotoServicesViewController *)photoServicesViewController
@@ -127,6 +220,34 @@
     }
 
     return photoServicesViewController;
+}
+
+- (SelectionViewController *)photoServiceSelectionViewController
+{
+    if (!photoServiceSelectionViewController) {
+        photoServiceSelectionViewController =
+            [[SelectionViewController alloc]
+            initWithNibName:@"SelectionView" bundle:nil];
+        photoServiceSelectionViewController.delegate = self;
+        photoServiceSelectionViewController.viewTitle =
+            NSLocalizedString(@"selectphotoserviceview.view.title", @"");
+    }
+
+    return photoServiceSelectionViewController;
+}
+
+- (SelectionViewController *)videoServiceSelectionViewController
+{
+    if (!videoServiceSelectionViewController) {
+        videoServiceSelectionViewController =
+            [[SelectionViewController alloc]
+            initWithNibName:@"SelectionView" bundle:nil];
+        videoServiceSelectionViewController.delegate = self;
+        videoServiceSelectionViewController.viewTitle =
+            NSLocalizedString(@"selectvideoserviceview.view.title", @"");
+    }
+
+    return videoServiceSelectionViewController;
 }
 
 - (AddPhotoServiceDisplayMgr *)addPhotoServiceDisplayMgr

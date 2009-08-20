@@ -26,4 +26,16 @@
     return nil;
 }
 
+- (BOOL)supportsPhotos
+{
+    // to be overridden by subclasses
+    return NO;
+}
+
+- (BOOL)supportsVideo
+{
+    // to be overridden by subclasses
+    return NO;
+}
+
 @end

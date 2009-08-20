@@ -19,6 +19,8 @@ enum PushSettings
 
 + (NSString *)pushMentionsKey;
 + (NSString *)pushDirectMessagesKey;
++ (NSString *)photoServiceNameKey;
++ (NSString *)videoServiceNameKey;
 + (NSString *)allAccountSettingsKey;
 
 @end
@@ -73,6 +75,8 @@ enum PushSettings
 {
     [pushMentions release];
     [pushDirectMessages release];
+    [photoServiceName release];
+    [videoServiceName release];
     [super dealloc];
 }
 
@@ -101,6 +105,8 @@ enum PushSettings
 
     [copy setPushMentions:[self pushMentions]];
     [copy setPushDirectMessages:[self pushDirectMessages]];
+    [copy setPhotoServiceName:[self photoServiceName]];
+    [copy setVideoServiceName:[self videoServiceName]];
 
     return copy;
 }
@@ -133,6 +139,32 @@ enum PushSettings
     }
 }
 
+- (NSString *)photoServiceName
+{
+    return photoServiceName;
+}
+
+- (void)setPhotoServiceName:(NSString *)name
+{
+    if (![photoServiceName isEqualToString:name]) {
+        [photoServiceName release];
+        photoServiceName = [name copy];
+    }
+}
+
+- (NSString *)videoServiceName
+{
+    return videoServiceName;
+}
+
+- (void)setVideoServiceName:(NSString *)name
+{
+    if (![videoServiceName isEqualToString:name]) {
+        [videoServiceName release];
+        videoServiceName = [name copy];
+    }
+}
+
 - (NSNumber *)pushSettings
 {
     NSInteger n = 0;
@@ -156,10 +188,20 @@ enum PushSettings
 
 - (NSDictionary *)toDictionary
 {
-    return [NSDictionary dictionaryWithObjectsAndKeys:
+    NSMutableDictionary * d =
+        [NSMutableDictionary dictionaryWithObjectsAndKeys:
         pushMentions, [[self class] pushMentionsKey],
         pushDirectMessages, [[self class] pushDirectMessagesKey],
         nil];
+
+    if ([self photoServiceName])
+        [d setObject:[self photoServiceName]
+              forKey:[[self class] photoServiceNameKey]];
+    if ([self videoServiceName])
+        [d setObject:[self videoServiceName]
+              forKey:[[self class] videoServiceNameKey]];
+
+    return d;
 }
 
 + (id)fromDictionary:(NSDictionary *)dictionary
@@ -170,6 +212,14 @@ enum PushSettings
         [[dictionary objectForKey:[[self class] pushMentionsKey]] retain];
     settings->pushDirectMessages =
         [[dictionary objectForKey:[[self class] pushDirectMessagesKey]] retain];
+
+    NSString * photoService =
+        [dictionary objectForKey:[[self class] photoServiceNameKey]];
+    NSString * videoService =
+        [dictionary objectForKey:[[self class] videoServiceNameKey]];
+
+    [settings setPhotoServiceName:photoService];
+    [settings setVideoServiceName:videoService];
 
     return [settings autorelease];
 }
@@ -202,6 +252,16 @@ enum PushSettings
 + (NSString *)pushDirectMessagesKey
 {
     return @"push-direct-messages";
+}
+
++ (NSString *)photoServiceNameKey
+{
+    return @"photo-service";
+}
+
++ (NSString *)videoServiceNameKey
+{
+    return @"vide-service";
 }
 
 + (NSString *)allAccountSettingsKey
