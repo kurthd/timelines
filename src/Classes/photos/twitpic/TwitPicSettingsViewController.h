@@ -7,6 +7,8 @@
 
 @protocol TwitPicSettingsViewControllerDelegate
 
+- (void)userDidSaveUsername:(NSString *)username password:(NSString *)password;
+- (void)userDidCancel;
 - (void)deleteServiceWithCredentials:(TwitPicCredentials *)credentials;
 
 @end
@@ -27,12 +29,17 @@
 
     UIButton * deleteButton;
 
+    BOOL enabled;
+
     TwitPicCredentials * credentials;
 }
 
 @property (nonatomic, assign) id<TwitPicSettingsViewControllerDelegate>
     delegate;
 @property (nonatomic, retain) TwitPicCredentials * credentials;
+
+- (void)enable;
+- (void)disable;
 
 #pragma mark Button actions
 

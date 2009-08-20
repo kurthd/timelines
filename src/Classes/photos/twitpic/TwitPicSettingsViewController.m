@@ -50,16 +50,52 @@
     [super dealloc];
 }
 
+#pragma mark Public implementation
+
+- (void)enable
+{
+    self.usernameTextField.enabled = YES;
+    self.passwordTextField.enabled = YES;
+
+    self.cancelButton.enabled = YES;
+    self.saveButton.enabled = YES;
+
+    self.deleteButton.enabled = YES;
+
+    enabled = YES;
+}
+
+- (void)disable
+{
+    self.usernameTextField.enabled = NO;
+    self.passwordTextField.enabled = NO;
+
+    [self.usernameTextField resignFirstResponder];
+    [self.passwordTextField resignFirstResponder];
+
+    self.cancelButton.enabled = NO;
+    self.saveButton.enabled = NO;
+
+    self.deleteButton.enabled = NO;
+
+    enabled = NO;
+}
+
 #pragma mark UIViewController overrides
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+    self.navigationItem.leftBarButtonItem = self.cancelButton;
+    self.navigationItem.rightBarButtonItem = self.saveButton;
+
     self.usernameTextField.delegate = self;
     self.passwordTextField.delegate = self;
 
     self.tableView.tableFooterView = self.deleteButton;
+
+    enabled = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -94,14 +130,59 @@
     return nil;
 }
 
+#pragma mark UITextFieldDelegate implementation
+
+- (BOOL)textField:(UITextField *)textField
+    shouldChangeCharactersInRange:(NSRange)range
+                replacementString:(NSString *)string
+{
+    NSString * s = [textField.text stringByReplacingCharactersInRange:range
+                                                           withString:string];
+
+    NSString * username = nil, * password = nil;
+    if (textField == self.usernameTextField) {
+        username = s;
+        password = self.passwordTextField.text;
+    } else {
+        username = self.usernameTextField.text;
+        password = s;
+    }
+
+    self.saveButton.enabled = username.length && password.length;
+
+    return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    self.saveButton.enabled = NO;
+
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField == self.usernameTextField)
+        [self.passwordTextField becomeFirstResponder];
+    else
+        [self.passwordTextField resignFirstResponder];
+
+    return YES;
+}
+
 #pragma mark Button actions
 
 - (IBAction)userDidSave:(id)sender
 {
+    NSString * username = self.usernameTextField.text;
+    NSString * password = self.passwordTextField.text;
+
+    [self.delegate userDidSaveUsername:username password:password];
 }
 
 - (IBAction)userDidCancel:(id)sender
 {
+    [self.delegate userDidCancel];
 }
 
 - (void)deleteService:(id)sender
@@ -117,6 +198,7 @@
     self.passwordTextField.text = [self.credentials password];
 
     self.saveButton.enabled =
+        enabled &&
         self.credentials.username.length && [self.credentials password].length;
 }
 

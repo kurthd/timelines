@@ -5,9 +5,12 @@
 #import <Foundation/Foundation.h>
 #import "EditPhotoServiceDisplayMgr.h"
 #import "TwitPicSettingsViewController.h"
+#import "TwitterBasicAuthAuthenticator.h"
 
 @interface TwitPicEditPhotoServiceDisplayMgr :
-    EditPhotoServiceDisplayMgr <TwitPicSettingsViewControllerDelegate>
+    EditPhotoServiceDisplayMgr
+    <TwitPicSettingsViewControllerDelegate,
+    TwitterBasicAuthAuthenticatorDelegate>
 {
     TwitPicCredentials * credentials;
     NSManagedObjectContext * context;
