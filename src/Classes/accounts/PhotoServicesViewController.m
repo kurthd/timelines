@@ -106,6 +106,22 @@ enum {
     return title;
 }
 
+- (NSString *)tableView:(UITableView *)tableView
+titleForFooterInSection:(NSInteger)section
+{
+    NSString * footer = nil;
+
+    if (section == kDefaultsSection)
+        footer = NSLocalizedString(@"photoservicesview.defaults.footer", @"");
+    if (section == kAccountsSection && ![self.delegate areMoreServicesAvailable])
+        footer =
+            NSLocalizedString(@"photoservicesview.accounts.allinstalled.footer",
+            @"");
+
+    return footer;
+        
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
