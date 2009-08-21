@@ -178,8 +178,6 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet
     clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"index presssed: %d", buttonIndex);
-
     if (buttonIndex == 0)  // delete button was pressed
       [self.delegate deleteServiceWithCredentials:self.credentials];
 
