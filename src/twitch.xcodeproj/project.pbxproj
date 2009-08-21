@@ -62,7 +62,7 @@
 		05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05AC573C1029F0EF00F727A2 /* QuartzCore.framework */; };
 		05C6C92B1028F7F000182B4A /* Trend.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C6C92A1028F7F000182B4A /* Trend.m */; };
 		05C7B89D103B59D70017874C /* TwitPicCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B896103B59D70017874C /* TwitPicCredentials+KeychainAdditions.m */; };
-		05C7B89E103B59D70017874C /* TwitPicImageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B898103B59D70017874C /* TwitPicImageSender.m */; };
+		05C7B89E103B59D70017874C /* TwitPicPhotoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B898103B59D70017874C /* TwitPicPhotoService.m */; };
 		05C7B89F103B59D70017874C /* TwitPicResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B89B103B59D70017874C /* TwitPicResponseParser.m */; };
 		05C7B8A9103B5A5D0017874C /* PhotoServicesDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B8A8103B5A5D0017874C /* PhotoServicesDisplayMgr.m */; };
 		05C7B8AC103B5CE40017874C /* PhotoServicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B8AB103B5CE40017874C /* PhotoServicesViewController.m */; };
@@ -601,9 +601,8 @@
 		05C7051C0FF88C4100936E4C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/ExplainOauthView.xib; sourceTree = "<group>"; };
 		05C7B895103B59D70017874C /* TwitPicCredentials+KeychainAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TwitPicCredentials+KeychainAdditions.h"; path = "photos/twitpic/TwitPicCredentials+KeychainAdditions.h"; sourceTree = "<group>"; };
 		05C7B896103B59D70017874C /* TwitPicCredentials+KeychainAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TwitPicCredentials+KeychainAdditions.m"; path = "photos/twitpic/TwitPicCredentials+KeychainAdditions.m"; sourceTree = "<group>"; };
-		05C7B897103B59D70017874C /* TwitPicImageSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitPicImageSender.h; path = photos/twitpic/TwitPicImageSender.h; sourceTree = "<group>"; };
-		05C7B898103B59D70017874C /* TwitPicImageSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitPicImageSender.m; path = photos/twitpic/TwitPicImageSender.m; sourceTree = "<group>"; };
-		05C7B899103B59D70017874C /* TwitPicImageSenderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitPicImageSenderDelegate.h; path = photos/twitpic/TwitPicImageSenderDelegate.h; sourceTree = "<group>"; };
+		05C7B897103B59D70017874C /* TwitPicPhotoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitPicPhotoService.h; path = photos/twitpic/TwitPicPhotoService.h; sourceTree = "<group>"; };
+		05C7B898103B59D70017874C /* TwitPicPhotoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitPicPhotoService.m; path = photos/twitpic/TwitPicPhotoService.m; sourceTree = "<group>"; };
 		05C7B89A103B59D70017874C /* TwitPicResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitPicResponseParser.h; path = photos/twitpic/TwitPicResponseParser.h; sourceTree = "<group>"; };
 		05C7B89B103B59D70017874C /* TwitPicResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitPicResponseParser.m; path = photos/twitpic/TwitPicResponseParser.m; sourceTree = "<group>"; };
 		05C7B8A7103B5A5D0017874C /* PhotoServicesDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoServicesDisplayMgr.h; path = accounts/PhotoServicesDisplayMgr.h; sourceTree = "<group>"; };
@@ -1502,9 +1501,8 @@
 				059A6E95103C9EC600B7500C /* TwitPicEditPhotoServiceDisplayMgr.m */,
 				059A6E99103CA25900B7500C /* TwitPicSettingsViewController.h */,
 				059A6E9A103CA25900B7500C /* TwitPicSettingsViewController.m */,
-				05C7B897103B59D70017874C /* TwitPicImageSender.h */,
-				05C7B898103B59D70017874C /* TwitPicImageSender.m */,
-				05C7B899103B59D70017874C /* TwitPicImageSenderDelegate.h */,
+				05C7B897103B59D70017874C /* TwitPicPhotoService.h */,
+				05C7B898103B59D70017874C /* TwitPicPhotoService.m */,
 				05C7B89A103B59D70017874C /* TwitPicResponseParser.h */,
 				05C7B89B103B59D70017874C /* TwitPicResponseParser.m */,
 			);
@@ -2193,7 +2191,7 @@
 				9130FFD9103623DA004E3030 /* TimelineTableViewCellBackground.m in Sources */,
 				0519767B103A291E00883FAC /* AccountSettingsDisplayMgr.m in Sources */,
 				05C7B89D103B59D70017874C /* TwitPicCredentials+KeychainAdditions.m in Sources */,
-				05C7B89E103B59D70017874C /* TwitPicImageSender.m in Sources */,
+				05C7B89E103B59D70017874C /* TwitPicPhotoService.m in Sources */,
 				05C7B89F103B59D70017874C /* TwitPicResponseParser.m in Sources */,
 				05C7B8A9103B5A5D0017874C /* PhotoServicesDisplayMgr.m in Sources */,
 				05C7B8AC103B5CE40017874C /* PhotoServicesViewController.m in Sources */,

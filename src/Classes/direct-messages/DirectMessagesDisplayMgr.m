@@ -1042,19 +1042,11 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     if (!composeMessageDisplayMgr) {
         TwitterService * twitterService = [service clone];  // autoreleased
 
-        NSString * twitPicUrl =
-            [[InfoPlistConfigReader reader] valueForKey:@"TwitPicPostUrl"];
-        TwitPicImageSender * imageSender =
-            [[TwitPicImageSender alloc] initWithUrl:twitPicUrl];
-
         composeMessageDisplayMgr =
             [[ComposeTweetDisplayMgr alloc]
             initWithRootViewController:wrapperController.tabBarController
                         twitterService:twitterService
-                           imageSender:imageSender
                                context:managedObjectContext];
-        [imageSender release];
-
         composeMessageDisplayMgr.delegate = self;
     }
 

@@ -9,5 +9,6 @@
 @interface TwitterCredentials (PhotoServiceAdditions)
 
 - (PhotoServiceCredentials *)defaultPhotoServiceCredentials;
+- (PhotoServiceCredentials *)defaultVideoServiceCredentials;
 
 @end

@@ -6,7 +6,7 @@
 #import "ComposeTweetDisplayMgrDelegate.h"
 #import "ComposeTweetViewControllerDelegate.h"
 #import "TwitterService.h"
-#import "TwitPicImageSender.h"
+#import "PhotoService.h"
 #import "TwitterCredentials.h"
 #import "LogInDisplayMgr.h"
 #import "AddPhotoServiceDisplayMgr.h"
@@ -19,7 +19,7 @@
 @interface ComposeTweetDisplayMgr :
     NSObject
     <ComposeTweetViewControllerDelegate, TwitterServiceDelegate,
-    TwitPicImageSenderDelegate, LogInDisplayMgrDelegate,
+    PhotoServiceDelegate, LogInDisplayMgrDelegate,
     UIImagePickerControllerDelegate, UINavigationControllerDelegate,
     UIActionSheetDelegate, AddPhotoServiceDisplayMgrDelegate>
 {
@@ -29,7 +29,6 @@
     ComposeTweetViewController * composeTweetViewController;
 
     TwitterService * service;
-    TwitPicImageSender * imageSender;
     LogInDisplayMgr * logInDisplayMgr;
 
     BOOL fromHomeScreen;  // HACK: restore the correct draft from the "root"
@@ -52,7 +51,6 @@
 
 - (id)initWithRootViewController:(UIViewController *)aRootViewController
                   twitterService:(TwitterService *)aService
-                     imageSender:(TwitPicImageSender *)anImageSender
                          context:(NSManagedObjectContext *)aContext;
 
 - (void)composeTweet;

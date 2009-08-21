@@ -7,11 +7,11 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "CredentialsActivatedPublisher.h"
 #import "CredentialsSetChangedPublisher.h"
-#import "TwitPicImageSender.h"
 #import "TweetDraft.h"
 #import "DirectMessageDraft.h"
 #import "TweetDraftMgr.h"
 #import "TwitterCredentials+PhotoServiceAdditions.h"
+#import "PhotoService+ServiceAdditions.h"
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -20,7 +20,6 @@
     composeTweetViewController;
 
 @property (nonatomic, retain) TwitterService * service;
-@property (nonatomic, retain) TwitPicImageSender * imageSender;
 @property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
 
 @property (nonatomic, retain) CredentialsActivatedPublisher *
@@ -48,7 +47,7 @@
 @implementation ComposeTweetDisplayMgr
 
 @synthesize rootViewController, composeTweetViewController;
-@synthesize service, imageSender;
+@synthesize service;
 @synthesize credentialsUpdatePublisher, credentialsSetChangedPublisher;
 @synthesize logInDisplayMgr, context;
 @synthesize delegate;
@@ -62,7 +61,6 @@
     self.rootViewController = nil;
     self.composeTweetViewController = nil;
     self.service = nil;
-    self.imageSender = nil;
     self.credentialsUpdatePublisher = nil;
     self.credentialsSetChangedPublisher = nil;
     self.addPhotoServiceDisplayMgr = nil;
@@ -75,16 +73,12 @@
 
 - (id)initWithRootViewController:(UIViewController *)aRootViewController
                   twitterService:(TwitterService *)aService
-                     imageSender:(TwitPicImageSender *)anImageSender
                          context:(NSManagedObjectContext *)aContext
 {
     if (self = [super init]) {
         self.rootViewController = aRootViewController;
         self.service = aService;
         self.service.delegate = self;
-
-        self.imageSender = anImageSender;
-        self.imageSender.delegate = self;
 
         self.context = aContext;
 
@@ -456,17 +450,20 @@
     [self.delegate userFailedToSendDirectMessage:text to:username];
 }
 
-#pragma mark TwitPicImageSenderDelegate implementation
+#pragma mark PhotoServiceDelegate implementation
 
-- (void)sender:(TwitPicImageSender *)sender didPostImageToUrl:(NSString *)url
+- (void)service:(PhotoService *)photoService didPostImageToUrl:(NSString *)url
 {
     NSLog(@"Successfully posted image to URL: '%@'.", url);
 
     [self.composeTweetViewController hideActivityView];
     [self.composeTweetViewController addTextToMessage:url];
+
+    [photoService autorelease];
 }
 
-- (void)sender:(TwitPicImageSender *)sender failedToPostImage:(NSError *)error
+- (void)service:(PhotoService *)photoService
+    failedToPostImage:(NSError *)error
 {
     NSLog(@"Failed to post image to URL: '%@'.", error);
 
@@ -476,6 +473,8 @@
                                    message:error.localizedDescription] show];
 
     [self.composeTweetViewController hideActivityView];
+
+    [photoService autorelease];
 }
 
 #pragma mark UIImagePickerControllerDelegate implementation
@@ -483,18 +482,24 @@
 - (void)imagePickerController:(UIImagePickerController *)picker
     didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    NSLog(@"Cropped image: %@.", [info objectForKey:UIImagePickerControllerEditedImage]);
+    NSLog(@"Original image: %@.", [info objectForKey:UIImagePickerControllerOriginalImage]);
+
     UIImage * image = [info objectForKey:UIImagePickerControllerEditedImage];
     if (!image)
-         image = [info valueForKey:UIImagePickerControllerOriginalImage];
+         image = [info objectForKey:UIImagePickerControllerOriginalImage];
 
-    /*
-    TwitPicCredentials * c = service.credentials.twitPicCredentials;
-    NSAssert(c, @"Unexpected nil value for TwitPic credentials while uploading "
-        "image.");
-    [imageSender sendImage:image withCredentials:c];
+    PhotoServiceCredentials * c =
+        [service.credentials defaultPhotoServiceCredentials];
+    NSString * serviceName = [c serviceName];
+    NSLog(@"Uploading photo to: '%@'", serviceName);
+    PhotoService * photoService =
+        [[PhotoService photoServiceWithServiceName:serviceName] retain];
+    photoService.delegate = self;
+    [photoService sendImage:image withCredentials:c];
+
     [self.composeTweetViewController displayActivityView];
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
-     */
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -506,6 +511,8 @@
 
 - (void)photoServiceAdded:(PhotoServiceCredentials *)credentials
 {
+    [self promptForPhotoSource:
+        self.composeTweetViewController.modalViewController];
 }
 
 - (void)addingPhotoServiceCancelled

@@ -3,6 +3,7 @@
 //
 
 #import "PhotoService+ServiceAdditions.h"
+#import "NSObject+RuntimeAdditions.h"
 
 @implementation PhotoService (ServiceAdditions)
 
@@ -15,6 +16,25 @@
         [UIImage imageNamed:@"YfrogLogo.png"], @"Yfrog",
         [UIImage imageNamed:@"TwitVidLogo.png"], @"TwitVid",
         nil];
+}
+
++ (id)photoServiceWithServiceName:(NSString *)serviceName
+{
+    static NSDictionary * serviceClassNames = nil;
+    if (!serviceClassNames)
+        serviceClassNames =
+            [NSDictionary dictionaryWithObjectsAndKeys:
+            @"TwitPicPhotoService", @"TwitPic",
+            @"TwitVicPhotoService", @"TwitVid",
+            @"YfrogPhotoService", @"Yfrog",
+            nil];
+
+    NSString * className = [serviceClassNames objectForKey:serviceName];
+    NSAssert1(className, @"Failed to find class name for service name: '%@'.",
+        serviceName);
+
+    Class class = [self classNamed:className];
+    return [[[class alloc] init] autorelease];
 }
 
 @end

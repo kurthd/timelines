@@ -9,4 +9,6 @@
 
 + (NSDictionary *)photoServiceNamesAndLogos;
 
++ (id)photoServiceWithServiceName:(NSString *)serviceName;
+
 @end

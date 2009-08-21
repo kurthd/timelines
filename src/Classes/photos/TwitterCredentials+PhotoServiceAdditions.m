@@ -7,17 +7,27 @@
 
 @implementation TwitterCredentials (PhotoServiceAdditions)
 
-- (PhotoServiceCredentials *)defaultPhotoServiceCredentials
+- (PhotoServiceCredentials *)defaultServiceCredentials:(SEL)type
 {
     AccountSettings * settings =
         [AccountSettings settingsForKey:self.username];
-    NSString * selectedService = [settings photoServiceName];
+    NSString * selectedService = [settings performSelector:type];
 
     for (PhotoServiceCredentials * c in self.photoServiceCredentials)
         if ([[c serviceName] isEqualToString:selectedService])
             return c;
 
     return nil;
+}
+
+- (PhotoServiceCredentials *)defaultPhotoServiceCredentials
+{
+    return [self defaultServiceCredentials:@selector(photoServiceName)];
+}
+
+- (PhotoServiceCredentials *)defaultVideoServiceCredentials
+{
+    return [self defaultServiceCredentials:@selector(videoServiceName)];
 }
 
 @end
