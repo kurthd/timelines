@@ -14,8 +14,6 @@
 
 @property (nonatomic, copy) NSString * twitPicUrl;
 
-@property (nonatomic, retain) UIImage * image;
-
 @property (nonatomic, retain) NSMutableData * data;
 @property (nonatomic, retain) NSURLConnection * connection;
 
@@ -31,7 +29,6 @@
 @implementation TwitPicPhotoService
 
 @synthesize twitPicUrl;
-@synthesize image;
 @synthesize data, connection;
 @synthesize parser;
 
@@ -76,6 +73,13 @@
 
     // HACK
     [[UIApplication sharedApplication] networkActivityIsStarting];
+}
+
+- (void)sendVideo:(NSData *)aVideo
+  withCredentials:(TwitPicCredentials *)ctls
+{
+    NSAssert(
+        NO, @"Trying to send a video via TwitPic, which does not support it.");
 }
 
 #pragma mark NSURLConnection delegate methods

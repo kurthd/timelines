@@ -23,9 +23,9 @@
     static NSDictionary * serviceClassNames = nil;
     if (!serviceClassNames)
         serviceClassNames =
-            [NSDictionary dictionaryWithObjectsAndKeys:
+            [[NSDictionary alloc] initWithObjectsAndKeys:
             @"TwitPicPhotoService", @"TwitPic",
-            @"TwitVicPhotoService", @"TwitVid",
+            @"TwitVidPhotoService", @"TwitVid",
             @"YfrogPhotoService", @"Yfrog",
             nil];
 

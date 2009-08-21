@@ -2,6 +2,7 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
+#import <MobileCoreServices/MobileCoreServices.h>  // for kUTTypeMovie
 #import "ComposeTweetDisplayMgr.h"
 #import "ComposeTweetViewController.h"
 #import "UIAlertView+InstantiationAdditions.h"
@@ -462,6 +463,16 @@
     [photoService autorelease];
 }
 
+- (void)service:(PhotoService *)photoService didPostVideoToUrl:(NSString *)url
+{
+    NSLog(@"Successfully posted video to URL: '%@'.", url);
+
+    [self.composeTweetViewController hideActivityView];
+    [self.composeTweetViewController addTextToMessage:url];
+
+    [photoService autorelease];
+}
+
 - (void)service:(PhotoService *)photoService
     failedToPostImage:(NSError *)error
 {
@@ -482,23 +493,41 @@
 - (void)imagePickerController:(UIImagePickerController *)picker
     didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    NSLog(@"Cropped image: %@.",
-        [info objectForKey:UIImagePickerControllerEditedImage]);
-    NSLog(@"Original image: %@.",
-        [info objectForKey:UIImagePickerControllerOriginalImage]);
+    NSString * mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    if ([mediaType isEqualToString:(NSString *) kUTTypeMovie]) {
+        NSURL * videoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+        NSData * video = [NSData dataWithContentsOfURL:videoUrl];
 
-    UIImage * image = [info objectForKey:UIImagePickerControllerEditedImage];
-    if (!image)
-         image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        PhotoServiceCredentials * c =
+            [service.credentials defaultVideoServiceCredentials];
+        NSString * serviceName = [c serviceName];
+        NSLog(@"Uploading video to: '%@'.", serviceName);
 
-    PhotoServiceCredentials * c =
-        [service.credentials defaultPhotoServiceCredentials];
-    NSString * serviceName = [c serviceName];
-    NSLog(@"Uploading photo to: '%@'", serviceName);
-    PhotoService * photoService =
-        [[PhotoService photoServiceWithServiceName:serviceName] retain];
-    photoService.delegate = self;
-    [photoService sendImage:image withCredentials:c];
+        PhotoService * photoService =
+            [[PhotoService photoServiceWithServiceName:serviceName] retain];
+        photoService.delegate = self;
+
+        [photoService sendVideo:video withCredentials:c];
+    } else if ([mediaType isEqualToString:(NSString *) kUTTypeImage]) {
+        NSLog(@"Cropped image: %@.",
+           [info objectForKey:UIImagePickerControllerEditedImage]);
+        NSLog(@"Original image: %@.",
+            [info objectForKey:UIImagePickerControllerOriginalImage]);
+
+        UIImage * image = [info objectForKey:UIImagePickerControllerEditedImage];
+        if (!image)
+            image = [info objectForKey:UIImagePickerControllerOriginalImage];
+
+        PhotoServiceCredentials * c =
+            [service.credentials defaultPhotoServiceCredentials];
+        NSString * serviceName = [c serviceName];
+        NSLog(@"Uploading photo to: '%@'", serviceName);
+        PhotoService * photoService =
+            [[PhotoService photoServiceWithServiceName:serviceName] retain];
+        photoService.delegate = self;
+        [photoService sendImage:image withCredentials:c];
+    }
+
 
     [self.composeTweetViewController displayActivityView];
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
@@ -555,21 +584,32 @@
     UIImagePickerControllerSourceType camera =
         UIImagePickerControllerSourceTypeCamera;
 
-    UIImagePickerControllerSourceType source;
-
     BOOL libraryAvailable =
         [UIImagePickerController isSourceTypeAvailable:photoLibrary];
     BOOL cameraAvailable =
         [UIImagePickerController isSourceTypeAvailable:camera];
+    BOOL videoAvailable =
+        cameraAvailable &&
+        [[UIImagePickerController
+        availableMediaTypesForSourceType:camera]
+        containsObject:(NSString *) kUTTypeMovie];
+
+    // make sure the user has added a video service
+    videoAvailable =
+        videoAvailable && [service.credentials defaultVideoServiceCredentials];
 
     if (cameraAvailable && libraryAvailable) {
         NSString * cancelButton =
             NSLocalizedString(@"imagepicker.choose.cancel", @"");
         NSString * cameraButton =
+            videoAvailable ?
+            NSLocalizedString(@"imagepicker.choose.camerawithvideo", @"") :
             NSLocalizedString(@"imagepicker.choose.camera", @"");
         NSString * photosButton =
+            videoAvailable ?
+            NSLocalizedString(@"imagepicker.choose.photoswithvideo", @"") :
             NSLocalizedString(@"imagepicker.choose.photos", @"");
-        
+
         UIActionSheet * sheet =
             [[UIActionSheet alloc] initWithTitle:nil
                                         delegate:self
@@ -579,6 +619,7 @@
                                                  photosButton, nil];
         [sheet showInView:controller.view];
     } else {
+        UIImagePickerControllerSourceType source;
         if (cameraAvailable)
             source = camera;
         else
@@ -597,6 +638,8 @@
     imagePicker.delegate = self;
     imagePicker.allowsImageEditing = NO;
     imagePicker.sourceType = source;
+    imagePicker.mediaTypes =
+        [UIImagePickerController availableMediaTypesForSourceType:source];
 
     [controller presentModalViewController:imagePicker animated:YES];
     [imagePicker release];
