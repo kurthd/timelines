@@ -32,6 +32,8 @@
 	<true/>
 	<key>TwitPicPostUrl</key>
 	<string>https://twitpic.com/api/upload</string>
+	<key>YfrogPostUrl</key>
+	<string>https://yfrog.com/api/upload</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>GoogleMapsApiKey</key>

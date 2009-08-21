@@ -5,16 +5,16 @@
 #import <Foundation/Foundation.h>
 #import "PhotoService.h"
 
-@class TwitPicResponseParser;
+@class YfrogResponseParser;
 
-@interface TwitPicPhotoService : PhotoService
+@interface YfrogPhotoService : PhotoService
 {
-    NSString * twitPicUrl;
+    NSString * yfrogUrl;
 
     NSMutableData * data;
     NSURLConnection * connection;
 
-    TwitPicResponseParser * parser;
+    YfrogResponseParser * parser;
 }
 
 @end

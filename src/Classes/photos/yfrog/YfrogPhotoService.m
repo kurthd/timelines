@@ -2,24 +2,24 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import "TwitPicPhotoService.h"
-#import "TwitPicResponseParser.h"
+#import "YfrogPhotoService.h"
+#import "YfrogResponseParser.h"
 #import "UIApplication+NetworkActivityIndicatorAdditions.h"
 #import "NSError+InstantiationAdditions.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
-#import "TwitPicCredentials+KeychainAdditions.h"
+#import "YfrogCredentials+KeychainAdditions.h"
 #import "InfoPlistConfigReader.h"
 
-@interface TwitPicPhotoService ()
+@interface YfrogPhotoService ()
 
-@property (nonatomic, copy) NSString * twitPicUrl;
+@property (nonatomic, copy) NSString * yfrogUrl;
 
 @property (nonatomic, retain) UIImage * image;
 
 @property (nonatomic, retain) NSMutableData * data;
 @property (nonatomic, retain) NSURLConnection * connection;
 
-@property (nonatomic, retain) TwitPicResponseParser * parser;
+@property (nonatomic, retain) YfrogResponseParser * parser;
 
 + (NSURLRequest *)requestForPostingImage:(UIImage *)image
                                    toUrl:(NSURL *)url
@@ -28,16 +28,16 @@
 
 @end
 
-@implementation TwitPicPhotoService
+@implementation YfrogPhotoService
 
-@synthesize twitPicUrl;
+@synthesize yfrogUrl;
 @synthesize image;
 @synthesize data, connection;
 @synthesize parser;
 
 - (void)dealloc
 {
-    self.twitPicUrl = nil;
+    self.yfrogUrl = nil;
     self.connection = nil;
     self.data = nil;
     self.parser = nil;
@@ -47,20 +47,20 @@
 - (id)init
 {
     if (self = [super init]) {
-        self.twitPicUrl =
-            [[InfoPlistConfigReader reader] valueForKey:@"TwitPicPostUrl"];
-        parser = [[TwitPicResponseParser alloc] init];
+        self.yfrogUrl =
+            [[InfoPlistConfigReader reader] valueForKey:@"YfrogPostUrl"];
+        parser = [[YfrogResponseParser alloc] init];
     }
 
     return self;
 }
 
 - (void)sendImage:(UIImage *)anImage
-  withCredentials:(TwitPicCredentials *)someCredentials
+  withCredentials:(YfrogCredentials *)someCredentials
 {
     [super sendImage:anImage withCredentials:someCredentials];
 
-    NSURL * url = [NSURL URLWithString:self.twitPicUrl];
+    NSURL * url = [NSURL URLWithString:self.yfrogUrl];
     NSURLRequest * request =
         [[self class] requestForPostingImage:self.image
                                        toUrl:url
@@ -88,7 +88,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)conn
 {
-    NSLog(@"Received response from TwitPic: '%@'.", [[[NSString alloc]
+    NSLog(@"Received response from Yfrog: '%@'.", [[[NSString alloc]
            initWithData:data encoding:4] autorelease]);
 
     [self.parser parse:data];
@@ -119,8 +119,6 @@
                             withUsername:(NSString *)username
                                 password:(NSString *)password
 {
-    static NSString * devKey = @"023AGLTUc7533b166461ddb3bc523c54ab082240";
-
     NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:url];
     [postRequest setHTTPMethod:@"POST"];
 
@@ -134,9 +132,9 @@
     [postBody appendData:[[NSString stringWithFormat:@"\r\n\r\n--%@\r\n", 
                 stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithString:
-       @"Content-Disposition: form-data; name=\"key\"\r\n\r\n"] 
+       @"Content-Disposition: form-data; name=\"source\"\r\n\r\n"] 
        dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:devKey] 
+    [postBody appendData:[[NSString stringWithString:@"Twitbit for iPhone"] 
        dataUsingEncoding:NSUTF8StringEncoding]];
 
     [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", 

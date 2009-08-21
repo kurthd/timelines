@@ -482,8 +482,10 @@
 - (void)imagePickerController:(UIImagePickerController *)picker
     didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    NSLog(@"Cropped image: %@.", [info objectForKey:UIImagePickerControllerEditedImage]);
-    NSLog(@"Original image: %@.", [info objectForKey:UIImagePickerControllerOriginalImage]);
+    NSLog(@"Cropped image: %@.",
+        [info objectForKey:UIImagePickerControllerEditedImage]);
+    NSLog(@"Original image: %@.",
+        [info objectForKey:UIImagePickerControllerOriginalImage]);
 
     UIImage * image = [info objectForKey:UIImagePickerControllerEditedImage];
     if (!image)
@@ -593,7 +595,7 @@
         [[UIImagePickerController alloc] init];
 
     imagePicker.delegate = self;
-    imagePicker.allowsImageEditing = YES;
+    imagePicker.allowsImageEditing = NO;
     imagePicker.sourceType = source;
 
     [controller presentModalViewController:imagePicker animated:YES];
