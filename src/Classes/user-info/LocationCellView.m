@@ -217,9 +217,11 @@
         updatingMap = NO;
         [self.mapView setCenterCoordinate:coord animated:NO];
         self.mapAnnotation.coordinate = coord;
-        // force map to display, otherwise it won't really update the center
-        [self setNeedsDisplay];   
     }
+
+    // force map to display, otherwise it won't really update the center
+    // and we need to update the location text
+    [self setNeedsDisplay];
 }
 
 - (void)updateMapSpan
