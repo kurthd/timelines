@@ -505,7 +505,7 @@
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
     NSLog(@"User list display manager: setting credentials: %@",
-        someCredentials);
+        someCredentials.username);
 
     [someCredentials retain];
     [credentials release];
