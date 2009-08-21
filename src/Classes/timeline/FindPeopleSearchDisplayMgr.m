@@ -717,7 +717,8 @@
     } else
         self.autocompleteArray = [NSArray array];
 
-    if ([self.autocompleteArray count] > 0 && !showingAutocompleteResults)
+    if ([self.autocompleteArray count] > 0 && !showingAutocompleteResults &&
+        editingQuery)
         [self showAutocompleteResults];
     else if ([self.autocompleteArray count] == 0 && showingAutocompleteResults)
         [self hideAutocompleteResults];
