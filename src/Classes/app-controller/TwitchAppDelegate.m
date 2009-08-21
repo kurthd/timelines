@@ -771,6 +771,7 @@
 
 #if defined(HOB_TWITBIT_PUSH_ENABLE)
 
+    /** jad: temporary: removed for debugging
     UIRemoteNotificationType notificationTypes =
     (UIRemoteNotificationTypeBadge |
      UIRemoteNotificationTypeSound |
@@ -778,6 +779,7 @@
 
     [[UIApplication sharedApplication]
         registerForRemoteNotificationTypes:notificationTypes];
+    */
 
 #endif
 
