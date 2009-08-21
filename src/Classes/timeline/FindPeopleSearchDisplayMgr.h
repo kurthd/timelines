@@ -21,7 +21,8 @@
     NSObject
     <TwitterServiceDelegate, UISearchBarDelegate,
     FindPeopleBookmarkViewControllerDelegate, UserInfoViewControllerDelegate,
-    TwitchBrowserViewControllerDelegate>
+    TwitchBrowserViewControllerDelegate, UITableViewDataSource,
+    UITableViewDelegate>
 {
     NetworkAwareViewController * netAwareController;
     UserInfoViewController * userInfoController;
@@ -50,6 +51,12 @@
     NSString * currentSearchUsername; // main user search value
     NSString * currentSearch; // mention search value
     SavedSearchMgr * generalSavedSearchMgr;
+
+    BOOL editingQuery;
+    BOOL showingAutocompleteResults;
+    NSArray * autocompleteArray;
+    UIView * autocompleteView;
+    UITableView * autoCompleteTableView;
 }
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc
