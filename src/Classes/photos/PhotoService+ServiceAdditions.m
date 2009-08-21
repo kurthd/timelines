@@ -11,7 +11,7 @@
 {
     return
         [NSDictionary dictionaryWithObjectsAndKeys:
-        [UIImage imageNamed:@"FlickrLogo.png"], @"Flickr",
+        //[UIImage imageNamed:@"FlickrLogo.png"], @"Flickr",
         [UIImage imageNamed:@"TwitPicLogo.png"], @"TwitPic",
         [UIImage imageNamed:@"YfrogLogo.png"], @"Yfrog",
         [UIImage imageNamed:@"TwitVidLogo.png"], @"TwitVid",
