@@ -17,6 +17,7 @@
             [[NSDictionary alloc] initWithObjectsAndKeys:
             @"TwitPicEditPhotoServiceDisplayMgr", @"TwitPic",
             @"YfrogEditPhotoServiceDisplayMgr", @"Yfrog",
+            @"TwitVidEditPhotoServiceDisplayMgr", @"TwitVid",
             nil];
     }
 

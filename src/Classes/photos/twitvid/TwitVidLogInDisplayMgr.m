@@ -2,17 +2,17 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import "TwitPicLogInDisplayMgr.h"
-#import "TwitPicCredentials.h"
-#import "TwitPicCredentials+KeychainAdditions.h"
+#import "TwitVidLogInDisplayMgr.h"
+#import "TwitVidCredentials.h"
+#import "TwitVidCredentials+KeychainAdditions.h"
 
-@interface TwitPicLogInDisplayMgr ()
+@interface TwitVidLogInDisplayMgr ()
 
 @property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
 
 @end
 
-@implementation TwitPicLogInDisplayMgr
+@implementation TwitVidLogInDisplayMgr
 
 @synthesize logInDisplayMgr;
 
@@ -57,15 +57,15 @@
 
 - (void)logInCompleted:(NSString *)username password:(NSString *)password
 {
-    TwitPicCredentials * twitPicCredentials = (TwitPicCredentials *)
-    [NSEntityDescription insertNewObjectForEntityForName:@"TwitPicCredentials"
+    TwitVidCredentials * twitVidCredentials = (TwitVidCredentials *)
+    [NSEntityDescription insertNewObjectForEntityForName:@"TwitVidCredentials"
                                   inManagedObjectContext:context];
-    twitPicCredentials.username = username;
-    [twitPicCredentials setPassword:password];
-    twitPicCredentials.credentials = self.credentials;
+    twitVidCredentials.username = username;
+    [twitVidCredentials setPassword:password];
+    twitVidCredentials.credentials = self.credentials;
     [self.context save:NULL];
 
-    [self.delegate logInCompleted:twitPicCredentials];
+    [self.delegate logInCompleted:twitVidCredentials];
 }
 
 - (void)logInCancelled

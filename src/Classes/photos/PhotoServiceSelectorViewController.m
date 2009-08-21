@@ -129,9 +129,12 @@
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // jad: temporary
     static NSSet * supported = nil;
     if (!supported)
-        supported = [[NSSet alloc] initWithObjects:@"TwitPic", @"Yfrog", nil];
+        supported =
+            [[NSSet alloc]
+            initWithObjects:@"TwitPic", @"Yfrog", @"TwitVid", nil];
 
     NSString * name = [self.names objectAtIndex:indexPath.row];
     if ([supported containsObject:name]) {

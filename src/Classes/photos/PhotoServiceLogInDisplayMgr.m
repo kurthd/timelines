@@ -26,6 +26,7 @@
             [[NSDictionary alloc] initWithObjectsAndKeys:
             @"TwitPicLogInDisplayMgr", @"TwitPic",
             @"YfrogLogInDisplayMgr", @"Yfrog",
+            @"TwitVidLogInDisplayMgr", @"TwitVid",
             nil];
     }
 

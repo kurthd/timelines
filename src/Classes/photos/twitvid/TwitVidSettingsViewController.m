@@ -2,11 +2,11 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import "YfrogSettingsViewController.h"
-#import "YfrogCredentials+KeychainAdditions.h"
+#import "TwitVidSettingsViewController.h"
+#import "TwitVidCredentials+KeychainAdditions.h"
 #import "UIButton+StandardButtonAdditions.h"
 
-@interface YfrogSettingsViewController ()
+@interface TwitVidSettingsViewController ()
 
 @property (nonatomic, retain) UIBarButtonItem * saveButton;
 @property (nonatomic, retain) UIBarButtonItem * cancelButton;
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation YfrogSettingsViewController
+@implementation TwitVidSettingsViewController
 
 @synthesize delegate;
 @synthesize saveButton, cancelButton;
@@ -88,10 +88,13 @@
     [super viewDidLoad];
 
     self.navigationItem.title =
-        NSLocalizedString(@"yfrogsettings.view.title", @"");
+        NSLocalizedString(@"twitvidsettings.view.title", @"");
 
     self.navigationItem.leftBarButtonItem = self.cancelButton;
     self.navigationItem.rightBarButtonItem = self.saveButton;
+
+    self.usernameTextField.delegate = self;
+    self.passwordTextField.delegate = self;
 
     self.tableView.tableFooterView = self.deleteButton;
 
@@ -203,11 +206,11 @@
     // the sheet is autoreleased in the delegate method
 
     NSString * title =
-        NSLocalizedString(@"yfrogsettingsview.delete.alert.title", @"");
+        NSLocalizedString(@"twitvidsettingsview.delete.alert.title", @"");
     NSString * cancelButtonTitle =
-        NSLocalizedString(@"yfrogsettingsview.delete.alert.cancel.title", @"");
+        NSLocalizedString(@"twitvidsettingsview.delete.alert.cancel.title", @"");
     NSString * destructiveButtonTitle =
-        NSLocalizedString(@"yfrogsettingsview.delete.alert.delete.title", @"");
+        NSLocalizedString(@"twitvidsettingsview.delete.alert.delete.title", @"");
 
     UIActionSheet * sheet =
         [[UIActionSheet alloc] initWithTitle:title

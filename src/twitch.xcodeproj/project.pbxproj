@@ -50,6 +50,12 @@
 		059A7248103E172F00B7500C /* YfrogLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A7244103E172F00B7500C /* YfrogLogInDisplayMgr.m */; };
 		059A7249103E172F00B7500C /* YfrogSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A7246103E172F00B7500C /* YfrogSettingsViewController.m */; };
 		059A72AA103E1C7800B7500C /* YfrogSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72A8103E1C7800B7500C /* YfrogSettingsView.xib */; };
+		059A72EC103E20B900B7500C /* TwitVidCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A72EB103E20B900B7500C /* TwitVidCredentials.m */; };
+		059A72EF103E20EB00B7500C /* TwitVidCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A72EE103E20EB00B7500C /* TwitVidCredentials+KeychainAdditions.m */; };
+		059A72F8103E217400B7500C /* TwitVidSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A72F7103E217400B7500C /* TwitVidSettingsViewController.m */; };
+		059A7301103E221E00B7500C /* TwitVidSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72FF103E221E00B7500C /* TwitVidSettingsView.xib */; };
+		059A7316103E23CC00B7500C /* TwitVidEditPhotoServiceDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A7315103E23CC00B7500C /* TwitVidEditPhotoServiceDisplayMgr.m */; };
+		059A7327103E24B800B7500C /* TwitVidLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A7326103E24B800B7500C /* TwitVidLogInDisplayMgr.m */; };
 		059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */; };
 		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A1F5C91028C06A009F5B3E /* RegexKitLite.m */; };
@@ -469,6 +475,17 @@
 		059A7245103E172F00B7500C /* YfrogSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YfrogSettingsViewController.h; path = photos/yfrog/YfrogSettingsViewController.h; sourceTree = "<group>"; };
 		059A7246103E172F00B7500C /* YfrogSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YfrogSettingsViewController.m; path = photos/yfrog/YfrogSettingsViewController.m; sourceTree = "<group>"; };
 		059A72A9103E1C7800B7500C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/YfrogSettingsView.xib; sourceTree = "<group>"; };
+		059A72EA103E20B900B7500C /* TwitVidCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitVidCredentials.h; path = photos/twitvid/TwitVidCredentials.h; sourceTree = "<group>"; };
+		059A72EB103E20B900B7500C /* TwitVidCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitVidCredentials.m; path = photos/twitvid/TwitVidCredentials.m; sourceTree = "<group>"; };
+		059A72ED103E20EB00B7500C /* TwitVidCredentials+KeychainAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TwitVidCredentials+KeychainAdditions.h"; path = "photos/twitvid/TwitVidCredentials+KeychainAdditions.h"; sourceTree = "<group>"; };
+		059A72EE103E20EB00B7500C /* TwitVidCredentials+KeychainAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TwitVidCredentials+KeychainAdditions.m"; path = "photos/twitvid/TwitVidCredentials+KeychainAdditions.m"; sourceTree = "<group>"; };
+		059A72F6103E217400B7500C /* TwitVidSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitVidSettingsViewController.h; path = photos/twitvid/TwitVidSettingsViewController.h; sourceTree = "<group>"; };
+		059A72F7103E217400B7500C /* TwitVidSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitVidSettingsViewController.m; path = photos/twitvid/TwitVidSettingsViewController.m; sourceTree = "<group>"; };
+		059A7300103E221E00B7500C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TwitVidSettingsView.xib; sourceTree = "<group>"; };
+		059A7314103E23CC00B7500C /* TwitVidEditPhotoServiceDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitVidEditPhotoServiceDisplayMgr.h; path = photos/twitvid/TwitVidEditPhotoServiceDisplayMgr.h; sourceTree = "<group>"; };
+		059A7315103E23CC00B7500C /* TwitVidEditPhotoServiceDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitVidEditPhotoServiceDisplayMgr.m; path = photos/twitvid/TwitVidEditPhotoServiceDisplayMgr.m; sourceTree = "<group>"; };
+		059A7325103E24B800B7500C /* TwitVidLogInDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitVidLogInDisplayMgr.h; path = photos/twitvid/TwitVidLogInDisplayMgr.h; sourceTree = "<group>"; };
+		059A7326103E24B800B7500C /* TwitVidLogInDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitVidLogInDisplayMgr.m; path = photos/twitvid/TwitVidLogInDisplayMgr.m; sourceTree = "<group>"; };
 		059F6EE51017EDD900B323D7 /* DirectMessageDraft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageDraft.h; path = tweets/DirectMessageDraft.h; sourceTree = "<group>"; };
 		059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageDraft.m; path = tweets/DirectMessageDraft.m; sourceTree = "<group>"; };
 		059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v1-to-v2.xcmappingmodel"; path = "data-model/v1-to-v2.xcmappingmodel"; sourceTree = "<group>"; };
@@ -1050,14 +1067,31 @@
 				059A722A103E160200B7500C /* YfrogCredentials.m */,
 				059A722D103E164A00B7500C /* YfrogCredentials+KeychainAdditions.h */,
 				059A722E103E164A00B7500C /* YfrogCredentials+KeychainAdditions.m */,
-				059A7241103E172F00B7500C /* YfrogEditPhotoServiceDisplayMgr.h */,
-				059A7242103E172F00B7500C /* YfrogEditPhotoServiceDisplayMgr.m */,
 				059A7243103E172F00B7500C /* YfrogLogInDisplayMgr.h */,
 				059A7244103E172F00B7500C /* YfrogLogInDisplayMgr.m */,
+				059A7241103E172F00B7500C /* YfrogEditPhotoServiceDisplayMgr.h */,
+				059A7242103E172F00B7500C /* YfrogEditPhotoServiceDisplayMgr.m */,
 				059A7245103E172F00B7500C /* YfrogSettingsViewController.h */,
 				059A7246103E172F00B7500C /* YfrogSettingsViewController.m */,
 			);
 			name = yfrog;
+			sourceTree = "<group>";
+		};
+		059A72E9103E209500B7500C /* twitvid */ = {
+			isa = PBXGroup;
+			children = (
+				059A72EA103E20B900B7500C /* TwitVidCredentials.h */,
+				059A72EB103E20B900B7500C /* TwitVidCredentials.m */,
+				059A72ED103E20EB00B7500C /* TwitVidCredentials+KeychainAdditions.h */,
+				059A72EE103E20EB00B7500C /* TwitVidCredentials+KeychainAdditions.m */,
+				059A7325103E24B800B7500C /* TwitVidLogInDisplayMgr.h */,
+				059A7326103E24B800B7500C /* TwitVidLogInDisplayMgr.m */,
+				059A7314103E23CC00B7500C /* TwitVidEditPhotoServiceDisplayMgr.h */,
+				059A7315103E23CC00B7500C /* TwitVidEditPhotoServiceDisplayMgr.m */,
+				059A72F6103E217400B7500C /* TwitVidSettingsViewController.h */,
+				059A72F7103E217400B7500C /* TwitVidSettingsViewController.m */,
+			);
+			name = twitvid;
 			sourceTree = "<group>";
 		};
 		05A1F5C71028C06A009F5B3E /* regexkitlite */ = {
@@ -1256,6 +1290,7 @@
 				05C7B960103B791A0017874C /* PhotoServiceSelectorView.xib */,
 				059A6E9C103CA27400B7500C /* TwitPicSettingsView.xib */,
 				059A72A8103E1C7800B7500C /* YfrogSettingsView.xib */,
+				059A72FF103E221E00B7500C /* TwitVidSettingsView.xib */,
 				059A708F103DAE4A00B7500C /* SelectionView.xib */,
 			);
 			name = nibs;
@@ -1449,6 +1484,7 @@
 				059A6E92103C9D3200B7500C /* EditPhotoServiceDisplayMgr.m */,
 				059A7228103E148800B7500C /* yfrog */,
 				05C7B892103B59BA0017874C /* twitpic */,
+				059A72E9103E209500B7500C /* twitvid */,
 			);
 			name = photos;
 			sourceTree = "<group>";
@@ -1460,12 +1496,12 @@
 				05C7B904103B6E8E0017874C /* TwitPicCredentials.m */,
 				05C7B895103B59D70017874C /* TwitPicCredentials+KeychainAdditions.h */,
 				05C7B896103B59D70017874C /* TwitPicCredentials+KeychainAdditions.m */,
+				059A6DA2103C80AF00B7500C /* TwitPicLogInDisplayMgr.h */,
+				059A6DA3103C80AF00B7500C /* TwitPicLogInDisplayMgr.m */,
 				059A6E94103C9EC600B7500C /* TwitPicEditPhotoServiceDisplayMgr.h */,
 				059A6E95103C9EC600B7500C /* TwitPicEditPhotoServiceDisplayMgr.m */,
 				059A6E99103CA25900B7500C /* TwitPicSettingsViewController.h */,
 				059A6E9A103CA25900B7500C /* TwitPicSettingsViewController.m */,
-				059A6DA2103C80AF00B7500C /* TwitPicLogInDisplayMgr.h */,
-				059A6DA3103C80AF00B7500C /* TwitPicLogInDisplayMgr.m */,
 				05C7B897103B59D70017874C /* TwitPicImageSender.h */,
 				05C7B898103B59D70017874C /* TwitPicImageSender.m */,
 				05C7B899103B59D70017874C /* TwitPicImageSenderDelegate.h */,
@@ -1970,6 +2006,7 @@
 				059A6F26103CCE3D00B7500C /* DeleteButtonPressed.png in Resources */,
 				059A7091103DAE4A00B7500C /* SelectionView.xib in Resources */,
 				059A72AA103E1C7800B7500C /* YfrogSettingsView.xib in Resources */,
+				059A7301103E221E00B7500C /* TwitVidSettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2185,6 +2222,11 @@
 				059A7247103E172F00B7500C /* YfrogEditPhotoServiceDisplayMgr.m in Sources */,
 				059A7248103E172F00B7500C /* YfrogLogInDisplayMgr.m in Sources */,
 				059A7249103E172F00B7500C /* YfrogSettingsViewController.m in Sources */,
+				059A72EC103E20B900B7500C /* TwitVidCredentials.m in Sources */,
+				059A72EF103E20EB00B7500C /* TwitVidCredentials+KeychainAdditions.m in Sources */,
+				059A72F8103E217400B7500C /* TwitVidSettingsViewController.m in Sources */,
+				059A7316103E23CC00B7500C /* TwitVidEditPhotoServiceDisplayMgr.m in Sources */,
+				059A7327103E24B800B7500C /* TwitVidLogInDisplayMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2237,6 +2279,14 @@
 				059A72A9103E1C7800B7500C /* en */,
 			);
 			name = YfrogSettingsView.xib;
+			sourceTree = "<group>";
+		};
+		059A72FF103E221E00B7500C /* TwitVidSettingsView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				059A7300103E221E00B7500C /* en */,
+			);
+			name = TwitVidSettingsView.xib;
 			sourceTree = "<group>";
 		};
 		05B238820FEDC34200A6A2E6 /* MainWindow.xib */ = {

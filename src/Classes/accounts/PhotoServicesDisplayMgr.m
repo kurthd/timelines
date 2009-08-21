@@ -120,7 +120,7 @@
     return self.credentials.photoServiceCredentials.count <
         [PhotoService photoServiceNamesAndLogos].count;
     */
-    return self.credentials.photoServiceCredentials.count != 2;
+    return self.credentials.photoServiceCredentials.count != 3;
 }
 
 - (NSArray *)servicesForAccount:(TwitterCredentials *)someCredentials

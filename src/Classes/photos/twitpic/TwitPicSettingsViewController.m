@@ -93,9 +93,6 @@
     self.navigationItem.leftBarButtonItem = self.cancelButton;
     self.navigationItem.rightBarButtonItem = self.saveButton;
 
-    self.usernameTextField.delegate = self;
-    self.passwordTextField.delegate = self;
-
     self.tableView.tableFooterView = self.deleteButton;
 
     enabled = YES;

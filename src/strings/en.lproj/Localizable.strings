@@ -174,8 +174,20 @@ photoserviceview.service.notselected = "None";
 /* PhotoServiceSelectorView */
 photoserviceselector.view.title = "Select a Service";
 
+/* YfrogSettingsView */
+yfrogsettings.view.title = "Yfrog Settings";
+yfrogsettingsview.delete.alert.title = "Are you sure you want to delete this service?";
+yfrogsettingsview.delete.alert.cancel.title = "Cancel";
+yfrogsettingsview.delete.alert.delete.title = "Delete Service";
+
 /* TwitPicSettingsView */
 twitpicsettings.view.title = "TwitPic Settings";
 twitpicsettingsview.delete.alert.title = "Are you sure you want to delete this service?";
 twitpicsettingsview.delete.alert.cancel.title = "Cancel";
 twitpicsettingsview.delete.alert.delete.title = "Delete Service";
+
+/* TwitVidSettingsView */
+twitvidsettings.view.title = "TwitVid Settings";
+twitvidsettingsview.delete.alert.title = "Are you sure you want to delete this service?";
+twitvidsettingsview.delete.alert.cancel.title = "Cancel";
+twitvidsettingsview.delete.alert.delete.title = "Delete Service";
