@@ -90,6 +90,7 @@
 								<reference key="NSSuperview" ref="144823714"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+								<bool key="IBUIEnabled">NO</bool>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<string key="IBUIText"/>
 								<object class="NSColor" key="IBUITextColor">
