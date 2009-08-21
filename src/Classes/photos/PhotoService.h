@@ -10,8 +10,10 @@
 @protocol PhotoServiceDelegate
 
 - (void)service:(PhotoService *)service didPostImageToUrl:(NSString *)url;
-- (void)service:(PhotoService *)service didPostVideoToUrl:(NSString *)url;
 - (void)service:(PhotoService *)service failedToPostImage:(NSError *)error;
+
+- (void)service:(PhotoService *)service didPostVideoToUrl:(NSString *)url;
+- (void)service:(PhotoService *)service failedToPostVideo:(NSError *)error;
 
 @end
 
@@ -21,18 +23,18 @@
     id<PhotoServiceDelegate> delegate;
 
     UIImage * image;
-    NSData * video;
+    NSURL * videoUrl;
     PhotoServiceCredentials * credentials;
 }
 
 @property (nonatomic, assign) id<PhotoServiceDelegate> delegate;
 @property (nonatomic, retain, readonly) UIImage * image;
-@property (nonatomic, retain, readonly) NSData * video;
+@property (nonatomic, retain, readonly) NSURL * videoUrl;
 @property (nonatomic, retain, readonly) PhotoServiceCredentials * credentials;
 
 - (void)sendImage:(UIImage *)image
   withCredentials:(PhotoServiceCredentials *)credentials;
-- (void)sendVideo:(NSData *)video
+- (void)sendVideoAtUrl:(NSURL *)url
   withCredentials:(PhotoServiceCredentials *)credentials;
 
 @end

@@ -91,11 +91,13 @@
     [self sendData:imageData ofMimeType:@"image/png" withCredentials:ctls];
 }
 
-- (void)sendVideo:(NSData *)aVideo
+- (void)sendVideoAtUrl:(NSURL *)url
   withCredentials:(YfrogCredentials *)ctls
 {
-    [super sendVideo:aVideo withCredentials:ctls];
-    [self sendData:aVideo ofMimeType:@"video/quicktime" withCredentials:ctls];
+    [super sendVideoAtUrl:url withCredentials:ctls];
+
+    NSData * video = [NSData dataWithContentsOfURL:url];
+    [self sendData:video ofMimeType:@"video/quicktime" withCredentials:ctls];
 }
 
 #pragma mark NSURLConnection delegate methods
@@ -120,7 +122,7 @@
     } else
         if (self.image)
             [self.delegate service:self didPostImageToUrl:self.parser.mediaUrl];
-        else if (self.video)
+        else if (self.videoUrl)
             [self.delegate service:self didPostVideoToUrl:self.parser.mediaUrl];
 
     // HACK
@@ -129,7 +131,10 @@
 
 - (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error
 {
-    [self.delegate service:self failedToPostImage:error];
+    if (self.image)
+        [self.delegate service:self failedToPostImage:error];
+    else if (self.videoUrl)
+        [self.delegate service:self failedToPostVideo:error];
 
     // HACK
     [[UIApplication sharedApplication] networkActivityDidFinish];

@@ -7,20 +7,20 @@
 @interface PhotoService ()
 
 @property (nonatomic, retain) UIImage * image;
-@property (nonatomic, retain) NSData * video;
+@property (nonatomic, retain) NSURL * videoUrl;
 @property (nonatomic, retain) PhotoServiceCredentials * credentials;
 
 @end
 
 @implementation PhotoService
 
-@synthesize delegate, image, video, credentials;
+@synthesize delegate, image, videoUrl, credentials;
 
 - (void)dealloc
 {
     self.delegate = nil;
     self.image = nil;
-    self.video = nil;
+    self.videoUrl = nil;
     self.credentials = nil;
 
     [super dealloc];
@@ -30,15 +30,15 @@
   withCredentials:(PhotoServiceCredentials *)someCredentials
 {
     self.image = anImage;
-    self.video = nil;
+    self.videoUrl = nil;
     self.credentials = someCredentials;
 }
 
-- (void)sendVideo:(NSData *)aVideo
+- (void)sendVideoAtUrl:(NSURL *)url
   withCredentials:(PhotoServiceCredentials *)someCredentials
 {
     self.image = nil;
-    self.video = aVideo;
+    self.videoUrl = url;
     self.credentials = someCredentials;
 }
 

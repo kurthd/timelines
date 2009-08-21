@@ -23,6 +23,9 @@
 		05340B39101A5BFB0077E7C0 /* RecentSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 05340B36101A5BFB0077E7C0 /* RecentSearch.m */; };
 		053A11A4100CDBA5008DD2F6 /* TweetDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 053A11A2100CDBA5008DD2F6 /* TweetDraft.m */; };
 		053A2C90103F1FAC005BB245 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2C8F103F1FAC005BB245 /* MobileCoreServices.framework */; };
+		053A2D89103F575D005BB245 /* libTwitVid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D88103F575D005BB245 /* libTwitVid.a */; };
+		053A2D8D103F57B2005BB245 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D8C103F57B2005BB245 /* SystemConfiguration.framework */; };
+		053A2DA3103F58A8005BB245 /* TwitVidPhotoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 053A2DA2103F58A8005BB245 /* TwitVidPhotoService.m */; };
 		054B6A20101E153600882C19 /* NSString+HtmlEncodingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */; };
 		054F3EF910243FAA005B6805 /* DefaultAvatar50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */; };
 		055C92E210362DC2000B9A00 /* Avatar.m in Sources */ = {isa = PBXBuildFile; fileRef = 055C92E110362DC2000B9A00 /* Avatar.m */; };
@@ -386,6 +389,11 @@
 		053A11A1100CDBA5008DD2F6 /* TweetDraft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDraft.h; path = tweets/TweetDraft.h; sourceTree = "<group>"; };
 		053A11A2100CDBA5008DD2F6 /* TweetDraft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDraft.m; path = tweets/TweetDraft.m; sourceTree = "<group>"; };
 		053A2C8F103F1FAC005BB245 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		053A2D77103F573E005BB245 /* TwitVid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitVid.h; path = vendor/twitvid/TwitVid.h; sourceTree = "<group>"; };
+		053A2D88103F575D005BB245 /* libTwitVid.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTwitVid.a; path = Classes/vendor/twitvid/libTwitVid.a; sourceTree = "<group>"; };
+		053A2D8C103F57B2005BB245 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
+		053A2DA1103F58A8005BB245 /* TwitVidPhotoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitVidPhotoService.h; path = photos/twitvid/TwitVidPhotoService.h; sourceTree = "<group>"; };
+		053A2DA2103F58A8005BB245 /* TwitVidPhotoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitVidPhotoService.m; path = photos/twitvid/TwitVidPhotoService.m; sourceTree = "<group>"; };
 		054B6A1E101E153600882C19 /* NSString+HtmlEncodingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HtmlEncodingAdditions.h"; path = "shared/NSString+HtmlEncodingAdditions.h"; sourceTree = "<group>"; };
 		054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HtmlEncodingAdditions.m"; path = "shared/NSString+HtmlEncodingAdditions.m"; sourceTree = "<group>"; };
 		054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DefaultAvatar50x50.png; path = images/DefaultAvatar50x50.png; sourceTree = "<group>"; };
@@ -933,6 +941,8 @@
 				914CA284103A1DC300421C60 /* MapKit.framework in Frameworks */,
 				914CA331103A444000421C60 /* CoreLocation.framework in Frameworks */,
 				053A2C90103F1FAC005BB245 /* MobileCoreServices.framework in Frameworks */,
+				053A2D89103F575D005BB245 /* libTwitVid.a in Frameworks */,
+				053A2D8D103F57B2005BB245 /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -979,6 +989,14 @@
 			name = "app-controller";
 			sourceTree = "<group>";
 		};
+		053A2D76103F572D005BB245 /* twitvid */ = {
+			isa = PBXGroup;
+			children = (
+				053A2D77103F573E005BB245 /* TwitVid.h */,
+			);
+			name = twitvid;
+			sourceTree = "<group>";
+		};
 		0554E3EF0FFDB9EF00329FFA /* entitlements */ = {
 			isa = PBXGroup;
 			children = (
@@ -1006,6 +1024,7 @@
 				05C5E7B70FF45EE10073E7F2 /* yajl */,
 				0524C3B90FF2A7D400A6099B /* sfh-keychain-utils */,
 				05A1F5C71028C06A009F5B3E /* regexkitlite */,
+				053A2D76103F572D005BB245 /* twitvid */,
 			);
 			name = vendor;
 			sourceTree = "<group>";
@@ -1102,6 +1121,8 @@
 				059A7315103E23CC00B7500C /* TwitVidEditPhotoServiceDisplayMgr.m */,
 				059A72F6103E217400B7500C /* TwitVidSettingsViewController.h */,
 				059A72F7103E217400B7500C /* TwitVidSettingsViewController.m */,
+				053A2DA1103F58A8005BB245 /* TwitVidPhotoService.h */,
+				053A2DA2103F58A8005BB245 /* TwitVidPhotoService.m */,
 			);
 			name = twitvid;
 			sourceTree = "<group>";
@@ -1619,9 +1640,11 @@
 				288765070DF74369002DB57D /* CoreGraphics.framework */,
 				05AC573C1029F0EF00F727A2 /* QuartzCore.framework */,
 				05B23A310FEEB29D00A6A2E6 /* CoreData.framework */,
+				053A2C8F103F1FAC005BB245 /* MobileCoreServices.framework */,
+				053A2D8C103F57B2005BB245 /* SystemConfiguration.framework */,
 				05B238310FEDBA6600A6A2E6 /* libxml2.dylib */,
 				05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */,
-				053A2C8F103F1FAC005BB245 /* MobileCoreServices.framework */,
+				053A2D88103F575D005BB245 /* libTwitVid.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2241,6 +2264,7 @@
 				059A7327103E24B800B7500C /* TwitVidLogInDisplayMgr.m in Sources */,
 				059A743D103F13E200B7500C /* YfrogPhotoService.m in Sources */,
 				059A743E103F13E200B7500C /* YfrogResponseParser.m in Sources */,
+				053A2DA3103F58A8005BB245 /* TwitVidPhotoService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2511,6 +2535,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
+					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 				);
 				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "9BD30541-6CA6-4F48-B159-BC45D542BBD5";
@@ -2609,6 +2634,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
+					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 				);
 				PRODUCT_NAME = Twitbit;
 			};
@@ -2629,6 +2655,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
+					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 				);
 				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "AA7F2B41-6452-442A-ADBF-895609D202AE";
@@ -2647,6 +2674,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
+					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 				);
 				PRODUCT_NAME = Twitbit;
 			};
@@ -2665,6 +2693,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
+					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 				);
 				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "AA7F2B41-6452-442A-ADBF-895609D202AE";
@@ -2686,6 +2715,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
+					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 				);
 				PRODUCT_NAME = Twitbit;
 			};

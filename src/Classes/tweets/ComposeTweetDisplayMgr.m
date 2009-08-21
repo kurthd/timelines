@@ -488,6 +488,21 @@
     [photoService autorelease];
 }
 
+- (void)service:(PhotoService *)photoService
+failedToPostVideo:(NSError *)error
+{
+    NSLog(@"Failed to post video to URL: '%@'.", error);
+
+    NSString * title = NSLocalizedString(@"videoupload.failed.title", @"");
+
+    [[UIAlertView simpleAlertViewWithTitle:title
+                                   message:error.localizedDescription] show];
+
+    [self.composeTweetViewController hideActivityView];
+
+    [photoService autorelease];
+}
+
 #pragma mark UIImagePickerControllerDelegate implementation
 
 - (void)imagePickerController:(UIImagePickerController *)picker
@@ -496,7 +511,6 @@
     NSString * mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     if ([mediaType isEqualToString:(NSString *) kUTTypeMovie]) {
         NSURL * videoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
-        NSData * video = [NSData dataWithContentsOfURL:videoUrl];
 
         PhotoServiceCredentials * c =
             [service.credentials defaultVideoServiceCredentials];
@@ -507,7 +521,7 @@
             [[PhotoService photoServiceWithServiceName:serviceName] retain];
         photoService.delegate = self;
 
-        [photoService sendVideo:video withCredentials:c];
+        [photoService sendVideoAtUrl:videoUrl withCredentials:c];
     } else if ([mediaType isEqualToString:(NSString *) kUTTypeImage]) {
         NSLog(@"Cropped image: %@.",
            [info objectForKey:UIImagePickerControllerEditedImage]);
