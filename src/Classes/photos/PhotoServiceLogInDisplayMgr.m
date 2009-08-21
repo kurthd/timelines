@@ -5,9 +5,18 @@
 #import "PhotoServiceLogInDisplayMgr.h"
 #import "NSObject+RuntimeAdditions.h"
 
+@interface PhotoServiceLogInDisplayMgr ()
+
+@property (nonatomic, retain) UIViewController * rootViewController;
+@property (nonatomic, retain) TwitterCredentials * credentials;
+@property (nonatomic, retain) NSManagedObjectContext * context;
+
+@end
+
 @implementation PhotoServiceLogInDisplayMgr
 
 @synthesize delegate;
+@synthesize rootViewController, credentials, context;
 
 + (id)logInDisplayMgrWithServiceName:(NSString *)serviceName
 {
@@ -16,6 +25,7 @@
         services =
             [[NSDictionary alloc] initWithObjectsAndKeys:
             @"TwitPicLogInDisplayMgr", @"TwitPic",
+            @"YfrogLogInDisplayMgr", @"Yfrog",
             nil];
     }
 
@@ -30,6 +40,11 @@
 - (void)dealloc
 {
     self.delegate = nil;
+
+    self.rootViewController = nil;
+    self.credentials = nil;
+    self.context = nil;
+
     [super dealloc];
 }
 
@@ -37,7 +52,9 @@
                         credentials:(TwitterCredentials *)someCredentials
                             context:(NSManagedObjectContext *)aContext
 {
-    NSAssert(NO, @"This method must be implemented by subclasses.");
+    self.rootViewController = aController;
+    self.credentials = someCredentials;
+    self.context = aContext;
 }
 
 @end

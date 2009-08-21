@@ -115,7 +115,8 @@
         if ([userServiceNames containsObject:serviceName])
             [remainingServices removeObjectForKey:serviceName];
 
-        if (![serviceName isEqualToString:@"TwitPic"])
+        NSSet * tempFilter = [NSSet setWithObjects:@"TwitPic", @"Yfrog", nil];
+        if (![tempFilter containsObject:serviceName])
             [remainingServices removeObjectForKey:serviceName];
     }
 

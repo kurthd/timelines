@@ -44,6 +44,12 @@
 		059A708E103DAE2E00B7500C /* SelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A708D103DAE2E00B7500C /* SelectionViewController.m */; };
 		059A7091103DAE4A00B7500C /* SelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A708F103DAE4A00B7500C /* SelectionView.xib */; };
 		059A718C103E019F00B7500C /* TwitterCredentials+PhotoServiceAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A718B103E019F00B7500C /* TwitterCredentials+PhotoServiceAdditions.m */; };
+		059A722B103E160200B7500C /* YfrogCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A722A103E160200B7500C /* YfrogCredentials.m */; };
+		059A7231103E164A00B7500C /* YfrogCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A722E103E164A00B7500C /* YfrogCredentials+KeychainAdditions.m */; };
+		059A7247103E172F00B7500C /* YfrogEditPhotoServiceDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A7242103E172F00B7500C /* YfrogEditPhotoServiceDisplayMgr.m */; };
+		059A7248103E172F00B7500C /* YfrogLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A7244103E172F00B7500C /* YfrogLogInDisplayMgr.m */; };
+		059A7249103E172F00B7500C /* YfrogSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A7246103E172F00B7500C /* YfrogSettingsViewController.m */; };
+		059A72AA103E1C7800B7500C /* YfrogSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72A8103E1C7800B7500C /* YfrogSettingsView.xib */; };
 		059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */; };
 		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A1F5C91028C06A009F5B3E /* RegexKitLite.m */; };
@@ -452,6 +458,17 @@
 		059A7090103DAE4A00B7500C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/SelectionView.xib; sourceTree = "<group>"; };
 		059A718A103E019F00B7500C /* TwitterCredentials+PhotoServiceAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TwitterCredentials+PhotoServiceAdditions.h"; path = "photos/TwitterCredentials+PhotoServiceAdditions.h"; sourceTree = "<group>"; };
 		059A718B103E019F00B7500C /* TwitterCredentials+PhotoServiceAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TwitterCredentials+PhotoServiceAdditions.m"; path = "photos/TwitterCredentials+PhotoServiceAdditions.m"; sourceTree = "<group>"; };
+		059A7229103E160200B7500C /* YfrogCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YfrogCredentials.h; path = photos/yfrog/YfrogCredentials.h; sourceTree = "<group>"; };
+		059A722A103E160200B7500C /* YfrogCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YfrogCredentials.m; path = photos/yfrog/YfrogCredentials.m; sourceTree = "<group>"; };
+		059A722D103E164A00B7500C /* YfrogCredentials+KeychainAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "YfrogCredentials+KeychainAdditions.h"; path = "photos/yfrog/YfrogCredentials+KeychainAdditions.h"; sourceTree = "<group>"; };
+		059A722E103E164A00B7500C /* YfrogCredentials+KeychainAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "YfrogCredentials+KeychainAdditions.m"; path = "photos/yfrog/YfrogCredentials+KeychainAdditions.m"; sourceTree = "<group>"; };
+		059A7241103E172F00B7500C /* YfrogEditPhotoServiceDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YfrogEditPhotoServiceDisplayMgr.h; path = photos/yfrog/YfrogEditPhotoServiceDisplayMgr.h; sourceTree = "<group>"; };
+		059A7242103E172F00B7500C /* YfrogEditPhotoServiceDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YfrogEditPhotoServiceDisplayMgr.m; path = photos/yfrog/YfrogEditPhotoServiceDisplayMgr.m; sourceTree = "<group>"; };
+		059A7243103E172F00B7500C /* YfrogLogInDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YfrogLogInDisplayMgr.h; path = photos/yfrog/YfrogLogInDisplayMgr.h; sourceTree = "<group>"; };
+		059A7244103E172F00B7500C /* YfrogLogInDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YfrogLogInDisplayMgr.m; path = photos/yfrog/YfrogLogInDisplayMgr.m; sourceTree = "<group>"; };
+		059A7245103E172F00B7500C /* YfrogSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YfrogSettingsViewController.h; path = photos/yfrog/YfrogSettingsViewController.h; sourceTree = "<group>"; };
+		059A7246103E172F00B7500C /* YfrogSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YfrogSettingsViewController.m; path = photos/yfrog/YfrogSettingsViewController.m; sourceTree = "<group>"; };
+		059A72A9103E1C7800B7500C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/YfrogSettingsView.xib; sourceTree = "<group>"; };
 		059F6EE51017EDD900B323D7 /* DirectMessageDraft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageDraft.h; path = tweets/DirectMessageDraft.h; sourceTree = "<group>"; };
 		059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageDraft.m; path = tweets/DirectMessageDraft.m; sourceTree = "<group>"; };
 		059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v1-to-v2.xcmappingmodel"; path = "data-model/v1-to-v2.xcmappingmodel"; sourceTree = "<group>"; };
@@ -1026,6 +1043,23 @@
 			path = "vendor/oauth-twitter-engine";
 			sourceTree = "<group>";
 		};
+		059A7228103E148800B7500C /* yfrog */ = {
+			isa = PBXGroup;
+			children = (
+				059A7229103E160200B7500C /* YfrogCredentials.h */,
+				059A722A103E160200B7500C /* YfrogCredentials.m */,
+				059A722D103E164A00B7500C /* YfrogCredentials+KeychainAdditions.h */,
+				059A722E103E164A00B7500C /* YfrogCredentials+KeychainAdditions.m */,
+				059A7241103E172F00B7500C /* YfrogEditPhotoServiceDisplayMgr.h */,
+				059A7242103E172F00B7500C /* YfrogEditPhotoServiceDisplayMgr.m */,
+				059A7243103E172F00B7500C /* YfrogLogInDisplayMgr.h */,
+				059A7244103E172F00B7500C /* YfrogLogInDisplayMgr.m */,
+				059A7245103E172F00B7500C /* YfrogSettingsViewController.h */,
+				059A7246103E172F00B7500C /* YfrogSettingsViewController.m */,
+			);
+			name = yfrog;
+			sourceTree = "<group>";
+		};
 		05A1F5C71028C06A009F5B3E /* regexkitlite */ = {
 			isa = PBXGroup;
 			children = (
@@ -1221,6 +1255,7 @@
 				05C7B8B8103B5FAF0017874C /* PhotoServicesView.xib */,
 				05C7B960103B791A0017874C /* PhotoServiceSelectorView.xib */,
 				059A6E9C103CA27400B7500C /* TwitPicSettingsView.xib */,
+				059A72A8103E1C7800B7500C /* YfrogSettingsView.xib */,
 				059A708F103DAE4A00B7500C /* SelectionView.xib */,
 			);
 			name = nibs;
@@ -1412,6 +1447,7 @@
 				059A6DAB103C812000B7500C /* PhotoServiceLogInDisplayMgr.m */,
 				059A6E91103C9D3200B7500C /* EditPhotoServiceDisplayMgr.h */,
 				059A6E92103C9D3200B7500C /* EditPhotoServiceDisplayMgr.m */,
+				059A7228103E148800B7500C /* yfrog */,
 				05C7B892103B59BA0017874C /* twitpic */,
 			);
 			name = photos;
@@ -1424,6 +1460,10 @@
 				05C7B904103B6E8E0017874C /* TwitPicCredentials.m */,
 				05C7B895103B59D70017874C /* TwitPicCredentials+KeychainAdditions.h */,
 				05C7B896103B59D70017874C /* TwitPicCredentials+KeychainAdditions.m */,
+				059A6E94103C9EC600B7500C /* TwitPicEditPhotoServiceDisplayMgr.h */,
+				059A6E95103C9EC600B7500C /* TwitPicEditPhotoServiceDisplayMgr.m */,
+				059A6E99103CA25900B7500C /* TwitPicSettingsViewController.h */,
+				059A6E9A103CA25900B7500C /* TwitPicSettingsViewController.m */,
 				059A6DA2103C80AF00B7500C /* TwitPicLogInDisplayMgr.h */,
 				059A6DA3103C80AF00B7500C /* TwitPicLogInDisplayMgr.m */,
 				05C7B897103B59D70017874C /* TwitPicImageSender.h */,
@@ -1431,10 +1471,6 @@
 				05C7B899103B59D70017874C /* TwitPicImageSenderDelegate.h */,
 				05C7B89A103B59D70017874C /* TwitPicResponseParser.h */,
 				05C7B89B103B59D70017874C /* TwitPicResponseParser.m */,
-				059A6E94103C9EC600B7500C /* TwitPicEditPhotoServiceDisplayMgr.h */,
-				059A6E95103C9EC600B7500C /* TwitPicEditPhotoServiceDisplayMgr.m */,
-				059A6E99103CA25900B7500C /* TwitPicSettingsViewController.h */,
-				059A6E9A103CA25900B7500C /* TwitPicSettingsViewController.m */,
 			);
 			name = twitpic;
 			sourceTree = "<group>";
@@ -1933,6 +1969,7 @@
 				059A6F25103CCE3D00B7500C /* DeleteButtonNormal.png in Resources */,
 				059A6F26103CCE3D00B7500C /* DeleteButtonPressed.png in Resources */,
 				059A7091103DAE4A00B7500C /* SelectionView.xib in Resources */,
+				059A72AA103E1C7800B7500C /* YfrogSettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2143,6 +2180,11 @@
 				914CA2F1103A3E7200421C60 /* Geocoder.m in Sources */,
 				914CA4D7103B646700421C60 /* LocationCellView.m in Sources */,
 				914CA6CA103CA2A300421C60 /* BasicMapAnnotation.m in Sources */,
+				059A722B103E160200B7500C /* YfrogCredentials.m in Sources */,
+				059A7231103E164A00B7500C /* YfrogCredentials+KeychainAdditions.m in Sources */,
+				059A7247103E172F00B7500C /* YfrogEditPhotoServiceDisplayMgr.m in Sources */,
+				059A7248103E172F00B7500C /* YfrogLogInDisplayMgr.m in Sources */,
+				059A7249103E172F00B7500C /* YfrogSettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2187,6 +2229,14 @@
 				059A7090103DAE4A00B7500C /* en */,
 			);
 			name = SelectionView.xib;
+			sourceTree = "<group>";
+		};
+		059A72A8103E1C7800B7500C /* YfrogSettingsView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				059A72A9103E1C7800B7500C /* en */,
+			);
+			name = YfrogSettingsView.xib;
 			sourceTree = "<group>";
 		};
 		05B238820FEDC34200A6A2E6 /* MainWindow.xib */ = {

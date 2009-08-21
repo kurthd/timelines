@@ -141,25 +141,8 @@
         [self.logInViewController promptForLoginWithUsername:self.username
                                                     editable:NO];
     } else {
-        TwitPicCredentials * twitPicCredentials =
-            (TwitPicCredentials *) [NSEntityDescription
-            insertNewObjectForEntityForName:@"TwitPicCredentials"
-                     inManagedObjectContext:context];
-        twitPicCredentials.username = self.username;
-        twitPicCredentials.password = self.password;
-        twitPicCredentials.credentials = twitterCredentials;
-
-        NSError * error;
-        if ([context save:&error]) {
-            [self.rootViewController dismissModalViewControllerAnimated:YES];
-            [self.delegate logInCompleted:twitPicCredentials];
-        } else {  // handle the error
-            [self displayErrorWithMessage:error.localizedDescription];
-            // HACK: Hardcoding the call to the username here
-            [self.logInViewController
-                promptForLoginWithUsername:self.username
-                                  editable:NO];
-        }
+        [self.rootViewController dismissModalViewControllerAnimated:YES];
+        [self.delegate logInCompleted:self.username password:self.password];
     }
 
     [[UIApplication sharedApplication] networkActivityDidFinish];

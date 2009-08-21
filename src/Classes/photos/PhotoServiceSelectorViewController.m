@@ -131,7 +131,7 @@
 {
     static NSSet * supported = nil;
     if (!supported)
-        supported = [[NSSet alloc] initWithObjects:@"TwitPic", nil];
+        supported = [[NSSet alloc] initWithObjects:@"TwitPic", @"Yfrog", nil];
 
     NSString * name = [self.names objectAtIndex:indexPath.row];
     if ([supported containsObject:name]) {

@@ -2,23 +2,23 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import "TwitPicLogInDisplayMgr.h"
-#import "TwitPicCredentials.h"
-#import "TwitPicCredentials+KeychainAdditions.h"
+#import "YfrogLogInDisplayMgr.h"
+#import "YfrogCredentials.h"
+#import "YfrogCredentials+KeychainAdditions.h"
 
-@interface TwitPicLogInDisplayMgr ()
+@interface YfrogLogInDisplayMgr ()
 
 @property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
 
 @end
 
-@implementation TwitPicLogInDisplayMgr
+@implementation YfrogLogInDisplayMgr
 
 @synthesize logInDisplayMgr;
 
 - (void)dealloc
 {
-
+    self.logInDisplayMgr = nil;
     [super dealloc];
 }
 
@@ -57,15 +57,15 @@
 
 - (void)logInCompleted:(NSString *)username password:(NSString *)password
 {
-    TwitPicCredentials * twitPicCredentials = (TwitPicCredentials *)
-    [NSEntityDescription insertNewObjectForEntityForName:@"TwitPicCredentials"
+    YfrogCredentials * yfrogCredentials = (YfrogCredentials *)
+    [NSEntityDescription insertNewObjectForEntityForName:@"YfrogCredentials"
                                   inManagedObjectContext:context];
-    twitPicCredentials.username = username;
-    [twitPicCredentials setPassword:password];
-    twitPicCredentials.credentials = self.credentials;
+    yfrogCredentials.username = username;
+    [yfrogCredentials setPassword:password];
+    yfrogCredentials.credentials = self.credentials;
     [self.context save:NULL];
 
-    [self.delegate logInCompleted:twitPicCredentials];
+    [self.delegate logInCompleted:yfrogCredentials];
 }
 
 - (void)logInCancelled

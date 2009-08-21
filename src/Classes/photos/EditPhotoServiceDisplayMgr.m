@@ -16,6 +16,7 @@
         services =
             [[NSDictionary alloc] initWithObjectsAndKeys:
             @"TwitPicEditPhotoServiceDisplayMgr", @"TwitPic",
+            @"YfrogEditPhotoServiceDisplayMgr", @"Yfrog",
             nil];
     }
 

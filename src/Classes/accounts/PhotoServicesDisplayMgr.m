@@ -116,11 +116,11 @@
 
 - (BOOL)areMoreServicesAvailable
 {
-    /*
+    /* jad: temporary
     return self.credentials.photoServiceCredentials.count <
         [PhotoService photoServiceNamesAndLogos].count;
     */
-    return self.credentials.photoServiceCredentials.count != 1;
+    return self.credentials.photoServiceCredentials.count != 2;
 }
 
 - (NSArray *)servicesForAccount:(TwitterCredentials *)someCredentials
