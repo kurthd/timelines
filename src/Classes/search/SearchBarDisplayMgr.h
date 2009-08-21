@@ -12,7 +12,8 @@
 
 @interface SearchBarDisplayMgr : NSObject
     <TwitterServiceDelegate, UISearchBarDelegate,
-    SearchBookmarksDisplayMgrDelegate>
+    SearchBookmarksDisplayMgrDelegate, UITableViewDataSource,
+    UITableViewDelegate>
 {
     TwitterService * service;
     NSManagedObjectContext * context;
@@ -33,6 +34,12 @@
     CredentialsActivatedPublisher * credentialsActivatedPublisher;
 
     UIView * darkTransparentView;
+
+    BOOL editingQuery;
+    BOOL showingAutocompleteResults;
+    NSArray * autocompleteArray;
+    UIView * autocompleteView;
+    UITableView * autoCompleteTableView;
 }
 
 @property (nonatomic, assign) id<TimelineDataSourceDelegate> dataSourceDelegate;

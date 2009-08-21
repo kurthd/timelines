@@ -9,6 +9,7 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "ErrorState.h"
 #import "SearchDataSource.h"
+#import "RegexKitLite.h"
 
 @interface FindPeopleSearchDisplayMgr ()
 
@@ -25,6 +26,9 @@
 - (UIView *)saveSearchView;
 - (UIView *)removeSearchView;
 - (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title action:(SEL)action;
+- (void)updateAutocompleteView;
+- (void)showAutocompleteResults;
+- (void)hideAutocompleteResults;
 
 @property (nonatomic, readonly)
     FindPeopleBookmarkViewController * bookmarkController;
@@ -39,6 +43,8 @@
 @property (nonatomic, retain) NSString * currentSearchUsername;
 @property (nonatomic, retain) NSString * currentSearch;
 @property (nonatomic, retain) SavedSearchMgr * generalSavedSearchMgr;
+@property (nonatomic, copy) NSArray * autocompleteArray;
+@property (nonatomic, readonly) UIView * autocompleteView;
 
 @end
 
@@ -51,6 +57,7 @@
 @synthesize currentSearchUsername;
 @synthesize currentSearch;
 @synthesize generalSavedSearchMgr;
+@synthesize autocompleteArray;
 
 - (void)dealloc
 {
@@ -74,6 +81,8 @@
     [currentSearchUsername release];
     [currentSearch release];
     [generalSavedSearchMgr release];
+    [autocompleteArray release];
+    [autoCompleteTableView release];
 
     [super dealloc];
 }
@@ -133,6 +142,11 @@
     
     [netAwareController setUpdatingState:kConnectedAndNotUpdating];
     [netAwareController setCachedDataAvailable:YES];
+
+    // this forces the tableview to scroll to top
+    [userInfoController.tableView setContentOffset:CGPointMake(0, -300)
+        animated:NO];
+
     [userInfoController setUser:user];
 }
 
@@ -449,6 +463,7 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)aSearchBar
 {
     [self hideDarkTransparentView];
+    [self hideAutocompleteResults];
 
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:YES];
@@ -494,24 +509,36 @@
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:YES];
     [self hideDarkTransparentView];
+    [self hideAutocompleteResults];
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)aSearchBar
 {
+    editingQuery = YES;
     [self showDarkTransparentView];
     [searchBar setShowsCancelButton:YES animated:YES];
+    [self performSelector:@selector(updateAutocompleteView) withObject:nil
+        afterDelay:0.3];
+
     return YES;
 }
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)aSearchBar
 {
+    editingQuery = NO;
     [searchBar setShowsCancelButton:NO animated:YES];
+
     return YES;
 }
 
 - (void)searchBarBookmarkButtonClicked:(UISearchBar *)aSearchBar
 {
     [self displayBookmarksView];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    [self updateAutocompleteView];
 }
 
 #pragma mark SearchBookmarksViewControllerDelegate implementation
@@ -583,6 +610,44 @@
     self.generalSavedSearchMgr.accountName = someCredentials.username;
 }
 
+#pragma mark UITableViewDataSource implementation
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+    cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * cellIdentifier = @"UITableViewCell";
+
+    UITableViewCell * cell =
+        [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+
+    if (!cell)
+        cell =
+            [[[UITableViewCell alloc]
+            initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:cellIdentifier]
+            autorelease];
+
+    cell.textLabel.text = [self.autocompleteArray objectAtIndex:indexPath.row];
+
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+    numberOfRowsInSection:(NSInteger)section
+{
+    return [self.autocompleteArray count];
+}
+
+#pragma mark UITableViewDelegate implementation
+
+- (void)tableView:(UITableView *)tableView
+    didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self hideAutocompleteResults];
+    NSString * query = [self.autocompleteArray objectAtIndex:indexPath.row];
+    [self userDidSelectSearchQuery:query];
+}
+
 #pragma mark UI helpers
 
 - (void)showError:(NSError *)error
@@ -626,6 +691,57 @@
 {
     [netAwareController presentModalViewController:self.bookmarkController
         animated:YES];
+}
+
+- (void)updateAutocompleteView
+{
+    if (searchBar.text.length > 0) {
+        NSMutableArray * matchingSavedSearches = [NSMutableArray array];
+        for (SavedSearch * search in [self savedSearches]) {
+            NSString * regex =
+                [NSString stringWithFormat:@"\\b%@.*", searchBar.text];
+            NSRange range = NSMakeRange(0, search.query.length);
+            if ([search.query isMatchedByRegex:regex options:RKLCaseless
+                inRange:range error:NULL])
+                [matchingSavedSearches addObject:search.query];
+        }
+
+        for (SavedSearch * search in [self recentSearches]) {
+            NSString * regex =
+                [NSString stringWithFormat:@"\\b%@.*", searchBar.text];
+            NSRange range = NSMakeRange(0, search.query.length);
+            if ([search.query isMatchedByRegex:regex options:RKLCaseless
+                inRange:range error:NULL] &&
+                ![matchingSavedSearches containsObject:search.query])
+                [matchingSavedSearches addObject:search.query];
+        }
+
+        self.autocompleteArray =
+            [matchingSavedSearches
+            sortedArrayUsingSelector:@selector(compare:)];
+    } else
+        self.autocompleteArray = [NSArray array];
+
+    if ([self.autocompleteArray count] > 0 && !showingAutocompleteResults &&
+        editingQuery)
+        [self showAutocompleteResults];
+    else if ([self.autocompleteArray count] == 0 && showingAutocompleteResults)
+        [self hideAutocompleteResults];
+
+    [autoCompleteTableView reloadData];
+}
+
+- (void)showAutocompleteResults
+{
+    showingAutocompleteResults = YES;
+    [netAwareController.view.superview.superview
+        addSubview:self.autocompleteView];
+}
+
+- (void)hideAutocompleteResults
+{
+    showingAutocompleteResults = NO;
+    [self.autocompleteView removeFromSuperview];
 }
 
 #pragma mark Accessors
@@ -744,6 +860,32 @@
             context:context];
 
     return generalSavedSearchMgr;
+}
+
+- (UIView *)autocompleteView
+{
+    if (!autocompleteView) {
+        static const CGFloat HEIGHT = 200;
+        static const CGFloat WIDTH = 320;
+
+        CGRect frame = CGRectMake(0, 64, WIDTH, HEIGHT);
+        autocompleteView = [[UIView alloc] initWithFrame:frame];
+
+        CGRect tableViewFrame = CGRectMake(0, 0, WIDTH, HEIGHT);
+        autoCompleteTableView =
+            [[UITableView alloc]
+            initWithFrame:tableViewFrame style:UITableViewStylePlain];
+        autoCompleteTableView.dataSource = self;
+        autoCompleteTableView.delegate = self;
+        [autocompleteView addSubview:autoCompleteTableView];
+
+        UIImage * shadowImage = [UIImage imageNamed:@"DropShadow.png"];
+        UIImageView * shadowView =
+            [[[UIImageView alloc] initWithImage:shadowImage] autorelease];
+        [autocompleteView addSubview:shadowView];
+    }
+
+    return autocompleteView;
 }
 
 @end

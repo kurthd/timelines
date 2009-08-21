@@ -1389,13 +1389,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         userInfoControllerWrapper =
             [[NetworkAwareViewController alloc]
             initWithTargetViewController:self.userInfoController];
-
-        UIBarButtonItem * rightBarButton =
-            [[UIBarButtonItem alloc]
-            initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self
-            action:@selector(sendDirectMessageToCurrentUser)];
-        userInfoControllerWrapper.navigationItem.rightBarButtonItem =
-            rightBarButton;
     }
 
     return userInfoControllerWrapper;

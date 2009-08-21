@@ -61,7 +61,7 @@
 {
 #define LEFT_MARGIN 2
 #define TOP_MARGIN 2
-#define LABEL_WIDTH 201
+#define LABEL_WIDTH 196
 #define LABEL_HEIGHT 50
 
 #define LOCATION_LABEL_LEFT_MARGIN 103
@@ -217,9 +217,11 @@
         updatingMap = NO;
         [self.mapView setCenterCoordinate:coord animated:NO];
         self.mapAnnotation.coordinate = coord;
-        // force map to display, otherwise it won't really update the center
-        [self setNeedsDisplay];   
     }
+
+    // force map to display, otherwise it won't really update the center
+    // and we need to update the location text
+    [self setNeedsDisplay];
 }
 
 - (void)updateMapSpan

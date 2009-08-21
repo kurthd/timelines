@@ -5,6 +5,7 @@
 #import "SearchBarDisplayMgr.h"
 #import "SearchBookmarksDisplayMgr.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "RegexKitLite.h"
 
 @interface SearchBarDisplayMgr ()
 
@@ -29,6 +30,9 @@
 
 @property (nonatomic, retain) UIView * darkTransparentView;
 
+@property (nonatomic, copy) NSArray * autocompleteArray;
+@property (nonatomic, readonly) UIView * autocompleteView;
+
 - (void)displayBookmarksView;
 
 - (void)showError:(NSError *)error;
@@ -40,6 +44,10 @@
 - (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
                                    action:(SEL)action;
 
+- (void)updateAutocompleteView;
+- (void)showAutocompleteResults;
+- (void)hideAutocompleteResults;
+
 @end
 
 @implementation SearchBarDisplayMgr
@@ -50,6 +58,7 @@
 @synthesize searchResults, searchQuery, searchPage;
 @synthesize dataSourceDelegate, credentialsActivatedPublisher;
 @synthesize darkTransparentView;
+@synthesize autocompleteArray;
 
 #pragma mark Initialization
 
@@ -68,6 +77,8 @@
     self.dataSourceDelegate = nil;
     self.credentialsActivatedPublisher = nil;
     self.darkTransparentView = nil;
+    [autocompleteArray release];
+    [autoCompleteTableView release];
     [super dealloc];
 }
 
@@ -160,6 +171,7 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)aSarchBar
 {
     [self hideDarkTransparentView];
+    [self hideAutocompleteResults];
 
     [self.searchBar resignFirstResponder];
     [self.searchBar setShowsCancelButton:NO animated:YES];
@@ -197,17 +209,23 @@
     [self.searchBar resignFirstResponder];
     [self.searchBar setShowsCancelButton:NO animated:YES];
     [self hideDarkTransparentView];
+    [self hideAutocompleteResults];
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)aSearchBar
 {
+    editingQuery = YES;
     [self showDarkTransparentView];
     [self.searchBar setShowsCancelButton:YES animated:YES];
+    [self performSelector:@selector(updateAutocompleteView) withObject:nil
+        afterDelay:0.3];
+
     return YES;
 }
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
 {
+    editingQuery = NO;
     [self.searchBar setShowsCancelButton:NO animated:YES];
     return YES;
 }
@@ -215,6 +233,11 @@
 - (void)searchBarBookmarkButtonClicked:(UISearchBar *)searchBar
 {
     [self displayBookmarksView];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    [self updateAutocompleteView];
 }
 
 #pragma mark Bookmarks
@@ -251,6 +274,44 @@
 {
     if ([self.searchQuery isEqualToString:query])
         [self.timelineDisplayMgr setTimelineHeaderView:[self saveSearchView]];
+}
+
+#pragma mark UITableViewDataSource implementation
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+    cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * cellIdentifier = @"UITableViewCell";
+
+    UITableViewCell * cell =
+        [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+
+    if (!cell)
+        cell =
+            [[[UITableViewCell alloc]
+            initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:cellIdentifier]
+            autorelease];
+
+    cell.textLabel.text = [self.autocompleteArray objectAtIndex:indexPath.row];
+
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+    numberOfRowsInSection:(NSInteger)section
+{
+    return [self.autocompleteArray count];
+}
+
+#pragma mark UITableViewDelegate implementation
+
+- (void)tableView:(UITableView *)tableView
+    didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self hideAutocompleteResults];
+    NSString * query = [self.autocompleteArray objectAtIndex:indexPath.row];
+    [self.searchBookmarksDisplayMgr userDidSelectSearchQuery:query];
 }
 
 #pragma mark UI helpers
@@ -292,6 +353,59 @@
     [UIView commitAnimations];
 
     [self.darkTransparentView removeFromSuperview];
+}
+
+- (void)updateAutocompleteView
+{
+    if (searchBar.text.length > 0) {
+        NSMutableArray * matchingSavedSearches = [NSMutableArray array];
+        for (SavedSearch * search in
+            [self.searchBookmarksDisplayMgr savedSearches]) {
+            NSString * regex =
+                [NSString stringWithFormat:@"\\b%@.*", searchBar.text];
+            NSRange range = NSMakeRange(0, search.query.length);
+            if ([search.query isMatchedByRegex:regex options:RKLCaseless
+                inRange:range error:NULL])
+                [matchingSavedSearches addObject:search.query];
+        }
+
+        for (SavedSearch * search in
+            [self.searchBookmarksDisplayMgr recentSearches]) {
+            NSString * regex =
+                [NSString stringWithFormat:@"\\b%@.*", searchBar.text];
+            NSRange range = NSMakeRange(0, search.query.length);
+            if ([search.query isMatchedByRegex:regex options:RKLCaseless
+                inRange:range error:NULL] &&
+                ![matchingSavedSearches containsObject:search.query])
+                [matchingSavedSearches addObject:search.query];
+        }
+
+        self.autocompleteArray =
+            [matchingSavedSearches
+            sortedArrayUsingSelector:@selector(compare:)];
+    } else
+        self.autocompleteArray = [NSArray array];
+
+    if ([self.autocompleteArray count] > 0 && !showingAutocompleteResults &&
+        editingQuery)
+        [self showAutocompleteResults];
+    else if ([self.autocompleteArray count] == 0 && showingAutocompleteResults)
+        [self hideAutocompleteResults];
+
+    [autoCompleteTableView reloadData];
+}
+
+- (void)showAutocompleteResults
+{
+    showingAutocompleteResults = YES;
+    [networkAwareViewController.view.superview.superview
+        addSubview:self.autocompleteView];
+}
+
+- (void)hideAutocompleteResults
+{
+    showingAutocompleteResults = NO;
+    [self.autocompleteView removeFromSuperview];
 }
 
 #pragma mark Accessors
@@ -369,6 +483,32 @@
     [view addSubview:button];
 
     return [view autorelease];
+}
+
+- (UIView *)autocompleteView
+{
+    if (!autocompleteView) {
+        static const CGFloat HEIGHT = 200;
+        static const CGFloat WIDTH = 320;
+
+        CGRect frame = CGRectMake(0, 64, WIDTH, HEIGHT);
+        autocompleteView = [[UIView alloc] initWithFrame:frame];
+
+        CGRect tableViewFrame = CGRectMake(0, 0, WIDTH, HEIGHT);
+        autoCompleteTableView =
+            [[UITableView alloc]
+            initWithFrame:tableViewFrame style:UITableViewStylePlain];
+        autoCompleteTableView.dataSource = self;
+        autoCompleteTableView.delegate = self;
+        [autocompleteView addSubview:autoCompleteTableView];
+
+        UIImage * shadowImage = [UIImage imageNamed:@"DropShadow.png"];
+        UIImageView * shadowView =
+            [[[UIImageView alloc] initWithImage:shadowImage] autorelease];
+        [autocompleteView addSubview:shadowView];
+    }
+
+    return autocompleteView;
 }
 
 @end
