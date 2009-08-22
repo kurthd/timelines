@@ -293,10 +293,8 @@
 		914CA0F91039C62C00421C60 /* StopFollowingButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA0F71039C62C00421C60 /* StopFollowingButtonHighlighted.png */; };
 		914CA261103A1AB200421C60 /* LocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 914CA260103A1AB200421C60 /* LocationCell.m */; };
 		914CA284103A1DC300421C60 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914CA283103A1DC300421C60 /* MapKit.framework */; };
-		914CA2F1103A3E7200421C60 /* Geocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 914CA2F0103A3E7200421C60 /* Geocoder.m */; };
 		914CA331103A444000421C60 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914CA330103A444000421C60 /* CoreLocation.framework */; };
 		914CA4D7103B646700421C60 /* LocationCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 914CA4D6103B646700421C60 /* LocationCellView.m */; };
-		914CA6CA103CA2A300421C60 /* BasicMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 914CA6C9103CA2A300421C60 /* BasicMapAnnotation.m */; };
 		9152E14E1014F6B70033B63B /* DirectMessagesDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E14D1014F6B70033B63B /* DirectMessagesDisplayMgr.m */; };
 		9152E1511014F8260033B63B /* DirectMessageInboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E1501014F8260033B63B /* DirectMessageInboxViewController.m */; };
 		9152E1541014F8430033B63B /* DirectMessageConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E1531014F8430033B63B /* DirectMessageConversationViewController.m */; };
@@ -328,6 +326,11 @@
 		917FFF1B1010F8B800335C0F /* CommonTwitterServicePhotoSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 917FFF1A1010F8B800335C0F /* CommonTwitterServicePhotoSource.m */; };
 		9180B6BF101240B60096DFA1 /* ButtonBackground-92x35.png in Resources */ = {isa = PBXBuildFile; fileRef = 9180B6BE101240B60096DFA1 /* ButtonBackground-92x35.png */; };
 		9180B6C5101244CD0096DFA1 /* ButtonBackground-108x35.png in Resources */ = {isa = PBXBuildFile; fileRef = 9180B6C4101244CD0096DFA1 /* ButtonBackground-108x35.png */; };
+		918F3731103F478D000236AE /* LocationMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918F372F103F478D000236AE /* LocationMapView.xib */; };
+		918F3739103F486E000236AE /* BasicMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F3735103F486E000236AE /* BasicMapAnnotation.m */; };
+		918F373A103F486E000236AE /* Geocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F3737103F486E000236AE /* Geocoder.m */; };
+		918F373F103F48A1000236AE /* LocationMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F373E103F48A1000236AE /* LocationMapViewController.m */; };
+		918F3758103F5262000236AE /* Location.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F3757103F5262000236AE /* Location.png */; };
 		91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD5A3C100FED36009C2179 /* MessageUI.framework */; };
 		91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
 		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
@@ -766,14 +769,13 @@
 		914CA25F103A1AB200421C60 /* LocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationCell.h; path = "user-info/LocationCell.h"; sourceTree = "<group>"; };
 		914CA260103A1AB200421C60 /* LocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationCell.m; path = "user-info/LocationCell.m"; sourceTree = "<group>"; };
 		914CA283103A1DC300421C60 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		914CA2EF103A3E7200421C60 /* Geocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geocoder.h; path = shared/Geocoder.h; sourceTree = "<group>"; };
-		914CA2F0103A3E7200421C60 /* Geocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Geocoder.m; path = shared/Geocoder.m; sourceTree = "<group>"; };
-		914CA2F3103A402E00421C60 /* GeocoderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeocoderDelegate.h; path = shared/GeocoderDelegate.h; sourceTree = "<group>"; };
+		914CA2EF103A3E7200421C60 /* Geocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geocoder.h; path = /Users/doug/dev/twitbit/src/Classes/shared/Geocoder.h; sourceTree = "<absolute>"; };
+		914CA2F0103A3E7200421C60 /* Geocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Geocoder.m; path = /Users/doug/dev/twitbit/src/Classes/shared/Geocoder.m; sourceTree = "<absolute>"; };
+		914CA2F3103A402E00421C60 /* GeocoderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeocoderDelegate.h; path = /Users/doug/dev/twitbit/src/Classes/shared/GeocoderDelegate.h; sourceTree = "<absolute>"; };
 		914CA330103A444000421C60 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		914CA4D5103B646700421C60 /* LocationCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationCellView.h; path = "user-info/LocationCellView.h"; sourceTree = "<group>"; };
 		914CA4D6103B646700421C60 /* LocationCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationCellView.m; path = "user-info/LocationCellView.m"; sourceTree = "<group>"; };
-		914CA6C8103CA2A300421C60 /* BasicMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicMapAnnotation.h; sourceTree = "<group>"; };
-		914CA6C9103CA2A300421C60 /* BasicMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicMapAnnotation.m; sourceTree = "<group>"; };
+		914CA6C8103CA2A300421C60 /* BasicMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasicMapAnnotation.h; path = /Users/doug/dev/twitbit/src/Classes/BasicMapAnnotation.h; sourceTree = "<absolute>"; };
 		9152E14C1014F6B70033B63B /* DirectMessagesDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessagesDisplayMgr.h; path = "direct-messages/DirectMessagesDisplayMgr.h"; sourceTree = "<group>"; };
 		9152E14D1014F6B70033B63B /* DirectMessagesDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessagesDisplayMgr.m; path = "direct-messages/DirectMessagesDisplayMgr.m"; sourceTree = "<group>"; };
 		9152E14F1014F8260033B63B /* DirectMessageInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageInboxViewController.h; path = "direct-messages/DirectMessageInboxViewController.h"; sourceTree = "<group>"; };
@@ -889,6 +891,15 @@
 		918E8A5E0FF1C5560042BBEE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/UserInfoLabelCell.xib; sourceTree = "<group>"; };
 		918E8AA20FF1C69D0042BBEE /* UserInfoLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoLabelCell.h; path = "user-info/UserInfoLabelCell.h"; sourceTree = "<group>"; };
 		918E8AA30FF1C69D0042BBEE /* UserInfoLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoLabelCell.m; path = "user-info/UserInfoLabelCell.m"; sourceTree = "<group>"; };
+		918F3730103F478D000236AE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/LocationMapView.xib; sourceTree = "<group>"; };
+		918F3734103F486E000236AE /* BasicMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasicMapAnnotation.h; path = "geo-services/BasicMapAnnotation.h"; sourceTree = "<group>"; };
+		918F3735103F486E000236AE /* BasicMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicMapAnnotation.m; path = "geo-services/BasicMapAnnotation.m"; sourceTree = "<group>"; };
+		918F3736103F486E000236AE /* Geocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geocoder.h; path = "geo-services/Geocoder.h"; sourceTree = "<group>"; };
+		918F3737103F486E000236AE /* Geocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Geocoder.m; path = "geo-services/Geocoder.m"; sourceTree = "<group>"; };
+		918F3738103F486E000236AE /* GeocoderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeocoderDelegate.h; path = "geo-services/GeocoderDelegate.h"; sourceTree = "<group>"; };
+		918F373D103F48A1000236AE /* LocationMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationMapViewController.h; path = "geo-services/LocationMapViewController.h"; sourceTree = "<group>"; };
+		918F373E103F48A1000236AE /* LocationMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationMapViewController.m; path = "geo-services/LocationMapViewController.m"; sourceTree = "<group>"; };
+		918F3757103F5262000236AE /* Location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Location.png; path = images/Location.png; sourceTree = "<group>"; };
 		91A247640FFE7EF400538F29 /* TweetDetailsFooterGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsFooterGradient.png; path = images/TweetDetailsFooterGradient.png; sourceTree = "<group>"; };
 		91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadowReversed.png; path = images/DropShadowReversed.png; sourceTree = "<group>"; };
 		91A247720FFE81D300538F29 /* DeleteTweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweet.png; path = images/DeleteTweet.png; sourceTree = "<group>"; };
@@ -1291,7 +1302,6 @@
 				914CA2F0103A3E7200421C60 /* Geocoder.m */,
 				914CA2F3103A402E00421C60 /* GeocoderDelegate.h */,
 				914CA6C8103CA2A300421C60 /* BasicMapAnnotation.h */,
-				914CA6C9103CA2A300421C60 /* BasicMapAnnotation.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -1319,6 +1329,7 @@
 				05948993101569D500C37C98 /* AccountSettingsView.xib */,
 				917245E41028B715007E0DF6 /* FindPeopleBookmarkView.xib */,
 				9130FF201035E07B004E3030 /* MarkAsFavoriteCell.xib */,
+				918F372F103F478D000236AE /* LocationMapView.xib */,
 				05C7B8B8103B5FAF0017874C /* PhotoServicesView.xib */,
 				05C7B960103B791A0017874C /* PhotoServiceSelectorView.xib */,
 				059A6E9C103CA27400B7500C /* TwitPicSettingsView.xib */,
@@ -1557,6 +1568,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				918F3733103F47E9000236AE /* geo-services */,
 				9152E14A1014F68B0033B63B /* direct-messages */,
 				917FFF011010F71A00335C0F /* photo-browser */,
 				052C64150FED700B00B259D7 /* app-controller */,
@@ -1714,6 +1726,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				918F3757103F5262000236AE /* Location.png */,
 				059A6F23103CCE3D00B7500C /* DeleteButtonNormal.png */,
 				059A6F24103CCE3D00B7500C /* DeleteButtonPressed.png */,
 				05C7BA08103B90310017874C /* TwitVidLogo.png */,
@@ -1889,6 +1902,20 @@
 			name = "user-info";
 			sourceTree = "<group>";
 		};
+		918F3733103F47E9000236AE /* geo-services */ = {
+			isa = PBXGroup;
+			children = (
+				918F3734103F486E000236AE /* BasicMapAnnotation.h */,
+				918F3735103F486E000236AE /* BasicMapAnnotation.m */,
+				918F3736103F486E000236AE /* Geocoder.h */,
+				918F3737103F486E000236AE /* Geocoder.m */,
+				918F3738103F486E000236AE /* GeocoderDelegate.h */,
+				918F373D103F48A1000236AE /* LocationMapViewController.h */,
+				918F373E103F48A1000236AE /* LocationMapViewController.m */,
+			);
+			name = "geo-services";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2030,6 +2057,8 @@
 				051975FA103A119100883FAC /* AccountSelectedCheckmark.png in Resources */,
 				0519760E103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png in Resources */,
 				05197620103A168600883FAC /* AccountNotSelectedFiller.png in Resources */,
+				918F3731103F478D000236AE /* LocationMapView.xib in Resources */,
+				918F3758103F5262000236AE /* Location.png in Resources */,
 				05C7B8BA103B5FAF0017874C /* PhotoServicesView.xib in Resources */,
 				05C7B962103B791A0017874C /* PhotoServiceSelectorView.xib in Resources */,
 				05C7B99D103B7E1D0017874C /* FlickrLogo.png in Resources */,
@@ -2249,9 +2278,10 @@
 				059A708E103DAE2E00B7500C /* SelectionViewController.m in Sources */,
 				059A718C103E019F00B7500C /* TwitterCredentials+PhotoServiceAdditions.m in Sources */,
 				914CA261103A1AB200421C60 /* LocationCell.m in Sources */,
-				914CA2F1103A3E7200421C60 /* Geocoder.m in Sources */,
 				914CA4D7103B646700421C60 /* LocationCellView.m in Sources */,
-				914CA6CA103CA2A300421C60 /* BasicMapAnnotation.m in Sources */,
+				918F3739103F486E000236AE /* BasicMapAnnotation.m in Sources */,
+				918F373A103F486E000236AE /* Geocoder.m in Sources */,
+				918F373F103F48A1000236AE /* LocationMapViewController.m in Sources */,
 				059A722B103E160200B7500C /* YfrogCredentials.m in Sources */,
 				059A7231103E164A00B7500C /* YfrogCredentials+KeychainAdditions.m in Sources */,
 				059A7247103E172F00B7500C /* YfrogEditPhotoServiceDisplayMgr.m in Sources */,
@@ -2470,6 +2500,14 @@
 				918E8A5E0FF1C5560042BBEE /* en */,
 			);
 			name = UserInfoLabelCell.xib;
+			sourceTree = "<group>";
+		};
+		918F372F103F478D000236AE /* LocationMapView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				918F3730103F478D000236AE /* en */,
+			);
+			name = LocationMapView.xib;
 			sourceTree = "<group>";
 		};
 		91BD11391006736F0082D209 /* PhotoBrowserView.xib */ = {

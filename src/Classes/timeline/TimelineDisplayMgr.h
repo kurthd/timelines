@@ -25,6 +25,7 @@
 #import "SavedSearchMgr.h"
 #import "ConversationDisplayMgr.h"
 #import "UserInfoRequestAdapter.h"
+#import "LocationMapViewController.h"
 
 @class TimelineDisplayMgrFactory;
 @class TweetViewController;
@@ -99,6 +100,8 @@
     // Every conversation display mgr is added to this array. When the
     // timeline view is displayed, the array is emptied.
     NSMutableArray * conversationDisplayMgrs;
+
+    LocationMapViewController * locationMapViewController;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
