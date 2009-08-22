@@ -80,6 +80,16 @@
     [self.logInViewController promptForLoginWithUsername:user editable:NO];
 }
 
+- (void)setViewTitle:(NSString *)title
+{
+    self.logInViewController.title = title;
+}
+
+- (void)setViewInstructions:(NSString *)instructions
+{
+    self.logInViewController.footer = instructions;
+}
+
 #pragma mark LogInViewControllerDelegate implementation
 
 - (void)userDidProvideUsername:(NSString *)aUsername

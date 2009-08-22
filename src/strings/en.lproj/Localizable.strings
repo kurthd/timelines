@@ -182,17 +182,29 @@ photoserviceview.service.notselected = "None";
 /* PhotoServiceSelectorView */
 photoserviceselector.view.title = "Select a Service";
 
+/* YfrogLogInView */
+yfrogloginview.view.title = "Log In to Yfrog";
+yfrogloginview.view.instructions = "Yfrog is a free service for sharing photos and video through Twitter. To log in, provide Yfrog with your Twitter username and password.";
+
 /* YfrogSettingsView */
 yfrogsettings.view.title = "Yfrog Settings";
 yfrogsettingsview.delete.alert.title = "Are you sure you want to delete this service?";
 yfrogsettingsview.delete.alert.cancel.title = "Cancel";
 yfrogsettingsview.delete.alert.delete.title = "Delete Service";
 
+/* TwitVidLogInView */
+twitpicloginview.view.title = "Log In to TwitPic";
+twitpicloginview.view.instructions = "TwitPic is a free service for sharing photos through Twitter. To log in, provide TwitPic with your Twitter username and password.";
+
 /* TwitPicSettingsView */
 twitpicsettings.view.title = "TwitPic Settings";
 twitpicsettingsview.delete.alert.title = "Are you sure you want to delete this service?";
 twitpicsettingsview.delete.alert.cancel.title = "Cancel";
 twitpicsettingsview.delete.alert.delete.title = "Delete Service";
+
+/* TwitVidLogInView */
+twitvidloginview.view.title = "Log In to TwitVid";
+twitvidloginview.view.instructions = "TwitVid is a free service for sharing video through Twitter. To log in, provide TwitVid with your Twitter username and password.";
 
 /* TwitVidSettingsView */
 twitvidsettings.view.title = "TwitVid Settings";

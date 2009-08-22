@@ -41,6 +41,9 @@
 
     mgr.allowsCancel = YES;
     mgr.delegate = self;
+    [mgr setViewTitle:NSLocalizedString(@"twitvidloginview.view.title", @"")];
+    [mgr setViewInstructions:
+        NSLocalizedString(@"twitvidloginview.view.instructions", @"")];
 
     self.logInDisplayMgr = mgr;
     [mgr release];

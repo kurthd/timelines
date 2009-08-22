@@ -47,4 +47,9 @@
 - (void)logIn:(BOOL)animated;
 - (void)logInForUser:(NSString *)username animated:(BOOL)animated;
 
+#pragma mark Configuring the view
+
+- (void)setViewTitle:(NSString *)title;
+- (void)setViewInstructions:(NSString *)instructions;
+
 @end

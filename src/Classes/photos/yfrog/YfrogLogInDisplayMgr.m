@@ -41,6 +41,9 @@
 
     mgr.allowsCancel = YES;
     mgr.delegate = self;
+    [mgr setViewTitle:NSLocalizedString(@"yfrogloginview.view.title", @"")];
+    [mgr setViewInstructions:
+        NSLocalizedString(@"yfrogloginview.view.instructions", @"")];
 
     self.logInDisplayMgr = mgr;
     [mgr release];
