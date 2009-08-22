@@ -32,7 +32,6 @@
 @property (nonatomic, retain) AddPhotoServiceDisplayMgr *
     addPhotoServiceDisplayMgr;
 
-//@property (nonatomic, copy) NSString * recipient;
 @property (nonatomic, copy) NSString * origUsername;
 @property (nonatomic, copy) NSString * origTweetId;
 
@@ -53,7 +52,7 @@
 @synthesize credentialsUpdatePublisher, credentialsSetChangedPublisher;
 @synthesize logInDisplayMgr, context;
 @synthesize delegate;
-@synthesize /*recipient,*/ origUsername, origTweetId;
+@synthesize origUsername, origTweetId;
 @synthesize draftMgr;
 @synthesize addPhotoServiceDisplayMgr;
 
@@ -66,7 +65,6 @@
     self.credentialsUpdatePublisher = nil;
     self.credentialsSetChangedPublisher = nil;
     self.addPhotoServiceDisplayMgr = nil;
-    //self.recipient = nil;
     self.origUsername = nil;
     self.origTweetId = nil;
     self.draftMgr = nil;
@@ -529,7 +527,8 @@ failedToPostVideo:(NSError *)error
         NSLog(@"Original image: %@.",
             [info objectForKey:UIImagePickerControllerOriginalImage]);
 
-        UIImage * image = [info objectForKey:UIImagePickerControllerEditedImage];
+        UIImage * image =
+            [info objectForKey:UIImagePickerControllerEditedImage];
         if (!image)
             image = [info objectForKey:UIImagePickerControllerOriginalImage];
 
@@ -676,8 +675,18 @@ failedToPostVideo:(NSError *)error
     imagePicker.delegate = self;
     imagePicker.allowsImageEditing = NO;
     imagePicker.sourceType = source;
-    imagePicker.mediaTypes =
+
+    NSMutableArray * mediaTypes =
+        [NSMutableArray arrayWithObject:(NSString *) kUTTypeImage];
+    NSArray * availableMedaTypes =
         [UIImagePickerController availableMediaTypesForSourceType:source];
+    BOOL videoSupportedOnDevice =
+        [availableMedaTypes containsObject:(NSString *) kUTTypeMovie];
+    BOOL videoServiceInstalled =
+        [service.credentials defaultVideoServiceCredentials] != nil;
+    if (videoSupportedOnDevice && videoServiceInstalled)
+        [mediaTypes addObject:(NSString *) kUTTypeMovie];
+    imagePicker.mediaTypes = mediaTypes;
 
     [controller presentModalViewController:imagePicker animated:YES];
     [imagePicker release];
