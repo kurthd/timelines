@@ -13,6 +13,7 @@
 #import "TweetDraftMgr.h"
 #import "TwitterCredentials+PhotoServiceAdditions.h"
 #import "PhotoService+ServiceAdditions.h"
+#import "AccountSettings.h"
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -556,8 +557,31 @@ failedToPostVideo:(NSError *)error
 
 - (void)photoServiceAdded:(PhotoServiceCredentials *)credentials
 {
+    // HACK: Just save the settings here. This code is adapted from the photo
+    // services display mgr, and should be refactored to a common place.
+    NSString * serviceName = [credentials serviceName];
+    NSString * settingsKey = credentials.credentials.username;
+    AccountSettings * settings =
+        [AccountSettings settingsForKey:settingsKey];
+
+    NSString * photoService = [settings photoServiceName];
+    if (!photoService && [credentials supportsPhotos])
+        [settings setPhotoServiceName:serviceName];
+
+    NSString * videoService = [settings videoServiceName];
+    if (!videoService && [credentials supportsVideo])
+        [settings setVideoServiceName:serviceName];
+
+    [AccountSettings setSettings:settings forKey:settingsKey];
+
     [self promptForPhotoSource:
         self.composeTweetViewController.modalViewController];
+
+    [NSTimer scheduledTimerWithTimeInterval:0.5
+                                     target:self
+                                   selector:@selector(dismissSelector:)
+                                   userInfo:nil
+                                    repeats:NO];
 }
 
 - (void)addingPhotoServiceCancelled
@@ -657,6 +681,17 @@ failedToPostVideo:(NSError *)error
 
     [controller presentModalViewController:imagePicker animated:YES];
     [imagePicker release];
+}
+
+// HACK: Dismissing the modal view causes the app to crash. Putting it on a
+// timer fixes the problem.
+- (void)dismissSelector:(NSTimer *)timer
+{
+    [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
+
+    [self performSelector:@selector(promptForPhotoSource:)
+               withObject:self.composeTweetViewController
+               afterDelay:0.5];
 }
 
 #pragma mark Accessors

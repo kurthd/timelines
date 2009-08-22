@@ -165,8 +165,7 @@
 
     // HACK: Firing this on a timer because doing it here causes the app to
     // crash in an infinite loop somewhere deep in the UIView code and I have no
-    // idea why. I will revisit in the future. The most likely cause is the
-    // underlying oauth code.
+    // idea why. I will revisit in the future.
     [NSTimer scheduledTimerWithTimeInterval:0.5
                                      target:self
                                    selector:@selector(dismissExplain:)

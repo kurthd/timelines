@@ -102,7 +102,7 @@
     self.logInRequestId = [self.twitter checkUserCredentials];
 
     [[UIApplication sharedApplication] networkActivityIsStarting];
-
+    
     NSLog(@"Attempting log in %@: '%@'.",
         [self.twitter usesSecureConnection] ? @"securely" : @"insecurely",
         self.logInRequestId);
