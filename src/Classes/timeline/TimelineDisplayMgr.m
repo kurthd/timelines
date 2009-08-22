@@ -38,6 +38,9 @@
 @property (nonatomic, retain) SavedSearchMgr * savedSearchMgr;
 @property (nonatomic, retain) NSString * currentSearch;
 
+@property (nonatomic, readonly)
+    LocationMapViewController * locationMapViewController;
+
 @end
 
 enum {
@@ -719,17 +722,24 @@ static NSInteger retweetFormatValueAlredyRead;
 - (void)showLocationOnMap:(NSString *)locationString
 {
     NSLog(@"Timeline display manager: showing %@ on map", locationString);
-    NSString * locationWithoutCommas =
-        [locationString stringByReplacingOccurrencesOfString:@"iPhone:"
-        withString:@""];
-    NSString * urlString =
-        [[NSString
-        stringWithFormat:@"http://maps.google.com/maps?q=%@",
-        locationWithoutCommas]
-        stringByAddingPercentEscapesUsingEncoding:
-        NSUTF8StringEncoding];
-    NSURL * url = [NSURL URLWithString:urlString];
-    [[UIApplication sharedApplication] openURL:url];
+
+    self.locationMapViewController.navigationItem.title = locationString;
+    
+    [wrapperController.navigationController
+        pushViewController:self.locationMapViewController animated:YES];
+
+    [self.locationMapViewController setLocation:locationString];
+    // NSString * locationWithoutCommas =
+    //     [locationString stringByReplacingOccurrencesOfString:@"iPhone:"
+    //     withString:@""];
+    // NSString * urlString =
+    //     [[NSString
+    //     stringWithFormat:@"http://maps.google.com/maps?q=%@",
+    //     locationWithoutCommas]
+    //     stringByAddingPercentEscapesUsingEncoding:
+    //     NSUTF8StringEncoding];
+    // NSURL * url = [NSURL URLWithString:urlString];
+    // [[UIApplication sharedApplication] openURL:url];
 }
 
 - (void)displayFollowingForUser:(NSString *)username
@@ -1275,6 +1285,25 @@ static NSInteger retweetFormatValueAlredyRead;
 {
     showMentions = show;
     self.timelineController.mentionUsername = show ? credentials.username : nil;
+}
+
+- (LocationMapViewController *)locationMapViewController
+{
+    if (!locationMapViewController) {
+        locationMapViewController =
+            [[LocationMapViewController alloc]
+            initWithNibName:@"LocationMapView" bundle:nil];
+
+        UIBarButtonItem * currentLocationButton =
+            [[[UIBarButtonItem alloc]
+            initWithImage:[UIImage imageNamed:@"Location.png"]
+            style:UIBarButtonItemStyleBordered target:locationMapViewController
+            action:@selector(setCurrentLocation:)] autorelease];
+        self.locationMapViewController.navigationItem.rightBarButtonItem =
+            currentLocationButton;
+    }
+
+    return locationMapViewController;
 }
 
 @end

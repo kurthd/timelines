@@ -26,43 +26,15 @@
         locationCellView.autoresizingMask =
             UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.contentView addSubview:locationCellView];
+
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
 
 	return self;
 }
 
-// - (void)awakeFromNib
-// {
-//     [super awakeFromNib];
-//     mapView.delegate = self;
-//     
-//     MKCoordinateRegion region = mapView.region;
-//     CLLocationCoordinate2D coordinate;
-//     coordinate.longitude = -122.419209;
-//     coordinate.latitude = 37.775206;
-//     region.center = coordinate;
-//     MKCoordinateSpan span;
-//     span.latitudeDelta = .002;
-//     span.longitudeDelta = .002;
-//     region.span = span;
-//     [mapView setRegion:region animated:YES];
-// }
-
 - (void)setLocationText:(NSString *)locationText
 {
-    // mapView.delegate = self;
-    // NSLog(@"Setting map view coordinates");
-    // NSLog(@"Map view: %@", mapView);
-    // NSLog(@"coordinate long: %f", coordinate.longitude);
-    // NSLog(@"coordinate lat: %f", coordinate.latitude);
-    // MKCoordinateRegion region = mapView.region;
-    // region.center = coordinate;
-    // MKCoordinateSpan span;
-    // span.latitudeDelta = .005;
-    // span.longitudeDelta = .005;
-    // region.span = span;
-    // [mapView setRegion:region animated:YES];
-    //[mapView setCenterCoordinate:coordinate animated:YES];
     [locationCellView setLocationText:locationText];
 }
 
