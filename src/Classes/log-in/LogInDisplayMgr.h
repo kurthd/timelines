@@ -5,7 +5,6 @@
 #import <Foundation/Foundation.h>
 #import "LogInViewControllerDelegate.h"
 #import "MGTwitterEngineDelegate.h"
-#import "TwitPicCredentials.h"
 
 @class MGTwitterEngine, LogInViewController;
 
@@ -15,7 +14,7 @@
 
 - (BOOL)isUsernameValid:(NSString *)username;
 
-- (void)logInCompleted;
+- (void)logInCompleted:(NSString *)username password:(NSString *)password;
 - (void)logInCancelled;
 
 @end
@@ -47,5 +46,10 @@
 
 - (void)logIn:(BOOL)animated;
 - (void)logInForUser:(NSString *)username animated:(BOOL)animated;
+
+#pragma mark Configuring the view
+
+- (void)setViewTitle:(NSString *)title;
+- (void)setViewInstructions:(NSString *)instructions;
 
 @end

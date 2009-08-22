@@ -2,7 +2,7 @@
 //  TwitterCredentials.h
 //  twitch
 //
-//  Created by John A. Debay on 7/14/09.
+//  Created by John A. Debay on 8/18/09.
 //  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
@@ -12,8 +12,8 @@
 @class DirectMessage;
 @class DirectMessageDraft;
 @class Mention;
+@class PhotoServiceCredentials;
 @class TweetDraft;
-@class TwitPicCredentials;
 @class UserTweet;
 
 @interface TwitterCredentials :  NSManagedObject  
@@ -21,12 +21,12 @@
 }
 
 @property (nonatomic, retain) NSString * username;
-@property (nonatomic, retain) TwitPicCredentials * twitPicCredentials;
 @property (nonatomic, retain) ActiveTwitterCredentials * activeCredentials;
 @property (nonatomic, retain) NSSet* userTimeline;
 @property (nonatomic, retain) NSSet* directMessageDrafts;
 @property (nonatomic, retain) TweetDraft * tweetDraft;
 @property (nonatomic, retain) NSSet* mentions;
+@property (nonatomic, retain) NSSet* photoServiceCredentials;
 @property (nonatomic, retain) NSSet* directMessages;
 
 @end
@@ -47,6 +47,11 @@
 - (void)removeMentionsObject:(Mention *)value;
 - (void)addMentions:(NSSet *)value;
 - (void)removeMentions:(NSSet *)value;
+
+- (void)addPhotoServiceCredentialsObject:(PhotoServiceCredentials *)value;
+- (void)removePhotoServiceCredentialsObject:(PhotoServiceCredentials *)value;
+- (void)addPhotoServiceCredentials:(NSSet *)value;
+- (void)removePhotoServiceCredentials:(NSSet *)value;
 
 - (void)addDirectMessagesObject:(DirectMessage *)value;
 - (void)removeDirectMessagesObject:(DirectMessage *)value;

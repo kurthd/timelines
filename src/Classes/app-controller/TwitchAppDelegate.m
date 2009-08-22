@@ -13,7 +13,7 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "InfoPlistConfigReader.h"
 #import "TwitterService.h"
-#import "TwitPicImageSender.h"
+#import "TwitPicPhotoService.h"
 #import "ComposeTweetDisplayMgr.h"
 #import "UserTimelineDataSource.h"
 #import "SearchBarDisplayMgr.h"
@@ -770,7 +770,7 @@
 {
 
 #if defined(HOB_TWITBIT_PUSH_ENABLE)
-    
+
     UIRemoteNotificationType notificationTypes =
     (UIRemoteNotificationTypeBadge |
      UIRemoteNotificationTypeSound |
@@ -1214,19 +1214,12 @@
             [[TwitterService alloc]
             initWithTwitterCredentials:nil context:[self managedObjectContext]];
 
-        NSString * twitPicUrl =
-            [[InfoPlistConfigReader reader] valueForKey:@"TwitPicPostUrl"];
-        TwitPicImageSender * imageSender =
-            [[TwitPicImageSender alloc] initWithUrl:twitPicUrl];
-
         composeTweetDisplayMgr =
             [[ComposeTweetDisplayMgr alloc]
             initWithRootViewController:self.tabBarController
                         twitterService:service
-                           imageSender:imageSender
                                context:[self managedObjectContext]];
         [service release];
-        [imageSender release];
 
         composeTweetDisplayMgr.delegate = self;
     }

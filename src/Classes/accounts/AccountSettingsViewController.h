@@ -11,6 +11,9 @@
 - (void)userDidCommitSettings:(AccountSettings *)settings
                    forAccount:(TwitterCredentials *)credentials;
 
+- (void)userWantsToConfigurePhotoServicesForAccount:
+    (TwitterCredentials *)credentials;
+
 @end
 
 @interface AccountSettingsViewController : UITableViewController

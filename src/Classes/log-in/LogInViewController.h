@@ -9,6 +9,7 @@
 {
     id<LogInViewControllerDelegate> delegate;
 
+    IBOutlet UINavigationBar * navigationBar;
     IBOutlet UITableView * tableView;
 
     IBOutlet UIBarButtonItem * logInButton;
@@ -20,10 +21,13 @@
     IBOutlet UITextField * usernameTextField;
     IBOutlet UITextField * passwordTextField;
     
-    IBOutlet UIView * footerView;
+    NSString * title;
+    NSString * footer;
 }
 
 @property (nonatomic, assign) id<LogInViewControllerDelegate> delegate;
+@property (nonatomic, copy) NSString * title;
+@property (nonatomic, copy) NSString * footer;
 
 - (void)promptForLogIn;
 - (void)promptForLoginWithUsername:(NSString *)username editable:(BOOL)editable;

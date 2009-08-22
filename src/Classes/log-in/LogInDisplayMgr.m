@@ -80,6 +80,16 @@
     [self.logInViewController promptForLoginWithUsername:user editable:NO];
 }
 
+- (void)setViewTitle:(NSString *)title
+{
+    self.logInViewController.title = title;
+}
+
+- (void)setViewInstructions:(NSString *)instructions
+{
+    self.logInViewController.footer = instructions;
+}
+
 #pragma mark LogInViewControllerDelegate implementation
 
 - (void)userDidProvideUsername:(NSString *)aUsername
@@ -92,7 +102,7 @@
     self.logInRequestId = [self.twitter checkUserCredentials];
 
     [[UIApplication sharedApplication] networkActivityIsStarting];
-
+    
     NSLog(@"Attempting log in %@: '%@'.",
         [self.twitter usesSecureConnection] ? @"securely" : @"insecurely",
         self.logInRequestId);
@@ -141,24 +151,8 @@
         [self.logInViewController promptForLoginWithUsername:self.username
                                                     editable:NO];
     } else {
-        TwitPicCredentials * twitPicCredentials =
-            (TwitPicCredentials *) [NSEntityDescription
-            insertNewObjectForEntityForName:@"TwitPicCredentials"
-                     inManagedObjectContext:context];
-        twitPicCredentials.username = self.username;
-        twitPicCredentials.password = self.password;
-        twitPicCredentials.twitterCredentials = twitterCredentials;
-
-        NSError * error;
-        if ([context save:&error])
-            [self.delegate logInCompleted];
-        else {  // handle the error
-            [self displayErrorWithMessage:error.localizedDescription];
-            // HACK: Hardcoding the call to the username here
-            [self.logInViewController
-                promptForLoginWithUsername:self.username
-                                  editable:NO];
-        }
+        [self.rootViewController dismissModalViewControllerAnimated:YES];
+        [self.delegate logInCompleted:self.username password:self.password];
     }
 
     [[UIApplication sharedApplication] networkActivityDidFinish];

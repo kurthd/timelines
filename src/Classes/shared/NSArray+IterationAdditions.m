@@ -6,6 +6,17 @@
 
 @implementation NSArray (IterationAdditions)
 
+- (NSArray *)arrayByTransformingObjectsUsingSelector:(SEL)sel
+{
+    NSMutableArray * transformedArray =
+        [NSMutableArray arrayWithCapacity:self.count];
+
+    for (id object in self)
+        [transformedArray addObject:[object performSelector:sel]];
+
+    return transformedArray;
+}
+
 - (NSArray *)arrayByFilteringObjectsUsingSelector:(SEL)sel
 {
     NSMutableArray * filteredArray =

@@ -20,6 +20,7 @@ enum CredentialRows
 
 @interface LogInViewController ()
 
+@property (nonatomic, retain) UINavigationBar * navigationBar;
 @property (nonatomic, retain) UITableView * tableView;
 
 @property (nonatomic, retain) UIBarButtonItem * logInButton;
@@ -39,15 +40,18 @@ enum CredentialRows
 
 @implementation LogInViewController
 
-@synthesize delegate, tableView;
+@synthesize delegate;
+@synthesize navigationBar, tableView;
 @synthesize logInButton, cancelButton;
 @synthesize usernameCell, passwordCell;
 @synthesize usernameTextField, passwordTextField;
+@synthesize title, footer;
 
 - (void)dealloc
 {
     self.delegate = nil;
 
+    self.navigationBar = nil;
     self.tableView = nil;
 
     self.logInButton = nil;
@@ -59,6 +63,9 @@ enum CredentialRows
     self.usernameTextField = nil;
     self.passwordTextField = nil;
 
+    self.title = nil;
+    self.footer = nil;
+
     [super dealloc];
 }
 
@@ -68,18 +75,19 @@ enum CredentialRows
 
     self.logInButton.enabled = NO;
     self.tableView.backgroundColor = [UIColor twitchBackgroundColor];
-    self.tableView.tableFooterView = footerView;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
+    self.navigationBar.topItem.title = self.title;
+
     [self resetForm];
     self.cancelButton.enabled = [delegate userCanCancel];
 }
 
-#pragma mark UITableViewDelegate implementation
+#pragma mark UITableViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -98,6 +106,12 @@ enum CredentialRows
     }
 
     return nrows;
+}
+
+- (NSString *)tableView:(UITableView *)tableView
+    titleForFooterInSection:(NSInteger)section
+{
+    return section == kCredentialsSection ? self.footer : nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView

@@ -3,6 +3,25 @@
 //
 
 #import "AccountSettingsViewController.h"
+#import "UIAlertView+InstantiationAdditions.h"
+
+static const NSInteger NUM_SECTIONS = 2;
+enum {
+    kPushNotificationSection,
+    kPhotoSection
+};
+
+static const NSInteger NUM_PUSH_NOTIFICATION_ROWS = 2;
+enum {
+    kMentionsRow,
+    kDirectMessagesRow
+};
+
+static const NSInteger NUM_PHOTO_ROWS = 2;
+enum {
+    kIntegrationRow,
+    kCompressionRow
+};
 
 @interface AccountSettingsViewController ()
 
@@ -47,6 +66,8 @@
     [super dealloc];
 }
 
+#pragma mark UIViewController overrides
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -73,38 +94,99 @@
                          forAccount:self.credentials];
 }
 
-#pragma mark Table view methods
+#pragma mark UITableViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv
 {
-    return 1;
+    return NUM_SECTIONS;
 }
 
 - (NSString *)tableView:(UITableView *)tableView
     titleForHeaderInSection:(NSInteger)section
 {
-    return NSLocalizedString(@"accountsettings.push.header", @"");
-    
+    NSString * title = nil;
+
+    if (section == kPushNotificationSection)
+        title = NSLocalizedString(@"accountsettings.push.header", @"");
+    else if (section == kPhotoSection)
+        title = NSLocalizedString(@"accountsettings.photo.header", @"");
+
+    return title;
 }
 
 - (NSString *)tableView:(UITableView *)tableView
     titleForFooterInSection:(NSInteger)section
 {
-    return NSLocalizedString(@"accountsettings.push.footer", @"");
+    NSString * footer = nil;
+
+    if (section == kPushNotificationSection)
+        footer = NSLocalizedString(@"accountsettings.push.footer", @"");
+
+    return footer;
 }
 
 - (NSInteger)tableView:(UITableView *)tv
  numberOfRowsInSection:(NSInteger)section
 {
-    return pushSettingTableViewCells.count;
+    NSInteger nrows = 0;
+
+    if (section == kPushNotificationSection)
+        nrows = NUM_PUSH_NOTIFICATION_ROWS;
+    else if (section == kPhotoSection)
+        nrows = NUM_PHOTO_ROWS;
+
+    return nrows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell * cell =
-        [self.pushSettingTableViewCells objectAtIndex:indexPath.row];
+    UITableViewCell * cell = nil;
+
+    if (indexPath.section == kPushNotificationSection)
+        cell = [self.pushSettingTableViewCells objectAtIndex:indexPath.row];
+    else if (indexPath.section == kPhotoSection) {
+        static NSString * CellIdentifier = @"AccountSettingsTableView";
+
+        cell = [tv dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!cell)
+            cell =
+                [[[UITableViewCell alloc]
+                initWithStyle:UITableViewCellStyleDefault
+                reuseIdentifier:CellIdentifier]
+                autorelease];
+
+        if (indexPath.row == kIntegrationRow)
+            cell.textLabel.text =
+                NSLocalizedString(
+                @"accountsettings.photo.integration.label", @"");
+        else if (indexPath.row == kCompressionRow)
+            cell.textLabel.text =
+                NSLocalizedString(
+                @"accountsettings.photo.compression.label", @"");
+
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    }
+
     return cell;
+}
+
+#pragma mark UITableViewDelegate implementation
+
+- (void)tableView:(UITableView *)tableView
+    didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == kPhotoSection)
+        if (indexPath.row == kIntegrationRow)
+            [self.delegate
+                userWantsToConfigurePhotoServicesForAccount:self.credentials];
+        else {
+            [[UIAlertView simpleAlertViewWithTitle:@"Not Implemented"
+                                           message:nil] show];
+            [self.tableView deselectRowAtIndexPath:indexPath
+                                          animated:YES];
+        }
 }
 
 #pragma mark Public interface to update the display

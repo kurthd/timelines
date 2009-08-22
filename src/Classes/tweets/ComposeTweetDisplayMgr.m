@@ -2,15 +2,18 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
+#import <MobileCoreServices/MobileCoreServices.h>  // for kUTTypeMovie
 #import "ComposeTweetDisplayMgr.h"
 #import "ComposeTweetViewController.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "CredentialsActivatedPublisher.h"
 #import "CredentialsSetChangedPublisher.h"
-#import "TwitPicImageSender.h"
 #import "TweetDraft.h"
 #import "DirectMessageDraft.h"
 #import "TweetDraftMgr.h"
+#import "TwitterCredentials+PhotoServiceAdditions.h"
+#import "PhotoService+ServiceAdditions.h"
+#import "AccountSettings.h"
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -19,13 +22,15 @@
     composeTweetViewController;
 
 @property (nonatomic, retain) TwitterService * service;
-@property (nonatomic, retain) TwitPicImageSender * imageSender;
 @property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
 
 @property (nonatomic, retain) CredentialsActivatedPublisher *
     credentialsUpdatePublisher;
 @property (nonatomic, retain) CredentialsSetChangedPublisher *
     credentialsSetChangedPublisher;
+
+@property (nonatomic, retain) AddPhotoServiceDisplayMgr *
+    addPhotoServiceDisplayMgr;
 
 //@property (nonatomic, copy) NSString * recipient;
 @property (nonatomic, copy) NSString * origUsername;
@@ -44,12 +49,13 @@
 @implementation ComposeTweetDisplayMgr
 
 @synthesize rootViewController, composeTweetViewController;
-@synthesize service, imageSender;
+@synthesize service;
 @synthesize credentialsUpdatePublisher, credentialsSetChangedPublisher;
 @synthesize logInDisplayMgr, context;
 @synthesize delegate;
 @synthesize /*recipient,*/ origUsername, origTweetId;
 @synthesize draftMgr;
+@synthesize addPhotoServiceDisplayMgr;
 
 - (void)dealloc
 {
@@ -57,9 +63,9 @@
     self.rootViewController = nil;
     self.composeTweetViewController = nil;
     self.service = nil;
-    self.imageSender = nil;
     self.credentialsUpdatePublisher = nil;
     self.credentialsSetChangedPublisher = nil;
+    self.addPhotoServiceDisplayMgr = nil;
     //self.recipient = nil;
     self.origUsername = nil;
     self.origTweetId = nil;
@@ -69,16 +75,12 @@
 
 - (id)initWithRootViewController:(UIViewController *)aRootViewController
                   twitterService:(TwitterService *)aService
-                     imageSender:(TwitPicImageSender *)anImageSender
                          context:(NSManagedObjectContext *)aContext
 {
     if (self = [super init]) {
         self.rootViewController = aRootViewController;
         self.service = aService;
         self.service.delegate = self;
-
-        self.imageSender = anImageSender;
-        self.imageSender.delegate = self;
 
         self.context = aContext;
 
@@ -380,10 +382,12 @@
 - (void)userWantsToSelectPhoto
 {
     TwitterCredentials * credentials = self.service.credentials;
-    if (credentials.twitPicCredentials == nil)
-        [self.logInDisplayMgr logInForUser:credentials.username animated:YES];
-    else
+    PhotoServiceCredentials * photoCredentials =
+        [credentials defaultPhotoServiceCredentials];
+    if (photoCredentials)
         [self promptForPhotoSource:self.composeTweetViewController];
+    else
+        [self.addPhotoServiceDisplayMgr addPhotoService:credentials];
 }
 
 #pragma mark TwitterServiceDelegate implementation
@@ -448,17 +452,30 @@
     [self.delegate userFailedToSendDirectMessage:text to:username];
 }
 
-#pragma mark TwitPicImageSenderDelegate implementation
+#pragma mark PhotoServiceDelegate implementation
 
-- (void)sender:(TwitPicImageSender *)sender didPostImageToUrl:(NSString *)url
+- (void)service:(PhotoService *)photoService didPostImageToUrl:(NSString *)url
 {
     NSLog(@"Successfully posted image to URL: '%@'.", url);
 
     [self.composeTweetViewController hideActivityView];
     [self.composeTweetViewController addTextToMessage:url];
+
+    [photoService autorelease];
 }
 
-- (void)sender:(TwitPicImageSender *)sender failedToPostImage:(NSError *)error
+- (void)service:(PhotoService *)photoService didPostVideoToUrl:(NSString *)url
+{
+    NSLog(@"Successfully posted video to URL: '%@'.", url);
+
+    [self.composeTweetViewController hideActivityView];
+    [self.composeTweetViewController addTextToMessage:url];
+
+    [photoService autorelease];
+}
+
+- (void)service:(PhotoService *)photoService
+    failedToPostImage:(NSError *)error
 {
     NSLog(@"Failed to post image to URL: '%@'.", error);
 
@@ -468,6 +485,23 @@
                                    message:error.localizedDescription] show];
 
     [self.composeTweetViewController hideActivityView];
+
+    [photoService autorelease];
+}
+
+- (void)service:(PhotoService *)photoService
+failedToPostVideo:(NSError *)error
+{
+    NSLog(@"Failed to post video to URL: '%@'.", error);
+
+    NSString * title = NSLocalizedString(@"videoupload.failed.title", @"");
+
+    [[UIAlertView simpleAlertViewWithTitle:title
+                                   message:error.localizedDescription] show];
+
+    [self.composeTweetViewController hideActivityView];
+
+    [photoService autorelease];
 }
 
 #pragma mark UIImagePickerControllerDelegate implementation
@@ -475,14 +509,41 @@
 - (void)imagePickerController:(UIImagePickerController *)picker
     didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage * image = [info objectForKey:UIImagePickerControllerEditedImage];
-    if (!image)
-         image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    NSString * mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    if ([mediaType isEqualToString:(NSString *) kUTTypeMovie]) {
+        NSURL * videoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
 
-    TwitPicCredentials * c = service.credentials.twitPicCredentials;
-    NSAssert(c, @"Unexpected nil value for TwitPic credentials while uploading "
-        "image.");
-    [imageSender sendImage:image withCredentials:c];
+        PhotoServiceCredentials * c =
+            [service.credentials defaultVideoServiceCredentials];
+        NSString * serviceName = [c serviceName];
+        NSLog(@"Uploading video to: '%@'.", serviceName);
+
+        PhotoService * photoService =
+            [[PhotoService photoServiceWithServiceName:serviceName] retain];
+        photoService.delegate = self;
+
+        [photoService sendVideoAtUrl:videoUrl withCredentials:c];
+    } else if ([mediaType isEqualToString:(NSString *) kUTTypeImage]) {
+        NSLog(@"Cropped image: %@.",
+           [info objectForKey:UIImagePickerControllerEditedImage]);
+        NSLog(@"Original image: %@.",
+            [info objectForKey:UIImagePickerControllerOriginalImage]);
+
+        UIImage * image = [info objectForKey:UIImagePickerControllerEditedImage];
+        if (!image)
+            image = [info objectForKey:UIImagePickerControllerOriginalImage];
+
+        PhotoServiceCredentials * c =
+            [service.credentials defaultPhotoServiceCredentials];
+        NSString * serviceName = [c serviceName];
+        NSLog(@"Uploading photo to: '%@'", serviceName);
+        PhotoService * photoService =
+            [[PhotoService photoServiceWithServiceName:serviceName] retain];
+        photoService.delegate = self;
+        [photoService sendImage:image withCredentials:c];
+    }
+
+
     [self.composeTweetViewController displayActivityView];
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
 }
@@ -490,6 +551,41 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark AddPhotoServiceDisplayMgrDelegate implementation
+
+- (void)photoServiceAdded:(PhotoServiceCredentials *)credentials
+{
+    // HACK: Just save the settings here. This code is adapted from the photo
+    // services display mgr, and should be refactored to a common place.
+    NSString * serviceName = [credentials serviceName];
+    NSString * settingsKey = credentials.credentials.username;
+    AccountSettings * settings =
+        [AccountSettings settingsForKey:settingsKey];
+
+    NSString * photoService = [settings photoServiceName];
+    if (!photoService && [credentials supportsPhotos])
+        [settings setPhotoServiceName:serviceName];
+
+    NSString * videoService = [settings videoServiceName];
+    if (!videoService && [credentials supportsVideo])
+        [settings setVideoServiceName:serviceName];
+
+    [AccountSettings setSettings:settings forKey:settingsKey];
+
+    [self promptForPhotoSource:
+        self.composeTweetViewController.modalViewController];
+
+    [NSTimer scheduledTimerWithTimeInterval:0.5
+                                     target:self
+                                   selector:@selector(dismissSelector:)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+- (void)addingPhotoServiceCancelled
+{
 }
 
 #pragma mark UIActionSheetDelegate implementation
@@ -526,21 +622,32 @@
     UIImagePickerControllerSourceType camera =
         UIImagePickerControllerSourceTypeCamera;
 
-    UIImagePickerControllerSourceType source;
-
     BOOL libraryAvailable =
         [UIImagePickerController isSourceTypeAvailable:photoLibrary];
     BOOL cameraAvailable =
         [UIImagePickerController isSourceTypeAvailable:camera];
+    BOOL videoAvailable =
+        cameraAvailable &&
+        [[UIImagePickerController
+        availableMediaTypesForSourceType:camera]
+        containsObject:(NSString *) kUTTypeMovie];
+
+    // make sure the user has added a video service
+    videoAvailable =
+        videoAvailable && [service.credentials defaultVideoServiceCredentials];
 
     if (cameraAvailable && libraryAvailable) {
         NSString * cancelButton =
             NSLocalizedString(@"imagepicker.choose.cancel", @"");
         NSString * cameraButton =
+            videoAvailable ?
+            NSLocalizedString(@"imagepicker.choose.camerawithvideo", @"") :
             NSLocalizedString(@"imagepicker.choose.camera", @"");
         NSString * photosButton =
+            videoAvailable ?
+            NSLocalizedString(@"imagepicker.choose.photoswithvideo", @"") :
             NSLocalizedString(@"imagepicker.choose.photos", @"");
-        
+
         UIActionSheet * sheet =
             [[UIActionSheet alloc] initWithTitle:nil
                                         delegate:self
@@ -550,6 +657,7 @@
                                                  photosButton, nil];
         [sheet showInView:controller.view];
     } else {
+        UIImagePickerControllerSourceType source;
         if (cameraAvailable)
             source = camera;
         else
@@ -566,11 +674,24 @@
         [[UIImagePickerController alloc] init];
 
     imagePicker.delegate = self;
-    imagePicker.allowsImageEditing = YES;
+    imagePicker.allowsImageEditing = NO;
     imagePicker.sourceType = source;
+    imagePicker.mediaTypes =
+        [UIImagePickerController availableMediaTypesForSourceType:source];
 
     [controller presentModalViewController:imagePicker animated:YES];
     [imagePicker release];
+}
+
+// HACK: Dismissing the modal view causes the app to crash. Putting it on a
+// timer fixes the problem.
+- (void)dismissSelector:(NSTimer *)timer
+{
+    [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
+
+    [self performSelector:@selector(promptForPhotoSource:)
+               withObject:self.composeTweetViewController
+               afterDelay:0.5];
 }
 
 #pragma mark Accessors
@@ -606,6 +727,20 @@
             [[TweetDraftMgr alloc] initWithManagedObjectContext:self.context];
 
     return draftMgr;
+}
+
+- (AddPhotoServiceDisplayMgr *)addPhotoServiceDisplayMgr
+{
+    if (!addPhotoServiceDisplayMgr) {
+        addPhotoServiceDisplayMgr =
+            [[AddPhotoServiceDisplayMgr alloc] initWithContext:context];
+        [addPhotoServiceDisplayMgr
+            displayModally:self.composeTweetViewController];
+        [addPhotoServiceDisplayMgr selectorAllowsCancel:YES];
+        addPhotoServiceDisplayMgr.delegate = self;
+    }
+
+    return addPhotoServiceDisplayMgr;
 }
 
 @end

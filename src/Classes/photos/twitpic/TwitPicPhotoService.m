@@ -2,18 +2,17 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import "TwitPicImageSender.h"
+#import "TwitPicPhotoService.h"
 #import "TwitPicResponseParser.h"
 #import "UIApplication+NetworkActivityIndicatorAdditions.h"
 #import "NSError+InstantiationAdditions.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
 #import "TwitPicCredentials+KeychainAdditions.h"
+#import "InfoPlistConfigReader.h"
 
-@interface TwitPicImageSender ()
+@interface TwitPicPhotoService ()
 
 @property (nonatomic, copy) NSString * twitPicUrl;
-
-@property (nonatomic, retain) UIImage * image;
 
 @property (nonatomic, retain) NSMutableData * data;
 @property (nonatomic, retain) NSURLConnection * connection;
@@ -27,44 +26,43 @@
 
 @end
 
-@implementation TwitPicImageSender
+@implementation TwitPicPhotoService
 
-@synthesize delegate;
 @synthesize twitPicUrl;
-@synthesize image;
 @synthesize data, connection;
 @synthesize parser;
 
 - (void)dealloc
 {
-    self.delegate = nil;
     self.twitPicUrl = nil;
-    self.image = nil;
     self.connection = nil;
     self.data = nil;
     self.parser = nil;
     [super dealloc];
 }
 
-- (id)initWithUrl:(NSString *)aUrl
+- (id)init
 {
-    if (self = [super init])
-        self.twitPicUrl = aUrl;
+    if (self = [super init]) {
+        self.twitPicUrl =
+            [[InfoPlistConfigReader reader] valueForKey:@"TwitPicPostUrl"];
+        parser = [[TwitPicResponseParser alloc] init];
+    }
 
     return self;
 }
 
 - (void)sendImage:(UIImage *)anImage
-  withCredentials:(TwitPicCredentials *)credentials
+  withCredentials:(TwitPicCredentials *)someCredentials
 {
-    self.image = anImage;
+    [super sendImage:anImage withCredentials:someCredentials];
 
     NSURL * url = [NSURL URLWithString:self.twitPicUrl];
     NSURLRequest * request =
         [[self class] requestForPostingImage:self.image
                                        toUrl:url
-                                withUsername:credentials.username
-                                    password:credentials.password];
+                                withUsername:someCredentials.username
+                                    password:someCredentials.password];
 
     self.connection =
         [[[NSURLConnection alloc] initWithRequest:request
@@ -73,7 +71,15 @@
 
     self.data = [NSMutableData data];
 
+    // HACK
     [[UIApplication sharedApplication] networkActivityIsStarting];
+}
+
+- (void)sendVideo:(NSData *)aVideo
+  withCredentials:(TwitPicCredentials *)ctls
+{
+    NSAssert(
+        NO, @"Trying to send a video via TwitPic, which does not support it.");
 }
 
 #pragma mark NSURLConnection delegate methods
@@ -94,9 +100,9 @@
     if (self.parser.error) {
         NSError * error =
             [NSError errorWithLocalizedDescription:self.parser.error];
-        [delegate sender:self failedToPostImage:error];
+        [self.delegate service:self failedToPostImage:error];
     } else
-        [delegate sender:self didPostImageToUrl:self.parser.mediaUrl];
+        [self.delegate service:self didPostImageToUrl:self.parser.mediaUrl];
 
     // HACK
     [[UIApplication sharedApplication] networkActivityDidFinish];
@@ -104,7 +110,7 @@
 
 - (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error
 {
-    [delegate sender:self failedToPostImage:error];
+    [self.delegate service:self failedToPostImage:error];
 
     // HACK
     [[UIApplication sharedApplication] networkActivityDidFinish];
@@ -117,6 +123,8 @@
                             withUsername:(NSString *)username
                                 password:(NSString *)password
 {
+    static NSString * devKey = @"023AGLTUc7533b166461ddb3bc523c54ab082240";
+
     NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:url];
     [postRequest setHTTPMethod:@"POST"];
 
@@ -130,9 +138,9 @@
     [postBody appendData:[[NSString stringWithFormat:@"\r\n\r\n--%@\r\n", 
                 stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithString:
-       @"Content-Disposition: form-data; name=\"source\"\r\n\r\n"] 
+       @"Content-Disposition: form-data; name=\"key\"\r\n\r\n"] 
        dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:@"twitch"] 
+    [postBody appendData:[[NSString stringWithString:devKey] 
        dataUsingEncoding:NSUTF8StringEncoding]];
 
     [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", 
@@ -172,16 +180,6 @@
     [postRequest setHTTPBody:postBody];
 
     return postRequest;
-}
-
-#pragma mark Accessors
-
-- (TwitPicResponseParser *)parser
-{
-    if (!parser)
-        parser = [[TwitPicResponseParser alloc] init];
-
-    return parser;
 }
 
 @end
