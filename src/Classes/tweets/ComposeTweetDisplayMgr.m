@@ -573,9 +573,6 @@ failedToPostVideo:(NSError *)error
 
     [AccountSettings setSettings:settings forKey:settingsKey];
 
-    [self promptForPhotoSource:
-        self.composeTweetViewController.modalViewController];
-
     [NSTimer scheduledTimerWithTimeInterval:0.5
                                      target:self
                                    selector:@selector(dismissSelector:)
