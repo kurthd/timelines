@@ -211,3 +211,11 @@ twitvidsettings.view.title = "TwitVid Settings";
 twitvidsettingsview.delete.alert.title = "Are you sure you want to delete this service?";
 twitvidsettingsview.delete.alert.cancel.title = "Cancel";
 twitvidsettingsview.delete.alert.delete.title = "Delete Service";
+
+/* ExplainFlickrAuthView */
+explainflickrauthview.title = "Log In to Flickr";
+explainflickrauthview.header = "";
+explainflickrauthview.footer = "";
+
+/* FlickrLogInView */
+flickrloginview.title = "Authorize";

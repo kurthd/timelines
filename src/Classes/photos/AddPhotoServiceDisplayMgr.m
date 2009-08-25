@@ -111,15 +111,9 @@
         [[userServices allObjects]
         arrayByTransformingObjectsUsingSelector:@selector(serviceName)]];
 
-    for (NSString * serviceName in [remainingServices allKeys]) {
+    for (NSString * serviceName in [remainingServices allKeys])
         if ([userServiceNames containsObject:serviceName])
             [remainingServices removeObjectForKey:serviceName];
-
-        NSSet * tempFilter =
-            [NSSet setWithObjects:@"TwitPic", @"Yfrog", @"TwitVid", nil];
-        if (![tempFilter containsObject:serviceName])
-            [remainingServices removeObjectForKey:serviceName];
-    }
 
     return remainingServices;
 }

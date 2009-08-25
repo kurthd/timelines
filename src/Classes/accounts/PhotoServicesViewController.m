@@ -113,7 +113,8 @@ titleForFooterInSection:(NSInteger)section
 
     if (section == kDefaultsSection)
         footer = NSLocalizedString(@"photoservicesview.defaults.footer", @"");
-    if (section == kAccountsSection && ![self.delegate areMoreServicesAvailable])
+    if (section == kAccountsSection &&
+        ![self.delegate areMoreServicesAvailable])
         footer =
             NSLocalizedString(@"photoservicesview.accounts.allinstalled.footer",
             @"");
