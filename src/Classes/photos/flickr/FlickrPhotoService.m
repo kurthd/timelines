@@ -82,7 +82,7 @@
 
 #pragma mark OFFlickrAPIRequestDelegate implementation
 
-- (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest
+- (void)flickrAPIRequest:(OFFlickrAPIRequest *)request
     didCompleteWithResponse:(NSDictionary *)response
 {
     NSString * photoIdString =
@@ -103,14 +103,20 @@
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
-- (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest
-        didFailWithError:(NSError *)inError
+- (void)flickrAPIRequest:(OFFlickrAPIRequest *)request
+        didFailWithError:(NSError *)error
 {
-    NSLog(@"Request failed: %@", inError);
+    NSLog(@"Request failed: %@", error);
+
+    if (self.image)
+        [self.delegate service:self failedToPostImage:error];
+    else if (self.videoUrl)
+        [self.delegate service:self failedToPostVideo:error];
+
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
-- (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest
+- (void)flickrAPIRequest:(OFFlickrAPIRequest *)request
     imageUploadSentBytes:(NSUInteger)inSentBytes
               totalBytes:(NSUInteger)inTotalBytes
 {

@@ -543,6 +543,8 @@ typedef unsigned int NSUInteger;
             NSAssert([fileManager removeFileAtPath:uploadTempFilename handler:nil], @"Should be able to remove temp file");
 #else
 			NSError *error = nil;
+#pragma unused(error)
+
 			NSAssert([fileManager removeItemAtPath:uploadTempFilename error:&error], @"Should be able to remove temp file");
 #endif
         }
