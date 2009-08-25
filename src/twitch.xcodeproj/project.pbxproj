@@ -818,13 +818,9 @@
 		914CA25F103A1AB200421C60 /* LocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationCell.h; path = "user-info/LocationCell.h"; sourceTree = "<group>"; };
 		914CA260103A1AB200421C60 /* LocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationCell.m; path = "user-info/LocationCell.m"; sourceTree = "<group>"; };
 		914CA283103A1DC300421C60 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		914CA2EF103A3E7200421C60 /* Geocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geocoder.h; path = /Users/doug/dev/twitbit/src/Classes/shared/Geocoder.h; sourceTree = "<absolute>"; };
-		914CA2F0103A3E7200421C60 /* Geocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Geocoder.m; path = /Users/doug/dev/twitbit/src/Classes/shared/Geocoder.m; sourceTree = "<absolute>"; };
-		914CA2F3103A402E00421C60 /* GeocoderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeocoderDelegate.h; path = /Users/doug/dev/twitbit/src/Classes/shared/GeocoderDelegate.h; sourceTree = "<absolute>"; };
 		914CA330103A444000421C60 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		914CA4D5103B646700421C60 /* LocationCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationCellView.h; path = "user-info/LocationCellView.h"; sourceTree = "<group>"; };
 		914CA4D6103B646700421C60 /* LocationCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationCellView.m; path = "user-info/LocationCellView.m"; sourceTree = "<group>"; };
-		914CA6C8103CA2A300421C60 /* BasicMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasicMapAnnotation.h; path = /Users/doug/dev/twitbit/src/Classes/BasicMapAnnotation.h; sourceTree = "<absolute>"; };
 		9152E14C1014F6B70033B63B /* DirectMessagesDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessagesDisplayMgr.h; path = "direct-messages/DirectMessagesDisplayMgr.h"; sourceTree = "<group>"; };
 		9152E14D1014F6B70033B63B /* DirectMessagesDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessagesDisplayMgr.m; path = "direct-messages/DirectMessagesDisplayMgr.m"; sourceTree = "<group>"; };
 		9152E14F1014F8260033B63B /* DirectMessageInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageInboxViewController.h; path = "direct-messages/DirectMessageInboxViewController.h"; sourceTree = "<group>"; };
@@ -1407,10 +1403,6 @@
 				9130FE4F1034D334004E3030 /* TwitchWebBrowserDisplayMgr.m */,
 				059A6F27103CD02700B7500C /* UIButton+StandardButtonAdditions.h */,
 				059A6F28103CD02700B7500C /* UIButton+StandardButtonAdditions.m */,
-				914CA2EF103A3E7200421C60 /* Geocoder.h */,
-				914CA2F0103A3E7200421C60 /* Geocoder.m */,
-				914CA2F3103A402E00421C60 /* GeocoderDelegate.h */,
-				914CA6C8103CA2A300421C60 /* BasicMapAnnotation.h */,
 			);
 			name = shared;
 			sourceTree = "<group>";
