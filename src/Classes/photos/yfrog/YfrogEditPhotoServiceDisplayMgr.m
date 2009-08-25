@@ -38,7 +38,7 @@
     return self = [super init];
 }
 
-- (void)editServiceWithCredentials:(PhotoServiceCredentials *)someCredentials
+- (void)editServiceWithCredentials:(YfrogCredentials *)someCredentials
               navigationController:(UINavigationController *)aController
                            context:(NSManagedObjectContext *)aContext
 {

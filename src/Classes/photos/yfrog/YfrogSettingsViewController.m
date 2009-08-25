@@ -214,9 +214,9 @@
                       destructiveButtonTitle:destructiveButtonTitle
                            otherButtonTitles:nil];
 
-    // HACK: Display the sheet in the key window so will appear over the tab bar.
-    // Even though the sheet is always visible over the tab bar, the portion
-    // of the sheet on top of the tab bar does not respond touch events.
+    // HACK: Display the sheet in the key window so will appear over the tab
+    // bar. Even though the sheet is always visible over the tab bar, the
+    // portion of the sheet on top of the tab bar does not respond touch events.
     [sheet showInView:[UIApplication sharedApplication].keyWindow];
 }
 
@@ -237,7 +237,10 @@
 - (UIButton *)deleteButton
 {
     if (!deleteButton) {
-        deleteButton = [[UIButton deleteButtonWithTitle:@"Delete"] retain];
+        NSString * deleteButtonTitle =
+            NSLocalizedString(@"yfrogsettingsview.delete", @"");
+        deleteButton =
+            [[UIButton deleteButtonWithTitle:deleteButtonTitle] retain];
         [deleteButton addTarget:self
                          action:@selector(deleteService:)
                forControlEvents:UIControlEventTouchUpInside];
@@ -245,6 +248,5 @@
 
     return deleteButton;
 }
-
 
 @end

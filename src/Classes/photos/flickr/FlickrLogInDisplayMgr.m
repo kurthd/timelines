@@ -135,8 +135,6 @@ static NSString * SHARED_SECRET = @"6c842eba4b2ce635";
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)request
  didCompleteWithResponse:(NSDictionary *)response
 {
-    NSLog(@"Request succeeded with response: %@", response);
-
     if (request == self.getFrobRequest) {
         self.frob = [[response objectForKey:@"frob"] objectForKey:@"_text"];
         self.flickrLogInUrl =
@@ -167,16 +165,27 @@ static NSString * SHARED_SECRET = @"6c842eba4b2ce635";
 
         [self.context save:NULL];
 
-        [self.rootViewController dismissModalViewControllerAnimated:YES];
+        [self performSelector:@selector(dismissModalViewController:)
+                   withObject:[NSNumber numberWithBool:YES]
+                   afterDelay:0.2];
 
         [self.delegate logInCompleted:ctls];
     }
+}
+
+- (void)dismissModalViewController:(NSNumber *)shouldAnimate
+{
+    BOOL animated = [shouldAnimate boolValue];
+    [self.rootViewController dismissModalViewControllerAnimated:animated];
 }
 
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest
         didFailWithError:(NSError *)inError
 {
     NSLog(@"Request failed with error: %@", inError);
+
+    // jad: IMPLEMENT ME
+
     [inRequest autorelease];
 }
 

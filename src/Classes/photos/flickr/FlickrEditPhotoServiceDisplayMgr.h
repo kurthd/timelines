@@ -4,24 +4,22 @@
 
 #import <Foundation/Foundation.h>
 #import "EditPhotoServiceDisplayMgr.h"
-#import "YfrogSettingsViewController.h"
-#import "TwitterBasicAuthAuthenticator.h"
+#import "FlickrCredentials.h"
+#import "FlickrSettingsViewController.h"
 
-@interface YfrogEditPhotoServiceDisplayMgr :
-    EditPhotoServiceDisplayMgr
-    <YfrogSettingsViewControllerDelegate,
-    TwitterBasicAuthAuthenticatorDelegate>
+@interface FlickrEditPhotoServiceDisplayMgr :
+    EditPhotoServiceDisplayMgr <FlickrSettingsViewControllerDelegate>
 {
-    YfrogCredentials * credentials;
+    FlickrCredentials * credentials;
     NSManagedObjectContext * context;
 
     UINavigationController * navigationController;
-    YfrogSettingsViewController * viewController;
+    FlickrSettingsViewController * settingsViewController;
 }
 
 - (id)init;
 
-- (void)editServiceWithCredentials:(YfrogCredentials *)credentials
+- (void)editServiceWithCredentials:(FlickrCredentials *)credentials
               navigationController:(UINavigationController *)controller
                            context:(NSManagedObjectContext *)context;
 

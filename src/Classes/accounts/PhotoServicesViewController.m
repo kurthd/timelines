@@ -5,13 +5,6 @@
 #import "PhotoServicesViewController.h"
 #import "PhotoServiceCredentials.h"
 
-NSInteger serviceNameSort(PhotoServiceCredentials * service1,
-                          PhotoServiceCredentials * service2,
-                          void * context)
-{
-    return [[service1 serviceName] compare:[service2 serviceName]];
-}
-
 static const NSInteger NUM_SECTIONS = 2;
 enum {
     kDefaultsSection,
@@ -48,9 +41,7 @@ enum {
 
 - (void)reloadDisplay
 {
-    self.services =
-        [[self.delegate servicesForAccount:self.credentials]
-        sortedArrayUsingFunction:serviceNameSort context:NULL];
+    self.services = [self.delegate servicesForAccount:self.credentials];
     [self.tableView reloadData];
 }
 

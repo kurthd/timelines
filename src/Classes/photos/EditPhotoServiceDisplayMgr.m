@@ -18,6 +18,7 @@
             @"TwitPicEditPhotoServiceDisplayMgr", @"TwitPic",
             @"YfrogEditPhotoServiceDisplayMgr", @"Yfrog",
             @"TwitVidEditPhotoServiceDisplayMgr", @"TwitVid",
+            @"FlickrEditPhotoServiceDisplayMgr", @"Flickr",
             nil];
     }
 
