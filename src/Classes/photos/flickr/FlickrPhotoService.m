@@ -53,7 +53,21 @@
 - (void)sendVideoAtUrl:(NSURL *)url
   withCredentials:(FlickrCredentials *)ctls
 {
-    //[super sendVideoAtUrl:url withCredentials:ctls];
+    [super sendVideoAtUrl:url withCredentials:ctls];
+    [flickrContext setAuthToken:ctls.token];
+
+    OFFlickrAPIRequest * request =
+        [[OFFlickrAPIRequest alloc] initWithAPIContext:flickrContext];
+    [request setDelegate:self];
+
+    NSData * videoData = [NSData dataWithContentsOfURL:url];
+    NSInputStream * videoStream = [NSInputStream inputStreamWithData:videoData];
+    [request uploadImageStream:videoStream
+             suggestedFilename:@""
+                      MIMEType:@"video/quicktime"
+                     arguments:nil];
+
+    [[UIApplication sharedApplication] networkActivityIsStarting];
 }
 
 + (NSString *)apiKey
@@ -71,8 +85,6 @@
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)inRequest
     didCompleteWithResponse:(NSDictionary *)response
 {
-    NSLog(@"Request succeeded: %@", response);
-
     NSString * photoIdString =
         [[response objectForKey:@"photoid"] objectForKey:@"_text"];
     NSNumber * photoId =
@@ -83,7 +95,10 @@
         [NSString stringWithFormat:@"http://flic.kr/p/%@", shortPhotoId];
     NSLog(@"short url: %@", shortUrl);
 
-    [self.delegate service:self didPostImageToUrl:shortUrl];
+    if (self.image)
+        [self.delegate service:self didPostImageToUrl:shortUrl];
+    else if (self.videoUrl)
+        [self.delegate service:self didPostVideoToUrl:shortUrl];
 
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
