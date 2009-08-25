@@ -5,9 +5,7 @@
 #import "FlickrLogInDisplayMgr.h"
 #import "FlickrCredentials.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
-
-static NSString * API_KEY = @"bbba4f622313b79555e107d46351e0f1";
-static NSString * SHARED_SECRET = @"6c842eba4b2ce635";
+#import "FlickrPhotoService.h"
 
 @interface FlickrLogInDisplayMgr ()
 
@@ -57,10 +55,13 @@ static NSString * SHARED_SECRET = @"6c842eba4b2ce635";
 
 - (id)init
 {
-    if (self = [super init])
+    if (self = [super init]) {
+        NSString * apiKey = [FlickrPhotoService apiKey];
+        NSString * secret = [FlickrPhotoService sharedSecret];
         flickrContext =
-            [[OFFlickrAPIContext alloc] initWithAPIKey:API_KEY
-                                          sharedSecret:SHARED_SECRET];
+            [[OFFlickrAPIContext alloc] initWithAPIKey:apiKey
+                                          sharedSecret:secret];
+    }
 
     return self;
 }
@@ -88,8 +89,9 @@ static NSString * SHARED_SECRET = @"6c842eba4b2ce635";
         [[OFFlickrAPIRequest alloc] initWithAPIContext:self.flickrContext];
     [self.getFrobRequest setDelegate:self];
 
+    NSString * apiKey = [FlickrPhotoService apiKey];
     NSDictionary * args =
-        [NSDictionary dictionaryWithObject:API_KEY forKey:@"api_key"];
+        [NSDictionary dictionaryWithObject:apiKey forKey:@"api_key"];
     [self.getFrobRequest
         callAPIMethodWithGET:@"flickr.auth.getFrob" arguments:args];
 }
@@ -115,7 +117,7 @@ static NSString * SHARED_SECRET = @"6c842eba4b2ce635";
 
     NSDictionary * args =
         [NSDictionary dictionaryWithObjectsAndKeys:
-        API_KEY, @"api_key", self.frob, @"frob", nil];
+        [FlickrPhotoService apiKey], @"api_key", self.frob, @"frob", nil];
     [self.getTokenRequest
         callAPIMethodWithGET:@"flickr.auth.getToken" arguments:args];
 

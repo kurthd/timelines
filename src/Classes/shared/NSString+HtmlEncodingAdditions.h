@@ -9,3 +9,10 @@
 - (NSString *)stringByDecodingHtmlEntities;
 
 @end
+
+@interface NSString (EncodingAdditions)
+
+- (NSString *)stringByEncodingWithAlphabet:(NSString *)alphabet;
+- (NSString *)stringByEncodingWithBase58Encoding;
+
+@end

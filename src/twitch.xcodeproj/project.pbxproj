@@ -27,6 +27,8 @@
 		0519C8EC10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C8EB10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.m */; };
 		0519C8EF10444DD000C2C7BD /* FlickrSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C8EE10444DD000C2C7BD /* FlickrSettingsViewController.m */; };
 		0519C8F21044502A00C2C7BD /* FlickrSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0519C8F01044502A00C2C7BD /* FlickrSettingsView.xib */; };
+		0519C9931044634200C2C7BD /* FlickrPhotoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C9921044634200C2C7BD /* FlickrPhotoService.m */; };
+		0519C9CC10446B2500C2C7BD /* NSNumber+EncodingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C9CB10446B2500C2C7BD /* NSNumber+EncodingAdditions.m */; };
 		051D7C69101D105A00B867C1 /* SavedSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 051D7C68101D105A00B867C1 /* SavedSearchMgr.m */; };
 		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
 		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
@@ -395,6 +397,10 @@
 		0519C8ED10444DD000C2C7BD /* FlickrSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrSettingsViewController.h; path = photos/flickr/FlickrSettingsViewController.h; sourceTree = "<group>"; };
 		0519C8EE10444DD000C2C7BD /* FlickrSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrSettingsViewController.m; path = photos/flickr/FlickrSettingsViewController.m; sourceTree = "<group>"; };
 		0519C8F11044502A00C2C7BD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/FlickrSettingsView.xib; sourceTree = "<group>"; };
+		0519C9911044634200C2C7BD /* FlickrPhotoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrPhotoService.h; path = photos/flickr/FlickrPhotoService.h; sourceTree = "<group>"; };
+		0519C9921044634200C2C7BD /* FlickrPhotoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrPhotoService.m; path = photos/flickr/FlickrPhotoService.m; sourceTree = "<group>"; };
+		0519C9CA10446B2500C2C7BD /* NSNumber+EncodingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNumber+EncodingAdditions.h"; path = "shared/NSNumber+EncodingAdditions.h"; sourceTree = "<group>"; };
+		0519C9CB10446B2500C2C7BD /* NSNumber+EncodingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSNumber+EncodingAdditions.m"; path = "shared/NSNumber+EncodingAdditions.m"; sourceTree = "<group>"; };
 		051D7C67101D105A00B867C1 /* SavedSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearchMgr.h; path = search/SavedSearchMgr.h; sourceTree = "<group>"; };
 		051D7C68101D105A00B867C1 /* SavedSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearchMgr.m; path = search/SavedSearchMgr.m; sourceTree = "<group>"; };
 		052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackground.png; path = images/SaveSearchButtonBackground.png; sourceTree = "<group>"; };
@@ -1054,6 +1060,8 @@
 				0519C8EB10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.m */,
 				0519C8ED10444DD000C2C7BD /* FlickrSettingsViewController.h */,
 				0519C8EE10444DD000C2C7BD /* FlickrSettingsViewController.m */,
+				0519C9911044634200C2C7BD /* FlickrPhotoService.h */,
+				0519C9921044634200C2C7BD /* FlickrPhotoService.m */,
 			);
 			name = flickr;
 			sourceTree = "<group>";
@@ -1389,6 +1397,8 @@
 				0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */,
 				054B6A1E101E153600882C19 /* NSString+HtmlEncodingAdditions.h */,
 				054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */,
+				0519C9CA10446B2500C2C7BD /* NSNumber+EncodingAdditions.h */,
+				0519C9CB10446B2500C2C7BD /* NSNumber+EncodingAdditions.m */,
 				05DB97391025107E00D06489 /* UIImage+DrawingAdditions.h */,
 				05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */,
 				9130FE0C1034C792004E3030 /* ErrorState.h */,
@@ -2413,6 +2423,8 @@
 				0519C8A7104377A000C2C7BD /* FlickrCredentials.m in Sources */,
 				0519C8EC10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.m in Sources */,
 				0519C8EF10444DD000C2C7BD /* FlickrSettingsViewController.m in Sources */,
+				0519C9931044634200C2C7BD /* FlickrPhotoService.m in Sources */,
+				0519C9CC10446B2500C2C7BD /* NSNumber+EncodingAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
