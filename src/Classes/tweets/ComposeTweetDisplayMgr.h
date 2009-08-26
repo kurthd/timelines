@@ -45,6 +45,9 @@
     CredentialsSetChangedPublisher * credentialsSetChangedPublisher;
 
     AddPhotoServiceDisplayMgr * addPhotoServiceDisplayMgr;
+
+    NSMutableArray * attachedPhotos;
+    NSMutableArray * attachedVideos;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;

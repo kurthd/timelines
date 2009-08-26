@@ -42,4 +42,20 @@
     self.credentials = someCredentials;
 }
 
+- (void)setTitle:(NSString *)text forPhotoWithUrl:(NSString *)photoUrl
+    credentials:(PhotoServiceCredentials *)someCredentials
+{
+    self.image = nil;
+    self.videoUrl = nil;
+    self.credentials = someCredentials;
+}
+
+- (void)setTitle:(NSString *)text forVideoWithUrl:(NSString *)photoUrl
+    credentials:(PhotoServiceCredentials *)someCredentials
+{
+    self.image = nil;
+    self.videoUrl = nil;
+    self.credentials = someCredentials;
+}
+
 @end

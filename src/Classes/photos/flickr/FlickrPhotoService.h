@@ -9,6 +9,9 @@
 @interface FlickrPhotoService : PhotoService <OFFlickrAPIRequestDelegate>
 {
     OFFlickrAPIContext * flickrContext;
+
+    OFFlickrAPIRequest * uploadRequest;
+    OFFlickrAPIRequest * editRequest;
 }
 
 + (NSString *)apiKey;

@@ -14,6 +14,7 @@
 #import "TwitterCredentials+PhotoServiceAdditions.h"
 #import "PhotoService+ServiceAdditions.h"
 #import "AccountSettings.h"
+#import "NSString+ConvenienceMethods.h"
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -39,9 +40,14 @@
 
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
+@property (nonatomic, retain) NSMutableArray * attachedPhotos;
+@property (nonatomic, retain) NSMutableArray * attachedVideos;
+
 - (void)promptForPhotoSource:(UIViewController *)controller;
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source
                 controller:(UIViewController *)controller;
+
++ (NSString *)removeStrings:(NSArray *)strings fromString:(NSString *)str;
 
 @end
 
@@ -55,6 +61,7 @@
 @synthesize origUsername, origTweetId;
 @synthesize draftMgr;
 @synthesize addPhotoServiceDisplayMgr;
+@synthesize attachedPhotos, attachedVideos;
 
 - (void)dealloc
 {
@@ -68,6 +75,8 @@
     self.origUsername = nil;
     self.origTweetId = nil;
     self.draftMgr = nil;
+    self.attachedPhotos = nil;
+    self.attachedVideos = nil;
     [super dealloc];
 }
 
@@ -113,6 +122,9 @@
     self.origTweetId = nil;
     self.origUsername = nil;
 
+    self.attachedPhotos = [NSMutableArray array];
+    self.attachedVideos = [NSMutableArray array];
+
     [self.composeTweetViewController composeTweet:tweet
                                              from:service.credentials.username];
 }
@@ -136,6 +148,9 @@
     self.origTweetId = tweetId;
     self.origUsername = user;
 
+    self.attachedPhotos = [NSMutableArray array];
+    self.attachedVideos = [NSMutableArray array];
+
     [self.composeTweetViewController composeTweet:text
                                              from:service.credentials.username
                                         inReplyTo:user];
@@ -151,6 +166,9 @@
     fromHomeScreen = YES;
     self.origUsername = nil;
     self.origTweetId = nil;
+
+    self.attachedPhotos = [NSMutableArray array];
+    self.attachedVideos = [NSMutableArray array];
 
     NSString * recipient = draft ? draft.recipient : @"";
     NSString * sender = service.credentials.username;
@@ -183,6 +201,9 @@
 {
     self.origUsername = nil;
     self.origTweetId = nil;
+
+    self.attachedPhotos = [NSMutableArray array];
+    self.attachedVideos = [NSMutableArray array];
 
     fromHomeScreen = NO;
 
@@ -392,6 +413,40 @@
 
 - (void)tweetSentSuccessfully:(Tweet *)tweet
 {
+    NSString * title = [[self class] removeStrings:self.attachedPhotos
+                                        fromString:tweet.text];
+    title = [[self class] removeStrings:self.attachedVideos fromString:title];
+
+    if (self.attachedPhotos.count > 0) {
+        PhotoServiceCredentials * photoCredentials =
+            [service.credentials defaultPhotoServiceCredentials];
+        NSString * serviceName = [photoCredentials serviceName];
+
+        PhotoService * photoService =
+            [[PhotoService photoServiceWithServiceName:serviceName] retain];
+        photoService.delegate = self;
+
+        for (NSString * photoUrl in self.attachedPhotos)
+            if ([tweet.text containsString:photoUrl])
+                [photoService setTitle:title forPhotoWithUrl:photoUrl
+                    credentials:photoCredentials];
+    }
+
+    if (self.attachedVideos.count > 0) {
+        PhotoServiceCredentials * photoCredentials =
+            [service.credentials defaultVideoServiceCredentials];
+        NSString * serviceName = [photoCredentials serviceName];
+
+        PhotoService * photoService =
+            [[PhotoService photoServiceWithServiceName:serviceName] retain];
+        photoService.delegate = self;
+
+        for (NSString * videoUrl in self.attachedVideos)
+            if ([tweet.text containsString:videoUrl])
+                [photoService setTitle:title forVideoWithUrl:videoUrl
+                    credentials:photoCredentials];
+    }
+
     [self.delegate userDidSendTweet:tweet];
 }
 
@@ -459,6 +514,8 @@
     [self.composeTweetViewController hideActivityView];
     [self.composeTweetViewController addTextToMessage:url];
 
+    [self.attachedPhotos addObject:url];
+
     [photoService autorelease];
 }
 
@@ -468,6 +525,8 @@
 
     [self.composeTweetViewController hideActivityView];
     [self.composeTweetViewController addTextToMessage:url];
+
+    [self.attachedVideos addObject:url];
 
     [photoService autorelease];
 }
@@ -698,6 +757,19 @@ failedToPostVideo:(NSError *)error
     [self performSelector:@selector(promptForPhotoSource:)
                withObject:self.composeTweetViewController
                afterDelay:0.5];
+}
+
+#pragma mark Private implementation
+
++ (NSString *)removeStrings:(NSArray *)strings fromString:(NSString *)str
+{
+    NSMutableString * s = [[str mutableCopy] autorelease];
+    for (NSString * string in strings) {
+        NSRange r = NSMakeRange(0, s.length);
+        [s replaceOccurrencesOfString:string withString:@"" options:0 range:r];
+    }
+
+    return s;
 }
 
 #pragma mark Accessors
