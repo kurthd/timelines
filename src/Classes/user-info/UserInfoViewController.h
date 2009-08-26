@@ -47,6 +47,7 @@
 
 - (void)setUser:(User *)user;
 - (void)setFollowing:(BOOL)enabled;
+- (void)setFailedToQueryFollowing;
 - (void)showingNewUser;
 - (IBAction)follow:(id)sender;
 - (IBAction)stopFollowing:(id)sender;

@@ -204,7 +204,8 @@ enum TweetActionRows {
             text =
                 NSLocalizedString(@"tweetdetailsview.directmessage.label", @"");
             image = [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
-            highlightedImage = [UIImage imageNamed:@"Envelope.png"];
+            highlightedImage =
+                [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
         } else if (indexPath.row == kRetweetRow) {
             text = NSLocalizedString(@"tweetdetailsview.retweet.label", @"");
             image = [UIImage imageNamed:@"RetweetButtonIcon.png"];

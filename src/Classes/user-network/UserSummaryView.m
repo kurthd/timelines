@@ -161,7 +161,7 @@ static UIImage * avatarBackgroundImage;
     CGRect avatarRect =
         CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN,
         AVATAR_WIDTH, AVATAR_HEIGHT);
-    [avatar drawInRect:avatarRect withRoundedCornersWithRadius:8.0];
+    [avatar drawInRect:avatarRect withRoundedCornersWithRadius:6.0];
 }
 
 - (void)setUser:(User *)aUser

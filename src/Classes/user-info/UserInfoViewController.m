@@ -232,13 +232,13 @@ static UIImage * defaultAvatar;
                     NSLocalizedString(@"userinfo.directmessage", @"");
                 cell.imageView.image =
                     indexPath.row == kUserInfoPublicMessage ?
-                    [UIImage imageNamed:@"PublicReplyButtonIcon.png"] :
+                    [UIImage imageNamed:@"PublicMessageButtonIcon.png"] :
                     [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
                 cell.imageView.highlightedImage =
                     indexPath.row == kUserInfoPublicMessage ?
                     [UIImage
-                    imageNamed:@"PublicReplyButtonIconHighlighted.png"] :
-                    [UIImage imageNamed:@"Envelope.png"];
+                    imageNamed:@"PublicMessageButtonIconHighlighted.png"] :
+                    [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
             }
         break;
     }
@@ -403,6 +403,14 @@ static UIImage * defaultAvatar;
         followButton.hidden = YES;
         stopFollowingButton.hidden = YES;
     }
+}
+
+- (void)setFailedToQueryFollowing
+{
+    followingActivityIndicator.hidden = YES;
+    followingLoadingLabel.hidden = YES;
+    followButton.hidden = YES;
+    stopFollowingButton.hidden = YES;
 }
 
 - (void)layoutViews

@@ -360,6 +360,10 @@
 		918F393710433E61000236AE /* LocationInfoLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F393610433E61000236AE /* LocationInfoLabelCell.m */; };
 		918F393A10433FE8000236AE /* ButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F393910433FE8000236AE /* ButtonCell.m */; };
 		918F397E10435CA1000236AE /* LocationDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F397D10435CA1000236AE /* LocationDark.png */; };
+		918F70611045C6B800FE7ABF /* DirectMessageButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F705D1045C6B800FE7ABF /* DirectMessageButtonIconHighlighted.png */; };
+		918F70621045C6B800FE7ABF /* favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F705E1045C6B800FE7ABF /* favorite.png */; };
+		918F70631045C6B800FE7ABF /* PublicMessageButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F705F1045C6B800FE7ABF /* PublicMessageButtonIcon.png */; };
+		918F70641045C6B800FE7ABF /* PublicMessageButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F70601045C6B800FE7ABF /* PublicMessageButtonIconHighlighted.png */; };
 		91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD5A3C100FED36009C2179 /* MessageUI.framework */; };
 		91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
 		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
@@ -978,6 +982,10 @@
 		918F393910433FE8000236AE /* ButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ButtonCell.m; path = shared/ButtonCell.m; sourceTree = "<group>"; };
 		918F397D10435CA1000236AE /* LocationDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LocationDark.png; path = images/LocationDark.png; sourceTree = "<group>"; };
 		918F3ACC1044A582000236AE /* LocationInfoViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationInfoViewControllerDelegate.h; path = "geo-services/LocationInfoViewControllerDelegate.h"; sourceTree = "<group>"; };
+		918F705D1045C6B800FE7ABF /* DirectMessageButtonIconHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DirectMessageButtonIconHighlighted.png; path = images/DirectMessageButtonIconHighlighted.png; sourceTree = "<group>"; };
+		918F705E1045C6B800FE7ABF /* favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = favorite.png; path = images/favorite.png; sourceTree = "<group>"; };
+		918F705F1045C6B800FE7ABF /* PublicMessageButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PublicMessageButtonIcon.png; path = images/PublicMessageButtonIcon.png; sourceTree = "<group>"; };
+		918F70601045C6B800FE7ABF /* PublicMessageButtonIconHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PublicMessageButtonIconHighlighted.png; path = images/PublicMessageButtonIconHighlighted.png; sourceTree = "<group>"; };
 		91A247640FFE7EF400538F29 /* TweetDetailsFooterGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsFooterGradient.png; path = images/TweetDetailsFooterGradient.png; sourceTree = "<group>"; };
 		91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadowReversed.png; path = images/DropShadowReversed.png; sourceTree = "<group>"; };
 		91A247720FFE81D300538F29 /* DeleteTweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweet.png; path = images/DeleteTweet.png; sourceTree = "<group>"; };
@@ -1879,6 +1887,10 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				918F705D1045C6B800FE7ABF /* DirectMessageButtonIconHighlighted.png */,
+				918F705E1045C6B800FE7ABF /* favorite.png */,
+				918F705F1045C6B800FE7ABF /* PublicMessageButtonIcon.png */,
+				918F70601045C6B800FE7ABF /* PublicMessageButtonIconHighlighted.png */,
 				918F397D10435CA1000236AE /* LocationDark.png */,
 				918F3757103F5262000236AE /* Location.png */,
 				059A6F23103CCE3D00B7500C /* DeleteButtonNormal.png */,
@@ -2239,6 +2251,10 @@
 				0519C76510434C0B00C2C7BD /* FlickrLogInView.xib in Resources */,
 				0519C8F21044502A00C2C7BD /* FlickrSettingsView.xib in Resources */,
 				0519CBD41045C42E00C2C7BD /* FlickrTagsView.xib in Resources */,
+				918F70611045C6B800FE7ABF /* DirectMessageButtonIconHighlighted.png in Resources */,
+				918F70621045C6B800FE7ABF /* favorite.png in Resources */,
+				918F70631045C6B800FE7ABF /* PublicMessageButtonIcon.png in Resources */,
+				918F70641045C6B800FE7ABF /* PublicMessageButtonIconHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

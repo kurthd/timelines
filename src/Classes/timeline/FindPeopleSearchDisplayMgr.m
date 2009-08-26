@@ -186,6 +186,9 @@
 {
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
+
+    [userInfoController setFailedToQueryFollowing];
+
     [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
