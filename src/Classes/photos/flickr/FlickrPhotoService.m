@@ -6,12 +6,34 @@
 #import "FlickrCredentials.h"
 #import "NSNumber+EncodingAdditions.h"
 #import "UIApplication+NetworkActivityIndicatorAdditions.h"
+#import "RegexKitLite.h"
+
+@interface FlickrPhotoService ()
+
+@property (nonatomic, retain) OFFlickrAPIContext * flickrContext;
+
+@property (nonatomic, retain) OFFlickrAPIRequest * uploadRequest;
+@property (nonatomic, retain) OFFlickrAPIRequest * editRequest;
+
+- (void)setTitle:(NSString *)title ofMediaAtUrl:(NSString *)url
+    credentials:(FlickrCredentials *)someCredentials;
+
++ (NSString *)shortPhotoIdFromUrl:(NSString *)urlString;
++ (NSString *)photoIdFromShortPhotoId:(NSString *)shortPhotoId;
+
+@end
 
 @implementation FlickrPhotoService
 
+@synthesize flickrContext;
+@synthesize uploadRequest, editRequest;
+
 - (void)dealloc
 {
-    [flickrContext release];
+    self.flickrContext = nil;
+
+    self.uploadRequest = nil;
+    self.editRequest = nil;
 
     [super dealloc];
 }
@@ -36,16 +58,16 @@
     [super sendImage:anImage withCredentials:ctls];
     [flickrContext setAuthToken:ctls.token];
 
-    OFFlickrAPIRequest * request =
+    self.uploadRequest =
         [[OFFlickrAPIRequest alloc] initWithAPIContext:flickrContext];
-    [request setDelegate:self];
+    [self.uploadRequest setDelegate:self];
 
     NSData * imageData = UIImagePNGRepresentation(image);
     NSInputStream * imageStream = [NSInputStream inputStreamWithData:imageData];
-    [request uploadImageStream:imageStream
-             suggestedFilename:@""
-                      MIMEType:@"image/png"
-                     arguments:nil];
+    [self.uploadRequest uploadImageStream:imageStream
+                        suggestedFilename:@""
+                                 MIMEType:@"image/png"
+                                arguments:nil];
 
     [[UIApplication sharedApplication] networkActivityIsStarting];
 }
@@ -56,18 +78,32 @@
     [super sendVideoAtUrl:url withCredentials:ctls];
     [flickrContext setAuthToken:ctls.token];
 
-    OFFlickrAPIRequest * request =
+    self.uploadRequest =
         [[OFFlickrAPIRequest alloc] initWithAPIContext:flickrContext];
-    [request setDelegate:self];
+    [self.uploadRequest setDelegate:self];
 
     NSData * videoData = [NSData dataWithContentsOfURL:url];
     NSInputStream * videoStream = [NSInputStream inputStreamWithData:videoData];
-    [request uploadImageStream:videoStream
-             suggestedFilename:@""
-                      MIMEType:@"video/quicktime"
-                     arguments:nil];
+    [self.uploadRequest uploadImageStream:videoStream
+                        suggestedFilename:@""
+                                 MIMEType:@"video/quicktime"
+                                arguments:nil];
 
     [[UIApplication sharedApplication] networkActivityIsStarting];
+}
+
+- (void)setTitle:(NSString *)title forPhotoWithUrl:(NSString *)photoUrl
+    credentials:(FlickrCredentials *)someCredentials
+{
+    [super setTitle:title forPhotoWithUrl:photoUrl credentials:someCredentials];
+    [self setTitle:title ofMediaAtUrl:photoUrl credentials:someCredentials];
+}
+
+- (void)setTitle:(NSString *)title forVideoWithUrl:(NSString *)url
+    credentials:(FlickrCredentials *)someCredentials
+{
+    [super setTitle:title forVideoWithUrl:url credentials:someCredentials];
+    [self setTitle:title ofMediaAtUrl:url credentials:someCredentials];
 }
 
 + (NSString *)apiKey
@@ -85,20 +121,28 @@
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)request
     didCompleteWithResponse:(NSDictionary *)response
 {
-    NSString * photoIdString =
-        [[response objectForKey:@"photoid"] objectForKey:@"_text"];
-    NSNumber * photoId =
-        [NSNumber numberWithLongLong:[photoIdString longLongValue]];
-    NSString * shortPhotoId = [photoId base58EncodedString];
+    if (request == self.uploadRequest) {
+        NSString * photoIdString =
+            [[response objectForKey:@"photoid"] objectForKey:@"_text"];
+        NSNumber * photoId =
+            [NSNumber numberWithLongLong:[photoIdString longLongValue]];
+        NSString * shortPhotoId = [photoId base58EncodedString];
 
-    NSString * shortUrl =
-        [NSString stringWithFormat:@"http://flic.kr/p/%@", shortPhotoId];
-    NSLog(@"short url: %@", shortUrl);
+        NSString * shortUrl =
+            [NSString stringWithFormat:@"http://flic.kr/p/%@", shortPhotoId];
+        NSLog(@"short url: %@", shortUrl);
 
-    if (self.image)
-        [self.delegate service:self didPostImageToUrl:shortUrl];
-    else if (self.videoUrl)
-        [self.delegate service:self didPostVideoToUrl:shortUrl];
+        if (self.image)
+            [self.delegate service:self didPostImageToUrl:shortUrl];
+        else if (self.videoUrl)
+            [self.delegate service:self didPostVideoToUrl:shortUrl];
+
+        [uploadRequest autorelease];
+        uploadRequest = nil;
+    } else if (request == self.editRequest) {
+        [editRequest autorelease];
+        editRequest = nil;
+    }
 
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
@@ -108,10 +152,18 @@
 {
     NSLog(@"Request failed: %@", error);
 
-    if (self.image)
-        [self.delegate service:self failedToPostImage:error];
-    else if (self.videoUrl)
-        [self.delegate service:self failedToPostVideo:error];
+    if (request == self.uploadRequest) {
+        if (self.image)
+            [self.delegate service:self failedToPostImage:error];
+        else if (self.videoUrl)
+            [self.delegate service:self failedToPostVideo:error];
+
+        [uploadRequest autorelease];
+        uploadRequest = nil;
+    } else {
+        [editRequest autorelease];
+        editRequest = nil;
+    }
 
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
@@ -121,6 +173,44 @@
               totalBytes:(NSUInteger)inTotalBytes
 {
     NSLog(@"Request uploaded %d of %d bytes", inSentBytes, inTotalBytes);
+}
+
+#pragma mark Private implementation
+
+- (void)setTitle:(NSString *)title ofMediaAtUrl:(NSString *)url
+    credentials:(FlickrCredentials *)someCredentials
+{
+    [flickrContext setAuthToken:someCredentials.token];
+
+    NSString * shortPhotoId = [[self class] shortPhotoIdFromUrl:url];
+    NSString * photoId = [[self class] photoIdFromShortPhotoId:shortPhotoId];
+
+    NSDictionary * args =
+        [NSMutableDictionary dictionaryWithObjectsAndKeys:
+        photoId, @"photo_id",
+        title, @"title",
+        nil];
+
+    [flickrContext setAuthToken:someCredentials.token];
+
+    self.editRequest =
+        [[OFFlickrAPIRequest alloc] initWithAPIContext:flickrContext];
+    [self.editRequest setDelegate:self];
+
+    [self.editRequest callAPIMethodWithPOST:@"flickr.photos.setMeta"
+                                  arguments:args];
+}
+
++ (NSString *)shortPhotoIdFromUrl:(NSString *)urlString
+{
+    static NSString * regex = @"\\bhttp://flic.kr/p/([a-zA-Z0-9]+)";
+    return [urlString stringByMatching:regex capture:1];
+}
+
++ (NSString *)photoIdFromShortPhotoId:(NSString *)shortPhotoId
+{
+    NSNumber * photoId = [NSNumber numberWithBase58EncodedString:shortPhotoId];
+    return [photoId description];
 }
 
 @end

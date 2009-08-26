@@ -29,6 +29,7 @@
 		0519C8F21044502A00C2C7BD /* FlickrSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0519C8F01044502A00C2C7BD /* FlickrSettingsView.xib */; };
 		0519C9931044634200C2C7BD /* FlickrPhotoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C9921044634200C2C7BD /* FlickrPhotoService.m */; };
 		0519C9CC10446B2500C2C7BD /* NSNumber+EncodingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C9CB10446B2500C2C7BD /* NSNumber+EncodingAdditions.m */; };
+		0519CA3C1044A50700C2C7BD /* NSString+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519CA3B1044A50700C2C7BD /* NSString+ConvenienceMethods.m */; };
 		051D7C69101D105A00B867C1 /* SavedSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 051D7C68101D105A00B867C1 /* SavedSearchMgr.m */; };
 		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
 		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
@@ -401,6 +402,8 @@
 		0519C9921044634200C2C7BD /* FlickrPhotoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrPhotoService.m; path = photos/flickr/FlickrPhotoService.m; sourceTree = "<group>"; };
 		0519C9CA10446B2500C2C7BD /* NSNumber+EncodingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNumber+EncodingAdditions.h"; path = "shared/NSNumber+EncodingAdditions.h"; sourceTree = "<group>"; };
 		0519C9CB10446B2500C2C7BD /* NSNumber+EncodingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSNumber+EncodingAdditions.m"; path = "shared/NSNumber+EncodingAdditions.m"; sourceTree = "<group>"; };
+		0519CA3A1044A50700C2C7BD /* NSString+ConvenienceMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+ConvenienceMethods.h"; path = "shared/NSString+ConvenienceMethods.h"; sourceTree = "<group>"; };
+		0519CA3B1044A50700C2C7BD /* NSString+ConvenienceMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+ConvenienceMethods.m"; path = "shared/NSString+ConvenienceMethods.m"; sourceTree = "<group>"; };
 		051D7C67101D105A00B867C1 /* SavedSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearchMgr.h; path = search/SavedSearchMgr.h; sourceTree = "<group>"; };
 		051D7C68101D105A00B867C1 /* SavedSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearchMgr.m; path = search/SavedSearchMgr.m; sourceTree = "<group>"; };
 		052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackground.png; path = images/SaveSearchButtonBackground.png; sourceTree = "<group>"; };
@@ -1391,6 +1394,8 @@
 				05F45CF20FF056DF00EBAFC7 /* AsynchronousNetworkFetcherDelegate.h */,
 				0524C1F00FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.h */,
 				0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */,
+				0519CA3A1044A50700C2C7BD /* NSString+ConvenienceMethods.h */,
+				0519CA3B1044A50700C2C7BD /* NSString+ConvenienceMethods.m */,
 				054B6A1E101E153600882C19 /* NSString+HtmlEncodingAdditions.h */,
 				054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */,
 				0519C9CA10446B2500C2C7BD /* NSNumber+EncodingAdditions.h */,
@@ -2417,6 +2422,7 @@
 				0519C8EF10444DD000C2C7BD /* FlickrSettingsViewController.m in Sources */,
 				0519C9931044634200C2C7BD /* FlickrPhotoService.m in Sources */,
 				0519C9CC10446B2500C2C7BD /* NSNumber+EncodingAdditions.m in Sources */,
+				0519CA3C1044A50700C2C7BD /* NSString+ConvenienceMethods.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

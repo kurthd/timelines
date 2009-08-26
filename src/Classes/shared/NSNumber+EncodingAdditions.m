@@ -35,4 +35,31 @@
     return [self encodeWithAlphabet:alphabet];
 }
 
++ (NSNumber *)numberWithBase58EncodedString:(NSString *)encodedString
+{
+    static NSString * alphabet =
+        @"123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
+    return [self numberByDecodingString:encodedString withAlphabet:alphabet];
+}
+
++ (NSNumber *)numberByDecodingString:(NSString *)encodedString
+                        withAlphabet:(NSString *)alphabet
+{
+    long long decoded = 0;
+    NSInteger mult = 1;
+    NSMutableString * s = [[encodedString mutableCopy] autorelease];
+    while (s.length > 0) {
+        unichar digit = [s characterAtIndex:s.length - 1];
+
+        NSString * tmp = [NSString stringWithFormat:@"%c", digit];
+        NSRange digitLoc = [alphabet rangeOfString:tmp];
+        decoded += mult * digitLoc.location;
+
+        mult = mult * alphabet.length;
+        [s deleteCharactersInRange:NSMakeRange(s.length - 1, 1)];
+    }
+
+    return [NSNumber numberWithLongLong:decoded];
+}
+
 @end
