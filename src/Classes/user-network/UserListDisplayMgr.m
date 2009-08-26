@@ -136,7 +136,7 @@
     self.userInfoUsername = aUser.username;
     [userInfoController release];
     userInfoController = nil; // Forces to scroll to top
-    self.userInfoController.navigationItem.title = aUser.name;
+    self.userInfoController.navigationItem.title = aUser.username;
     [wrapperController.navigationController
         pushViewController:self.userInfoController animated:YES];
     self.userInfoController.followingEnabled =
