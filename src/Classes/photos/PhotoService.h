@@ -15,6 +15,13 @@
 - (void)service:(PhotoService *)service didPostVideoToUrl:(NSString *)url;
 - (void)service:(PhotoService *)service failedToPostVideo:(NSError *)error;
 
+- (void)serviceDidUpdatePhotoTitle:(PhotoService *)service;
+- (void)service:(PhotoService *)service
+    failedToUpdatePhotoTitle:(NSError *)error;
+- (void)serviceDidUpdateVideoTitle:(PhotoService *)service;
+- (void)service:(PhotoService *)service
+    failedToUpdateVideoTitle:(NSError *)error;
+
 @end
 
 

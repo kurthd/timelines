@@ -45,6 +45,9 @@
         NSString * secret = [[self class] sharedSecret];
         flickrContext = [[OFFlickrAPIContext alloc] initWithAPIKey:key
                                                       sharedSecret:secret];
+
+        settingPhotoTitle = NO;
+        settingVideoTitle = NO;
     }
 
     return self;
@@ -97,6 +100,8 @@
 {
     [super setTitle:title forPhotoWithUrl:photoUrl credentials:someCredentials];
     [self setTitle:title ofMediaAtUrl:photoUrl credentials:someCredentials];
+
+    settingPhotoTitle = YES;
 }
 
 - (void)setTitle:(NSString *)title forVideoWithUrl:(NSString *)url
@@ -104,6 +109,8 @@
 {
     [super setTitle:title forVideoWithUrl:url credentials:someCredentials];
     [self setTitle:title ofMediaAtUrl:url credentials:someCredentials];
+
+    settingVideoTitle = YES;
 }
 
 + (NSString *)apiKey
@@ -140,6 +147,14 @@
         [uploadRequest autorelease];
         uploadRequest = nil;
     } else if (request == self.editRequest) {
+        if (settingPhotoTitle) {
+            [self.delegate serviceDidUpdatePhotoTitle:self];
+            settingPhotoTitle = NO;
+        } else if (settingVideoTitle) {
+            [self.delegate serviceDidUpdateVideoTitle:self];
+            settingVideoTitle = NO;
+        }
+
         [editRequest autorelease];
         editRequest = nil;
     }
@@ -161,6 +176,14 @@
         [uploadRequest autorelease];
         uploadRequest = nil;
     } else {
+        if (settingPhotoTitle) {
+            [self.delegate service:self failedToUpdatePhotoTitle:error];
+            settingPhotoTitle = NO;
+        } else if (settingVideoTitle) {
+            [self.delegate service:self failedToUpdateVideoTitle:error];
+            settingVideoTitle = NO;
+        }
+
         [editRequest autorelease];
         editRequest = nil;
     }
