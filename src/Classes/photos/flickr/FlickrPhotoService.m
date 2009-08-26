@@ -65,12 +65,18 @@
         [[OFFlickrAPIRequest alloc] initWithAPIContext:flickrContext];
     [self.uploadRequest setDelegate:self];
 
+    NSString * defaultTitle =
+        NSLocalizedString(@"flickr.photo.title.default", @"");
+    NSDictionary * args =
+        [NSDictionary dictionaryWithObject:defaultTitle forKey:@"title"];
+
     NSData * imageData = UIImagePNGRepresentation(image);
     NSInputStream * imageStream = [NSInputStream inputStreamWithData:imageData];
+
     [self.uploadRequest uploadImageStream:imageStream
                         suggestedFilename:@""
                                  MIMEType:@"image/png"
-                                arguments:nil];
+                                arguments:args];
 
     [[UIApplication sharedApplication] networkActivityIsStarting];
 }
@@ -85,12 +91,18 @@
         [[OFFlickrAPIRequest alloc] initWithAPIContext:flickrContext];
     [self.uploadRequest setDelegate:self];
 
+    NSString * defaultTitle =
+        NSLocalizedString(@"flickr.video.title.default", @"");
+    NSDictionary * args =
+        [NSDictionary dictionaryWithObject:defaultTitle forKey:@"title"];
+
     NSData * videoData = [NSData dataWithContentsOfURL:url];
     NSInputStream * videoStream = [NSInputStream inputStreamWithData:videoData];
+
     [self.uploadRequest uploadImageStream:videoStream
                         suggestedFilename:@""
                                  MIMEType:@"video/quicktime"
-                                arguments:nil];
+                                arguments:args];
 
     [[UIApplication sharedApplication] networkActivityIsStarting];
 }

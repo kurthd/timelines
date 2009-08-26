@@ -242,3 +242,7 @@ flickrsettingsview.delete = "Delete Service";
 flickrsettingsview.delete.alert.title = "Are you sure you want to delete this service?";
 flickrsettingsview.delete.alert.cancel.title = "Cancel";
 flickrsettingsview.delete.alert.delete.title = "Delete Service";
+
+/* Flickr */
+flickr.photo.title.default = "Uploaded from Twitbit";
+flickr.video.title.default = "Uploaded from Twitbit";
