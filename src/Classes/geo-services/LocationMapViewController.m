@@ -10,15 +10,21 @@
 @property (nonatomic, retain) Geocoder * geocoder;
 @property (nonatomic, readonly) BasicMapAnnotation * mapAnnotation;
 @property (nonatomic, readonly) MKAnnotationView * mapAnnotationView;
-@property (nonatomic, readonly) MKAnnotationView * userLocationAnnotationView;
+@property (nonatomic, readonly) UIBarButtonItem * activityIndicator;
+@property (nonatomic, retain) UIBarButtonItem * userLocationButton;
 
 - (void)updateMapSpan;
+- (void)showLocationInfo;
+
++ (BOOL)location:(CLLocationCoordinate2D)loc1
+    equalsLocation:(CLLocationCoordinate2D)loc2;
 
 @end
 
 @implementation LocationMapViewController
 
-@synthesize geocoder;
+@synthesize delegate;
+@synthesize geocoder, userLocationButton;
 
 - (void)dealloc
 {
@@ -26,16 +32,17 @@
     [geocoder release];
     [mapAnnotation release];
     [mapAnnotationView release];
-    [userLocationAnnotationView release];
+    [activityIndicator release];
+    [userLocationButton release];
     [super dealloc];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (!addedAnnotation) {
-        addedAnnotation = YES;
-        [mapView addAnnotation:self.mapAnnotation];
+    if (!setUserLocationButton) {
+        setUserLocationButton = YES;
+        self.userLocationButton = self.navigationItem.rightBarButtonItem;
     }
 }
 
@@ -45,10 +52,14 @@
     didFindCoordinate:(CLLocationCoordinate2D)coordinate
 {
     NSLog(@"Setting map coordinates");
+    if ([[self class] location:mapView.centerCoordinate
+        equalsLocation:coordinate])
+        [mapView addAnnotation:self.mapAnnotation];
     [self updateMapSpan];
     updatingMap = NO;
     [mapView setCenterCoordinate:coordinate animated:NO];
     self.mapAnnotation.coordinate = coordinate;
+    mapView.showsUserLocation = showingUserLocation;
 }
 
 - (void)geocoder:(Geocoder *)coder didFailWithError:(NSError *)error
@@ -65,7 +76,31 @@
     viewForAnnotation:(id<MKAnnotation>)annotation
 {
     return annotation == mapView.userLocation ?
-        self.userLocationAnnotationView : self.mapAnnotationView;
+        nil : self.mapAnnotationView;
+}
+
+- (void)mapView:(MKMapView *)aMapView didAddAnnotationViews:(NSArray *)views
+{
+    for (MKAnnotationView * view in views) {
+        if (view.annotation == mapView.userLocation) {
+            [mapView setCenterCoordinate:view.annotation.coordinate
+                animated:YES];
+            self.navigationItem.rightBarButtonItem = userLocationButton;
+            // just make sure the state is consistent
+            userLocationButton.style = UIBarButtonItemStyleDone;
+            break;
+        }
+    }
+}
+
+- (void)mapViewDidFinishLoadingMap:(MKMapView *)aMapView
+{
+    self.navigationItem.rightBarButtonItem = self.userLocationButton;
+}
+
+- (void)mapView:(MKMapView *)aMapView regionDidChangeAnimated:(BOOL)animated
+{
+    [mapView addAnnotation:self.mapAnnotation];
 }
 
 #pragma mark LocationMapViewController public implementation
@@ -75,6 +110,14 @@
     NSLog(@"Setting location to %@", locationText);
 
     self.mapAnnotation.title = locationText;
+
+    [mapView removeAnnotation:self.mapAnnotation];
+
+    showingUserLocation = NO;
+    mapView.showsUserLocation = NO;
+    if (self.userLocationButton)
+        self.navigationItem.rightBarButtonItem = self.userLocationButton;
+    self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
 
     static NSString * coordRegex =
         @"[^[-\\d\\.]]*([-\\d\\.]+\\s*,\\s*[-\\d\\.]+)[^[-\\d\\.]]*";
@@ -100,6 +143,9 @@
         coord.longitude = [[components objectAtIndex:1] doubleValue];
 
         updatingMap = NO;
+        if ([[self class] location:mapView.centerCoordinate
+            equalsLocation:coord])
+            [mapView addAnnotation:self.mapAnnotation];
         [mapView setCenterCoordinate:coord animated:NO];
         self.mapAnnotation.coordinate = coord;
     }
@@ -132,6 +178,12 @@
     mapView.region = region;
 }
 
+- (void)showLocationInfo
+{
+    [delegate showLocationInfo:self.mapAnnotation.title
+        coordinate:self.mapAnnotation.coordinate];
+}
+
 - (BasicMapAnnotation *)mapAnnotation
 {
     if (!mapAnnotation)
@@ -147,36 +199,49 @@
             [[MKPinAnnotationView alloc]
             initWithAnnotation:self.mapAnnotation reuseIdentifier:@""];
         pinAnnotationView.canShowCallout = YES;
-        pinAnnotationView.rightCalloutAccessoryView =
+        UIButton * disclosureButton =
             [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        [disclosureButton addTarget:self action:@selector(showLocationInfo)
+            forControlEvents:UIControlEventTouchUpInside];
+        pinAnnotationView.rightCalloutAccessoryView = disclosureButton;
+        pinAnnotationView.animatesDrop = YES;
+
         mapAnnotationView = pinAnnotationView;
     }
 
     return mapAnnotationView;
 }
 
-- (MKAnnotationView *)userLocationAnnotationView
-{
-    if (!userLocationAnnotationView) {
-        MKPinAnnotationView * pinAnnotationView =
-            [[MKPinAnnotationView alloc]
-            initWithAnnotation:self.mapAnnotation reuseIdentifier:@""];
-        pinAnnotationView.canShowCallout = YES;
-        pinAnnotationView.pinColor = MKPinAnnotationColorPurple;
-        pinAnnotationView.animatesDrop = YES;
-        pinAnnotationView.rightCalloutAccessoryView =
-            [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        userLocationAnnotationView = pinAnnotationView;
-    }
-
-    return userLocationAnnotationView;
-}
-
 - (void)setCurrentLocation:(UIBarButtonItem *)sender
 {
-    mapView.showsUserLocation = !mapView.showsUserLocation;
-    sender.style = mapView.showsUserLocation ?
+    showingUserLocation = !showingUserLocation;
+    mapView.showsUserLocation = showingUserLocation;
+    sender.style = showingUserLocation ?
         UIBarButtonItemStyleDone : UIBarButtonItemStyleBordered;
+    if (showingUserLocation)
+        self.navigationItem.rightBarButtonItem = self.activityIndicator;
+}
+
+- (UIBarButtonItem *)activityIndicator
+{
+    if (!activityIndicator) {
+        UIActivityIndicatorView * view =
+            [[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+
+        activityIndicator = [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [view startAnimating];
+        [view release];
+    }
+
+    return activityIndicator;
+}
+
++ (BOOL)location:(CLLocationCoordinate2D)loc1
+    equalsLocation:(CLLocationCoordinate2D)loc2
+{
+    return loc1.longitude == loc2.longitude && loc1.latitude == loc2.latitude;
 }
 
 @end

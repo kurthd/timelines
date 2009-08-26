@@ -20,12 +20,17 @@
 #import "TwitchBrowserViewController.h"
 #import "PhotoBrowser.h"
 #import "SavedSearchMgr.h"
+#import "LocationMapViewController.h"
+#import "LocationMapViewControllerDelegate.h"
+#import "LocationInfoViewController.h"
+#import "LocationInfoViewControllerDelegate.h"
 
 @interface UserListDisplayMgr :
     NSObject
     <UserListTableViewControllerDelegate, TwitterServiceDelegate,
     UserInfoViewControllerDelegate, TwitchBrowserViewControllerDelegate,
-    NetworkAwareViewControllerDelegate>
+    NetworkAwareViewControllerDelegate, LocationMapViewControllerDelegate,
+    LocationInfoViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     UserListTableViewController * userListController;
@@ -51,6 +56,9 @@
     NSString * userInfoUsername;
     NSString * currentSearch;
     SavedSearchMgr * savedSearchMgr;
+
+    LocationMapViewController * locationMapViewController;
+    LocationInfoViewController * locationInfoViewController;
 }
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController

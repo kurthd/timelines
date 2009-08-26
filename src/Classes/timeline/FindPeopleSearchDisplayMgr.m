@@ -46,6 +46,11 @@
 @property (nonatomic, copy) NSArray * autocompleteArray;
 @property (nonatomic, readonly) UIView * autocompleteView;
 
+@property (nonatomic, readonly)
+    LocationMapViewController * locationMapViewController;
+@property (nonatomic, readonly)
+    LocationInfoViewController * locationInfoViewController;
+
 @end
 
 @implementation FindPeopleSearchDisplayMgr
@@ -83,6 +88,8 @@
     [generalSavedSearchMgr release];
     [autocompleteArray release];
     [autoCompleteTableView release];
+    [locationMapViewController release];
+    [locationInfoViewController release];
 
     [super dealloc];
 }
@@ -273,17 +280,26 @@
 - (void)showLocationOnMap:(NSString *)locationString
 {
     NSLog(@"Find people display manager: showing %@ on map", locationString);
-    NSString * locationWithoutCommas =
-        [locationString stringByReplacingOccurrencesOfString:@"iPhone:"
-        withString:@""];
-    NSString * urlString =
-        [[NSString
-        stringWithFormat:@"http://maps.google.com/maps?q=%@",
-        locationWithoutCommas]
-        stringByAddingPercentEscapesUsingEncoding:
-        NSUTF8StringEncoding];
-    NSURL * url = [NSURL URLWithString:urlString];
-    [[UIApplication sharedApplication] openURL:url];
+
+    self.locationMapViewController.navigationItem.title = @"Map";
+    
+    [netAwareController.navigationController
+        pushViewController:self.locationMapViewController animated:YES];
+
+    [self.locationMapViewController setLocation:locationString];
+}
+
+- (void)showLocationInfo:(NSString *)locationString
+    coordinate:(CLLocationCoordinate2D)coordinate
+{
+    NSLog(@"Find people display manager: showing location info for %@",
+        locationString);
+
+    [netAwareController.navigationController
+        pushViewController:self.locationInfoViewController animated:YES];
+
+    [self.locationInfoViewController setLocationString:locationString
+        coordinate:coordinate];
 }
 
 - (void)displayFollowingForUser:(NSString *)aUsername
@@ -886,6 +902,48 @@
     }
 
     return autocompleteView;
+}
+
+- (LocationMapViewController *)locationMapViewController
+{
+    if (!locationMapViewController) {
+        locationMapViewController =
+            [[LocationMapViewController alloc]
+            initWithNibName:@"LocationMapView" bundle:nil];
+        locationMapViewController.delegate = self;
+
+        UIBarButtonItem * currentLocationButton =
+            [[[UIBarButtonItem alloc]
+            initWithImage:[UIImage imageNamed:@"Location.png"]
+            style:UIBarButtonItemStyleBordered target:locationMapViewController
+            action:@selector(setCurrentLocation:)] autorelease];
+        self.locationMapViewController.navigationItem.rightBarButtonItem =
+            currentLocationButton;
+    }
+
+    return locationMapViewController;
+}
+
+- (LocationInfoViewController *)locationInfoViewController
+{
+    if (!locationInfoViewController) {
+        locationInfoViewController =
+            [[LocationInfoViewController alloc]
+            initWithNibName:@"LocationInfoView" bundle:nil];
+        locationInfoViewController.navigationItem.title =
+            NSLocalizedString(@"locationinfo.title", @"");
+        locationInfoViewController.delegate = self;
+
+        UIBarButtonItem * forwardButton =
+            [[[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+            target:locationInfoViewController
+            action:@selector(showForwardOptions)] autorelease];
+        self.locationInfoViewController.navigationItem.rightBarButtonItem =
+            forwardButton;
+    }
+
+    return locationInfoViewController;
 }
 
 @end

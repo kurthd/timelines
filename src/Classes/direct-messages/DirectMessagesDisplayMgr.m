@@ -56,6 +56,11 @@
 @property (nonatomic, retain)
     NetworkAwareViewController * userListNetAwareViewController;
 
+@property (nonatomic, readonly)
+    LocationMapViewController * locationMapViewController;
+@property (nonatomic, readonly)
+    LocationInfoViewController * locationInfoViewController;
+
 @end
 
 @implementation DirectMessagesDisplayMgr
@@ -93,6 +98,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [userInfoControllerWrapper release];
     [userInfoRequestAdapter release];
     [userInfoTwitterService release];
+    [locationMapViewController release];
+    [locationInfoViewController release];
     [super dealloc];
 }
 
@@ -554,18 +561,27 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)showLocationOnMap:(NSString *)locationString
 {
-    NSLog(@"Timeline display manager: showing %@ on map", locationString);
-    NSString * locationWithoutCommas =
-        [locationString stringByReplacingOccurrencesOfString:@"iPhone:"
-        withString:@""];
-    NSString * urlString =
-        [[NSString
-        stringWithFormat:@"http://maps.google.com/maps?q=%@",
-        locationWithoutCommas]
-        stringByAddingPercentEscapesUsingEncoding:
-        NSUTF8StringEncoding];
-    NSURL * url = [NSURL URLWithString:urlString];
-    [[UIApplication sharedApplication] openURL:url];
+    NSLog(@"Direct message display manager: showing %@ on map", locationString);
+
+    self.locationMapViewController.navigationItem.title = @"Map";
+    
+    [wrapperController.navigationController
+        pushViewController:self.locationMapViewController animated:YES];
+
+    [self.locationMapViewController setLocation:locationString];
+}
+
+- (void)showLocationInfo:(NSString *)locationString
+    coordinate:(CLLocationCoordinate2D)coordinate
+{
+    NSLog(@"Direct message display manager: showing location info for %@",
+        locationString);
+
+    [wrapperController.navigationController
+        pushViewController:self.locationInfoViewController animated:YES];
+
+    [self.locationInfoViewController setLocationString:locationString
+        coordinate:coordinate];
 }
 
 - (void)showingTweetDetails:(TweetViewController *)tweetController
@@ -1438,6 +1454,48 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     alreadyReadDisplayWithUsernameValue = YES;
 
     return displayWithUsername;
+}
+
+- (LocationMapViewController *)locationMapViewController
+{
+    if (!locationMapViewController) {
+        locationMapViewController =
+            [[LocationMapViewController alloc]
+            initWithNibName:@"LocationMapView" bundle:nil];
+        locationMapViewController.delegate = self;
+
+        UIBarButtonItem * currentLocationButton =
+            [[[UIBarButtonItem alloc]
+            initWithImage:[UIImage imageNamed:@"Location.png"]
+            style:UIBarButtonItemStyleBordered target:locationMapViewController
+            action:@selector(setCurrentLocation:)] autorelease];
+        self.locationMapViewController.navigationItem.rightBarButtonItem =
+            currentLocationButton;
+    }
+
+    return locationMapViewController;
+}
+
+- (LocationInfoViewController *)locationInfoViewController
+{
+    if (!locationInfoViewController) {
+        locationInfoViewController =
+            [[LocationInfoViewController alloc]
+            initWithNibName:@"LocationInfoView" bundle:nil];
+        locationInfoViewController.navigationItem.title =
+            NSLocalizedString(@"locationinfo.title", @"");
+        locationInfoViewController.delegate = self;
+
+        UIBarButtonItem * forwardButton =
+            [[[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+            target:locationInfoViewController
+            action:@selector(showForwardOptions)] autorelease];
+        self.locationInfoViewController.navigationItem.rightBarButtonItem =
+            forwardButton;
+    }
+
+    return locationInfoViewController;
 }
 
 @end

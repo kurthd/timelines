@@ -35,13 +35,13 @@
 }
 
 - (void)drawRect:(CGRect)rect 
-{ 
+{
     CGContextRef ctx = UIGraphicsGetCurrentContext(); 
     CGMutablePathRef outlinePath = CGPathCreateMutable(); 
 
     float w = [self bounds].size.width;
     float h = [self bounds].size.height;
-
+    
     // Making the path and the rounded corners
     CGPathMoveToPoint(outlinePath, nil, radius, 0);
     CGPathAddArcToPoint(outlinePath, nil, 0, 0, 0, radius, radius);
