@@ -2842,7 +2842,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: High Order Bit, Inc.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Douglas Kurth";
 				DEVICE_REGISTRATION_DOMAIN = sandbox.twitbit.highorderbit.com;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2858,7 +2858,7 @@
 					"-licucore",
 				);
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "86370A6E-A17F-44DD-A7A3-E53062D55715";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AA7F2B41-6452-442A-ADBF-895609D202AE";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Release - Doug";
