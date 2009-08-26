@@ -25,6 +25,9 @@ static UIImage * mentionTopImage;
 - (void)drawRectNoAvatar:(CGRect)rect;
 - (void)drawRectNoAuthor:(CGRect)rect;
 
+- (void)drawHighlightedAvatarBorderWithTopMargin:(NSInteger)topMargin
+    leftMargin:(NSInteger)leftMargin;
+
 - (void)setStringValue:(NSString **)dest to:(NSString *)source;
 + (CGFloat)degreesToRadians:(CGFloat)degrees;
 
@@ -66,7 +69,7 @@ static UIImage * mentionTopImage;
     NSInteger minHeight =
         cellType == kTimelineTableViewCellTypeNoAvatar ?
         0 : 65;
-    NSUInteger height = 36.0 + size.height;
+    NSUInteger height = 35.0 + size.height;
     height = height > minHeight ? height : minHeight;
 
     return height;
@@ -129,7 +132,7 @@ static UIImage * mentionTopImage;
     static const CGFloat AUTHOR_LEFT_MARGIN = 64.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 64.0;
-    static const CGFloat TEXT_TOP_MARGIN = 28.0;
+    static const CGFloat TEXT_TOP_MARGIN = 27.0;
 
     static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
     static const CGFloat AVATAR_TOP_MARGIN = 7.0;
@@ -152,6 +155,7 @@ static UIImage * mentionTopImage;
         authorColor = [UIColor whiteColor];
         timestampColor = [UIColor whiteColor];
         textColor = [UIColor whiteColor];
+        [self drawHighlightedAvatarBorderWithTopMargin:6 leftMargin:6];
     } else {
         authorColor = [UIColor blackColor];
         timestampColor = [UIColor twitchBlueColor];
@@ -239,7 +243,7 @@ static UIImage * mentionTopImage;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 7.0;
-    static const CGFloat TEXT_TOP_MARGIN = 28.0;
+    static const CGFloat TEXT_TOP_MARGIN = 27.0;
 
     static const CGFloat AVATAR_LEFT_MARGIN = 246.0;
     static const CGFloat AVATAR_TOP_MARGIN = 7.0;
@@ -256,6 +260,7 @@ static UIImage * mentionTopImage;
     if (highlighted) {
         timestampColor = [UIColor whiteColor];
         textColor = [UIColor whiteColor];
+        [self drawHighlightedAvatarBorderWithTopMargin:6 leftMargin:245];
     } else {
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
@@ -324,7 +329,7 @@ static UIImage * mentionTopImage;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 7.0;
-    static const CGFloat TEXT_TOP_MARGIN = 28.0;
+    static const CGFloat TEXT_TOP_MARGIN = 27.0;
 
     UIColor * timestampColor = nil;
     UIFont * timestampFont = [UIFont systemFontOfSize:14.0];
@@ -395,7 +400,7 @@ static UIImage * mentionTopImage;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 64.0;
-    static const CGFloat TEXT_TOP_MARGIN = 28.0;
+    static const CGFloat TEXT_TOP_MARGIN = 27.0;
 
     static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
     static const CGFloat AVATAR_TOP_MARGIN = 7.0;
@@ -412,6 +417,7 @@ static UIImage * mentionTopImage;
     if (highlighted) {
         timestampColor = [UIColor whiteColor];
         textColor = [UIColor whiteColor];
+        [self drawHighlightedAvatarBorderWithTopMargin:6 leftMargin:6];
     } else {
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
@@ -526,6 +532,47 @@ static UIImage * mentionTopImage;
             [TimelineTableViewCellView mentionCellColor] :
             [TimelineTableViewCellView defaultTimelineCellColor];
     }
+}
+
+- (void)drawHighlightedAvatarBorderWithTopMargin:(NSInteger)topMargin
+    leftMargin:(NSInteger)leftMargin
+{
+#define ROUNDED_CORNER_RADIUS 6
+
+    CGFloat roundedCornerWidth = ROUNDED_CORNER_RADIUS * 2 + 1;
+    CGFloat roundedCornerHeight = ROUNDED_CORNER_RADIUS * 2 + 1;
+
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    CGContextSetFillColorWithColor(context, [[UIColor whiteColor] CGColor]);
+
+    CGContextFillRect(context,
+        CGRectMake(ROUNDED_CORNER_RADIUS + leftMargin, topMargin,
+        AVATAR_WIDTH + 2 - roundedCornerWidth, AVATAR_HEIGHT + 2));
+
+    // Draw rounded corners
+    CGContextFillEllipseInRect(context,
+        CGRectMake(leftMargin, topMargin, roundedCornerWidth,
+        roundedCornerHeight));
+    CGContextFillEllipseInRect(context,
+        CGRectMake(leftMargin,
+        AVATAR_HEIGHT + 2 + topMargin - roundedCornerHeight,
+        roundedCornerWidth, roundedCornerHeight));
+    CGContextFillRect(context,
+        CGRectMake(leftMargin, topMargin + 1 + roundedCornerHeight / 2,
+        roundedCornerWidth, AVATAR_HEIGHT  + 1 - roundedCornerHeight));
+
+    CGContextFillEllipseInRect(context,
+        CGRectMake(leftMargin + 2 + AVATAR_WIDTH - roundedCornerWidth,
+        topMargin, roundedCornerWidth, roundedCornerHeight));
+    CGContextFillEllipseInRect(context,
+        CGRectMake(leftMargin + 2 + AVATAR_WIDTH - roundedCornerWidth,
+        AVATAR_HEIGHT + 2 + topMargin - roundedCornerHeight, roundedCornerWidth,
+        roundedCornerHeight));
+    CGContextFillRect(context,
+        CGRectMake(leftMargin + 2 + AVATAR_WIDTH - roundedCornerWidth,
+        topMargin + 1 + roundedCornerHeight / 2, roundedCornerWidth,
+        AVATAR_HEIGHT - roundedCornerHeight));
 }
 
 static UIColor * mentionCellColor;
