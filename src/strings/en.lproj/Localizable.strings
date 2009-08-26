@@ -173,7 +173,7 @@ photoservicesview.photoservice.label = "Photos";
 photoservicesview.videoservice.label = "Videos";
 photoservicesview.defaults.title = "Settings";
 photoservicesview.defaults.footer = "Select which service to use for uploading photos and video.";
-photoservicesview.accounts.title = "Added Services";
+photoservicesview.accounts.title = "Available Services";
 photoservicesview.accounts.allinstalled.footer = "All available services have been installed.";
 selectphotoserviceview.view.title = "Select Service";
 selectvideoserviceview.view.title = "Select Service";
@@ -234,14 +234,18 @@ flickrloginview.title = "Authorize";
 
 /* FlickrSettingsView */
 flickrsettingsview.title = "Flickr Settings";
-flickrsettingsview.details.title = "Account Details";
+flickrsettingsview.details.title = "Details";
+flickrsettingsview.settings.title = "Settings";
 flickrsettingsview.username.label = "Username";
 flickrsettingsview.fullname.label = "Full Name";
-flickrsettingsview.userid.label = "User ID";
+flickrsettingsview.tags.label = "Tag Photos & Videos";
 flickrsettingsview.delete = "Delete Service";
 flickrsettingsview.delete.alert.title = "Are you sure you want to delete this service?";
 flickrsettingsview.delete.alert.cancel.title = "Cancel";
 flickrsettingsview.delete.alert.delete.title = "Delete Service";
+
+/* FlickrTagsView */
+flickrtagsview.title = "Tags";
 
 /* Flickr */
 flickr.photo.title.default = "Uploaded from Twitbit";

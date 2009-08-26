@@ -14,12 +14,23 @@
 @property (nonatomic, retain) FlickrSettingsViewController *
     settingsViewController;
 
+@property (nonatomic, retain) NetworkAwareViewController *
+    tagsNetViewController;
+@property (nonatomic, retain) FlickrTagsViewController * tagsViewController;
+
+@property (nonatomic, retain) NSArray * tags;
+
+@property (nonatomic, retain) FlickrDataFetcher * flickrDataFetcher;
+
 @end
 
 @implementation FlickrEditPhotoServiceDisplayMgr
 
 @synthesize credentials, context;
 @synthesize navigationController, settingsViewController;
+@synthesize tagsNetViewController, tagsViewController;
+@synthesize tags;
+@synthesize flickrDataFetcher;
 
 - (void)dealloc
 {
@@ -28,6 +39,13 @@
 
     self.navigationController = nil;
     self.settingsViewController = nil;
+
+    self.tagsNetViewController = nil;
+    self.tagsViewController = nil;
+
+    self.tags = nil;
+
+    self.flickrDataFetcher = nil;
 
     [super dealloc];
 }
@@ -68,6 +86,59 @@
     [self.delegate userDidDeleteAccount];
 }
 
+- (void)userWantsToSelectTags:(FlickrCredentials *)someCredentials
+{
+    [self.navigationController
+        pushViewController:self.tagsNetViewController animated:YES];
+
+    self.tagsViewController.tags = self.tags;
+    if (self.tags.count) {
+        [self.tagsNetViewController setUpdatingState:kConnectedAndNotUpdating];
+        [self.tagsNetViewController setCachedDataAvailable:YES];
+    } else {
+        [self.tagsNetViewController setUpdatingState:kConnectedAndUpdating];
+        [self.tagsNetViewController setCachedDataAvailable:NO];
+
+        self.flickrDataFetcher.token = someCredentials.token;
+        [self.flickrDataFetcher fetchTags:someCredentials.userId];
+    }
+}
+
+#pragma mark FlickrDataFetcherDelegate implementation
+
+- (void)dataFetcher:(FlickrDataFetcher *)fetcher
+        fetchedTags:(NSDictionary *)someTags
+{
+    NSLog(@"Fetched tags: %@", someTags);
+
+    NSMutableArray * newTags = [NSMutableArray array];
+    NSArray * downloadedTags =
+        [[[someTags objectForKey:@"who"]
+                    objectForKey:@"tags"]
+                    objectForKey:@"tag"];
+
+    for (NSDictionary * data in downloadedTags)
+        [newTags addObject:[data objectForKey:@"_text"]];
+    self.tags = newTags;
+
+    self.tagsViewController.tags = self.tags;
+    [self.tagsNetViewController setUpdatingState:kConnectedAndNotUpdating];
+    [self.tagsNetViewController setCachedDataAvailable:YES];
+}
+
+- (void)dataFetcher:(FlickrDataFetcher *)fetcher
+  failedToFetchTags:(NSError *)error
+{
+    NSLog(@"Failed to fetch tags: %@", error);
+}
+
+#pragma mark NetworkAwareViewControllerDelegate implementation
+
+- (void)networkAwareViewWillAppear
+{
+    NSLog(@"Network aware view will appear.");
+}
+
 #pragma mark Accessors
 
 - (FlickrSettingsViewController *)settingsViewController
@@ -77,6 +148,37 @@
             [[FlickrSettingsViewController alloc] initWithDelegate:self];
 
     return settingsViewController;
+}
+
+- (NetworkAwareViewController *)tagsNetViewController
+{
+    if (!tagsNetViewController) {
+        tagsNetViewController =
+            [[NetworkAwareViewController alloc]
+            initWithTargetViewController:self.tagsViewController];
+        tagsNetViewController.delegate = self;
+        tagsNetViewController.navigationItem.title =
+            NSLocalizedString(@"flickrtagsview.title", @"");
+    }
+
+    return tagsNetViewController;
+}
+
+- (FlickrTagsViewController *)tagsViewController
+{
+    if (!tagsViewController)
+        tagsViewController =
+            [[FlickrTagsViewController alloc] initWithDelegate:self];
+
+    return tagsViewController;
+}
+
+- (FlickrDataFetcher *)flickrDataFetcher
+{
+    if (!flickrDataFetcher)
+        flickrDataFetcher = [[FlickrDataFetcher alloc] initWithDelegate:self];
+
+    return flickrDataFetcher;
 }
 
 @end

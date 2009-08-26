@@ -30,6 +30,10 @@
 		0519C9931044634200C2C7BD /* FlickrPhotoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C9921044634200C2C7BD /* FlickrPhotoService.m */; };
 		0519C9CC10446B2500C2C7BD /* NSNumber+EncodingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C9CB10446B2500C2C7BD /* NSNumber+EncodingAdditions.m */; };
 		0519CA3C1044A50700C2C7BD /* NSString+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519CA3B1044A50700C2C7BD /* NSString+ConvenienceMethods.m */; };
+		0519CBD11045C2A300C2C7BD /* FlickrTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519CBD01045C2A300C2C7BD /* FlickrTagsViewController.m */; };
+		0519CBD41045C42E00C2C7BD /* FlickrTagsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0519CBD21045C42E00C2C7BD /* FlickrTagsView.xib */; };
+		0519CC051045C8E900C2C7BD /* FlickrDataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519CC041045C8E900C2C7BD /* FlickrDataFetcher.m */; };
+		0519CC2E1045CED600C2C7BD /* NSDictionary+NonRetainedKeyAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519CC2D1045CED600C2C7BD /* NSDictionary+NonRetainedKeyAdditions.m */; };
 		051D7C69101D105A00B867C1 /* SavedSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 051D7C68101D105A00B867C1 /* SavedSearchMgr.m */; };
 		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
 		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
@@ -411,6 +415,13 @@
 		0519C9CB10446B2500C2C7BD /* NSNumber+EncodingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSNumber+EncodingAdditions.m"; path = "shared/NSNumber+EncodingAdditions.m"; sourceTree = "<group>"; };
 		0519CA3A1044A50700C2C7BD /* NSString+ConvenienceMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+ConvenienceMethods.h"; path = "shared/NSString+ConvenienceMethods.h"; sourceTree = "<group>"; };
 		0519CA3B1044A50700C2C7BD /* NSString+ConvenienceMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+ConvenienceMethods.m"; path = "shared/NSString+ConvenienceMethods.m"; sourceTree = "<group>"; };
+		0519CBCF1045C2A300C2C7BD /* FlickrTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrTagsViewController.h; path = photos/flickr/FlickrTagsViewController.h; sourceTree = "<group>"; };
+		0519CBD01045C2A300C2C7BD /* FlickrTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrTagsViewController.m; path = photos/flickr/FlickrTagsViewController.m; sourceTree = "<group>"; };
+		0519CBD31045C42E00C2C7BD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/FlickrTagsView.xib; sourceTree = "<group>"; };
+		0519CC031045C8E900C2C7BD /* FlickrDataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrDataFetcher.h; path = photos/flickr/FlickrDataFetcher.h; sourceTree = "<group>"; };
+		0519CC041045C8E900C2C7BD /* FlickrDataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrDataFetcher.m; path = photos/flickr/FlickrDataFetcher.m; sourceTree = "<group>"; };
+		0519CC2C1045CED600C2C7BD /* NSDictionary+NonRetainedKeyAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+NonRetainedKeyAdditions.h"; path = "shared/NSDictionary+NonRetainedKeyAdditions.h"; sourceTree = "<group>"; };
+		0519CC2D1045CED600C2C7BD /* NSDictionary+NonRetainedKeyAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+NonRetainedKeyAdditions.m"; path = "shared/NSDictionary+NonRetainedKeyAdditions.m"; sourceTree = "<group>"; };
 		051D7C67101D105A00B867C1 /* SavedSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearchMgr.h; path = search/SavedSearchMgr.h; sourceTree = "<group>"; };
 		051D7C68101D105A00B867C1 /* SavedSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearchMgr.m; path = search/SavedSearchMgr.m; sourceTree = "<group>"; };
 		052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackground.png; path = images/SaveSearchButtonBackground.png; sourceTree = "<group>"; };
@@ -1080,6 +1091,10 @@
 				0519C8EE10444DD000C2C7BD /* FlickrSettingsViewController.m */,
 				0519C9911044634200C2C7BD /* FlickrPhotoService.h */,
 				0519C9921044634200C2C7BD /* FlickrPhotoService.m */,
+				0519CBCF1045C2A300C2C7BD /* FlickrTagsViewController.h */,
+				0519CBD01045C2A300C2C7BD /* FlickrTagsViewController.m */,
+				0519CC031045C8E900C2C7BD /* FlickrDataFetcher.h */,
+				0519CC041045C8E900C2C7BD /* FlickrDataFetcher.m */,
 			);
 			name = flickr;
 			sourceTree = "<group>";
@@ -1394,6 +1409,8 @@
 				916BD7A30FEEADD7007143A9 /* NSDate+StringHelpers.m */,
 				916BD7A40FEEADD7007143A9 /* NSError+InstantiationAdditions.h */,
 				916BD7A50FEEADD7007143A9 /* NSError+InstantiationAdditions.m */,
+				0519CC2C1045CED600C2C7BD /* NSDictionary+NonRetainedKeyAdditions.h */,
+				0519CC2D1045CED600C2C7BD /* NSDictionary+NonRetainedKeyAdditions.m */,
 				916BD7A60FEEADD7007143A9 /* UIColor+TwitchColors.h */,
 				916BD7A70FEEADD7007143A9 /* UIColor+TwitchColors.m */,
 				916BD7A80FEEADD7007143A9 /* UITableViewCell+InstantiationAdditions.h */,
@@ -1469,6 +1486,7 @@
 				0519C76010434BD000C2C7BD /* ExplainFlickrAuthView.xib */,
 				0519C76310434C0B00C2C7BD /* FlickrLogInView.xib */,
 				0519C8F01044502A00C2C7BD /* FlickrSettingsView.xib */,
+				0519CBD21045C42E00C2C7BD /* FlickrTagsView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -2220,6 +2238,7 @@
 				0519C76210434BD000C2C7BD /* ExplainFlickrAuthView.xib in Resources */,
 				0519C76510434C0B00C2C7BD /* FlickrLogInView.xib in Resources */,
 				0519C8F21044502A00C2C7BD /* FlickrSettingsView.xib in Resources */,
+				0519CBD41045C42E00C2C7BD /* FlickrTagsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2461,6 +2480,9 @@
 				0519C9931044634200C2C7BD /* FlickrPhotoService.m in Sources */,
 				0519C9CC10446B2500C2C7BD /* NSNumber+EncodingAdditions.m in Sources */,
 				0519CA3C1044A50700C2C7BD /* NSString+ConvenienceMethods.m in Sources */,
+				0519CBD11045C2A300C2C7BD /* FlickrTagsViewController.m in Sources */,
+				0519CC051045C8E900C2C7BD /* FlickrDataFetcher.m in Sources */,
+				0519CC2E1045CED600C2C7BD /* NSDictionary+NonRetainedKeyAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2489,6 +2511,14 @@
 				0519C8F11044502A00C2C7BD /* en */,
 			);
 			name = FlickrSettingsView.xib;
+			sourceTree = "<group>";
+		};
+		0519CBD21045C42E00C2C7BD /* FlickrTagsView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0519CBD31045C42E00C2C7BD /* en */,
+			);
+			name = FlickrTagsView.xib;
 			sourceTree = "<group>";
 		};
 		05340AB8101A3DAD0077E7C0 /* SearchBookmarksView.xib */ = {
