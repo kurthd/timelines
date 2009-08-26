@@ -405,6 +405,14 @@ static UIImage * defaultAvatar;
     }
 }
 
+- (void)setFailedToQueryFollowing
+{
+    followingActivityIndicator.hidden = YES;
+    followingLoadingLabel.hidden = YES;
+    followButton.hidden = YES;
+    stopFollowingButton.hidden = YES;
+}
+
 - (void)layoutViews
 {
     CGRect bioLabelFrame = bioLabel.frame;

@@ -296,6 +296,9 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Timeline display manager: failed to query if %@ is following %@",
         username, followee);
     NSLog(@"Error: %@", error);
+
+    [self.userInfoController setFailedToQueryFollowing];
+
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
     [[ErrorState instance] displayErrorWithTitle:errorMessage];
