@@ -13,10 +13,12 @@
     id<FlickrTagsViewControllerDelegate> delegate;
 
     NSArray * tags;
+    NSSet * selectedTags;
 }
 
 @property (nonatomic, assign) id<FlickrTagsViewControllerDelegate> delegate;
 @property (nonatomic, copy) NSArray * tags;
+@property (nonatomic, copy) NSSet * selectedTags;
 
 - (id)initWithDelegate:(id<FlickrTagsViewControllerDelegate>)aDelegate;
 
