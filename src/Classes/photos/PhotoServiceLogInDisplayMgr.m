@@ -27,6 +27,7 @@
             @"TwitPicLogInDisplayMgr", @"TwitPic",
             @"YfrogLogInDisplayMgr", @"Yfrog",
             @"TwitVidLogInDisplayMgr", @"TwitVid",
+            @"FlickrLogInDisplayMgr", @"Flickr",
             nil];
     }
 

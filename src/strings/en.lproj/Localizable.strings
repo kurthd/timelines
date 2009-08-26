@@ -191,6 +191,7 @@ yfrogsettings.view.title = "Yfrog Settings";
 yfrogsettingsview.delete.alert.title = "Are you sure you want to delete this service?";
 yfrogsettingsview.delete.alert.cancel.title = "Cancel";
 yfrogsettingsview.delete.alert.delete.title = "Delete Service";
+yfrogsettingsview.delete = "Delete";
 
 /* TwitVidLogInView */
 twitpicloginview.view.title = "Log In to TwitPic";
@@ -198,6 +199,7 @@ twitpicloginview.view.instructions = "TwitPic is a free service for sharing phot
 
 /* TwitPicSettingsView */
 twitpicsettings.view.title = "TwitPic Settings";
+twitpicsettingsview.delete = "Delete Service";
 twitpicsettingsview.delete.alert.title = "Are you sure you want to delete this service?";
 twitpicsettingsview.delete.alert.cancel.title = "Cancel";
 twitpicsettingsview.delete.alert.delete.title = "Delete Service";
@@ -208,6 +210,7 @@ twitvidloginview.view.instructions = "TwitVid is a free service for sharing vide
 
 /* TwitVidSettingsView */
 twitvidsettings.view.title = "TwitVid Settings";
+twitvidsettingsview.delete = "Delete Service";
 twitvidsettingsview.delete.alert.title = "Are you sure you want to delete this service?";
 twitvidsettingsview.delete.alert.cancel.title = "Cancel";
 twitvidsettingsview.delete.alert.delete.title = "Delete Service";
@@ -220,3 +223,22 @@ locationinfo.directionsto = "Directions To Here";
 locationinfo.directionsfrom = "Directions From Here";
 locationinfo.actions.cancel = "Cancel";
 locationinfo.actions.maps = "Open in Maps";
+
+/* ExplainFlickrAuthView */
+explainflickrauthview.title = "Log In to Flickr";
+explainflickrauthview.header = "";
+explainflickrauthview.footer = "";
+
+/* FlickrLogInView */
+flickrloginview.title = "Authorize";
+
+/* FlickrSettingsView */
+flickrsettingsview.title = "Flickr Settings";
+flickrsettingsview.details.title = "Account Details";
+flickrsettingsview.username.label = "Username";
+flickrsettingsview.fullname.label = "Full Name";
+flickrsettingsview.userid.label = "User ID";
+flickrsettingsview.delete = "Delete Service";
+flickrsettingsview.delete.alert.title = "Are you sure you want to delete this service?";
+flickrsettingsview.delete.alert.cancel.title = "Cancel";
+flickrsettingsview.delete.alert.delete.title = "Delete Service";

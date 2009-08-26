@@ -129,22 +129,8 @@
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // jad: temporary
-    static NSSet * supported = nil;
-    if (!supported)
-        supported =
-            [[NSSet alloc]
-            initWithObjects:@"TwitPic", @"Yfrog", @"TwitVid", nil];
-
-    NSString * name = [self.names objectAtIndex:indexPath.row];
-    if ([supported containsObject:name]) {
-        NSString * serviceName = [self.names objectAtIndex:indexPath.row];
-        [self.delegate userSelectedServiceNamed:serviceName];
-    } else {
-        [[UIAlertView simpleAlertViewWithTitle:@"Not Implemented"
-                                       message:nil] show];
-        [tv deselectRowAtIndexPath:indexPath animated:YES];
-    }
+    NSString * serviceName = [self.names objectAtIndex:indexPath.row];
+    [self.delegate userSelectedServiceNamed:serviceName];
 }
 
 #pragma mark Button actions

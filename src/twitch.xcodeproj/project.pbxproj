@@ -12,6 +12,23 @@
 		0519760E103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */; };
 		05197620103A168600883FAC /* AccountNotSelectedFiller.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519761F103A168600883FAC /* AccountNotSelectedFiller.png */; };
 		0519767B103A291E00883FAC /* AccountSettingsDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519767A103A291E00883FAC /* AccountSettingsDisplayMgr.m */; };
+		0519C6FB1043461600C2C7BD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0519C6FA1043461600C2C7BD /* CFNetwork.framework */; };
+		0519C7211043470100C2C7BD /* ObjectiveFlickr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C71A1043470100C2C7BD /* ObjectiveFlickr.m */; };
+		0519C7221043470100C2C7BD /* OFXMLMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C71D1043470100C2C7BD /* OFXMLMapper.m */; };
+		0519C741104347B800C2C7BD /* LFHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C73B104347B800C2C7BD /* LFHTTPRequest.m */; };
+		0519C742104347B800C2C7BD /* LFSiteReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C73D104347B800C2C7BD /* LFSiteReachability.m */; };
+		0519C743104347B800C2C7BD /* NSData+LFHTTPFormExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C740104347B800C2C7BD /* NSData+LFHTTPFormExtensions.m */; };
+		0519C755104349DF00C2C7BD /* FlickrLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C754104349DF00C2C7BD /* FlickrLogInDisplayMgr.m */; };
+		0519C75F10434BAE00C2C7BD /* FlickrLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C75E10434BAE00C2C7BD /* FlickrLogInViewController.m */; };
+		0519C76210434BD000C2C7BD /* ExplainFlickrAuthView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0519C76010434BD000C2C7BD /* ExplainFlickrAuthView.xib */; };
+		0519C76510434C0B00C2C7BD /* FlickrLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0519C76310434C0B00C2C7BD /* FlickrLogInView.xib */; };
+		0519C76A10434CB500C2C7BD /* ExplainFlickrAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C76910434CB500C2C7BD /* ExplainFlickrAuthViewController.m */; };
+		0519C8A7104377A000C2C7BD /* FlickrCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C8A6104377A000C2C7BD /* FlickrCredentials.m */; };
+		0519C8EC10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C8EB10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.m */; };
+		0519C8EF10444DD000C2C7BD /* FlickrSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C8EE10444DD000C2C7BD /* FlickrSettingsViewController.m */; };
+		0519C8F21044502A00C2C7BD /* FlickrSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0519C8F01044502A00C2C7BD /* FlickrSettingsView.xib */; };
+		0519C9931044634200C2C7BD /* FlickrPhotoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C9921044634200C2C7BD /* FlickrPhotoService.m */; };
+		0519C9CC10446B2500C2C7BD /* NSNumber+EncodingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C9CB10446B2500C2C7BD /* NSNumber+EncodingAdditions.m */; };
 		051D7C69101D105A00B867C1 /* SavedSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 051D7C68101D105A00B867C1 /* SavedSearchMgr.m */; };
 		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
 		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
@@ -359,6 +376,38 @@
 		0519761F103A168600883FAC /* AccountNotSelectedFiller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountNotSelectedFiller.png; path = images/AccountNotSelectedFiller.png; sourceTree = "<group>"; };
 		05197679103A291E00883FAC /* AccountSettingsDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountSettingsDisplayMgr.h; path = accounts/AccountSettingsDisplayMgr.h; sourceTree = "<group>"; };
 		0519767A103A291E00883FAC /* AccountSettingsDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountSettingsDisplayMgr.m; path = accounts/AccountSettingsDisplayMgr.m; sourceTree = "<group>"; };
+		0519C6FA1043461600C2C7BD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		0519C7191043470100C2C7BD /* ObjectiveFlickr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectiveFlickr.h; path = "vendor/objective-flickr/Source/ObjectiveFlickr.h"; sourceTree = "<group>"; };
+		0519C71A1043470100C2C7BD /* ObjectiveFlickr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectiveFlickr.m; path = "vendor/objective-flickr/Source/ObjectiveFlickr.m"; sourceTree = "<group>"; };
+		0519C71B1043470100C2C7BD /* OFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OFUtilities.h; path = "vendor/objective-flickr/Source/OFUtilities.h"; sourceTree = "<group>"; };
+		0519C71C1043470100C2C7BD /* OFXMLMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OFXMLMapper.h; path = "vendor/objective-flickr/Source/OFXMLMapper.h"; sourceTree = "<group>"; };
+		0519C71D1043470100C2C7BD /* OFXMLMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OFXMLMapper.m; path = "vendor/objective-flickr/Source/OFXMLMapper.m"; sourceTree = "<group>"; };
+		0519C73A104347B800C2C7BD /* LFHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFHTTPRequest.h; path = "vendor/objective-flickr/LFWebAPIKit/LFHTTPRequest.h"; sourceTree = "<group>"; };
+		0519C73B104347B800C2C7BD /* LFHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFHTTPRequest.m; path = "vendor/objective-flickr/LFWebAPIKit/LFHTTPRequest.m"; sourceTree = "<group>"; };
+		0519C73C104347B800C2C7BD /* LFSiteReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFSiteReachability.h; path = "vendor/objective-flickr/LFWebAPIKit/LFSiteReachability.h"; sourceTree = "<group>"; };
+		0519C73D104347B800C2C7BD /* LFSiteReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFSiteReachability.m; path = "vendor/objective-flickr/LFWebAPIKit/LFSiteReachability.m"; sourceTree = "<group>"; };
+		0519C73E104347B800C2C7BD /* LFWebAPIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFWebAPIKit.h; path = "vendor/objective-flickr/LFWebAPIKit/LFWebAPIKit.h"; sourceTree = "<group>"; };
+		0519C73F104347B800C2C7BD /* NSData+LFHTTPFormExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+LFHTTPFormExtensions.h"; path = "vendor/objective-flickr/LFWebAPIKit/NSData+LFHTTPFormExtensions.h"; sourceTree = "<group>"; };
+		0519C740104347B800C2C7BD /* NSData+LFHTTPFormExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+LFHTTPFormExtensions.m"; path = "vendor/objective-flickr/LFWebAPIKit/NSData+LFHTTPFormExtensions.m"; sourceTree = "<group>"; };
+		0519C753104349DF00C2C7BD /* FlickrLogInDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrLogInDisplayMgr.h; path = photos/flickr/FlickrLogInDisplayMgr.h; sourceTree = "<group>"; };
+		0519C754104349DF00C2C7BD /* FlickrLogInDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrLogInDisplayMgr.m; path = photos/flickr/FlickrLogInDisplayMgr.m; sourceTree = "<group>"; };
+		0519C75D10434BAE00C2C7BD /* FlickrLogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrLogInViewController.h; path = photos/flickr/FlickrLogInViewController.h; sourceTree = "<group>"; };
+		0519C75E10434BAE00C2C7BD /* FlickrLogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrLogInViewController.m; path = photos/flickr/FlickrLogInViewController.m; sourceTree = "<group>"; };
+		0519C76110434BD000C2C7BD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/ExplainFlickrAuthView.xib; sourceTree = "<group>"; };
+		0519C76410434C0B00C2C7BD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/FlickrLogInView.xib; sourceTree = "<group>"; };
+		0519C76810434CB500C2C7BD /* ExplainFlickrAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExplainFlickrAuthViewController.h; path = photos/flickr/ExplainFlickrAuthViewController.h; sourceTree = "<group>"; };
+		0519C76910434CB500C2C7BD /* ExplainFlickrAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExplainFlickrAuthViewController.m; path = photos/flickr/ExplainFlickrAuthViewController.m; sourceTree = "<group>"; };
+		0519C8A5104377A000C2C7BD /* FlickrCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrCredentials.h; path = photos/flickr/FlickrCredentials.h; sourceTree = "<group>"; };
+		0519C8A6104377A000C2C7BD /* FlickrCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrCredentials.m; path = photos/flickr/FlickrCredentials.m; sourceTree = "<group>"; };
+		0519C8EA10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrEditPhotoServiceDisplayMgr.h; path = photos/flickr/FlickrEditPhotoServiceDisplayMgr.h; sourceTree = "<group>"; };
+		0519C8EB10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrEditPhotoServiceDisplayMgr.m; path = photos/flickr/FlickrEditPhotoServiceDisplayMgr.m; sourceTree = "<group>"; };
+		0519C8ED10444DD000C2C7BD /* FlickrSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrSettingsViewController.h; path = photos/flickr/FlickrSettingsViewController.h; sourceTree = "<group>"; };
+		0519C8EE10444DD000C2C7BD /* FlickrSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrSettingsViewController.m; path = photos/flickr/FlickrSettingsViewController.m; sourceTree = "<group>"; };
+		0519C8F11044502A00C2C7BD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/FlickrSettingsView.xib; sourceTree = "<group>"; };
+		0519C9911044634200C2C7BD /* FlickrPhotoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrPhotoService.h; path = photos/flickr/FlickrPhotoService.h; sourceTree = "<group>"; };
+		0519C9921044634200C2C7BD /* FlickrPhotoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrPhotoService.m; path = photos/flickr/FlickrPhotoService.m; sourceTree = "<group>"; };
+		0519C9CA10446B2500C2C7BD /* NSNumber+EncodingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNumber+EncodingAdditions.h"; path = "shared/NSNumber+EncodingAdditions.h"; sourceTree = "<group>"; };
+		0519C9CB10446B2500C2C7BD /* NSNumber+EncodingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSNumber+EncodingAdditions.m"; path = "shared/NSNumber+EncodingAdditions.m"; sourceTree = "<group>"; };
 		051D7C67101D105A00B867C1 /* SavedSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearchMgr.h; path = search/SavedSearchMgr.h; sourceTree = "<group>"; };
 		051D7C68101D105A00B867C1 /* SavedSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearchMgr.m; path = search/SavedSearchMgr.m; sourceTree = "<group>"; };
 		052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackground.png; path = images/SaveSearchButtonBackground.png; sourceTree = "<group>"; };
@@ -969,12 +1018,69 @@
 				053A2C90103F1FAC005BB245 /* MobileCoreServices.framework in Frameworks */,
 				053A2D89103F575D005BB245 /* libTwitVid.a in Frameworks */,
 				053A2D8D103F57B2005BB245 /* SystemConfiguration.framework in Frameworks */,
+				0519C6FB1043461600C2C7BD /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0519C710104346C800C2C7BD /* objective-flickr */ = {
+			isa = PBXGroup;
+			children = (
+				0519C736104347A000C2C7BD /* LFWebAPIKit */,
+				0519C7351043479700C2C7BD /* Source */,
+			);
+			name = "objective-flickr";
+			sourceTree = "<group>";
+		};
+		0519C7351043479700C2C7BD /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0519C7191043470100C2C7BD /* ObjectiveFlickr.h */,
+				0519C71A1043470100C2C7BD /* ObjectiveFlickr.m */,
+				0519C71B1043470100C2C7BD /* OFUtilities.h */,
+				0519C71C1043470100C2C7BD /* OFXMLMapper.h */,
+				0519C71D1043470100C2C7BD /* OFXMLMapper.m */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		0519C736104347A000C2C7BD /* LFWebAPIKit */ = {
+			isa = PBXGroup;
+			children = (
+				0519C73A104347B800C2C7BD /* LFHTTPRequest.h */,
+				0519C73B104347B800C2C7BD /* LFHTTPRequest.m */,
+				0519C73C104347B800C2C7BD /* LFSiteReachability.h */,
+				0519C73D104347B800C2C7BD /* LFSiteReachability.m */,
+				0519C73E104347B800C2C7BD /* LFWebAPIKit.h */,
+				0519C73F104347B800C2C7BD /* NSData+LFHTTPFormExtensions.h */,
+				0519C740104347B800C2C7BD /* NSData+LFHTTPFormExtensions.m */,
+			);
+			name = LFWebAPIKit;
+			sourceTree = "<group>";
+		};
+		0519C752104349B700C2C7BD /* flickr */ = {
+			isa = PBXGroup;
+			children = (
+				0519C8A5104377A000C2C7BD /* FlickrCredentials.h */,
+				0519C8A6104377A000C2C7BD /* FlickrCredentials.m */,
+				0519C753104349DF00C2C7BD /* FlickrLogInDisplayMgr.h */,
+				0519C754104349DF00C2C7BD /* FlickrLogInDisplayMgr.m */,
+				0519C76810434CB500C2C7BD /* ExplainFlickrAuthViewController.h */,
+				0519C76910434CB500C2C7BD /* ExplainFlickrAuthViewController.m */,
+				0519C75D10434BAE00C2C7BD /* FlickrLogInViewController.h */,
+				0519C75E10434BAE00C2C7BD /* FlickrLogInViewController.m */,
+				0519C8EA10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.h */,
+				0519C8EB10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.m */,
+				0519C8ED10444DD000C2C7BD /* FlickrSettingsViewController.h */,
+				0519C8EE10444DD000C2C7BD /* FlickrSettingsViewController.m */,
+				0519C9911044634200C2C7BD /* FlickrPhotoService.h */,
+				0519C9921044634200C2C7BD /* FlickrPhotoService.m */,
+			);
+			name = flickr;
+			sourceTree = "<group>";
+		};
 		0524BDF80FF16E0A00A6099B /* accounts */ = {
 			isa = PBXGroup;
 			children = (
@@ -1050,6 +1156,7 @@
 				05C5E7B70FF45EE10073E7F2 /* yajl */,
 				0524C3B90FF2A7D400A6099B /* sfh-keychain-utils */,
 				05A1F5C71028C06A009F5B3E /* regexkitlite */,
+				0519C710104346C800C2C7BD /* objective-flickr */,
 				053A2D76103F572D005BB245 /* twitvid */,
 			);
 			name = vendor;
@@ -1305,6 +1412,8 @@
 				0524C1F10FF1E6D800A6099B /* UIApplication+NetworkActivityIndicatorAdditions.m */,
 				054B6A1E101E153600882C19 /* NSString+HtmlEncodingAdditions.h */,
 				054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */,
+				0519C9CA10446B2500C2C7BD /* NSNumber+EncodingAdditions.h */,
+				0519C9CB10446B2500C2C7BD /* NSNumber+EncodingAdditions.m */,
 				05DB97391025107E00D06489 /* UIImage+DrawingAdditions.h */,
 				05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */,
 				9130FE0C1034C792004E3030 /* ErrorState.h */,
@@ -1352,6 +1461,9 @@
 				918F38F61042129C000236AE /* LocationInfoView.xib */,
 				918F392810433325000236AE /* LocationInfoLabelCell.xib */,
 				918F393110433DE7000236AE /* ButtonCellView.xib */,
+				0519C76010434BD000C2C7BD /* ExplainFlickrAuthView.xib */,
+				0519C76310434C0B00C2C7BD /* FlickrLogInView.xib */,
+				0519C8F01044502A00C2C7BD /* FlickrSettingsView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -1545,6 +1657,7 @@
 				059A7228103E148800B7500C /* yfrog */,
 				05C7B892103B59BA0017874C /* twitpic */,
 				059A72E9103E209500B7500C /* twitvid */,
+				0519C752104349B700C2C7BD /* flickr */,
 			);
 			name = photos;
 			sourceTree = "<group>";
@@ -1670,6 +1783,7 @@
 				05B23A310FEEB29D00A6A2E6 /* CoreData.framework */,
 				053A2C8F103F1FAC005BB245 /* MobileCoreServices.framework */,
 				053A2D8C103F57B2005BB245 /* SystemConfiguration.framework */,
+				0519C6FA1043461600C2C7BD /* CFNetwork.framework */,
 				05B238310FEDBA6600A6A2E6 /* libxml2.dylib */,
 				05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */,
 				053A2D88103F575D005BB245 /* libTwitVid.a */,
@@ -2098,6 +2212,9 @@
 				918F392A10433325000236AE /* LocationInfoLabelCell.xib in Resources */,
 				918F393310433DE7000236AE /* ButtonCellView.xib in Resources */,
 				918F397E10435CA1000236AE /* LocationDark.png in Resources */,
+				0519C76210434BD000C2C7BD /* ExplainFlickrAuthView.xib in Resources */,
+				0519C76510434C0B00C2C7BD /* FlickrLogInView.xib in Resources */,
+				0519C8F21044502A00C2C7BD /* FlickrSettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2325,12 +2442,49 @@
 				918F38F510421269000236AE /* LocationInfoViewController.m in Sources */,
 				918F393710433E61000236AE /* LocationInfoLabelCell.m in Sources */,
 				918F393A10433FE8000236AE /* ButtonCell.m in Sources */,
+				0519C7211043470100C2C7BD /* ObjectiveFlickr.m in Sources */,
+				0519C7221043470100C2C7BD /* OFXMLMapper.m in Sources */,
+				0519C741104347B800C2C7BD /* LFHTTPRequest.m in Sources */,
+				0519C742104347B800C2C7BD /* LFSiteReachability.m in Sources */,
+				0519C743104347B800C2C7BD /* NSData+LFHTTPFormExtensions.m in Sources */,
+				0519C755104349DF00C2C7BD /* FlickrLogInDisplayMgr.m in Sources */,
+				0519C75F10434BAE00C2C7BD /* FlickrLogInViewController.m in Sources */,
+				0519C76A10434CB500C2C7BD /* ExplainFlickrAuthViewController.m in Sources */,
+				0519C8A7104377A000C2C7BD /* FlickrCredentials.m in Sources */,
+				0519C8EC10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.m in Sources */,
+				0519C8EF10444DD000C2C7BD /* FlickrSettingsViewController.m in Sources */,
+				0519C9931044634200C2C7BD /* FlickrPhotoService.m in Sources */,
+				0519C9CC10446B2500C2C7BD /* NSNumber+EncodingAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		0519C76010434BD000C2C7BD /* ExplainFlickrAuthView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0519C76110434BD000C2C7BD /* en */,
+			);
+			name = ExplainFlickrAuthView.xib;
+			sourceTree = "<group>";
+		};
+		0519C76310434C0B00C2C7BD /* FlickrLogInView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0519C76410434C0B00C2C7BD /* en */,
+			);
+			name = FlickrLogInView.xib;
+			sourceTree = "<group>";
+		};
+		0519C8F01044502A00C2C7BD /* FlickrSettingsView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0519C8F11044502A00C2C7BD /* en */,
+			);
+			name = FlickrSettingsView.xib;
+			sourceTree = "<group>";
+		};
 		05340AB8101A3DAD0077E7C0 /* SearchBookmarksView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

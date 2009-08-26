@@ -21,7 +21,7 @@
 
 - (id)init;
 
-- (void)editServiceWithCredentials:(PhotoServiceCredentials *)credentials
+- (void)editServiceWithCredentials:(YfrogCredentials *)credentials
               navigationController:(UINavigationController *)controller
                            context:(NSManagedObjectContext *)context;
 

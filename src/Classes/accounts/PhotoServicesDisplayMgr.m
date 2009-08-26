@@ -7,6 +7,13 @@
 #import "PhotoService+ServiceAdditions.h"
 #import "NSArray+IterationAdditions.h"
 
+NSInteger serviceNameSort(PhotoServiceCredentials * service1,
+                          PhotoServiceCredentials * service2,
+                          void * context)
+{
+    return [[service1 serviceName] compare:[service2 serviceName]];
+}
+
 @interface PhotoServicesDisplayMgr ()
 
 @property (nonatomic, retain) UINavigationController * navigationController;
@@ -122,7 +129,8 @@
 
 - (NSArray *)servicesForAccount:(TwitterCredentials *)someCredentials
 {
-    return [someCredentials.photoServiceCredentials allObjects];
+    NSArray * services = [someCredentials.photoServiceCredentials allObjects];
+    return [services sortedArrayUsingFunction:serviceNameSort context:NULL];
 }
 
 - (void)userWantsToEditAccountAtIndex:(NSUInteger)index

@@ -61,8 +61,8 @@
 - (void)logInCompleted:(NSString *)username password:(NSString *)password
 {
     YfrogCredentials * yfrogCredentials = (YfrogCredentials *)
-    [NSEntityDescription insertNewObjectForEntityForName:@"YfrogCredentials"
-                                  inManagedObjectContext:context];
+        [NSEntityDescription insertNewObjectForEntityForName:@"YfrogCredentials"
+                                      inManagedObjectContext:context];
     yfrogCredentials.username = username;
     [yfrogCredentials setPassword:password];
     yfrogCredentials.credentials = self.credentials;
