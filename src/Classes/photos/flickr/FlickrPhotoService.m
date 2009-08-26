@@ -45,6 +45,9 @@
         NSString * secret = [[self class] sharedSecret];
         flickrContext = [[OFFlickrAPIContext alloc] initWithAPIKey:key
                                                       sharedSecret:secret];
+
+        settingPhotoTitle = NO;
+        settingVideoTitle = NO;
     }
 
     return self;
@@ -62,12 +65,18 @@
         [[OFFlickrAPIRequest alloc] initWithAPIContext:flickrContext];
     [self.uploadRequest setDelegate:self];
 
+    NSString * defaultTitle =
+        NSLocalizedString(@"flickr.photo.title.default", @"");
+    NSDictionary * args =
+        [NSDictionary dictionaryWithObject:defaultTitle forKey:@"title"];
+
     NSData * imageData = UIImagePNGRepresentation(image);
     NSInputStream * imageStream = [NSInputStream inputStreamWithData:imageData];
+
     [self.uploadRequest uploadImageStream:imageStream
                         suggestedFilename:@""
                                  MIMEType:@"image/png"
-                                arguments:nil];
+                                arguments:args];
 
     [[UIApplication sharedApplication] networkActivityIsStarting];
 }
@@ -82,12 +91,18 @@
         [[OFFlickrAPIRequest alloc] initWithAPIContext:flickrContext];
     [self.uploadRequest setDelegate:self];
 
+    NSString * defaultTitle =
+        NSLocalizedString(@"flickr.video.title.default", @"");
+    NSDictionary * args =
+        [NSDictionary dictionaryWithObject:defaultTitle forKey:@"title"];
+
     NSData * videoData = [NSData dataWithContentsOfURL:url];
     NSInputStream * videoStream = [NSInputStream inputStreamWithData:videoData];
+
     [self.uploadRequest uploadImageStream:videoStream
                         suggestedFilename:@""
                                  MIMEType:@"video/quicktime"
-                                arguments:nil];
+                                arguments:args];
 
     [[UIApplication sharedApplication] networkActivityIsStarting];
 }
@@ -97,6 +112,8 @@
 {
     [super setTitle:title forPhotoWithUrl:photoUrl credentials:someCredentials];
     [self setTitle:title ofMediaAtUrl:photoUrl credentials:someCredentials];
+
+    settingPhotoTitle = YES;
 }
 
 - (void)setTitle:(NSString *)title forVideoWithUrl:(NSString *)url
@@ -104,6 +121,8 @@
 {
     [super setTitle:title forVideoWithUrl:url credentials:someCredentials];
     [self setTitle:title ofMediaAtUrl:url credentials:someCredentials];
+
+    settingVideoTitle = YES;
 }
 
 + (NSString *)apiKey
@@ -140,6 +159,14 @@
         [uploadRequest autorelease];
         uploadRequest = nil;
     } else if (request == self.editRequest) {
+        if (settingPhotoTitle) {
+            [self.delegate serviceDidUpdatePhotoTitle:self];
+            settingPhotoTitle = NO;
+        } else if (settingVideoTitle) {
+            [self.delegate serviceDidUpdateVideoTitle:self];
+            settingVideoTitle = NO;
+        }
+
         [editRequest autorelease];
         editRequest = nil;
     }
@@ -161,6 +188,14 @@
         [uploadRequest autorelease];
         uploadRequest = nil;
     } else {
+        if (settingPhotoTitle) {
+            [self.delegate service:self failedToUpdatePhotoTitle:error];
+            settingPhotoTitle = NO;
+        } else if (settingVideoTitle) {
+            [self.delegate service:self failedToUpdateVideoTitle:error];
+            settingVideoTitle = NO;
+        }
+
         [editRequest autorelease];
         editRequest = nil;
     }

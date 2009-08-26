@@ -12,6 +12,10 @@
 
     OFFlickrAPIRequest * uploadRequest;
     OFFlickrAPIRequest * editRequest;
+
+    // HACK
+    BOOL settingPhotoTitle;
+    BOOL settingVideoTitle;
 }
 
 + (NSString *)apiKey;

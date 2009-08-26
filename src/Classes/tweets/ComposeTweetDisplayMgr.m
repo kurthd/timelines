@@ -49,6 +49,10 @@
 
 + (NSString *)removeStrings:(NSArray *)strings fromString:(NSString *)str;
 
+- (void)updateMediaTitleFromTweet:(Tweet *)tweet;
+- (void)updateMediaTitleFromDirectMessage:(DirectMessage *)dm;
+- (void)updateMediaTitleFromTweetText:(NSString *)text;
+
 @end
 
 @implementation ComposeTweetDisplayMgr
@@ -99,6 +103,9 @@
                           action:@selector(credentialsSetChanged:added:)];
 
         fromHomeScreen = NO;
+
+        self.attachedPhotos = [NSMutableArray array];
+        self.attachedVideos = [NSMutableArray array];
     }
 
     return self;
@@ -121,9 +128,6 @@
 
     self.origTweetId = nil;
     self.origUsername = nil;
-
-    self.attachedPhotos = [NSMutableArray array];
-    self.attachedVideos = [NSMutableArray array];
 
     [self.composeTweetViewController composeTweet:tweet
                                              from:service.credentials.username];
@@ -148,9 +152,6 @@
     self.origTweetId = tweetId;
     self.origUsername = user;
 
-    self.attachedPhotos = [NSMutableArray array];
-    self.attachedVideos = [NSMutableArray array];
-
     [self.composeTweetViewController composeTweet:text
                                              from:service.credentials.username
                                         inReplyTo:user];
@@ -166,9 +167,6 @@
     fromHomeScreen = YES;
     self.origUsername = nil;
     self.origTweetId = nil;
-
-    self.attachedPhotos = [NSMutableArray array];
-    self.attachedVideos = [NSMutableArray array];
 
     NSString * recipient = draft ? draft.recipient : @"";
     NSString * sender = service.credentials.username;
@@ -201,9 +199,6 @@
 {
     self.origUsername = nil;
     self.origTweetId = nil;
-
-    self.attachedPhotos = [NSMutableArray array];
-    self.attachedVideos = [NSMutableArray array];
 
     fromHomeScreen = NO;
 
@@ -413,38 +408,11 @@
 
 - (void)tweetSentSuccessfully:(Tweet *)tweet
 {
-    NSString * title = [[self class] removeStrings:self.attachedPhotos
-                                        fromString:tweet.text];
-    title = [[self class] removeStrings:self.attachedVideos fromString:title];
+    if (self.attachedPhotos.count > 0 || self.attachedVideos.count > 0) {
+        [self updateMediaTitleFromTweet:tweet];
 
-    if (self.attachedPhotos.count > 0) {
-        PhotoServiceCredentials * photoCredentials =
-            [service.credentials defaultPhotoServiceCredentials];
-        NSString * serviceName = [photoCredentials serviceName];
-
-        PhotoService * photoService =
-            [[PhotoService photoServiceWithServiceName:serviceName] retain];
-        photoService.delegate = self;
-
-        for (NSString * photoUrl in self.attachedPhotos)
-            if ([tweet.text containsString:photoUrl])
-                [photoService setTitle:title forPhotoWithUrl:photoUrl
-                    credentials:photoCredentials];
-    }
-
-    if (self.attachedVideos.count > 0) {
-        PhotoServiceCredentials * photoCredentials =
-            [service.credentials defaultVideoServiceCredentials];
-        NSString * serviceName = [photoCredentials serviceName];
-
-        PhotoService * photoService =
-            [[PhotoService photoServiceWithServiceName:serviceName] retain];
-        photoService.delegate = self;
-
-        for (NSString * videoUrl in self.attachedVideos)
-            if ([tweet.text containsString:videoUrl])
-                [photoService setTitle:title forVideoWithUrl:videoUrl
-                    credentials:photoCredentials];
+        self.attachedPhotos = [NSMutableArray array];
+        self.attachedVideos = [NSMutableArray array];
     }
 
     [self.delegate userDidSendTweet:tweet];
@@ -464,6 +432,13 @@
 
 - (void)tweet:(Tweet *)tweet sentInReplyTo:(NSString *)tweetId
 {
+    if (self.attachedPhotos.count > 0 || self.attachedVideos.count > 0) {
+        [self updateMediaTitleFromTweet:tweet];
+
+        self.attachedPhotos = [NSMutableArray array];
+        self.attachedVideos = [NSMutableArray array];
+    }
+
     [self.delegate userDidReplyToTweet:self.origTweetId
                               fromUser:self.origUsername
                              withTweet:tweet];
@@ -487,6 +462,13 @@
 
 - (void)directMessage:(DirectMessage *)dm sentToUser:(NSString *)username
 {
+    if (self.attachedPhotos.count > 0 || self.attachedVideos.count > 0) {
+        [self updateMediaTitleFromDirectMessage:dm];
+
+        self.attachedPhotos = [NSMutableArray array];
+        self.attachedVideos = [NSMutableArray array];
+    }
+
     [self.delegate userDidSendDirectMessage:dm];
 }
 
@@ -531,8 +513,7 @@
     [photoService autorelease];
 }
 
-- (void)service:(PhotoService *)photoService
-    failedToPostImage:(NSError *)error
+- (void)service:(PhotoService *)photoService failedToPostImage:(NSError *)error
 {
     NSLog(@"Failed to post image to URL: '%@'.", error);
 
@@ -546,8 +527,7 @@
     [photoService autorelease];
 }
 
-- (void)service:(PhotoService *)photoService
-failedToPostVideo:(NSError *)error
+- (void)service:(PhotoService *)photoService failedToPostVideo:(NSError *)error
 {
     NSLog(@"Failed to post video to URL: '%@'.", error);
 
@@ -558,6 +538,32 @@ failedToPostVideo:(NSError *)error
 
     [self.composeTweetViewController hideActivityView];
 
+    [photoService autorelease];
+}
+
+- (void)serviceDidUpdatePhotoTitle:(PhotoService *)photoService
+{
+    NSLog(@"Successfully updated photo title.");
+    [photoService autorelease];
+}
+
+- (void)service:(PhotoService *)photoService
+    failedToUpdatePhotoTitle:(NSError *)error
+{
+    NSLog(@"Failed to update photo title: %@", error);
+    [photoService autorelease];
+}
+
+- (void)serviceDidUpdateVideoTitle:(PhotoService *)photoService
+{
+    NSLog(@"Successfully updated video title.");
+    [photoService autorelease];
+}
+
+- (void)service:(PhotoService *)photoService
+    failedToUpdateVideoTitle:(NSError *)error
+{
+    NSLog(@"Failed to update video title: %@", error);
     [photoService autorelease];
 }
 
@@ -770,6 +776,53 @@ failedToPostVideo:(NSError *)error
     }
 
     return s;
+}
+
+- (void)updateMediaTitleFromTweet:(Tweet *)tweet
+{
+    [self updateMediaTitleFromTweetText:tweet.text];
+}
+
+- (void)updateMediaTitleFromDirectMessage:(DirectMessage *)dm
+{
+    [self updateMediaTitleFromTweetText:dm.text];
+}
+
+- (void)updateMediaTitleFromTweetText:(NSString *)text
+{
+    NSString * title = [[self class] removeStrings:self.attachedPhotos
+                                        fromString:text];
+    title = [[self class] removeStrings:self.attachedVideos fromString:title];
+
+    if (self.attachedPhotos.count > 0) {
+        PhotoServiceCredentials * photoCredentials =
+            [service.credentials defaultPhotoServiceCredentials];
+        NSString * serviceName = [photoCredentials serviceName];
+
+        PhotoService * photoService =
+            [[PhotoService photoServiceWithServiceName:serviceName] retain];
+        photoService.delegate = self;
+
+        for (NSString * photoUrl in self.attachedPhotos)
+            if ([text containsString:photoUrl])
+                [photoService setTitle:title forPhotoWithUrl:photoUrl
+                    credentials:photoCredentials];
+    }
+
+    if (self.attachedVideos.count > 0) {
+        PhotoServiceCredentials * photoCredentials =
+            [service.credentials defaultVideoServiceCredentials];
+        NSString * serviceName = [photoCredentials serviceName];
+
+        PhotoService * photoService =
+            [[PhotoService photoServiceWithServiceName:serviceName] retain];
+        photoService.delegate = self;
+
+        for (NSString * videoUrl in self.attachedVideos)
+            if ([text containsString:videoUrl])
+                [photoService setTitle:title forVideoWithUrl:videoUrl
+                    credentials:photoCredentials];
+    }
 }
 
 #pragma mark Accessors
