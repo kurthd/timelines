@@ -7,19 +7,26 @@
 #import "Geocoder.h"
 #import "GeocoderDelegate.h"
 #import "BasicMapAnnotation.h"
+#import "LocationMapViewControllerDelegate.h"
 
 @interface LocationMapViewController :
     UIViewController <GeocoderDelegate, MKMapViewDelegate>
 {
+    id<LocationMapViewControllerDelegate> delegate;
+
     IBOutlet MKMapView * mapView;
     Geocoder * geocoder;
     BOOL updatingMap;
     BasicMapAnnotation * mapAnnotation;
     MKAnnotationView * mapAnnotationView;
-    MKAnnotationView * userLocationAnnotationView;
     double mapSpan;
-    BOOL addedAnnotation;
+    BOOL setUserLocationButton;
+    UIBarButtonItem * userLocationButton;
+    UIBarButtonItem * activityIndicator;
+    BOOL showingUserLocation;
 }
+
+@property (nonatomic, assign) id<LocationMapViewControllerDelegate> delegate;
 
 - (void)setLocation:(NSString *)location;
 - (void)setCurrentLocation:(UIBarButtonItem *)sender;

@@ -21,6 +21,11 @@
 @property (nonatomic, copy) NSString * currentSearch;
 @property (nonatomic, retain) SavedSearchMgr * savedSearchMgr;
 
+@property (nonatomic, readonly)
+    LocationMapViewController * locationMapViewController;
+@property (nonatomic, readonly)
+    LocationInfoViewController * locationInfoViewController;
+
 - (void)deallocateNode;
 - (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page;
 - (void)sendDirectMessageToCurrentUser;
@@ -59,6 +64,9 @@
     [userInfoController release];
     [currentSearch release];
     [savedSearchMgr release];
+
+    [locationMapViewController release];
+    [locationInfoViewController release];
 
     [super dealloc];
 }
@@ -307,17 +315,26 @@
 - (void)showLocationOnMap:(NSString *)locationString
 {
     NSLog(@"User list display manager: showing %@ on map", locationString);
-    NSString * locationWithoutCommas =
-        [locationString stringByReplacingOccurrencesOfString:@"iPhone:"
-        withString:@""];
-    NSString * urlString =
-        [[NSString
-        stringWithFormat:@"http://maps.google.com/maps?q=%@",
-        locationWithoutCommas]
-        stringByAddingPercentEscapesUsingEncoding:
-        NSUTF8StringEncoding];
-    NSURL * url = [NSURL URLWithString:urlString];
-    [[UIApplication sharedApplication] openURL:url];
+
+    self.locationMapViewController.navigationItem.title = @"Map";
+    
+    [wrapperController.navigationController
+        pushViewController:self.locationMapViewController animated:YES];
+
+    [self.locationMapViewController setLocation:locationString];
+}
+
+- (void)showLocationInfo:(NSString *)locationString
+    coordinate:(CLLocationCoordinate2D)coordinate
+{
+    NSLog(@"User list display manager: showing location info for %@",
+        locationString);
+
+    [wrapperController.navigationController
+        pushViewController:self.locationInfoViewController animated:YES];
+
+    [self.locationInfoViewController setLocationString:locationString
+        coordinate:coordinate];
 }
 
 - (void)displayFollowingForUser:(NSString *)aUsername
@@ -651,6 +668,48 @@
             initWithAccountName:credentials.username context:context];
 
     return savedSearchMgr;
+}
+
+- (LocationMapViewController *)locationMapViewController
+{
+    if (!locationMapViewController) {
+        locationMapViewController =
+            [[LocationMapViewController alloc]
+            initWithNibName:@"LocationMapView" bundle:nil];
+        locationMapViewController.delegate = self;
+
+        UIBarButtonItem * currentLocationButton =
+            [[[UIBarButtonItem alloc]
+            initWithImage:[UIImage imageNamed:@"Location.png"]
+            style:UIBarButtonItemStyleBordered target:locationMapViewController
+            action:@selector(setCurrentLocation:)] autorelease];
+        self.locationMapViewController.navigationItem.rightBarButtonItem =
+            currentLocationButton;
+    }
+
+    return locationMapViewController;
+}
+
+- (LocationInfoViewController *)locationInfoViewController
+{
+    if (!locationInfoViewController) {
+        locationInfoViewController =
+            [[LocationInfoViewController alloc]
+            initWithNibName:@"LocationInfoView" bundle:nil];
+        locationInfoViewController.navigationItem.title =
+            NSLocalizedString(@"locationinfo.title", @"");
+        locationInfoViewController.delegate = self;
+
+        UIBarButtonItem * forwardButton =
+            [[[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+            target:locationInfoViewController
+            action:@selector(showForwardOptions)] autorelease];
+        self.locationInfoViewController.navigationItem.rightBarButtonItem =
+            forwardButton;
+    }
+
+    return locationInfoViewController;
 }
 
 @end

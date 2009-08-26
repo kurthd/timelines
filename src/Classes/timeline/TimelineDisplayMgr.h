@@ -26,6 +26,9 @@
 #import "ConversationDisplayMgr.h"
 #import "UserInfoRequestAdapter.h"
 #import "LocationMapViewController.h"
+#import "LocationMapViewControllerDelegate.h"
+#import "LocationInfoViewController.h"
+#import "LocationInfoViewControllerDelegate.h"
 
 @class TimelineDisplayMgrFactory;
 @class TweetViewController;
@@ -38,7 +41,8 @@
     <TimelineDataSourceDelegate, TimelineViewControllerDelegate,
     TweetViewControllerDelegate, NetworkAwareViewControllerDelegate,
     UserInfoViewControllerDelegate, TwitchBrowserViewControllerDelegate,
-    TwitterServiceDelegate, UIWebViewDelegate, ConversationDisplayMgrDelegate>
+    TwitterServiceDelegate, UIWebViewDelegate, ConversationDisplayMgrDelegate,
+    LocationMapViewControllerDelegate, LocationInfoViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
@@ -102,6 +106,7 @@
     NSMutableArray * conversationDisplayMgrs;
 
     LocationMapViewController * locationMapViewController;
+    LocationInfoViewController * locationInfoViewController;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;

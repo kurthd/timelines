@@ -16,13 +16,18 @@
 #import "ComposeTweetDisplayMgr.h"
 #import "TimelineDisplayMgrFactory.h"
 #import "UserListDisplayMgrFactory.h"
+#import "LocationMapViewController.h"
+#import "LocationMapViewControllerDelegate.h"
+#import "LocationInfoViewController.h"
+#import "LocationInfoViewControllerDelegate.h"
 
 @interface FindPeopleSearchDisplayMgr :
     NSObject
     <TwitterServiceDelegate, UISearchBarDelegate,
     FindPeopleBookmarkViewControllerDelegate, UserInfoViewControllerDelegate,
     TwitchBrowserViewControllerDelegate, UITableViewDataSource,
-    UITableViewDelegate>
+    UITableViewDelegate, LocationMapViewControllerDelegate,
+    LocationInfoViewControllerDelegate>
 {
     NetworkAwareViewController * netAwareController;
     UserInfoViewController * userInfoController;
@@ -57,6 +62,9 @@
     NSArray * autocompleteArray;
     UIView * autocompleteView;
     UITableView * autoCompleteTableView;
+
+    LocationMapViewController * locationMapViewController;
+    LocationInfoViewController * locationInfoViewController;
 }
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc

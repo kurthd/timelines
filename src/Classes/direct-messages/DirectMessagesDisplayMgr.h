@@ -27,6 +27,10 @@
 #import "ComposeTweetDisplayMgrDelegate.h"
 #import "SavedSearchMgr.h"
 #import "UserInfoRequestAdapter.h"
+#import "LocationMapViewController.h"
+#import "LocationMapViewControllerDelegate.h"
+#import "LocationInfoViewController.h"
+#import "LocationInfoViewControllerDelegate.h"
 
 /*  This class is responsible for managing the display of the direct messages
     tab.  It will function very similarly to the timeline display, re-using many
@@ -63,7 +67,8 @@
     DirectMessageConversationViewControllerDelegate, TweetViewControllerDelegate,
     TwitchBrowserViewControllerDelegate, ComposeTweetDisplayMgrDelegate,
     MFMailComposeViewControllerDelegate, UIActionSheetDelegate,
-    UserInfoViewControllerDelegate>
+    UserInfoViewControllerDelegate, LocationMapViewControllerDelegate,
+    LocationInfoViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     DirectMessageInboxViewController * inboxController;
@@ -122,6 +127,9 @@
     NetworkAwareViewController * userInfoControllerWrapper;
     UserInfoRequestAdapter * userInfoRequestAdapter;
     TwitterService * userInfoTwitterService;
+
+    LocationMapViewController * locationMapViewController;
+    LocationInfoViewController * locationInfoViewController;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;

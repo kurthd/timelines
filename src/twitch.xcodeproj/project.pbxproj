@@ -349,6 +349,13 @@
 		918F373A103F486E000236AE /* Geocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F3737103F486E000236AE /* Geocoder.m */; };
 		918F373F103F48A1000236AE /* LocationMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F373E103F48A1000236AE /* LocationMapViewController.m */; };
 		918F3758103F5262000236AE /* Location.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F3757103F5262000236AE /* Location.png */; };
+		918F38F510421269000236AE /* LocationInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F38F410421269000236AE /* LocationInfoViewController.m */; };
+		918F38F81042129C000236AE /* LocationInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918F38F61042129C000236AE /* LocationInfoView.xib */; };
+		918F392A10433325000236AE /* LocationInfoLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918F392810433325000236AE /* LocationInfoLabelCell.xib */; };
+		918F393310433DE7000236AE /* ButtonCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918F393110433DE7000236AE /* ButtonCellView.xib */; };
+		918F393710433E61000236AE /* LocationInfoLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F393610433E61000236AE /* LocationInfoLabelCell.m */; };
+		918F393A10433FE8000236AE /* ButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F393910433FE8000236AE /* ButtonCell.m */; };
+		918F397E10435CA1000236AE /* LocationDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F397D10435CA1000236AE /* LocationDark.png */; };
 		91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD5A3C100FED36009C2179 /* MessageUI.framework */; };
 		91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
 		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
@@ -948,6 +955,18 @@
 		918F373D103F48A1000236AE /* LocationMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationMapViewController.h; path = "geo-services/LocationMapViewController.h"; sourceTree = "<group>"; };
 		918F373E103F48A1000236AE /* LocationMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationMapViewController.m; path = "geo-services/LocationMapViewController.m"; sourceTree = "<group>"; };
 		918F3757103F5262000236AE /* Location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Location.png; path = images/Location.png; sourceTree = "<group>"; };
+		918F38DB1041EB82000236AE /* LocationMapViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationMapViewControllerDelegate.h; path = "geo-services/LocationMapViewControllerDelegate.h"; sourceTree = "<group>"; };
+		918F38F310421269000236AE /* LocationInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationInfoViewController.h; path = "geo-services/LocationInfoViewController.h"; sourceTree = "<group>"; };
+		918F38F410421269000236AE /* LocationInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationInfoViewController.m; path = "geo-services/LocationInfoViewController.m"; sourceTree = "<group>"; };
+		918F38F71042129C000236AE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/LocationInfoView.xib; sourceTree = "<group>"; };
+		918F392910433325000236AE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/LocationInfoLabelCell.xib; sourceTree = "<group>"; };
+		918F393210433DE7000236AE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/ButtonCellView.xib; sourceTree = "<group>"; };
+		918F393510433E61000236AE /* LocationInfoLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationInfoLabelCell.h; path = "geo-services/LocationInfoLabelCell.h"; sourceTree = "<group>"; };
+		918F393610433E61000236AE /* LocationInfoLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationInfoLabelCell.m; path = "geo-services/LocationInfoLabelCell.m"; sourceTree = "<group>"; };
+		918F393810433FE8000236AE /* ButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ButtonCell.h; path = shared/ButtonCell.h; sourceTree = "<group>"; };
+		918F393910433FE8000236AE /* ButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ButtonCell.m; path = shared/ButtonCell.m; sourceTree = "<group>"; };
+		918F397D10435CA1000236AE /* LocationDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LocationDark.png; path = images/LocationDark.png; sourceTree = "<group>"; };
+		918F3ACC1044A582000236AE /* LocationInfoViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationInfoViewControllerDelegate.h; path = "geo-services/LocationInfoViewControllerDelegate.h"; sourceTree = "<group>"; };
 		91A247640FFE7EF400538F29 /* TweetDetailsFooterGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsFooterGradient.png; path = images/TweetDetailsFooterGradient.png; sourceTree = "<group>"; };
 		91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadowReversed.png; path = images/DropShadowReversed.png; sourceTree = "<group>"; };
 		91A247720FFE81D300538F29 /* DeleteTweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweet.png; path = images/DeleteTweet.png; sourceTree = "<group>"; };
@@ -1408,6 +1427,8 @@
 				9130FE4F1034D334004E3030 /* TwitchWebBrowserDisplayMgr.m */,
 				059A6F27103CD02700B7500C /* UIButton+StandardButtonAdditions.h */,
 				059A6F28103CD02700B7500C /* UIButton+StandardButtonAdditions.m */,
+				918F393810433FE8000236AE /* ButtonCell.h */,
+				918F393910433FE8000236AE /* ButtonCell.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -1442,6 +1463,9 @@
 				059A72A8103E1C7800B7500C /* YfrogSettingsView.xib */,
 				059A72FF103E221E00B7500C /* TwitVidSettingsView.xib */,
 				059A708F103DAE4A00B7500C /* SelectionView.xib */,
+				918F38F61042129C000236AE /* LocationInfoView.xib */,
+				918F392810433325000236AE /* LocationInfoLabelCell.xib */,
+				918F393110433DE7000236AE /* ButtonCellView.xib */,
 				0519C76010434BD000C2C7BD /* ExplainFlickrAuthView.xib */,
 				0519C76310434C0B00C2C7BD /* FlickrLogInView.xib */,
 				0519C8F01044502A00C2C7BD /* FlickrSettingsView.xib */,
@@ -1837,6 +1861,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				918F397D10435CA1000236AE /* LocationDark.png */,
 				918F3757103F5262000236AE /* Location.png */,
 				059A6F23103CCE3D00B7500C /* DeleteButtonNormal.png */,
 				059A6F24103CCE3D00B7500C /* DeleteButtonPressed.png */,
@@ -2023,6 +2048,12 @@
 				918F3738103F486E000236AE /* GeocoderDelegate.h */,
 				918F373D103F48A1000236AE /* LocationMapViewController.h */,
 				918F373E103F48A1000236AE /* LocationMapViewController.m */,
+				918F38DB1041EB82000236AE /* LocationMapViewControllerDelegate.h */,
+				918F38F310421269000236AE /* LocationInfoViewController.h */,
+				918F38F410421269000236AE /* LocationInfoViewController.m */,
+				918F393510433E61000236AE /* LocationInfoLabelCell.h */,
+				918F393610433E61000236AE /* LocationInfoLabelCell.m */,
+				918F3ACC1044A582000236AE /* LocationInfoViewControllerDelegate.h */,
 			);
 			name = "geo-services";
 			sourceTree = "<group>";
@@ -2182,6 +2213,10 @@
 				059A7091103DAE4A00B7500C /* SelectionView.xib in Resources */,
 				059A72AA103E1C7800B7500C /* YfrogSettingsView.xib in Resources */,
 				059A7301103E221E00B7500C /* TwitVidSettingsView.xib in Resources */,
+				918F38F81042129C000236AE /* LocationInfoView.xib in Resources */,
+				918F392A10433325000236AE /* LocationInfoLabelCell.xib in Resources */,
+				918F393310433DE7000236AE /* ButtonCellView.xib in Resources */,
+				918F397E10435CA1000236AE /* LocationDark.png in Resources */,
 				0519C76210434BD000C2C7BD /* ExplainFlickrAuthView.xib in Resources */,
 				0519C76510434C0B00C2C7BD /* FlickrLogInView.xib in Resources */,
 				0519C8F21044502A00C2C7BD /* FlickrSettingsView.xib in Resources */,
@@ -2409,6 +2444,9 @@
 				059A743D103F13E200B7500C /* YfrogPhotoService.m in Sources */,
 				059A743E103F13E200B7500C /* YfrogResponseParser.m in Sources */,
 				053A2DA3103F58A8005BB245 /* TwitVidPhotoService.m in Sources */,
+				918F38F510421269000236AE /* LocationInfoViewController.m in Sources */,
+				918F393710433E61000236AE /* LocationInfoLabelCell.m in Sources */,
+				918F393A10433FE8000236AE /* ButtonCell.m in Sources */,
 				0519C7211043470100C2C7BD /* ObjectiveFlickr.m in Sources */,
 				0519C7221043470100C2C7BD /* OFXMLMapper.m in Sources */,
 				0519C741104347B800C2C7BD /* LFHTTPRequest.m in Sources */,
@@ -2660,6 +2698,30 @@
 				918F3730103F478D000236AE /* en */,
 			);
 			name = LocationMapView.xib;
+			sourceTree = "<group>";
+		};
+		918F38F61042129C000236AE /* LocationInfoView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				918F38F71042129C000236AE /* en */,
+			);
+			name = LocationInfoView.xib;
+			sourceTree = "<group>";
+		};
+		918F392810433325000236AE /* LocationInfoLabelCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				918F392910433325000236AE /* en */,
+			);
+			name = LocationInfoLabelCell.xib;
+			sourceTree = "<group>";
+		};
+		918F393110433DE7000236AE /* ButtonCellView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				918F393210433DE7000236AE /* en */,
+			);
+			name = ButtonCellView.xib;
 			sourceTree = "<group>";
 		};
 		91BD11391006736F0082D209 /* PhotoBrowserView.xib */ = {
