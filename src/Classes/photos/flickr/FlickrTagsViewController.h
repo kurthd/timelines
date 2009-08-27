@@ -7,6 +7,7 @@
 @protocol FlickrTagsViewControllerDelegate
 
 - (void)userWantsToAddTag;
+- (void)userSelectedTags:(NSSet *)tags;
 
 @end
 

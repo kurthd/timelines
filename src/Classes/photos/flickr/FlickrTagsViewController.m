@@ -42,15 +42,23 @@
 
 - (void)addSelectedTag:(NSString *)tag
 {
+    BOOL changed = NO;
+
     if (![self.tags containsObject:tag]) {
         NSMutableArray * mutableTags = [self.tags mutableCopy];
         [mutableTags addObject:tag];
         self.tags = mutableTags;
         [mutableTags release];
+        changed = YES;
     }
 
-    if (![self.selectedTags containsObject:tag])
+    if (![self.selectedTags containsObject:tag]) {
         [self selectTag:tag];
+        changed = YES;
+    }
+
+    if (changed)
+        [self.tableView reloadData];
 }
 
 #pragma mark UIViewController overrides
@@ -136,6 +144,7 @@
                 [[self class] configureSelectedCell:cell];
         }
 
+        [self.delegate userSelectedTags:self.selectedTags];
         [tv deselectRowAtIndexPath:indexPath animated:YES];
     }
 }

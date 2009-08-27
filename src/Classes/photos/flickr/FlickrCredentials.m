@@ -2,19 +2,21 @@
 //  FlickrCredentials.m
 //  twitch
 //
-//  Created by John A. Debay on 8/24/09.
+//  Created by John A. Debay on 8/27/09.
 //  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
 #import "FlickrCredentials.h"
 
+#import "FlickrTag.h"
 
 @implementation FlickrCredentials 
 
 @dynamic username;
-@dynamic userId;
 @dynamic fullName;
+@dynamic userId;
 @dynamic token;
+@dynamic tags;
 
 - (NSString *)serviceName
 {

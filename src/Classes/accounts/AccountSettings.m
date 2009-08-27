@@ -261,7 +261,7 @@ enum PushSettings
 
 + (NSString *)videoServiceNameKey
 {
-    return @"vide-service";
+    return @"video-service";
 }
 
 + (NSString *)allAccountSettingsKey

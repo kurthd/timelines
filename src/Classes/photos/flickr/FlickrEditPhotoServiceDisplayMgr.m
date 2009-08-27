@@ -4,6 +4,8 @@
 
 #import "FlickrEditPhotoServiceDisplayMgr.h"
 #import "TwitterCredentials.h"
+#import "FlickrTag.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @interface FlickrEditPhotoServiceDisplayMgr ()
 
@@ -109,14 +111,6 @@
     }
 }
 
-#pragma mark EditTextViewControllerDelegate implementation
-
-- (void)userDidSetText:(NSString *)newTag
-{
-    if (newTag.length)
-        [self.tagsViewController addSelectedTag:newTag];
-}
-
 #pragma mark FlickrDataFetcherDelegate implementation
 
 - (void)dataFetcher:(FlickrDataFetcher *)fetcher
@@ -132,9 +126,21 @@
 
     for (NSDictionary * data in downloadedTags)
         [newTags addObject:[data objectForKey:@"_text"]];
-    self.tags = newTags;
+
+    //
+    // Merge the downloaded tags with the selected tags saved as preferences.
+    //
+
+    NSSet * uniqueTags = [NSSet setWithArray:newTags];
+    NSMutableSet * selectedTags = [NSMutableSet set];
+    for (FlickrTag * flickrTag in self.credentials.tags)
+        [selectedTags addObject:flickrTag.name];
+    NSSet * completeTags = [uniqueTags setByAddingObjectsFromSet:selectedTags];
+
+    self.tags = [completeTags allObjects];
 
     self.tagsViewController.tags = self.tags;
+    self.tagsViewController.selectedTags = selectedTags;
     [self.tagsNetViewController setUpdatingState:kConnectedAndNotUpdating];
     [self.tagsNetViewController setCachedDataAvailable:YES];
 }
@@ -152,6 +158,41 @@
     [self.navigationController pushViewController:self.editTextViewController
                                          animated:YES];
     self.editTextViewController.textField.text = @"";
+}
+
+- (void)userSelectedTags:(NSSet *)selectedTags
+{
+    NSMutableArray * mytags = [self.tags mutableCopy];
+    NSMutableSet * flickrTags = [NSMutableSet set];
+
+    // delete the old tags and create a new set
+    for (FlickrTag * flickrTag in self.credentials.tags)
+        [self.context deleteObject:flickrTag];
+
+    for (NSString * tag in selectedTags) {
+        FlickrTag * flickrTag = [FlickrTag createInstance:self.context];
+        flickrTag.name = tag;
+        [flickrTags addObject:flickrTag];
+
+        if (![mytags containsObject:tag])
+            [mytags addObject:tag];
+    }
+
+    self.credentials.tags = flickrTags;
+    [self.context save:NULL];
+
+    self.tags = mytags;
+    [mytags release];
+}
+
+#pragma mark EditTextViewControllerDelegate implementation
+
+- (void)userDidSetText:(NSString *)newTag
+{
+    if (newTag.length) {
+        [self.tagsViewController addSelectedTag:newTag];
+        [self userSelectedTags:self.tagsViewController.selectedTags];
+    }
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation
