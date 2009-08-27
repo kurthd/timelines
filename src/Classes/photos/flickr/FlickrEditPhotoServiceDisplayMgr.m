@@ -18,6 +18,8 @@
     tagsNetViewController;
 @property (nonatomic, retain) FlickrTagsViewController * tagsViewController;
 
+@property (nonatomic, retain) EditTextViewController * editTextViewController;
+
 @property (nonatomic, retain) NSArray * tags;
 
 @property (nonatomic, retain) FlickrDataFetcher * flickrDataFetcher;
@@ -29,6 +31,7 @@
 @synthesize credentials, context;
 @synthesize navigationController, settingsViewController;
 @synthesize tagsNetViewController, tagsViewController;
+@synthesize editTextViewController;
 @synthesize tags;
 @synthesize flickrDataFetcher;
 
@@ -43,6 +46,8 @@
     self.tagsNetViewController = nil;
     self.tagsViewController = nil;
 
+    self.editTextViewController = nil;
+
     self.tags = nil;
 
     self.flickrDataFetcher = nil;
@@ -55,7 +60,7 @@
     return self = [super init];
 }
 
-#pragma mark Public implemetation
+#pragma mark Public implementation
 
 - (void)editServiceWithCredentials:(FlickrCredentials *)someCredentials
               navigationController:(UINavigationController *)aController
@@ -92,7 +97,7 @@
         pushViewController:self.tagsNetViewController animated:YES];
 
     self.tagsViewController.tags = self.tags;
-    if (self.tags.count) {
+    if (self.tags) {
         [self.tagsNetViewController setUpdatingState:kConnectedAndNotUpdating];
         [self.tagsNetViewController setCachedDataAvailable:YES];
     } else {
@@ -102,6 +107,14 @@
         self.flickrDataFetcher.token = someCredentials.token;
         [self.flickrDataFetcher fetchTags:someCredentials.userId];
     }
+}
+
+#pragma mark EditTextViewControllerDelegate implementation
+
+- (void)userDidSetText:(NSString *)newTag
+{
+    if (newTag.length)
+        [self.tagsViewController addSelectedTag:newTag];
 }
 
 #pragma mark FlickrDataFetcherDelegate implementation
@@ -130,6 +143,15 @@
   failedToFetchTags:(NSError *)error
 {
     NSLog(@"Failed to fetch tags: %@", error);
+}
+
+#pragma mark FlickrTagsViewControllerDelegate implementation
+
+- (void)userWantsToAddTag
+{
+    [self.navigationController pushViewController:self.editTextViewController
+                                         animated:YES];
+    self.editTextViewController.textField.text = @"";
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation
@@ -179,6 +201,18 @@
         flickrDataFetcher = [[FlickrDataFetcher alloc] initWithDelegate:self];
 
     return flickrDataFetcher;
+}
+
+- (EditTextViewController *)editTextViewController
+{
+    if (!editTextViewController) {
+        editTextViewController =
+            [[EditTextViewController alloc] initWithDelegate:self];
+        editTextViewController.viewTitle =
+            NSLocalizedString(@"addflickrtagview.title", @"");
+    }
+
+    return editTextViewController;
 }
 
 @end

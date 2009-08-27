@@ -7,8 +7,8 @@
 
 @interface FlickrTagsViewController ()
 
-- (void)configureSelectedCell:(UITableViewCell *)cell;
-- (void)configureNormalCell:(UITableViewCell *)cell;
++ (void)configureSelectedCell:(UITableViewCell *)cell;
++ (void)configureNormalCell:(UITableViewCell *)cell;
 
 - (void)selectTag:(NSString *)tag;
 - (void)unselectTag:(NSString *)tag;
@@ -38,6 +38,31 @@
     return self;
 }
 
+#pragma mark Public implementation
+
+- (void)addSelectedTag:(NSString *)tag
+{
+    if (![self.tags containsObject:tag]) {
+        NSMutableArray * mutableTags = [self.tags mutableCopy];
+        [mutableTags addObject:tag];
+        self.tags = mutableTags;
+        [mutableTags release];
+    }
+
+    if (![self.selectedTags containsObject:tag])
+        [self selectTag:tag];
+}
+
+#pragma mark UIViewController overrides
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    tags = [[NSArray alloc] init];
+    selectedTags = [[NSArray alloc] init];
+}
+
 #pragma mark UITableViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv
@@ -48,7 +73,7 @@
 - (NSInteger)tableView:(UITableView *)tv
  numberOfRowsInSection:(NSInteger)section
 {
-    return self.tags.count;
+    return self.tags.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv
@@ -66,12 +91,20 @@
             reuseIdentifier:CellIdentifier]
             autorelease];
 
-    NSString * tag = [self.tags objectAtIndex:indexPath.row];
-    cell.textLabel.text = tag;
-    if ([self.selectedTags containsObject:tag])
-        [self configureSelectedCell:cell];
-    else
-        [self configureNormalCell:cell];
+    if (indexPath.row == self.tags.count) {
+        cell.textLabel.text =
+            NSLocalizedString(@"flickrtagsview.addtag.label", @"");
+        [[self class] configureNormalCell:cell];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    } else {
+        NSString * tag = [self.tags objectAtIndex:indexPath.row];
+        cell.textLabel.text = tag;
+        if ([self.selectedTags containsObject:tag])
+            [[self class] configureSelectedCell:cell];
+        else
+            [[self class] configureNormalCell:cell];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 
     return cell;
 }
@@ -81,26 +114,41 @@
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString * tag = [self.tags objectAtIndex:indexPath.row];
-    UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    if ([self.selectedTags containsObject:tag]) {
-        [self unselectTag:tag];
-        [self configureNormalCell:cell];
-    } else {
-        [self selectTag:tag];
-        [self configureSelectedCell:cell];
+    if (indexPath.row == self.tags.count)
+        [self.delegate userWantsToAddTag];
+    else {
+        NSString * tag = [self.tags objectAtIndex:indexPath.row];
+        NSArray * visibleCells = self.tableView.visibleCells;
+        UITableViewCell * cell = nil;
+        for (UITableViewCell * c in visibleCells)
+            if ([c.textLabel.text isEqualToString:tag]) {
+                cell = c;
+                break;
+            }
+
+        if ([self.selectedTags containsObject:tag]) {
+            [self unselectTag:tag];
+            if (cell)
+                [[self class] configureNormalCell:cell];
+        } else {
+            [self selectTag:tag];
+            if (cell)
+                [[self class] configureSelectedCell:cell];
+        }
+
+        [tv deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 
 #pragma mark Private implementation
 
-- (void)configureSelectedCell:(UITableViewCell *)cell
++ (void)configureSelectedCell:(UITableViewCell *)cell
 {
     cell.textLabel.textColor = [UIColor twitchCheckedColor];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
 }
 
-- (void)configureNormalCell:(UITableViewCell *)cell
++ (void)configureNormalCell:(UITableViewCell *)cell
 {
     cell.textLabel.textColor = [UIColor blackColor];
     cell.accessoryType = UITableViewCellAccessoryNone;
@@ -110,16 +158,16 @@
 {
     NSMutableSet * copy = [self.selectedTags mutableCopy];
     [copy addObject:tag];
-    self.selectedTags = copy;
-    [copy release];
+    [selectedTags release];
+    selectedTags = copy;
 }
 
 - (void)unselectTag:(NSString *)tag
 {
     NSMutableSet * copy = [self.selectedTags mutableCopy];
     [copy removeObject:tag];
-    self.selectedTags = copy;
-    [copy release];
+    [selectedTags release];
+    selectedTags = copy;
 }
 
 #pragma mark Accessors
@@ -128,7 +176,7 @@
 {
     if (newTags != tags) {
         [tags release];
-        tags = [newTags copy];
+        tags = [[newTags sortedArrayUsingSelector:@selector(compare:)] retain];
 
         [self.tableView reloadData];
     }
@@ -138,7 +186,7 @@
 {
     if (selectedTags != newSelectedTags) {
         [selectedTags release];
-        tags = [newSelectedTags copy];
+        selectedTags = [newSelectedTags copy];
 
         [self.tableView reloadData];
     }

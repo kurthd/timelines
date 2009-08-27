@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0511067F102A25FC00915638 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0511067E102A25FC00915638 /* Settings.bundle */; };
+		0515675C1047035500A26F17 /* EditTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0515675A1047035500A26F17 /* EditTextView.xib */; };
+		05156760104703FA00A26F17 /* EditTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0515675F104703FA00A26F17 /* EditTextViewController.m */; };
 		051975FA103A119100883FAC /* AccountSelectedCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 051975F9103A119100883FAC /* AccountSelectedCheckmark.png */; };
 		0519760E103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */; };
 		05197620103A168600883FAC /* AccountNotSelectedFiller.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519761F103A168600883FAC /* AccountNotSelectedFiller.png */; };
@@ -380,6 +382,9 @@
 /* Begin PBXFileReference section */
 		050F7DE810323394007C6F04 /* twitch-v2.0.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.0.xcdatamodel"; sourceTree = "<group>"; };
 		0511067E102A25FC00915638 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		0515675B1047035500A26F17 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/EditTextView.xib; sourceTree = "<group>"; };
+		0515675E104703FA00A26F17 /* EditTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditTextViewController.h; path = shared/EditTextViewController.h; sourceTree = "<group>"; };
+		0515675F104703FA00A26F17 /* EditTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditTextViewController.m; path = shared/EditTextViewController.m; sourceTree = "<group>"; };
 		051975F9103A119100883FAC /* AccountSelectedCheckmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountSelectedCheckmark.png; path = images/AccountSelectedCheckmark.png; sourceTree = "<group>"; };
 		0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountSelectedCheckmarkHighlighted.png; path = images/AccountSelectedCheckmarkHighlighted.png; sourceTree = "<group>"; };
 		0519761F103A168600883FAC /* AccountNotSelectedFiller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountNotSelectedFiller.png; path = images/AccountNotSelectedFiller.png; sourceTree = "<group>"; };
@@ -1454,6 +1459,8 @@
 				059A6F28103CD02700B7500C /* UIButton+StandardButtonAdditions.m */,
 				918F393810433FE8000236AE /* ButtonCell.h */,
 				918F393910433FE8000236AE /* ButtonCell.m */,
+				0515675E104703FA00A26F17 /* EditTextViewController.h */,
+				0515675F104703FA00A26F17 /* EditTextViewController.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -1495,6 +1502,7 @@
 				0519C76310434C0B00C2C7BD /* FlickrLogInView.xib */,
 				0519C8F01044502A00C2C7BD /* FlickrSettingsView.xib */,
 				0519CBD21045C42E00C2C7BD /* FlickrTagsView.xib */,
+				0515675A1047035500A26F17 /* EditTextView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -2255,6 +2263,7 @@
 				918F70621045C6B800FE7ABF /* favorite.png in Resources */,
 				918F70631045C6B800FE7ABF /* PublicMessageButtonIcon.png in Resources */,
 				918F70641045C6B800FE7ABF /* PublicMessageButtonIconHighlighted.png in Resources */,
+				0515675C1047035500A26F17 /* EditTextView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2499,12 +2508,21 @@
 				0519CBD11045C2A300C2C7BD /* FlickrTagsViewController.m in Sources */,
 				0519CC051045C8E900C2C7BD /* FlickrDataFetcher.m in Sources */,
 				0519CC2E1045CED600C2C7BD /* NSDictionary+NonRetainedKeyAdditions.m in Sources */,
+				05156760104703FA00A26F17 /* EditTextViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		0515675A1047035500A26F17 /* EditTextView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0515675B1047035500A26F17 /* en */,
+			);
+			name = EditTextView.xib;
+			sourceTree = "<group>";
+		};
 		0519C76010434BD000C2C7BD /* ExplainFlickrAuthView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

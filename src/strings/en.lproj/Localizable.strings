@@ -238,6 +238,7 @@ flickrsettingsview.details.title = "Details";
 flickrsettingsview.settings.title = "Settings";
 flickrsettingsview.username.label = "Username";
 flickrsettingsview.fullname.label = "Full Name";
+flickrsettingsview.userid.label = "User ID";
 flickrsettingsview.tags.label = "Tag Photos & Videos";
 flickrsettingsview.delete = "Delete Service";
 flickrsettingsview.delete.alert.title = "Are you sure you want to delete this service?";
@@ -246,6 +247,10 @@ flickrsettingsview.delete.alert.delete.title = "Delete Service";
 
 /* FlickrTagsView */
 flickrtagsview.title = "Tags";
+flickrtagsview.addtag.label = "Add a New Tag...";
+
+/* AddFlickrTagView */
+addflickrtagview.title = "New Tag";
 
 /* Flickr */
 flickr.photo.title.default = "Uploaded from Twitbit";

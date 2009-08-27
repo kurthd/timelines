@@ -6,6 +6,8 @@
 
 @protocol FlickrTagsViewControllerDelegate
 
+- (void)userWantsToAddTag;
+
 @end
 
 @interface FlickrTagsViewController : UITableViewController
@@ -21,5 +23,7 @@
 @property (nonatomic, copy) NSSet * selectedTags;
 
 - (id)initWithDelegate:(id<FlickrTagsViewControllerDelegate>)aDelegate;
+
+- (void)addSelectedTag:(NSString *)tag;
 
 @end
