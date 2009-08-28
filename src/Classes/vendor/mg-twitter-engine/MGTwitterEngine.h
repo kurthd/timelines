@@ -103,7 +103,7 @@
 - (NSString *)getRepliesSince:(NSDate *)date startingAtPage:(int)pageNum count:(int)count; // statuses/replies
 - (NSString *)getRepliesSinceID:(int)updateID startingAtPage:(int)pageNum count:(int)count; // statuses/replies
 
-- (NSString *)deleteUpdate:(int)updateID; // statuses/destroy
+- (NSString *)deleteUpdate:(NSString *)updateID; // statuses/destroy
 
 // Getting mentions
 - (NSString *)getMentionsSinceID:(int)updateID page:(int)page count:(int)count;
