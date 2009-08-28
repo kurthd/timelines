@@ -94,7 +94,7 @@
 									<int key="IBUIKeyboardType">4</int>
 								</object>
 							</object>
-							<object class="IBUIButton" id="478732475">
+							<object class="IBUIButton" id="352176182">
 								<reference key="NSNextResponder" ref="618099943"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{294, 15}, {18, 19}}</string>
@@ -113,11 +113,11 @@
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4zMDE5NjA4IDAuMzAxOTYwOCAwLjMwMTk2MDgAA</bytes>
 								</object>
-								<object class="NSColor" key="IBUINormalTitleColor" id="405523220">
+								<object class="NSColor" key="IBUINormalTitleColor" id="698791881">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
 								</object>
-								<reference key="IBUINormalTitleShadowColor" ref="405523220"/>
+								<reference key="IBUINormalTitleShadowColor" ref="698791881"/>
 							</object>
 						</object>
 						<string key="NSFrameSize">{320, 46}</string>
@@ -227,7 +227,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">showHelpView</string>
-						<reference key="source" ref="478732475"/>
+						<reference key="source" ref="352176182"/>
 						<reference key="destination" ref="841351856"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -239,7 +239,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBObjectRecord">
 						<int key="objectID">0</int>
-						<object class="NSArray" key="object" id="791207728">
+						<object class="NSArray" key="object" id="808270440">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 						</object>
 						<reference key="children" ref="1000"/>
@@ -248,13 +248,13 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">-1</int>
 						<reference key="object" ref="841351856"/>
-						<reference key="parent" ref="791207728"/>
+						<reference key="parent" ref="808270440"/>
 						<string type="base64-UTF8" key="objectName">RmlsZSdzIE93bmVyA</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">-2</int>
 						<reference key="object" ref="371349661"/>
-						<reference key="parent" ref="791207728"/>
+						<reference key="parent" ref="808270440"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">3</int>
@@ -264,7 +264,7 @@
 							<reference ref="618099943"/>
 							<reference ref="577770557"/>
 						</object>
-						<reference key="parent" ref="791207728"/>
+						<reference key="parent" ref="808270440"/>
 						<string key="objectName">OAuth Web View</string>
 					</object>
 					<object class="IBObjectRecord">
@@ -279,7 +279,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="621779258"/>
 							<reference ref="946624172"/>
-							<reference ref="478732475"/>
+							<reference ref="352176182"/>
 						</object>
 						<reference key="parent" ref="883467546"/>
 					</object>
@@ -296,16 +296,16 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">56</int>
 						<reference key="object" ref="218186669"/>
-						<reference key="parent" ref="791207728"/>
+						<reference key="parent" ref="808270440"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">57</int>
 						<reference key="object" ref="526067510"/>
-						<reference key="parent" ref="791207728"/>
+						<reference key="parent" ref="808270440"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">60</int>
-						<reference key="object" ref="478732475"/>
+						<reference key="object" ref="352176182"/>
 						<reference key="parent" ref="618099943"/>
 					</object>
 				</object>
@@ -361,7 +361,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">65</int>
+			<int key="maxID">66</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -412,7 +412,6 @@
 							<string>activityButton</string>
 							<string>activityIndicator</string>
 							<string>delegate</string>
-							<string>navigationBar</string>
 							<string>pinTextField</string>
 							<string>webView</string>
 						</object>
@@ -421,7 +420,6 @@
 							<string>UIBarButtonItem</string>
 							<string>UIActivityIndicatorView</string>
 							<string>id</string>
-							<string>UINavigationBar</string>
 							<string>UITextField</string>
 							<string>UIWebView</string>
 						</object>

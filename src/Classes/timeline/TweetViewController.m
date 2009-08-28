@@ -63,6 +63,8 @@ enum TweetActionRows {
 
 - (void)fetchRemoteImage:(NSString *)avatarUrlString;
 
+- (NSIndexPath *)indexForActualIndexPath:(NSIndexPath *)indexPath;
+
 + (UIImage *)defaultAvatar;
 
 @end
@@ -163,9 +165,11 @@ enum TweetActionRows {
 {
     UITableViewCell * cell = nil;
 
+    NSIndexPath * transformedPath = [self indexForActualIndexPath:indexPath];
+
     BOOL tweetTextRow =
-        indexPath.section == kTweetDetailsSection &&
-        indexPath.row == kTweetTextRow;
+        transformedPath.section == kTweetDetailsSection &&
+        transformedPath.row == kTweetTextRow;
 
     if (!tweetTextRow) {
         NSString * identifier =
@@ -176,8 +180,8 @@ enum TweetActionRows {
                                      reuseIdentifier:identifier];
     }
 
-    if (indexPath.section == kTweetDetailsSection) {
-        if (indexPath.row == kTweetTextRow) {
+    if (transformedPath.section == kTweetDetailsSection) {
+        if (transformedPath.row == kTweetTextRow) {
             [tweetTextTableViewCell.contentView addSubview:tweetContentView];
             cell = tweetTextTableViewCell;
         } else if (indexPath.row == kConversationRow) {
@@ -189,24 +193,24 @@ enum TweetActionRows {
                 tweet.inReplyToTwitterUsername];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-    } else if (indexPath.section == kComposeActionsSection) {
+    } else if (transformedPath.section == kComposeActionsSection) {
         NSString * text = nil;
         UIImage * image = nil;
         UIImage * highlightedImage = nil;
 
-        if (indexPath.row == kPublicReplyRow) {
+        if (transformedPath.row == kPublicReplyRow) {
             text =
                 NSLocalizedString(@"tweetdetailsview.publicreply.label", @"");
             image = [UIImage imageNamed:@"PublicReplyButtonIcon.png"];
             highlightedImage =
                 [UIImage imageNamed:@"PublicReplyButtonIconHighlighted.png"];
-        } else if (indexPath.row == kDirectMessageRow) {
+        } else if (transformedPath.row == kDirectMessageRow) {
             text =
                 NSLocalizedString(@"tweetdetailsview.directmessage.label", @"");
             image = [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
             highlightedImage =
                 [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
-        } else if (indexPath.row == kRetweetRow) {
+        } else if (transformedPath.row == kRetweetRow) {
             text = NSLocalizedString(@"tweetdetailsview.retweet.label", @"");
             image = [UIImage imageNamed:@"RetweetButtonIcon.png"];
             highlightedImage =
@@ -216,8 +220,8 @@ enum TweetActionRows {
         cell.textLabel.text = text;
         cell.imageView.image = image;
         cell.imageView.highlightedImage = highlightedImage;
-    } else if (indexPath.section == kTweetActionsSection)
-        if (indexPath.row == kFavoriteRow) {
+    } else if (transformedPath.section == kTweetActionsSection)
+        if (transformedPath.row == kFavoriteRow) {
             cell = self.favoriteCell;
             [self.favoriteCell setMarkedState:[tweet.favorited boolValue]];
             [self.favoriteCell setUpdatingState:markingFavorite];
@@ -229,21 +233,23 @@ enum TweetActionRows {
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == kTweetDetailsSection) {
-        if (indexPath.row == kConversationRow)
+    NSIndexPath * transformedPath = [self indexForActualIndexPath:indexPath];
+
+    if (transformedPath.section == kTweetDetailsSection) {
+        if (transformedPath.row == kConversationRow)
             [delegate loadConversationFromTweetId:tweet.identifier];
-    } else if (indexPath.section == kComposeActionsSection) {
-        if (indexPath.row == kPublicReplyRow)
+    } else if (transformedPath.section == kComposeActionsSection) {
+        if (transformedPath.row == kPublicReplyRow)
             [self sendReply];
-        else if (indexPath.row == kDirectMessageRow)
+        else if (transformedPath.row == kDirectMessageRow)
             [self sendDirectMessage];
-        else if (indexPath.row == kRetweetRow)
+        else if (transformedPath.row == kRetweetRow)
             [self retweet];
-    } else if (indexPath.section == kTweetActionsSection)
-        if (indexPath.row == kFavoriteRow)
+    } else if (transformedPath.section == kTweetActionsSection)
+        if (transformedPath.row == kFavoriteRow)
             [self toggleFavoriteValue];
 
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.tableView deselectRowAtIndexPath:transformedPath animated:YES];
 }
 
 #pragma mark UIWebViewDelegate implementation
@@ -370,7 +376,7 @@ enum TweetActionRows {
             NSLog(@"Sending tweet in email...");
             if ([MFMailComposeViewController canSendMail]) {
                 [self displayComposerMailSheet];
-            } else {     
+            } else {
                 UIAlertView * alert =
                     [UIAlertView simpleAlertViewWithTitle:title
                     message:message];
@@ -419,8 +425,8 @@ enum TweetActionRows {
     [picker setSubject:subject];
 
     NSString * body =
-        [NSString stringWithFormat:@"%@\n\n%@", self.tweet.text,
-        [tweet tweetUrl]];
+        [NSString stringWithFormat:@"\"%@\"\n- %@\n\n%@", self.tweet.text,
+        self.tweet.user.username, [tweet tweetUrl]];
     [picker setMessageBody:body isHTML:NO];
 
     [self.realParentViewController presentModalViewController:picker
@@ -617,6 +623,17 @@ enum TweetActionRows {
     }
 
     return favoriteCell;
+}
+
+- (NSIndexPath *)indexForActualIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger row =
+        indexPath.section == kComposeActionsSection &&
+        indexPath.row == kPublicReplyRow && !showsExtendedActions ?
+        kDirectMessageRow : indexPath.row;
+    NSInteger section = indexPath.section;
+
+    return [NSIndexPath indexPathForRow:row inSection:section];
 }
 
 + (UIImage *)defaultAvatar

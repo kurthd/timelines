@@ -20,6 +20,7 @@
     id<ConversationViewControllerDelegate> delegate;
 
     IBOutlet UIView * footerView;
+    IBOutlet UIView * plainFooterView;
 
     IBOutlet UIView * loadingView;
     IBOutlet UIView * loadMoreView;
