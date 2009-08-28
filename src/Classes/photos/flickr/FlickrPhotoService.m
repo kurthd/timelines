@@ -7,6 +7,7 @@
 #import "NSNumber+EncodingAdditions.h"
 #import "UIApplication+NetworkActivityIndicatorAdditions.h"
 #import "RegexKitLite.h"
+#import "NSArray+IterationAdditions.h"
 
 @interface FlickrPhotoService ()
 
@@ -67,8 +68,30 @@
 
     NSString * defaultTitle =
         NSLocalizedString(@"flickr.photo.title.default", @"");
+
+    NSArray * flickrTags = [ctls.tags allObjects];
+    NSArray * tagsAsStrings =
+        [flickrTags arrayByTransformingObjectsUsingSelector:@selector(name)];
+
+    // quote each tag
+    NSMutableArray * quotedTags =
+        [NSMutableArray arrayWithCapacity:tagsAsStrings.count];
+    for (NSString * tag in tagsAsStrings) {
+        NSMutableString * quotedTag = [tag mutableCopy];
+        [quotedTag insertString:@"\"" atIndex:0];
+        [quotedTag appendString:@"\""];
+
+        [quotedTags addObject:quotedTag];
+        [quotedTag release];
+    }
+
+    NSString * joinedTags = [quotedTags join:@" "];
+
     NSDictionary * args =
-        [NSDictionary dictionaryWithObject:defaultTitle forKey:@"title"];
+        [NSDictionary dictionaryWithObjectsAndKeys:
+        defaultTitle, @"title",
+        joinedTags, @"tags",
+        nil];
 
     NSData * imageData = UIImagePNGRepresentation(image);
     NSInputStream * imageStream = [NSInputStream inputStreamWithData:imageData];

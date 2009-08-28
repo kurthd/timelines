@@ -52,4 +52,18 @@
     return copy;
 }
 
+- (NSString *)join:(NSString *)component
+{
+    NSMutableString * s = [NSMutableString string];
+    if (self.count) {
+        [s appendString:[[self objectAtIndex:0] description]];
+        for (NSInteger i = 1, count = self.count; i < count; ++i) {
+            [s appendString:component];
+            [s appendString:[[self objectAtIndex:i] description]];
+        }
+    }
+
+    return s;
+}
+
 @end
