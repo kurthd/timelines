@@ -11,6 +11,7 @@
 #import "UIWebView+FileLoadingAdditions.h"
 #import "UserListDisplayMgrFactory.h"
 #import "ErrorState.h"
+#import "UIColor+TwitchColors.h"
 
 @interface TimelineDisplayMgr ()
 
@@ -1255,6 +1256,11 @@ static NSInteger retweetFormatValueAlredyRead;
     CGRect buttonFrame = CGRectMake(20, 7, 280, 37);
     UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = buttonFrame;
+    
+    CGRect grayLineFrame = CGRectMake(0, 50, 320, 1);
+    UIView * grayLineView =
+        [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
+    grayLineView.backgroundColor = [UIColor twitchLightGrayColor];
 
     UIImage * background =
         [UIImage imageNamed:@"SaveSearchButtonBackground.png"];
@@ -1276,6 +1282,7 @@ static NSInteger retweetFormatValueAlredyRead;
     [button addTarget:self action:action forControlEvents:events];
 
     [view addSubview:button];
+    [view addSubview:grayLineView];
 
     return [view autorelease];
 }

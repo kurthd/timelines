@@ -367,6 +367,12 @@
 		918F70621045C6B800FE7ABF /* favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F705E1045C6B800FE7ABF /* favorite.png */; };
 		918F70631045C6B800FE7ABF /* PublicMessageButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F705F1045C6B800FE7ABF /* PublicMessageButtonIcon.png */; };
 		918F70641045C6B800FE7ABF /* PublicMessageButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F70601045C6B800FE7ABF /* PublicMessageButtonIconHighlighted.png */; };
+		918F710F1047310F00FE7ABF /* LoginScreenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F710E1047310F00FE7ABF /* LoginScreenshot.png */; };
+		918F713710473FBF00FE7ABF /* LogInHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F713610473FBF00FE7ABF /* LogInHelpViewController.m */; };
+		918F713F104741AE00FE7ABF /* log-in-help.html in Resources */ = {isa = PBXBuildFile; fileRef = 918F713D104741AE00FE7ABF /* log-in-help.html */; };
+		918F71431047420C00FE7ABF /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F71421047420C00FE7ABF /* WebViewController.m */; };
+		918F7155104744FF00FE7ABF /* NSString+WebViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F7154104744FF00FE7ABF /* NSString+WebViewAdditions.m */; };
+		918F7167104745D000FE7ABF /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 918F7166104745D000FE7ABF /* style.css */; };
 		91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD5A3C100FED36009C2179 /* MessageUI.framework */; };
 		91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
 		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
@@ -994,6 +1000,15 @@
 		918F705E1045C6B800FE7ABF /* favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = favorite.png; path = images/favorite.png; sourceTree = "<group>"; };
 		918F705F1045C6B800FE7ABF /* PublicMessageButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PublicMessageButtonIcon.png; path = images/PublicMessageButtonIcon.png; sourceTree = "<group>"; };
 		918F70601045C6B800FE7ABF /* PublicMessageButtonIconHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PublicMessageButtonIconHighlighted.png; path = images/PublicMessageButtonIconHighlighted.png; sourceTree = "<group>"; };
+		918F710E1047310F00FE7ABF /* LoginScreenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LoginScreenshot.png; path = images/LoginScreenshot.png; sourceTree = "<group>"; };
+		918F713510473FBF00FE7ABF /* LogInHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInHelpViewController.h; sourceTree = "<group>"; };
+		918F713610473FBF00FE7ABF /* LogInHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInHelpViewController.m; sourceTree = "<group>"; };
+		918F713E104741AE00FE7ABF /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = en; path = "en.lproj/log-in-help.html"; sourceTree = "<group>"; };
+		918F71411047420C00FE7ABF /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = web/WebViewController.h; sourceTree = "<group>"; };
+		918F71421047420C00FE7ABF /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = web/WebViewController.m; sourceTree = "<group>"; };
+		918F7153104744FF00FE7ABF /* NSString+WebViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+WebViewAdditions.h"; path = "web/NSString+WebViewAdditions.h"; sourceTree = "<group>"; };
+		918F7154104744FF00FE7ABF /* NSString+WebViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+WebViewAdditions.m"; path = "web/NSString+WebViewAdditions.m"; sourceTree = "<group>"; };
+		918F7166104745D000FE7ABF /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		91A247640FFE7EF400538F29 /* TweetDetailsFooterGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsFooterGradient.png; path = images/TweetDetailsFooterGradient.png; sourceTree = "<group>"; };
 		91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadowReversed.png; path = images/DropShadowReversed.png; sourceTree = "<group>"; };
 		91A247720FFE81D300538F29 /* DeleteTweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweet.png; path = images/DeleteTweet.png; sourceTree = "<group>"; };
@@ -1675,6 +1690,8 @@
 				05C7028B0FF835AE00936E4C /* OauthLogInViewController.m */,
 				05C705180FF88C1E00936E4C /* ExplainOauthViewController.h */,
 				05C705190FF88C1E00936E4C /* ExplainOauthViewController.m */,
+				918F713510473FBF00FE7ABF /* LogInHelpViewController.h */,
+				918F713610473FBF00FE7ABF /* LogInHelpViewController.m */,
 			);
 			path = "log-in-oauth";
 			sourceTree = "<group>";
@@ -1741,6 +1758,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				918F7140104741F900FE7ABF /* web */,
 				918F3733103F47E9000236AE /* geo-services */,
 				9152E14A1014F68B0033B63B /* direct-messages */,
 				917FFF011010F71A00335C0F /* photo-browser */,
@@ -1900,6 +1918,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				918F710E1047310F00FE7ABF /* LoginScreenshot.png */,
 				918F705D1045C6B800FE7ABF /* DirectMessageButtonIconHighlighted.png */,
 				918F705E1045C6B800FE7ABF /* favorite.png */,
 				918F705F1045C6B800FE7ABF /* PublicMessageButtonIcon.png */,
@@ -2041,6 +2060,8 @@
 		916BDA4C0FEF573A007143A9 /* html */ = {
 			isa = PBXGroup;
 			children = (
+				918F7166104745D000FE7ABF /* style.css */,
+				918F713D104741AE00FE7ABF /* log-in-help.html */,
 				916BDA4D0FEF573A007143A9 /* tweet-style.css */,
 			);
 			path = html;
@@ -2099,6 +2120,17 @@
 				918F3ACC1044A582000236AE /* LocationInfoViewControllerDelegate.h */,
 			);
 			name = "geo-services";
+			sourceTree = "<group>";
+		};
+		918F7140104741F900FE7ABF /* web */ = {
+			isa = PBXGroup;
+			children = (
+				918F7153104744FF00FE7ABF /* NSString+WebViewAdditions.h */,
+				918F7154104744FF00FE7ABF /* NSString+WebViewAdditions.m */,
+				918F71411047420C00FE7ABF /* WebViewController.h */,
+				918F71421047420C00FE7ABF /* WebViewController.m */,
+			);
+			name = web;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2269,6 +2301,9 @@
 				918F70631045C6B800FE7ABF /* PublicMessageButtonIcon.png in Resources */,
 				918F70641045C6B800FE7ABF /* PublicMessageButtonIconHighlighted.png in Resources */,
 				0515675C1047035500A26F17 /* EditTextView.xib in Resources */,
+				918F710F1047310F00FE7ABF /* LoginScreenshot.png in Resources */,
+				918F713F104741AE00FE7ABF /* log-in-help.html in Resources */,
+				918F7167104745D000FE7ABF /* style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2509,6 +2544,9 @@
 				0519C9931044634200C2C7BD /* FlickrPhotoService.m in Sources */,
 				0519C9CC10446B2500C2C7BD /* NSNumber+EncodingAdditions.m in Sources */,
 				0519CA3C1044A50700C2C7BD /* NSString+ConvenienceMethods.m in Sources */,
+				918F713710473FBF00FE7ABF /* LogInHelpViewController.m in Sources */,
+				918F71431047420C00FE7ABF /* WebViewController.m in Sources */,
+				918F7155104744FF00FE7ABF /* NSString+WebViewAdditions.m in Sources */,
 				0519CBD11045C2A300C2C7BD /* FlickrTagsViewController.m in Sources */,
 				0519CC051045C8E900C2C7BD /* FlickrDataFetcher.m in Sources */,
 				0519CC2E1045CED600C2C7BD /* NSDictionary+NonRetainedKeyAdditions.m in Sources */,
@@ -2794,6 +2832,14 @@
 			name = ButtonCellView.xib;
 			sourceTree = "<group>";
 		};
+		918F713D104741AE00FE7ABF /* log-in-help.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				918F713E104741AE00FE7ABF /* en */,
+			);
+			name = "log-in-help.html";
+			sourceTree = "<group>";
+		};
 		91BD11391006736F0082D209 /* PhotoBrowserView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2896,7 +2942,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: High Order Bit, Inc.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Douglas Kurth";
 				DEVICE_REGISTRATION_DOMAIN = sandbox.twitbit.highorderbit.com;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2912,7 +2958,7 @@
 					"-licucore",
 				);
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "86370A6E-A17F-44DD-A7A3-E53062D55715";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AA7F2B41-6452-442A-ADBF-895609D202AE";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Release - Doug";

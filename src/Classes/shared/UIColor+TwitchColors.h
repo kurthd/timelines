@@ -8,6 +8,7 @@
 
 + (UIColor *)twitchBlueColor;
 + (UIColor *)twitchGrayColor;
++ (UIColor *)twitchLightGrayColor;
 + (UIColor *)twitchDarkGrayColor;
 + (UIColor *)twitchLabelColor;
 + (UIColor *)twitchBackgroundColor;
