@@ -37,6 +37,7 @@
     self.delegate = nil;
 
     self.footerView = nil;
+    [plainFooterView release];
     self.loadingView = nil;
     self.loadMoreView = nil;
 
@@ -302,10 +303,14 @@
         [UIView commitAnimations];
     }
 
+    UIEdgeInsets edgeInsets;
     if (loadMoreAlpha != 0 || loadingAlpha != 0)
         footer = self.footerView;
-    else
-        footer = nil;
+    else {
+        footer = plainFooterView;
+        edgeInsets.bottom = -700;
+    }
+    self.tableView.contentInset = edgeInsets;
 
     if (footer != self.tableView.tableFooterView)
         if (!self.tableView.tableFooterView)  // no footer - display now
