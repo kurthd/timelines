@@ -8,6 +8,7 @@
 @protocol FlickrSettingsViewControllerDelegate
 
 - (void)deleteServiceWithCredentials:(FlickrCredentials *)credentials;
+- (void)userWantsToSelectTags:(FlickrCredentials *)credentials;
 
 @end
 

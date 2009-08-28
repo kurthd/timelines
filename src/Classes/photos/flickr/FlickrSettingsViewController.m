@@ -5,9 +5,10 @@
 #import "FlickrSettingsViewController.h"
 #import "UIButton+StandardButtonAdditions.h"
 
-static const NSInteger NUM_SECTIONS = 1;
+static const NSInteger NUM_SECTIONS = 2;
 enum {
-    kAccountDetailsSection
+    kAccountDetailsSection,
+    kAccountSettingsSection
 };
 
 static const NSInteger NUM_ACCOUNT_DETAILS_ROWS = 3;
@@ -16,6 +17,18 @@ enum {
     kFullNameRow,
     kUserIdRow
 };
+
+static const NSInteger NUM_ACCOUNT_SETTINGS_ROWS = 1;
+enum {
+    kTagsRow
+};
+
+@interface FlickrSettingsViewController ()
+
+- (UITableViewCell *)tableView:(UITableView *)tv
+    cellInstanceForRowAtIndexPath:(NSIndexPath *)indexPath;
+
+@end
 
 @implementation FlickrSettingsViewController
 
@@ -75,6 +88,9 @@ enum {
         case kAccountDetailsSection:
             nrows = NUM_ACCOUNT_DETAILS_ROWS;
             break;
+        case kAccountSettingsSection:
+            nrows = NUM_ACCOUNT_SETTINGS_ROWS;
+            break;
     }
 
     return nrows;
@@ -89,6 +105,10 @@ enum {
         case kAccountDetailsSection:
             title = NSLocalizedString(@"flickrsettingsview.details.title", @"");
             break;
+        case kAccountSettingsSection:
+            title =
+                NSLocalizedString(@"flickrsettingsview.settings.title", @"");
+            break;
     }
 
     return title;
@@ -97,35 +117,32 @@ enum {
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * CellIdentifier = @"FlickrTableViewCell";
-
     UITableViewCell * cell =
-        [tv dequeueReusableCellWithIdentifier:CellIdentifier];
+        [self tableView:tv cellInstanceForRowAtIndexPath:indexPath];
 
-    if (cell == nil)
-        cell =
-            [[[UITableViewCell alloc]
-            initWithStyle:UITableViewCellStyleValue2
-            reuseIdentifier:CellIdentifier] autorelease];
+    if (indexPath.section == kAccountDetailsSection) {
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryNone;
 
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    switch (indexPath.row) {
-        case kUsernameRow:
+        if (indexPath.row == kUsernameRow) {
             cell.detailTextLabel.text = self.credentials.username;
             cell.textLabel.text =
                 NSLocalizedString(@"flickrsettingsview.username.label", @"");
-            break;
-        case kFullNameRow:
+        } else if (indexPath.row == kFullNameRow) {
             cell.detailTextLabel.text = self.credentials.fullName;
             cell.textLabel.text =
                 NSLocalizedString(@"flickrsettingsview.fullname.label", @"");
-            break;
-        case kUserIdRow:
+        } else if (indexPath.row == kUserIdRow) {
             cell.detailTextLabel.text = self.credentials.userId;
             cell.textLabel.text =
                 NSLocalizedString(@"flickrsettingsview.userid.label", @"");
-            break;
+        }
+    } else if (indexPath.section == kAccountSettingsSection) {
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+        cell.textLabel.text =
+            NSLocalizedString(@"flickrsettingsview.tags.label", @"");
     }
 
     return cell;
@@ -136,12 +153,10 @@ enum {
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    // AnotherViewController *anotherViewController =
-    //     [[AnotherViewController alloc]
-    //      initWithNibName:@"AnotherView" bundle:nil];
-    // [self.navigationController pushViewController:anotherViewController];
-    // [anotherViewController release];
+    if (indexPath.section == kAccountSettingsSection) {
+        if (indexPath.row == kTagsRow)
+            [self.delegate userWantsToSelectTags:self.credentials];
+    }
 }
 
 #pragma mark UIActionSheetDelegate implementation
@@ -179,6 +194,33 @@ enum {
     // bar. Even though the sheet is always visible over the tab bar, the
     // portion of the sheet on top of the tab bar does not respond touch events.
     [sheet showInView:[UIApplication sharedApplication].keyWindow];
+}
+
+#pragma mark Private implementation
+
+- (UITableViewCell *)tableView:(UITableView *)tv
+    cellInstanceForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString * identifier = indexPath.section == kAccountDetailsSection ?
+        @"FlickrDetailsTableViewCell" : @"FlickrSettingsTableViewCell";
+
+    UITableViewCell * cell =
+        [tv dequeueReusableCellWithIdentifier:identifier];
+
+    if (cell == nil) {
+        if (indexPath.section == kAccountDetailsSection)
+            cell =
+                [[[UITableViewCell alloc]
+                initWithStyle:UITableViewCellStyleValue2
+                reuseIdentifier:identifier] autorelease];
+        else if (indexPath.section == kAccountSettingsSection)
+            cell =
+                [[[UITableViewCell alloc]
+                initWithStyle:UITableViewCellStyleDefault
+                reuseIdentifier:identifier] autorelease];
+    }
+
+    return cell;
 }
 
 @end
