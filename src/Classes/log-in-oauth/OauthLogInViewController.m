@@ -5,19 +5,19 @@
 #import "OauthLogInViewController.h"
 #import "RegexKitLite.h"
 #import "UIApplication+NetworkActivityIndicatorAdditions.h"
+#import "WebViewController.h"
 
 @interface OauthLogInViewController ()
 
 @property (nonatomic, retain) UIWebView * webView;
 
-@property (nonatomic, retain) UINavigationBar * navigationBar;
-@property (nonatomic, retain) UIBarButtonItem * cancelButton;
-@property (nonatomic, retain) UIBarButtonItem * doneButton;
 
 @property (nonatomic, retain) UIBarButtonItem * activityButton;
 @property (nonatomic, retain) UIActivityIndicatorView * activityIndicator;
 
 @property (nonatomic, retain) UITextField * pinTextField;
+
+@property (nonatomic, readonly) UIViewController * helpViewController;
 
 - (void)showActivity;
 - (void)hideActivity;
@@ -27,7 +27,7 @@
 @implementation OauthLogInViewController
 
 @synthesize delegate;
-@synthesize navigationBar, cancelButton, doneButton;
+@synthesize cancelButton, doneButton;
 @synthesize activityButton, activityIndicator;
 @synthesize webView, pinTextField;
 
@@ -35,12 +35,12 @@
 {
     self.delegate = nil;
     self.webView = nil;
-    self.navigationBar = nil;
     self.cancelButton = nil;
     self.doneButton = nil;
     self.activityButton = nil;
     self.activityIndicator = nil;
     self.pinTextField = nil;
+    [helpViewController release];
     [super dealloc];
 }
 
@@ -52,17 +52,12 @@
     self.pinTextField.text = @"";
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-
-    // reset the view
-    [self.webView loadHTMLString:@"<html></html>" baseURL:nil];
-}
-
 - (IBAction)userDidCancel
 {
     [self.delegate userDidCancel];
+
+    // reset the view
+    [self.webView loadHTMLString:@"<html></html>" baseURL:nil];
 }
 
 - (IBAction)userIsDone
@@ -70,6 +65,15 @@
     NSString * pin =
         self.pinTextField.text.length ? self.pinTextField.text : nil;
     [self.delegate userIsDone:pin];
+
+    // reset the view
+    [self.webView loadHTMLString:@"<html></html>" baseURL:nil];
+}
+
+- (IBAction)showHelpView
+{
+    [self.navigationController pushViewController:self.helpViewController
+        animated:YES];
 }
 
 - (void)loadAuthRequest:(NSURLRequest *)request
@@ -107,15 +111,14 @@
 
 - (void)showActivity
 {
-    [self.navigationBar.topItem setRightBarButtonItem:self.activityButton
-                                             animated:YES];
+    [self.navigationItem setRightBarButtonItem:self.activityButton
+        animated:YES];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
 - (void)hideActivity
 {
-    [self.navigationBar.topItem setRightBarButtonItem:self.doneButton
-                                             animated:YES];
+    [self.navigationItem setRightBarButtonItem:self.doneButton animated:YES];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
@@ -128,6 +131,18 @@
             [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
 
     return activityButton;
+}
+
+- (UIViewController *)helpViewController
+{
+    if (!helpViewController) {
+        helpViewController =
+            [[WebViewController alloc] initWithHtmlFilename:@"log-in-help"];
+        helpViewController.navigationItem.title =
+            NSLocalizedString(@"loginhelpview.title", @"");
+    }
+
+    return helpViewController;
 }
 
 @end

@@ -79,7 +79,11 @@
 
 - (void)presentOauth:(NSTimer *)timer
 {
-    [self.explainOauthViewController presentModalViewController:self.oauthLogInViewController animated:YES];
+    UINavigationController * navController =
+        [[[UINavigationController alloc]
+        initWithRootViewController:self.oauthLogInViewController] autorelease];
+    [self.explainOauthViewController presentModalViewController:navController
+        animated:YES];
 }
 
 - (void)dismissOauth:(NSTimer *)timer
@@ -107,10 +111,14 @@
         "authorize?oauth_token=%@&oauth_callback=oob", self.requestToken.key]];
     NSURLRequest * req = [NSURLRequest requestWithURL:url];
 
-    [self.explainOauthViewController
-        presentModalViewController:self.oauthLogInViewController
-                          animated:YES];
-    [self.oauthLogInViewController loadAuthRequest:req];
+    UINavigationController * navController =
+        [[[UINavigationController alloc]
+        initWithRootViewController:self.oauthLogInViewController] autorelease];
+    [self.explainOauthViewController presentModalViewController:navController
+        animated:YES];
+
+    [self.oauthLogInViewController performSelector:@selector(loadAuthRequest:)
+        withObject:req afterDelay:0.2];
 
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
@@ -244,6 +252,29 @@
             [[OauthLogInViewController alloc]
             initWithNibName:@"OauthLogInView" bundle:nil];
         oauthLogInViewController.delegate = self;
+        oauthLogInViewController.navigationItem.title =
+            NSLocalizedString(@"login.title", @"");
+        
+        NSString * cancelButtonTitle =
+            NSLocalizedString(@"login.cancel", @"");
+        UIBarButtonItem * cancelButton =
+            [[[UIBarButtonItem alloc]
+            initWithTitle:cancelButtonTitle style:UIBarButtonItemStyleBordered
+            target:oauthLogInViewController action:@selector(userDidCancel)]
+            autorelease];
+        oauthLogInViewController.navigationItem.leftBarButtonItem =
+            cancelButton;
+        oauthLogInViewController.cancelButton = cancelButton;
+
+        NSString * doneButtonTitle =
+            NSLocalizedString(@"login.done", @"");
+        UIBarButtonItem * doneButton =
+            [[[UIBarButtonItem alloc]
+            initWithTitle:doneButtonTitle style:UIBarButtonItemStyleBordered
+            target:oauthLogInViewController action:@selector(userIsDone)]
+            autorelease];
+        oauthLogInViewController.navigationItem.rightBarButtonItem = doneButton;
+        oauthLogInViewController.doneButton = doneButton;
     }
 
     return oauthLogInViewController;

@@ -3,10 +3,14 @@ alert.dismiss = "Dismiss";
 
 /* Log in */
 login.failed.alert.title = "Log In Failed";
+login.title = "Log In";
+login.cancel = "Cancel";
+login.done = "Done";
 explainoauth.begin = "Authorize with Twitter";
 explainoauth.header = "Twitbit requires your authorization";
 explainoauth.footer = "Authorization is a simple process. You will be provided with a Twitter log in screen and given the option to give Twitbit access to your account.";
 oauth.requesttokenfetch.failed.message = "Failed to connect to Twitter.";
+loginhelpview.title = "Help";
 
 /* TwitchAppDelegate */
 appdelegate.hometabtitle = "Home";
