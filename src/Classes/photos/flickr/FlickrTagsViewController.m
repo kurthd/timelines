@@ -7,6 +7,8 @@
 
 @interface FlickrTagsViewController ()
 
+@property (nonatomic, retain) IBOutlet UIBarButtonItem * refreshButton;
+
 + (void)configureSelectedCell:(UITableViewCell *)cell;
 + (void)configureNormalCell:(UITableViewCell *)cell;
 
@@ -18,11 +20,14 @@
 @implementation FlickrTagsViewController
 
 @synthesize delegate;
+@synthesize refreshButton;
 @synthesize tags, selectedTags;
 
 - (void)dealloc
 {
     self.delegate = nil;
+
+    self.refreshButton = nil;
 
     self.tags = nil;
     self.selectedTags = nil;
@@ -147,6 +152,13 @@
         [self.delegate userSelectedTags:self.selectedTags];
         [tv deselectRowAtIndexPath:indexPath animated:YES];
     }
+}
+
+#pragma mark Button actions
+
+- (IBAction)refresh:(id)sender
+{
+    [self.delegate refreshData];
 }
 
 #pragma mark Private implementation

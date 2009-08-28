@@ -6,6 +6,7 @@
 #import "TwitterCredentials.h"
 #import "FlickrTag.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
+#import "UIAlertView+InstantiationAdditions.h"
 
 @interface FlickrEditPhotoServiceDisplayMgr ()
 
@@ -148,7 +149,14 @@
 - (void)dataFetcher:(FlickrDataFetcher *)fetcher
   failedToFetchTags:(NSError *)error
 {
-    NSLog(@"Failed to fetch tags: %@", error);
+    NSLog(@"Failed to download tags from Flickr: %@", error);
+
+    NSString * title = NSLocalizedString(@"flickrtags.download.failed", @"");
+    NSString * message = error.localizedDescription;
+    [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
+
+    [self.tagsNetViewController setUpdatingState:kDisconnected];
+    [self.tagsNetViewController setCachedDataAvailable:NO];
 }
 
 #pragma mark FlickrTagsViewControllerDelegate implementation
@@ -185,6 +193,12 @@
     [mytags release];
 }
 
+- (void)refreshData
+{
+    [self.flickrDataFetcher fetchTags:self.credentials.userId];
+    [self.tagsNetViewController setUpdatingState:kConnectedAndUpdating];
+}
+
 #pragma mark EditTextViewControllerDelegate implementation
 
 - (void)userDidSetText:(NSString *)newTag
@@ -200,6 +214,9 @@
 - (void)networkAwareViewWillAppear
 {
     NSLog(@"Network aware view will appear.");
+    if (!self.tagsNetViewController.navigationItem.rightBarButtonItem)
+        self.tagsNetViewController.navigationItem.rightBarButtonItem =
+            self.tagsViewController.refreshButton;
 }
 
 #pragma mark Accessors
