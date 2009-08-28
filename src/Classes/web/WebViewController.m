@@ -18,7 +18,8 @@
             [[NSBundle mainBundle] pathForResource:htmlFilename ofType:@"html"];
         if (htmlFilePath) {
             NSString * html =
-                [[NSString stringWithContentsOfFile:htmlFilePath]
+                [[NSString stringWithContentsOfFile:htmlFilePath
+                encoding:NSUTF8StringEncoding error:NULL]
                 wrapHTMLForWebViewDisplay];
 
             // Loading the bundle path as the baseURL of the web view will
