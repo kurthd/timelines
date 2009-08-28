@@ -84,8 +84,6 @@
 
 - (void)fetchTweetWithId:(NSString *)tweetId
 {
-    // jad: Temporary while testing animations
-    //[self.service fetchTweet:tweetId];
     [self.service performSelector:@selector(fetchTweet:)
                        withObject:tweetId
                        afterDelay:1.0];
