@@ -35,6 +35,11 @@
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId;
 - (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error;
 
+#pragma mark Deleting individual tweets
+
+- (void)deletedTweetWithId:(NSString *)tweetId;
+- (void)failedToDeleteTweetWithId:(NSString *)tweetId error:(NSError *)error;
+
 #pragma mark Timelines
 
 @optional

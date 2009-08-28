@@ -102,8 +102,6 @@
     NSString * requestId = [twitter sendUpdate:tweet inReplyTo:referenceId];
 
     [self request:requestId isHandledBy:processor];
-
-    [self deleteTweet:@"3438028396"];
 }
 
 #pragma mark Fetching individual tweets

@@ -3,10 +3,6 @@
 //
 
 #import "DeleteTweetResponseProcessor.h"
-#import "User.h"
-#import "User+CoreDataAdditions.h"
-#import "Tweet.h"
-#import "ResponseProcessor+ParsingHelpers.h"
 
 @interface DeleteTweetResponseProcessor ()
 
@@ -56,44 +52,20 @@
     if (!statuses)
         return NO;
 
-    NSLog(@"Statuses: %@.", statuses);
-    return YES;
+    NSLog(@"Deleted tweet %@: %@.", tweetId, statuses);
 
-    /*
-    NSAssert1(statuses.count == 1, @"Expected 1 status in response; received "
-        "%d.", statuses.count);
-
-    NSDictionary * status = [statuses objectAtIndex:0];
-
-    NSDictionary * userData = [status objectForKey:@"user"];
-    NSString * userId = [[userData objectForKey:@"id"] description];
-    User * user = [User findOrCreateWithId:userId context:context];
-
-    [self populateUser:user fromData:userData];
-
-    NSDictionary * tweetData = status;
-
-    NSString * receivedTweetId = [[tweetData objectForKey:@"id"] description];
-    NSAssert2([tweetId isEqual:receivedTweetId], @"Expected to receive tweet "
-        "with id '%@' but received '%@' instead.", tweetId, receivedTweetId);
-    Tweet * tweet = [Tweet tweetWithId:receivedTweetId context:context];
-    if (!tweet)
-        tweet = [Tweet createInstance:context];
-
-    [self populateTweet:tweet fromData:tweetData];
-    tweet.user = user;
-
-    SEL sel = @selector(fetchedTweet:withId:);
-    [self invokeSelector:sel withTarget:delegate args:tweet, tweetId, nil];
+    SEL sel = @selector(deletedTweetWithId:);
+    [self invokeSelector:sel withTarget:delegate args:tweetId];
 
     return YES;
-    */
 }
 
 - (BOOL)processErrorResponse:(NSError *)error
 {
-    //SEL sel = @selector(failedToFetchTweetWithId:error:);
-    //[self invokeSelector:sel withTarget:delegate args:tweetId, error, nil];
+    NSLog(@"Failed to delete tweet: %@.", error);
+
+    SEL sel = @selector(failedToDeleteTweetWithId:error:);
+    [self invokeSelector:sel withTarget:delegate args:tweetId, error, nil];
 
     return YES;
 }
