@@ -376,7 +376,7 @@ enum TweetActionRows {
             NSLog(@"Sending tweet in email...");
             if ([MFMailComposeViewController canSendMail]) {
                 [self displayComposerMailSheet];
-            } else {     
+            } else {
                 UIAlertView * alert =
                     [UIAlertView simpleAlertViewWithTitle:title
                     message:message];
@@ -425,8 +425,8 @@ enum TweetActionRows {
     [picker setSubject:subject];
 
     NSString * body =
-        [NSString stringWithFormat:@"%@\n\n%@", self.tweet.text,
-        [tweet tweetUrl]];
+        [NSString stringWithFormat:@"\"%@\"\n- %@\n\n%@", self.tweet.text,
+        self.tweet.user.username, [tweet tweetUrl]];
     [picker setMessageBody:body isHTML:NO];
 
     [self.realParentViewController presentModalViewController:picker
