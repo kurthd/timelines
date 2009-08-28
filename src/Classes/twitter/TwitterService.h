@@ -89,6 +89,11 @@
 - (void)followUser:(NSString *)username;
 - (void)stopFollowingUser:(NSString *)username;
 
+#pragma mark Blocking/unblocking users
+
+- (void)blockUserWithUsername:(NSString *)username;
+- (void)unblockUserWithUsername:(NSString *)username;
+
 #pragma mark Social graph
 
 - (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page;

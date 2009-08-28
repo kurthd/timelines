@@ -55,7 +55,7 @@
     NSLog(@"Deleted tweet %@: %@.", tweetId, statuses);
 
     SEL sel = @selector(deletedTweetWithId:);
-    [self invokeSelector:sel withTarget:delegate args:tweetId];
+    [self invokeSelector:sel withTarget:delegate args:tweetId, nil];
 
     return YES;
 }

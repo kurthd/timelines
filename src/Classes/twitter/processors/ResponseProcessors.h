@@ -19,6 +19,7 @@
 #import "QueryIsFollowingResponseProcessor.h"
 #import "FetchTweetResponseProcessor.h"
 #import "DeleteTweetResponseProcessor.h"
+#import "BlockUserResponseProcessor.h"
 
 #import "SendTweetResponseProcessor.h"
 #import "SendDirectMessageResponseProcessor.h"

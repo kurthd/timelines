@@ -134,6 +134,16 @@
 - (void)failedToStopFollowingUsername:(NSString *)username
                                 error:(NSError *)error;
 
+#pragma mark Block/unblock users
+
+- (void)blockedUser:(User *)user withUsername:(NSString *)username;
+- (void)failedToBlockUserWithUsername:(NSString *)username
+                                error:(NSError *)error;
+- (void)unblockedUser:(User *)user
+         withUsername:(NSString *)username;
+- (void)failedToUnblockUserWithUsername:(NSString *)username
+                                  error:(NSError *)error;
+
 #pragma mark Social graph
 
 @optional

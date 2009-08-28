@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0502249610485CCA00BCB903 /* DeleteTweetResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0502249510485CCA00BCB903 /* DeleteTweetResponseProcessor.m */; };
+		050224D810488ED500BCB903 /* BlockUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 050224D710488ED500BCB903 /* BlockUserResponseProcessor.m */; };
 		0511067F102A25FC00915638 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0511067E102A25FC00915638 /* Settings.bundle */; };
 		0515675C1047035500A26F17 /* EditTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0515675A1047035500A26F17 /* EditTextView.xib */; };
 		05156760104703FA00A26F17 /* EditTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0515675F104703FA00A26F17 /* EditTextViewController.m */; };
@@ -390,6 +391,8 @@
 /* Begin PBXFileReference section */
 		0502249410485CCA00BCB903 /* DeleteTweetResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeleteTweetResponseProcessor.h; path = twitter/processors/DeleteTweetResponseProcessor.h; sourceTree = "<group>"; };
 		0502249510485CCA00BCB903 /* DeleteTweetResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeleteTweetResponseProcessor.m; path = twitter/processors/DeleteTweetResponseProcessor.m; sourceTree = "<group>"; };
+		050224D610488ED500BCB903 /* BlockUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlockUserResponseProcessor.h; path = twitter/processors/BlockUserResponseProcessor.h; sourceTree = "<group>"; };
+		050224D710488ED500BCB903 /* BlockUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BlockUserResponseProcessor.m; path = twitter/processors/BlockUserResponseProcessor.m; sourceTree = "<group>"; };
 		050F7DE810323394007C6F04 /* twitch-v2.0.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.0.xcdatamodel"; sourceTree = "<group>"; };
 		0511067E102A25FC00915638 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		0515675B1047035500A26F17 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/EditTextView.xib; sourceTree = "<group>"; };
@@ -1615,6 +1618,8 @@
 				0562BE2E0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m */,
 				0502249410485CCA00BCB903 /* DeleteTweetResponseProcessor.h */,
 				0502249510485CCA00BCB903 /* DeleteTweetResponseProcessor.m */,
+				050224D610488ED500BCB903 /* BlockUserResponseProcessor.h */,
+				050224D710488ED500BCB903 /* BlockUserResponseProcessor.m */,
 			);
 			name = processors;
 			sourceTree = "<group>";
@@ -2559,6 +2564,7 @@
 				051568691047405900A26F17 /* FlickrTag.m in Sources */,
 				0515686A1047405900A26F17 /* FlickrCredentials.m in Sources */,
 				0502249610485CCA00BCB903 /* DeleteTweetResponseProcessor.m in Sources */,
+				050224D810488ED500BCB903 /* BlockUserResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
