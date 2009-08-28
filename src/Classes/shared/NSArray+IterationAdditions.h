@@ -13,4 +13,6 @@
 
 - (NSArray *)arrayByReversingContents;
 
+- (NSString *)join:(NSString *)component;
+
 @end

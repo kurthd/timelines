@@ -9,11 +9,13 @@
 #import "NetworkAwareViewController.h"
 #import "FlickrTagsViewController.h"
 #import "FlickrDataFetcher.h"
+#import "EditTextViewController.h"
 
 @interface FlickrEditPhotoServiceDisplayMgr :
     EditPhotoServiceDisplayMgr
     <FlickrSettingsViewControllerDelegate, NetworkAwareViewControllerDelegate,
-    FlickrTagsViewControllerDelegate, FlickrDataFetcherDelegate>
+    FlickrTagsViewControllerDelegate, FlickrDataFetcherDelegate,
+    EditTextViewControllerDelegate>
 {
     FlickrCredentials * credentials;
     NSManagedObjectContext * context;
@@ -23,6 +25,8 @@
 
     NetworkAwareViewController * tagsNetViewController;
     FlickrTagsViewController * tagsViewController;
+
+    EditTextViewController * editTextViewController;
 
     NSArray * tags;
 

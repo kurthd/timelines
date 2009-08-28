@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0511067F102A25FC00915638 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0511067E102A25FC00915638 /* Settings.bundle */; };
+		0515675C1047035500A26F17 /* EditTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0515675A1047035500A26F17 /* EditTextView.xib */; };
+		05156760104703FA00A26F17 /* EditTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0515675F104703FA00A26F17 /* EditTextViewController.m */; };
+		051568691047405900A26F17 /* FlickrTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 051568661047405900A26F17 /* FlickrTag.m */; };
+		0515686A1047405900A26F17 /* FlickrCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 051568681047405900A26F17 /* FlickrCredentials.m */; };
 		051975FA103A119100883FAC /* AccountSelectedCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 051975F9103A119100883FAC /* AccountSelectedCheckmark.png */; };
 		0519760E103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */; };
 		05197620103A168600883FAC /* AccountNotSelectedFiller.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519761F103A168600883FAC /* AccountNotSelectedFiller.png */; };
@@ -23,7 +27,6 @@
 		0519C76210434BD000C2C7BD /* ExplainFlickrAuthView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0519C76010434BD000C2C7BD /* ExplainFlickrAuthView.xib */; };
 		0519C76510434C0B00C2C7BD /* FlickrLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0519C76310434C0B00C2C7BD /* FlickrLogInView.xib */; };
 		0519C76A10434CB500C2C7BD /* ExplainFlickrAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C76910434CB500C2C7BD /* ExplainFlickrAuthViewController.m */; };
-		0519C8A7104377A000C2C7BD /* FlickrCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C8A6104377A000C2C7BD /* FlickrCredentials.m */; };
 		0519C8EC10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C8EB10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.m */; };
 		0519C8EF10444DD000C2C7BD /* FlickrSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519C8EE10444DD000C2C7BD /* FlickrSettingsViewController.m */; };
 		0519C8F21044502A00C2C7BD /* FlickrSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0519C8F01044502A00C2C7BD /* FlickrSettingsView.xib */; };
@@ -386,6 +389,13 @@
 /* Begin PBXFileReference section */
 		050F7DE810323394007C6F04 /* twitch-v2.0.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.0.xcdatamodel"; sourceTree = "<group>"; };
 		0511067E102A25FC00915638 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		0515675B1047035500A26F17 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/EditTextView.xib; sourceTree = "<group>"; };
+		0515675E104703FA00A26F17 /* EditTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditTextViewController.h; path = shared/EditTextViewController.h; sourceTree = "<group>"; };
+		0515675F104703FA00A26F17 /* EditTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditTextViewController.m; path = shared/EditTextViewController.m; sourceTree = "<group>"; };
+		051568651047405900A26F17 /* FlickrTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrTag.h; path = photos/flickr/FlickrTag.h; sourceTree = "<group>"; };
+		051568661047405900A26F17 /* FlickrTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrTag.m; path = photos/flickr/FlickrTag.m; sourceTree = "<group>"; };
+		051568671047405900A26F17 /* FlickrCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrCredentials.h; path = photos/flickr/FlickrCredentials.h; sourceTree = "<group>"; };
+		051568681047405900A26F17 /* FlickrCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrCredentials.m; path = photos/flickr/FlickrCredentials.m; sourceTree = "<group>"; };
 		051975F9103A119100883FAC /* AccountSelectedCheckmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountSelectedCheckmark.png; path = images/AccountSelectedCheckmark.png; sourceTree = "<group>"; };
 		0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountSelectedCheckmarkHighlighted.png; path = images/AccountSelectedCheckmarkHighlighted.png; sourceTree = "<group>"; };
 		0519761F103A168600883FAC /* AccountNotSelectedFiller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountNotSelectedFiller.png; path = images/AccountNotSelectedFiller.png; sourceTree = "<group>"; };
@@ -412,8 +422,6 @@
 		0519C76410434C0B00C2C7BD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/FlickrLogInView.xib; sourceTree = "<group>"; };
 		0519C76810434CB500C2C7BD /* ExplainFlickrAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExplainFlickrAuthViewController.h; path = photos/flickr/ExplainFlickrAuthViewController.h; sourceTree = "<group>"; };
 		0519C76910434CB500C2C7BD /* ExplainFlickrAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExplainFlickrAuthViewController.m; path = photos/flickr/ExplainFlickrAuthViewController.m; sourceTree = "<group>"; };
-		0519C8A5104377A000C2C7BD /* FlickrCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrCredentials.h; path = photos/flickr/FlickrCredentials.h; sourceTree = "<group>"; };
-		0519C8A6104377A000C2C7BD /* FlickrCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrCredentials.m; path = photos/flickr/FlickrCredentials.m; sourceTree = "<group>"; };
 		0519C8EA10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrEditPhotoServiceDisplayMgr.h; path = photos/flickr/FlickrEditPhotoServiceDisplayMgr.h; sourceTree = "<group>"; };
 		0519C8EB10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrEditPhotoServiceDisplayMgr.m; path = photos/flickr/FlickrEditPhotoServiceDisplayMgr.m; sourceTree = "<group>"; };
 		0519C8ED10444DD000C2C7BD /* FlickrSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrSettingsViewController.h; path = photos/flickr/FlickrSettingsViewController.h; sourceTree = "<group>"; };
@@ -1100,8 +1108,10 @@
 		0519C752104349B700C2C7BD /* flickr */ = {
 			isa = PBXGroup;
 			children = (
-				0519C8A5104377A000C2C7BD /* FlickrCredentials.h */,
-				0519C8A6104377A000C2C7BD /* FlickrCredentials.m */,
+				051568671047405900A26F17 /* FlickrCredentials.h */,
+				051568681047405900A26F17 /* FlickrCredentials.m */,
+				051568651047405900A26F17 /* FlickrTag.h */,
+				051568661047405900A26F17 /* FlickrTag.m */,
 				0519C753104349DF00C2C7BD /* FlickrLogInDisplayMgr.h */,
 				0519C754104349DF00C2C7BD /* FlickrLogInDisplayMgr.m */,
 				0519C76810434CB500C2C7BD /* ExplainFlickrAuthViewController.h */,
@@ -1469,6 +1479,8 @@
 				059A6F28103CD02700B7500C /* UIButton+StandardButtonAdditions.m */,
 				918F393810433FE8000236AE /* ButtonCell.h */,
 				918F393910433FE8000236AE /* ButtonCell.m */,
+				0515675E104703FA00A26F17 /* EditTextViewController.h */,
+				0515675F104703FA00A26F17 /* EditTextViewController.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -1510,6 +1522,7 @@
 				0519C76310434C0B00C2C7BD /* FlickrLogInView.xib */,
 				0519C8F01044502A00C2C7BD /* FlickrSettingsView.xib */,
 				0519CBD21045C42E00C2C7BD /* FlickrTagsView.xib */,
+				0515675A1047035500A26F17 /* EditTextView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -2287,6 +2300,7 @@
 				918F70621045C6B800FE7ABF /* favorite.png in Resources */,
 				918F70631045C6B800FE7ABF /* PublicMessageButtonIcon.png in Resources */,
 				918F70641045C6B800FE7ABF /* PublicMessageButtonIconHighlighted.png in Resources */,
+				0515675C1047035500A26F17 /* EditTextView.xib in Resources */,
 				918F710F1047310F00FE7ABF /* LoginScreenshot.png in Resources */,
 				918F713F104741AE00FE7ABF /* log-in-help.html in Resources */,
 				918F7167104745D000FE7ABF /* style.css in Resources */,
@@ -2525,7 +2539,6 @@
 				0519C755104349DF00C2C7BD /* FlickrLogInDisplayMgr.m in Sources */,
 				0519C75F10434BAE00C2C7BD /* FlickrLogInViewController.m in Sources */,
 				0519C76A10434CB500C2C7BD /* ExplainFlickrAuthViewController.m in Sources */,
-				0519C8A7104377A000C2C7BD /* FlickrCredentials.m in Sources */,
 				0519C8EC10444DB300C2C7BD /* FlickrEditPhotoServiceDisplayMgr.m in Sources */,
 				0519C8EF10444DD000C2C7BD /* FlickrSettingsViewController.m in Sources */,
 				0519C9931044634200C2C7BD /* FlickrPhotoService.m in Sources */,
@@ -2537,12 +2550,23 @@
 				0519CBD11045C2A300C2C7BD /* FlickrTagsViewController.m in Sources */,
 				0519CC051045C8E900C2C7BD /* FlickrDataFetcher.m in Sources */,
 				0519CC2E1045CED600C2C7BD /* NSDictionary+NonRetainedKeyAdditions.m in Sources */,
+				05156760104703FA00A26F17 /* EditTextViewController.m in Sources */,
+				051568691047405900A26F17 /* FlickrTag.m in Sources */,
+				0515686A1047405900A26F17 /* FlickrCredentials.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		0515675A1047035500A26F17 /* EditTextView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0515675B1047035500A26F17 /* en */,
+			);
+			name = EditTextView.xib;
+			sourceTree = "<group>";
+		};
 		0519C76010434BD000C2C7BD /* ExplainFlickrAuthView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2909,7 +2933,7 @@
 					"-licucore",
 				);
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B52DB6FE-ED0F-47A7-8265-381FD8A93D00";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D2F6ECD2-6FB5-4493-986B-B3878E7E2E14";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Distribution - Ad Hoc";
