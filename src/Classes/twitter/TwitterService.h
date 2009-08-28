@@ -45,6 +45,10 @@
 
 - (void)fetchTweet:(NSString *)tweetId;
 
+#pragma mark Deleting individual tweets
+
+- (void)deleteTweet:(NSString *)tweetId;
+
 #pragma mark Timeline
 
 // for the user associated with 'credentials'

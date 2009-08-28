@@ -18,6 +18,7 @@
 #import "MarkFavoriteResponseProcessor.h"
 #import "QueryIsFollowingResponseProcessor.h"
 #import "FetchTweetResponseProcessor.h"
+#import "DeleteTweetResponseProcessor.h"
 
 #import "SendTweetResponseProcessor.h"
 #import "SendDirectMessageResponseProcessor.h"

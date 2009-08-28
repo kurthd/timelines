@@ -102,6 +102,8 @@
     NSString * requestId = [twitter sendUpdate:tweet inReplyTo:referenceId];
 
     [self request:requestId isHandledBy:processor];
+
+    [self deleteTweet:@"3438028396"];
 }
 
 #pragma mark Fetching individual tweets
@@ -114,6 +116,20 @@
                                                  delegate:delegate];
 
     NSString * requestId = [twitter getUpdate:tweetId];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+#pragma mark Deleting individual tweets
+
+- (void)deleteTweet:(NSString *)tweetId
+{
+    ResponseProcessor * processor =
+        [DeleteTweetResponseProcessor processorWithTweetId:tweetId
+                                                   context:context
+                                                  delegate:delegate];
+
+    NSString * requestId = [twitter deleteUpdate:tweetId];
 
     [self request:requestId isHandledBy:processor];
 }
