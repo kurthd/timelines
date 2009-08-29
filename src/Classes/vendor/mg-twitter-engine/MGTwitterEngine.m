@@ -1550,9 +1550,9 @@
 }
 
 
-- (NSString *)deleteUpdate:(int)updateID
+- (NSString *)deleteUpdate:(NSString *)updateID
 {
-    NSString *path = [NSString stringWithFormat:@"statuses/destroy/%d.%@", updateID, API_FORMAT];
+    NSString *path = [NSString stringWithFormat:@"statuses/destroy/%@.%@", updateID, API_FORMAT];
     
     return [self _sendRequestWithMethod:HTTP_POST_METHOD path:path queryParameters:nil body:nil 
                             requestType:MGTwitterAccountRequest 

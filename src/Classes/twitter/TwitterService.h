@@ -45,6 +45,10 @@
 
 - (void)fetchTweet:(NSString *)tweetId;
 
+#pragma mark Deleting individual tweets
+
+- (void)deleteTweet:(NSString *)tweetId;
+
 #pragma mark Timeline
 
 // for the user associated with 'credentials'
@@ -84,6 +88,11 @@
 - (void)fetchUserInfoForUsername:(NSString *)username;
 - (void)followUser:(NSString *)username;
 - (void)stopFollowingUser:(NSString *)username;
+
+#pragma mark Blocking/unblocking users
+
+- (void)blockUserWithUsername:(NSString *)username;
+- (void)unblockUserWithUsername:(NSString *)username;
 
 #pragma mark Social graph
 

@@ -118,6 +118,20 @@
     [self request:requestId isHandledBy:processor];
 }
 
+#pragma mark Deleting individual tweets
+
+- (void)deleteTweet:(NSString *)tweetId
+{
+    ResponseProcessor * processor =
+        [DeleteTweetResponseProcessor processorWithTweetId:tweetId
+                                                   context:context
+                                                  delegate:delegate];
+
+    NSString * requestId = [twitter deleteUpdate:tweetId];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark Timelines
 
 - (void)fetchTimelineSinceUpdateId:(NSNumber *)updateId
@@ -309,6 +323,34 @@
                                                   delegate:delegate];
 
     NSString * requestId = [twitter disableUpdatesFor:username];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+#pragma mark Blocking/unblocking users
+
+- (void)blockUserWithUsername:(NSString *)username
+{
+    ResponseProcessor * processor =
+        [BlockUserResponseProcessor processorWithUsername:username
+                                                 blocking:YES
+                                                  context:context
+                                                 delegate:delegate];
+
+    NSString * requestId = [twitter block:username];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+- (void)unblockUserWithUsername:(NSString *)username
+{
+    ResponseProcessor * processor =
+        [BlockUserResponseProcessor processorWithUsername:username
+                                                 blocking:NO
+                                                  context:context
+                                                 delegate:delegate];
+
+    NSString * requestId = [twitter unblock:username];
 
     [self request:requestId isHandledBy:processor];
 }

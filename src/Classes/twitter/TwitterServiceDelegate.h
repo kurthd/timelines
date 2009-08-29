@@ -35,6 +35,11 @@
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId;
 - (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error;
 
+#pragma mark Deleting individual tweets
+
+- (void)deletedTweetWithId:(NSString *)tweetId;
+- (void)failedToDeleteTweetWithId:(NSString *)tweetId error:(NSError *)error;
+
 #pragma mark Timelines
 
 @optional
@@ -128,6 +133,16 @@
 - (void)stoppedFollowingUsername:(NSString *)username;
 - (void)failedToStopFollowingUsername:(NSString *)username
                                 error:(NSError *)error;
+
+#pragma mark Block/unblock users
+
+- (void)blockedUser:(User *)user withUsername:(NSString *)username;
+- (void)failedToBlockUserWithUsername:(NSString *)username
+                                error:(NSError *)error;
+- (void)unblockedUser:(User *)user
+         withUsername:(NSString *)username;
+- (void)failedToUnblockUserWithUsername:(NSString *)username
+                                  error:(NSError *)error;
 
 #pragma mark Social graph
 
