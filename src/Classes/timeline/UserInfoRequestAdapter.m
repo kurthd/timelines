@@ -12,16 +12,19 @@
 {
     [target release];
     [wrapperController release];
+    [errorHandler release];
     [super dealloc];
 }
 
 - (id)initWithTarget:(id)aTarget action:(SEL)anAction
     wrapperController:(NetworkAwareViewController *)aWrapperController
+    errorHandler:(id)anErrorHandler
 {
     if (self = [super init]) {
         target = [aTarget retain];
         action = anAction;
         wrapperController = [aWrapperController retain];
+        errorHandler = [anErrorHandler retain];
     }
 
     return self;
@@ -38,12 +41,11 @@
 - (void)failedToFetchUserInfoForUsername:(NSString *)username
     error:(NSError *)error
 {
-    NSString * message = error.localizedDescription;
-    NSString * title =
-        NSLocalizedString(@"timelinedisplaymgr.error.fetchuserinfo", @"");
-    UIAlertView * alertView =
-        [UIAlertView simpleAlertViewWithTitle:title message:message];
-    [alertView show];
+    if ([target
+        respondsToSelector:@selector(failedToFetchUserInfoForUsername:error:)])
+        [errorHandler
+            performSelector:@selector(failedToFetchUserInfoForUsername:error:)
+            withObject:username withObject:error];
 
     [wrapperController setCachedDataAvailable:NO];
     [wrapperController setUpdatingState:kDisconnected];

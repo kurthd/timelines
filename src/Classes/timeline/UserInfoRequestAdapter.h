@@ -12,9 +12,11 @@
     // of the form - (void)setUser:(User *)user
     SEL action;
     NetworkAwareViewController * wrapperController;
+    id errorHandler;
 }
 
 - (id)initWithTarget:(id)target action:(SEL)action
-    wrapperController:(NetworkAwareViewController *)wrapperController;
+    wrapperController:(NetworkAwareViewController *)wrapperController
+    errorHandler:(id)errorHandler;
 
 @end

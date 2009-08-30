@@ -43,7 +43,7 @@
     LocationMapViewController * locationMapViewController;
 @property (nonatomic, readonly)
     LocationInfoViewController * locationInfoViewController;
-
+    
 @end
 
 enum {
@@ -218,7 +218,8 @@ static NSInteger retweetFormatValueAlredyRead;
     if (!suppressTimelineFailures) {
         NSString * errorMessage =
             NSLocalizedString(@"timelinedisplaymgr.error.fetchtimeline", @"");
-        [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+        [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
+            retryTarget:self retryAction:@selector(refreshWithLatest)];
         [self.wrapperController setUpdatingState:kDisconnected];
     } else
         [wrapperController setUpdatingState:kDisconnected];
@@ -297,9 +298,9 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Timeline display manager: failed to query if %@ is following %@",
         username, followee);
     NSLog(@"Error: %@", error);
-
+    
     [self.userInfoController setFailedToQueryFollowing];
-
+    
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
     [[ErrorState instance] displayErrorWithTitle:errorMessage];
@@ -872,6 +873,7 @@ static NSInteger retweetFormatValueAlredyRead;
     NSLog(@"Timeline display manager: refreshing timeline with latest...");
     if([timelineSource credentials]) {
         refreshingTweets = YES;
+        [[ErrorState instance] exitErrorState];
         [timelineSource fetchTimelineSince:self.updateId
             page:[NSNumber numberWithInt:0]];
     } else
@@ -1047,7 +1049,7 @@ static NSInteger retweetFormatValueAlredyRead;
         userInfoRequestAdapter =
             [[UserInfoRequestAdapter alloc]
             initWithTarget:self.userInfoController action:@selector(setUser:)
-            wrapperController:self.userInfoControllerWrapper];
+            wrapperController:self.userInfoControllerWrapper errorHandler:self];
     }
 
     return userInfoRequestAdapter;

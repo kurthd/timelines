@@ -179,6 +179,7 @@
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)clearState;
 
+- (void)refreshWithLatest;
 - (void)updateDirectMessagesSinceLastUpdateIds;
 - (void)updateWithABunchOfRecentMessages;
 - (void)loadAnotherPageOfMessages;

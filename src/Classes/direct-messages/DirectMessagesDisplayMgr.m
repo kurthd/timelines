@@ -142,8 +142,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         UIBarButtonItem * refreshButton =
             wrapperController.navigationItem.leftBarButtonItem;
         refreshButton.target = self;
-        refreshButton.action =
-            @selector(updateDirectMessagesSinceLastUpdateIds);
+        refreshButton.action = @selector(refreshWithLatest);
 
         newDirectMessagesState = [[NewDirectMessagesState alloc] init];
         
@@ -200,7 +199,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchmessages", @"");
-    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
+        retryTarget:self retryAction:@selector(refreshWithLatest)];
     [wrapperController setUpdatingState:kDisconnected];
 
     outstandingReceivedRequests--;
@@ -243,7 +243,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchmessages", @"");
-    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
+        retryTarget:self retryAction:@selector(refreshWithLatest)];
     [wrapperController setUpdatingState:kDisconnected];
 
     outstandingSentRequests--;
@@ -960,6 +961,12 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         [self updateWithABunchOfRecentMessages];
 }
 
+- (void)refreshWithLatest
+{
+    [[ErrorState instance] exitErrorState];
+    [self updateDirectMessagesSinceLastUpdateIds];
+}
+
 - (void)updateWithABunchOfRecentMessages
 {
     NSLog(@"Messages Display Manager: Updating with a bunch of messages...");
@@ -1419,7 +1426,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         userInfoRequestAdapter =
             [[UserInfoRequestAdapter alloc]
             initWithTarget:self.userInfoController action:@selector(setUser:)
-            wrapperController:self.userInfoControllerWrapper];
+            wrapperController:self.userInfoControllerWrapper errorHandler:self];
     }
 
     return userInfoRequestAdapter;

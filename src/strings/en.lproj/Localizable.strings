@@ -1,5 +1,5 @@
 alert.dismiss = "Dismiss";
-
+alert.retry = "Retry";
 
 /* Log in */
 login.failed.alert.title = "Log In Failed";
