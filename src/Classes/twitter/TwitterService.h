@@ -76,7 +76,10 @@
 - (void)fetchSentDirectMessagesSinceId:(NSNumber *)updateId
                                   page:(NSNumber *)page
                                  count:(NSNumber *)count;
+
 - (void)sendDirectMessage:(NSString *)message to:(NSString *)username;
+
+- (void)deleteDirectMessage:(NSString *)directMessageId;
 
 #pragma mark Favorites
 

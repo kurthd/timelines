@@ -1624,9 +1624,9 @@
 }
 
 
-- (NSString *)deleteDirectMessage:(int)updateID
+- (NSString *)deleteDirectMessage:(NSString *)updateID
 {
-    NSString *path = [NSString stringWithFormat:@"direct_messages/destroy/%d.%@", updateID, API_FORMAT];
+    NSString *path = [NSString stringWithFormat:@"direct_messages/destroy/%@.%@", updateID, API_FORMAT];
     
     return [self _sendRequestWithMethod:HTTP_POST_METHOD path:path queryParameters:nil body:nil 
                             requestType:MGTwitterAccountRequest 

@@ -258,6 +258,19 @@
     [self request:requestId isHandledBy:processor];
 }
 
+- (void)deleteDirectMessage:(NSString *)directMessageId
+{
+    ResponseProcessor * processor =
+        [DeleteDirectMessageResponseProcessor
+        processorWithDirectMessageId:directMessageId
+                             context:context
+                            delegate:delegate];
+
+    NSString * requestId = [twitter deleteDirectMessage:directMessageId];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark Favorites
 
 - (void)fetchFavoritesForUser:(NSString *)user page:(NSNumber *)page

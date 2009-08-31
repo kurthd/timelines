@@ -132,7 +132,7 @@
 - (NSString *)getSentDirectMessagesSinceID:(NSNumber *)updateID startingAtPage:(int)pageNum count:(int)count; // direct_messages/sent
 
 - (NSString *)sendDirectMessage:(NSString *)message to:(NSString *)username; // direct_messages/new
-- (NSString *)deleteDirectMessage:(int)updateID;// direct_messages/destroy
+- (NSString *)deleteDirectMessage:(NSString *)updateID;// direct_messages/destroy
 
 
 // Friendship methods - http://apiwiki.twitter.com/REST+API+Documentation#FriendshipMethods
