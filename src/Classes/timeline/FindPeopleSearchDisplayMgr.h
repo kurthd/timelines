@@ -77,4 +77,7 @@
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
 
+- (NSInteger)selectedBookmarkSegment;
+- (void)setSelectedBookmarkSegment:(NSInteger)segment;
+
 @end

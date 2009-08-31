@@ -12,6 +12,8 @@
 + (NSString *)selectedTimelineFeedKey;
 + (NSString *)viewedTweetIdKey;
 + (NSString *)tabOrderKey;
++ (NSString *)selectedPeopleBookmarkIndexKey;
++ (NSString *)selectedSearchBookmarkIndexKey;
 
 @end
 
@@ -32,10 +34,18 @@
     NSString * viewedTweetId =
         [dict objectForKey:[[self class] viewedTweetIdKey]];
     NSArray * tabOrder = [dict objectForKey:[[self class] tabOrderKey]];
+    NSUInteger selectedSearchBookmarkIndex =
+        [[dict objectForKey:[[self class] selectedSearchBookmarkIndexKey]]
+        unsignedIntValue];
+    NSUInteger selectedPeopleBookmarkIndex =
+        [[dict objectForKey:[[self class] selectedPeopleBookmarkIndexKey]]
+        unsignedIntValue];
     state.selectedTab = selectedTab;
     state.selectedTimelineFeed = selectedTimelineFeed;
     state.viewedTweetId = viewedTweetId;
     state.tabOrder = tabOrder;
+    state.selectedSearchBookmarkIndex = selectedSearchBookmarkIndex;
+    state.selectedPeopleBookmarkIndex = selectedPeopleBookmarkIndex;
 
     return state;
 }
@@ -56,6 +66,15 @@
                  forKey:[[self class] viewedTweetIdKey]];
 
     [dict setObject:state.tabOrder forKey:[[self class] tabOrderKey]];
+
+    NSNumber * selectedPeopleBookmarkIndex =
+        [NSNumber numberWithUnsignedInt:state.selectedPeopleBookmarkIndex];
+    [dict setObject:selectedPeopleBookmarkIndex
+        forKey:[[self class] selectedPeopleBookmarkIndexKey]];
+    NSNumber * selectedSearchBookmarkIndex =
+        [NSNumber numberWithUnsignedInt:state.selectedSearchBookmarkIndex];
+    [dict setObject:selectedSearchBookmarkIndex
+        forKey:[[self class] selectedSearchBookmarkIndexKey]];
 
     [PlistUtils saveDictionary:dict toPlist:[[self class] plistName]];
 }
@@ -83,6 +102,16 @@
 + (NSString *)tabOrderKey
 {
     return @"tabOrder";
+}
+
++ (NSString *)selectedPeopleBookmarkIndexKey
+{
+    return @"selectedPeopleBookmarkIndex";
+}
+
++ (NSString *)selectedSearchBookmarkIndexKey
+{
+    return @"selectedSearchBookmarkIndex";
 }
 
 @end

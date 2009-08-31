@@ -81,8 +81,9 @@ typedef enum
     [super viewDidLoad];
 
     [self.bookmarkCategorySelector addTarget:self
-                                      action:@selector(bookmarkCategoryChanged:)
-                            forControlEvents:UIControlEventValueChanged];
+        action:@selector(bookmarkCategoryChanged:)
+        forControlEvents:UIControlEventValueChanged];
+    bookmarkCategorySelector.selectedSegmentIndex = selectedIndex;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -347,6 +348,17 @@ typedef enum
 - (IBAction)selectedUsername
 {
     [self.delegate userDidSelectSearchQuery:self.username];
+}
+
+- (NSInteger)selectedSegment
+{
+    return self.bookmarkCategorySelector.selectedSegmentIndex;
+}
+
+- (void)setSelectedSegment:(NSInteger)segment
+{
+    selectedIndex = segment;
+    self.bookmarkCategorySelector.selectedSegmentIndex = segment;
 }
 
 @end

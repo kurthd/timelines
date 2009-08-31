@@ -1082,6 +1082,14 @@
 
     UISegmentedControl * control = (UISegmentedControl *)
         homeNetAwareViewController.navigationItem.titleView;
+    
+    NSLog(@"searchBarDisplayMgr: %@", searchBarDisplayMgr);
+    NSLog(@"uiState.selectedSearchBookmarkIndex: %f", uiState.selectedSearchBookmarkIndex);
+    [searchBarDisplayMgr
+        setSelectedBookmarkSegment:uiState.selectedSearchBookmarkIndex];
+    [findPeopleSearchDisplayMgr
+        setSelectedBookmarkSegment:uiState.selectedPeopleBookmarkIndex];
+
     NSLog(@"Setting segmented control index");
     control.selectedSegmentIndex = uiState.selectedTimelineFeed;
 
@@ -1123,6 +1131,11 @@
         [tabOrder addObject:tagNumber];
     }
     uiState.tabOrder = tabOrder;
+    
+    uiState.selectedSearchBookmarkIndex =
+        [searchBarDisplayMgr selectedBookmarkSegment];
+    uiState.selectedPeopleBookmarkIndex =
+        [findPeopleSearchDisplayMgr selectedBookmarkSegment];
 
     [uiStatePersistenceStore save:uiState];
 

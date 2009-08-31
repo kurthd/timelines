@@ -518,4 +518,14 @@
     return autocompleteView;
 }
 
+- (NSInteger)selectedBookmarkSegment
+{
+    return [self.searchBookmarksDisplayMgr selectedSegment];
+}
+
+- (void)setSelectedBookmarkSegment:(NSInteger)segment
+{
+    [self.searchBookmarksDisplayMgr setSelectedSegment:segment];
+}
+
 @end

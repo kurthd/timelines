@@ -49,4 +49,7 @@
 - (void)removeSavedSearch:(NSString *)query;
 - (BOOL)isSearchSaved:(NSString *)query;
 
+- (NSInteger)selectedSegment;
+- (void)setSelectedSegment:(NSInteger)segment;
+
 @end

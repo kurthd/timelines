@@ -53,4 +53,7 @@
 
 - (void)searchBarViewWillAppear:(BOOL)promptUser;
 
+- (NSInteger)selectedBookmarkSegment;
+- (void)setSelectedBookmarkSegment:(NSInteger)segment;
+
 @end

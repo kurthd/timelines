@@ -256,4 +256,14 @@
     return savedSearchMgr;
 }
 
+- (NSInteger)selectedSegment
+{
+    return [self.searchBookmarksViewController selectedSegment];
+}
+
+- (void)setSelectedSegment:(NSInteger)segment
+{
+    [self.searchBookmarksViewController setSelectedSegment:segment];
+}
+
 @end

@@ -949,4 +949,14 @@
     return locationInfoViewController;
 }
 
+- (NSInteger)selectedBookmarkSegment
+{
+    return [self.bookmarkController selectedSegment];
+}
+
+- (void)setSelectedBookmarkSegment:(NSInteger)segment
+{
+    [self.bookmarkController setSelectedSegment:segment];
+}
+
 @end
