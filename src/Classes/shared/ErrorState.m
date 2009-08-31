@@ -5,7 +5,17 @@
 #import "ErrorState.h"
 #import "UIAlertView+InstantiationAdditions.h"
 
+@interface ErrorState ()
+
+@property (nonatomic, retain) id currentTarget;
+@property (nonatomic, assign) SEL currentAction;
+@property (nonatomic, readonly) UIAlertView * retryAlertView;
+
+@end
+
 @implementation ErrorState
+
+@synthesize currentAction, currentTarget;
 
 static ErrorState * gInstance = NULL;
 
@@ -19,6 +29,25 @@ static ErrorState * gInstance = NULL;
     return gInstance;
 }
 
+- (void)dealloc
+{
+    [retryAlertView release];
+    [super dealloc];
+}
+
+#pragma mark UIAlertViewDelegate implementation
+
+- (void)alertView:(UIAlertView *)alertView
+    clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self exitErrorState];
+        [self.currentTarget performSelector:self.currentAction];
+    }
+}
+
+#pragma mark ErrorState implementation
+
 - (void)exitErrorState
 {
     failedState = NO;
@@ -27,19 +56,52 @@ static ErrorState * gInstance = NULL;
 - (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error
 {
     if (!failedState) {
+        failedState = YES;
         NSLog(@"Displaying error with title: %@, error:%@", title, error);
         NSString * message = error.localizedDescription;
         UIAlertView * alertView =
             [UIAlertView simpleAlertViewWithTitle:title message:message];
         [alertView show];
-
-        failedState = YES;
     }
 }
 
 - (void)displayErrorWithTitle:(NSString *)title
 {
     [self displayErrorWithTitle:title error:nil];
+}
+
+- (void)displayErrorWithTitle:(NSString *)title error:(NSError *)error
+    retryTarget:(id)target retryAction:(SEL)action
+{
+    if (!failedState) {
+        failedState = YES;
+        NSLog(@"Displaying error with title: %@, error:%@", title, error);
+
+        self.currentTarget = target;
+        self.currentAction = action;
+        self.retryAlertView.title = title;
+        self.retryAlertView.message = error.localizedDescription;
+
+        [self.retryAlertView show];
+    }
+}
+
+- (UIAlertView *)retryAlertView
+{
+    if (!retryAlertView) {
+        NSString * cancelButtonTitle =
+            NSLocalizedString(@"alert.dismiss", @"");
+        NSString * retryButtonTitle =
+            NSLocalizedString(@"alert.retry", @"");
+
+        retryAlertView =
+            [[UIAlertView alloc]
+            initWithTitle:nil message:nil delegate:self
+            cancelButtonTitle:cancelButtonTitle
+            otherButtonTitles:retryButtonTitle];
+    }
+
+    return retryAlertView;
 }
 
 @end
