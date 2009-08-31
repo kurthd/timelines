@@ -102,6 +102,10 @@
                            toUser:(NSString *)username
                             error:(NSError *)error;
 
+- (void)deletedDirectMessageWithId:(NSString *)directMessageId;
+- (void)failedToDeleteDirectMessageWithId:(NSString *)directMessageId
+                                    error:(NSError *)error;
+
 #pragma mark Favorites
 
 @optional
