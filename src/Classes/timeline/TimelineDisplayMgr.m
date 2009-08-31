@@ -35,6 +35,7 @@
     action:(SEL)action;
 
 + (NSInteger)retweetFormat;
++ (BOOL)scrollToTop;
 
 @property (nonatomic, retain) SavedSearchMgr * savedSearchMgr;
 @property (nonatomic, retain) NSString * currentSearch;
@@ -55,6 +56,9 @@ enum {
 
 static NSInteger retweetFormat;
 static NSInteger retweetFormatValueAlredyRead;
+
+static BOOL scrollToTop;
+static BOOL scrollToTopValueAlreadyRead;
 
 @synthesize wrapperController, timelineController, userInfoController,
     selectedTweet, updateId, user, timeline, pagesShown, displayAsConversation,
@@ -199,8 +203,11 @@ static NSInteger retweetFormatValueAlredyRead;
             [service fetchUserInfoForUsername:self.currentUsername];
     }
 
+    BOOL scrollToTop = [[self class] scrollToTop];
+    NSString * scrollId =
+        scrollToTop ? [anUpdateId description] : self.tweetIdToShow;
     [timelineController setTweets:[timeline allValues] page:pagesShown
-        visibleTweetId:self.tweetIdToShow];
+        visibleTweetId:scrollId];
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
     [wrapperController setCachedDataAvailable:YES];
     refreshingTweets = NO;
@@ -1201,18 +1208,6 @@ static NSInteger retweetFormatValueAlredyRead;
     return [self.timelineController mostRecentTweetId];
 }
 
-+ (NSInteger)retweetFormat
-{
-    if (!retweetFormatValueAlredyRead) {
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        retweetFormat = [defaults integerForKey:@"retweet_format"];
-    }
-
-    retweetFormatValueAlredyRead = YES;
-
-    return retweetFormat;
-}
-
 // HACK: Added to get "Save Search" button in header view.
 - (void)setTimelineHeaderView:(UIView *)view
 {
@@ -1346,6 +1341,28 @@ static NSInteger retweetFormatValueAlredyRead;
     }
 
     return locationInfoViewController;
+}
+
++ (NSInteger)retweetFormat
+{
+    if (!retweetFormatValueAlredyRead) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        retweetFormat = [defaults integerForKey:@"retweet_format"];
+        retweetFormatValueAlredyRead = YES;
+    }
+
+    return retweetFormat;
+}
+
++ (BOOL)scrollToTop
+{
+    if (!scrollToTopValueAlreadyRead) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        scrollToTop = [defaults boolForKey:@"scroll_to_top"];
+        scrollToTopValueAlreadyRead = YES;
+    }
+
+    return scrollToTop;
 }
 
 @end
