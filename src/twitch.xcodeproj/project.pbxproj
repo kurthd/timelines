@@ -2153,6 +2153,7 @@
 				05EF40D30FFADF95007B59F1 /* Resources */,
 				05EF40FC0FFADF95007B59F1 /* Sources */,
 				05EF41810FFADF95007B59F1 /* Frameworks */,
+				0502255B104899C800BCB903 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2318,6 +2319,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0502255B104899C800BCB903 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "ARCHIVE_ROOT=\"$HOME/Dropbox/High Order Bit/Projects/Twitbit/Symbol Files/\"\n\nif [ $SDK_NAME = \"iphoneos3.0\" ]; then\n    echo \"Archiving $CONFIGURATION in $ARCHIVE_ROOT at `date`\" >> /tmp/dsym-archive.out\n#    if [ $CONFIGURATION = \"Distribution - Ad Hoc\" -o $CONFIGURATION = \"Distribution - App Store\" ]; then\n    if [ \"Distribution\" = \"Distribution\" ]; then\n        ARCHIVE_CONFIG_FOLDER=\"$ARCHIVE_ROOT/$CONFIGURATION\"\n        mkdir -p -v \"$ARCHIVE_CONFIG_FOLDER\" >> /tmp/dsym-archive.out\n        ARCHIVE_FOLDER=\"$ARCHIVE_CONFIG_FOLDER/`date \"+%Y-%m-%d-%H%M%S\"`\"\n        echo \"Copying $DWARF_DSYM_FOLDER_PATH to $ARCHIVE_FOLDER\" >> /tmp/dsym-archive.out\n        cp -R $DWARF_DSYM_FOLDER_PATH \"$ARCHIVE_FOLDER\" >> /tmp/dsym-archive.out\n    fi\nelse\n    echo \"Not archiving\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		05EF40FC0FFADF95007B59F1 /* Sources */ = {
