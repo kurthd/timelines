@@ -866,8 +866,6 @@
 
     self.activeCredentials.credentials = activatedCredentials;
     [self saveContext];
-
-    self.instapaperLogInDisplayMgr = nil;
 }
 
 - (void)credentialsSetChanged:(TwitterCredentials *)changedCredentials
