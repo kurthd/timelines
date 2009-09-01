@@ -241,6 +241,10 @@ enum {
     [self syncDisplayWithSettings];
 
     self.navigationItem.title = credentials.username;
+    [self.tableView reloadData];
+    // this forces the tableview to scroll to top
+    [self.tableView setContentOffset:CGPointMake(0, 0)
+                            animated:NO];
 }
 
 - (void)reloadDisplay
