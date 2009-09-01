@@ -27,7 +27,7 @@
     FindPeopleBookmarkViewControllerDelegate, UserInfoViewControllerDelegate,
     TwitchBrowserViewControllerDelegate, UITableViewDataSource,
     UITableViewDelegate, LocationMapViewControllerDelegate,
-    LocationInfoViewControllerDelegate>
+    LocationInfoViewControllerDelegate, NetworkAwareViewControllerDelegate>
 {
     NetworkAwareViewController * netAwareController;
     UserInfoViewController * userInfoController;
@@ -65,7 +65,11 @@
 
     LocationMapViewController * locationMapViewController;
     LocationInfoViewController * locationInfoViewController;
+
+    BOOL hasBeenDisplayed;
 }
+
+@property (nonatomic, retain) NSString * currentSearchUsername;
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc
     userInfoController:(UserInfoViewController *)userInfoController

@@ -118,14 +118,14 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         displayType = kTimelineTableViewCellTypeNormal;
 
     [cell setDisplayType:displayType];
-
+    
     BOOL newerThanVisibleTweetId =
         self.visibleTweetId &&
         [tweet.identifier compare:self.visibleTweetId] != NSOrderedDescending;
     BOOL darkenForOld =
         [[self class] highlightNewTweets] && newerThanVisibleTweetId;
     [cell setDarkenForOld:darkenForOld];
-
+    
     BOOL highlightForMention =
         self.mentionRegex ?
         [tweet.text isMatchedByRegex:self.mentionRegex] : NO;
@@ -166,13 +166,13 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
         [User setAvatar:avatarImage forUrl:urlAsString];
-
+        
         // avoid calling reloadData by setting the avatars of the visible cells
         NSArray * visibleCells = self.tableView.visibleCells;
         for (TimelineTableViewCell * cell in visibleCells)
             if ([cell.avatarImageUrl isEqualToString:urlAsString])
                 [cell setAvatarImage:avatarImage];
-
+        
         NSString * largeProfileUrl = user.avatar.fullImageUrl;
         if ([urlAsString isEqual:largeProfileUrl] && avatarImage)
             [avatarView setImage:avatarImage];
@@ -324,7 +324,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
             [alreadySent setObject:url forKey:url];
         }
     }
-
+    
     return avatarImage;
 }
 

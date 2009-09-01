@@ -23,7 +23,6 @@
     searchBookmarksDisplayMgr;
 
 @property (nonatomic, copy) NSArray * searchResults;
-@property (nonatomic, copy) NSString * searchQuery;
 @property (nonatomic, copy) NSNumber * searchPage;
 
 @property (nonatomic, retain) CredentialsActivatedPublisher *
@@ -275,6 +274,16 @@
 {
     if ([self.searchQuery isEqualToString:query])
         [self.timelineDisplayMgr setTimelineHeaderView:[self saveSearchView]];
+}
+
+#pragma mark NetworkAwareViewControllerDelegate implementation
+
+- (void)networkAwareViewWillAppear
+{
+    if (!hasBeenDisplayed && self.searchQuery) {
+        hasBeenDisplayed = YES;
+        [self searchFor:self.searchQuery];
+    }
 }
 
 #pragma mark UITableViewDataSource implementation

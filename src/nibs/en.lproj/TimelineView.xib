@@ -235,16 +235,16 @@
 				</object>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 			</object>
-			<object class="IBUIView" id="82088015">
+			<object class="IBUIView" id="94378415">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="IBUIView" id="490007214">
-						<reference key="NSNextResponder" ref="82088015"/>
+					<object class="IBUIView" id="768542261">
+						<reference key="NSNextResponder" ref="94378415"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, 391}, {320, 1}}</string>
-						<reference key="NSSuperview" ref="82088015"/>
+						<reference key="NSSuperview" ref="94378415"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC44NjI3NDUxMDYyIDAuODYyNzQ1MTA2MiAwLjg2Mjc0NTEwNjIAA</bytes>
@@ -256,7 +256,7 @@
 				<reference key="NSSuperview"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC45NDExNzY0NzQxIDAuOTQxMTc2NDc0MSAwLjk0MTE3NjQ3NDEAA</bytes>
+					<bytes key="NSRGB">MC45NjA3ODQzMTYxIDAuOTYwNzg0MzE2MSAwLjk2MDc4NDMxNjEAA</bytes>
 				</object>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 			</object>
@@ -458,7 +458,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">plainHeaderView</string>
 						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="82088015"/>
+						<reference key="destination" ref="94378415"/>
 					</object>
 					<int key="connectionID">63</int>
 				</object>
@@ -591,18 +591,18 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">53</int>
-						<reference key="object" ref="82088015"/>
+						<reference key="object" ref="94378415"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="490007214"/>
+							<reference ref="768542261"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Plain Header View</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">59</int>
-						<reference key="object" ref="490007214"/>
-						<reference key="parent" ref="82088015"/>
+						<reference key="object" ref="768542261"/>
+						<reference key="parent" ref="94378415"/>
 						<string key="objectName">Gray Line</string>
 					</object>
 				</object>
@@ -641,7 +641,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>TimelineViewController</string>
 					<string>UIResponder</string>
-					<string>{{21, 778}, {78, 78}}</string>
+					<string>{{79, 734}, {78, 78}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>

@@ -40,7 +40,6 @@
 @property (nonatomic, retain)
     CredentialsActivatedPublisher * credentialsPublisher;
 @property (nonatomic, retain) UserListDisplayMgr * nextUserListDisplayMgr;
-@property (nonatomic, retain) NSString * currentSearchUsername;
 @property (nonatomic, retain) NSString * currentSearch;
 @property (nonatomic, retain) SavedSearchMgr * generalSavedSearchMgr;
 @property (nonatomic, copy) NSArray * autocompleteArray;
@@ -138,6 +137,16 @@
     }
 
     return self;
+}
+
+#pragma mark NetworkAwareViewControllerDelegate implementation
+
+- (void)networkAwareViewWillAppear
+{
+    if (!hasBeenDisplayed && self.currentSearchUsername) {
+        hasBeenDisplayed = YES;
+        [self userDidSelectSearchQuery:self.currentSearchUsername];
+    }
 }
 
 #pragma mark TwitterServiceDelegate implementation

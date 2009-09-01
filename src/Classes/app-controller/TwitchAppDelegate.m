@@ -516,6 +516,7 @@
         timelineFactory:timelineDisplayMgrFactory
         userListFactory:userListFactory];
 
+    findPeopleNetAwareViewController.delegate = findPeopleSearchDisplayMgr;
     twitterService.delegate = findPeopleSearchDisplayMgr;
     userInfoController.delegate = findPeopleSearchDisplayMgr;
 
@@ -546,6 +547,7 @@
             netAwareController:searchNetAwareViewController
             timelineDisplayMgr:displayMgr
                        context:[self managedObjectContext]];
+    searchNetAwareViewController.delegate = searchBarDisplayMgr;
 }
 
 - (void)initAccountsTab
@@ -1113,6 +1115,9 @@
         [newDirectMessagesPersistenceStore load];
     [directMessageAcctMgr setWithDirectMessageCountsByAccount:
         [newDirectMessagesPersistenceStore loadNewMessageCountsForAllAccounts]];
+    
+    findPeopleSearchDisplayMgr.currentSearchUsername = uiState.findPeopleText;
+    searchBarDisplayMgr.searchQuery = uiState.searchText;
 }
 
 - (void)persistUIState
@@ -1139,6 +1144,9 @@
         [searchBarDisplayMgr selectedBookmarkSegment];
     uiState.selectedPeopleBookmarkIndex =
         [findPeopleSearchDisplayMgr selectedBookmarkSegment];
+
+    uiState.findPeopleText = findPeopleSearchDisplayMgr.currentSearchUsername;
+    uiState.searchText = searchBarDisplayMgr.searchQuery;
 
     [uiStatePersistenceStore save:uiState];
 
