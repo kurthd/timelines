@@ -3,10 +3,19 @@
 //
 
 #import "InstapaperLogInViewController.h"
+#import "InstapaperCredentials+KeychainAdditions.h"
+#import "UIButton+StandardButtonAdditions.h"
+
+@interface InstapaperLogInViewController ()
+
+- (void)syncInterfaceToState;
+
+@end
 
 @implementation InstapaperLogInViewController
 
-@synthesize delegate, credentials, displayMode, displayingActivity;
+@synthesize delegate, credentials, displayMode;
+@synthesize displayingActivity, editingExistingAccount;
 
 - (void)dealloc
 {
@@ -21,8 +30,6 @@
 
     [usernameTextField release];
     [passwordTextField release];
-
-    [deleteButton release];
 
     [credentials release];
 
@@ -79,6 +86,7 @@
     [ai release];
 
     displayingActivity = NO;
+    editingExistingAccount = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -86,7 +94,14 @@
     [super viewWillAppear:animated];
 
     saveButton.enabled = usernameTextField.text.length > 0;
-    [usernameTextField becomeFirstResponder];
+
+    // if we don't do this after a delay, we don't see the animation and
+    // the view transition animations looks like they're skipping
+    [usernameTextField performSelector:@selector(becomeFirstResponder)
+                            withObject:nil
+                            afterDelay:0.5];
+
+    [self syncInterfaceToState];
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -116,19 +131,6 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return indexPath.row == 0 ? usernameCell : passwordCell;
-}
-
-#pragma mark UITableViewDelegate implementation
-
-- (void)tableView:(UITableView *)tv
-    didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    // AnotherViewController *anotherViewController =
-    //     [[AnotherViewController alloc]
-    //      initWithNibName:@"AnotherView" bundle:nil];
-    // [self.navigationController pushViewController:anotherViewController];
-    // [anotherViewController release];
 }
 
 #pragma mark Button actions
@@ -177,6 +179,86 @@
     }
 
     return YES;
+}
+
+#pragma mark Private implementation
+
+- (void)syncInterfaceToState
+{
+    usernameTextField.text = credentials.username;
+    passwordTextField.text = [credentials password];
+
+    saveButton.enabled = credentials.username.length > 0;
+
+    if (editingExistingAccount) {
+        NSString * title =
+            NSLocalizedString(@"instapaperloginview.deleteaccount.button.title",
+            @"");
+        UIButton * deleteButton = [UIButton deleteButtonWithTitle:title];
+        [deleteButton addTarget:self
+                         action:@selector(deleteAccount:)
+               forControlEvents:UIControlEventTouchUpInside];
+
+        self.tableView.tableFooterView = deleteButton;
+        [deleteButton release];
+    } else
+        self.tableView.tableFooterView = nil;
+}
+
+- (void)deleteAccount:(id)sender
+{
+    NSString * title =
+        NSLocalizedString(@"instapaperloginview.deleteaccount.confirm.title",
+        @"");
+    NSString * cancelButtonTitle =
+        NSLocalizedString(@"instapaperloginview.deleteaccount.confirm.cancel",
+        @"");
+    NSString * destructiveButtonTitle =
+        NSLocalizedString(@"instapaperloginview.deleteaccount.confirm.delete",
+        @"");
+
+    // released in the delegate method
+    UIActionSheet * sheet =
+        [[UIActionSheet alloc] initWithTitle:title
+                                    delegate:self
+                           cancelButtonTitle:cancelButtonTitle
+                      destructiveButtonTitle:destructiveButtonTitle
+                           otherButtonTitles:nil];
+
+    [sheet showInView:[UIApplication sharedApplication].keyWindow];
+}
+
+#pragma mark UIActionSheetDelegate implementation
+
+- (void)actionSheet:(UIActionSheet *)actionSheet
+    clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        NSLog(@"Deleting Instapaper account: %@.", self.credentials.username);
+        [self.delegate deleteAccount:credentials];
+    }
+
+    [actionSheet autorelease];
+}
+
+#pragma mark Accessors
+
+- (void)setCredentials:(InstapaperCredentials *)someCredentials
+{
+    if (credentials != someCredentials) {
+        [credentials release];
+        credentials = [someCredentials retain];
+
+        [self syncInterfaceToState];
+    }
+}
+
+- (void)setEditingExistingAccount:(BOOL)editing
+{
+    if (editing != editingExistingAccount) {
+        editingExistingAccount = editing;
+        [self syncInterfaceToState];
+    }
 }
 
 @end

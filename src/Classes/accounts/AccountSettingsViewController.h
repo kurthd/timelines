@@ -14,6 +14,9 @@
 - (void)userWantsToConfigurePhotoServicesForAccount:
     (TwitterCredentials *)credentials;
 
+- (void)userWantsToConfigureInstapaperForAccount:
+    (TwitterCredentials *)credentials;
+
 @end
 
 @interface AccountSettingsViewController : UITableViewController
@@ -37,5 +40,7 @@
 
 - (void)presentSettings:(AccountSettings *)someSettings
              forAccount:(TwitterCredentials *)someCredentials;
+
+- (void)reloadDisplay;
 
 @end

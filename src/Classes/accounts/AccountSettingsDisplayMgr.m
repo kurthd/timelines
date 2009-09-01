@@ -13,6 +13,7 @@
     accountSettingsViewController;
 
 @property (nonatomic, retain) PhotoServicesDisplayMgr * photoServicesDisplayMgr;
+@property (nonatomic, retain) InstapaperLogInDisplayMgr * instapaperDisplayMgr;
 
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
@@ -22,7 +23,7 @@
 
 @synthesize delegate;
 @synthesize navigationController, accountSettingsViewController;
-@synthesize photoServicesDisplayMgr;
+@synthesize photoServicesDisplayMgr, instapaperDisplayMgr;
 @synthesize context;
 
 - (void)dealloc
@@ -89,6 +90,15 @@
         configurePhotoServicesForAccount:credentials];
 }
 
+- (void)userWantsToConfigureInstapaperForAccount:
+    (TwitterCredentials *)credentials
+{
+    self.instapaperDisplayMgr.credentials = credentials;
+    [self.instapaperDisplayMgr
+        configureExistingAccountWithNavigationController:
+        self.navigationController];
+}
+
 #pragma mark PhotoServiceDisplayMgrDelegate implementation
 
 - (NSString *)currentlySelectedPhotoServiceName:(TwitterCredentials *)ctls
@@ -123,6 +133,23 @@
     [AccountSettings setSettings:settings forKey:ctls.username];
 }
 
+#pragma mark InstapaperLogInDisplayMgrDelegate implementation
+
+- (void)accountWillBeDeleted:(InstapaperCredentials *)instapaperCredentials
+{
+    [self.accountSettingsViewController reloadDisplay];
+}
+
+- (void)accountCreated:(InstapaperCredentials *)credentials
+{
+    [self.accountSettingsViewController reloadDisplay];
+}
+
+- (void)accountCreationCancelled
+{
+    // nothing changed, so nothing to do
+}
+
 #pragma mark Accessors
 
 - (AccountSettingsViewController *)accountSettingsViewController
@@ -148,6 +175,17 @@
     }
 
     return photoServicesDisplayMgr;
+}
+
+- (InstapaperLogInDisplayMgr *)instapaperDisplayMgr
+{
+    if (!instapaperDisplayMgr) {
+        instapaperDisplayMgr =
+            [[InstapaperLogInDisplayMgr alloc] initWithContext:self.context];
+        instapaperDisplayMgr.delegate = self;
+    }
+
+    return instapaperDisplayMgr;
 }
 
 @end

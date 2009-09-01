@@ -110,6 +110,9 @@ accountsettings.push.footer = "Twitbit can send push notifications for\nmentions
 accountsettings.photo.header = "Photo & Video";
 accountsettings.photo.integration.label = "Photo & Video Services";
 accountsettings.photo.compression.label = "Compression";
+accountsettings.integration.header = "Other Services";
+accountsettings.integration.instapaper.label = "Instapaper";
+accountsettings.integration.instapaper.notconfigured.label = "not configured";
 
 /* PhotoServicesViewController */
 photoservices.view.title = "Services";
@@ -267,7 +270,12 @@ instapaperloginview.footer = "Instapaper is a free service that saves links to w
 
 /* Instapaper */
 instapaper.login.failed.alert.title = "Log In Failed";
+instapaper.save.failed.alert.title = "Failed to Save URL";
 instapaper.http400.message = "Bad request";
 instapaper.http403.message = "Invalid username or password";
 instapaper.http500.message = "The service encountered an error. Please try again later.";
-instapaper.unkownerror.message = "An unknown error occurred";
+instapaper.unknownerror.message = "An unknown error occurred";
+instapaperloginview.deleteaccount.button.title = "Delete Account";
+instapaperloginview.deleteaccount.confirm.title = "Are you sure you want to delete your Instapaper account?";
+instapaperloginview.deleteaccount.confirm.cancel = "Cancel";
+instapaperloginview.deleteaccount.confirm.delete = "Delete Account";

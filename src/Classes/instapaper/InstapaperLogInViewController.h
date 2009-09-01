@@ -15,9 +15,12 @@ typedef enum {
 - (void)userDidSave:(NSString *)username password:(NSString *)password;
 - (void)userDidCancel;
 
+- (void)deleteAccount:(InstapaperCredentials *)credentials;
+
 @end
 
-@interface InstapaperLogInViewController : UITableViewController
+@interface InstapaperLogInViewController :
+    UITableViewController <UIActionSheetDelegate>
 {
     id<InstapaperLogInViewControllerDelegate> delegate;
 
@@ -31,13 +34,12 @@ typedef enum {
     IBOutlet UITextField * usernameTextField;
     IBOutlet UITextField * passwordTextField;
 
-    UIButton * deleteButton;
-
     InstapaperCredentials * credentials;
 
     InstapaperLogInViewControllerDisplayMode displayMode;
 
     BOOL displayingActivity;
+    BOOL editingExistingAccount;
 }
 
 @property (nonatomic, assign) id<InstapaperLogInViewControllerDelegate>
@@ -47,6 +49,7 @@ typedef enum {
     displayMode;
 
 @property (nonatomic, assign, readonly) BOOL displayingActivity;
+@property (nonatomic, assign) BOOL editingExistingAccount;
 
 - (id)initWithDelegate:(id<InstapaperLogInViewControllerDelegate>)aDelegate;
 

@@ -7,11 +7,15 @@
 #import "InstapaperService.h"
 #import "TwitterCredentials.h"
 
+@protocol InstapaperLogInDisplayMgrDelegate;
+
 @interface InstapaperLogInDisplayMgr :
     NSObject
     <InstapaperLogInViewControllerDelegate,
     InstapaperServiceDelegate>
 {
+    id<InstapaperLogInDisplayMgrDelegate> delegate;
+
     InstapaperLogInViewController * viewController;
     UINavigationController * navigationController;
     UIViewController * rootViewController;
@@ -23,9 +27,22 @@
     NSManagedObjectContext * context;
 }
 
-- (id)initWithCredentials:(TwitterCredentials *)someCredentials
-                  context:(NSManagedObjectContext *)aContext;
+@property (nonatomic, assign) id<InstapaperLogInDisplayMgrDelegate> delegate;
+@property (nonatomic, retain) TwitterCredentials * credentials;
+
+- (id)initWithContext:(NSManagedObjectContext *)aContext;
 
 - (void)logInModallyForViewController:(UIViewController *)aRootViewController;
+- (void)configureExistingAccountWithNavigationController:
+    (UINavigationController *)aNavigationController;
+
+@end
+
+@protocol InstapaperLogInDisplayMgrDelegate
+
+- (void)accountCreated:(InstapaperCredentials *)credentials;
+- (void)accountCreationCancelled;
+
+- (void)accountWillBeDeleted:(InstapaperCredentials *)credentials;
 
 @end

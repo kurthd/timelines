@@ -15,19 +15,23 @@
 @property (nonatomic, retain) UINavigationController * navigationController;
 @property (nonatomic, retain) InstapaperService * instapaperService;
 
-@property (nonatomic, retain) TwitterCredentials * credentials;
 @property (nonatomic, retain) NSManagedObjectContext * context;
+
+- (void)dismissInstapaperLogInViewController;
 
 @end
 
 @implementation InstapaperLogInDisplayMgr
 
+@synthesize delegate;
 @synthesize viewController, navigationController, rootViewController;
 @synthesize instapaperService;
 @synthesize credentials, context;
 
 - (void)dealloc
 {
+    self.delegate = nil;
+
     self.viewController = nil;
     self.rootViewController = nil;
     self.navigationController = nil;
@@ -40,11 +44,9 @@
     [super dealloc];
 }
 
-- (id)initWithCredentials:(TwitterCredentials *)someCredentials
-                  context:(NSManagedObjectContext *)aContext
+- (id)initWithContext:(NSManagedObjectContext *)aContext
 {
     if (self = [super init]) {
-        self.credentials = someCredentials;
         self.context = aContext;
         authenticating = NO;
     }
@@ -67,6 +69,20 @@
         presentModalViewController:self.navigationController animated:YES];
 }
 
+- (void)configureExistingAccountWithNavigationController:
+    (UINavigationController *)aNavigationController
+{
+    self.viewController = nil;
+    self.rootViewController = nil;
+    self.navigationController = aNavigationController;
+
+    [self.navigationController pushViewController:self.viewController
+                                         animated:YES];
+    self.viewController.credentials = self.credentials.instapaperCredentials;
+    self.viewController.editingExistingAccount =
+        !!self.credentials.instapaperCredentials;
+}
+
 #pragma mark InstapaperLogInViewControllerDelegate implementation
 
 - (void)userDidSave:(NSString *)username password:(NSString *)password
@@ -80,9 +96,20 @@
 
 - (void)userDidCancel
 {
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
+    [self dismissInstapaperLogInViewController];
     if (authenticating)
         [self.instapaperService cancelAuthentication];
+    [self.delegate accountCreationCancelled];
+}
+
+- (void)deleteAccount:(InstapaperCredentials *)instapaperCredentials
+{
+    [self.delegate accountWillBeDeleted:instapaperCredentials];
+
+    [self.context deleteObject:instapaperCredentials];
+    [self.context save:NULL];
+
+    [self dismissInstapaperLogInViewController];
 }
 
 #pragma mark InstapaperServiceDelegate implementation
@@ -100,8 +127,10 @@
     [self.context save:NULL];
 
     [self.viewController hideActivity];
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
+    [self dismissInstapaperLogInViewController];
     authenticating = NO;
+
+    [self.delegate accountCreated:instapaperCredentials];
 }
 
 - (void)failedToAuthenticateUsername:(NSString *)username
@@ -124,6 +153,16 @@
 
 - (void)failedToPostUrl:(NSString *)url error:(NSError *)error
 {
+}
+
+#pragma mark Private implementation
+
+- (void)dismissInstapaperLogInViewController
+{
+    if (self.rootViewController)
+        [self.rootViewController dismissModalViewControllerAnimated:YES];
+    else
+        [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark Accessors

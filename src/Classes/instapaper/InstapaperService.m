@@ -127,10 +127,10 @@
     didReceiveResponse:(NSURLResponse *)response
 {
     NSHTTPURLResponse * httpResponse = (NSHTTPURLResponse *) response;
-    NSLog(@"Status code of response: %d.", [httpResponse statusCode]);
-    NSLog(@"All header fields: %@.", [httpResponse allHeaderFields]);
-
     NSInteger statusCode = [httpResponse statusCode];
+    NSLog(@"Instapaper response: %d: %@.", statusCode,
+        [NSHTTPURLResponse localizedStringForStatusCode:statusCode]);
+
     if (statusCode == 200 && connection == self.authenticationConnection) {
         SEL sel = @selector(authenticatedUsername:password:);
         if ([self.delegate respondsToSelector:sel])

@@ -6,13 +6,14 @@
 #import "TwitterCredentials.h"
 #import "AccountSettingsViewController.h"
 #import "PhotoServicesDisplayMgr.h"
+#import "InstapaperLogInDisplayMgr.h"
 
 @protocol AccountSettingsDisplayMgrDelegate
 @end
 
 @interface AccountSettingsDisplayMgr :
     NSObject <AccountSettingsViewControllerDelegate,
-    PhotoServicesDisplayMgrDelegate>
+    PhotoServicesDisplayMgrDelegate, InstapaperLogInDisplayMgrDelegate>
 {
     id<AccountSettingsDisplayMgrDelegate> delegate;
 
@@ -20,6 +21,7 @@
     AccountSettingsViewController * accountSettingsViewController;
 
     PhotoServicesDisplayMgr * photoServicesDisplayMgr;
+    InstapaperLogInDisplayMgr * instapaperDisplayMgr;
 
     NSManagedObjectContext * context;
 }

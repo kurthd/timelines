@@ -27,7 +27,8 @@
 @interface TwitchAppDelegate : NSObject
     <UIApplicationDelegate, UITabBarControllerDelegate, DeviceRegistrarDelegate,
     TwitterServiceDelegate, ComposeTweetDisplayMgrDelegate,
-    TwitchWebBrowserDisplayMgrDelegate, InstapaperServiceDelegate>
+    TwitchWebBrowserDisplayMgrDelegate, InstapaperServiceDelegate,
+    InstapaperLogInDisplayMgrDelegate>
 {
     UIWindow * window;
     UITabBarController * tabBarController;
