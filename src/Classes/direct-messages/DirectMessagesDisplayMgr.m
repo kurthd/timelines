@@ -364,11 +364,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)selectedTweet:(DirectMessage *)message
     avatarImage:(UIImage *)avatarImage
 {
-    // HACK: Release and then re-recreate the view for every tweet so the view
-    // is properly scrolled to top when it appears. I have not been able to get
-    // the view to scroll to top programmatically.
-    [tweetViewController release];
-    tweetViewController = nil;
+    // HACK: forces to scroll to top
+    [self.tweetViewController.tableView setContentOffset:CGPointMake(0, 300)
+        animated:NO];
 
     NSLog(@"Message display manager: selected message: %@", message);
     self.selectedMessage = message;
@@ -407,9 +405,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)showUserInfoForUser:(User *)aUser
 {
     NSLog(@"Direct message display manager: showing user info for %@", aUser);
-    // Forces to scroll to top
-    [userInfoController release];
-    userInfoController = nil;
+    // HACK: forces to scroll to top
+    [self performSelector:@selector(scrollUserInfoViewToTop) withObject:nil
+        afterDelay:1];
+
     self.userInfoController.navigationItem.title = aUser.username;
     [wrapperController.navigationController
         pushViewController:self.userInfoController animated:YES];
@@ -423,16 +422,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)showUserInfoForUsername:(NSString *)aUsername
 {
     // HACK: forces to scroll to top
-    // All dependencies must also be recreated
-    [userInfoController release];
-    userInfoController = nil;
-    [userInfoControllerWrapper release];
-    userInfoControllerWrapper = nil;
-    [userInfoRequestAdapter release];
-    userInfoRequestAdapter = nil;
-    [userInfoTwitterService release];
-    userInfoTwitterService = nil;
-
+    [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
+        animated:NO];
     [self.userInfoController showingNewUser];
     self.userInfoControllerWrapper.navigationItem.title = aUsername;
     [self.userInfoControllerWrapper setCachedDataAvailable:NO];

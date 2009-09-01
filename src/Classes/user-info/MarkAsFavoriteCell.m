@@ -16,14 +16,17 @@
 
 - (void)setMarkedState:(BOOL)favorite
 {
-    if (favorite) {
-        mainLabel.text =
-            NSLocalizedString(@"tweetdetailsview.unfavorite.label", @"");
-        iconView.image = [UIImage imageNamed:@"Favorite.png"];
-    } else {
-        mainLabel.text =
-            NSLocalizedString(@"tweetdetailsview.favorite.label", @"");
-        iconView.image = [UIImage imageNamed:@"NotFavorite.png"];
+    if (markedAsFavorite != favorite) {
+        markedAsFavorite = favorite;
+        if (favorite) {
+            mainLabel.text =
+                NSLocalizedString(@"tweetdetailsview.unfavorite.label", @"");
+            iconView.image = [UIImage imageNamed:@"Favorite.png"];
+        } else {
+            mainLabel.text =
+                NSLocalizedString(@"tweetdetailsview.favorite.label", @"");
+            iconView.image = [UIImage imageNamed:@"NotFavorite.png"];
+        }
     }
 }
 

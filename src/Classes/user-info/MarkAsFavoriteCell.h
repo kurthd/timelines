@@ -9,6 +9,8 @@
     IBOutlet UILabel * mainLabel;
     IBOutlet UIImageView * iconView;
     IBOutlet UIActivityIndicatorView * activityIndicator;
+
+    BOOL markedAsFavorite;
 }
 
 - (void)setMarkedState:(BOOL)favorite;
