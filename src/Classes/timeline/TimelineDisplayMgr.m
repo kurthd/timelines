@@ -365,11 +365,9 @@ static BOOL scrollToTopValueAlreadyRead;
 
 - (void)selectedTweet:(TweetInfo *)tweet
 {
-    // HACK: Release and then re-recreate the view for every tweet so the view
-    // is properly scrolled to top when it appears. I have not been able to get
-    // the view to scroll to top programmatically.
-    [tweetDetailsController release];
-    tweetDetailsController = nil;
+    // HACK: forces to scroll to top
+    [self.tweetDetailsController.tableView setContentOffset:CGPointMake(0, 300)
+        animated:NO];
 
     NSLog(@"Timeline display manager: selected tweet: %@", tweet);
     self.selectedTweet = tweet;
@@ -427,8 +425,9 @@ static BOOL scrollToTopValueAlreadyRead;
 - (void)showUserInfoForUser:(User *)aUser
 {
     // HACK: forces to scroll to top
-    [userInfoController release];
-    userInfoController = nil;
+    [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
+        animated:NO];
+
     self.userInfoController.navigationItem.title = aUser.username;
     [self.wrapperController.navigationController
         pushViewController:self.userInfoController animated:YES];
@@ -442,15 +441,8 @@ static BOOL scrollToTopValueAlreadyRead;
 - (void)showUserInfoForUsername:(NSString *)aUsername
 {
     // HACK: forces to scroll to top
-    // All dependencies must also be recreated
-    [userInfoController release];
-    userInfoController = nil;
-    [userInfoControllerWrapper release];
-    userInfoControllerWrapper = nil;
-    [userInfoRequestAdapter release];
-    userInfoRequestAdapter = nil;
-    [userInfoTwitterService release];
-    userInfoTwitterService = nil;
+    [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
+        animated:NO];
 
     [self.userInfoController showingNewUser];
     self.userInfoControllerWrapper.navigationItem.title = aUsername;

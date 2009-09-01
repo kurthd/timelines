@@ -45,11 +45,15 @@ enum TweetActionRows {
 
 @property (nonatomic, retain) TweetInfo * tweet;
 @property (nonatomic, retain) UIWebView * tweetContentView;
-@property (readonly) MarkAsFavoriteCell * favoriteCell;
 
-- (NSString *)reuseIdentifierForRowAtIndexPath:(NSIndexPath *)indexPath;
-- (UITableViewCell *)createCellForRowAtIndexPath:(NSIndexPath *)indexPath
-                                 reuseIdentifier:(NSString *)reuseIdentifier;
+@property (readonly) UITableViewCell * publicReplyCell;
+@property (readonly) UITableViewCell * directMessageCell;
+@property (readonly) UITableViewCell * retweetCell;
+@property (readonly) MarkAsFavoriteCell * favoriteCell;
+// 
+// - (NSString *)reuseIdentifierForRowAtIndexPath:(NSIndexPath *)indexPath;
+// - (UITableViewCell *)createCellForRowAtIndexPath:(NSIndexPath *)indexPath
+//                                  reuseIdentifier:(NSString *)reuseIdentifier;
 
 - (void)displayTweet;
 - (void)loadTweetWebView;
@@ -84,6 +88,10 @@ enum TweetActionRows {
     [headerView release];
     [fullNameLabel release];
     [usernameLabel release];
+    
+    [publicReplyCell release];
+    [directMessageCell release];
+    [retweetCell release];
     [favoriteCell release];
 
     [tweetTextTableViewCell release];
@@ -167,18 +175,9 @@ enum TweetActionRows {
 
     NSIndexPath * transformedPath = [self indexForActualIndexPath:indexPath];
 
-    BOOL tweetTextRow =
-        transformedPath.section == kTweetDetailsSection &&
-        transformedPath.row == kTweetTextRow;
-
-    if (!tweetTextRow) {
-        NSString * identifier =
-            [self reuseIdentifierForRowAtIndexPath:indexPath];
-        cell = [tv dequeueReusableCellWithIdentifier:identifier];
-        if (cell == nil)
-            cell = [self createCellForRowAtIndexPath:indexPath
-                                     reuseIdentifier:identifier];
-    }
+    // BOOL tweetTextRow =
+    //     transformedPath.section == kTweetDetailsSection &&
+    //     transformedPath.row == kTweetTextRow;
 
     if (transformedPath.section == kTweetDetailsSection) {
         if (transformedPath.row == kTweetTextRow) {
@@ -194,32 +193,12 @@ enum TweetActionRows {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     } else if (transformedPath.section == kComposeActionsSection) {
-        NSString * text = nil;
-        UIImage * image = nil;
-        UIImage * highlightedImage = nil;
-
-        if (transformedPath.row == kPublicReplyRow) {
-            text =
-                NSLocalizedString(@"tweetdetailsview.publicreply.label", @"");
-            image = [UIImage imageNamed:@"PublicReplyButtonIcon.png"];
-            highlightedImage =
-                [UIImage imageNamed:@"PublicReplyButtonIconHighlighted.png"];
-        } else if (transformedPath.row == kDirectMessageRow) {
-            text =
-                NSLocalizedString(@"tweetdetailsview.directmessage.label", @"");
-            image = [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
-            highlightedImage =
-                [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
-        } else if (transformedPath.row == kRetweetRow) {
-            text = NSLocalizedString(@"tweetdetailsview.retweet.label", @"");
-            image = [UIImage imageNamed:@"RetweetButtonIcon.png"];
-            highlightedImage =
-                [UIImage imageNamed:@"RetweetButtonIconHighlighted.png"];
-        }
-
-        cell.textLabel.text = text;
-        cell.imageView.image = image;
-        cell.imageView.highlightedImage = highlightedImage;
+        if (transformedPath.row == kPublicReplyRow)
+            cell = self.publicReplyCell;
+        else if (transformedPath.row == kDirectMessageRow)
+            cell = self.directMessageCell;
+        else if (transformedPath.row == kRetweetRow)
+            cell = self.retweetCell;
     } else if (transformedPath.section == kTweetActionsSection)
         if (transformedPath.row == kFavoriteRow) {
             cell = self.favoriteCell;
@@ -351,7 +330,7 @@ enum TweetActionRows {
 - (void)hideFavoriteButton:(BOOL)hide
 {
     showsFavoriteButton = !hide;
-} 
+}
 
 #pragma mark UIActionSheetDelegate implementation
 
@@ -501,49 +480,100 @@ enum TweetActionRows {
 
 #pragma mark Private implementation
 
-- (NSString *)reuseIdentifierForRowAtIndexPath:(NSIndexPath *)indexPath
+// - (NSString *)reuseIdentifierForRowAtIndexPath:(NSIndexPath *)indexPath
+// {
+//     NSString * identifier = nil;
+// 
+//     switch (indexPath.section) {
+//         case kTweetDetailsSection:
+//             switch (indexPath.row) {
+//                 case kTweetTextRow:
+//                     identifier = @"TweetTextTableViewCell";
+//                     break;
+//                 case kConversationRow:
+//                     identifier = @"TweetConversationTableViewCell";
+//                     break;
+//             }
+//             break;
+//         case kComposeActionsSection:
+//             identifier = @"ComposeActionsTableViewCell";
+//             break;
+//         case kTweetActionsSection:
+//             identifier = @"TweetActionsSection";
+//             break;
+//     }
+// 
+//     return identifier;
+// }
+// 
+// - (UITableViewCell *)createCellForRowAtIndexPath:(NSIndexPath *)indexPath
+//                                  reuseIdentifier:(NSString *)reuseIdentifier
+// {
+//     UITableViewCell * cell = nil;
+// 
+//     BOOL tweetTextRow =
+//         indexPath.section == kTweetDetailsSection &&
+//         indexPath.row == kTweetTextRow;
+//     if (tweetTextRow)
+//         cell = tweetTextTableViewCell;
+//     else
+//         cell =
+//             [[[UITableViewCell alloc]
+//             initWithStyle:UITableViewCellStyleDefault
+//             reuseIdentifier:reuseIdentifier] autorelease];
+// 
+//     return cell;
+// }
+
+        
+- (UITableViewCell *)publicReplyCell
 {
-    NSString * identifier = nil;
-
-    switch (indexPath.section) {
-        case kTweetDetailsSection:
-            switch (indexPath.row) {
-                case kTweetTextRow:
-                    identifier = @"TweetTextTableViewCell";
-                    break;
-                case kConversationRow:
-                    identifier = @"TweetConversationTableViewCell";
-                    break;
-            }
-            break;
-        case kComposeActionsSection:
-            identifier = @"ComposeActionsTableViewCell";
-            break;
-        case kTweetActionsSection:
-            identifier = @"TweetActionsSection";
-            break;
+    if (!publicReplyCell) {
+        publicReplyCell = 
+            [[UITableViewCell alloc]
+            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+        publicReplyCell.textLabel.text =
+            NSLocalizedString(@"tweetdetailsview.publicreply.label", @"");
+        publicReplyCell.imageView.image =
+            [UIImage imageNamed:@"PublicReplyButtonIcon.png"];
+        publicReplyCell.imageView.highlightedImage =
+            [UIImage imageNamed:@"PublicReplyButtonIconHighlighted.png"];
     }
-
-    return identifier;
+    
+    return publicReplyCell;
 }
 
-- (UITableViewCell *)createCellForRowAtIndexPath:(NSIndexPath *)indexPath
-                                 reuseIdentifier:(NSString *)reuseIdentifier
+- (UITableViewCell *)directMessageCell
 {
-    UITableViewCell * cell = nil;
+    if (!directMessageCell) {
+        directMessageCell =
+            [[UITableViewCell alloc]
+            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+        directMessageCell.textLabel.text =
+            NSLocalizedString(@"tweetdetailsview.directmessage.label", @"");
+        directMessageCell.imageView.image =
+            [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
+        directMessageCell.imageView.highlightedImage =
+            [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
+    }
 
-    BOOL tweetTextRow =
-        indexPath.section == kTweetDetailsSection &&
-        indexPath.row == kTweetTextRow;
-    if (tweetTextRow)
-        cell = tweetTextTableViewCell;
-    else
-        cell =
-            [[[UITableViewCell alloc]
-            initWithStyle:UITableViewCellStyleDefault
-            reuseIdentifier:reuseIdentifier] autorelease];
+    return directMessageCell;
+}
 
-    return cell;
+- (UITableViewCell *)retweetCell
+{
+    if (!retweetCell) {
+        retweetCell = 
+            [[UITableViewCell alloc]
+            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+        retweetCell.textLabel.text =
+            NSLocalizedString(@"tweetdetailsview.retweet.label", @"");
+        retweetCell.imageView.image = [UIImage imageNamed:@"RetweetButtonIcon.png"];
+        retweetCell.imageView.highlightedImage =
+            [UIImage imageNamed:@"RetweetButtonIconHighlighted.png"];
+    }
+
+    return retweetCell;
 }
 
 - (void)loadTweetWebView

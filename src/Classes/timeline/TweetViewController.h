@@ -34,7 +34,11 @@
 
     UIViewController * realParentViewController;
 
+    UITableViewCell * publicReplyCell;
+    UITableViewCell * directMessageCell;
+    UITableViewCell * retweetCell;
     MarkAsFavoriteCell * favoriteCell;
+
     BOOL markingFavorite;
 }
 
