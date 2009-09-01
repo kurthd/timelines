@@ -135,11 +135,6 @@
 
 #pragma mark InstapaperLogInDisplayMgrDelegate implementation
 
-- (void)accountWillBeDeleted:(InstapaperCredentials *)instapaperCredentials
-{
-    [self.accountSettingsViewController reloadDisplay];
-}
-
 - (void)accountCreated:(InstapaperCredentials *)credentials
 {
     [self.accountSettingsViewController reloadDisplay];
@@ -148,6 +143,21 @@
 - (void)accountCreationCancelled
 {
     // nothing changed, so nothing to do
+}
+
+- (void)accountEdited:(InstapaperCredentials *)credentials
+{
+    [self.accountSettingsViewController reloadDisplay];
+}
+
+- (void)editingAccountCancelled:(InstapaperCredentials *)credentials
+{
+    // nothing changed, so nothing to do
+}
+
+- (void)accountWillBeDeleted:(InstapaperCredentials *)instapaperCredentials
+{
+    [self.accountSettingsViewController reloadDisplay];
 }
 
 #pragma mark Accessors

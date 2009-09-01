@@ -43,6 +43,9 @@
 - (void)accountCreated:(InstapaperCredentials *)credentials;
 - (void)accountCreationCancelled;
 
+- (void)accountEdited:(InstapaperCredentials *)credentials;
+- (void)editingAccountCancelled:(InstapaperCredentials *)credentials;
+
 - (void)accountWillBeDeleted:(InstapaperCredentials *)credentials;
 
 @end

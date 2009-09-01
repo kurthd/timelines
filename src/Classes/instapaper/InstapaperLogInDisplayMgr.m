@@ -99,7 +99,13 @@
     [self dismissInstapaperLogInViewController];
     if (authenticating)
         [self.instapaperService cancelAuthentication];
-    [self.delegate accountCreationCancelled];
+
+    InstapaperCredentials * instapaperCredentials =
+        self.credentials.instapaperCredentials;
+    if (instapaperCredentials)
+        [self.delegate editingAccountCancelled:instapaperCredentials];
+    else
+        [self.delegate accountCreationCancelled];
 }
 
 - (void)deleteAccount:(InstapaperCredentials *)instapaperCredentials
@@ -119,7 +125,11 @@
 {
     NSLog(@"'%@': Successfully authenticated Instapaper account.", username);
 
+    BOOL changingExisting = !!self.credentials.instapaperCredentials;
+
     InstapaperCredentials * instapaperCredentials =
+        changingExisting ?
+        self.credentials.instapaperCredentials :
         [InstapaperCredentials createInstance:self.context];
     instapaperCredentials.username = username;
     [instapaperCredentials setPassword:password];
@@ -130,7 +140,10 @@
     [self dismissInstapaperLogInViewController];
     authenticating = NO;
 
-    [self.delegate accountCreated:instapaperCredentials];
+    if (changingExisting)
+        [self.delegate accountEdited:instapaperCredentials];
+    else
+        [self.delegate accountCreated:instapaperCredentials];
 }
 
 - (void)failedToAuthenticateUsername:(NSString *)username

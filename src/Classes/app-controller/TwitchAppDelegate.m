@@ -431,6 +431,16 @@
     self.savingInstapaperUrl = nil;
 }
 
+- (void)accountEdited:(InstapaperCredentials *)credentials
+{
+    // don't care
+}
+
+- (void)editingAccountCancelled:(InstapaperCredentials *)credentials
+{
+    // don't care
+}
+
 - (void)accountWillBeDeleted:(InstapaperCredentials *)credentials
 {
     // don't care
