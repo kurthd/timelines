@@ -54,7 +54,7 @@ static UIColor * darkCellBackgroundColor;
 {
     if (!twitchDarkGrayColor)
         twitchDarkGrayColor =
-            [[UIColor colorWithRed:.25 green:.25 blue:.25 alpha:1] retain];
+            [[UIColor colorWithRed:.3 green:.3 blue:.3 alpha:1] retain];
 
     return twitchDarkGrayColor;
 }
@@ -164,7 +164,7 @@ static UIColor * darkCellBackgroundColor;
 {
     if (!darkCellBackgroundColor)
         darkCellBackgroundColor =
-            [[UIColor colorWithRed:.965 green:.965 blue:.965 alpha:1] retain];
+            [[UIColor colorWithRed:.95 green:.95 blue:.95 alpha:1] retain];
     
     return darkCellBackgroundColor;
 }

@@ -30,7 +30,7 @@
 {
     NSLog(@"'All' data source: fetching timeline");
     [service fetchTimelineSinceUpdateId:updateId page:page
-        count:[NSNumber numberWithInt:0]];
+        count:[NSNumber numberWithInt:200]];
 }
 
 - (BOOL)readyForQuery

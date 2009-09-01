@@ -13,7 +13,7 @@
 @interface SearchBarDisplayMgr : NSObject
     <TwitterServiceDelegate, UISearchBarDelegate,
     SearchBookmarksDisplayMgrDelegate, UITableViewDataSource,
-    UITableViewDelegate>
+    UITableViewDelegate, NetworkAwareViewControllerDelegate>
 {
     TwitterService * service;
     NSManagedObjectContext * context;
@@ -40,8 +40,11 @@
     NSArray * autocompleteArray;
     UIView * autocompleteView;
     UITableView * autoCompleteTableView;
+
+    BOOL hasBeenDisplayed;
 }
 
+@property (nonatomic, copy) NSString * searchQuery;
 @property (nonatomic, assign) id<TimelineDataSourceDelegate> dataSourceDelegate;
 
 - (id)initWithTwitterService:(TwitterService *)aService
@@ -52,5 +55,8 @@
 - (void)setCredentials:(TwitterCredentials *)credentials;
 
 - (void)searchBarViewWillAppear:(BOOL)promptUser;
+
+- (NSInteger)selectedBookmarkSegment;
+- (void)setSelectedBookmarkSegment:(NSInteger)segment;
 
 @end

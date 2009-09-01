@@ -37,7 +37,7 @@
         NSLog(@"Arbitraty user data source: fetching timeline for user %@",
             username);
         [service fetchTimelineForUser:username sinceUpdateId:updateId page:page
-            count:[NSNumber numberWithInt:0]];
+            count:[NSNumber numberWithInt:200]];
     }
 }
 

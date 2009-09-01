@@ -6,6 +6,8 @@
 
 @implementation UIState
 
-@synthesize selectedTab, selectedTimelineFeed, viewedTweetId, tabOrder;
+@synthesize selectedTab, selectedTimelineFeed, viewedTweetId, tabOrder,
+    selectedSearchBookmarkIndex, selectedPeopleBookmarkIndex, findPeopleText,
+    searchText;
 
 @end

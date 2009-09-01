@@ -40,6 +40,9 @@
     NSArray * contents;
 
     NSString * username;
+
+    // NIB hack:
+    NSInteger selectedIndex;
 }
 
 @property (nonatomic, assign) id<FindPeopleBookmarkViewControllerDelegate>
@@ -56,5 +59,8 @@
 - (IBAction)selectedUsername;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
+
+- (NSInteger)selectedSegment;
+- (void)setSelectedSegment:(NSInteger)segment;
 
 @end

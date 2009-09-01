@@ -86,9 +86,25 @@ static UIImage * topGradientImage;
     ((TimelineTableViewCellBackground *)self.backgroundView).
         highlightForMention =
         hfm;
-    self.backgroundView.backgroundColor = hfm ?
-         [TimelineTableViewCellView mentionCellColor] :
-         [TimelineTableViewCellView defaultTimelineCellColor];
+    UIColor * nonMentionCellColor =
+        timelineView.darkenForOld ?
+        [TimelineTableViewCellView darkenedCellColor] :
+        [TimelineTableViewCellView defaultTimelineCellColor];
+    self.backgroundView.backgroundColor =
+        hfm ?
+        [TimelineTableViewCellView mentionCellColor] :
+        nonMentionCellColor;
+}
+
+- (void)setDarkenForOld:(BOOL)darken
+{
+    timelineView.darkenForOld = darken;
+    ((TimelineTableViewCellBackground *)self.backgroundView).
+        darkenForOld = darken;
+    self.backgroundView.backgroundColor =
+        darken ?
+        [TimelineTableViewCellView darkenedCellColor] :
+        [TimelineTableViewCellView defaultTimelineCellColor];
 }
 
 + (NSString *)reuseIdentifier

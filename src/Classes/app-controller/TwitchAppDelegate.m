@@ -505,6 +505,11 @@
     [[CredentialsActivatedPublisher alloc]
         initWithListener:personalFeedSelectionMgr
         action:@selector(setCredentials:)];
+
+    UIStatePersistenceStore * uiStatePersistenceStore =
+        [[[UIStatePersistenceStore alloc] init] autorelease];
+    UIState * uiState = [uiStatePersistenceStore load];
+    timelineDisplayMgr.tweetIdToShow = uiState.viewedTweetId;
 }
 
 - (void)initMessagesTab
@@ -593,6 +598,7 @@
         timelineFactory:timelineDisplayMgrFactory
         userListFactory:userListFactory];
 
+    findPeopleNetAwareViewController.delegate = findPeopleSearchDisplayMgr;
     twitterService.delegate = findPeopleSearchDisplayMgr;
     userInfoController.delegate = findPeopleSearchDisplayMgr;
 
@@ -623,6 +629,7 @@
             netAwareController:searchNetAwareViewController
             timelineDisplayMgr:displayMgr
                        context:[self managedObjectContext]];
+    searchNetAwareViewController.delegate = searchBarDisplayMgr;
 }
 
 - (void)initAccountsTab
@@ -1164,6 +1171,14 @@
 
     UISegmentedControl * control = (UISegmentedControl *)
         homeNetAwareViewController.navigationItem.titleView;
+    
+    NSLog(@"searchBarDisplayMgr: %@", searchBarDisplayMgr);
+    NSLog(@"uiState.selectedSearchBookmarkIndex: %f", uiState.selectedSearchBookmarkIndex);
+    [searchBarDisplayMgr
+        setSelectedBookmarkSegment:uiState.selectedSearchBookmarkIndex];
+    [findPeopleSearchDisplayMgr
+        setSelectedBookmarkSegment:uiState.selectedPeopleBookmarkIndex];
+
     NSLog(@"Setting segmented control index");
     control.selectedSegmentIndex = uiState.selectedTimelineFeed;
 
@@ -1176,14 +1191,15 @@
     if (uiState.selectedTab == 3)
         [searchBarDisplayMgr searchBarViewWillAppear:NO];
 
-    timelineDisplayMgr.tweetIdToShow = uiState.viewedTweetId;
-    
     NewDirectMessagesPersistenceStore * newDirectMessagesPersistenceStore =
         [[[NewDirectMessagesPersistenceStore alloc] init] autorelease];
     directMessageDisplayMgr.newDirectMessagesState =
         [newDirectMessagesPersistenceStore load];
     [directMessageAcctMgr setWithDirectMessageCountsByAccount:
         [newDirectMessagesPersistenceStore loadNewMessageCountsForAllAccounts]];
+    
+    findPeopleSearchDisplayMgr.currentSearchUsername = uiState.findPeopleText;
+    searchBarDisplayMgr.searchQuery = uiState.searchText;
 }
 
 - (void)persistUIState
@@ -1205,6 +1221,14 @@
         [tabOrder addObject:tagNumber];
     }
     uiState.tabOrder = tabOrder;
+    
+    uiState.selectedSearchBookmarkIndex =
+        [searchBarDisplayMgr selectedBookmarkSegment];
+    uiState.selectedPeopleBookmarkIndex =
+        [findPeopleSearchDisplayMgr selectedBookmarkSegment];
+
+    uiState.findPeopleText = findPeopleSearchDisplayMgr.currentSearchUsername;
+    uiState.searchText = searchBarDisplayMgr.searchQuery;
 
     [uiStatePersistenceStore save:uiState];
 

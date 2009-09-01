@@ -30,7 +30,7 @@
 - (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page
 {
     [service fetchTimelineForUser:credentials.username
-        sinceUpdateId:updateId page:page count:[NSNumber numberWithInt:0]];
+        sinceUpdateId:updateId page:page count:[NSNumber numberWithInt:200]];
 }
 
 - (BOOL)readyForQuery

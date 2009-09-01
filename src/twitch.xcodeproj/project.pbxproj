@@ -298,6 +298,8 @@
 		910EFE5F1017E78A002083D6 /* NewDirectMessagesState.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE5E1017E78A002083D6 /* NewDirectMessagesState.m */; };
 		910EFE831017F078002083D6 /* NewDirectMessagesPersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE821017F078002083D6 /* NewDirectMessagesPersistenceStore.m */; };
 		9112EAB5102E236E002715DC /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
+		9125779A104C7A53006F5DBD /* DarkenedTableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */; };
+		9125779B104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257799104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png */; };
 		9130002210363177004E3030 /* MentionBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9130002010363177004E3030 /* MentionBottomGradient.png */; };
 		9130002310363177004E3030 /* MentionTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9130002110363177004E3030 /* MentionTopGradient.png */; };
 		913000B010377454004E3030 /* FollowButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 913000AF10377454004E3030 /* FollowButton.png */; };
@@ -853,6 +855,8 @@
 		9115A92D0FF06AA100D6A769 /* TweetInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetInfo.m; path = timeline/TweetInfo.m; sourceTree = "<group>"; };
 		9115A97F0FF0874700D6A769 /* MentionsTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionsTimelineDataSource.h; path = timeline/MentionsTimelineDataSource.h; sourceTree = "<group>"; };
 		9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionsTimelineDataSource.m; path = timeline/MentionsTimelineDataSource.m; sourceTree = "<group>"; };
+		91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkenedTableViewCellGradient.png; path = images/DarkenedTableViewCellGradient.png; sourceTree = "<group>"; };
+		91257799104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkenedTableViewCellTopGradient.png; path = images/DarkenedTableViewCellTopGradient.png; sourceTree = "<group>"; };
 		9130002010363177004E3030 /* MentionBottomGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MentionBottomGradient.png; path = images/MentionBottomGradient.png; sourceTree = "<group>"; };
 		9130002110363177004E3030 /* MentionTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MentionTopGradient.png; path = images/MentionTopGradient.png; sourceTree = "<group>"; };
 		913000AF10377454004E3030 /* FollowButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FollowButton.png; path = images/FollowButton.png; sourceTree = "<group>"; };
@@ -1969,6 +1973,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */,
+				91257799104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png */,
 				918F710E1047310F00FE7ABF /* LoginScreenshot.png */,
 				918F705D1045C6B800FE7ABF /* DirectMessageButtonIconHighlighted.png */,
 				918F705E1045C6B800FE7ABF /* favorite.png */,
@@ -2357,6 +2363,8 @@
 				918F713F104741AE00FE7ABF /* log-in-help.html in Resources */,
 				918F7167104745D000FE7ABF /* style.css in Resources */,
 				0538FE97104C7897009E50CE /* InstapaperLogInView.xib in Resources */,
+				9125779A104C7A53006F5DBD /* DarkenedTableViewCellGradient.png in Resources */,
+				9125779B104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

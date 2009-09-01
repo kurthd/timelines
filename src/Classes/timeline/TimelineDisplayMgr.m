@@ -35,6 +35,7 @@
     action:(SEL)action;
 
 + (NSInteger)retweetFormat;
++ (BOOL)scrollToTop;
 
 @property (nonatomic, retain) SavedSearchMgr * savedSearchMgr;
 @property (nonatomic, retain) NSString * currentSearch;
@@ -55,6 +56,9 @@ enum {
 
 static NSInteger retweetFormat;
 static NSInteger retweetFormatValueAlredyRead;
+
+static BOOL scrollToTop;
+static BOOL scrollToTopValueAlreadyRead;
 
 @synthesize wrapperController, timelineController, userInfoController,
     selectedTweet, updateId, user, timeline, pagesShown, displayAsConversation,
@@ -199,10 +203,13 @@ static NSInteger retweetFormatValueAlredyRead;
             [service fetchUserInfoForUsername:self.currentUsername];
     }
 
-    [timelineController setTweets:[timeline allValues] page:pagesShown
-        visibleTweetId:self.tweetIdToShow];
+    BOOL scrollToTop = [[self class] scrollToTop];
+    NSString * scrollId =
+        scrollToTop ? [anUpdateId description] : self.tweetIdToShow;
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
     [wrapperController setCachedDataAvailable:YES];
+    [timelineController setTweets:[timeline allValues] page:pagesShown
+        visibleTweetId:scrollId];
     refreshingTweets = NO;
     [[ErrorState instance] exitErrorState];
     firstFetchReceived = YES;
@@ -1101,7 +1108,7 @@ static NSInteger retweetFormatValueAlredyRead;
         animated:NO];
 
     [timelineController setTweets:[timeline allValues] page:pagesShown
-        visibleTweetId:nil];
+        visibleTweetId:self.tweetIdToShow];
     [timelineController setAllPagesLoaded:allPagesLoaded];
 
     if (refresh || [[someTweets allKeys] count] == 0)
@@ -1204,18 +1211,6 @@ static NSInteger retweetFormatValueAlredyRead;
 - (NSString *)mostRecentTweetId
 {
     return [self.timelineController mostRecentTweetId];
-}
-
-+ (NSInteger)retweetFormat
-{
-    if (!retweetFormatValueAlredyRead) {
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        retweetFormat = [defaults integerForKey:@"retweet_format"];
-    }
-
-    retweetFormatValueAlredyRead = YES;
-
-    return retweetFormat;
 }
 
 // HACK: Added to get "Save Search" button in header view.
@@ -1351,6 +1346,28 @@ static NSInteger retweetFormatValueAlredyRead;
     }
 
     return locationInfoViewController;
+}
+
++ (NSInteger)retweetFormat
+{
+    if (!retweetFormatValueAlredyRead) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        retweetFormat = [defaults integerForKey:@"retweet_format"];
+        retweetFormatValueAlredyRead = YES;
+    }
+
+    return retweetFormat;
+}
+
++ (BOOL)scrollToTop
+{
+    if (!scrollToTopValueAlreadyRead) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        scrollToTop = [defaults boolForKey:@"scroll_to_top"];
+        scrollToTopValueAlreadyRead = YES;
+    }
+
+    return scrollToTop;
 }
 
 @end

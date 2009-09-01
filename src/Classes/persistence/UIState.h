@@ -10,11 +10,23 @@
     NSUInteger selectedTimelineFeed;
     NSString * viewedTweetId;
     NSArray * tabOrder;
+
+    NSUInteger selectedSearchBookmarkIndex;
+    NSUInteger selectedPeopleBookmarkIndex;
+
+    NSString * findPeopleText;
+    NSString * searchText;
 }
 
 @property (nonatomic, assign) NSUInteger selectedTab;
 @property (nonatomic, assign) NSUInteger selectedTimelineFeed;
 @property (nonatomic, copy) NSString * viewedTweetId;
 @property (nonatomic, copy) NSArray * tabOrder;
+
+@property (nonatomic, assign) NSUInteger selectedSearchBookmarkIndex;
+@property (nonatomic, assign) NSUInteger selectedPeopleBookmarkIndex;
+
+@property (nonatomic, copy) NSString * findPeopleText;
+@property (nonatomic, copy) NSString * searchText;
     
 @end

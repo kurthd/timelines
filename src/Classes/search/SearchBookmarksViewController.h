@@ -39,6 +39,9 @@
     IBOutlet UISegmentedControl * trendsCategorySelector;
 
     NSArray * contents;
+
+    // Fucking NIB hack:
+    NSInteger selectedIndex;
 }
 
 @property (nonatomic, assign) id<SearchBookmarksViewControllerDelegate>
@@ -56,5 +59,8 @@
 - (IBAction)editSavedSearches;
 - (IBAction)doneEditingSavedSearches;
 - (IBAction)refreshTrends;
+
+- (NSInteger)selectedSegment;
+- (void)setSelectedSegment:(NSInteger)segment;
 
 @end

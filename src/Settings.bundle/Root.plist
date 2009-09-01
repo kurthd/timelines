@@ -9,6 +9,12 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>timelinegroupname</string>
+		</dict>
+		<dict>
 			<key>DefaultValue</key>
 			<integer>0</integer>
 			<key>Title</key>
@@ -27,6 +33,30 @@
 			<string>PSMultiValueSpecifier</string>
 			<key>Key</key>
 			<string>display_name</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>highlightnew</string>
+			<key>Key</key>
+			<string>highlight_new</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>scrolltotop</string>
+			<key>Key</key>
+			<string>scroll_to_top</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>

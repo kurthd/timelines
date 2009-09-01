@@ -30,7 +30,7 @@
 {
     NSLog(@"'Mentions' data source: fetching timeline");
     [service fetchMentionsSinceUpdateId:updateId page:page
-        count:[NSNumber numberWithInt:0]];
+        count:[NSNumber numberWithInt:200]];
 }
 
 - (void)fetchUserInfoForUsername:(NSString *)username

@@ -16,7 +16,8 @@
 @interface TimelineViewController ()
 
 @property (nonatomic, retain) NSString * mentionRegex;
-    
+@property (nonatomic, retain) NSString * visibleTweetId;
+
 - (UIImage *)getAvatarForUrl:(NSString *)url;
 - (UIImage *)convertUrlToImage:(NSString *)url;
 - (NSArray *)sortedTweets;
@@ -25,21 +26,27 @@
 
 + (UIImage *)defaultAvatar;
 + (BOOL)displayWithUsername;
++ (BOOL)highlightNewTweets;
 
 @end
 
 @implementation TimelineViewController
 
 static UIImage * defaultAvatar;
+
 static BOOL displayWithUsername;
 static BOOL alreadyReadDisplayWithUsernameValue;
 
+static BOOL highlightNewTweets;
+static BOOL alreadyReadHighlightNewTweetsValue;
+
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
-    showWithoutAvatars, mentionUsername, mentionRegex;
+    showWithoutAvatars, mentionUsername, mentionRegex, visibleTweetId;
 
 - (void)dealloc
 {
     [headerView release];
+    [plainHeaderView release];
     [footerView release];
     [avatarView release];
     [fullNameLabel release];
@@ -57,6 +64,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     [mentionUsername release];
 
+    [visibleTweetId release];
+
     [super dealloc];
 }
 
@@ -66,6 +75,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     self.tableView.tableFooterView = footerView;
     alreadySent = [[NSMutableDictionary dictionary] retain];
     showInbox = YES;
+    self.tableView.tableHeaderView = plainHeaderView;
+    self.tableView.contentInset = UIEdgeInsetsMake(-392, 0, 0, 0);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -107,7 +118,14 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         displayType = kTimelineTableViewCellTypeNormal;
 
     [cell setDisplayType:displayType];
-
+    
+    BOOL newerThanVisibleTweetId =
+        self.visibleTweetId &&
+        [tweet.identifier compare:self.visibleTweetId] != NSOrderedDescending;
+    BOOL darkenForOld =
+        [[self class] highlightNewTweets] && newerThanVisibleTweetId;
+    [cell setDarkenForOld:darkenForOld];
+    
     BOOL highlightForMention =
         self.mentionRegex ?
         [tweet.text isMatchedByRegex:self.mentionRegex] : NO;
@@ -148,13 +166,13 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
         [User setAvatar:avatarImage forUrl:urlAsString];
-
+        
         // avoid calling reloadData by setting the avatars of the visible cells
         NSArray * visibleCells = self.tableView.visibleCells;
         for (TimelineTableViewCell * cell in visibleCells)
             if ([cell.avatarImageUrl isEqualToString:urlAsString])
                 [cell setAvatarImage:avatarImage];
-
+        
         NSString * largeProfileUrl = user.avatar.fullImageUrl;
         if ([urlAsString isEqual:largeProfileUrl] && avatarImage)
             [avatarView setImage:avatarImage];
@@ -217,8 +235,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     user = aUser;
 
     if (!aUser) {
-        self.tableView.tableHeaderView = nil;
-        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        self.tableView.tableHeaderView = plainHeaderView;
+        self.tableView.contentInset = UIEdgeInsetsMake(-392, 0, 0, 0);
     } else {
         self.tableView.contentInset = UIEdgeInsetsMake(-317, 0, 0, 0);
         self.tableView.tableHeaderView = headerView;
@@ -241,9 +259,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 }
 
 - (void)setTweets:(NSArray *)someTweets page:(NSUInteger)page
-    visibleTweetId:(NSString *)visibleTweetId
+    visibleTweetId:(NSString *)aVisibleTweetId
 {
-    NSLog(@"Displaying tweets without inbox/outbox...");
+    if (aVisibleTweetId && !self.visibleTweetId)
+        self.visibleTweetId = aVisibleTweetId;
     self.sortedTweetCache = nil;
     NSArray * tempTweets = [someTweets copy];
     [tweets release];
@@ -267,12 +286,12 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
         forState:UIControlStateNormal];
     loadMoreButton.enabled = YES;
-    
-    if (visibleTweetId) {
-        NSLog(@"Scrolling to visible tweet id %@", visibleTweetId);
+
+    if (aVisibleTweetId) {
+        NSLog(@"Scrolling to visible tweet id %@", aVisibleTweetId);
         NSUInteger visibleRow = 0;
         for (TweetInfo * tweetInfo in self.sortedTweets) {
-            if ([visibleTweetId isEqual:tweetInfo.identifier])
+            if ([aVisibleTweetId isEqual:tweetInfo.identifier])
                 break;
             visibleRow++;
         }
@@ -305,7 +324,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             [alreadySent setObject:url forKey:url];
         }
     }
-
+    
     return avatarImage;
 }
 
@@ -403,6 +422,17 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     alreadyReadDisplayWithUsernameValue = YES;
 
     return displayWithUsername;
+}
+
++ (BOOL)highlightNewTweets
+{
+    if (!highlightNewTweets) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        highlightNewTweets = [defaults boolForKey:@"highlight_new"];
+        alreadyReadHighlightNewTweetsValue = YES;
+    }
+
+    return highlightNewTweets;
 }
 
 @end

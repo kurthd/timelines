@@ -23,7 +23,6 @@
     searchBookmarksDisplayMgr;
 
 @property (nonatomic, copy) NSArray * searchResults;
-@property (nonatomic, copy) NSString * searchQuery;
 @property (nonatomic, copy) NSNumber * searchPage;
 
 @property (nonatomic, retain) CredentialsActivatedPublisher *
@@ -277,6 +276,16 @@
         [self.timelineDisplayMgr setTimelineHeaderView:[self saveSearchView]];
 }
 
+#pragma mark NetworkAwareViewControllerDelegate implementation
+
+- (void)networkAwareViewWillAppear
+{
+    if (!hasBeenDisplayed && self.searchQuery) {
+        hasBeenDisplayed = YES;
+        [self searchFor:self.searchQuery];
+    }
+}
+
 #pragma mark UITableViewDataSource implementation
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -516,6 +525,16 @@
     }
 
     return autocompleteView;
+}
+
+- (NSInteger)selectedBookmarkSegment
+{
+    return [self.searchBookmarksDisplayMgr selectedSegment];
+}
+
+- (void)setSelectedBookmarkSegment:(NSInteger)segment
+{
+    [self.searchBookmarksDisplayMgr setSelectedSegment:segment];
 }
 
 @end

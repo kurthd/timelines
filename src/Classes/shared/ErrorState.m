@@ -23,7 +23,7 @@ static ErrorState * gInstance = NULL;
 {
     @synchronized (self) {
         if (gInstance == NULL)
-            gInstance = [[self alloc] init];
+            gInstance = [[ErrorState alloc] init];
     }
 
     return gInstance;
@@ -96,9 +96,10 @@ static ErrorState * gInstance = NULL;
 
         retryAlertView =
             [[UIAlertView alloc]
-            initWithTitle:nil message:nil delegate:self
+            initWithTitle:nil message:nil delegate:nil
             cancelButtonTitle:cancelButtonTitle
-            otherButtonTitles:retryButtonTitle];
+            otherButtonTitles:retryButtonTitle, nil];
+        retryAlertView.delegate = self;
     }
 
     return retryAlertView;

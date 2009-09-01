@@ -12,6 +12,10 @@
 + (NSString *)selectedTimelineFeedKey;
 + (NSString *)viewedTweetIdKey;
 + (NSString *)tabOrderKey;
++ (NSString *)selectedPeopleBookmarkIndexKey;
++ (NSString *)selectedSearchBookmarkIndexKey;
++ (NSString *)findPeopleTextKey;
++ (NSString *)searchTextKey;
 
 @end
 
@@ -32,10 +36,24 @@
     NSString * viewedTweetId =
         [dict objectForKey:[[self class] viewedTweetIdKey]];
     NSArray * tabOrder = [dict objectForKey:[[self class] tabOrderKey]];
+    NSUInteger selectedSearchBookmarkIndex =
+        [[dict objectForKey:[[self class] selectedSearchBookmarkIndexKey]]
+        unsignedIntValue];
+    NSUInteger selectedPeopleBookmarkIndex =
+        [[dict objectForKey:[[self class] selectedPeopleBookmarkIndexKey]]
+        unsignedIntValue];
+    NSString * findPeopleText =
+        [dict objectForKey:[[self class] findPeopleTextKey]];
+    NSString * searchText =
+        [dict objectForKey:[[self class] searchTextKey]];
     state.selectedTab = selectedTab;
     state.selectedTimelineFeed = selectedTimelineFeed;
     state.viewedTweetId = viewedTweetId;
     state.tabOrder = tabOrder;
+    state.selectedSearchBookmarkIndex = selectedSearchBookmarkIndex;
+    state.selectedPeopleBookmarkIndex = selectedPeopleBookmarkIndex;
+    state.findPeopleText = findPeopleText;
+    state.searchText = searchText;
 
     return state;
 }
@@ -56,6 +74,22 @@
                  forKey:[[self class] viewedTweetIdKey]];
 
     [dict setObject:state.tabOrder forKey:[[self class] tabOrderKey]];
+
+    NSNumber * selectedPeopleBookmarkIndex =
+        [NSNumber numberWithUnsignedInt:state.selectedPeopleBookmarkIndex];
+    [dict setObject:selectedPeopleBookmarkIndex
+        forKey:[[self class] selectedPeopleBookmarkIndexKey]];
+    NSNumber * selectedSearchBookmarkIndex =
+        [NSNumber numberWithUnsignedInt:state.selectedSearchBookmarkIndex];
+    [dict setObject:selectedSearchBookmarkIndex
+        forKey:[[self class] selectedSearchBookmarkIndexKey]];
+
+    if (state.findPeopleText)
+        [dict setObject:state.findPeopleText
+            forKey:[[self class] findPeopleTextKey]];
+    if (state.searchText)
+        [dict setObject:state.searchText
+            forKey:[[self class] searchTextKey]];
 
     [PlistUtils saveDictionary:dict toPlist:[[self class] plistName]];
 }
@@ -83,6 +117,26 @@
 + (NSString *)tabOrderKey
 {
     return @"tabOrder";
+}
+
++ (NSString *)selectedPeopleBookmarkIndexKey
+{
+    return @"selectedPeopleBookmarkIndex";
+}
+
++ (NSString *)selectedSearchBookmarkIndexKey
+{
+    return @"selectedSearchBookmarkIndex";
+}
+
++ (NSString *)findPeopleTextKey
+{
+    return @"findPeopleText";
+}
+
++ (NSString *)searchTextKey
+{
+    return @"searchText";
 }
 
 @end

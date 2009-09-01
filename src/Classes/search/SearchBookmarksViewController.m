@@ -96,6 +96,8 @@ typedef enum
     [self.trendsCategorySelector addTarget:self
                                     action:@selector(trendsCategoryChanged:)
                           forControlEvents:UIControlEventValueChanged];
+
+    self.bookmarkCategorySelector.selectedSegmentIndex = selectedIndex;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -446,6 +448,17 @@ typedef enum
     }
 
     return activityButton;
+}
+
+- (NSInteger)selectedSegment
+{
+    return self.bookmarkCategorySelector.selectedSegmentIndex;
+}
+
+- (void)setSelectedSegment:(NSInteger)segment
+{
+    selectedIndex = segment;
+    self.bookmarkCategorySelector.selectedSegmentIndex = segment;
 }
 
 @end
