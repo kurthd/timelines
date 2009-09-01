@@ -29,8 +29,6 @@
 #import "LocationMapViewControllerDelegate.h"
 #import "LocationInfoViewController.h"
 #import "LocationInfoViewControllerDelegate.h"
-#import "InstapaperService.h"
-#import "InstapaperLogInDisplayMgr.h"
 
 @class TimelineDisplayMgrFactory;
 @class TweetViewController;
@@ -44,8 +42,7 @@
     TweetViewControllerDelegate, NetworkAwareViewControllerDelegate,
     UserInfoViewControllerDelegate, TwitchBrowserViewControllerDelegate,
     TwitterServiceDelegate, UIWebViewDelegate, ConversationDisplayMgrDelegate,
-    LocationMapViewControllerDelegate, LocationInfoViewControllerDelegate,
-    InstapaperServiceDelegate>
+    LocationMapViewControllerDelegate, LocationInfoViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
@@ -110,10 +107,6 @@
 
     LocationMapViewController * locationMapViewController;
     LocationInfoViewController * locationInfoViewController;
-
-    InstapaperService * instapaperService;
-    NSString * savingInstapaperUrl;
-    InstapaperLogInDisplayMgr * instapaperLogInDisplayMgr;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;

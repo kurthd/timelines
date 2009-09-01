@@ -44,11 +44,6 @@
 @property (nonatomic, readonly)
     LocationInfoViewController * locationInfoViewController;
 
-@property (nonatomic, retain) InstapaperService * instapaperService;
-@property (nonatomic, copy) NSString * savingInstapaperUrl;
-@property (nonatomic, retain) InstapaperLogInDisplayMgr * 
-    instapaperLogInDisplayMgr;
-    
 @end
 
 enum {
@@ -69,8 +64,7 @@ static NSInteger retweetFormatValueAlredyRead;
     currentUsername, allPagesLoaded,setUserToAuthenticatedUser,
     firstFetchReceived, tweetIdToShow, suppressTimelineFailures, credentials,
     savedSearchMgr, currentSearch, userListDisplayMgr,
-    userListNetAwareViewController, showMentions, instapaperService,
-    savingInstapaperUrl, instapaperLogInDisplayMgr;
+    userListNetAwareViewController, showMentions;
 
 - (void)dealloc
 {
@@ -114,10 +108,6 @@ static NSInteger retweetFormatValueAlredyRead;
 
     [locationMapViewController release];
     [locationInfoViewController release];
-
-    [instapaperService release];
-    [savingInstapaperUrl release];
-    [instapaperLogInDisplayMgr release];
 
     [super dealloc];
 }
@@ -966,15 +956,7 @@ static NSInteger retweetFormatValueAlredyRead;
 
 - (void)readLater:(NSString *)url
 {
-    self.savingInstapaperUrl = url;
-
-    if (credentials.instapaperCredentials)
-        // save to instapaper
-        [self.instapaperService addUrl:url];
-    else
-        // prompt the user to set up an account
-        [self.instapaperLogInDisplayMgr
-            logInModallyForViewController:wrapperController];
+    // should never be called
 }
 
 #pragma mark Accessors
@@ -1369,16 +1351,6 @@ static NSInteger retweetFormatValueAlredyRead;
     }
 
     return locationInfoViewController;
-}
-
-- (InstapaperService *)instapaperService
-{
-    if (!instapaperService) {
-        instapaperService = [[InstapaperService alloc] init];
-        instapaperService.delegate = self;
-    }
-
-    return instapaperService;
 }
 
 @end

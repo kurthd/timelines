@@ -13,6 +13,8 @@
 #import "DirectMessageAcctMgr.h"
 #import "FindPeopleSearchDisplayMgr.h"
 #import "TwitchWebBrowserDisplayMgr.h"
+#import "InstapaperService.h"
+#import "InstapaperLogInDisplayMgr.h"
 
 @class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class SearchBarDisplayMgr;
