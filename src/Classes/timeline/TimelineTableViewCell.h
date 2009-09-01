@@ -28,6 +28,7 @@ typedef enum {
 - (void)setTweetText:(NSString *)tweetText;
 - (void)setDisplayType:(TimelineTableViewCellType)displayType;
 - (void)setHighlightForMention:(BOOL)highlight;
+- (void)setDarkenForOld:(BOOL)darken;
 
 + (NSString *)reuseIdentifier;
 + (CGFloat)heightForContent:(NSString *)tweetText

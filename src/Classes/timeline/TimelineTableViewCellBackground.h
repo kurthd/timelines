@@ -7,8 +7,10 @@
 @interface TimelineTableViewCellBackground : UIView
 {
     BOOL highlightForMention;
+    BOOL darkenForOld;
 }
 
 @property (nonatomic, assign) BOOL highlightForMention;
+@property (nonatomic, assign) BOOL darkenForOld;
 
 @end

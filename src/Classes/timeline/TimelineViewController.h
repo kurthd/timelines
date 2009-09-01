@@ -14,6 +14,7 @@
     NSObject<TimelineViewControllerDelegate> * delegate;
 
     IBOutlet UIView * headerView;
+    IBOutlet UIView * plainHeaderView;
     IBOutlet UIView * footerView;
     IBOutlet RoundedImage * avatarView;
     IBOutlet UILabel * fullNameLabel;
@@ -35,6 +36,8 @@
 
     NSString * mentionUsername;
     NSString * mentionRegex;
+
+    NSString * visibleTweetId;
 }
 
 @property (nonatomic, assign)

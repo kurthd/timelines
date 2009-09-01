@@ -13,6 +13,7 @@
     UIImage * avatar;
     TimelineTableViewCellType cellType;
     BOOL highlightForMention;
+    BOOL darkenForOld;
 
     BOOL highlighted;
 }
@@ -23,6 +24,7 @@
 @property (nonatomic, retain) UIImage * avatar;
 @property (nonatomic, assign) TimelineTableViewCellType cellType;
 @property (nonatomic, assign) BOOL highlightForMention;
+@property (nonatomic, assign) BOOL darkenForOld;
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;
 
 + (CGFloat)heightForContent:(NSString *)tweetText
@@ -30,5 +32,6 @@
 
 + (UIColor *)defaultTimelineCellColor;
 + (UIColor *)mentionCellColor;
-               
++ (UIColor *)darkenedCellColor;
+
 @end

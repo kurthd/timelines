@@ -17,6 +17,8 @@ static UIImage * backgroundImage;
 static UIImage * topGradientImage;
 static UIImage * mentionBottomImage;
 static UIImage * mentionTopImage;
+static UIImage * darkenedBottomImage;
+static UIImage * darkenedTopImage;
 
 @interface TimelineTableViewCellView ()
 
@@ -35,7 +37,8 @@ static UIImage * mentionTopImage;
 
 @implementation TimelineTableViewCellView
 
-@synthesize text, author, timestamp, avatar, cellType, highlightForMention;
+@synthesize text, author, timestamp, avatar, cellType, highlightForMention,
+    darkenForOld;
 @synthesize highlighted;
 
 + (void)initialize
@@ -49,6 +52,10 @@ static UIImage * mentionTopImage;
         [[UIImage imageNamed:@"MentionBottomGradient.png"] retain];
     mentionTopImage =
         [[UIImage imageNamed:@"MentionTopGradient.png"] retain];
+    darkenedBottomImage =
+        [[UIImage imageNamed:@"DarkenedTableViewCellGradient.png"] retain];
+    darkenedTopImage =
+        [[UIImage imageNamed:@"DarkenedTableViewCellTopGradient.png"] retain];
 }
 
 + (CGFloat)heightForContent:(NSString *)tweetText
@@ -166,6 +173,9 @@ static UIImage * mentionTopImage;
         if (highlightForMention) {
             bottomImage = mentionBottomImage;
             topImage = mentionTopImage;
+        } else if (darkenForOld) {
+            bottomImage = darkenedBottomImage;
+            topImage = darkenedTopImage;
         } else {
             bottomImage = backgroundImage;
             topImage = topGradientImage;
@@ -270,6 +280,9 @@ static UIImage * mentionTopImage;
         if (highlightForMention) {
             bottomImage = mentionBottomImage;
             topImage = mentionTopImage;
+        } else if (darkenForOld) {
+            bottomImage = darkenedBottomImage;
+            topImage = darkenedTopImage;
         } else {
             bottomImage = backgroundImage;
             topImage = topGradientImage;
@@ -352,6 +365,9 @@ static UIImage * mentionTopImage;
         if (highlightForMention) {
             bottomImage = mentionBottomImage;
             topImage = mentionTopImage;
+        } else if (darkenForOld) {
+            bottomImage = darkenedBottomImage;
+            topImage = darkenedTopImage;
         } else {
             bottomImage = backgroundImage;
             topImage = topGradientImage;
@@ -427,6 +443,9 @@ static UIImage * mentionTopImage;
         if (highlightForMention) {
             bottomImage = mentionBottomImage;
             topImage = mentionTopImage;
+        } else if (darkenForOld) {
+            bottomImage = darkenedBottomImage;
+            topImage = darkenedTopImage;
         } else {
             bottomImage = backgroundImage;
             topImage = topGradientImage;
@@ -527,13 +546,28 @@ static UIImage * mentionTopImage;
 {
     if (highlightForMention != hfm) {
         highlightForMention = hfm;
+        UIColor * nonMentionCellColor =
+            darkenForOld ?
+            [TimelineTableViewCellView darkenedCellColor] :
+            [TimelineTableViewCellView defaultTimelineCellColor];
         self.backgroundColor =
             highlightForMention ?
             [TimelineTableViewCellView mentionCellColor] :
-            [TimelineTableViewCellView defaultTimelineCellColor];
+            nonMentionCellColor;
     }
 }
 
+- (void)setDarkenForOld:(BOOL)darken
+{
+    if (darkenForOld != darken) {
+        darkenForOld = darken;
+        self.backgroundColor =
+            darkenForOld ?
+            [TimelineTableViewCellView darkenedCellColor] :
+            [TimelineTableViewCellView defaultTimelineCellColor];
+    }
+}
+    
 - (void)drawHighlightedAvatarBorderWithTopMargin:(NSInteger)topMargin
     leftMargin:(NSInteger)leftMargin
 {
@@ -589,6 +623,11 @@ static UIColor * mentionCellColor;
 + (UIColor *)defaultTimelineCellColor
 {
     return [UIColor whiteColor];
+}
+
++ (UIColor *)darkenedCellColor
+{
+    return [UIColor darkCellBackgroundColor];
 }
 
 #pragma mark Private helpers
