@@ -43,6 +43,11 @@
     LocationMapViewController * locationMapViewController;
 @property (nonatomic, readonly)
     LocationInfoViewController * locationInfoViewController;
+
+@property (nonatomic, retain) InstapaperService * instapaperService;
+@property (nonatomic, copy) NSString * savingInstapaperUrl;
+@property (nonatomic, retain) InstapaperLogInDisplayMgr * 
+    instapaperLogInDisplayMgr;
     
 @end
 
@@ -64,7 +69,8 @@ static NSInteger retweetFormatValueAlredyRead;
     currentUsername, allPagesLoaded,setUserToAuthenticatedUser,
     firstFetchReceived, tweetIdToShow, suppressTimelineFailures, credentials,
     savedSearchMgr, currentSearch, userListDisplayMgr,
-    userListNetAwareViewController, showMentions;
+    userListNetAwareViewController, showMentions, instapaperService,
+    savingInstapaperUrl, instapaperLogInDisplayMgr;
 
 - (void)dealloc
 {
@@ -108,6 +114,10 @@ static NSInteger retweetFormatValueAlredyRead;
 
     [locationMapViewController release];
     [locationInfoViewController release];
+
+    [instapaperService release];
+    [savingInstapaperUrl release];
+    [instapaperLogInDisplayMgr release];
 
     [super dealloc];
 }
@@ -954,6 +964,19 @@ static NSInteger retweetFormatValueAlredyRead;
     [composeTweetDisplayMgr composeTweetWithText:text];
 }
 
+- (void)readLater:(NSString *)url
+{
+    self.savingInstapaperUrl = url;
+
+    if (credentials.instapaperCredentials)
+        // save to instapaper
+        [self.instapaperService addUrl:url];
+    else
+        // prompt the user to set up an account
+        [self.instapaperLogInDisplayMgr
+            logInModallyForViewController:wrapperController];
+}
+
 #pragma mark Accessors
 
 - (NetworkAwareViewController *)newTweetDetailsWrapperController
@@ -1346,6 +1369,16 @@ static NSInteger retweetFormatValueAlredyRead;
     }
 
     return locationInfoViewController;
+}
+
+- (InstapaperService *)instapaperService
+{
+    if (!instapaperService) {
+        instapaperService = [[InstapaperService alloc] init];
+        instapaperService.delegate = self;
+    }
+
+    return instapaperService;
 }
 
 @end

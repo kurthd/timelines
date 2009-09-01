@@ -34,6 +34,10 @@
 	<string>https://twitpic.com/api/upload</string>
 	<key>YfrogPostUrl</key>
 	<string>https://yfrog.com/api/upload</string>
+	<key>InstapaperPostUrl</key>
+	<string>https://www.instapaper.com/api/add</string>
+	<key>InstapaperAuthenticationUrl</key>
+	<string>https://www.instapaper.com/api/authenticate</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>GoogleMapsApiKey</key>

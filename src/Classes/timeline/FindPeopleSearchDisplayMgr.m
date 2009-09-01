@@ -614,6 +614,11 @@
     [composeTweetDisplayMgr composeTweetWithText:text];
 }
 
+- (void)readLater:(NSString *)url
+{
+    // TODO: implement me
+}
+
 #pragma mark FindPeopleSearchDisplayMgr implementation
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials

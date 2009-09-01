@@ -39,3 +39,25 @@
 }
 
 @end
+
+@implementation NSString (UrlEncodingAdditions)
+
+- (NSString *)urlEncodedString
+{
+    return [self
+            stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSString *)urlEncodedStringWithEscapedAllowedCharacters:(NSString *)allowed
+{
+    id escapedString = (id)
+        CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                (CFStringRef) self,
+                                                (CFStringRef) NULL,
+                                                (CFStringRef) allowed,
+                                                kCFStringEncodingUTF8);
+
+    return [escapedString autorelease];
+}
+
+@end

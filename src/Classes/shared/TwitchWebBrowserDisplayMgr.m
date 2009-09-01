@@ -4,15 +4,10 @@
 
 #import "TwitchWebBrowserDisplayMgr.h"
 
-@interface TwitchWebBrowserDisplayMgr ()
-
-@property (readonly) TwitchBrowserViewController * browserController;
-
-@end
-
 @implementation TwitchWebBrowserDisplayMgr
 
-@synthesize composeTweetDisplayMgr, hostViewController;
+@synthesize delegate, composeTweetDisplayMgr, hostViewController;
+@synthesize browserController;
 
 static TwitchWebBrowserDisplayMgr * gInstance = NULL;
 
@@ -28,6 +23,7 @@ static TwitchWebBrowserDisplayMgr * gInstance = NULL;
 
 - (void)dealloc
 {
+    self.delegate = nil;
     [browserController release];
     [composeTweetDisplayMgr release];
     [hostViewController release];
@@ -60,6 +56,11 @@ static TwitchWebBrowserDisplayMgr * gInstance = NULL;
 {
     NSLog(@"Composing tweet with text'%@'", text);
     [composeTweetDisplayMgr composeTweetWithText:text];
+}
+
+- (void)readLater:(NSString *)url
+{
+    [self.delegate readLater:url];
 }
 
 @end

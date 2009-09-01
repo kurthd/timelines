@@ -2,7 +2,7 @@
 //  TwitterCredentials.h
 //  twitch
 //
-//  Created by John A. Debay on 8/18/09.
+//  Created by John A. Debay on 8/31/09.
 //  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
@@ -11,6 +11,7 @@
 @class ActiveTwitterCredentials;
 @class DirectMessage;
 @class DirectMessageDraft;
+@class InstapaperCredentials;
 @class Mention;
 @class PhotoServiceCredentials;
 @class TweetDraft;
@@ -21,6 +22,7 @@
 }
 
 @property (nonatomic, retain) NSString * username;
+@property (nonatomic, retain) InstapaperCredentials * instapaperCredentials;
 @property (nonatomic, retain) ActiveTwitterCredentials * activeCredentials;
 @property (nonatomic, retain) NSSet* userTimeline;
 @property (nonatomic, retain) NSSet* directMessageDrafts;

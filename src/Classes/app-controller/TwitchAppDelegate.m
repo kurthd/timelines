@@ -46,6 +46,11 @@
 @property (nonatomic, retain) ActiveTwitterCredentials *
     activeCredentials;
 
+@property (nonatomic, retain) InstapaperService * instapaperService;
+@property (nonatomic, copy) NSString * savingInstapaperUrl;
+@property (nonatomic, retain) InstapaperLogInDisplayMgr *
+    instapaperLogInDisplayMgr;
+
 - (void)initHomeTab;
 - (void)initMessagesTab;
 - (void)initProfileTab;
@@ -80,6 +85,9 @@
 @synthesize registrar;
 @synthesize credentials;
 @synthesize activeCredentials;
+@synthesize instapaperService;
+@synthesize savingInstapaperUrl;
+@synthesize instapaperLogInDisplayMgr;
 
 - (void)dealloc
 {
@@ -123,6 +131,10 @@
     [profileSendingTweetProgressView release];
 
     [findPeopleBookmarkMgr release];
+
+    [instapaperService release];
+    [savingInstapaperUrl release];
+    [instapaperLogInDisplayMgr release];
 
     [super dealloc];
 }
@@ -202,6 +214,7 @@
         [TwitchWebBrowserDisplayMgr instance];
     webDispMgr.composeTweetDisplayMgr = self.composeTweetDisplayMgr;
     webDispMgr.hostViewController = tabBarController;
+    webDispMgr.delegate = self;
     
     PhotoBrowserDisplayMgr * photoBrowserDispMgr =
         [PhotoBrowserDisplayMgr instance];
@@ -378,6 +391,24 @@
     NSString * username = [userInfo objectForKey:@"username"];
 
     [self.composeTweetDisplayMgr composeDirectMessageTo:username withText:dm];
+}
+
+#pragma mark TwitchWebBrowserDisplayMgrDelegate implementation
+
+- (void)readLater:(NSString *)aUrl
+{
+    NSLog(@"User wants to read '%@' later.", aUrl);
+
+    InstapaperCredentials * instapaperCredentials =
+        self.activeCredentials.credentials.instapaperCredentials;
+    if (instapaperCredentials) {
+        self.instapaperService.credentials = instapaperCredentials;
+        [self.instapaperService addUrl:aUrl];
+    } else
+        // prompt the user to set up an account
+        [self.instapaperLogInDisplayMgr
+            logInModallyForViewController:
+            [[TwitchWebBrowserDisplayMgr instance] browserController]];
 }
 
 #pragma mark initialization helpers
@@ -794,6 +825,8 @@
 
     self.activeCredentials.credentials = activatedCredentials;
     [self saveContext];
+
+    self.instapaperLogInDisplayMgr = nil;
 }
 
 - (void)credentialsSetChanged:(TwitterCredentials *)changedCredentials
@@ -1272,6 +1305,27 @@
                              action:@selector(composeTweet:)];
 
     return [button autorelease];
+}
+
+- (InstapaperService *)instapaperService
+{
+    if (!instapaperService) {
+        instapaperService = [[InstapaperService alloc] init];
+        instapaperService.delegate = self;
+    }
+
+    return instapaperService;
+}
+
+- (InstapaperLogInDisplayMgr *)instapaperLogInDisplayMgr
+{
+    if (!instapaperLogInDisplayMgr)
+        instapaperLogInDisplayMgr =
+            [[InstapaperLogInDisplayMgr alloc]
+            initWithCredentials:self.activeCredentials.credentials
+                        context:[self managedObjectContext]];
+
+    return instapaperLogInDisplayMgr;
 }
 
 @end

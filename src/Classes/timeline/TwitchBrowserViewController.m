@@ -103,6 +103,9 @@
         case 2:
             [self sendInEmail];
             break;
+        case 3:
+            [self readLater];
+            break;
     }
 
     [sheet autorelease];
@@ -173,10 +176,14 @@
     NSString * post = NSLocalizedString(@"browserview.actions.post", @"");
     NSString * email = NSLocalizedString(@"browserview.actions.email", @"");
 
+    NSString * readlater =
+        NSLocalizedString(@"browserview.actions.readlater", @"");
+
     UIActionSheet * sheet =
         [[UIActionSheet alloc]
         initWithTitle:nil delegate:self cancelButtonTitle:cancel
-        destructiveButtonTitle:nil otherButtonTitles:browser, post, email, nil];
+        destructiveButtonTitle:nil
+        otherButtonTitles:browser, post, email, readlater, nil];
 
     [sheet showInView:self.view];
 }
@@ -229,12 +236,25 @@
     NSLog(@"Posting page link in tweet");
     
     NSURL * url = [webView.request URL];
-    url = url ? url : [NSURL URLWithString:self.currentUrl];
-    NSString * urlAsString = [url absoluteString];
-    
+    NSString * urlAsString =
+        [url absoluteString].length == 0 ?
+        self.currentUrl : [url absoluteString];
+
     [self dismissView];
     [delegate performSelector:@selector(composeTweetWithText:)
         withObject:urlAsString afterDelay:0.5];
+}
+
+- (void)readLater
+{
+    NSLog(@"Sending the page to Instapaper");
+
+    NSURL * url = [webView.request URL];
+    NSString * urlAsString =
+        [url absoluteString].length == 0 ?
+        self.currentUrl : [url absoluteString];
+
+    [delegate readLater:urlAsString];
 }
 
 - (void)updateViewForNotLoading

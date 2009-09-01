@@ -159,6 +159,7 @@ browserview.actions.cancel = "Cancel";
 browserview.actions.browser = "Open in Safari";
 browserview.actions.post = "Post in Tweet";
 browserview.actions.email = "Email Link";
+browserview.actions.readlater = "Read Later";
 browserview.fetcherror.title = "Cannot Open Page";  // same title as Safari
 
 /* DirectMessageInboxView */
@@ -259,3 +260,14 @@ addflickrtagview.title = "New Tag";
 /* Flickr */
 flickr.photo.title.default = "Uploaded from Twitbit";
 flickr.video.title.default = "Uploaded from Twitbit";
+
+/* InstapaperLogInView */
+instapaperloginview.title = "Instapaper";
+instapaperloginview.footer = "Instapaper is a free service that saves links to web pages so you can read them later. If you don't have an Instapaper account, get one at instapaper.com.";
+
+/* Instapaper */
+instapaper.login.failed.alert.title = "Log In Failed";
+instapaper.http400.message = "Bad request";
+instapaper.http403.message = "Invalid username or password";
+instapaper.http500.message = "The service encountered an error. Please try again later.";
+instapaper.unkownerror.message = "An unknown error occurred";

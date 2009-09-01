@@ -49,6 +49,13 @@
 		05340AC0101A3E970077E7C0 /* SearchBookmarksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05340ABF101A3E970077E7C0 /* SearchBookmarksViewController.m */; };
 		05340B39101A5BFB0077E7C0 /* RecentSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 05340B36101A5BFB0077E7C0 /* RecentSearch.m */; };
 		0538FE1E104C4584009E50CE /* DeleteDirectMessageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0538FE1D104C4584009E50CE /* DeleteDirectMessageResponseProcessor.m */; };
+		0538FE5C104C4F16009E50CE /* InstapaperService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0538FE5B104C4F16009E50CE /* InstapaperService.m */; };
+		0538FE5F104C6DBC009E50CE /* InstapaperCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0538FE5E104C6DBC009E50CE /* InstapaperCredentials.m */; };
+		0538FE64104C6DE4009E50CE /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0538FE63104C6DE4009E50CE /* TwitterCredentials.m */; };
+		0538FE6B104C6ED9009E50CE /* InstapaperCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0538FE6A104C6ED9009E50CE /* InstapaperCredentials+KeychainAdditions.m */; };
+		0538FE91104C77E1009E50CE /* InstapaperLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0538FE90104C77E1009E50CE /* InstapaperLogInDisplayMgr.m */; };
+		0538FE94104C77F6009E50CE /* InstapaperLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0538FE93104C77F6009E50CE /* InstapaperLogInViewController.m */; };
+		0538FE97104C7897009E50CE /* InstapaperLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0538FE95104C7897009E50CE /* InstapaperLogInView.xib */; };
 		053A11A4100CDBA5008DD2F6 /* TweetDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 053A11A2100CDBA5008DD2F6 /* TweetDraft.m */; };
 		053A2C90103F1FAC005BB245 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2C8F103F1FAC005BB245 /* MobileCoreServices.framework */; };
 		053A2D89103F575D005BB245 /* libTwitVid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D88103F575D005BB245 /* libTwitVid.a */; };
@@ -103,7 +110,6 @@
 		05C7B8BA103B5FAF0017874C /* PhotoServicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B8B8103B5FAF0017874C /* PhotoServicesView.xib */; };
 		05C7B905103B6E8E0017874C /* TwitPicCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B904103B6E8E0017874C /* TwitPicCredentials.m */; };
 		05C7B90D103B6EFF0017874C /* PhotoServiceCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B90C103B6EFF0017874C /* PhotoServiceCredentials.m */; };
-		05C7B912103B6F220017874C /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B911103B6F220017874C /* TwitterCredentials.m */; };
 		05C7B93C103B72FC0017874C /* AddPhotoServiceDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B93B103B72FC0017874C /* AddPhotoServiceDisplayMgr.m */; };
 		05C7B94A103B74920017874C /* PhotoService+ServiceAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B949103B74920017874C /* PhotoService+ServiceAdditions.m */; };
 		05C7B94D103B74C40017874C /* PhotoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B94C103B74C40017874C /* PhotoService.m */; };
@@ -486,6 +492,19 @@
 		05340B36101A5BFB0077E7C0 /* RecentSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearch.m; path = search/RecentSearch.m; sourceTree = "<group>"; };
 		0538FE1C104C4584009E50CE /* DeleteDirectMessageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeleteDirectMessageResponseProcessor.h; path = twitter/processors/DeleteDirectMessageResponseProcessor.h; sourceTree = "<group>"; };
 		0538FE1D104C4584009E50CE /* DeleteDirectMessageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeleteDirectMessageResponseProcessor.m; path = twitter/processors/DeleteDirectMessageResponseProcessor.m; sourceTree = "<group>"; };
+		0538FE5A104C4F16009E50CE /* InstapaperService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstapaperService.h; path = instapaper/InstapaperService.h; sourceTree = "<group>"; };
+		0538FE5B104C4F16009E50CE /* InstapaperService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstapaperService.m; path = instapaper/InstapaperService.m; sourceTree = "<group>"; };
+		0538FE5D104C6DBC009E50CE /* InstapaperCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstapaperCredentials.h; path = instapaper/InstapaperCredentials.h; sourceTree = "<group>"; };
+		0538FE5E104C6DBC009E50CE /* InstapaperCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstapaperCredentials.m; path = instapaper/InstapaperCredentials.m; sourceTree = "<group>"; };
+		0538FE62104C6DE4009E50CE /* TwitterCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterCredentials.h; path = twitter/TwitterCredentials.h; sourceTree = "<group>"; };
+		0538FE63104C6DE4009E50CE /* TwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterCredentials.m; path = twitter/TwitterCredentials.m; sourceTree = "<group>"; };
+		0538FE69104C6ED9009E50CE /* InstapaperCredentials+KeychainAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "InstapaperCredentials+KeychainAdditions.h"; path = "instapaper/InstapaperCredentials+KeychainAdditions.h"; sourceTree = "<group>"; };
+		0538FE6A104C6ED9009E50CE /* InstapaperCredentials+KeychainAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "InstapaperCredentials+KeychainAdditions.m"; path = "instapaper/InstapaperCredentials+KeychainAdditions.m"; sourceTree = "<group>"; };
+		0538FE8F104C77E1009E50CE /* InstapaperLogInDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstapaperLogInDisplayMgr.h; path = instapaper/InstapaperLogInDisplayMgr.h; sourceTree = "<group>"; };
+		0538FE90104C77E1009E50CE /* InstapaperLogInDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstapaperLogInDisplayMgr.m; path = instapaper/InstapaperLogInDisplayMgr.m; sourceTree = "<group>"; };
+		0538FE92104C77F6009E50CE /* InstapaperLogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstapaperLogInViewController.h; path = instapaper/InstapaperLogInViewController.h; sourceTree = "<group>"; };
+		0538FE93104C77F6009E50CE /* InstapaperLogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstapaperLogInViewController.m; path = instapaper/InstapaperLogInViewController.m; sourceTree = "<group>"; };
+		0538FE96104C7897009E50CE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/InstapaperLogInView.xib; sourceTree = "<group>"; };
 		053A11A1100CDBA5008DD2F6 /* TweetDraft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDraft.h; path = tweets/TweetDraft.h; sourceTree = "<group>"; };
 		053A11A2100CDBA5008DD2F6 /* TweetDraft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDraft.m; path = tweets/TweetDraft.m; sourceTree = "<group>"; };
 		053A2C8F103F1FAC005BB245 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -730,8 +749,6 @@
 		05C7B904103B6E8E0017874C /* TwitPicCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitPicCredentials.m; path = photos/twitpic/TwitPicCredentials.m; sourceTree = "<group>"; };
 		05C7B90B103B6EFF0017874C /* PhotoServiceCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoServiceCredentials.h; path = photos/PhotoServiceCredentials.h; sourceTree = "<group>"; };
 		05C7B90C103B6EFF0017874C /* PhotoServiceCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoServiceCredentials.m; path = photos/PhotoServiceCredentials.m; sourceTree = "<group>"; };
-		05C7B910103B6F220017874C /* TwitterCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterCredentials.h; path = twitter/TwitterCredentials.h; sourceTree = "<group>"; };
-		05C7B911103B6F220017874C /* TwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterCredentials.m; path = twitter/TwitterCredentials.m; sourceTree = "<group>"; };
 		05C7B93A103B72FC0017874C /* AddPhotoServiceDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddPhotoServiceDisplayMgr.h; path = photos/AddPhotoServiceDisplayMgr.h; sourceTree = "<group>"; };
 		05C7B93B103B72FC0017874C /* AddPhotoServiceDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddPhotoServiceDisplayMgr.m; path = photos/AddPhotoServiceDisplayMgr.m; sourceTree = "<group>"; };
 		05C7B948103B74920017874C /* PhotoService+ServiceAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PhotoService+ServiceAdditions.h"; path = "photos/PhotoService+ServiceAdditions.h"; sourceTree = "<group>"; };
@@ -1181,6 +1198,23 @@
 			name = "app-controller";
 			sourceTree = "<group>";
 		};
+		0538FE59104C4EF1009E50CE /* instapaper */ = {
+			isa = PBXGroup;
+			children = (
+				0538FE5D104C6DBC009E50CE /* InstapaperCredentials.h */,
+				0538FE5E104C6DBC009E50CE /* InstapaperCredentials.m */,
+				0538FE69104C6ED9009E50CE /* InstapaperCredentials+KeychainAdditions.h */,
+				0538FE6A104C6ED9009E50CE /* InstapaperCredentials+KeychainAdditions.m */,
+				0538FE5A104C4F16009E50CE /* InstapaperService.h */,
+				0538FE5B104C4F16009E50CE /* InstapaperService.m */,
+				0538FE8F104C77E1009E50CE /* InstapaperLogInDisplayMgr.h */,
+				0538FE90104C77E1009E50CE /* InstapaperLogInDisplayMgr.m */,
+				0538FE92104C77F6009E50CE /* InstapaperLogInViewController.h */,
+				0538FE93104C77F6009E50CE /* InstapaperLogInViewController.m */,
+			);
+			name = instapaper;
+			sourceTree = "<group>";
+		};
 		053A2D76103F572D005BB245 /* twitvid */ = {
 			isa = PBXGroup;
 			children = (
@@ -1412,8 +1446,8 @@
 			isa = PBXGroup;
 			children = (
 				05B23B3C0FEED50E00A6A2E6 /* processors */,
-				05C7B910103B6F220017874C /* TwitterCredentials.h */,
-				05C7B911103B6F220017874C /* TwitterCredentials.m */,
+				0538FE62104C6DE4009E50CE /* TwitterCredentials.h */,
+				0538FE63104C6DE4009E50CE /* TwitterCredentials.m */,
 				05D173E10FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.h */,
 				05D173E20FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m */,
 				0524C02D0FF1B1E300A6099B /* ActiveTwitterCredentials.h */,
@@ -1532,6 +1566,7 @@
 				0519C8F01044502A00C2C7BD /* FlickrSettingsView.xib */,
 				0519CBD21045C42E00C2C7BD /* FlickrTagsView.xib */,
 				0515675A1047035500A26F17 /* EditTextView.xib */,
+				0538FE95104C7897009E50CE /* InstapaperLogInView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -1791,6 +1826,7 @@
 				05B23C0C0FEEEEC000A6A2E6 /* tweets */,
 				05B238F80FEDC8EE00A6A2E6 /* twitter */,
 				05C7B891103B59B60017874C /* photos */,
+				0538FE59104C4EF1009E50CE /* instapaper */,
 				05B239620FEDD1A400A6A2E6 /* publishers */,
 				055B78280FED7D31008859F7 /* push-notifications */,
 				05B23AC70FEEC29D00A6A2E6 /* configuration */,
@@ -2320,6 +2356,7 @@
 				918F710F1047310F00FE7ABF /* LoginScreenshot.png in Resources */,
 				918F713F104741AE00FE7ABF /* log-in-help.html in Resources */,
 				918F7167104745D000FE7ABF /* style.css in Resources */,
+				0538FE97104C7897009E50CE /* InstapaperLogInView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2528,7 +2565,6 @@
 				05C7B8AC103B5CE40017874C /* PhotoServicesViewController.m in Sources */,
 				05C7B905103B6E8E0017874C /* TwitPicCredentials.m in Sources */,
 				05C7B90D103B6EFF0017874C /* PhotoServiceCredentials.m in Sources */,
-				05C7B912103B6F220017874C /* TwitterCredentials.m in Sources */,
 				05C7B93C103B72FC0017874C /* AddPhotoServiceDisplayMgr.m in Sources */,
 				05C7B94A103B74920017874C /* PhotoService+ServiceAdditions.m in Sources */,
 				05C7B94D103B74C40017874C /* PhotoService.m in Sources */,
@@ -2588,6 +2624,12 @@
 				0502249610485CCA00BCB903 /* DeleteTweetResponseProcessor.m in Sources */,
 				050224D810488ED500BCB903 /* BlockUserResponseProcessor.m in Sources */,
 				0538FE1E104C4584009E50CE /* DeleteDirectMessageResponseProcessor.m in Sources */,
+				0538FE5C104C4F16009E50CE /* InstapaperService.m in Sources */,
+				0538FE5F104C6DBC009E50CE /* InstapaperCredentials.m in Sources */,
+				0538FE64104C6DE4009E50CE /* TwitterCredentials.m in Sources */,
+				0538FE6B104C6ED9009E50CE /* InstapaperCredentials+KeychainAdditions.m in Sources */,
+				0538FE91104C77E1009E50CE /* InstapaperLogInDisplayMgr.m in Sources */,
+				0538FE94104C77F6009E50CE /* InstapaperLogInViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2640,6 +2682,14 @@
 				05340AB9101A3DAD0077E7C0 /* en */,
 			);
 			name = SearchBookmarksView.xib;
+			sourceTree = "<group>";
+		};
+		0538FE95104C7897009E50CE /* InstapaperLogInView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0538FE96104C7897009E50CE /* en */,
+			);
+			name = InstapaperLogInView.xib;
 			sourceTree = "<group>";
 		};
 		057620320FF736D600392ADC /* OauthLogInView.xib */ = {
