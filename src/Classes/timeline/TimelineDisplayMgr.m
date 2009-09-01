@@ -206,10 +206,10 @@ static BOOL scrollToTopValueAlreadyRead;
     BOOL scrollToTop = [[self class] scrollToTop];
     NSString * scrollId =
         scrollToTop ? [anUpdateId description] : self.tweetIdToShow;
-    [timelineController setTweets:[timeline allValues] page:pagesShown
-        visibleTweetId:scrollId];
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
     [wrapperController setCachedDataAvailable:YES];
+    [timelineController setTweets:[timeline allValues] page:pagesShown
+        visibleTweetId:scrollId];
     refreshingTweets = NO;
     [[ErrorState instance] exitErrorState];
     firstFetchReceived = YES;
@@ -1103,7 +1103,7 @@ static BOOL scrollToTopValueAlreadyRead;
         animated:NO];
 
     [timelineController setTweets:[timeline allValues] page:pagesShown
-        visibleTweetId:nil];
+        visibleTweetId:self.tweetIdToShow];
     [timelineController setAllPagesLoaded:allPagesLoaded];
 
     if (refresh || [[someTweets allKeys] count] == 0)

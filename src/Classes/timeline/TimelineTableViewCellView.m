@@ -550,10 +550,13 @@ static UIImage * darkenedTopImage;
             darkenForOld ?
             [TimelineTableViewCellView darkenedCellColor] :
             [TimelineTableViewCellView defaultTimelineCellColor];
-        self.backgroundColor =
+        UIColor * cellColor =
             highlightForMention ?
             [TimelineTableViewCellView mentionCellColor] :
             nonMentionCellColor;
+        // HACK: cell color doesn't always seem to update if this isn't delayed
+        [self performSelector:@selector(setBackgroundColor:)
+            withObject:cellColor afterDelay:0];
     }
 }
 
@@ -561,10 +564,13 @@ static UIImage * darkenedTopImage;
 {
     if (darkenForOld != darken) {
         darkenForOld = darken;
-        self.backgroundColor =
-            darkenForOld ?
+        UIColor * cellColor =
+            darken ?
             [TimelineTableViewCellView darkenedCellColor] :
             [TimelineTableViewCellView defaultTimelineCellColor];
+        // HACK: cell color doesn't always seem to update if this isn't delayed
+        [self performSelector:@selector(setBackgroundColor:)
+            withObject:cellColor afterDelay:0];
     }
 }
     

@@ -119,7 +119,8 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
     [cell setDisplayType:displayType];
 
-    BOOL newerThanVisibleTweetId = !self.visibleTweetId ||
+    BOOL newerThanVisibleTweetId =
+        self.visibleTweetId &&
         [tweet.identifier compare:self.visibleTweetId] != NSOrderedDescending;
     BOOL darkenForOld =
         [[self class] highlightNewTweets] && newerThanVisibleTweetId;

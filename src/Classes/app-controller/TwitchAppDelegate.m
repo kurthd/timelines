@@ -423,6 +423,11 @@
     [[CredentialsActivatedPublisher alloc]
         initWithListener:personalFeedSelectionMgr
         action:@selector(setCredentials:)];
+
+    UIStatePersistenceStore * uiStatePersistenceStore =
+        [[[UIStatePersistenceStore alloc] init] autorelease];
+    UIState * uiState = [uiStatePersistenceStore load];
+    timelineDisplayMgr.tweetIdToShow = uiState.viewedTweetId;
 }
 
 - (void)initMessagesTab
@@ -1102,8 +1107,6 @@
     if (uiState.selectedTab == 3)
         [searchBarDisplayMgr searchBarViewWillAppear:NO];
 
-    timelineDisplayMgr.tweetIdToShow = uiState.viewedTweetId;
-    
     NewDirectMessagesPersistenceStore * newDirectMessagesPersistenceStore =
         [[[NewDirectMessagesPersistenceStore alloc] init] autorelease];
     directMessageDisplayMgr.newDirectMessagesState =
