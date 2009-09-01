@@ -520,6 +520,11 @@
     [composeTweetDisplayMgr composeTweetWithText:text];
 }
 
+- (void)readLater:(NSString *)url
+{
+    // should never be called
+}
+
 #pragma mark UserListDisplayMgr implementation
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials

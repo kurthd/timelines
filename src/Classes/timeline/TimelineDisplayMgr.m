@@ -44,7 +44,7 @@
     LocationMapViewController * locationMapViewController;
 @property (nonatomic, readonly)
     LocationInfoViewController * locationInfoViewController;
-    
+
 @end
 
 enum {
@@ -951,6 +951,11 @@ static BOOL scrollToTopValueAlreadyRead;
 {
     NSLog(@"Timeline display manager: composing tweet with text'%@'", text);
     [composeTweetDisplayMgr composeTweetWithText:text];
+}
+
+- (void)readLater:(NSString *)url
+{
+    // should never be called
 }
 
 #pragma mark Accessors

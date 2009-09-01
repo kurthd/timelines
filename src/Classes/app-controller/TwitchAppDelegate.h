@@ -12,6 +12,9 @@
 #import "PersonalFeedSelectionMgr.h"
 #import "DirectMessageAcctMgr.h"
 #import "FindPeopleSearchDisplayMgr.h"
+#import "TwitchWebBrowserDisplayMgr.h"
+#import "InstapaperService.h"
+#import "InstapaperLogInDisplayMgr.h"
 
 @class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class SearchBarDisplayMgr;
@@ -23,7 +26,9 @@
 
 @interface TwitchAppDelegate : NSObject
     <UIApplicationDelegate, UITabBarControllerDelegate, DeviceRegistrarDelegate,
-    TwitterServiceDelegate, ComposeTweetDisplayMgrDelegate>
+    TwitterServiceDelegate, ComposeTweetDisplayMgrDelegate,
+    TwitchWebBrowserDisplayMgrDelegate, InstapaperServiceDelegate,
+    InstapaperLogInDisplayMgrDelegate>
 {
     UIWindow * window;
     UITabBarController * tabBarController;
@@ -70,6 +75,10 @@
     UIBarButtonItem * profileSendingTweetProgressView;
 
     SavedSearchMgr * findPeopleBookmarkMgr;
+
+    InstapaperService * instapaperService;
+    NSString * savingInstapaperUrl;
+    InstapaperLogInDisplayMgr * instapaperLogInDisplayMgr;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;

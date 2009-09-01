@@ -4,11 +4,13 @@
 
 #import "AccountSettingsViewController.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "InstapaperCredentials.h"
 
-static const NSInteger NUM_SECTIONS = 2;
+static const NSInteger NUM_SECTIONS = 3;
 enum {
     kPushNotificationSection,
-    kPhotoSection
+    kPhotoSection,
+    kIntegrationSection
 };
 
 static const NSInteger NUM_PUSH_NOTIFICATION_ROWS = 2;
@@ -21,6 +23,11 @@ static const NSInteger NUM_PHOTO_ROWS = 2;
 enum {
     kIntegrationRow,
     kCompressionRow
+};
+
+static const NSInteger NUM_INTEGRATION_ROWS = 1;
+enum {
+    kInstapaperRow
 };
 
 @interface AccountSettingsViewController ()
@@ -110,6 +117,8 @@ enum {
         title = NSLocalizedString(@"accountsettings.push.header", @"");
     else if (section == kPhotoSection)
         title = NSLocalizedString(@"accountsettings.photo.header", @"");
+    else if (section == kIntegrationSection)
+        title = NSLocalizedString(@"accountsettings.integration.header", @"");
 
     return title;
 }
@@ -134,6 +143,8 @@ enum {
         nrows = NUM_PUSH_NOTIFICATION_ROWS;
     else if (section == kPhotoSection)
         nrows = NUM_PHOTO_ROWS;
+    else if (section == kIntegrationSection)
+        nrows = NUM_INTEGRATION_ROWS;
 
     return nrows;
 }
@@ -146,7 +157,7 @@ enum {
     if (indexPath.section == kPushNotificationSection)
         cell = [self.pushSettingTableViewCells objectAtIndex:indexPath.row];
     else if (indexPath.section == kPhotoSection) {
-        static NSString * CellIdentifier = @"AccountSettingsTableView";
+        static NSString * CellIdentifier = @"AccountSettingsPhotoTableViewCell";
 
         cell = [tv dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell)
@@ -167,6 +178,33 @@ enum {
 
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    } else if (indexPath.section == kIntegrationSection) {
+        static NSString * CellIdentifier =
+            @"AccountSettingsIntegrationTableViewCell";
+
+        cell = [tv dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!cell)
+            cell =
+                [[[UITableViewCell alloc]
+                initWithStyle:UITableViewCellStyleValue1
+                reuseIdentifier:CellIdentifier]
+                autorelease];
+
+        if (indexPath.row == kInstapaperRow) {
+            cell.textLabel.text =
+                NSLocalizedString(
+                @"accountsettings.integration.instapaper.label", @"");
+
+            InstapaperCredentials * ic =
+                self.credentials.instapaperCredentials;
+            cell.detailTextLabel.text =
+                ic ?
+                ic.username :
+                NSLocalizedString(
+                @"accountsettings.integration.instapaper.notconfigured.label",
+                @"");
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
     }
 
     return cell;
@@ -187,9 +225,12 @@ enum {
             [self.tableView deselectRowAtIndexPath:indexPath
                                           animated:YES];
         }
+    else if (indexPath.section == kIntegrationSection)
+        [self.delegate
+            userWantsToConfigureInstapaperForAccount:self.credentials];
 }
 
-#pragma mark Public interface to update the display
+#pragma mark Public interface implementation
 
 - (void)presentSettings:(AccountSettings *)someSettings
              forAccount:(TwitterCredentials *)someCredentials
@@ -200,6 +241,16 @@ enum {
     [self syncDisplayWithSettings];
 
     self.navigationItem.title = credentials.username;
+    [self.tableView reloadData];
+    // this forces the tableview to scroll to top
+    [self.tableView setContentOffset:CGPointMake(0, 0)
+                            animated:NO];
+}
+
+- (void)reloadDisplay
+{
+    [self syncDisplayWithSettings];
+    [self.tableView reloadData];
 }
 
 #pragma mark Display helpers

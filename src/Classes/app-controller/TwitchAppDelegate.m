@@ -46,6 +46,11 @@
 @property (nonatomic, retain) ActiveTwitterCredentials *
     activeCredentials;
 
+@property (nonatomic, retain) InstapaperService * instapaperService;
+@property (nonatomic, copy) NSString * savingInstapaperUrl;
+@property (nonatomic, retain) InstapaperLogInDisplayMgr *
+    instapaperLogInDisplayMgr;
+
 - (void)initHomeTab;
 - (void)initMessagesTab;
 - (void)initProfileTab;
@@ -80,6 +85,9 @@
 @synthesize registrar;
 @synthesize credentials;
 @synthesize activeCredentials;
+@synthesize instapaperService;
+@synthesize savingInstapaperUrl;
+@synthesize instapaperLogInDisplayMgr;
 
 - (void)dealloc
 {
@@ -123,6 +131,10 @@
     [profileSendingTweetProgressView release];
 
     [findPeopleBookmarkMgr release];
+
+    [instapaperService release];
+    [savingInstapaperUrl release];
+    [instapaperLogInDisplayMgr release];
 
     [super dealloc];
 }
@@ -202,6 +214,7 @@
         [TwitchWebBrowserDisplayMgr instance];
     webDispMgr.composeTweetDisplayMgr = self.composeTweetDisplayMgr;
     webDispMgr.hostViewController = tabBarController;
+    webDispMgr.delegate = self;
     
     PhotoBrowserDisplayMgr * photoBrowserDispMgr =
         [PhotoBrowserDisplayMgr instance];
@@ -378,6 +391,75 @@
     NSString * username = [userInfo objectForKey:@"username"];
 
     [self.composeTweetDisplayMgr composeDirectMessageTo:username withText:dm];
+}
+
+#pragma mark TwitchWebBrowserDisplayMgrDelegate implementation
+
+- (void)readLater:(NSString *)aUrl
+{
+    NSLog(@"User wants to read '%@' later.", aUrl);
+
+    InstapaperCredentials * instapaperCredentials =
+        self.activeCredentials.credentials.instapaperCredentials;
+    if (instapaperCredentials) {
+        self.instapaperService.credentials = instapaperCredentials;
+        [self.instapaperService addUrl:aUrl];
+    } else {
+        // prompt the user to set up an account
+        self.instapaperLogInDisplayMgr.credentials =
+            self.activeCredentials.credentials;
+        [self.instapaperLogInDisplayMgr
+            logInModallyForViewController:
+            [[TwitchWebBrowserDisplayMgr instance] browserController]];
+        self.savingInstapaperUrl = aUrl;  // remember for later
+    }
+}
+
+#pragma mark InstapaperLogInDisplayMgrDelegate implementation
+
+- (void)accountCreated:(InstapaperCredentials *)instapaperCredentials
+{
+    NSAssert(self.savingInstapaperUrl,
+        @"I don't know which URL I'm supposed to be saving.");
+
+    self.instapaperService.credentials = instapaperCredentials;
+    [self.instapaperService addUrl:self.savingInstapaperUrl];
+}
+
+- (void)accountCreationCancelled
+{
+    self.savingInstapaperUrl = nil;
+}
+
+- (void)accountEdited:(InstapaperCredentials *)credentials
+{
+    // don't care
+}
+
+- (void)editingAccountCancelled:(InstapaperCredentials *)credentials
+{
+    // don't care
+}
+
+- (void)accountWillBeDeleted:(InstapaperCredentials *)credentials
+{
+    // don't care
+}
+
+- (void)postedUrl:(NSString *)url
+{
+    NSLog(@"Successfully saved '%@' to Instapaper.", url);
+    if ([url isEqualToString:self.savingInstapaperUrl])
+        self.savingInstapaperUrl = nil;
+}
+
+- (void)failedToPostUrl:(NSString *)url error:(NSError *)error
+{
+    NSString * title =
+        NSLocalizedString(@"instapaper.save.failed.alert.title", @"");
+    NSString * message = error.localizedDescription;
+
+    [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
 }
 
 #pragma mark initialization helpers
@@ -1296,6 +1378,28 @@
                              action:@selector(composeTweet:)];
 
     return [button autorelease];
+}
+
+- (InstapaperService *)instapaperService
+{
+    if (!instapaperService) {
+        instapaperService = [[InstapaperService alloc] init];
+        instapaperService.delegate = self;
+    }
+
+    return instapaperService;
+}
+
+- (InstapaperLogInDisplayMgr *)instapaperLogInDisplayMgr
+{
+    if (!instapaperLogInDisplayMgr) {
+        instapaperLogInDisplayMgr =
+            [[InstapaperLogInDisplayMgr alloc]
+            initWithContext:[self managedObjectContext]];
+        instapaperLogInDisplayMgr.delegate = self;
+    }
+
+    return instapaperLogInDisplayMgr;
 }
 
 @end

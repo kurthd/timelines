@@ -39,5 +39,6 @@
 - (void)openInSafari;
 - (void)sendInEmail;
 - (void)postInTweet;
+- (void)readLater;
 
 @end

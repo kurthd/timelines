@@ -10,9 +10,9 @@
 
 @end
 
-@interface NSString (EncodingAdditions)
+@interface NSString (UrlEncodingAdditions)
 
-- (NSString *)stringByEncodingWithAlphabet:(NSString *)alphabet;
-- (NSString *)stringByEncodingWithBase58Encoding;
+- (NSString *)urlEncodedString;
+- (NSString *)urlEncodedStringWithEscapedAllowedCharacters:(NSString *)allowed;
 
 @end
