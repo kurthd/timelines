@@ -33,6 +33,7 @@ static UIImage * defaultAvatar;
 
 - (void)dealloc
 {
+    [headerView release];
     [footerView release];
     [tweets release];
     [avatarCache release];
@@ -48,6 +49,7 @@ static UIImage * defaultAvatar;
     avatarCache = [[NSMutableDictionary dictionary] retain];
     alreadySent = [[NSMutableDictionary dictionary] retain];
     self.tableView.tableFooterView = footerView;
+    self.tableView.tableHeaderView = headerView;
 }
 
 - (void)viewWillAppear:(BOOL)animated
