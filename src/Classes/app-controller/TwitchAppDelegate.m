@@ -981,7 +981,7 @@
     }
 
     // only keep the last n tweets, mentions, and dms for each account
-    static const NSUInteger NUM_TWEETS_TO_KEEP = 20;
+    static const NSUInteger NUM_TWEETS_TO_KEEP = 200;
     static const NSUInteger NUM_DIRECT_MESSAGES_TO_KEEP = 500;
 
     NSMutableDictionary * living =
