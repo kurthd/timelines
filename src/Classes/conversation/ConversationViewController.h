@@ -19,6 +19,7 @@
 {
     id<ConversationViewControllerDelegate> delegate;
 
+    IBOutlet UIView * headerView;
     IBOutlet UIView * footerView;
     IBOutlet UIView * plainFooterView;
 
