@@ -421,6 +421,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)setTimelineHeaderView:(UIView *)aView
 {
     self.tableView.tableHeaderView = aView;
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
 - (void)setMentionUsername:(NSString *)aMentionUsername
@@ -428,7 +429,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     NSString * tempUsername = [aMentionUsername copy];
     [mentionUsername release];
     mentionUsername = tempUsername;
-    
+
     self.mentionRegex =
         [NSString stringWithFormat:@"\\B@%@", mentionUsername];
 }
