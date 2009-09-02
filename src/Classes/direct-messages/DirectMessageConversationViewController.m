@@ -18,6 +18,9 @@
 - (void)triggerDelayedRefresh;
 - (void)processDelayedRefresh;
 
+- (NSInteger)indexForTweetId:(NSString *)tweetId;
+- (NSInteger)sortedIndexForTweetId:(NSString *)tweetId;
+
 + (UIImage *)defaultAvatar;
 
 @end
@@ -154,6 +157,26 @@ static UIImage * defaultAvatar;
     [self.tableView reloadData];
 }
 
+- (void)deleteTweet:(NSString *)tweetId
+{
+    NSInteger index = [self indexForTweetId:tweetId];
+    NSInteger sortedIndex = [self sortedIndexForTweetId:tweetId];
+
+    NSMutableArray * newTweets = [tweets mutableCopy];
+    self.sortedTweetCache = nil;
+    [newTweets removeObjectAtIndex:index];
+
+    [tweets release];
+    tweets = [[NSArray alloc] initWithArray:newTweets];
+    [newTweets release];
+
+    NSIndexPath * indexPath =
+        [NSIndexPath indexPathForRow:sortedIndex inSection:0];
+
+    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+        withRowAnimation:UITableViewRowAnimationFade];
+}
+
 - (void)setMessages:(NSArray *)messages
 {
     self.sortedTweetCache = nil;
@@ -213,6 +236,34 @@ static UIImage * defaultAvatar;
 {
     [self.tableView reloadData];
     delayedRefreshTriggered = NO;
+}
+
+- (NSInteger)indexForTweetId:(NSString *)tweetId
+{
+    NSInteger index = -1;
+    for (int i = 0; i < [tweets count]; i++) {
+        DirectMessage * tweet = [tweets objectAtIndex:i];
+        if ([tweet.identifier isEqual:tweetId]) {
+            index = i;
+            break;
+        }
+    }
+
+    return index;
+}   
+
+- (NSInteger)sortedIndexForTweetId:(NSString *)tweetId
+{
+    NSInteger index = -1;
+    for (int i = 0; i < [self.sortedTweets count]; i++) {
+        DirectMessage * tweet = [self.sortedTweets objectAtIndex:i];
+        if ([tweet.identifier isEqual:tweetId]) {
+            index = i;
+            break;
+        }
+    }
+
+    return index;
 }
 
 + (UIImage *)defaultAvatar

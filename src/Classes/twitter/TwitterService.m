@@ -75,7 +75,9 @@
 
 #pragma mark Sending tweets
 
-// is 'tweet' a verb or a noun?
+// JD: is 'tweet' a verb or a noun?
+// DK: I think it's both, like 'file'
+// DK: I love code comment conversations
 - (void)sendTweet:(NSString *)tweet
 {
     ResponseProcessor * processor =

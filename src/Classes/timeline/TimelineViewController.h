@@ -60,6 +60,7 @@
 - (IBAction)showFullProfileImage:(id)sender;
 
 - (void)addTweet:(TweetInfo *)tweet;
+- (void)deleteTweet:(NSString *)tweetId;
 - (NSString *)mostRecentTweetId;
 
 // HACK: Exposed to allow for "Save Search" button
