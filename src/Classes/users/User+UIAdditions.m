@@ -92,6 +92,27 @@ static NSMutableDictionary * followersDescriptions;
     return followersDescription;
 }
 
+- (UIImage *)getAvatar
+{
+    NSData * imageData = self.avatar.thumbnailImage;
+    if (!imageData)
+        imageData = self.avatar.fullImage;
+
+    return imageData ? [UIImage imageWithData:imageData] : nil;
+}
+
+- (UIImage *)thumbnailAvatar
+{
+    NSData * imageData = self.avatar.thumbnailImage;
+    return imageData ? [UIImage imageWithData:imageData] : nil;
+}
+
+- (UIImage *)fullAvatar
+{
+    NSData * imageData = self.avatar.fullImage;
+    return imageData ? [UIImage imageWithData:imageData] : nil;
+}
+
 + (void)setAvatar:(UIImage *)image forUrl:(NSString *)url
 {
     id delegate = [[UIApplication sharedApplication] delegate];
@@ -112,31 +133,7 @@ static NSMutableDictionary * followersDescriptions;
     }
 }
 
-+ (UIImage *)avatarForUrl:(NSString *)url
-{
-    UIImage * image = nil;
-
-    id delegate = [[UIApplication sharedApplication] delegate];
-    NSManagedObjectContext * context = [delegate managedObjectContext];
-
-    NSPredicate * predicate =
-        [NSPredicate predicateWithFormat:@"thumbnailImageUrl == %@", url];
-    Avatar * avatar = [Avatar findFirst:predicate context:context];
-    if (avatar)
-        image = [UIImage imageWithData:avatar.thumbnailImage];
-    else {
-        predicate =
-            [NSPredicate predicateWithFormat:@"fullImageUrl == %@", url];
-        avatar = [Avatar findFirst:predicate context:context];
-
-        if (avatar)
-            image = [UIImage imageWithData:avatar.fullImage];
-    }
-
-    return image;
-}
-
-+ (NSString *)largeAvatarUrlForUrl:(NSString *)url
++ (NSString *)fullAvatarUrlForUrl:(NSString *)url
 {
     NSString * largeAvatarUrl =
         [url stringByReplacingOccurrencesOfString:@"_normal." withString:@"."];

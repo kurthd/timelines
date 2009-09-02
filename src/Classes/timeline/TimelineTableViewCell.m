@@ -55,6 +55,11 @@ static UIImage * topGradientImage;
     return self;
 }
 
+- (UIImage *)avatarImage
+{
+    return timelineView.avatar;
+}
+
 - (void)setAvatarImage:(UIImage *)image
 {
     timelineView.avatar = image;

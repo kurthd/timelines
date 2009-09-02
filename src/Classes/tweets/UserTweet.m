@@ -16,8 +16,12 @@
 
 - (NSString *)description
 {
+    /*
     return [NSString stringWithFormat:@"'%@' recieved: '%@': '%@'",
         self.credentials.username, self.user, self.text];
+     */
+    return [NSString stringWithFormat:@"%@, %@", self.credentials.username,
+        self.user];
 }
 
 @end

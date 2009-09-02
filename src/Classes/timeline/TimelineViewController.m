@@ -18,7 +18,8 @@
 @property (nonatomic, retain) NSString * mentionRegex;
 @property (nonatomic, retain) NSString * visibleTweetId;
 
-- (UIImage *)getAvatarForUrl:(NSString *)url;
+- (UIImage *)getLargeAvatarForUser:(User *)aUser;
+- (UIImage *)getThumbnailAvatarForUser:(User *)aUser;
 - (UIImage *)convertUrlToImage:(NSString *)url;
 - (NSArray *)sortedTweets;
 - (void)triggerDelayedRefresh;
@@ -108,9 +109,9 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
     TimelineTableViewCell * cell = [tweet cell];
 
-    UIImage * avatarImage =
-        [self getAvatarForUrl:tweet.user.avatar.thumbnailImageUrl];
-    [cell setAvatarImage:avatarImage];
+    UIImage * defaultAvatar = [[self class] defaultAvatar];
+    if (![cell avatarImage] || [cell avatarImage] == defaultAvatar)
+        [cell setAvatarImage:[self getThumbnailAvatarForUser:tweet.user]];
 
     TimelineTableViewCellType displayType;
     if (showWithoutAvatars)
@@ -224,7 +225,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         [NSIndexPath indexPathForRow:0 inSection:0]
         atScrollPosition:UITableViewScrollPositionNone animated:YES];
 
-    if (![self getAvatarForUrl:tweet.user.avatar.thumbnailImageUrl]) {
+    if (!tweet.user.avatar.thumbnailImage) {
         NSURL * avatarUrl =
             [NSURL URLWithString:tweet.user.avatar.thumbnailImageUrl];
         [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
@@ -274,9 +275,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
             [NSString stringWithFormat:
             NSLocalizedString(@"userinfoview.statusescount.formatstring", @""),
             [formatter stringFromNumber:user.statusesCount]];
-        NSString * largeProfileUrl =
-            [User largeAvatarUrlForUrl:aUser.avatar.thumbnailImageUrl];
-        UIImage * avatarImage = [self getAvatarForUrl:largeProfileUrl];
+        UIImage * avatarImage = [self getLargeAvatarForUser:aUser];
         [avatarView setImage:avatarImage];
     }
 }
@@ -336,11 +335,12 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     noMorePagesLabel.hidden = !allLoaded;
 }
 
-- (UIImage *)getAvatarForUrl:(NSString *)url
+- (UIImage *)getLargeAvatarForUser:(User *)aUser
 {
-    UIImage * avatarImage = [User avatarForUrl:url];
+    UIImage * avatarImage = [aUser fullAvatar];
     if (!avatarImage) {
         avatarImage = [[self class] defaultAvatar];
+        NSString * url = aUser.avatar.fullImageUrl;
         if (![alreadySent objectForKey:url]) {
             NSURL * avatarUrl = [NSURL URLWithString:url];
             [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
@@ -348,6 +348,22 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         }
     }
     
+    return avatarImage;
+}
+
+- (UIImage *)getThumbnailAvatarForUser:(User *)aUser
+{
+    UIImage * avatarImage = [aUser thumbnailAvatar];
+    if (!avatarImage) {
+        avatarImage = [[self class] defaultAvatar];
+        NSString * url = aUser.avatar.thumbnailImageUrl;
+        if (![alreadySent objectForKey:url]) {
+            NSURL * avatarUrl = [NSURL URLWithString:url];
+            [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+            [alreadySent setObject:url forKey:url];
+        }
+    }
+
     return avatarImage;
 }
 

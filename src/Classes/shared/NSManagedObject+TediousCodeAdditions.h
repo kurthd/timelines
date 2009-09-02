@@ -19,6 +19,9 @@
 + (NSArray *)findAll:(NSPredicate *)predicate
              context:(NSManagedObjectContext *)context;
 + (NSArray *)findAll:(NSPredicate *)predicate
+             context:(NSManagedObjectContext *)context
+  prefetchedKeyPaths:(NSArray *)prefetchedKeyPaths;
++ (NSArray *)findAll:(NSPredicate *)predicate
               sortBy:(NSSortDescriptor *)sorter
              context:(NSManagedObjectContext *)context;
 + (NSArray *)findAll:(NSPredicate *)predicate
