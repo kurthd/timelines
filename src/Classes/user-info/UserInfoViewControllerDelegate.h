@@ -14,6 +14,8 @@
 - (void)showTweetsForUser:(NSString *)username;
 - (void)startFollowingUser:(NSString *)username;
 - (void)stopFollowingUser:(NSString *)username;
+- (void)blockUser:(NSString *)username;
+- (void)unblockUser:(NSString *)username;
 - (void)showingUserInfoView;
 - (void)sendDirectMessageToUser:(NSString *)username;
 - (void)sendPublicMessageToUser:(NSString *)username;

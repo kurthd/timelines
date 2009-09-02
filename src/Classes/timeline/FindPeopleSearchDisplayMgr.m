@@ -411,6 +411,16 @@
     [service stopFollowingUser:aUsername];
 }
 
+- (void)blockUser:(NSString *)username
+{
+    [service blockUserWithUsername:username];
+}
+
+- (void)unblockUser:(NSString *)username
+{
+    [service unblockUserWithUsername:username];
+}
+
 - (void)showingUserInfoView
 {
     self.nextWrapperController = nil;

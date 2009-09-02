@@ -441,6 +441,16 @@
     [service stopFollowingUser:aUsername];
 }
 
+- (void)blockUser:(NSString *)aUsername
+{
+    [service blockUserWithUsername:aUsername];
+}
+
+- (void)unblockUser:(NSString *)aUsername
+{
+    [service unblockUserWithUsername:aUsername];
+}
+
 - (void)showingUserInfoView
 {
     // do nothing

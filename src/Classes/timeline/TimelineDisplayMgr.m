@@ -436,6 +436,7 @@ static BOOL scrollToTopValueAlreadyRead;
     [self.userInfoController setUser:aUser];
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUser.username];
+    [service isUser:credentials.username following:aUser.username];
 }
 
 - (void)showUserInfoForUsername:(NSString *)aUsername
@@ -857,6 +858,16 @@ static BOOL scrollToTopValueAlreadyRead;
     NSLog(@"Timeline display manager: sending 'stop following' request for %@",
         username);
     [service stopFollowingUser:username];
+}
+
+- (void)blockUser:(NSString *)username
+{
+    [service blockUserWithUsername:username];
+}
+
+- (void)unblockUser:(NSString *)username
+{
+    [service unblockUserWithUsername:username];
 }
 
 - (void)showingUserInfoView

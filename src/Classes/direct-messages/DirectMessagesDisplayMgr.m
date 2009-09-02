@@ -652,6 +652,16 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [service stopFollowingUser:username];
 }
 
+- (void)blockUser:(NSString *)username
+{
+    [service blockUserWithUsername:username];
+}
+
+- (void)unblockUser:(NSString *)username
+{
+    [service unblockUserWithUsername:username];
+}
+
 - (void)displayFavoritesForUser:(NSString *)username
 {
     NSLog(@"Direct message display manager: displaying favorites for user %@",
