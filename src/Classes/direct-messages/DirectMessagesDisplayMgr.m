@@ -312,6 +312,16 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
+- (void)failedToDeleteDirectMessageWithId:(NSString *)directMessageId
+    error:(NSError *)error;
+{
+    NSLog(@"Direct message display manager: failed to delete direct message");
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.deletedirectmessage", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+}
+
 #pragma mark NetworkAwareViewControllerDelegate implementation
 
 - (void)networkAwareViewWillAppear
@@ -393,6 +403,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     TweetInfo * tweetInfo = [TweetInfo createFromDirectMessage:message];
     [self.tweetViewController displayTweet:tweetInfo
         onNavigationController:wrapperController.navigationController];
+    self.tweetViewController.allowDeletion =
+        [message.sender.username isEqual:activeAcctUsername];
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
@@ -752,6 +764,13 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     [wrapperController.navigationController
         pushViewController:self.userListNetAwareViewController animated:YES];
+}
+
+- (void)deleteTweet:(NSString *)tweetId
+{
+    [service deleteDirectMessage:tweetId];
+    [conversationController performSelector:@selector(deleteTweet:)
+        withObject:tweetId afterDelay:0.5];
 }
 
 #pragma mark TwitchBrowserViewControllerDelegate implementation

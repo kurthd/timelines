@@ -361,6 +361,15 @@ static BOOL scrollToTopValueAlreadyRead;
         [self.lastTweetDetailsController.tweet.favorited boolValue]];
 }
 
+- (void)failedToDeleteTweetWithId:(NSString *)tweetId error:(NSError *)error
+{
+    NSLog(@"Timeline display manager: failed to delete tweet");
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.deletetweet", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+}
+
 #pragma mark TimelineViewControllerDelegate implementation
 
 - (void)selectedTweet:(TweetInfo *)tweet
@@ -401,6 +410,8 @@ static BOOL scrollToTopValueAlreadyRead;
     self.tweetDetailsController.showsExtendedActions = YES;
     [self.tweetDetailsController displayTweet:tweet
         onNavigationController:self.wrapperController.navigationController];
+    self.tweetDetailsController.allowDeletion =
+        [tweet.user.username isEqual:credentials.username];
 }
 
 - (void)loadMoreTweets
@@ -458,6 +469,13 @@ static BOOL scrollToTopValueAlreadyRead;
         [service isUser:credentials.username following:aUsername];
 
     [self.userInfoTwitterService fetchUserInfoForUsername:aUsername];
+}
+
+- (void)deleteTweet:(NSString *)tweetId
+{
+    [service deleteTweet:tweetId];
+    [timelineController performSelector:@selector(deleteTweet:)
+        withObject:tweetId afterDelay:0.5];
 }
 
 #pragma mark TweetDetailsViewDelegate implementation

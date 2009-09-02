@@ -23,5 +23,6 @@
 - (void)replyToTweet;
 - (void)sendDirectMessageToUser:(NSString *)username;
 - (void)loadConversationFromTweetId:(NSString *)tweetId;
+- (void)deleteTweet:(NSString *)tweetId;
 
 @end

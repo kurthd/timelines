@@ -24,6 +24,7 @@
     IBOutlet RoundedImage * avatarImage;
 
     UITableViewCell * tweetTextTableViewCell;
+    UITableViewCell * conversationCell;
     UIWebView * tweetContentView;
 
     TweetInfo * tweet;
@@ -31,6 +32,7 @@
     // configure the display
     BOOL showsFavoriteButton;
     BOOL showsExtendedActions;
+    BOOL allowDeletion;
 
     UIViewController * realParentViewController;
 
@@ -38,6 +40,7 @@
     UITableViewCell * directMessageCell;
     UITableViewCell * retweetCell;
     MarkAsFavoriteCell * favoriteCell;
+    UITableViewCell * deleteTweetCell;
 
     BOOL markingFavorite;
 }
@@ -45,6 +48,7 @@
 @property (nonatomic, assign) NSObject<TweetViewControllerDelegate> * delegate;
 @property (nonatomic, retain, readonly) TweetInfo * tweet;
 @property (nonatomic, assign) BOOL showsExtendedActions;
+@property (nonatomic, assign) BOOL allowDeletion;
 @property (nonatomic, retain) UIViewController * realParentViewController;
 
 - (void)displayTweet:(TweetInfo *)tweet
