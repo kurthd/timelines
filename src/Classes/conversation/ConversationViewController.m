@@ -15,7 +15,7 @@
 @property (nonatomic, retain) UIView * loadMoreView;
 @property (nonatomic, retain) NSMutableArray * conversation;
 
-- (UIImage *)getAvatarForUrl:(NSString *)url;
+- (UIImage *)getThumbnailAvatarForUser:(User *)user;
 + (UIImage *)defaultAvatar;
 
 - (void)configureFooterForCurrentState;
@@ -186,8 +186,7 @@
     else
         [cell setDisplayType:kTimelineTableViewCellTypeNormal];
 
-    [cell setAvatarImage:
-        [self getAvatarForUrl:tweet.user.avatar.thumbnailImageUrl]];
+    [cell setAvatarImage:[self getThumbnailAvatarForUser:tweet.user]];
     cell.avatarImageUrl = tweet.user.avatar.thumbnailImageUrl;
 
     return cell;
@@ -246,11 +245,12 @@
 
 #pragma mark Private implementation
 
-- (UIImage *)getAvatarForUrl:(NSString *)url
+- (UIImage *)getThumbnailAvatarForUser:(User *)user
 {
-    UIImage * avatarImage = [User avatarForUrl:url];
+    UIImage * avatarImage = [user thumbnailAvatar];
     if (!avatarImage) {
         avatarImage = [[self class] defaultAvatar];
+        NSString * url = user.avatar.thumbnailImageUrl;
         if (![alreadySent objectForKey:url]) {
             NSURL * avatarUrl = [NSURL URLWithString:url];
             [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];

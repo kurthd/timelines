@@ -51,6 +51,25 @@
 }
 
 + (NSArray *)findAll:(NSPredicate *)predicate
+             context:(NSManagedObjectContext *)context
+  prefetchedKeyPaths:(NSArray *)prefetchedKeyPaths
+{
+    NSFetchRequest * request = [[NSFetchRequest alloc] init];
+    NSEntityDescription * entity =
+        [NSEntityDescription entityForName:[self className]
+                    inManagedObjectContext:context];
+    [request setEntity:entity];
+    [request setPredicate:predicate];
+    [request setRelationshipKeyPathsForPrefetching:prefetchedKeyPaths];
+
+    NSArray * results = [context executeFetchRequest:request error:NULL];
+
+    [request release];
+
+    return results;
+}
+
++ (NSArray *)findAll:(NSPredicate *)predicate
               sortBy:(NSSortDescriptor *)sorter
              context:(NSManagedObjectContext *)context
 {

@@ -13,9 +13,11 @@
 - (UIImage *)avatarImage;
 - (NSString *)followersDescription;
 
-+ (void)setAvatar:(UIImage *)avatar forUrl:(NSString *)url;
-+ (UIImage *)avatarForUrl:(NSString *)url;
+- (UIImage *)thumbnailAvatar;
+- (UIImage *)fullAvatar;
 
-+ (NSString *)largeAvatarUrlForUrl:(NSString *)url;
++ (void)setAvatar:(UIImage *)avatar forUrl:(NSString *)url;
+
++ (NSString *)fullAvatarUrlForUrl:(NSString *)url;
 
 @end

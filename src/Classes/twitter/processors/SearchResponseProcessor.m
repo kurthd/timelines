@@ -101,7 +101,7 @@
         tweetAuthor.avatar.thumbnailImageUrl =
             [userData objectForKey:@"profile_image_url"];
         tweetAuthor.avatar.fullImageUrl =
-            [User largeAvatarUrlForUrl:tweetAuthor.avatar.thumbnailImageUrl];
+            [User fullAvatarUrlForUrl:tweetAuthor.avatar.thumbnailImageUrl];
 
         // fill in the rest of the required user fields that are not
         // provided as part of the search results

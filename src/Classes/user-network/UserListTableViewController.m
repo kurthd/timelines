@@ -29,7 +29,7 @@
 
 @interface UserListTableViewController ()
 
-- (UIImage *)getAvatarForUrl:(NSString *)url;
+- (UIImage *)getAvatarForUser:(User *)user;
 - (NSArray *)sortedUsers;
 
 + (UIImage *)defaultAvatar;
@@ -113,8 +113,7 @@ static UIImage * defaultAvatar;
     User * user = [[self sortedUsers] objectAtIndex:indexPath.row];
     [cell setUser:user];
     
-    UIImage * avatarImage =
-        [self getAvatarForUrl:user.avatar.thumbnailImageUrl];
+    UIImage * avatarImage = [self getAvatarForUser:user];
     [cell setAvatarImage:avatarImage];
     
     return cell;
@@ -188,11 +187,12 @@ static UIImage * defaultAvatar;
     noMorePagesLabel.hidden = !allLoaded;
 }
 
-- (UIImage *)getAvatarForUrl:(NSString *)url
+- (UIImage *)getAvatarForUser:(User *)user
 {
-    UIImage * avatarImage = [User avatarForUrl:url];
+    UIImage * avatarImage = [user thumbnailAvatar];
     if (!avatarImage) {
         avatarImage = [[self class] defaultAvatar];
+        NSString * url = user.avatar.thumbnailImageUrl;
         if (![alreadySent objectForKey:url]) {
             NSURL * avatarUrl = [NSURL URLWithString:url];
             [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];

@@ -9,6 +9,5 @@
 @interface TweetInfo (UIAdditions)
 
 - (TimelineTableViewCell *)cell;
-- (TimelineTableViewCell *)cellWithAvatar;
 
 @end

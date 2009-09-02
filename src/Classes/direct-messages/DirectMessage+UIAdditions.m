@@ -30,30 +30,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     return timelineCell;
 }
 
-- (TimelineTableViewCell *)cellWithAvatar
-{
-    TimelineTableViewCell * timelineCell =
-        [[[self class] cellCache] objectForKey:self.identifier];
-
-    if (!timelineCell) {
-        timelineCell = [self createCell];
-        //RoundedImage * avatarView = [self.sender avatar];
-        //[timelineCell setAvatarView:avatarView];
-    }
-
-    return timelineCell;
-}
-
 - (TimelineTableViewCell *)createCell
 {
-    /*
-    NSArray * nib =
-        [[NSBundle mainBundle] loadNibNamed:@"TimelineTableViewCell"
-        owner:self options:nil];
-
-    TimelineTableViewCell * timelineCell = [nib objectAtIndex:0];
-     */
-
     TimelineTableViewCell * timelineCell =
         [[TimelineTableViewCell alloc]
         initWithStyle:UITableViewCellStyleDefault 
@@ -65,6 +43,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [timelineCell setName:displayName];
     [timelineCell setDate:self.created];
     [timelineCell setTweetText:self.text];
+    UIImage * avatar = [self.sender thumbnailAvatar];
+    if (avatar)
+        [timelineCell setAvatarImage:avatar];
 
     [[[self class] cellCache]
         setObject:timelineCell forKey:self.identifier];

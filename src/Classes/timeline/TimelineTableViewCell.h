@@ -22,6 +22,7 @@ typedef enum {
 
 @property (nonatomic, copy) NSString * avatarImageUrl;
 
+- (UIImage *)avatarImage;
 - (void)setAvatarImage:(UIImage *)image;
 - (void)setName:(NSString *)name;
 - (void)setDate:(NSDate *)date;

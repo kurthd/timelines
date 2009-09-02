@@ -348,28 +348,20 @@ static UIImage * defaultAvatar;
 
     blockButton.enabled = blockedStateSet;
 
-    NSString * largeAvatarUrlAsString =
-        [User largeAvatarUrlForUrl:user.avatar.thumbnailImageUrl];
-
-    UIImage * avatar = [User avatarForUrl:largeAvatarUrlAsString];
+    UIImage * avatar = [user fullAvatar];
     if (!avatar)
-        avatar = [User avatarForUrl:user.avatar.thumbnailImageUrl];
+        avatar = [user thumbnailAvatar];
     if (!avatar)
         avatar = [[self class] defaultAvatar];
 
     [avatarView setImage:avatar];
 
-    NSURL * largeAvatarUrl =
-        [NSURL URLWithString:
-        [User largeAvatarUrlForUrl:largeAvatarUrlAsString]];
-    NSURL * avatarUrl =
-        [NSURL URLWithString:
-        [User largeAvatarUrlForUrl:user.avatar.thumbnailImageUrl]];
+    NSURL * largeAvatarUrl = [NSURL URLWithString:user.avatar.fullImageUrl];
+    NSURL * avatarUrl = [NSURL URLWithString:user.avatar.thumbnailImageUrl];
     [AsynchronousNetworkFetcher fetcherWithUrl:largeAvatarUrl delegate:self];
     [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
 
-    UIImage * avatarImage =
-        [User avatarForUrl:user.avatar.thumbnailImageUrl];
+    UIImage * avatarImage = [user thumbnailAvatar];
     if (avatarImage)
         [avatarView setImage:avatarImage];
 

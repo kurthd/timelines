@@ -45,7 +45,7 @@
     user.avatar.thumbnailImageUrl =
         [data safeObjectForKey:@"profile_image_url"];
     user.avatar.fullImageUrl =
-        [User largeAvatarUrlForUrl:user.avatar.thumbnailImageUrl];
+        [User fullAvatarUrlForUrl:user.avatar.thumbnailImageUrl];
 
     [user setValue:[data objectForKey:@"statuses_count"]
             forKey:@"statusesCount"];

@@ -9,6 +9,5 @@
 @interface DirectMessage (UIAdditions)
 
 - (TimelineTableViewCell *)cell;
-- (TimelineTableViewCell *)cellWithAvatar;
 
 @end

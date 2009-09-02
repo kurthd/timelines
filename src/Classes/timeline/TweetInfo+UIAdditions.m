@@ -28,17 +28,6 @@ static NSMutableDictionary * cells;
     return timelineCell;
 }
 
-- (TimelineTableViewCell *)cellWithAvatar
-{
-    TimelineTableViewCell * timelineCell =
-        [[[self class] cellCache] objectForKey:self.identifier];
-
-    if (!timelineCell)
-        timelineCell = [self createCell];
-
-    return timelineCell;
-}
-
 - (TimelineTableViewCell *)createCell
 {
     TimelineTableViewCell * timelineCell =
@@ -50,6 +39,9 @@ static NSMutableDictionary * cells;
     [timelineCell setDate:self.timestamp];
     [timelineCell setTweetText:[self.text stringByDecodingHtmlEntities]];
     timelineCell.avatarImageUrl = self.user.avatar.thumbnailImageUrl;
+    UIImage * avatar = [self.user thumbnailAvatar];
+    if (avatar)
+        [timelineCell setAvatarImage:avatar];
 
     [[[self class] cellCache]
         setObject:timelineCell forKey:self.identifier];

@@ -860,6 +860,7 @@
 
 #if defined(HOB_TWITBIT_PUSH_ENABLE)
 
+    /*
     UIRemoteNotificationType notificationTypes =
     (UIRemoteNotificationTypeBadge |
      UIRemoteNotificationTypeSound |
@@ -867,6 +868,7 @@
 
     [[UIApplication sharedApplication]
         registerForRemoteNotificationTypes:notificationTypes];
+     */
 
 #endif
 
@@ -1080,8 +1082,13 @@
         [NSPredicate predicateWithFormat:@"credentials.username == %@",
         account.username];
 
-    NSArray * allTweets = [UserTweet findAll:predicate context:context];
-    NSArray * allMentions = [Mention findAll:predicate context:context];
+    NSArray * paths = [NSArray arrayWithObjects:@"user", @"user.avatar", nil];
+    NSArray * allTweets = [UserTweet findAll:predicate
+                                     context:context
+                          prefetchedKeyPaths:paths];
+    NSArray * allMentions = [Mention findAll:predicate
+                                     context:context
+                          prefetchedKeyPaths:paths];
 
     NSLog(@"Loading persisted tweets:");
 

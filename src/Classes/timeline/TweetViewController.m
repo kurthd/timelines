@@ -612,18 +612,15 @@ enum TweetActionRows {
         fullNameLabel.text = tweet.user.username;
     }
 
-    NSString * largeAvatarUrl =
-        [User largeAvatarUrlForUrl:tweet.user.avatar.thumbnailImageUrl];
-
-    UIImage * avatar = [User avatarForUrl:largeAvatarUrl];
+    UIImage * avatar = [tweet.user fullAvatar];
     if (!avatar)
-        avatar = [User avatarForUrl:tweet.user.avatar.thumbnailImageUrl];
+        avatar = [tweet.user thumbnailAvatar];
     if (!avatar)
         avatar = [[self class] defaultAvatar];
 
     [avatarImage setImage:avatar];
 
-    [self fetchRemoteImage:largeAvatarUrl];
+    [self fetchRemoteImage:tweet.user.avatar.fullImageUrl];
     [self fetchRemoteImage:tweet.user.avatar.thumbnailImageUrl];
 
     [self.tableView reloadData];
