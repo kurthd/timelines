@@ -66,6 +66,7 @@ static UIImage * defaultAvatar;
 
     [followButton release];
     [stopFollowingButton release];
+    [blockButton release];
     [bookmarkButton release];
 
     [user release];
@@ -323,6 +324,9 @@ static UIImage * defaultAvatar;
     [user release];
     user = aUser;
 
+    // sucks but the map span doesn't seem to set properly if we don't recreate
+    locationCell = nil;
+
     if (followingEnabled) {
         if (!followingStateSet) {
             followingActivityIndicator.hidden = NO;
@@ -341,6 +345,8 @@ static UIImage * defaultAvatar;
         stopFollowingButton.hidden = YES;
     }
     activeAcctLabel.hidden = followingEnabled;
+
+    blockButton.enabled = blockedStateSet;
 
     NSString * largeAvatarUrlAsString =
         [User largeAvatarUrlForUrl:user.avatar.thumbnailImageUrl];
@@ -388,6 +394,7 @@ static UIImage * defaultAvatar;
 - (void)showingNewUser
 {
     followingStateSet = NO;
+    blockedStateSet = NO;
 }
 
 - (void)setFollowing:(BOOL)following
@@ -411,6 +418,24 @@ static UIImage * defaultAvatar;
     followingLoadingLabel.hidden = YES;
     followButton.hidden = YES;
     stopFollowingButton.hidden = YES;
+}
+
+- (void)setBlocked:(BOOL)blocked
+{
+    currentlyBlocked = blocked;
+    blockedStateSet = YES;
+    blockButton.enabled = YES;
+
+    NSString * title =
+        blocked ?
+        NSLocalizedString(@"userinfo.unblock", @"") :
+        NSLocalizedString(@"userinfo.block", @"");
+    [blockButton setTitle:title forState:UIControlStateNormal];
+}
+
+- (void)setFailedToQueryBlocked
+{
+    blockButton.enabled = NO;
 }
 
 - (void)layoutViews
@@ -458,6 +483,15 @@ static UIImage * defaultAvatar;
     NSLog(@"Bookmarking user");
     [findPeopleBookmarkMgr addSavedSearch:user.username];
     bookmarkButton.enabled = NO;
+}
+
+- (IBAction)changeBlockedState:(id)sender
+{
+    blockButton.enabled = NO;
+    if (currentlyBlocked)
+        [delegate unblockUser:user.username];
+    else
+        [delegate blockUser:user.username];
 }
 
 - (void)updateDisplayForFollwoing:(BOOL)following
