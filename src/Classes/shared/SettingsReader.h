@@ -7,5 +7,6 @@
 @interface SettingsReader : NSObject
 
 + (NSInteger)fetchQuantity;
++ (NSInteger)defaultFetchQuantity;
 
 @end
