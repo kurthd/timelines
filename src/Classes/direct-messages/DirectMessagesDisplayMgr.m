@@ -621,7 +621,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     NSLog(@"Direct message display manager: sending direct message to %@",
         aUsername);
-    [composeTweetDisplayMgr composeDirectMessageTo:aUsername];
+    [self.composeMessageDisplayMgr composeDirectMessageTo:aUsername];
 }
 
 - (void)sendPublicMessageToUser:(NSString *)aUsername
