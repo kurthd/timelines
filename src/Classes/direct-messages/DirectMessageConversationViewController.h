@@ -12,7 +12,8 @@
     UITableViewController <AsynchronousNetworkFetcherDelegate>
 {
     IBOutlet UIView * footerView;
-    
+    IBOutlet UIView * headerView;
+
     NSObject<DirectMessageConversationViewControllerDelegate> * delegate;
 
     NSArray * tweets;

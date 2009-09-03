@@ -36,6 +36,7 @@
 {
     self.delegate = nil;
 
+    [headerView release];
     self.footerView = nil;
     [plainFooterView release];
     self.loadingView = nil;
@@ -127,6 +128,8 @@
     self.loadMoreView.alpha = 0;
     self.loadingView.alpha = 0;
 
+    self.tableView.tableHeaderView = headerView;
+    
     [self.footerView addSubview:self.loadMoreView];
     [self.footerView addSubview:self.loadingView];
 }
@@ -310,6 +313,7 @@
         footer = plainFooterView;
         edgeInsets.bottom = -700;
     }
+    edgeInsets.top = -392;
     self.tableView.contentInset = edgeInsets;
 
     if (footer != self.tableView.tableFooterView)
