@@ -15,9 +15,16 @@ static NSInteger fetchQuantity;
         alreadyReadFetchQuantityValue = YES;
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
         fetchQuantity = [defaults integerForKey:@"fetch_quantity"];
+        if (fetchQuantity == 0)
+            fetchQuantity = [[self class] defaultFetchQuantity];
     }
 
     return fetchQuantity;
+}
+
++ (NSInteger)defaultFetchQuantity
+{
+    return 20;
 }
 
 @end
