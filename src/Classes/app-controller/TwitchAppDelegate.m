@@ -36,6 +36,7 @@
 #import "UserListDisplayMgrFactory.h"
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "PhotoBrowserDisplayMgr.h"
+#import "SettingsReader.h"
 
 @interface TwitchAppDelegate ()
 
@@ -986,7 +987,7 @@
     }
 
     // only keep the last n tweets, mentions, and dms for each account
-    static const NSUInteger NUM_TWEETS_TO_KEEP = 200;
+    const NSUInteger NUM_TWEETS_TO_KEEP = [SettingsReader fetchQuantity];
     static const NSUInteger NUM_DIRECT_MESSAGES_TO_KEEP = 500;
 
     NSMutableDictionary * living =
@@ -1093,7 +1094,8 @@
                                      context:context
                           prefetchedKeyPaths:paths];
 
-    NSLog(@"Loading persisted tweets:");
+    NSLog(@"%@: Loaded %d persisted tweets and %d persisted mentions.",
+        account.username, allTweets.count, allMentions.count);
 
     // convert them all to dictionaries
     NSMutableDictionary * tweets =
