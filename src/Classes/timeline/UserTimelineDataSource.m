@@ -5,6 +5,7 @@
 #import "UserTimelineDataSource.h"
 #import "Tweet.h"
 #import "TweetInfo.h"
+#import "SettingsReader.h"
 
 @implementation UserTimelineDataSource
 
@@ -30,7 +31,8 @@
 - (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page
 {
     [service fetchTimelineForUser:credentials.username
-        sinceUpdateId:updateId page:page count:[NSNumber numberWithInt:200]];
+        sinceUpdateId:updateId page:page
+        count:[NSNumber numberWithInt:[SettingsReader fetchQuantity]]];
 }
 
 - (BOOL)readyForQuery

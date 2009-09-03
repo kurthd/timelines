@@ -5,6 +5,7 @@
 #import "ArbUserTimelineDataSource.h"
 #import "Tweet.h"
 #import "TweetInfo.h"
+#import "SettingsReader.h"
 
 @implementation ArbUserTimelineDataSource
 
@@ -37,7 +38,7 @@
         NSLog(@"Arbitraty user data source: fetching timeline for user %@",
             username);
         [service fetchTimelineForUser:username sinceUpdateId:updateId page:page
-            count:[NSNumber numberWithInt:200]];
+            count:[NSNumber numberWithInt:[SettingsReader fetchQuantity]]];
     }
 }
 

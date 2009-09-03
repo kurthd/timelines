@@ -479,6 +479,8 @@ static BOOL scrollToTopValueAlreadyRead;
 
 - (void)showUserInfoForUser:(User *)aUser
 {
+    NSLog(@"Timeline display manager: showing user info for user: %@",
+        aUser);
     self.currentUsername = aUser.username;
 
     // HACK: forces to scroll to top
@@ -498,6 +500,9 @@ static BOOL scrollToTopValueAlreadyRead;
 
 - (void)showUserInfoForUsername:(NSString *)aUsername
 {
+    NSLog(@"Timeline display manager: showing user info for username '%@'",
+        aUsername);
+
     // HACK: forces to scroll to top
     [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
         animated:NO];

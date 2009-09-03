@@ -301,6 +301,7 @@
 		9112EAB5102E236E002715DC /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
 		9125779A104C7A53006F5DBD /* DarkenedTableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */; };
 		9125779B104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257799104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png */; };
+		91257B38105057C2006F5DBD /* SettingsReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 91257B37105057C2006F5DBD /* SettingsReader.m */; };
 		9130002210363177004E3030 /* MentionBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9130002010363177004E3030 /* MentionBottomGradient.png */; };
 		9130002310363177004E3030 /* MentionTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9130002110363177004E3030 /* MentionTopGradient.png */; };
 		913000B010377454004E3030 /* FollowButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 913000AF10377454004E3030 /* FollowButton.png */; };
@@ -860,6 +861,8 @@
 		9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionsTimelineDataSource.m; path = timeline/MentionsTimelineDataSource.m; sourceTree = "<group>"; };
 		91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkenedTableViewCellGradient.png; path = images/DarkenedTableViewCellGradient.png; sourceTree = "<group>"; };
 		91257799104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkenedTableViewCellTopGradient.png; path = images/DarkenedTableViewCellTopGradient.png; sourceTree = "<group>"; };
+		91257B36105057C2006F5DBD /* SettingsReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsReader.h; path = shared/SettingsReader.h; sourceTree = "<group>"; };
+		91257B37105057C2006F5DBD /* SettingsReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsReader.m; path = shared/SettingsReader.m; sourceTree = "<group>"; };
 		9130002010363177004E3030 /* MentionBottomGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MentionBottomGradient.png; path = images/MentionBottomGradient.png; sourceTree = "<group>"; };
 		9130002110363177004E3030 /* MentionTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MentionTopGradient.png; path = images/MentionTopGradient.png; sourceTree = "<group>"; };
 		913000AF10377454004E3030 /* FollowButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FollowButton.png; path = images/FollowButton.png; sourceTree = "<group>"; };
@@ -1531,6 +1534,8 @@
 				918F393910433FE8000236AE /* ButtonCell.m */,
 				0515675E104703FA00A26F17 /* EditTextViewController.h */,
 				0515675F104703FA00A26F17 /* EditTextViewController.m */,
+				91257B36105057C2006F5DBD /* SettingsReader.h */,
+				91257B37105057C2006F5DBD /* SettingsReader.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -2644,6 +2649,7 @@
 				0538FE91104C77E1009E50CE /* InstapaperLogInDisplayMgr.m in Sources */,
 				0538FE94104C77F6009E50CE /* InstapaperLogInViewController.m in Sources */,
 				05E1B94E104F36D500DD8876 /* BlockExistsResponseProcessor.m in Sources */,
+				91257B38105057C2006F5DBD /* SettingsReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,6 +5,7 @@
 #import "AllTimelineDataSource.h"
 #import "Tweet.h"
 #import "TweetInfo.h"
+#import "SettingsReader.h"
 
 @implementation AllTimelineDataSource
 
@@ -30,7 +31,7 @@
 {
     NSLog(@"'All' data source: fetching timeline");
     [service fetchTimelineSinceUpdateId:updateId page:page
-        count:[NSNumber numberWithInt:200]];
+        count:[NSNumber numberWithInt:[SettingsReader fetchQuantity]]];
 }
 
 - (BOOL)readyForQuery

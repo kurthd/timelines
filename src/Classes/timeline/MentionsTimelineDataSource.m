@@ -5,6 +5,7 @@
 #import "MentionsTimelineDataSource.h"
 #import "Tweet.h"
 #import "TweetInfo.h"
+#import "SettingsReader.h"
 
 @implementation MentionsTimelineDataSource
 
@@ -30,7 +31,7 @@
 {
     NSLog(@"'Mentions' data source: fetching timeline");
     [service fetchMentionsSinceUpdateId:updateId page:page
-        count:[NSNumber numberWithInt:200]];
+        count:[NSNumber numberWithInt:[SettingsReader fetchQuantity]]];
 }
 
 - (void)fetchUserInfoForUsername:(NSString *)username

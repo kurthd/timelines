@@ -6,9 +6,14 @@
 "displayname.fullname" = "Full Name";
 "displayname.username" = "Username";
 
-"highlightnew" = "Highlight New Tweets";
+"highlightnew" = "Highlight New";
 
-"scrolltotop" = "Scroll to Most Recent";
+"scrolltotop" = "Scroll to Top";
+
+"fetchquantity" = "Fetch Quantity";
+"fetchquantity.twenty" = "20";
+"fetchquantity.fifty" = "50";
+"fetchquantity.onehundred" = "100";
 
 "retweetformat" = "Retweet Format";
 "retweetformat.via" = "... (via @name)";

@@ -36,6 +36,28 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Key</key>
+			<string>fetch_quantity</string>
+			<key>DefaultValue</key>
+			<integer>20</integer>
+			<key>Title</key>
+			<string>fetchquantity</string>
+			<key>Values</key>
+			<array>
+				<integer>20</integer>
+				<integer>50</integer>
+				<integer>100</integer>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>fetchquantity.twenty</string>
+				<string>fetchquantity.fifty</string>
+				<string>fetchquantity.onehundred</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
 			<string>highlightnew</string>
@@ -90,7 +112,7 @@
 			<key>Key</key>
 			<string>version</string>
 			<key>DefaultValue</key>
-			<string>1.1.0</string>
+			<string>2.0.0</string>
 		</dict>
 	</array>
 </dict>
