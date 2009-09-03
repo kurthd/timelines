@@ -556,6 +556,8 @@
 // helper
 - (void)searchForQuery:(NSString *)query
 {
+    hasBeenDisplayed = YES; // bit of a hack, but force this to be set
+        
     [netAwareController setUpdatingState:kConnectedAndUpdating];
     [netAwareController setCachedDataAvailable:NO];
     NSCharacterSet * validUsernameCharSet =

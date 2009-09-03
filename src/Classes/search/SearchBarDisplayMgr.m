@@ -170,6 +170,8 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)aSarchBar
 {
+    hasBeenDisplayed = YES; // bit of a hack, but force this to be set
+
     [self hideDarkTransparentView];
     [self hideAutocompleteResults];
 
