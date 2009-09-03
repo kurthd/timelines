@@ -370,6 +370,18 @@
     [self request:requestId isHandledBy:processor];
 }
 
+- (void)isUserBlocked:(NSString *)username
+{
+    ResponseProcessor * processor =
+        [BlockExistsResponseProcessor processorWithUsername:username
+                                                    context:context
+                                                   delegate:delegate];
+
+    NSString * requestId = [twitter isBlocking:username];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark Social graph
 
 - (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page

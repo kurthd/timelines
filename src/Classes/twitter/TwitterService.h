@@ -96,6 +96,7 @@
 
 - (void)blockUserWithUsername:(NSString *)username;
 - (void)unblockUserWithUsername:(NSString *)username;
+- (void)isUserBlocked:(NSString *)username;
 
 #pragma mark Social graph
 

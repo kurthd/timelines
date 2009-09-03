@@ -126,6 +126,7 @@
 		05DB2A0A102CDEC0001E8C30 /* PublicReplyButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB2A09102CDEC0001E8C30 /* PublicReplyButtonIcon.png */; };
 		05DB973B1025107E00D06489 /* UIImage+DrawingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */; };
 		05E0271B101B983D00A97AC9 /* RecentSearchMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */; };
+		05E1B94E104F36D500DD8876 /* BlockExistsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E1B94D104F36D500DD8876 /* BlockExistsResponseProcessor.m */; };
 		05EDAEFC1029F6F500D0B62B /* TweetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EDAEFB1029F6F500D0B62B /* TweetViewController.m */; };
 		05EDAEFF1029F75600D0B62B /* TweetTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EDAEFE1029F75600D0B62B /* TweetTextTableViewCell.m */; };
 		05EDAF0C1029FAAB00D0B62B /* TweetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05EDAF0A1029FAAB00D0B62B /* TweetView.xib */; };
@@ -778,6 +779,8 @@
 		05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+DrawingAdditions.m"; path = "shared/UIImage+DrawingAdditions.m"; sourceTree = "<group>"; };
 		05E02719101B983D00A97AC9 /* RecentSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecentSearchMgr.h; path = search/RecentSearchMgr.h; sourceTree = "<group>"; };
 		05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearchMgr.m; path = search/RecentSearchMgr.m; sourceTree = "<group>"; };
+		05E1B94C104F36D500DD8876 /* BlockExistsResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlockExistsResponseProcessor.h; path = twitter/processors/BlockExistsResponseProcessor.h; sourceTree = "<group>"; };
+		05E1B94D104F36D500DD8876 /* BlockExistsResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BlockExistsResponseProcessor.m; path = twitter/processors/BlockExistsResponseProcessor.m; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
 		05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+TediousCodeAdditions.m"; path = "shared/NSManagedObject+TediousCodeAdditions.m"; sourceTree = "<group>"; };
 		05EDAEFA1029F6F500D0B62B /* TweetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetViewController.h; path = timeline/TweetViewController.h; sourceTree = "<group>"; };
@@ -1664,6 +1667,8 @@
 				0538FE1D104C4584009E50CE /* DeleteDirectMessageResponseProcessor.m */,
 				050224D610488ED500BCB903 /* BlockUserResponseProcessor.h */,
 				050224D710488ED500BCB903 /* BlockUserResponseProcessor.m */,
+				05E1B94C104F36D500DD8876 /* BlockExistsResponseProcessor.h */,
+				05E1B94D104F36D500DD8876 /* BlockExistsResponseProcessor.m */,
 			);
 			name = processors;
 			sourceTree = "<group>";
@@ -2638,6 +2643,7 @@
 				0538FE6B104C6ED9009E50CE /* InstapaperCredentials+KeychainAdditions.m in Sources */,
 				0538FE91104C77E1009E50CE /* InstapaperLogInDisplayMgr.m in Sources */,
 				0538FE94104C77F6009E50CE /* InstapaperLogInViewController.m in Sources */,
+				05E1B94E104F36D500DD8876 /* BlockExistsResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

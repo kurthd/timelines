@@ -179,6 +179,7 @@
 
 - (NSString *)block:(NSString *)username; // blocks/create
 - (NSString *)unblock:(NSString *)username; // blocks/destroy
+- (NSString *)isBlocking:(NSString *)username;  // blocks/exists
 
 
 // Help methods - http://apiwiki.twitter.com/REST+API+Documentation#HelpMethods

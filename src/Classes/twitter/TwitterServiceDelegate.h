@@ -148,6 +148,11 @@
 - (void)failedToUnblockUserWithUsername:(NSString *)username
                                   error:(NSError *)error;
 
+- (void)userIsBlocked:(NSString *)username;
+- (void)userIsNotBlocked:(NSString *)username;
+- (void)failedToCheckIfUserIsBlocked:(NSString *)username
+                               error:(NSError *)error;
+
 #pragma mark Social graph
 
 @optional

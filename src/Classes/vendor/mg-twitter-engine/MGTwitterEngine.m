@@ -1058,6 +1058,18 @@
                            responseType:MGTwitterUser];
 }
 
+- (NSString *)isBlocking:(NSString *)username
+{
+    if (!username) {
+        return nil;
+    }
+    NSString *path = [NSString stringWithFormat:@"blocks/exists/%@.%@", username, API_FORMAT];
+    
+    return [self _sendRequestWithMethod:nil path:path queryParameters:nil body:nil 
+                            requestType:MGTwitterAccountRequest 
+                           responseType:MGTwitterUser];
+}
+
 
 - (NSString *)testService
 {

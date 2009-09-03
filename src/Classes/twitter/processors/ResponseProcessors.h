@@ -21,6 +21,7 @@
 #import "DeleteTweetResponseProcessor.h"
 #import "DeleteDirectMessageResponseProcessor.h"
 #import "BlockUserResponseProcessor.h"
+#import "BlockExistsResponseProcessor.h"
 
 #import "SendTweetResponseProcessor.h"
 #import "SendDirectMessageResponseProcessor.h"
