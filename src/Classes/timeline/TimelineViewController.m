@@ -87,6 +87,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
+    [self.tableView flashScrollIndicators];
 }
 
 #pragma mark UITableViewDataSource implementation

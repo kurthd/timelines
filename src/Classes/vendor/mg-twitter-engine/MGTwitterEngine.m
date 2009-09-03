@@ -782,7 +782,10 @@
         NSError *error = [NSError errorWithDomain:@"HTTP" code:statusCode userInfo:nil];
 		if ([self _isValidDelegateForSelector:@selector(requestFailed:withError:)])
 			[_delegate requestFailed:[connection identifier] withError:error];
-        
+
+        /* jad: commenting out so we can receive and parse the Twitter error
+         * message.
+         */
         // Destroy the connection.
         [connection cancel];
         [_connections removeObjectForKey:[connection identifier]];
