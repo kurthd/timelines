@@ -390,6 +390,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)selectedConversationPreview:(ConversationPreview *)preview
 {
+    // HACK: forces to scroll to top
+    [self.conversationController.tableView setContentOffset:CGPointMake(0, 392)
+        animated:NO];
+
     self.currentConversationUserId = preview.otherUserId;
     NSLog(@"Messages Display Manager: Selected conversation for user '%@'",
         self.currentConversationUserId);
