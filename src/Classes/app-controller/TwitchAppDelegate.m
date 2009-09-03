@@ -948,8 +948,13 @@
     if ([managedObjectContext hasChanges] &&
         ![managedObjectContext save:&error]) {
         // Handle error
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        return NO;
+        NSLog(@"Failed to save to data store: %@", [error localizedDescription]);
+        NSArray * detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+        if(detailedErrors != nil && [detailedErrors count] > 0)
+            for(NSError * detailedError in detailedErrors)
+                NSLog(@"  Detailed error: %@", [detailedError userInfo]);
+        else
+            NSLog(@"  %@", [error userInfo]);
     }
 
     return YES;
