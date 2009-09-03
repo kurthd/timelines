@@ -299,18 +299,62 @@ static BOOL scrollToTopValueAlreadyRead;
     [self.userInfoController setFollowing:NO];
 }
 
+- (void)userIsBlocked:(NSString *)username
+{
+    if ([self.currentUsername isEqual:username])
+        [self.userInfoController setBlocked:YES];
+}
+
+- (void)userIsNotBlocked:(NSString *)username
+{
+    if ([self.currentUsername isEqual:username])
+        [self.userInfoController setBlocked:NO];
+}
+
+- (void)blockedUser:(User *)user withUsername:(NSString *)username
+{
+    if ([self.currentUsername isEqual:username])
+        [self.userInfoController setBlocked:YES];
+}
+
+- (void)failedToBlockUserWithUsername:(NSString *)username
+    error:(NSError *)error
+{
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.unblock", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+}
+
+- (void)unblockedUser:(User *)user withUsername:(NSString *)username
+{
+    if ([self.currentUsername isEqual:username])
+        [self.userInfoController setBlocked:NO];
+}
+
+- (void)failedToUnblockUserWithUsername:(NSString *)username
+    error:(NSError *)error
+{
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.unblock", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, username];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+}
+
 - (void)failedToQueryIfUser:(NSString *)username
     isFollowing:(NSString *)followee error:(NSError *)error
 {
     NSLog(@"Timeline display manager: failed to query if %@ is following %@",
         username, followee);
     NSLog(@"Error: %@", error);
-    
+
     [self.userInfoController setFailedToQueryFollowing];
-    
-    NSString * errorMessage =
+
+    NSString * errorMessageFormatString =
         NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
-    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, username];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
 }
 
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
@@ -435,6 +479,8 @@ static BOOL scrollToTopValueAlreadyRead;
 
 - (void)showUserInfoForUser:(User *)aUser
 {
+    self.currentUsername = aUser.username;
+
     // HACK: forces to scroll to top
     [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
         animated:NO];
@@ -447,7 +493,7 @@ static BOOL scrollToTopValueAlreadyRead;
     [self.userInfoController setUser:aUser];
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUser.username];
-    [service isUser:credentials.username following:aUser.username];
+    [service isUserBlocked:aUser.username];
 }
 
 - (void)showUserInfoForUsername:(NSString *)aUsername

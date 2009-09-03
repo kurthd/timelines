@@ -201,6 +201,48 @@
     [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
+- (void)userIsBlocked:(NSString *)username
+{
+    if ([self.currentSearchUsername isEqual:username])
+        [userInfoController setBlocked:YES];
+}
+
+- (void)userIsNotBlocked:(NSString *)username
+{
+    if ([self.currentSearchUsername isEqual:username])
+        [userInfoController setBlocked:NO];
+}
+
+- (void)blockedUser:(User *)user withUsername:(NSString *)username
+{
+    if ([self.currentSearchUsername isEqual:username])
+        [userInfoController setBlocked:YES];
+}
+
+- (void)failedToBlockUserWithUsername:(NSString *)username
+    error:(NSError *)error
+{
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.unblock", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+}
+
+- (void)unblockedUser:(User *)user withUsername:(NSString *)username
+{
+    if ([self.currentSearchUsername isEqual:username])
+        [userInfoController setBlocked:NO];
+}
+
+- (void)failedToUnblockUserWithUsername:(NSString *)username
+    error:(NSError *)error
+{
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.unblock", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, username];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+}
+
 - (void)startedFollowingUsername:(NSString *)aUsername
 {
     NSLog(@"Find people display manager: started following '%@'", aUsername);

@@ -280,6 +280,48 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
+- (void)userIsBlocked:(NSString *)username
+{
+    if ([self.otherUserInConversation.username isEqual:username])
+        [self.userInfoController setBlocked:YES];
+}
+
+- (void)userIsNotBlocked:(NSString *)username
+{
+    if ([self.otherUserInConversation.username isEqual:username])
+        [self.userInfoController setBlocked:NO];
+}
+
+- (void)blockedUser:(User *)user withUsername:(NSString *)username
+{
+    if ([self.otherUserInConversation.username isEqual:username])
+        [self.userInfoController setBlocked:YES];
+}
+
+- (void)failedToBlockUserWithUsername:(NSString *)username
+    error:(NSError *)error
+{
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.unblock", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+}
+
+- (void)unblockedUser:(User *)user withUsername:(NSString *)username
+{
+    if ([self.otherUserInConversation.username isEqual:username])
+        [self.userInfoController setBlocked:NO];
+}
+
+- (void)failedToUnblockUserWithUsername:(NSString *)username
+    error:(NSError *)error
+{
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.unblock", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, username];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+}
+
 - (void)startedFollowingUsername:(NSString *)aUsername
 {
     NSLog(@"Direct message display manager: started following '%@'", aUsername);

@@ -325,6 +325,7 @@ static UIImage * defaultAvatar;
     user = aUser;
 
     // sucks but the map span doesn't seem to set properly if we don't recreate
+    [locationCell release];
     locationCell = nil;
 
     if (followingEnabled) {
