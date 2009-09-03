@@ -182,14 +182,16 @@
 {
     NSLog(@"Find people display manager: %@ is following %@", username,
         followee);
-    [userInfoController setFollowing:YES];
+    if ([self.currentSearchUsername isEqual:followee])
+        [userInfoController setFollowing:YES];
 }
 
 - (void)user:(NSString *)username isNotFollowing:(NSString *)followee
 {
     NSLog(@"Find people display manager: %@ is not following %@", username,
         followee);
-    [userInfoController setFollowing:NO];
+    if ([self.currentSearchUsername isEqual:followee])
+        [userInfoController setFollowing:NO];
 }
 
 - (void)failedToQueryIfUser:(NSString *)username
@@ -198,7 +200,8 @@
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
 
-    [userInfoController setFailedToQueryFollowing];
+    if ([self.currentSearchUsername isEqual:followee])
+        [userInfoController setFailedToQueryFollowing];
 
     [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
@@ -248,7 +251,8 @@
 - (void)startedFollowingUsername:(NSString *)aUsername
 {
     NSLog(@"Find people display manager: started following '%@'", aUsername);
-    [userInfoController setFollowing:YES];
+    if ([self.currentSearchUsername isEqual:aUsername])
+        [userInfoController setFollowing:YES];
 }
 
 - (void)failedToStartFollowingUsername:(NSString *)aUsername
@@ -264,7 +268,8 @@
 - (void)stoppedFollowingUsername:(NSString *)aUsername
 {
     NSLog(@"Find people display manager: stopped following '%@'", aUsername);
-    [userInfoController setFollowing:NO];
+    if ([self.currentSearchUsername isEqual:aUsername])
+        [userInfoController setFollowing:NO];
 }
 
 - (void)failedToStopFollowingUsername:(NSString *)aUsername

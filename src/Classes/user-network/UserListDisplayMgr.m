@@ -170,7 +170,8 @@
 - (void)startedFollowingUsername:(NSString *)aUsername
 {
     NSLog(@"Started following %@", aUsername);
-    [userInfoController setFollowing:YES];
+    if ([userInfoUsername isEqual:aUsername])
+        [userInfoController setFollowing:YES];
 }
 
 - (void)failedToStartFollowingUsername:(NSString *)aUsername
@@ -186,7 +187,8 @@
 - (void)stoppedFollowingUsername:(NSString *)aUsername
 {
     NSLog(@"Stopped following %@", aUsername);
-    [userInfoController setFollowing:NO];
+    if ([userInfoUsername isEqual:aUsername])
+        [userInfoController setFollowing:NO];
 }
 
 - (void)failedToStopFollowingUsername:(NSString *)aUsername
@@ -238,13 +240,15 @@
 - (void)user:(NSString *)aUsername isFollowing:(NSString *)followee
 {
     NSLog(@"%@ is following %@", aUsername, followee);
-    [self.userInfoController setFollowing:YES];
+    if ([userInfoUsername isEqual:followee])
+        [self.userInfoController setFollowing:YES];
 }
 
 - (void)user:(NSString *)aUsername isNotFollowing:(NSString *)followee
 {
     NSLog(@"%@ is not following %@", aUsername, followee);
-    [self.userInfoController setFollowing:NO];
+    if ([userInfoUsername isEqual:followee])
+        [self.userInfoController setFollowing:NO];
 }
 
 - (void)failedToQueryIfUser:(NSString *)aUsername
@@ -254,7 +258,8 @@
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
 
-    [self.userInfoController setFailedToQueryFollowing];
+    if ([userInfoUsername isEqual:followee])
+        [self.userInfoController setFailedToQueryFollowing];
 
     [self.userInfoController setFollowing:NO];
     [[ErrorState instance] displayErrorWithTitle:errorMessage];

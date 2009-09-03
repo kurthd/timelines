@@ -89,6 +89,7 @@
     NSUInteger outstandingSentRequests;
 
     NSString * activeAcctUsername;
+    NSString * userInfoUsername;
     User * otherUserInConversation;
     DirectMessage * selectedMessage;
 

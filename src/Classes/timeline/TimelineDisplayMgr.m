@@ -257,7 +257,8 @@ static BOOL scrollToTopValueAlreadyRead;
 - (void)startedFollowingUsername:(NSString *)username
 {
     NSLog(@"Timeline display manager: started following %@", username);
-    [self.userInfoController setFollowing:YES];
+    if ([self.currentUsername isEqual:username])
+        [self.userInfoController setFollowing:YES];
 }
 
 - (void)failedToStartFollowingUsername:(NSString *)username
@@ -273,7 +274,8 @@ static BOOL scrollToTopValueAlreadyRead;
 - (void)stoppedFollowingUsername:(NSString *)username
 {
     NSLog(@"Timeline display manager: stopped following %@", username);
-    [userInfoController setFollowing:NO];
+    if ([self.currentUsername isEqual:username])
+        [userInfoController setFollowing:NO];
 }
 
 - (void)failedToStopFollowingUsername:(NSString *)username
@@ -289,14 +291,16 @@ static BOOL scrollToTopValueAlreadyRead;
 - (void)user:(NSString *)username isFollowing:(NSString *)followee
 {
     NSLog(@"Timeline display manager: %@ is following %@", username, followee);
-    [self.userInfoController setFollowing:YES];
+    if ([self.currentUsername isEqual:followee])
+        [self.userInfoController setFollowing:YES];
 }
 
 - (void)user:(NSString *)username isNotFollowing:(NSString *)followee
 {
     NSLog(@"Timeline display manager: %@ is not following %@", username,
         followee);
-    [self.userInfoController setFollowing:NO];
+    if ([self.currentUsername isEqual:followee])
+        [self.userInfoController setFollowing:NO];
 }
 
 - (void)userIsBlocked:(NSString *)username
@@ -348,7 +352,8 @@ static BOOL scrollToTopValueAlreadyRead;
         username, followee);
     NSLog(@"Error: %@", error);
 
-    [self.userInfoController setFailedToQueryFollowing];
+    if ([self.currentUsername isEqual:followee])
+        [self.userInfoController setFailedToQueryFollowing];
 
     NSString * errorMessageFormatString =
         NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");

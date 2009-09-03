@@ -60,6 +60,8 @@
     LocationMapViewController * locationMapViewController;
 @property (nonatomic, readonly)
     LocationInfoViewController * locationInfoViewController;
+    
+@property (nonatomic, copy) NSString * userInfoUsername;
 
 @end
 
@@ -73,7 +75,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     tweetDetailsCredentialsPublisher, userListNetAwareViewController,
     userListDisplayMgr, directMessageCache, newDirectMessages,
     newDirectMessagesState, currentConversationUserId, currentSearch,
-    savedSearchMgr, userInfoController;
+    savedSearchMgr, userInfoController, userInfoUsername;
 
 - (void)dealloc
 {
@@ -84,6 +86,12 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [directMessageCache release];
     [conversations release];
     [sortedConversations release];
+
+    [activeAcctUsername release];
+    [userInfoUsername release];
+    [otherUserInConversation release];
+    [selectedMessage release];
+
     [managedObjectContext release];
     [composeTweetDisplayMgr release];
     [composeMessageDisplayMgr release];
@@ -254,7 +262,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     NSLog(@"Direct message display manager: %@ is following %@", username,
         followee);
-    [self.userInfoController setFollowing:YES];
+    if ([self.userInfoUsername isEqual:followee])
+        [self.userInfoController setFollowing:YES];
     [[ErrorState instance] exitErrorState];
 }
 
@@ -262,7 +271,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     NSLog(@"Direct message display manager: %@ is not following %@", username,
         followee);
-    [self.userInfoController setFollowing:NO];
+    if ([self.userInfoUsername isEqual:followee])
+        [self.userInfoController setFollowing:NO];
     [[ErrorState instance] exitErrorState];
 }
 
@@ -273,7 +283,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         username, followee);
     NSLog(@"Error: %@", error);
 
-    [self.userInfoController setFailedToQueryFollowing];
+    if ([self.userInfoUsername isEqual:followee])
+        [self.userInfoController setFailedToQueryFollowing];
 
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
@@ -282,19 +293,19 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)userIsBlocked:(NSString *)username
 {
-    if ([self.otherUserInConversation.username isEqual:username])
+    if ([self.userInfoUsername isEqual:username])
         [self.userInfoController setBlocked:YES];
 }
 
 - (void)userIsNotBlocked:(NSString *)username
 {
-    if ([self.otherUserInConversation.username isEqual:username])
+    if ([self.userInfoUsername isEqual:username])
         [self.userInfoController setBlocked:NO];
 }
 
 - (void)blockedUser:(User *)user withUsername:(NSString *)username
 {
-    if ([self.otherUserInConversation.username isEqual:username])
+    if ([self.userInfoUsername isEqual:username])
         [self.userInfoController setBlocked:YES];
 }
 
@@ -325,7 +336,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)startedFollowingUsername:(NSString *)aUsername
 {
     NSLog(@"Direct message display manager: started following '%@'", aUsername);
-    [userInfoController setFollowing:YES];
+    if ([self.userInfoUsername isEqual:aUsername])
+        [userInfoController setFollowing:YES];
 }
 
 - (void)failedToStartFollowingUsername:(NSString *)aUsername
@@ -341,7 +353,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)stoppedFollowingUsername:(NSString *)aUsername
 {
     NSLog(@"Direct message display manager: stopped following '%@'", aUsername);
-    [userInfoController setFollowing:NO];
+    if ([self.userInfoUsername isEqual:aUsername])
+        [userInfoController setFollowing:NO];
 }
 
 - (void)failedToStopFollowingUsername:(NSString *)aUsername
@@ -459,6 +472,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)showUserInfoForUser:(User *)aUser
 {
     NSLog(@"Direct message display manager: showing user info for %@", aUser);
+    self.userInfoUsername = aUser.username;
+
     // HACK: forces to scroll to top
     [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
         animated:NO];
@@ -476,6 +491,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)showUserInfoForUsername:(NSString *)aUsername
 {
+    self.userInfoUsername = aUsername;
+
     // HACK: forces to scroll to top
     [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
         animated:NO];
