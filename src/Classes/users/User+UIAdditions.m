@@ -92,15 +92,6 @@ static NSMutableDictionary * followersDescriptions;
     return followersDescription;
 }
 
-- (UIImage *)getAvatar
-{
-    NSData * imageData = self.avatar.thumbnailImage;
-    if (!imageData)
-        imageData = self.avatar.fullImage;
-
-    return imageData ? [UIImage imageWithData:imageData] : nil;
-}
-
 - (UIImage *)thumbnailAvatar
 {
     NSData * imageData = self.avatar.thumbnailImage;
