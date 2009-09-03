@@ -145,7 +145,9 @@
 {
     if (!hasBeenDisplayed && self.currentSearchUsername) {
         hasBeenDisplayed = YES;
-        [self userDidSelectSearchQuery:self.currentSearchUsername];
+        if (self.currentSearchUsername &&
+            ![self.currentSearchUsername isEqual:@""])
+            [self userDidSelectSearchQuery:self.currentSearchUsername];
     }
 }
 
@@ -160,7 +162,7 @@
     [netAwareController setCachedDataAvailable:YES];
 
     // this forces the tableview to scroll to top
-    [userInfoController.tableView setContentOffset:CGPointMake(0, -300)
+    [userInfoController.tableView setContentOffset:CGPointMake(0, 300)
         animated:NO];
 
     [userInfoController setUser:user];
@@ -577,6 +579,7 @@
         ![credentials.username isEqual:searchName];
     if (userInfoController.followingEnabled)
         [service isUser:credentials.username following:searchName];
+    [service isUserBlocked:searchName];
 
     UITableViewController * tvc = (UITableViewController *)
         netAwareController.targetViewController;

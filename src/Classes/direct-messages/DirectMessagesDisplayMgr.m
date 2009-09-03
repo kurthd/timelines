@@ -460,8 +460,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     NSLog(@"Direct message display manager: showing user info for %@", aUser);
     // HACK: forces to scroll to top
-    [self performSelector:@selector(scrollUserInfoViewToTop) withObject:nil
-        afterDelay:1];
+    [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
+        animated:NO];
 
     self.userInfoController.navigationItem.title = aUser.username;
     [wrapperController.navigationController
@@ -471,6 +471,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [self.userInfoController setUser:aUser];
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUser.username];
+    [service isUserBlocked:aUser.username];
 }
 
 - (void)showUserInfoForUsername:(NSString *)aUsername

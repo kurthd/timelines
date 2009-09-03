@@ -144,6 +144,7 @@
     [self.userInfoController setUser:aUser];
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUser.username];
+    [service isUserBlocked:aUser.username];
 }
 
 - (void)loadMoreUsers
@@ -261,19 +262,19 @@
 
 - (void)userIsBlocked:(NSString *)aUsername
 {
-    if ([username isEqual:aUsername])
+    if ([userInfoUsername isEqual:aUsername])
         [self.userInfoController setBlocked:YES];
 }
 
 - (void)userIsNotBlocked:(NSString *)aUsername
 {
-    if ([username isEqual:aUsername])
+    if ([userInfoUsername isEqual:aUsername])
         [self.userInfoController setBlocked:NO];
 }
 
 - (void)blockedUser:(User *)user withUsername:(NSString *)aUsername
 {
-    if ([username isEqual:aUsername])
+    if ([userInfoUsername isEqual:aUsername])
         [self.userInfoController setBlocked:YES];
 }
 
@@ -287,7 +288,7 @@
 
 - (void)unblockedUser:(User *)user withUsername:(NSString *)aUsername
 {
-    if ([username isEqual:aUsername])
+    if ([userInfoUsername isEqual:aUsername])
         [self.userInfoController setBlocked:NO];
 }
 
