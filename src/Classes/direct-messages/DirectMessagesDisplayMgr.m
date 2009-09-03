@@ -490,6 +490,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUsername];
+    [service isUserBlocked:aUsername];
 
     [self.userInfoTwitterService fetchUserInfoForUsername:aUsername];
 }
