@@ -502,6 +502,7 @@ static BOOL scrollToTopValueAlreadyRead;
 {
     NSLog(@"Timeline display manager: showing user info for username '%@'",
         aUsername);
+    self.currentUsername = aUsername;
 
     // HACK: forces to scroll to top
     [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
@@ -518,6 +519,7 @@ static BOOL scrollToTopValueAlreadyRead;
 
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUsername];
+    [service isUserBlocked:aUsername];
 
     [self.userInfoTwitterService fetchUserInfoForUsername:aUsername];
 }
