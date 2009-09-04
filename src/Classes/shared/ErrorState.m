@@ -62,7 +62,8 @@ static ErrorState * gInstance = NULL;
         UIAlertView * alertView =
             [UIAlertView simpleAlertViewWithTitle:title message:message];
         [alertView show];
-    }
+    } else
+        NSLog(@"Not displaying error with title: %@, error:%@", title, error);
 }
 
 - (void)displayErrorWithTitle:(NSString *)title
@@ -83,7 +84,8 @@ static ErrorState * gInstance = NULL;
         self.retryAlertView.message = error.localizedDescription;
 
         [self.retryAlertView show];
-    }
+    } else
+        NSLog(@"Not displaying error with title: %@, error:%@", title, error);
 }
 
 - (UIAlertView *)retryAlertView

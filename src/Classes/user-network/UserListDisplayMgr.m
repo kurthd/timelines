@@ -286,8 +286,10 @@
 - (void)failedToBlockUserWithUsername:(NSString *)aUsername
     error:(NSError *)error
 {
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.block", @"");
     NSString * errorMessage =
-        NSLocalizedString(@"timelinedisplaymgr.error.unblock", @"");
+        [NSString stringWithFormat:errorMessageFormatString, aUsername];
     [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
