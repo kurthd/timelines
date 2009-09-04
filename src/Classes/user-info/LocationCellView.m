@@ -140,12 +140,12 @@
         [self.mapView.layer renderInContext:UIGraphicsGetCurrentContext()];
         UIImage * viewImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-    
+
         CGRect mapViewRect =
             CGRectMake(TOP_MARGIN + 1, LEFT_MARGIN + 1, MAP_WIDTH, MAP_HEIGHT);
         [viewImage drawInRect:mapViewRect
             withRoundedCornersWithRadius:ROUNDED_CORNER_RADIUS];
-        
+
         [self.activityIndicator stopAnimating];
     } else
         [self.activityIndicator startAnimating];
