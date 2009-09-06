@@ -3038,7 +3038,7 @@
 					"-licucore",
 				);
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D2F6ECD2-6FB5-4493-986B-B3878E7E2E14";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4F8A417E-CB2E-4DAA-AD73-408239CC6485";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Distribution - Ad Hoc";
