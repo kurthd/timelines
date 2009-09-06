@@ -360,11 +360,12 @@
 
 - (void)userIsSendingDirectMessage:(NSString *)dm to:(NSString *)username
 {
+    [directMessageDisplayMgr updateDisplayForSendingDirectMessage];
 }
 
 - (void)userDidSendDirectMessage:(DirectMessage *)dm
 {
-    // should the dm be added to the timeline display mgr?
+    [directMessageDisplayMgr addDirectMessage:dm];
 }
 
 - (void)userFailedToSendDirectMessage:(NSString *)dm to:(NSString *)username

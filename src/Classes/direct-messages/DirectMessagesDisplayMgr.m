@@ -31,7 +31,6 @@
 - (void)sendDirectMessageToOtherUserInConversation;
 - (void)deallocateTweetDetailsNode;
 - (void)updateBadge;
-- (void)presentFailedDirectMessageOnTimer:(NSTimer *)timer;
 
 - (void)removeSearch:(NSString *)search;
 - (void)saveSearch:(NSString *)search;
@@ -94,7 +93,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     [managedObjectContext release];
     [composeTweetDisplayMgr release];
-    [composeMessageDisplayMgr release];
     [credentials release];
     [newDirectMessages release];
     [newDirectMessagesState release];
@@ -688,7 +686,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     NSLog(@"Direct message display manager: sending direct message to %@",
         aUsername);
-    [self.composeMessageDisplayMgr composeDirectMessageTo:aUsername];
+    [composeTweetDisplayMgr composeDirectMessageTo:aUsername];
 }
 
 - (void)sendPublicMessageToUser:(NSString *)aUsername
@@ -852,93 +850,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)readLater:(NSString *)url
 {
     // TODO: implement me
-}
-
-#pragma mark ComposeTweetDisplayMgrDelegate implementation
-
-- (void)userDidCancelComposingTweet
-{
-    // Not applicable
-}
-
-- (void)userIsSendingTweet:(NSString *)tweet
-{
-    // Not applicable
-}
-
-- (void)userDidSendTweet:(Tweet *)tweet
-{
-    // Not applicable
-}
-
-- (void)userFailedToSendTweet:(NSString *)tweet
-{
-    // Not applicable
-}
-
-- (void)userIsReplyingToTweet:(NSString *)origTweetId
-                     fromUser:(NSString *)origUsername
-                     withText:(NSString *)text
-{
-}
-
-- (void)userDidReplyToTweet:(NSString *)origTweetId
-                   fromUser:(NSString *)origUsername
-                  withTweet:(Tweet *)reply
-{
-    // Not applicable
-}
-
-- (void)userFailedToReplyToTweet:(NSString *)origTweetId
-                        fromUser:(NSString *)origUsername
-                        withText:(NSString *)text
-{
-    // Not applicable
-}
-
-- (void)userIsSendingDirectMessage:(NSString *)dm to:(NSString *)username
-{
-    [self.conversationController.navigationItem
-        setRightBarButtonItem:[self sendingTweetProgressView] animated:YES];
-}
-
-- (void)userDidSendDirectMessage:(DirectMessage *)dm
-{
-    [self.conversationController.navigationItem
-        setRightBarButtonItem:[self newMessageButtonItem] animated:YES];
-        
-    if ([dm.recipient.identifier isEqual:self.currentConversationUserId])
-        [self.conversationController addTweet:dm];
-    
-    [directMessageCache addSentDirectMessage:dm];
-    [self updateViewsWithNewMessages];
-}
-
-- (void)userFailedToSendDirectMessage:(NSString *)dm to:(NSString *)username
-{
-    NSDictionary * userInfo =
-        [NSDictionary dictionaryWithObjectsAndKeys:
-        dm, @"dm",
-        username, @"username", nil];
-
-    // if the error happened quickly, while the compose modal view is still
-    // dismissing, re-presenting it has no effect; force a brief delay for now
-    // and revisit later
-    SEL sel = @selector(presentFailedDirectMessageOnTimer:);
-    [NSTimer scheduledTimerWithTimeInterval:0.8
-                                     target:self
-                                   selector:sel
-                                   userInfo:userInfo
-                                    repeats:NO];
-}
-
-- (void)presentFailedDirectMessageOnTimer:(NSTimer *)timer
-{
-    NSDictionary * userInfo = timer.userInfo;
-    NSString * dm = [userInfo objectForKey:@"dm"];
-    NSString * username = [userInfo objectForKey:@"username"];
-
-    [self.composeMessageDisplayMgr composeDirectMessageTo:username withText:dm];
 }
 
 #pragma mark UIActionSheetDelegate implementation
@@ -1155,22 +1066,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     return wrapperController.parentViewController.tabBarItem;
 }
 
-- (ComposeTweetDisplayMgr *)composeMessageDisplayMgr
-{
-    if (!composeMessageDisplayMgr) {
-        TwitterService * twitterService = [service clone];  // autoreleased
-
-        composeMessageDisplayMgr =
-            [[ComposeTweetDisplayMgr alloc]
-            initWithRootViewController:wrapperController.tabBarController
-                        twitterService:twitterService
-                               context:managedObjectContext];
-        composeMessageDisplayMgr.delegate = self;
-    }
-
-    return composeMessageDisplayMgr;
-}
-
 - (UIBarButtonItem *)sendingTweetProgressView
 {
     if (!sendingTweetProgressView) {
@@ -1336,14 +1231,14 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)composeNewDirectMessage
 {
     NSLog(@"Messages display manager: composing new direct message...");
-    [self.composeMessageDisplayMgr composeDirectMessage];
+    [composeTweetDisplayMgr composeDirectMessage];
 }
 
 - (void)sendDirectMessageToOtherUserInConversation
 {
     NSLog(@"Messages display manager: sending direct message to %@",
         self.otherUserInConversation.username);
-    [self.composeMessageDisplayMgr
+    [composeTweetDisplayMgr
         composeDirectMessageTo:self.otherUserInConversation.username];
 }
 
@@ -1544,20 +1439,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         composeDirectMessageTo:otherUserInConversation.username];
 }
 
-+ (BOOL)displayWithUsername
-{
-    if (!alreadyReadDisplayWithUsernameValue) {
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        NSInteger displayNameValAsNumber =
-            [defaults integerForKey:@"display_name"];
-        displayWithUsername = displayNameValAsNumber;
-    }
-
-    alreadyReadDisplayWithUsernameValue = YES;
-
-    return displayWithUsername;
-}
-
 - (LocationMapViewController *)locationMapViewController
 {
     if (!locationMapViewController) {
@@ -1598,6 +1479,42 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     }
 
     return locationInfoViewController;
+}
+
+- (void)updateDisplayForSendingDirectMessage
+{
+    [self.conversationController.navigationItem
+        setRightBarButtonItem:[self sendingTweetProgressView] animated:YES];
+}
+
+- (void)addDirectMessage:(DirectMessage *)dm
+{
+    NSLog(@"Direct message display manager: adding direct message");
+
+    if ([dm.recipient.identifier isEqual:self.currentConversationUserId]){
+        [self.conversationController.navigationItem
+            setRightBarButtonItem:[self newMessageButtonItem] animated:YES];
+        [self.conversationController addTweet:dm];
+    }
+
+    [directMessageCache addSentDirectMessage:dm];
+    [self updateViewsWithNewMessages];
+}
+
+#pragma mark static helper methods
+
++ (BOOL)displayWithUsername
+{
+    if (!alreadyReadDisplayWithUsernameValue) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger displayNameValAsNumber =
+            [defaults integerForKey:@"display_name"];
+        displayWithUsername = displayNameValAsNumber;
+    }
+
+    alreadyReadDisplayWithUsernameValue = YES;
+
+    return displayWithUsername;
 }
 
 @end

@@ -64,8 +64,8 @@
 @interface DirectMessagesDisplayMgr :
     NSObject <TwitterServiceDelegate, NetworkAwareViewControllerDelegate,
     DirectMessageInboxViewControllerDelegate,
-    DirectMessageConversationViewControllerDelegate, TweetViewControllerDelegate,
-    TwitchBrowserViewControllerDelegate, ComposeTweetDisplayMgrDelegate,
+    DirectMessageConversationViewControllerDelegate,
+    TweetViewControllerDelegate, TwitchBrowserViewControllerDelegate,
     MFMailComposeViewControllerDelegate, UIActionSheetDelegate,
     UserInfoViewControllerDelegate, LocationMapViewControllerDelegate,
     LocationInfoViewControllerDelegate>
@@ -114,8 +114,6 @@
     NSUInteger loadMoreSentNextPage;
     NSUInteger loadMoreReceivedNextPage;
 
-    ComposeTweetDisplayMgr * composeMessageDisplayMgr;
-
     UIBarButtonItem * sendingTweetProgressView;
 
     NSNumber * currentConversationUserId;
@@ -155,9 +153,6 @@
 @property (nonatomic, copy) NSArray * newDirectMessages;
 @property (nonatomic, retain) NewDirectMessagesState * newDirectMessagesState;
 
-@property (nonatomic, readonly)
-    ComposeTweetDisplayMgr * composeMessageDisplayMgr;
-
 @property (nonatomic, readonly) UIBarButtonItem * sendingTweetProgressView;
 @property (nonatomic, readonly) UIBarButtonItem * newMessageButtonItem;
 
@@ -186,5 +181,8 @@
 - (void)loadAnotherPageOfMessages;
 
 - (void)viewAppearedForFirstTimeAfterCredentialChange;
+
+- (void)updateDisplayForSendingDirectMessage;
+- (void)addDirectMessage:(DirectMessage *)dm;
 
 @end
