@@ -15,6 +15,11 @@
 #import "PhotoService+ServiceAdditions.h"
 #import "AccountSettings.h"
 #import "NSString+ConvenienceMethods.h"
+#import "UIColor+TwitchColors.h"
+#import "AsynchronousNetworkFetcher.h"
+#import "InfoPlistConfigReader.h"
+#import "RegexKitLite.h"
+#import "ErrorState.h"
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -57,7 +62,9 @@
 - (void)updateMediaTitleFromTweetText:(NSString *)text;
 
 - (void)startShorteningLink:(NSString *)link;
+- (void)abortShorteningLink;
 - (void)showShorteningLinkView;
+- (void)removeShorteningLinkView;
 
 @end
 
@@ -151,7 +158,8 @@
     [self.composeTweetViewController composeTweet:link
         from:service.credentials.username];
 
-//    [self startShorteningLink:link];
+    if (![link isMatchedByRegex:@".*bit\\.ly/.*"])
+        [self startShorteningLink:link];
 }
 
 - (void)composeReplyToTweet:(NSString *)tweetId
@@ -628,7 +636,6 @@
         [photoService sendImage:image withCredentials:c];
     }
 
-
     [self.composeTweetViewController displayActivityView];
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
 }
@@ -692,6 +699,34 @@
     }
 
     [actionSheet autorelease];
+}
+
+#pragma mark AsynchronousNetworkFetcherDelegate implementation
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    didReceiveData:(NSData *)data fromUrl:(NSURL *)url
+{
+    if (!canceledLinkShortening) {
+        NSString * json =
+            [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]
+            autorelease];
+        NSString * shortUrl = json; // TODO: parse
+        [self.composeTweetViewController composeTweet:shortUrl
+            from:service.credentials.username];
+
+        [self removeShorteningLinkView];
+    }
+}
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
+{
+    if (!canceledLinkShortening) {
+        NSString * title =
+            NSLocalizedString(@"composetweet.shorteningerror", @"");
+        [[ErrorState instance] displayErrorWithTitle:title error:error];
+        [self removeShorteningLinkView];
+    }
 }
 
 #pragma mark UIImagePicker helper methods
@@ -922,8 +957,47 @@
 
 - (void)startShorteningLink:(NSString *)link
 {
-    // submit shorten request
+    canceledLinkShortening = NO;
+
+    NSString * version =
+        [[InfoPlistConfigReader reader] valueForKey:@"BitlyVersion"];
+    NSString * username =
+        [[InfoPlistConfigReader reader] valueForKey:@"BitlyUsername"];
+    NSString * apiKey =
+        [[InfoPlistConfigReader reader] valueForKey:@"BitlyApiKey"];
+    NSString * urlAsString =
+        [NSString stringWithFormat:
+        @"http://api.bit.ly/shorten?version=%@&longUrl=%@&login=%@&apiKey=%@",
+        version, link, username, apiKey];
+    NSLog(@"Link shortening request: %@", urlAsString);
+    NSURL * url = [NSURL URLWithString:urlAsString];
+    [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];
+
+    self.composeTweetViewController.displayingActivity = YES;
     [self showShorteningLinkView];
+}
+
+- (void)abortShorteningLink
+{
+    canceledLinkShortening = YES;
+    [self removeShorteningLinkView];
+}
+
+- (void)removeShorteningLinkView
+{
+    [self.linkShorteningView performSelector:@selector(removeFromSuperview)
+        withObject:nil afterDelay:0.5];
+
+    self.linkShorteningView.alpha = 1.0;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone
+        forView:self.linkShorteningView cache:YES];
+
+    self.linkShorteningView.alpha = 0.0;
+
+    [UIView commitAnimations];
+
+    self.composeTweetViewController.displayingActivity = NO;
 }
 
 - (void)showShorteningLinkView
@@ -935,7 +1009,7 @@
     [UIView setAnimationTransition:UIViewAnimationTransitionNone
         forView:self.linkShorteningView cache:YES];
 
-    self.linkShorteningView.alpha = 0.8;
+    self.linkShorteningView.alpha = 1.0;
 
     [UIView commitAnimations];
 }
@@ -953,11 +1027,68 @@
 - (UIView *)linkShorteningView
 {
     if (!linkShorteningView) {
-        CGRect darkTransparentViewFrame = CGRectMake(0, 0, 320, 480);
+        CGRect darkTransparentViewFrame = CGRectMake(0, 0, 320, 460);
+        UIView * darkTransparentView =
+            [[[UIView alloc] initWithFrame:darkTransparentViewFrame]
+            autorelease];
+        darkTransparentView.backgroundColor = [UIColor blackColor];
+        darkTransparentView.alpha = 0.9;
+
+        UIActivityIndicatorView * activityIndicator =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge]
+            autorelease];
+        activityIndicator.frame = CGRectMake(50, 87, 37, 37);
+        [activityIndicator startAnimating];
+        
+        CGRect shorteningLabelFrame =
+            CGRectMake(
+            activityIndicator.frame.origin.x +
+            activityIndicator.frame.size.width + 12,
+            87,
+            200,
+            37);
+        UILabel * shorteningLabel =
+            [[[UILabel alloc] initWithFrame:shorteningLabelFrame] autorelease];
+        shorteningLabel.text =
+            NSLocalizedString(@"composetweet.shorteninglink", @"");
+        shorteningLabel.backgroundColor = [UIColor clearColor];
+        shorteningLabel.textColor = [UIColor whiteColor];
+        shorteningLabel.font = [UIFont boldSystemFontOfSize:20];
+        shorteningLabel.shadowOffset = CGSizeMake(0.0, 1.0);
+        shorteningLabel.shadowColor = [UIColor blackColor];
+
+        static const NSInteger BUTTON_WIDTH = 134;
+        CGRect buttonFrame =
+            CGRectMake((320 - BUTTON_WIDTH) / 2, 146, BUTTON_WIDTH, 46);
+        UIButton * cancelButton =
+            [[[UIButton alloc] initWithFrame:buttonFrame] autorelease];
+        NSString * cancelButtonTitle =
+            NSLocalizedString(@"composetweet.cancelshortening", @"");
+        [cancelButton setTitle:cancelButtonTitle forState:UIControlStateNormal];
+        UIImage * normalImage =
+            [[UIImage imageNamed:@"CancelButton.png"]
+            stretchableImageWithLeftCapWidth:13.0 topCapHeight:0.0];
+        [cancelButton setBackgroundImage:normalImage
+            forState:UIControlStateNormal];
+        cancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+        [cancelButton setTitleColor:[UIColor whiteColor]
+            forState:UIControlStateNormal];
+        [cancelButton setTitleColor:[UIColor grayColor]
+            forState:UIControlStateHighlighted];
+        [cancelButton setTitleShadowColor:[UIColor twitchDarkGrayColor]
+            forState:UIControlStateNormal];
+        cancelButton.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
+        [cancelButton addTarget:self action:@selector(abortShorteningLink)
+            forControlEvents:UIControlEventTouchUpInside];
+
+        CGRect linkShorteningViewFrame = CGRectMake(0, 0, 320, 460);
         linkShorteningView =
-            [[UIView alloc] initWithFrame:darkTransparentViewFrame];
-        linkShorteningView.backgroundColor = [UIColor blackColor];
-        linkShorteningView.alpha = 0.0;
+            [[UIView alloc] initWithFrame:linkShorteningViewFrame];
+        [linkShorteningView addSubview:darkTransparentView];
+        [linkShorteningView addSubview:activityIndicator];
+        [linkShorteningView addSubview:shorteningLabel];
+        [linkShorteningView addSubview:cancelButton];
     }
 
     return linkShorteningView;

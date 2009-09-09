@@ -35,6 +35,8 @@
 @property (nonatomic, retain) UIBarButtonItem * sendButton;
 @property (nonatomic, retain) UIBarButtonItem * cancelButton;
 
+@property (nonatomic, assign) BOOL displayingActivity;
+
 - (void)composeTweet:(NSString *)text from:(NSString *)sender;
 - (void)composeTweet:(NSString *)text
                 from:(NSString *)sender

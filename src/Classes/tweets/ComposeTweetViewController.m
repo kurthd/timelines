@@ -27,7 +27,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 @implementation ComposeTweetViewController
 
-@synthesize delegate, sendButton, cancelButton, currentSender, textViewText;
+@synthesize delegate, sendButton, cancelButton, currentSender, textViewText,
+    displayingActivity;
 
 - (void)dealloc
 {
@@ -55,8 +56,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     [super viewDidLoad];
 
-    displayingActivity = NO;
-    
     if (hideRecipientView)
         [self hideRecipientView];
     

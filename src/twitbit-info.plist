@@ -29,7 +29,7 @@
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
 	<key>SBUsesNetwork</key>
-	<true/>
+	<false/>
 	<key>TwitPicPostUrl</key>
 	<string>https://twitpic.com/api/upload</string>
 	<key>YfrogPostUrl</key>
@@ -42,5 +42,11 @@
 	<true/>
 	<key>GoogleMapsApiKey</key>
 	<string>ABQIAAAA4YcfyY-S4O3XZADw6XUrMBS__PqgG_j9kacaPeRd_7KkjCUsGRTyQMdIBpkodQoLI--P6eyACiiv7g</string>
+	<key>BitlyVersion</key>
+	<string>2.0.1</string>
+	<key>BitlyUsername</key>
+	<string>twitbitapp</string>
+	<key>BitlyApiKey</key>
+	<string>R_2fabc643b863319ee6d61261d4452171</string>
 </dict>
 </plist>
