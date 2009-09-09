@@ -15,6 +15,10 @@
 "fetchquantity.fifty" = "50";
 "fetchquantity.onehundred" = "100";
 
+"tweetcompositiongroupname" = "Tweet Composition";
+
 "retweetformat" = "Retweet Format";
 "retweetformat.via" = "... (via @name)";
 "retweetformat.rt" = "RT @name: ...";
+
+"shortenurls" = "Shorten Links";

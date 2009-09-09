@@ -52,10 +52,10 @@ static TwitchWebBrowserDisplayMgr * gInstance = NULL;
 
 #pragma mark TwitchBrowserViewControllerDelegate implementation
 
-- (void)composeTweetWithText:(NSString *)text
+- (void)composeTweetWithLink:(NSString *)link
 {
-    NSLog(@"Composing tweet with text'%@'", text);
-    [composeTweetDisplayMgr composeTweetWithText:text];
+    NSLog(@"Composing tweet with link'%@'", link);
+    [composeTweetDisplayMgr composeTweetWithLink:link];
 }
 
 - (void)readLater:(NSString *)url

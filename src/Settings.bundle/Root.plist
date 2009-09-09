@@ -79,6 +79,8 @@
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>tweetcompositiongroupname</string>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
@@ -99,6 +101,16 @@
 			<string>PSMultiValueSpecifier</string>
 			<key>Key</key>
 			<string>retweet_format</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>shortenurls</string>
+			<key>Key</key>
+			<string>shorten_urls</string>
+			<key>DefaultValue</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>

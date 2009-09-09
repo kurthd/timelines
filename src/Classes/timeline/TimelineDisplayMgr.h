@@ -40,9 +40,9 @@
     NSObject
     <TimelineDataSourceDelegate, TimelineViewControllerDelegate,
     TweetViewControllerDelegate, NetworkAwareViewControllerDelegate,
-    UserInfoViewControllerDelegate, TwitchBrowserViewControllerDelegate,
-    TwitterServiceDelegate, UIWebViewDelegate, ConversationDisplayMgrDelegate,
-    LocationMapViewControllerDelegate, LocationInfoViewControllerDelegate>
+    UserInfoViewControllerDelegate, TwitterServiceDelegate, UIWebViewDelegate,
+    ConversationDisplayMgrDelegate, LocationMapViewControllerDelegate,
+    LocationInfoViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;

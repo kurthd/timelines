@@ -12,10 +12,9 @@
 
     IBOutlet UITextView * textView;
 
-    IBOutlet UINavigationBar * navigationBar;
     IBOutlet UIToolbar * toolbar;
-    IBOutlet UIBarButtonItem * sendButton;
-    IBOutlet UIBarButtonItem * cancelButton;
+    UIBarButtonItem * sendButton;
+    UIBarButtonItem * cancelButton;
 
     IBOutlet UILabel * characterCount;
     IBOutlet UILabel * accountLabel;
@@ -25,9 +24,16 @@
 
     IBOutlet UIView * activityView;
     BOOL displayingActivity;
+    
+    BOOL hideRecipientView;
+    NSString * currentSender;
+    NSString * textViewText;
 }
 
 @property (nonatomic, assign) id<ComposeTweetViewControllerDelegate> delegate;
+
+@property (nonatomic, retain) UIBarButtonItem * sendButton;
+@property (nonatomic, retain) UIBarButtonItem * cancelButton;
 
 - (void)composeTweet:(NSString *)text from:(NSString *)sender;
 - (void)composeTweet:(NSString *)text

@@ -8,5 +8,6 @@
 
 + (NSInteger)fetchQuantity;
 + (NSInteger)defaultFetchQuantity;
++ (BOOL)shortenURLs;
 
 @end

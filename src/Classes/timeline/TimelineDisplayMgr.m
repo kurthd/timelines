@@ -1034,19 +1034,6 @@ static BOOL scrollToTopValueAlreadyRead;
     [composeTweetDisplayMgr composeTweetWithText:reTweetMessage];
 }
 
-#pragma mark TwitchBrowserViewControllerDelegate implementation
-
-- (void)composeTweetWithText:(NSString *)text
-{
-    NSLog(@"Timeline display manager: composing tweet with text'%@'", text);
-    [composeTweetDisplayMgr composeTweetWithText:text];
-}
-
-- (void)readLater:(NSString *)url
-{
-    // should never be called
-}
-
 #pragma mark Accessors
 
 - (NetworkAwareViewController *)newTweetDetailsWrapperController

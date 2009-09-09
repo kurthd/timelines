@@ -19,6 +19,7 @@
 @interface ComposeTweetDisplayMgr ()
 
 @property (nonatomic, retain) UIViewController * rootViewController;
+@property (nonatomic, readonly) UIViewController * navController;
 @property (nonatomic, retain) ComposeTweetViewController *
     composeTweetViewController;
 
@@ -43,6 +44,8 @@
 @property (nonatomic, retain) NSMutableArray * attachedPhotos;
 @property (nonatomic, retain) NSMutableArray * attachedVideos;
 
+@property (nonatomic, readonly) UIView * linkShorteningView;
+
 - (void)promptForPhotoSource:(UIViewController *)controller;
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source
                 controller:(UIViewController *)controller;
@@ -52,6 +55,9 @@
 - (void)updateMediaTitleFromTweet:(Tweet *)tweet;
 - (void)updateMediaTitleFromDirectMessage:(DirectMessage *)dm;
 - (void)updateMediaTitleFromTweetText:(NSString *)text;
+
+- (void)startShorteningLink:(NSString *)link;
+- (void)showShorteningLinkView;
 
 @end
 
@@ -71,6 +77,7 @@
 {
     self.delegate = nil;
     self.rootViewController = nil;
+    [navController release];
     self.composeTweetViewController = nil;
     self.service = nil;
     self.credentialsUpdatePublisher = nil;
@@ -81,6 +88,7 @@
     self.draftMgr = nil;
     self.attachedPhotos = nil;
     self.attachedVideos = nil;
+    [linkShorteningView release];
     [super dealloc];
 }
 
@@ -122,15 +130,28 @@
 
 - (void)composeTweetWithText:(NSString *)tweet
 {
-    [self.rootViewController
-        presentModalViewController:self.composeTweetViewController
-                          animated:YES];
+    [self.rootViewController presentModalViewController:self.navController
+        animated:YES];
 
     self.origTweetId = nil;
     self.origUsername = nil;
 
     [self.composeTweetViewController composeTweet:tweet
                                              from:service.credentials.username];
+}
+
+- (void)composeTweetWithLink:(NSString *)link
+{
+    [self.rootViewController presentModalViewController:self.navController
+        animated:YES];
+
+    self.origTweetId = nil;
+    self.origUsername = nil;
+
+    [self.composeTweetViewController composeTweet:link
+        from:service.credentials.username];
+
+//    [self startShorteningLink:link];
 }
 
 - (void)composeReplyToTweet:(NSString *)tweetId
@@ -146,7 +167,7 @@
                    withText:(NSString *)text
 {
     [self.rootViewController
-        presentModalViewController:self.composeTweetViewController
+        presentModalViewController:self.navController
                           animated:YES];
 
     self.origTweetId = tweetId;
@@ -175,7 +196,7 @@
     // Present the view before calling 'composeDirectMessage:...' because
     // otherwise the view elements aren't wired up (they're nil).
     [self.rootViewController
-        presentModalViewController:self.composeTweetViewController
+        presentModalViewController:self.navController
                           animated:YES];
 
     [self.composeTweetViewController composeDirectMessage:text
@@ -205,7 +226,7 @@
     // Present the view before calling 'composeDirectMessage:...' because
     // otherwise the view elements aren't wired up (they're nil).
     [self.rootViewController
-        presentModalViewController:self.composeTweetViewController
+        presentModalViewController:self.navController
                           animated:YES];
 
     NSString * sender = service.credentials.username;
@@ -833,6 +854,31 @@
         composeTweetViewController = [[ComposeTweetViewController alloc]
             initWithNibName:@"ComposeTweetView" bundle:nil];
         composeTweetViewController.delegate = self;
+        
+        NSString * cancelButtonText =
+            NSLocalizedString(@"composetweet.navigationitem.cancel", @"");
+        UIBarButtonItem * cancelButton =
+            [[[UIBarButtonItem alloc]
+            initWithTitle:cancelButtonText style:UIBarButtonItemStyleBordered
+            target:composeTweetViewController action:@selector(userDidCancel)]
+            autorelease];
+        composeTweetViewController.navigationItem.leftBarButtonItem =
+            cancelButton;
+        composeTweetViewController.cancelButton = cancelButton;
+
+        NSString * sendButtonText =
+            NSLocalizedString(@"composetweet.navigationitem.send", @"");
+        UIBarButtonItem * sendButton =
+            [[[UIBarButtonItem alloc]
+            initWithTitle:sendButtonText style:UIBarButtonItemStyleBordered
+            target:composeTweetViewController action:@selector(userDidSave)]
+            autorelease];
+        composeTweetViewController.navigationItem.rightBarButtonItem =
+            sendButton;
+            
+        composeTweetViewController.navigationItem.title =
+            NSLocalizedString(@"composetweet.navigationitem.title", @"");
+        composeTweetViewController.sendButton = sendButton;
     }
 
     return composeTweetViewController;
@@ -842,7 +888,7 @@
 {
     if (!logInDisplayMgr) {
         logInDisplayMgr = [[LogInDisplayMgr alloc]
-            initWithRootViewController:self.composeTweetViewController
+            initWithRootViewController:self.navController
                   managedObjectContext:self.context];
         logInDisplayMgr.delegate = self;
         logInDisplayMgr.allowsCancel = YES;
@@ -872,6 +918,49 @@
     }
 
     return addPhotoServiceDisplayMgr;
+}
+
+- (void)startShorteningLink:(NSString *)link
+{
+    // submit shorten request
+    [self showShorteningLinkView];
+}
+
+- (void)showShorteningLinkView
+{
+    [self.navController.view.superview.superview
+        addSubview:self.linkShorteningView];
+    self.linkShorteningView.alpha = 0.0;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone
+        forView:self.linkShorteningView cache:YES];
+
+    self.linkShorteningView.alpha = 0.8;
+
+    [UIView commitAnimations];
+}
+
+- (UIViewController *)navController
+{
+    if (!navController)
+        navController =
+            [[UINavigationController alloc]
+            initWithRootViewController:self.composeTweetViewController];
+
+    return navController;
+}
+
+- (UIView *)linkShorteningView
+{
+    if (!linkShorteningView) {
+        CGRect darkTransparentViewFrame = CGRectMake(0, 0, 320, 480);
+        linkShorteningView =
+            [[UIView alloc] initWithFrame:darkTransparentViewFrame];
+        linkShorteningView.backgroundColor = [UIColor blackColor];
+        linkShorteningView.alpha = 0.0;
+    }
+
+    return linkShorteningView;
 }
 
 @end

@@ -838,20 +838,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         withObject:tweetId afterDelay:0.5];
 }
 
-#pragma mark TwitchBrowserViewControllerDelegate implementation
-
-- (void)composeTweetWithText:(NSString *)text
-{
-    NSLog(@"Messages display manager: composing new tweet with text '%@'...",
-        text);
-    [composeTweetDisplayMgr composeTweetWithText:text];
-}
-
-- (void)readLater:(NSString *)url
-{
-    // TODO: implement me
-}
-
 #pragma mark UIActionSheetDelegate implementation
 
 - (void)actionSheet:(UIActionSheet *)sheet

@@ -20,17 +20,19 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)updateCharacterCountFromInterface;
 - (void)updateCharacterCountFromText:(NSString *)text;
 
+@property (nonatomic, copy) NSString * currentSender;
+@property (nonatomic, copy) NSString * textViewText;
+
 @end
 
 @implementation ComposeTweetViewController
 
-@synthesize delegate;
+@synthesize delegate, sendButton, cancelButton, currentSender, textViewText;
 
 - (void)dealloc
 {
     [textView release];
 
-    [navigationBar release];
     [toolbar release];
     [sendButton release];
     [cancelButton release];
@@ -42,6 +44,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [recipientTextField release];
 
     [activityView release];
+    
+    [currentSender release];
+    [textViewText release];
 
     [super dealloc];
 }
@@ -51,6 +56,15 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [super viewDidLoad];
 
     displayingActivity = NO;
+    
+    if (hideRecipientView)
+        [self hideRecipientView];
+    
+    if (self.currentSender)
+        accountLabel.text =
+            [NSString stringWithFormat:@"@%@", self.currentSender];
+    if (self.textViewText)
+        textView.text = self.textViewText;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -62,9 +76,12 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [self updateCharacterCountFromText:textView.text];
 
     CGRect characterCountFrame = characterCount.frame;
-     // hack -- this needs to be 210 when displayed, but 133 after a rotation
-    characterCountFrame.origin.y = 210;
+    // hack -- this needs to be 167 when displayed, but 104 after a rotation
+    // <sarcasm>it makes sense</sarcasm>
+    characterCountFrame.origin.y = 167;
     characterCount.frame = characterCountFrame;
+
+    [textView becomeFirstResponder];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -94,17 +111,19 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
             recipientView.frame = recipientViewFrame;
 
             CGRect textViewFrame = textView.frame;
-            textViewFrame.origin.y = 83;
+            textViewFrame.origin.y = 39;
             textView.frame = textViewFrame;
         }
 
         CGRect characterCountFrame = characterCount.frame;
-        characterCountFrame.origin.y = 133;
+        characterCountFrame.origin.y = 104;
         characterCount.frame = characterCountFrame;
+
         characterCount.textColor = [UIColor whiteColor];
         characterCount.backgroundColor = [UIColor clearColor];
 
         toolbar.hidden = NO;
+        accountLabel.hidden = NO;
     } else {
         if (!recipientView.hidden) {
             CGRect recipientViewFrame = recipientView.frame;
@@ -112,22 +131,27 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
             recipientView.frame = recipientViewFrame;
 
             CGRect textViewFrame = textView.frame;
-            textViewFrame.origin.y = 73;
+            textViewFrame.origin.y = 29;
             textView.frame = textViewFrame;
         }
 
         CGRect characterCountFrame = characterCount.frame;
-        characterCountFrame.origin.y = 173;
+        characterCountFrame.origin.y = 129;
         characterCount.frame = characterCountFrame;
+
         characterCount.textColor = [UIColor twitchGrayColor];
         characterCount.backgroundColor = [UIColor whiteColor];
 
         toolbar.hidden = YES;
+        accountLabel.hidden = YES;
     }
 }
 
 - (void)composeTweet:(NSString *)text from:(NSString *)sender
 {
+    self.currentSender = sender;
+    self.textViewText = text;
+
     textView.text = text;
     accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
     recipientTextField.text = @"";
@@ -137,7 +161,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [self enableSendButtonFromInterface];
     [self updateCharacterCountFromText:text];
 
-    navigationBar.topItem.title =
+    self.navigationItem.title =
         NSLocalizedString(@"composetweet.view.title", @"");
 }
 
@@ -145,6 +169,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                 from:(NSString *)sender
            inReplyTo:(NSString *)recipient
 {
+    self.currentSender = sender;
+    self.textViewText = text;
+
     textView.text = text;
     accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
     recipientTextField.text = @"";
@@ -154,12 +181,15 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [self enableSendButtonFromInterface];
     [self updateCharacterCountFromText:text];
 
-    navigationBar.topItem.title =
+    self.navigationItem.title =
         NSLocalizedString(@"composetweet.view.title", @"");
 }
 
 - (void)composeDirectMessage:(NSString *)text from:(NSString *)sender
 {
+    self.currentSender = sender;
+    self.textViewText = text;
+
     textView.text = text;
     accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
     recipientTextField.text = @"";
@@ -174,6 +204,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                         from:(NSString *)sender
                           to:(NSString *)recipient
 {
+    self.currentSender = sender;
+    self.textViewText = text;
+
     textView.text = text;
     accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
     recipientTextField.text = recipient;
@@ -186,7 +219,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         [recipientTextField becomeFirstResponder];
     [self enableSendButtonFromInterface];
     [self updateCharacterCountFromText:text];
-    navigationBar.topItem.title = @"Direct Message";
+    self.navigationItem.title = @"Direct Message";
 }
 
 - (void)addTextToMessage:(NSString *)text
@@ -362,6 +395,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)showRecipientView
 {
+    hideRecipientView = NO;
     if (recipientView.hidden) {
         CGRect recipientFrame = recipientView.frame;
         CGRect textViewFrame = textView.frame;
@@ -376,11 +410,12 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)hideRecipientView
 {
+    hideRecipientView = YES;
     if (!recipientView.hidden) {
         CGRect recipientFrame = recipientView.frame;
         CGRect textViewFrame = textView.frame;
 
-        textViewFrame.origin.y = navigationBar.frame.size.height;
+        textViewFrame.origin.y = 0;
         textViewFrame.size.height += recipientFrame.size.height;
 
         textView.frame = textViewFrame;

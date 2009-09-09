@@ -26,6 +26,7 @@
     id<ComposeTweetDisplayMgrDelegate> delegate;
 
     UIViewController * rootViewController;
+    UIViewController * navController;
     ComposeTweetViewController * composeTweetViewController;
 
     TwitterService * service;
@@ -48,6 +49,8 @@
 
     NSMutableArray * attachedPhotos;
     NSMutableArray * attachedVideos;
+
+    UIView * linkShorteningView;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;
@@ -58,6 +61,7 @@
 
 - (void)composeTweet;
 - (void)composeTweetWithText:(NSString *)tweet;
+- (void)composeTweetWithLink:(NSString *)link;
 
 - (void)composeReplyToTweet:(NSString *)tweetId
                    fromUser:(NSString *)user;

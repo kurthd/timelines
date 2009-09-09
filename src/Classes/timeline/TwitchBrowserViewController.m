@@ -234,14 +234,14 @@
 - (void)postInTweet
 {
     NSLog(@"Posting page link in tweet");
-    
+
     NSURL * url = [webView.request URL];
     NSString * urlAsString =
         [url absoluteString].length == 0 ?
         self.currentUrl : [url absoluteString];
 
     [self dismissView];
-    [delegate performSelector:@selector(composeTweetWithText:)
+    [delegate performSelector:@selector(composeTweetWithLink:)
         withObject:urlAsString afterDelay:0.5];
 }
 

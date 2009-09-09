@@ -9,6 +9,9 @@
 static BOOL alreadyReadFetchQuantityValue;
 static NSInteger fetchQuantity;
 
+static BOOL alreadyReadShortenURLsValue;
+static BOOL shortenURLs;
+
 + (NSInteger)fetchQuantity
 {
     if (!alreadyReadFetchQuantityValue) {
@@ -20,6 +23,17 @@ static NSInteger fetchQuantity;
     }
 
     return fetchQuantity;
+}
+
++ (BOOL)shortenURLs
+{
+    if (!alreadyReadShortenURLsValue) {
+        alreadyReadShortenURLsValue = YES;
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        shortenURLs = defaults ? [defaults boolForKey:@"shorten_urls"] : YES;
+    }
+
+    return shortenURLs;
 }
 
 + (NSInteger)defaultFetchQuantity
