@@ -20,11 +20,13 @@
 #import "InfoPlistConfigReader.h"
 #import "RegexKitLite.h"
 #import "ErrorState.h"
+#import "JSON.h"
+#import "NSString+HtmlEncodingAdditions.h"
 
 @interface ComposeTweetDisplayMgr ()
 
 @property (nonatomic, retain) UIViewController * rootViewController;
-@property (nonatomic, readonly) UIViewController * navController;
+@property (nonatomic, retain) UIViewController * navController;
 @property (nonatomic, retain) ComposeTweetViewController *
     composeTweetViewController;
 
@@ -49,7 +51,8 @@
 @property (nonatomic, retain) NSMutableArray * attachedPhotos;
 @property (nonatomic, retain) NSMutableArray * attachedVideos;
 
-@property (nonatomic, readonly) UIView * linkShorteningView;
+@property (nonatomic, retain) UIView * linkShorteningView;
+@property (nonatomic, copy) NSString * shorteningUrl;
 
 - (void)promptForPhotoSource:(UIViewController *)controller;
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source
@@ -70,7 +73,7 @@
 
 @implementation ComposeTweetDisplayMgr
 
-@synthesize rootViewController, composeTweetViewController;
+@synthesize rootViewController, navController, composeTweetViewController;
 @synthesize service;
 @synthesize credentialsUpdatePublisher, credentialsSetChangedPublisher;
 @synthesize logInDisplayMgr, context;
@@ -79,12 +82,13 @@
 @synthesize draftMgr;
 @synthesize addPhotoServiceDisplayMgr;
 @synthesize attachedPhotos, attachedVideos;
+@synthesize linkShorteningView, shorteningUrl;
 
 - (void)dealloc
 {
     self.delegate = nil;
     self.rootViewController = nil;
-    [navController release];
+    self.navController = nil;
     self.composeTweetViewController = nil;
     self.service = nil;
     self.credentialsUpdatePublisher = nil;
@@ -95,7 +99,8 @@
     self.draftMgr = nil;
     self.attachedPhotos = nil;
     self.attachedVideos = nil;
-    [linkShorteningView release];
+    self.linkShorteningView = nil;
+    self.shorteningUrl = nil;
     [super dealloc];
 }
 
@@ -636,8 +641,8 @@
         [photoService sendImage:image withCredentials:c];
     }
 
-    [self.composeTweetViewController displayActivityView];
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
+    [self.composeTweetViewController displayActivityView];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -666,7 +671,7 @@
 
     [AccountSettings setSettings:settings forKey:settingsKey];
 
-    [NSTimer scheduledTimerWithTimeInterval:0.5
+    [NSTimer scheduledTimerWithTimeInterval:0.8
                                      target:self
                                    selector:@selector(dismissSelector:)
                                    userInfo:nil
@@ -707,14 +712,18 @@
     didReceiveData:(NSData *)data fromUrl:(NSURL *)url
 {
     if (!canceledLinkShortening) {
-        NSString * json =
-            [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]
+        NSString * jsonString =
+            [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]
             autorelease];
-        NSString * shortUrl = json; // TODO: parse
+        NSDictionary * json = [jsonString JSONValue];
+        NSDictionary * values =
+            [[json objectForKey:@"results"] objectForKey:self.shorteningUrl];
+        NSString * shortUrl = [values objectForKey:@"shortUrl"];
         [self.composeTweetViewController composeTweet:shortUrl
             from:service.credentials.username];
 
         [self removeShorteningLinkView];
+        self.shorteningUrl = nil;
     }
 }
 
@@ -726,6 +735,7 @@
             NSLocalizedString(@"composetweet.shorteningerror", @"");
         [[ErrorState instance] displayErrorWithTitle:title error:error];
         [self removeShorteningLinkView];
+        self.shorteningUrl = nil;
     }
 }
 
@@ -959,16 +969,23 @@
 {
     canceledLinkShortening = NO;
 
+    self.shorteningUrl = link;
+
     NSString * version =
         [[InfoPlistConfigReader reader] valueForKey:@"BitlyVersion"];
     NSString * username =
         [[InfoPlistConfigReader reader] valueForKey:@"BitlyUsername"];
     NSString * apiKey =
         [[InfoPlistConfigReader reader] valueForKey:@"BitlyApiKey"];
+
+    // the link needs to be encoded because it could contain query parameters
+    static NSString * allowed = @":@/?&";
+    NSString * encodedLink =
+        [link urlEncodedStringWithEscapedAllowedCharacters:allowed];
     NSString * urlAsString =
         [NSString stringWithFormat:
         @"http://api.bit.ly/shorten?version=%@&longUrl=%@&login=%@&apiKey=%@",
-        version, link, username, apiKey];
+        version, encodedLink, username, apiKey];
     NSLog(@"Link shortening request: %@", urlAsString);
     NSURL * url = [NSURL URLWithString:urlAsString];
     [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];

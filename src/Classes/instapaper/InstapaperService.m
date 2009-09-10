@@ -70,12 +70,12 @@
     self.username = user;
     self.password = pass;
 
-    NSStringEncoding encoding = NSUTF8StringEncoding;
+    static NSString * allowed = @":@/?&";
     NSString * fullUrl =
         [NSString stringWithFormat:@"%@/?username=%@&password=%@",
         self.authenticationUrl,
-        [self.username stringByAddingPercentEscapesUsingEncoding:encoding],
-        [self.password stringByAddingPercentEscapesUsingEncoding:encoding]];
+        [self.username urlEncodedStringWithEscapedAllowedCharacters:allowed],
+        [self.password urlEncodedStringWithEscapedAllowedCharacters:allowed]];
 
     NSURL * instapaperUrl = [NSURL URLWithString:fullUrl];
     NSURLRequest * request = [NSURLRequest requestWithURL:instapaperUrl];

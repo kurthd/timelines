@@ -417,7 +417,11 @@ typedef unsigned int NSUInteger;
     size_t writeLength;
     UTF8String = [multipartBegin UTF8String];
     writeLength = strlen(UTF8String);
+#if defined(NS_BLOCK_ASSERTIONS)
+    [outputStream write:(uint8_t *)UTF8String maxLength:writeLength];
+#else
     NSAssert([outputStream write:(uint8_t *)UTF8String maxLength:writeLength] == writeLength, @"Must write multipartBegin");
+#endif
 
     // open the input stream
     const size_t bufferSize = 65536;
@@ -431,7 +435,11 @@ typedef unsigned int NSUInteger;
             break;
         }
         
+#if defined(NS_BLOCK_ASSERTIONS)
+        [outputStream write:buffer maxLength:readSize];
+#else
         NSAssert (readSize == [outputStream write:buffer maxLength:readSize], @"Must completes the writing");
+#endif
     }
     
     [inImageStream close];
@@ -440,7 +448,11 @@ typedef unsigned int NSUInteger;
     
     UTF8String = [multipartEnd UTF8String];
     writeLength = strlen(UTF8String);
+#if defined(NS_BLOCK_ASSERTIONS)
+    [outputStream write:(uint8_t *)UTF8String maxLength:writeLength];
+#else
     NSAssert([outputStream write:(uint8_t *)UTF8String maxLength:writeLength] == writeLength, @"Must write multipartBegin");
+#endif
     [outputStream close];
     
 #if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_4                
@@ -540,12 +552,20 @@ typedef unsigned int NSUInteger;
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:uploadTempFilename]) {
 #if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_4                
+#if defined(NS_BLOCK_ASSERTIONS)
+            [fileManager removeFileAtPath:uploadTempFilename handler:nil];
+#else
             NSAssert([fileManager removeFileAtPath:uploadTempFilename handler:nil], @"Should be able to remove temp file");
+#endif
 #else
 			NSError *error = nil;
 #pragma unused(error)
 
-			NSAssert([fileManager removeItemAtPath:uploadTempFilename error:&error], @"Should be able to remove temp file");
+#if defined(NS_BLOCK_ASSERTIONS)
+            [fileManager removeItemAtPath:uploadTempFilename error:&error];
+#else
+            NSAssert([fileManager removeItemAtPath:uploadTempFilename error:&error], @"Should be able to remove temp file");
+#endif
 #endif
         }
         

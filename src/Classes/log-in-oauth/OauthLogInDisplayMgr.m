@@ -270,7 +270,7 @@
             NSLocalizedString(@"login.done", @"");
         UIBarButtonItem * doneButton =
             [[[UIBarButtonItem alloc]
-            initWithTitle:doneButtonTitle style:UIBarButtonItemStyleBordered
+            initWithTitle:doneButtonTitle style:UIBarButtonItemStyleDone
             target:oauthLogInViewController action:@selector(userIsDone)]
             autorelease];
         oauthLogInViewController.navigationItem.rightBarButtonItem = doneButton;

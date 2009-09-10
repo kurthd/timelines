@@ -54,6 +54,7 @@
 
     UIView * linkShorteningView;
     BOOL canceledLinkShortening;
+    NSString * shorteningUrl;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;
