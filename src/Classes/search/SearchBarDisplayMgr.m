@@ -48,6 +48,8 @@
 - (void)showAutocompleteResults;
 - (void)hideAutocompleteResults;
 
+- (void)toggleNearbySearchValue;
+
 @end
 
 @implementation SearchBarDisplayMgr
@@ -59,6 +61,7 @@
 @synthesize dataSourceDelegate, credentialsActivatedPublisher;
 @synthesize darkTransparentView;
 @synthesize autocompleteArray;
+@synthesize nearbySearch;
 
 #pragma mark Initialization
 
@@ -94,7 +97,7 @@
         self.context = aContext;
 
         self.networkAwareViewController = navc;
-        
+
         UINavigationItem * navItem =
             self.networkAwareViewController.navigationItem;
         searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
@@ -111,6 +114,14 @@
             self.networkAwareViewController.view.bounds.size.width - 10.0,
             barHeight);
         searchBar.bounds = searchBarRect;
+
+        UIBarButtonItem * locationButton =
+            [[[UIBarButtonItem alloc]
+            initWithImage:[UIImage imageNamed:@"Location.png"]
+            style:UIBarButtonItemStyleBordered target:self
+            action:@selector(toggleNearbySearchValue)]
+            autorelease];
+        navItem.leftBarButtonItem = locationButton;
 
         self.timelineDisplayMgr = aTimelineDisplayMgr;
         searchDisplayMgr =
@@ -189,6 +200,7 @@
     NSLog(@"Searching Twitter for: '%@'...", self.searchQuery);
     [self.searchDisplayMgr displaySearchResults:self.searchQuery
                                       withTitle:self.searchQuery];
+    self.searchDisplayMgr.nearbySearch = nearbySearch;
     [self.timelineDisplayMgr setService:self.searchDisplayMgr
                                  tweets:nil
                                    page:[self.searchPage integerValue]
@@ -537,6 +549,27 @@
 - (void)setSelectedBookmarkSegment:(NSInteger)segment
 {
     [self.searchBookmarksDisplayMgr setSelectedSegment:segment];
+}
+
+- (void)toggleNearbySearchValue
+{
+    nearbySearch = !nearbySearch;
+    UIBarButtonItem * locationButton =
+        self.networkAwareViewController.navigationItem.leftBarButtonItem;
+    locationButton.style =
+        nearbySearch ? UIBarButtonItemStyleDone : UIBarButtonItemStyleBordered;
+
+    if (searchBar.text && ![searchBar.text isEqual:@""])
+        [self searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)setNearbySearch:(BOOL)nearbySearchValue
+{
+    nearbySearch = nearbySearchValue;
+    UIBarButtonItem * locationButton =
+        self.networkAwareViewController.navigationItem.leftBarButtonItem;
+    locationButton.style =
+        nearbySearch ? UIBarButtonItemStyleDone : UIBarButtonItemStyleBordered;
 }
 
 @end

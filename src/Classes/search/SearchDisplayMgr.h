@@ -18,11 +18,13 @@
     NSArray * searchResults;
     NSString * queryString;
     NSString * queryTitle;
+    BOOL nearbySearch;
     NSNumber * updateId;
 
     id<TimelineDataSourceDelegate> dataSourceDelegate;
 }
 
+@property (nonatomic, assign) BOOL nearbySearch;
 @property (nonatomic, assign) id<TimelineDataSourceDelegate> dataSourceDelegate;
 
 - (id)initWithTwitterService:(TwitterService *)aService;

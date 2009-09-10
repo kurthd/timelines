@@ -16,6 +16,7 @@
 
     NSString * findPeopleText;
     NSString * searchText;
+    BOOL nearbySearch;
 }
 
 @property (nonatomic, assign) NSUInteger selectedTab;
@@ -28,5 +29,7 @@
 
 @property (nonatomic, copy) NSString * findPeopleText;
 @property (nonatomic, copy) NSString * searchText;
+
+@property (nonatomic, assign) BOOL nearbySearch;
     
 @end
