@@ -483,6 +483,37 @@
     [self request:requestId isHandledBy:processor];
 }
 
+- (void)searchFor:(NSString *)queryString
+             page:(NSNumber *)page
+         latitude:(NSNumber *)latitude
+        longitude:(NSNumber *)longitude
+           radius:(NSNumber *)radius
+  radiusIsInMiles:(BOOL)radiusIsInMiles
+{
+    NSNumber * inMiles = [NSNumber numberWithBool:radiusIsInMiles];
+    ResponseProcessor * processor =
+        [NearbySearchResponseProcessor processorWithQuery:queryString
+                                                     page:page
+                                                 latitude:latitude
+                                                longitude:longitude
+                                                   radius:radius
+                                          radiusIsInMiles:inMiles
+                                                  context:context
+                                                 delegate:delegate];
+
+    NSString * requestId =
+        [twitter getSearchResultsForQuery:queryString
+                                  sinceID:@"0"
+                           startingAtPage:[page integerValue]
+                                    count:0
+                                 latitude:[latitude floatValue]
+                                longitude:[longitude floatValue]
+                                   radius:[radius integerValue]
+                          radiusIsInMiles:radiusIsInMiles];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark MGTwitterEngineDelegate implementation
 
 - (void)requestSucceeded:(NSString *)requestId

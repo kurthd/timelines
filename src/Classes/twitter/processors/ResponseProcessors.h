@@ -29,3 +29,4 @@
 #import "FetchTrendsResponseProcessor.h"
 
 #import "SearchResponseProcessor.h"
+#import "NearbySearchResponseProcessor.h"

@@ -107,6 +107,7 @@
 		05B7C8CF105899E00043298A /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B7C8C7105899E00043298A /* SBJsonBase.m */; };
 		05B7C8D0105899E00043298A /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B7C8C9105899E00043298A /* SBJsonParser.m */; };
 		05B7C8D1105899E00043298A /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B7C8CB105899E00043298A /* SBJsonWriter.m */; };
+		05B7C9CE10599D1F0043298A /* NearbySearchResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B7C9CD10599D1F0043298A /* NearbySearchResponseProcessor.m */; };
 		05C6C92B1028F7F000182B4A /* Trend.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C6C92A1028F7F000182B4A /* Trend.m */; };
 		05C7B89D103B59D70017874C /* TwitPicCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B896103B59D70017874C /* TwitPicCredentials+KeychainAdditions.m */; };
 		05C7B89E103B59D70017874C /* TwitPicPhotoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B898103B59D70017874C /* TwitPicPhotoService.m */; };
@@ -721,6 +722,8 @@
 		05B7C8C9105899E00043298A /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonParser.m; path = vendor/json/SBJsonParser.m; sourceTree = "<group>"; };
 		05B7C8CA105899E00043298A /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonWriter.h; path = vendor/json/SBJsonWriter.h; sourceTree = "<group>"; };
 		05B7C8CB105899E00043298A /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonWriter.m; path = vendor/json/SBJsonWriter.m; sourceTree = "<group>"; };
+		05B7C9CC10599D1F0043298A /* NearbySearchResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NearbySearchResponseProcessor.h; path = twitter/processors/NearbySearchResponseProcessor.h; sourceTree = "<group>"; };
+		05B7C9CD10599D1F0043298A /* NearbySearchResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NearbySearchResponseProcessor.m; path = twitter/processors/NearbySearchResponseProcessor.m; sourceTree = "<group>"; };
 		05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarDisplayMgr.h; path = search/SearchBarDisplayMgr.h; sourceTree = "<group>"; };
 		05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBarDisplayMgr.m; path = search/SearchBarDisplayMgr.m; sourceTree = "<group>"; };
 		05C5E7B00FF455B00073E7F2 /* FetchTrendsResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTrendsResponseProcessor.h; path = twitter/processors/FetchTrendsResponseProcessor.h; sourceTree = "<group>"; };
@@ -1686,6 +1689,8 @@
 				05C5E7B10FF455B00073E7F2 /* FetchTrendsResponseProcessor.m */,
 				05C5E9C20FF494390073E7F2 /* SearchResponseProcessor.h */,
 				05C5E9C30FF494390073E7F2 /* SearchResponseProcessor.m */,
+				05B7C9CC10599D1F0043298A /* NearbySearchResponseProcessor.h */,
+				05B7C9CD10599D1F0043298A /* NearbySearchResponseProcessor.m */,
 				0562BE2D0FF6AB6B005DA549 /* FetchTweetResponseProcessor.h */,
 				0562BE2E0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m */,
 				0502249410485CCA00BCB903 /* DeleteTweetResponseProcessor.h */,
@@ -2700,6 +2705,7 @@
 				05B7C8CF105899E00043298A /* SBJsonBase.m in Sources */,
 				05B7C8D0105899E00043298A /* SBJsonParser.m in Sources */,
 				05B7C8D1105899E00043298A /* SBJsonWriter.m in Sources */,
+				05B7C9CE10599D1F0043298A /* NearbySearchResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

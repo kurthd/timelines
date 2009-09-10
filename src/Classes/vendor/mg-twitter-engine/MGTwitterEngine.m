@@ -1698,6 +1698,41 @@
                            responseType:MGTwitterSearchResults];
 }
 
+- (NSString *)getSearchResultsForQuery:(NSString *)query
+                               sinceID:(NSString *)updateID
+                        startingAtPage:(int)pageNum
+                                 count:(int)count
+                              latitude:(float)latitude
+                             longitude:(float)longitude
+                                radius:(int)radius
+                       radiusIsInMiles:(BOOL)radiusIsInMiles
+{
+    NSString *path = [NSString stringWithFormat:@"search.%@", API_FORMAT];
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+	if (query) {
+		[params setObject:query forKey:@"q"];
+	}
+    if ([updateID longLongValue] > 0) {
+        [params setObject:[NSString stringWithFormat:@"%@", updateID] forKey:@"since_id"];
+    }
+	if (pageNum > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];
+    }
+    if (count > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", count] forKey:@"rpp"];
+    }
+
+    NSString * geocode =
+        [NSString stringWithFormat:@"geocode=%.6f%%2C%.f%%%d%@",
+        latitude, longitude, radius, radiusIsInMiles ? @"mi" : @"km"];
+    [params setObject:geocode forKey:@"geocode"];
+	
+    return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil 
+                            requestType:MGTwitterSearchRequest 
+                           responseType:MGTwitterSearchResults];
+}
+
 - (NSString *)getTrends
 {
     NSString *path = [NSString stringWithFormat:@"trends.%@", API_FORMAT];

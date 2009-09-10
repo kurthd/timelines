@@ -113,5 +113,11 @@
 #pragma mark Search
 
 - (void)searchFor:(NSString *)queryString page:(NSNumber *)page;
+- (void)searchFor:(NSString *)queryString
+             page:(NSNumber *)page
+         latitude:(NSNumber *)latitude
+        longitude:(NSNumber *)longitude
+           radius:(NSNumber *)radius
+  radiusIsInMiles:(BOOL)radiusIsInMiles;
 
 @end

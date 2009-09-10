@@ -193,4 +193,19 @@
                                       page:(NSNumber *)page
                                      error:(NSError *)error;
 
+- (void)nearbySearchResultsReceived:(NSArray *)searchResults
+                           forQuery:(NSString *)query
+                               page:(NSNumber *)page
+                           latitude:(NSNumber *)latitude
+                          longitude:(NSNumber *)longitude
+                             radius:(NSNumber *)radius
+                    radiusIsInMiles:(BOOL)radiusIsInMiles;
+- (void)failedToFetchNearbySearchResultsForQuery:(NSString *)searchResults
+                                            page:(NSNumber *)page
+                                        latitude:(NSNumber *)latitude
+                                       longitude:(NSNumber *)longitude
+                                          radius:(NSNumber *)radius
+                                 radiusIsInMiles:(BOOL)radiusIsInMiles
+                                           error:(NSError *)error;
+
 @end
