@@ -713,7 +713,7 @@
 {
     if (!canceledLinkShortening) {
         NSString * jsonString =
-            [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]
+            [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]
             autorelease];
         NSDictionary * json = [jsonString JSONValue];
         NSDictionary * values =
