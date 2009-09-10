@@ -476,7 +476,7 @@
 
     NSString * requestId =
         [twitter getSearchResultsForQuery:queryString
-                                  sinceID:0
+                                  sinceID:@"0"
                            startingAtPage:[page integerValue]
                                     count:0];
 

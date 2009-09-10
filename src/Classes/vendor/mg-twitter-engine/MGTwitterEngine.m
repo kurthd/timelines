@@ -1657,7 +1657,7 @@
     return [self getSearchResultsForQuery:query sinceID:0 startingAtPage:0 count:0]; // zero means default
 }
 
-- (NSString *)getSearchResultsForQuery:(NSString *)query sinceID:(int)updateID startingAtPage:(int)pageNum count:(int)count
+- (NSString *)getSearchResultsForQuery:(NSString *)query sinceID:(NSString *)updateID startingAtPage:(int)pageNum count:(int)count
 {
     NSString *path = [NSString stringWithFormat:@"search.%@", API_FORMAT];
     
@@ -1665,8 +1665,8 @@
 	if (query) {
 		[params setObject:query forKey:@"q"];
 	}
-    if (updateID > 0) {
-        [params setObject:[NSString stringWithFormat:@"%d", updateID] forKey:@"since_id"];
+    if ([updateID longLongValue] > 0) {
+        [params setObject:[NSString stringWithFormat:@"%@", updateID] forKey:@"since_id"];
     }
 	if (pageNum > 0) {
         [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];

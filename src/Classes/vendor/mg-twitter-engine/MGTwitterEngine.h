@@ -201,7 +201,7 @@
 
 // Search method - http://apiwiki.twitter.com/Search+API+Documentation#Search
 
-- (NSString *)getSearchResultsForQuery:(NSString *)query sinceID:(int)updateID startingAtPage:(int)pageNum count:(int)count; // search
+- (NSString *)getSearchResultsForQuery:(NSString *)query sinceID:(NSString *)updateID startingAtPage:(int)pageNum count:(int)count; // search
 
 // Trends method - http://apiwiki.twitter.com/Search+API+Documentation#Trends
 
