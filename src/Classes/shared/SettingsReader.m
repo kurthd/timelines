@@ -66,7 +66,7 @@ static NSInteger nearbySearchRadius;
     if (!alreadyReadNearbySearchRadiusValue) {
         alreadyReadNearbySearchRadiusValue = YES;
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        nearbySearchRadius = [defaults integerForKey:@"fetch_quantity"];
+        nearbySearchRadius = [defaults integerForKey:@"search_radius"];
         if (nearbySearchRadius == 0)
             nearbySearchRadius = [[self class] defaultFetchQuantity];
     }
