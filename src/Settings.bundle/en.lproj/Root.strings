@@ -21,4 +21,9 @@
 "retweetformat.via" = "... (via @name)";
 "retweetformat.rt" = "RT @name: ...";
 
+"imagequality" = "Image Quality";
+"imagequality.low" = "Low";
+"imagequality.medium" = "Medium";
+"imagequality.high" = "High";
+
 "shortenurls" = "Shorten Links";

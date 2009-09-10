@@ -8,6 +8,6 @@
 
 @synthesize selectedTab, selectedTimelineFeed, viewedTweetId, tabOrder,
     selectedSearchBookmarkIndex, selectedPeopleBookmarkIndex, findPeopleText,
-    searchText;
+    searchText, nearbySearch;
 
 @end

@@ -18,9 +18,11 @@ typedef enum {
 {
     TimelineTableViewCellView * timelineView;
     NSString * avatarImageUrl;
+    BOOL longTimeDescription;
 }
 
 @property (nonatomic, copy) NSString * avatarImageUrl;
+@property (nonatomic, assign) BOOL longTimeDescription;
 
 - (UIImage *)avatarImage;
 - (void)setAvatarImage:(UIImage *)image;

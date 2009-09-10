@@ -25,7 +25,7 @@
 
 @synthesize networkAwareViewController;
 @synthesize service;
-@synthesize searchResults, queryString, queryTitle, updateId;
+@synthesize searchResults, queryString, queryTitle, nearbySearch, updateId;
 @synthesize dataSourceDelegate;
 
 #pragma mark Initialization

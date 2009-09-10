@@ -103,6 +103,28 @@
 			<string>retweet_format</string>
 		</dict>
 		<dict>
+			<key>DefaultValue</key>
+			<integer>1</integer>
+			<key>Title</key>
+			<string>imagequality</string>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<string>2</string>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>imagequality.low</string>
+				<string>imagequality.medium</string>
+				<string>imagequality.high</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Key</key>
+			<string>image_quality</string>
+		</dict>
+		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>

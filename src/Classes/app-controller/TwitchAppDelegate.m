@@ -1213,6 +1213,8 @@
     
     findPeopleSearchDisplayMgr.currentSearchUsername = uiState.findPeopleText;
     searchBarDisplayMgr.searchQuery = uiState.searchText;
+    
+    searchBarDisplayMgr.nearbySearch = uiState.nearbySearch;
 }
 
 - (void)persistUIState
@@ -1242,6 +1244,7 @@
 
     uiState.findPeopleText = findPeopleSearchDisplayMgr.currentSearchUsername;
     uiState.searchText = searchBarDisplayMgr.searchQuery;
+    uiState.nearbySearch = searchBarDisplayMgr.nearbySearch;
 
     [uiStatePersistenceStore save:uiState];
 

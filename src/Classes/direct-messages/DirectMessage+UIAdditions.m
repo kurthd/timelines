@@ -41,6 +41,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         self.sender.name && ![[self class] displayWithUsername] ?
         self.sender.name : self.sender.username;
     [timelineCell setName:displayName];
+    timelineCell.longTimeDescription = YES;
     [timelineCell setDate:self.created];
     [timelineCell setTweetText:self.text];
     UIImage * avatar = [self.sender thumbnailAvatar];

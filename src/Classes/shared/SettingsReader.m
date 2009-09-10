@@ -12,6 +12,9 @@ static NSInteger fetchQuantity;
 static BOOL alreadyReadShortenURLsValue;
 static BOOL shortenURLs;
 
+static BOOL alreadyReadImageQualityValue;
+static ComposeTweetImageQuality imageQuality;
+
 + (NSInteger)fetchQuantity
 {
     if (!alreadyReadFetchQuantityValue) {
@@ -25,6 +28,11 @@ static BOOL shortenURLs;
     return fetchQuantity;
 }
 
++ (NSInteger)defaultFetchQuantity
+{
+    return 20;
+}
+
 + (BOOL)shortenURLs
 {
     if (!alreadyReadShortenURLsValue) {
@@ -36,9 +44,18 @@ static BOOL shortenURLs;
     return shortenURLs;
 }
 
-+ (NSInteger)defaultFetchQuantity
++ (ComposeTweetImageQuality)imageQuality
 {
-    return 20;
+    if (!alreadyReadImageQualityValue) {
+        alreadyReadImageQualityValue = YES;
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        imageQuality =
+            defaults ?
+            [defaults integerForKey:@"image_quality"] :
+            kComposeTweetImageQualityMedium;
+    }
+
+    return imageQuality;
 }
 
 @end

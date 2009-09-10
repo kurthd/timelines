@@ -42,10 +42,12 @@
     UITableView * autoCompleteTableView;
 
     BOOL hasBeenDisplayed;
+    BOOL nearbySearch;
 }
 
 @property (nonatomic, copy) NSString * searchQuery;
 @property (nonatomic, assign) id<TimelineDataSourceDelegate> dataSourceDelegate;
+@property (nonatomic, assign) BOOL nearbySearch;
 
 - (id)initWithTwitterService:(TwitterService *)aService
           netAwareController:(NetworkAwareViewController *)navc

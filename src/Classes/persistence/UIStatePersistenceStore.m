@@ -16,6 +16,7 @@
 + (NSString *)selectedSearchBookmarkIndexKey;
 + (NSString *)findPeopleTextKey;
 + (NSString *)searchTextKey;
++ (NSString *)nearbySearchKey;
 
 @end
 
@@ -46,6 +47,8 @@
         [dict objectForKey:[[self class] findPeopleTextKey]];
     NSString * searchText =
         [dict objectForKey:[[self class] searchTextKey]];
+    BOOL nearbySearch =
+        [[dict objectForKey:[[self class] nearbySearchKey]] boolValue];
     state.selectedTab = selectedTab;
     state.selectedTimelineFeed = selectedTimelineFeed;
     state.viewedTweetId = viewedTweetId;
@@ -54,6 +57,7 @@
     state.selectedPeopleBookmarkIndex = selectedPeopleBookmarkIndex;
     state.findPeopleText = findPeopleText;
     state.searchText = searchText;
+    state.nearbySearch = nearbySearch;
 
     return state;
 }
@@ -90,6 +94,9 @@
     if (state.searchText)
         [dict setObject:state.searchText
             forKey:[[self class] searchTextKey]];
+
+    NSNumber * nearbySearch = [NSNumber numberWithBool:state.nearbySearch];
+    [dict setObject:nearbySearch forKey:[[self class] nearbySearchKey]];
 
     [PlistUtils saveDictionary:dict toPlist:[[self class] plistName]];
 }
@@ -137,6 +144,11 @@
 + (NSString *)searchTextKey
 {
     return @"searchText";
+}
+
++ (NSString *)nearbySearchKey
+{
+    return @"nearbySearch";
 }
 
 @end

@@ -13,7 +13,7 @@ static UIImage * topGradientImage;
 
 @implementation TimelineTableViewCell
 
-@synthesize avatarImageUrl;
+@synthesize avatarImageUrl, longTimeDescription;
 
 + (void)initialize
 {
@@ -72,7 +72,9 @@ static UIImage * topGradientImage;
 
 - (void)setDate:(NSDate *)date
 {
-    timelineView.timestamp = [date shortDescription];
+    timelineView.timestamp =
+        longTimeDescription ?
+        [date shortDateAndTimeDescription] : [date shortDescription];
 }
 
 - (void)setTweetText:(NSString *)tweetText
