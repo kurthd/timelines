@@ -21,6 +21,7 @@
 #import "RegexKitLite.h"
 #import "ErrorState.h"
 #import "JSON.h"
+#import "NSString+HtmlEncodingAdditions.h"
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -976,10 +977,15 @@
         [[InfoPlistConfigReader reader] valueForKey:@"BitlyUsername"];
     NSString * apiKey =
         [[InfoPlistConfigReader reader] valueForKey:@"BitlyApiKey"];
+
+    // the link needs to be encoded because it could contain query parameters
+    static NSString * allowed = @":@/?&";
+    NSString * encodedLink =
+        [link urlEncodedStringWithEscapedAllowedCharacters:allowed];
     NSString * urlAsString =
         [NSString stringWithFormat:
         @"http://api.bit.ly/shorten?version=%@&longUrl=%@&login=%@&apiKey=%@",
-        version, link, username, apiKey];
+        version, encodedLink, username, apiKey];
     NSLog(@"Link shortening request: %@", urlAsString);
     NSURL * url = [NSURL URLWithString:urlAsString];
     [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];
