@@ -222,9 +222,6 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
         withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView scrollToRowAtIndexPath:
-        [NSIndexPath indexPathForRow:0 inSection:0]
-        atScrollPosition:UITableViewScrollPositionNone animated:YES];
 
     if (!tweet.user.avatar.thumbnailImage) {
         NSURL * avatarUrl =
