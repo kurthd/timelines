@@ -19,7 +19,7 @@
 
 @property (nonatomic, retain) TwitPicResponseParser * parser;
 
-+ (NSURLRequest *)requestForPostingImage:(UIImage *)image
++ (NSURLRequest *)requestForPostingImage:(NSData *)image
                                    toUrl:(NSURL *)url
                             withUsername:(NSString *)username
                                 password:(NSString *)password;
@@ -57,9 +57,10 @@
 {
     [super sendImage:anImage withCredentials:someCredentials];
 
+    NSData * imageData = [self dataForImageUsingCompressionSettings:image];
     NSURL * url = [NSURL URLWithString:self.twitPicUrl];
     NSURLRequest * request =
-        [[self class] requestForPostingImage:self.image
+        [[self class] requestForPostingImage:imageData
                                        toUrl:url
                                 withUsername:someCredentials.username
                                     password:someCredentials.password];
@@ -118,7 +119,7 @@
 
 #pragma mark Helpers for building the post body
 
-+ (NSURLRequest *)requestForPostingImage:(UIImage *)image
++ (NSURLRequest *)requestForPostingImage:(NSData *)image
                                    toUrl:(NSURL *)url
                             withUsername:(NSString *)username
                                 password:(NSString *)password
@@ -171,8 +172,7 @@
             @"Content-Transfer-Encoding: binary\r\n\r\n"] 
                       dataUsingEncoding:NSUTF8StringEncoding]];
 
-    NSData * imageData = UIImagePNGRepresentation(image);
-    [postBody appendData:imageData];
+    [postBody appendData:image];
 
     [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",
             stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
