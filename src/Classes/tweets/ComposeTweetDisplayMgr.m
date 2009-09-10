@@ -607,9 +607,8 @@
         [photoService sendImage:image withCredentials:c];
     }
 
-
-    [self.composeTweetViewController displayActivityView];
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
+    [self.composeTweetViewController displayActivityView];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

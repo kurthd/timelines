@@ -96,10 +96,21 @@
     NSData * imageData = UIImagePNGRepresentation(image);
     NSInputStream * imageStream = [NSInputStream inputStreamWithData:imageData];
 
-    [self.uploadRequest uploadImageStream:imageStream
-                        suggestedFilename:@""
-                                 MIMEType:@"image/png"
-                                arguments:args];
+    // the next step is slow within the Flickr layer (it copies the image to
+    // disk); let the function return so the UI can remain responsive while the
+    // video is updated
+    NSDictionary * userInfo =
+        [NSDictionary dictionaryWithObjectsAndKeys:
+            imageStream, @"stream",
+            @"image/png", @"mime-type",
+            args, @"args",
+            nil];
+
+    [NSTimer scheduledTimerWithTimeInterval:0.2
+                                     target:self
+                                   selector:@selector(uploadMedia:)
+                                   userInfo:userInfo
+                                    repeats:NO];
 
     [[UIApplication sharedApplication] networkActivityIsStarting];
 }
@@ -122,10 +133,21 @@
     NSData * videoData = [NSData dataWithContentsOfURL:url];
     NSInputStream * videoStream = [NSInputStream inputStreamWithData:videoData];
 
-    [self.uploadRequest uploadImageStream:videoStream
-                        suggestedFilename:@""
-                                 MIMEType:@"video/quicktime"
-                                arguments:args];
+    // the next step is slow within the Flickr layer (it copies the image to
+    // disk); let the function return so the UI can remain responsive while the
+    // video is updated
+    NSDictionary * userInfo =
+        [NSDictionary dictionaryWithObjectsAndKeys:
+            videoStream, @"stream",
+            @"video/quicktime", @"mime-type",
+            args, @"args",
+            nil];
+
+    [NSTimer scheduledTimerWithTimeInterval:0.2
+                                     target:self
+                                   selector:@selector(uploadMedia:)
+                                   userInfo:userInfo
+                                    repeats:NO];
 
     [[UIApplication sharedApplication] networkActivityIsStarting];
 }
@@ -257,6 +279,15 @@
 
     [self.editRequest callAPIMethodWithPOST:@"flickr.photos.setMeta"
                                   arguments:args];
+}
+
+- (void)uploadMedia:(NSTimer *)timer
+{
+    NSDictionary * userInfo = timer.userInfo;
+    [self.uploadRequest uploadImageStream:[userInfo objectForKey:@"stream"]
+                        suggestedFilename:@""
+                                 MIMEType:[userInfo objectForKey:@"mime-type"]
+                                arguments:[userInfo objectForKey:@"args"]];
 }
 
 + (NSString *)shortPhotoIdFromUrl:(NSString *)urlString

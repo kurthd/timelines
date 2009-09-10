@@ -213,7 +213,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [UIView commitAnimations];
 
-    [textView resignFirstResponder];
     displayingActivity = YES;
 }
 
