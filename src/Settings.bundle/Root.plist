@@ -139,6 +139,34 @@
 			<string>PSGroupSpecifier</string>
 		</dict>
 		<dict>
+			<key>DefaultValue</key>
+			<integer>10</integer>
+			<key>Title</key>
+			<string>searchradius</string>
+			<key>Values</key>
+			<array>
+				<integer>2</integer>
+				<integer>10</integer>
+				<string>50</string>
+				<string>250</string>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>searchradius.two</string>
+				<string>searchradius.ten</string>
+				<string>searchradius.fifty</string>
+				<string>searchradius.twofifty</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Key</key>
+			<string>search_radius</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
 			<key>Title</key>

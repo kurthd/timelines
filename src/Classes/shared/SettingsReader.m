@@ -15,6 +15,9 @@ static BOOL shortenURLs;
 static BOOL alreadyReadImageQualityValue;
 static ComposeTweetImageQuality imageQuality;
 
+static BOOL alreadyReadNearbySearchRadiusValue;
+static NSInteger nearbySearchRadius;
+
 + (NSInteger)fetchQuantity
 {
     if (!alreadyReadFetchQuantityValue) {
@@ -56,6 +59,24 @@ static ComposeTweetImageQuality imageQuality;
     }
 
     return imageQuality;
+}
+
++ (NSInteger)nearbySearchRadius
+{
+    if (!alreadyReadNearbySearchRadiusValue) {
+        alreadyReadNearbySearchRadiusValue = YES;
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        nearbySearchRadius = [defaults integerForKey:@"fetch_quantity"];
+        if (nearbySearchRadius == 0)
+            nearbySearchRadius = [[self class] defaultFetchQuantity];
+    }
+
+    return nearbySearchRadius;
+}
+
++ (NSInteger)defaultNearbySearchRadius
+{
+    return 10;
 }
 
 @end
