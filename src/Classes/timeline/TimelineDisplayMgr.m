@@ -12,6 +12,7 @@
 #import "UserListDisplayMgrFactory.h"
 #import "ErrorState.h"
 #import "UIColor+TwitchColors.h"
+#import "User+UIAdditions.h"
 
 @interface TimelineDisplayMgr ()
 
@@ -486,23 +487,26 @@ static BOOL scrollToTopValueAlreadyRead;
 
 - (void)showUserInfoForUser:(User *)aUser
 {
-    NSLog(@"Timeline display manager: showing user info for user: %@",
-        aUser);
-    self.currentUsername = aUser.username;
+    if ([aUser isComplete]) {
+        NSLog(@"Timeline display manager: showing user info for user: %@",
+            aUser);
+        self.currentUsername = aUser.username;
 
-    // HACK: forces to scroll to top
-    [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
-        animated:NO];
+        // HACK: forces to scroll to top
+        [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
+            animated:NO];
 
-    self.userInfoController.navigationItem.title = aUser.username;
-    [self.wrapperController.navigationController
-        pushViewController:self.userInfoController animated:YES];
-    self.userInfoController.followingEnabled =
-        ![credentials.username isEqual:aUser.username];
-    [self.userInfoController setUser:aUser];
-    if (self.userInfoController.followingEnabled)
-        [service isUser:credentials.username following:aUser.username];
-    [service isUserBlocked:aUser.username];
+        self.userInfoController.navigationItem.title = aUser.username;
+        [self.wrapperController.navigationController
+            pushViewController:self.userInfoController animated:YES];
+        self.userInfoController.followingEnabled =
+            ![credentials.username isEqual:aUser.username];
+        [self.userInfoController setUser:aUser];
+        if (self.userInfoController.followingEnabled)
+            [service isUser:credentials.username following:aUser.username];
+        [service isUserBlocked:aUser.username];
+    } else
+        [self showUserInfoForUsername:aUser.username];
 }
 
 - (void)showUserInfoForUsername:(NSString *)aUsername
