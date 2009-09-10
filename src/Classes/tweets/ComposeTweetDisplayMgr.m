@@ -20,11 +20,12 @@
 #import "InfoPlistConfigReader.h"
 #import "RegexKitLite.h"
 #import "ErrorState.h"
+#import "JSON.h"
 
 @interface ComposeTweetDisplayMgr ()
 
 @property (nonatomic, retain) UIViewController * rootViewController;
-@property (nonatomic, readonly) UIViewController * navController;
+@property (nonatomic, retain) UIViewController * navController;
 @property (nonatomic, retain) ComposeTweetViewController *
     composeTweetViewController;
 
@@ -49,7 +50,8 @@
 @property (nonatomic, retain) NSMutableArray * attachedPhotos;
 @property (nonatomic, retain) NSMutableArray * attachedVideos;
 
-@property (nonatomic, readonly) UIView * linkShorteningView;
+@property (nonatomic, retain) UIView * linkShorteningView;
+@property (nonatomic, copy) NSString * shorteningUrl;
 
 - (void)promptForPhotoSource:(UIViewController *)controller;
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source
@@ -70,7 +72,7 @@
 
 @implementation ComposeTweetDisplayMgr
 
-@synthesize rootViewController, composeTweetViewController;
+@synthesize rootViewController, navController, composeTweetViewController;
 @synthesize service;
 @synthesize credentialsUpdatePublisher, credentialsSetChangedPublisher;
 @synthesize logInDisplayMgr, context;
@@ -79,12 +81,13 @@
 @synthesize draftMgr;
 @synthesize addPhotoServiceDisplayMgr;
 @synthesize attachedPhotos, attachedVideos;
+@synthesize linkShorteningView, shorteningUrl;
 
 - (void)dealloc
 {
     self.delegate = nil;
     self.rootViewController = nil;
-    [navController release];
+    self.navController = nil;
     self.composeTweetViewController = nil;
     self.service = nil;
     self.credentialsUpdatePublisher = nil;
@@ -95,7 +98,8 @@
     self.draftMgr = nil;
     self.attachedPhotos = nil;
     self.attachedVideos = nil;
-    [linkShorteningView release];
+    self.linkShorteningView = nil;
+    self.shorteningUrl = nil;
     [super dealloc];
 }
 
@@ -707,14 +711,18 @@
     didReceiveData:(NSData *)data fromUrl:(NSURL *)url
 {
     if (!canceledLinkShortening) {
-        NSString * json =
+        NSString * jsonString =
             [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]
             autorelease];
-        NSString * shortUrl = json; // TODO: parse
+        NSDictionary * json = [jsonString JSONValue];
+        NSDictionary * values =
+            [[json objectForKey:@"results"] objectForKey:self.shorteningUrl];
+        NSString * shortUrl = [values objectForKey:@"shortUrl"];
         [self.composeTweetViewController composeTweet:shortUrl
             from:service.credentials.username];
 
         [self removeShorteningLinkView];
+        self.shorteningUrl = nil;
     }
 }
 
@@ -726,6 +734,7 @@
             NSLocalizedString(@"composetweet.shorteningerror", @"");
         [[ErrorState instance] displayErrorWithTitle:title error:error];
         [self removeShorteningLinkView];
+        self.shorteningUrl = nil;
     }
 }
 
@@ -958,6 +967,8 @@
 - (void)startShorteningLink:(NSString *)link
 {
     canceledLinkShortening = NO;
+
+    self.shorteningUrl = link;
 
     NSString * version =
         [[InfoPlistConfigReader reader] valueForKey:@"BitlyVersion"];
