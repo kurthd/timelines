@@ -637,7 +637,7 @@
 
     [AccountSettings setSettings:settings forKey:settingsKey];
 
-    [NSTimer scheduledTimerWithTimeInterval:0.6
+    [NSTimer scheduledTimerWithTimeInterval:0.8
                                      target:self
                                    selector:@selector(dismissSelector:)
                                    userInfo:nil
