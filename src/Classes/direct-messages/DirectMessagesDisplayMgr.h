@@ -65,10 +65,9 @@
     NSObject <TwitterServiceDelegate, NetworkAwareViewControllerDelegate,
     DirectMessageInboxViewControllerDelegate,
     DirectMessageConversationViewControllerDelegate,
-    TweetViewControllerDelegate, TwitchBrowserViewControllerDelegate,
-    MFMailComposeViewControllerDelegate, UIActionSheetDelegate,
-    UserInfoViewControllerDelegate, LocationMapViewControllerDelegate,
-    LocationInfoViewControllerDelegate>
+    TweetViewControllerDelegate, MFMailComposeViewControllerDelegate,
+    UIActionSheetDelegate, UserInfoViewControllerDelegate,
+    LocationMapViewControllerDelegate, LocationInfoViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     DirectMessageInboxViewController * inboxController;

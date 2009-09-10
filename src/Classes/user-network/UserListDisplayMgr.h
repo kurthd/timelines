@@ -28,9 +28,8 @@
 @interface UserListDisplayMgr :
     NSObject
     <UserListTableViewControllerDelegate, TwitterServiceDelegate,
-    UserInfoViewControllerDelegate, TwitchBrowserViewControllerDelegate,
-    NetworkAwareViewControllerDelegate, LocationMapViewControllerDelegate,
-    LocationInfoViewControllerDelegate>
+    UserInfoViewControllerDelegate, NetworkAwareViewControllerDelegate,
+    LocationMapViewControllerDelegate, LocationInfoViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     UserListTableViewController * userListController;

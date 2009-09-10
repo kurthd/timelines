@@ -679,19 +679,6 @@
     [netAwareController dismissModalViewControllerAnimated:YES];
 }
 
-#pragma mark TwitchBrowserViewControllerDelegate implementation
-
-- (void)composeTweetWithText:(NSString *)text
-{
-    NSLog(@"Find people display manager: composing tweet with text'%@'", text);
-    [composeTweetDisplayMgr composeTweetWithText:text];
-}
-
-- (void)readLater:(NSString *)url
-{
-    // TODO: implement me
-}
-
 #pragma mark FindPeopleSearchDisplayMgr implementation
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials

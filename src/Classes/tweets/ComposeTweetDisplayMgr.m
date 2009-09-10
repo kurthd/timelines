@@ -15,10 +15,16 @@
 #import "PhotoService+ServiceAdditions.h"
 #import "AccountSettings.h"
 #import "NSString+ConvenienceMethods.h"
+#import "UIColor+TwitchColors.h"
+#import "AsynchronousNetworkFetcher.h"
+#import "InfoPlistConfigReader.h"
+#import "RegexKitLite.h"
+#import "ErrorState.h"
 
 @interface ComposeTweetDisplayMgr ()
 
 @property (nonatomic, retain) UIViewController * rootViewController;
+@property (nonatomic, readonly) UIViewController * navController;
 @property (nonatomic, retain) ComposeTweetViewController *
     composeTweetViewController;
 
@@ -43,6 +49,8 @@
 @property (nonatomic, retain) NSMutableArray * attachedPhotos;
 @property (nonatomic, retain) NSMutableArray * attachedVideos;
 
+@property (nonatomic, readonly) UIView * linkShorteningView;
+
 - (void)promptForPhotoSource:(UIViewController *)controller;
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source
                 controller:(UIViewController *)controller;
@@ -52,6 +60,11 @@
 - (void)updateMediaTitleFromTweet:(Tweet *)tweet;
 - (void)updateMediaTitleFromDirectMessage:(DirectMessage *)dm;
 - (void)updateMediaTitleFromTweetText:(NSString *)text;
+
+- (void)startShorteningLink:(NSString *)link;
+- (void)abortShorteningLink;
+- (void)showShorteningLinkView;
+- (void)removeShorteningLinkView;
 
 @end
 
@@ -71,6 +84,7 @@
 {
     self.delegate = nil;
     self.rootViewController = nil;
+    [navController release];
     self.composeTweetViewController = nil;
     self.service = nil;
     self.credentialsUpdatePublisher = nil;
@@ -81,6 +95,7 @@
     self.draftMgr = nil;
     self.attachedPhotos = nil;
     self.attachedVideos = nil;
+    [linkShorteningView release];
     [super dealloc];
 }
 
@@ -122,15 +137,29 @@
 
 - (void)composeTweetWithText:(NSString *)tweet
 {
-    [self.rootViewController
-        presentModalViewController:self.composeTweetViewController
-                          animated:YES];
+    [self.rootViewController presentModalViewController:self.navController
+        animated:YES];
 
     self.origTweetId = nil;
     self.origUsername = nil;
 
     [self.composeTweetViewController composeTweet:tweet
                                              from:service.credentials.username];
+}
+
+- (void)composeTweetWithLink:(NSString *)link
+{
+    [self.rootViewController presentModalViewController:self.navController
+        animated:YES];
+
+    self.origTweetId = nil;
+    self.origUsername = nil;
+
+    [self.composeTweetViewController composeTweet:link
+        from:service.credentials.username];
+
+    if (![link isMatchedByRegex:@".*bit\\.ly/.*"])
+        [self startShorteningLink:link];
 }
 
 - (void)composeReplyToTweet:(NSString *)tweetId
@@ -146,7 +175,7 @@
                    withText:(NSString *)text
 {
     [self.rootViewController
-        presentModalViewController:self.composeTweetViewController
+        presentModalViewController:self.navController
                           animated:YES];
 
     self.origTweetId = tweetId;
@@ -175,7 +204,7 @@
     // Present the view before calling 'composeDirectMessage:...' because
     // otherwise the view elements aren't wired up (they're nil).
     [self.rootViewController
-        presentModalViewController:self.composeTweetViewController
+        presentModalViewController:self.navController
                           animated:YES];
 
     [self.composeTweetViewController composeDirectMessage:text
@@ -205,7 +234,7 @@
     // Present the view before calling 'composeDirectMessage:...' because
     // otherwise the view elements aren't wired up (they're nil).
     [self.rootViewController
-        presentModalViewController:self.composeTweetViewController
+        presentModalViewController:self.navController
                           animated:YES];
 
     NSString * sender = service.credentials.username;
@@ -672,6 +701,34 @@
     [actionSheet autorelease];
 }
 
+#pragma mark AsynchronousNetworkFetcherDelegate implementation
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    didReceiveData:(NSData *)data fromUrl:(NSURL *)url
+{
+    if (!canceledLinkShortening) {
+        NSString * json =
+            [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]
+            autorelease];
+        NSString * shortUrl = json; // TODO: parse
+        [self.composeTweetViewController composeTweet:shortUrl
+            from:service.credentials.username];
+
+        [self removeShorteningLinkView];
+    }
+}
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
+{
+    if (!canceledLinkShortening) {
+        NSString * title =
+            NSLocalizedString(@"composetweet.shorteningerror", @"");
+        [[ErrorState instance] displayErrorWithTitle:title error:error];
+        [self removeShorteningLinkView];
+    }
+}
+
 #pragma mark UIImagePicker helper methods
 
 - (void)promptForPhotoSource:(UIViewController *)controller
@@ -832,6 +889,31 @@
         composeTweetViewController = [[ComposeTweetViewController alloc]
             initWithNibName:@"ComposeTweetView" bundle:nil];
         composeTweetViewController.delegate = self;
+        
+        NSString * cancelButtonText =
+            NSLocalizedString(@"composetweet.navigationitem.cancel", @"");
+        UIBarButtonItem * cancelButton =
+            [[[UIBarButtonItem alloc]
+            initWithTitle:cancelButtonText style:UIBarButtonItemStyleBordered
+            target:composeTweetViewController action:@selector(userDidCancel)]
+            autorelease];
+        composeTweetViewController.navigationItem.leftBarButtonItem =
+            cancelButton;
+        composeTweetViewController.cancelButton = cancelButton;
+
+        NSString * sendButtonText =
+            NSLocalizedString(@"composetweet.navigationitem.send", @"");
+        UIBarButtonItem * sendButton =
+            [[[UIBarButtonItem alloc]
+            initWithTitle:sendButtonText style:UIBarButtonItemStyleBordered
+            target:composeTweetViewController action:@selector(userDidSave)]
+            autorelease];
+        composeTweetViewController.navigationItem.rightBarButtonItem =
+            sendButton;
+            
+        composeTweetViewController.navigationItem.title =
+            NSLocalizedString(@"composetweet.navigationitem.title", @"");
+        composeTweetViewController.sendButton = sendButton;
     }
 
     return composeTweetViewController;
@@ -841,7 +923,7 @@
 {
     if (!logInDisplayMgr) {
         logInDisplayMgr = [[LogInDisplayMgr alloc]
-            initWithRootViewController:self.composeTweetViewController
+            initWithRootViewController:self.navController
                   managedObjectContext:self.context];
         logInDisplayMgr.delegate = self;
         logInDisplayMgr.allowsCancel = YES;
@@ -871,6 +953,145 @@
     }
 
     return addPhotoServiceDisplayMgr;
+}
+
+- (void)startShorteningLink:(NSString *)link
+{
+    canceledLinkShortening = NO;
+
+    NSString * version =
+        [[InfoPlistConfigReader reader] valueForKey:@"BitlyVersion"];
+    NSString * username =
+        [[InfoPlistConfigReader reader] valueForKey:@"BitlyUsername"];
+    NSString * apiKey =
+        [[InfoPlistConfigReader reader] valueForKey:@"BitlyApiKey"];
+    NSString * urlAsString =
+        [NSString stringWithFormat:
+        @"http://api.bit.ly/shorten?version=%@&longUrl=%@&login=%@&apiKey=%@",
+        version, link, username, apiKey];
+    NSLog(@"Link shortening request: %@", urlAsString);
+    NSURL * url = [NSURL URLWithString:urlAsString];
+    [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];
+
+    self.composeTweetViewController.displayingActivity = YES;
+    [self showShorteningLinkView];
+}
+
+- (void)abortShorteningLink
+{
+    canceledLinkShortening = YES;
+    [self removeShorteningLinkView];
+}
+
+- (void)removeShorteningLinkView
+{
+    [self.linkShorteningView performSelector:@selector(removeFromSuperview)
+        withObject:nil afterDelay:0.5];
+
+    self.linkShorteningView.alpha = 1.0;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone
+        forView:self.linkShorteningView cache:YES];
+
+    self.linkShorteningView.alpha = 0.0;
+
+    [UIView commitAnimations];
+
+    self.composeTweetViewController.displayingActivity = NO;
+}
+
+- (void)showShorteningLinkView
+{
+    [self.navController.view.superview.superview
+        addSubview:self.linkShorteningView];
+    self.linkShorteningView.alpha = 0.0;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone
+        forView:self.linkShorteningView cache:YES];
+
+    self.linkShorteningView.alpha = 1.0;
+
+    [UIView commitAnimations];
+}
+
+- (UIViewController *)navController
+{
+    if (!navController)
+        navController =
+            [[UINavigationController alloc]
+            initWithRootViewController:self.composeTweetViewController];
+
+    return navController;
+}
+
+- (UIView *)linkShorteningView
+{
+    if (!linkShorteningView) {
+        CGRect darkTransparentViewFrame = CGRectMake(0, 0, 320, 460);
+        UIView * darkTransparentView =
+            [[[UIView alloc] initWithFrame:darkTransparentViewFrame]
+            autorelease];
+        darkTransparentView.backgroundColor = [UIColor blackColor];
+        darkTransparentView.alpha = 0.9;
+
+        UIActivityIndicatorView * activityIndicator =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge]
+            autorelease];
+        activityIndicator.frame = CGRectMake(50, 87, 37, 37);
+        [activityIndicator startAnimating];
+        
+        CGRect shorteningLabelFrame =
+            CGRectMake(
+            activityIndicator.frame.origin.x +
+            activityIndicator.frame.size.width + 12,
+            87,
+            200,
+            37);
+        UILabel * shorteningLabel =
+            [[[UILabel alloc] initWithFrame:shorteningLabelFrame] autorelease];
+        shorteningLabel.text =
+            NSLocalizedString(@"composetweet.shorteninglink", @"");
+        shorteningLabel.backgroundColor = [UIColor clearColor];
+        shorteningLabel.textColor = [UIColor whiteColor];
+        shorteningLabel.font = [UIFont boldSystemFontOfSize:20];
+        shorteningLabel.shadowOffset = CGSizeMake(0.0, 1.0);
+        shorteningLabel.shadowColor = [UIColor blackColor];
+
+        static const NSInteger BUTTON_WIDTH = 134;
+        CGRect buttonFrame =
+            CGRectMake((320 - BUTTON_WIDTH) / 2, 146, BUTTON_WIDTH, 46);
+        UIButton * cancelButton =
+            [[[UIButton alloc] initWithFrame:buttonFrame] autorelease];
+        NSString * cancelButtonTitle =
+            NSLocalizedString(@"composetweet.cancelshortening", @"");
+        [cancelButton setTitle:cancelButtonTitle forState:UIControlStateNormal];
+        UIImage * normalImage =
+            [[UIImage imageNamed:@"CancelButton.png"]
+            stretchableImageWithLeftCapWidth:13.0 topCapHeight:0.0];
+        [cancelButton setBackgroundImage:normalImage
+            forState:UIControlStateNormal];
+        cancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+        [cancelButton setTitleColor:[UIColor whiteColor]
+            forState:UIControlStateNormal];
+        [cancelButton setTitleColor:[UIColor grayColor]
+            forState:UIControlStateHighlighted];
+        [cancelButton setTitleShadowColor:[UIColor twitchDarkGrayColor]
+            forState:UIControlStateNormal];
+        cancelButton.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
+        [cancelButton addTarget:self action:@selector(abortShorteningLink)
+            forControlEvents:UIControlEventTouchUpInside];
+
+        CGRect linkShorteningViewFrame = CGRectMake(0, 0, 320, 460);
+        linkShorteningView =
+            [[UIView alloc] initWithFrame:linkShorteningViewFrame];
+        [linkShorteningView addSubview:darkTransparentView];
+        [linkShorteningView addSubview:activityIndicator];
+        [linkShorteningView addSubview:shorteningLabel];
+        [linkShorteningView addSubview:cancelButton];
+    }
+
+    return linkShorteningView;
 }
 
 @end

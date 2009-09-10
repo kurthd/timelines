@@ -6,7 +6,7 @@
 
 @protocol TwitchBrowserViewControllerDelegate
 
-- (void)composeTweetWithText:(NSString *)text;
+- (void)composeTweetWithLink:(NSString *)link;
 - (void)readLater:(NSString *)url;
 
 @end

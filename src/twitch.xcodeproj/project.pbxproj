@@ -302,6 +302,7 @@
 		9125779A104C7A53006F5DBD /* DarkenedTableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */; };
 		9125779B104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257799104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png */; };
 		91257B38105057C2006F5DBD /* SettingsReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 91257B37105057C2006F5DBD /* SettingsReader.m */; };
+		91257DBA1058449C006F5DBD /* CancelButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257DB91058449C006F5DBD /* CancelButton.png */; };
 		9130002210363177004E3030 /* MentionBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9130002010363177004E3030 /* MentionBottomGradient.png */; };
 		9130002310363177004E3030 /* MentionTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9130002110363177004E3030 /* MentionTopGradient.png */; };
 		913000B010377454004E3030 /* FollowButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 913000AF10377454004E3030 /* FollowButton.png */; };
@@ -863,6 +864,7 @@
 		91257799104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkenedTableViewCellTopGradient.png; path = images/DarkenedTableViewCellTopGradient.png; sourceTree = "<group>"; };
 		91257B36105057C2006F5DBD /* SettingsReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsReader.h; path = shared/SettingsReader.h; sourceTree = "<group>"; };
 		91257B37105057C2006F5DBD /* SettingsReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsReader.m; path = shared/SettingsReader.m; sourceTree = "<group>"; };
+		91257DB91058449C006F5DBD /* CancelButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CancelButton.png; path = images/CancelButton.png; sourceTree = "<group>"; };
 		9130002010363177004E3030 /* MentionBottomGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MentionBottomGradient.png; path = images/MentionBottomGradient.png; sourceTree = "<group>"; };
 		9130002110363177004E3030 /* MentionTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MentionTopGradient.png; path = images/MentionTopGradient.png; sourceTree = "<group>"; };
 		913000AF10377454004E3030 /* FollowButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FollowButton.png; path = images/FollowButton.png; sourceTree = "<group>"; };
@@ -1983,6 +1985,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91257DB91058449C006F5DBD /* CancelButton.png */,
 				91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */,
 				91257799104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png */,
 				918F710E1047310F00FE7ABF /* LoginScreenshot.png */,
@@ -2375,6 +2378,7 @@
 				0538FE97104C7897009E50CE /* InstapaperLogInView.xib in Resources */,
 				9125779A104C7A53006F5DBD /* DarkenedTableViewCellGradient.png in Resources */,
 				9125779B104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png in Resources */,
+				91257DBA1058449C006F5DBD /* CancelButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

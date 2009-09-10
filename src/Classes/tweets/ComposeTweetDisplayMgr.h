@@ -10,6 +10,7 @@
 #import "TwitterCredentials.h"
 #import "LogInDisplayMgr.h"
 #import "AddPhotoServiceDisplayMgr.h"
+#import "AsynchronousNetworkFetcherDelegate.h"
 
 @class ComposeTweetViewController;
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
@@ -21,11 +22,13 @@
     <ComposeTweetViewControllerDelegate, TwitterServiceDelegate,
     PhotoServiceDelegate, LogInDisplayMgrDelegate,
     UIImagePickerControllerDelegate, UINavigationControllerDelegate,
-    UIActionSheetDelegate, AddPhotoServiceDisplayMgrDelegate>
+    UIActionSheetDelegate, AddPhotoServiceDisplayMgrDelegate,
+    AsynchronousNetworkFetcherDelegate>
 {
     id<ComposeTweetDisplayMgrDelegate> delegate;
 
     UIViewController * rootViewController;
+    UIViewController * navController;
     ComposeTweetViewController * composeTweetViewController;
 
     TwitterService * service;
@@ -48,6 +51,9 @@
 
     NSMutableArray * attachedPhotos;
     NSMutableArray * attachedVideos;
+
+    UIView * linkShorteningView;
+    BOOL canceledLinkShortening;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;
@@ -58,6 +64,7 @@
 
 - (void)composeTweet;
 - (void)composeTweetWithText:(NSString *)tweet;
+- (void)composeTweetWithLink:(NSString *)link;
 
 - (void)composeReplyToTweet:(NSString *)tweetId
                    fromUser:(NSString *)user;

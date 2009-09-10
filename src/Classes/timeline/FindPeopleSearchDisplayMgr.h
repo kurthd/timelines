@@ -25,9 +25,9 @@
     NSObject
     <TwitterServiceDelegate, UISearchBarDelegate,
     FindPeopleBookmarkViewControllerDelegate, UserInfoViewControllerDelegate,
-    TwitchBrowserViewControllerDelegate, UITableViewDataSource,
-    UITableViewDelegate, LocationMapViewControllerDelegate,
-    LocationInfoViewControllerDelegate, NetworkAwareViewControllerDelegate>
+    UITableViewDataSource, UITableViewDelegate,
+    LocationMapViewControllerDelegate, LocationInfoViewControllerDelegate,
+    NetworkAwareViewControllerDelegate>
 {
     NetworkAwareViewController * netAwareController;
     UserInfoViewController * userInfoController;

@@ -572,19 +572,6 @@
         pushViewController:self.nextWrapperController animated:YES];
 }
 
-#pragma mark TwitchBrowserViewControllerDelegate implementation
-
-- (void)composeTweetWithText:(NSString *)text
-{
-    NSLog(@"Timeline display manager: composing tweet with text'%@'", text);
-    [composeTweetDisplayMgr composeTweetWithText:text];
-}
-
-- (void)readLater:(NSString *)url
-{
-    // should never be called
-}
-
 #pragma mark UserListDisplayMgr implementation
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
