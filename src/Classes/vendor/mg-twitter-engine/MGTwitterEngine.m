@@ -1130,13 +1130,13 @@
 }
 
 
-- (NSString *)getFollowedTimelineFor:(NSString *)username sinceID:(int)updateID startingAtPage:(int)pageNum count:(int)count
+- (NSString *)getFollowedTimelineFor:(NSString *)username sinceID:(NSString *)updateID startingAtPage:(int)pageNum count:(int)count
 {
 	NSString *path = [NSString stringWithFormat:@"statuses/friends_timeline.%@", API_FORMAT];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
-    if (updateID > 0) {
-        [params setObject:[NSString stringWithFormat:@"%d", updateID] forKey:@"since_id"];
+    if ([updateID longLongValue] > 0) {
+        [params setObject:[NSString stringWithFormat:@"%@", updateID] forKey:@"since_id"];
     }
     if (pageNum > 0) {
         [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];
@@ -1187,13 +1187,13 @@
 }
 
 
-- (NSString *)getUserTimelineFor:(NSString *)username sinceID:(int)updateID startingAtPage:(int)pageNum count:(int)numUpdates
+- (NSString *)getUserTimelineFor:(NSString *)username sinceID:(NSString *)updateID startingAtPage:(int)pageNum count:(int)numUpdates
 {
 	NSString *path = [NSString stringWithFormat:@"statuses/user_timeline.%@", API_FORMAT];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
-    if (updateID > 0) {
-        [params setObject:[NSString stringWithFormat:@"%d", updateID] forKey:@"since_id"];
+    if ([updateID longLongValue] > 0) {
+        [params setObject:[NSString stringWithFormat:@"%@", updateID] forKey:@"since_id"];
     }
 	if (pageNum > 0) {
         [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];
@@ -1362,7 +1362,7 @@
                            responseType:MGTwitterDirectMessages];
 }
 
-- (NSString *)getDirectMessagesSinceID:(NSNumber *)updateID startingAtPage:(int)pageNum count:(int)count; // direct_messages
+- (NSString *)getDirectMessagesSinceID:(NSString *)updateID startingAtPage:(int)pageNum count:(int)count; // direct_messages
 {
     NSString *path = [NSString stringWithFormat:@"direct_messages.%@", API_FORMAT];
     
@@ -1417,7 +1417,7 @@
                            responseType:MGTwitterDirectMessages];
 }
 
-- (NSString *)getSentDirectMessagesSinceID:(NSNumber *)updateID startingAtPage:(int)pageNum count:(int)count; // direct_messages/sent
+- (NSString *)getSentDirectMessagesSinceID:(NSString *)updateID startingAtPage:(int)pageNum count:(int)count; // direct_messages/sent
 {
     NSString *path = [NSString stringWithFormat:@"direct_messages/sent.%@", API_FORMAT];
     
@@ -1587,15 +1587,15 @@
 }
 
 // Getting mentions
-- (NSString *)getMentionsSinceID:(int)updateID
+- (NSString *)getMentionsSinceID:(NSString *)updateID
                             page:(int)pageNum
                            count:(int)count
 {
     NSString *path = [NSString stringWithFormat:@"statuses/mentions.%@", API_FORMAT];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
-    if (updateID > 0) {
-        [params setObject:[NSString stringWithFormat:@"%d", updateID] forKey:@"since_id"];
+    if ([updateID longLongValue] > 0) {
+        [params setObject:[NSString stringWithFormat:@"%@", updateID] forKey:@"since_id"];
     }
     if (pageNum > 0) {
         [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];

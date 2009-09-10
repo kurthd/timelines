@@ -150,7 +150,7 @@
 
     NSString * requestId =
         [twitter getFollowedTimelineFor:credentials.username
-                                sinceID:[updateId integerValue]
+                                sinceID:[updateId description]
                          startingAtPage:[page integerValue]
                                   count:[count integerValue]];
 
@@ -173,7 +173,7 @@
 
     NSString * requestId =
         [twitter getUserTimelineFor:user
-                            sinceID:[updateId integerValue]
+                            sinceID:[updateId description]
                      startingAtPage:[page integerValue]
                               count:[count integerValue]];
 
@@ -195,7 +195,7 @@
                                                      delegate:delegate];
 
     NSString * requestId =
-        [twitter getMentionsSinceID:[updateId integerValue]
+        [twitter getMentionsSinceID:[updateId description]
                                page:[page integerValue]
                               count:[count integerValue]];
 
@@ -218,7 +218,7 @@
                                                            delegate:delegate];
 
     NSString * requestId =
-        [twitter getDirectMessagesSinceID:updateId
+        [twitter getDirectMessagesSinceID:[updateId description]
                            startingAtPage:[page integerValue]
                                     count:[count integerValue]];
 
@@ -239,7 +239,7 @@
                                                            delegate:delegate];
 
     NSString * requestId =
-        [twitter getSentDirectMessagesSinceID:updateId
+        [twitter getSentDirectMessagesSinceID:[updateId description]
                                startingAtPage:[page integerValue]
                                         count:[count integerValue]];
 
