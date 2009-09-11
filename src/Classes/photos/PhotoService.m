@@ -3,6 +3,7 @@
 //
 
 #import "PhotoService.h"
+#import "SettingsReader.h"
 
 @interface PhotoService ()
 
@@ -56,6 +57,29 @@
     self.image = nil;
     self.videoUrl = nil;
     self.credentials = someCredentials;
+}
+
+- (NSData *)dataForImageUsingCompressionSettings:(UIImage *)anImage
+{
+    ComposeTweetImageQuality quality = [SettingsReader imageQuality];
+
+    CGFloat compression = 0.0;
+    switch (quality) {
+        case kComposeTweetImageQualityLow:
+            compression = 0.25;
+            break;
+        case kComposeTweetImageQualityMedium:
+            compression = 0.65;
+            break;
+        case kComposeTweetImageQualityHigh:
+            compression = 1.0;
+            break;
+    }
+
+    NSData * data = UIImageJPEGRepresentation(anImage, compression);
+    NSLog(@"Image data: %d", data.length);
+
+    return data;
 }
 
 @end

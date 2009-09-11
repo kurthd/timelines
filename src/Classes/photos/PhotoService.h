@@ -49,4 +49,8 @@
 - (void)setTitle:(NSString *)text forVideoWithUrl:(NSString *)photoUrl
     credentials:(PhotoServiceCredentials *)credentials;
 
+#pragma mark Protected methods to be used by subclasses
+
+- (NSData *)dataForImageUsingCompressionSettings:(UIImage *)image;
+
 @end

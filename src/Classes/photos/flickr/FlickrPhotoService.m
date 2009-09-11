@@ -93,7 +93,7 @@
         joinedTags, @"tags",
         nil];
 
-    NSData * imageData = UIImagePNGRepresentation(image);
+    NSData * imageData = [self dataForImageUsingCompressionSettings:image];
     NSInputStream * imageStream = [NSInputStream inputStreamWithData:imageData];
 
     // the next step is slow within the Flickr layer (it copies the image to

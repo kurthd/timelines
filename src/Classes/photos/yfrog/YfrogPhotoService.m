@@ -193,7 +193,7 @@
             @"Content-Transfer-Encoding: binary\r\n\r\n"] 
                       dataUsingEncoding:NSUTF8StringEncoding]];
 
-    NSData * imageData = UIImagePNGRepresentation(image);
+    NSData * imageData = [self dataForImageUsingCompressionSettings:image];
     [postBody appendData:imageData];
 
     [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",

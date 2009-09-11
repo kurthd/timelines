@@ -19,10 +19,9 @@ enum {
     kDirectMessagesRow
 };
 
-static const NSInteger NUM_PHOTO_ROWS = 2;
+static const NSInteger NUM_PHOTO_ROWS = 1;
 enum {
-    kIntegrationRow,
-    kCompressionRow
+    kIntegrationRow
 };
 
 static const NSInteger NUM_INTEGRATION_ROWS = 1;
@@ -171,10 +170,6 @@ enum {
             cell.textLabel.text =
                 NSLocalizedString(
                 @"accountsettings.photo.integration.label", @"");
-        else if (indexPath.row == kCompressionRow)
-            cell.textLabel.text =
-                NSLocalizedString(
-                @"accountsettings.photo.compression.label", @"");
 
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -219,12 +214,6 @@ enum {
         if (indexPath.row == kIntegrationRow)
             [self.delegate
                 userWantsToConfigurePhotoServicesForAccount:self.credentials];
-        else {
-            [[UIAlertView simpleAlertViewWithTitle:@"Not Implemented"
-                                           message:nil] show];
-            [self.tableView deselectRowAtIndexPath:indexPath
-                                          animated:YES];
-        }
     else if (indexPath.section == kIntegrationSection)
         [self.delegate
             userWantsToConfigureInstapaperForAccount:self.credentials];
