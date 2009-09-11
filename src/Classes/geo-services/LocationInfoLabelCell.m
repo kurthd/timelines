@@ -4,6 +4,12 @@
 
 #import "LocationInfoLabelCell.h"
 
+@interface LocationInfoLabelCell ()
+
+- (NSInteger)cellHeight;
+
+@end
+
 @implementation LocationInfoLabelCell
 
 - (void)dealloc
@@ -29,7 +35,6 @@
     [super layoutSubviews];
 
     CGRect streetLabelFrame = streetLabel.frame;
-    // streetLabel.frame = streetLabelFrame;
 
     CGRect cityLabelFrame = cityLabel.frame;
     cityLabelFrame.origin.y =
@@ -44,6 +49,10 @@
 
 - (void)setLoading
 {
+    CGRect activityIndicatorFrame = activityIndicator.frame;
+    activityIndicatorFrame.origin.y = ([self cellHeight] - 20) / 2;
+    activityIndicator.frame = activityIndicatorFrame;
+    
     [activityIndicator startAnimating];
     streetLabel.hidden = YES;
     cityLabel.hidden = YES;
@@ -58,6 +67,21 @@
     cityLabel.hidden = NO;
     countryLabel.hidden = NO;
     addressLabel.hidden = NO;
+}
+
+- (NSInteger)cellHeight
+{
+    NSInteger height;
+    if (!streetLabel.text && !cityLabel.text && !countryLabel.text)
+        height = 84;
+    else {
+        height = 21;
+        height = streetLabel.text ? height + 21 : height;
+        height = cityLabel.text ? height + 21 : height;
+        height = countryLabel.text ? height + 21 : height;
+    }
+
+    return height;
 }
     
 @end
