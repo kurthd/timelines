@@ -102,6 +102,16 @@ enum {
         case kLocationInfoSectionSearch:
             if (indexPath.row == kLocationInfoSearchLocation)
                 [delegate showResultsForSearch:titleLabel.text];
+            else {
+                NSNumber * latitude =
+                    [NSNumber
+                    numberWithDouble:mapView.centerCoordinate.latitude];
+                NSNumber * longitude =
+                    [NSNumber
+                    numberWithDouble:mapView.centerCoordinate.longitude];
+                [delegate showResultsForNearbySearchWithLatitude:latitude
+                    longitude:longitude];
+            }
             break;
         case kLocationInfoSectionDirections:
             directionChar =

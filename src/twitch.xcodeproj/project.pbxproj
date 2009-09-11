@@ -394,6 +394,7 @@
 		918F71431047420C00FE7ABF /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F71421047420C00FE7ABF /* WebViewController.m */; };
 		918F7155104744FF00FE7ABF /* NSString+WebViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F7154104744FF00FE7ABF /* NSString+WebViewAdditions.m */; };
 		918F7167104745D000FE7ABF /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 918F7166104745D000FE7ABF /* style.css */; };
+		919CCC5C1059CD6B0029C0A1 /* NearbySearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 919CCC5B1059CD6B0029C0A1 /* NearbySearchDataSource.m */; };
 		91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD5A3C100FED36009C2179 /* MessageUI.framework */; };
 		91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
 		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
@@ -1069,6 +1070,8 @@
 		918F7153104744FF00FE7ABF /* NSString+WebViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+WebViewAdditions.h"; path = "web/NSString+WebViewAdditions.h"; sourceTree = "<group>"; };
 		918F7154104744FF00FE7ABF /* NSString+WebViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+WebViewAdditions.m"; path = "web/NSString+WebViewAdditions.m"; sourceTree = "<group>"; };
 		918F7166104745D000FE7ABF /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		919CCC5A1059CD6B0029C0A1 /* NearbySearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NearbySearchDataSource.h; path = timeline/NearbySearchDataSource.h; sourceTree = "<group>"; };
+		919CCC5B1059CD6B0029C0A1 /* NearbySearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NearbySearchDataSource.m; path = timeline/NearbySearchDataSource.m; sourceTree = "<group>"; };
 		91A247640FFE7EF400538F29 /* TweetDetailsFooterGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsFooterGradient.png; path = images/TweetDetailsFooterGradient.png; sourceTree = "<group>"; };
 		91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadowReversed.png; path = images/DropShadowReversed.png; sourceTree = "<group>"; };
 		91A247720FFE81D300538F29 /* DeleteTweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweet.png; path = images/DeleteTweet.png; sourceTree = "<group>"; };
@@ -2168,6 +2171,8 @@
 				9130FCA310337EA1004E3030 /* UserInfoRequestAdapter.m */,
 				9130FFD7103623DA004E3030 /* TimelineTableViewCellBackground.h */,
 				9130FFD8103623DA004E3030 /* TimelineTableViewCellBackground.m */,
+				919CCC5A1059CD6B0029C0A1 /* NearbySearchDataSource.h */,
+				919CCC5B1059CD6B0029C0A1 /* NearbySearchDataSource.m */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -2706,6 +2711,7 @@
 				05B7C8D0105899E00043298A /* SBJsonParser.m in Sources */,
 				05B7C8D1105899E00043298A /* SBJsonWriter.m in Sources */,
 				05B7C9CE10599D1F0043298A /* NearbySearchResponseProcessor.m in Sources */,
+				919CCC5C1059CD6B0029C0A1 /* NearbySearchDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,6 +16,8 @@
 #import "FavoritesTimelineDataSource.h"
 #import "UserListDisplayMgrFactory.h"
 #import "ErrorState.h"
+#import "NearbySearchDataSource.h"
+#import "SettingsReader.h"
 
 @interface DirectMessagesDisplayMgr ()
 
@@ -614,6 +616,61 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         [[[SearchDataSource alloc]
         initWithTwitterService:twitterService
         query:query]
+        autorelease];
+
+    self.tweetDetailsCredentialsPublisher =
+        [[CredentialsActivatedPublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+
+    twitterService.delegate = dataSource;
+    [self.tweetDetailsTimelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO allPagesLoaded:NO];
+    dataSource.delegate = self.tweetDetailsTimelineDisplayMgr;
+
+    [dataSource setCredentials:credentials];
+    [wrapperController.navigationController
+        pushViewController:self.tweetDetailsNetAwareViewController
+        animated:YES];
+}
+
+- (void)showResultsForNearbySearchWithLatitude:(NSNumber *)latitude
+    longitude:(NSNumber *)longitude
+{
+    NSLog(@"Direct message display manager: showing results for nearby search");
+    self.tweetDetailsNetAwareViewController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    NSString * title =
+        NSLocalizedString(@"timelinedisplaymgr.nearbysearch", @"");
+    self.tweetDetailsTimelineDisplayMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:
+        tweetDetailsNetAwareViewController
+        title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
+    self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
+    self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = NO;
+    self.tweetDetailsTimelineDisplayMgr.currentUsername = nil;
+
+    [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
+    self.tweetDetailsNetAwareViewController.navigationItem.rightBarButtonItem =
+        nil;
+
+    self.tweetDetailsNetAwareViewController.delegate =
+        self.tweetDetailsTimelineDisplayMgr;
+
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:managedObjectContext]
+        autorelease];
+
+    NSNumber * radius =
+        [NSNumber numberWithInt:[SettingsReader nearbySearchRadius]];
+
+    NearbySearchDataSource * dataSource =
+        [[[NearbySearchDataSource alloc]
+        initWithTwitterService:twitterService
+        latitude:latitude longitude:longitude radiusInKm:radius]
         autorelease];
 
     self.tweetDetailsCredentialsPublisher =
