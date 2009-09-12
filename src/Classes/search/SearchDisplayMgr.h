@@ -3,6 +3,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 #import "NetworkAwareViewController.h"
 #import "TwitterService.h"
 #import "TimelineDataSource.h"
@@ -18,13 +19,13 @@
     NSArray * searchResults;
     NSString * queryString;
     NSString * queryTitle;
-    BOOL nearbySearch;
+    CLLocation * nearbySearchLocation;
     NSNumber * updateId;
 
     id<TimelineDataSourceDelegate> dataSourceDelegate;
 }
 
-@property (nonatomic, assign) BOOL nearbySearch;
+@property (nonatomic, retain) CLLocation * nearbySearchLocation;
 @property (nonatomic, assign) id<TimelineDataSourceDelegate> dataSourceDelegate;
 
 - (id)initWithTwitterService:(TwitterService *)aService;

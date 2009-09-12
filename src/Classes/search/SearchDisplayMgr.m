@@ -6,6 +6,7 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "Tweet.h"
 #import "TweetInfo.h"
+#import "SettingsReader.h"
 
 @interface SearchDisplayMgr ()
 
@@ -25,7 +26,8 @@
 
 @synthesize networkAwareViewController;
 @synthesize service;
-@synthesize searchResults, queryString, queryTitle, nearbySearch, updateId;
+@synthesize searchResults, queryString, queryTitle, nearbySearchLocation,
+    updateId;
 @synthesize dataSourceDelegate;
 
 #pragma mark Initialization
@@ -48,6 +50,7 @@
     self.queryString = nil;
     self.queryTitle = nil;
     self.updateId = nil;
+    self.nearbySearchLocation = nil;
     [super dealloc];
 }
 
@@ -73,7 +76,19 @@
 - (void)fetchTimelineSince:(NSNumber *)anUpdateId page:(NSNumber *)page
 {
     self.updateId = anUpdateId;
-    [service searchFor:self.queryString page:page];
+    if (self.nearbySearchLocation) {
+        NSNumber * radius =
+            [NSNumber numberWithInt:[SettingsReader nearbySearchRadius]];
+        NSNumber * longitude =
+            [NSNumber numberWithInt:
+            self.nearbySearchLocation.coordinate.latitude];
+        NSNumber * latitude =
+            [NSNumber numberWithInt:
+            self.nearbySearchLocation.coordinate.longitude];
+        [service searchFor:self.queryString page:page latitude:latitude
+            longitude:longitude radius:radius radiusIsInMiles:NO];
+    } else
+        [service searchFor:self.queryString page:page];
 }
 
 - (TwitterCredentials *)credentials
@@ -113,6 +128,41 @@
 - (void)failedToFetchSearchResultsForQuery:(NSString *)query
                                       page:(NSNumber *)page
                                      error:(NSError *)error
+{
+    if ([query isEqualToString:self.queryString])
+        [self.dataSourceDelegate failedToFetchTimelineSinceUpdateId:updateId
+                                                               page:page
+                                                              error:error];
+}
+
+- (void)nearbySearchResultsReceived:(NSArray *)newSearchResults
+                           forQuery:(NSString *)query
+                               page:(NSNumber *)page
+                           latitude:(NSNumber *)latitude
+                          longitude:(NSNumber *)longitude
+                             radius:(NSNumber *)radius
+                    radiusIsInMiles:(BOOL)radiusIsInMiles
+{
+    self.searchResults = newSearchResults;
+    if ([query isEqualToString:self.queryString]) {
+        NSMutableArray * tweetInfoTimeline = [NSMutableArray array];
+        for (Tweet * tweet in searchResults) {
+            TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
+            [tweetInfoTimeline addObject:tweetInfo];
+        }
+        [self.dataSourceDelegate timeline:tweetInfoTimeline
+                     fetchedSinceUpdateId:self.updateId
+                                     page:page];
+    }
+}
+
+- (void)failedToFetchNearbySearchResultsForQuery:(NSString *)query
+                                            page:(NSNumber *)page
+                                        latitude:(NSNumber *)latitude
+                                       longitude:(NSNumber *)longitude
+                                          radius:(NSNumber *)radius
+                                 radiusIsInMiles:(BOOL)radiusIsInMiles
+                                           error:(NSError *)error
 {
     if ([query isEqualToString:self.queryString])
         [self.dataSourceDelegate failedToFetchTimelineSinceUpdateId:updateId

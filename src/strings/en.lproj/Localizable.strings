@@ -145,6 +145,7 @@ userlisttableview.following.title = "Following";
 /* Search */
 search.view.title = "Search";
 search.fetch.failed = "Search Failed";
+search.location.failed = "Failed to Determine Location";
 
 /* Search Bookmarks */
 searchbookmarks.savedsearches.prompt = "Choose a saved search";
