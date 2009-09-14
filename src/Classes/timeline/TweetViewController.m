@@ -652,10 +652,8 @@ enum TweetActionSheets {
             initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
         deleteTweetCell.textLabel.text =
             NSLocalizedString(@"tweetdetailsview.deletetweet.label", @"");
-        // deleteTweetCell.imageView.image =
-        //     [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
-        // deleteTweetCell.imageView.highlightedImage =
-        //     [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
+        deleteTweetCell.imageView.image =
+            [UIImage imageNamed:@"DeleteTweetButtonIcon.png"];
     }
 
     return deleteTweetCell;
