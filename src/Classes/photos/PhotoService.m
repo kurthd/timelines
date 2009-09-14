@@ -82,4 +82,9 @@
     return data;
 }
 
+- (NSString *)mimeTypeForImage:(UIImage *)anImage
+{
+    return @"image/jpeg";
+}
+
 @end
