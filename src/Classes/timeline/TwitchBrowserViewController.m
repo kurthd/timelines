@@ -273,6 +273,8 @@
         [[innerHtml stringByMatching:@"<\\s*title\\s*>.*<\\s*/\\s*title\\s*>"]
         stringByReplacingOccurrencesOfRegex:
         @"<\\s*/?\\s*title\\s*>" withString:@""];
+    title =
+        [title stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "];
 
     NSString * loadedPage =
         title ? title : [[webView.request URL] absoluteString];
