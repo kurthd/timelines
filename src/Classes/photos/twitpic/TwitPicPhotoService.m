@@ -19,7 +19,8 @@
 
 @property (nonatomic, retain) TwitPicResponseParser * parser;
 
-+ (NSURLRequest *)requestForPostingImage:(NSData *)image
+- (NSURLRequest *)requestForPostingImage:(NSData *)image
+                                mimeType:(NSString *)mimeType
                                    toUrl:(NSURL *)url
                             withUsername:(NSString *)username
                                 password:(NSString *)password;
@@ -57,13 +58,15 @@
 {
     [super sendImage:anImage withCredentials:someCredentials];
 
-    NSData * imageData = [self dataForImageUsingCompressionSettings:image];
+    NSData * imageData = [self dataForImageUsingCompressionSettings:anImage];
+    NSString * mimeType = [self mimeTypeForImage:anImage];
     NSURL * url = [NSURL URLWithString:self.twitPicUrl];
     NSURLRequest * request =
-        [[self class] requestForPostingImage:imageData
-                                       toUrl:url
-                                withUsername:someCredentials.username
-                                    password:someCredentials.password];
+        [self requestForPostingImage:imageData
+                            mimeType:mimeType
+                               toUrl:url
+                        withUsername:someCredentials.username
+                            password:someCredentials.password];
 
     self.connection =
         [[[NSURLConnection alloc] initWithRequest:request
@@ -105,7 +108,6 @@
     } else
         [self.delegate service:self didPostImageToUrl:self.parser.mediaUrl];
 
-    // HACK
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
@@ -113,13 +115,13 @@
 {
     [self.delegate service:self failedToPostImage:error];
 
-    // HACK
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 #pragma mark Helpers for building the post body
 
-+ (NSURLRequest *)requestForPostingImage:(NSData *)image
+- (NSURLRequest *)requestForPostingImage:(NSData *)imageData
+                                mimeType:(NSString *)mimeType
                                    toUrl:(NSURL *)url
                             withUsername:(NSString *)username
                                 password:(NSString *)password
@@ -158,8 +160,6 @@
    dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[password dataUsingEncoding:NSUTF8StringEncoding]];
 
-    NSString * mimeType = @"image/png";
-
     [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",
             stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [postBody appendData:[[NSString stringWithString:
@@ -172,7 +172,7 @@
             @"Content-Transfer-Encoding: binary\r\n\r\n"] 
                       dataUsingEncoding:NSUTF8StringEncoding]];
 
-    [postBody appendData:image];
+    [postBody appendData:imageData];
 
     [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",
             stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];

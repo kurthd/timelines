@@ -19,10 +19,6 @@
 
 @property (nonatomic, retain) YfrogResponseParser * parser;
 
-+ (NSURLRequest *)requestForPostingImage:(UIImage *)image
-                                   toUrl:(NSURL *)url
-                            withUsername:(NSString *)username
-                                password:(NSString *)password;
 + (NSURLRequest *)requestForPostingData:(NSData *)data
                              ofMimeType:(NSString *)mimeType
                                   toUrl:(NSURL *)url
@@ -87,8 +83,9 @@
 {
     [super sendImage:anImage withCredentials:ctls];
 
-    NSData * imageData = UIImagePNGRepresentation(image);
-    [self sendData:imageData ofMimeType:@"image/png" withCredentials:ctls];
+    NSData * imageData = [self dataForImageUsingCompressionSettings:image];
+    NSString * mimeType = [self mimeTypeForImage:image];
+    [self sendData:imageData ofMimeType:mimeType withCredentials:ctls];
 }
 
 - (void)sendVideoAtUrl:(NSURL *)url
@@ -141,129 +138,6 @@
 }
 
 #pragma mark Helpers for building the post body
-
-+ (NSURLRequest *)requestForPostingImage:(UIImage *)image
-                                   toUrl:(NSURL *)url
-                            withUsername:(NSString *)username
-                                password:(NSString *)password
-{
-    NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:url];
-    [postRequest setHTTPMethod:@"POST"];
-
-    NSString * stringBoundary = @"0xKhTmLbOuNdArY";
-    NSString * contentType = [NSString 
-        stringWithFormat:@"multipart/form-data; boundary=%@",
-        stringBoundary];
-    [postRequest addValue:contentType forHTTPHeaderField:@"Content-Type"];
-
-    NSMutableData * postBody = [NSMutableData data];
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n\r\n--%@\r\n", 
-                stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-       @"Content-Disposition: form-data; name=\"source\"\r\n\r\n"] 
-       dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:@"Twitbit for iPhone"] 
-       dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", 
-            stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-   @"Content-Disposition: form-data; name=\"username\"\r\n\r\n"]
-   dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[username dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",
-            stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-   @"Content-Disposition: form-data; name=\"password\"\r\n\r\n"] 
-   dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[password dataUsingEncoding:NSUTF8StringEncoding]];
-
-    NSString * mimeType = @"image/png";
-
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",
-            stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-   @"Content-Disposition: form-data; name=\"media\"; filename=\"file\"\r\n"]
-       dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:
-          @"Content-Type: %@\r\n", mimeType] 
-       dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-            @"Content-Transfer-Encoding: binary\r\n\r\n"] 
-                      dataUsingEncoding:NSUTF8StringEncoding]];
-
-    NSData * imageData = [self dataForImageUsingCompressionSettings:image];
-    [postBody appendData:imageData];
-
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",
-            stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [postRequest setHTTPBody:postBody];
-
-    return postRequest;
-}
-
-+ (NSURLRequest *)requestForPostingVideo:(NSData *)video
-                                   toUrl:(NSURL *)url
-                            withUsername:(NSString *)username
-                                password:(NSString *)password
-{
-    NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:url];
-    [postRequest setHTTPMethod:@"POST"];
-
-    NSString * stringBoundary = @"0xKhTmLbOuNdArY";
-    NSString * contentType = [NSString 
-        stringWithFormat:@"multipart/form-data; boundary=%@",
-        stringBoundary];
-    [postRequest addValue:contentType forHTTPHeaderField:@"Content-Type"];
-
-    NSMutableData * postBody = [NSMutableData data];
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n\r\n--%@\r\n", 
-                stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-       @"Content-Disposition: form-data; name=\"source\"\r\n\r\n"] 
-       dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:@"Twitbit for iPhone"] 
-       dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", 
-            stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-   @"Content-Disposition: form-data; name=\"username\"\r\n\r\n"]
-   dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[username dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",
-            stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-   @"Content-Disposition: form-data; name=\"password\"\r\n\r\n"] 
-   dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[password dataUsingEncoding:NSUTF8StringEncoding]];
-
-    NSString * mimeType = @"video/quicktime";
-
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",
-            stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-   @"Content-Disposition: form-data; name=\"media\"; filename=\"file\"\r\n"]
-       dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:
-          @"Content-Type: %@\r\n", mimeType] 
-       dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-            @"Content-Transfer-Encoding: binary\r\n\r\n"] 
-                      dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [postBody appendData:video];
-
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",
-            stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [postRequest setHTTPBody:postBody];
-
-    return postRequest;
-}
 
 + (NSURLRequest *)requestForPostingData:(NSData *)data
                              ofMimeType:(NSString *)mimeType

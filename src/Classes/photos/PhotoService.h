@@ -52,5 +52,6 @@
 #pragma mark Protected methods to be used by subclasses
 
 - (NSData *)dataForImageUsingCompressionSettings:(UIImage *)image;
+- (NSString *)mimeTypeForImage:(UIImage *)image;
 
 @end

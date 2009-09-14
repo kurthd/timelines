@@ -16,6 +16,7 @@
     MGTwitterResponseType _responseType;    // type of response data expected (if successful)
     NSString *_identifier;
 	NSURL *_URL;							// the URL used for the connection (needed as a base URL when parsing with libxml)
+    NSError *_error;
 }
 
 // Initializer
@@ -33,5 +34,7 @@
 - (MGTwitterRequestType)requestType;
 - (MGTwitterResponseType)responseType;
 - (NSString *)description;
+- (NSError *)error;
+- (void)setError:(NSError *)error;
 
 @end

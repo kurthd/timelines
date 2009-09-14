@@ -94,6 +94,7 @@
         nil];
 
     NSData * imageData = [self dataForImageUsingCompressionSettings:image];
+    NSString * mimeType = [self mimeTypeForImage:image];
     NSInputStream * imageStream = [NSInputStream inputStreamWithData:imageData];
 
     // the next step is slow within the Flickr layer (it copies the image to
@@ -102,7 +103,7 @@
     NSDictionary * userInfo =
         [NSDictionary dictionaryWithObjectsAndKeys:
             imageStream, @"stream",
-            @"image/png", @"mime-type",
+            mimeType, @"mime-type",
             args, @"args",
             nil];
 

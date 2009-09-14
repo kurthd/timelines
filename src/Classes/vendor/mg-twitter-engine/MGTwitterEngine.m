@@ -701,35 +701,51 @@
                     ofResponseType:(MGTwitterResponseType)responseType 
                  withParsedObjects:(NSArray *)parsedObjects
 {
-    // Forward appropriate message to _delegate, depending on responseType.
-    switch (responseType) {
-        case MGTwitterStatuses:
-        case MGTwitterStatus:
-			if ([self _isValidDelegateForSelector:@selector(statusesReceived:forRequest:)])
-				[_delegate statusesReceived:parsedObjects forRequest:identifier];
-            break;
-        case MGTwitterUsers:
-        case MGTwitterUser:
-			if ([self _isValidDelegateForSelector:@selector(userInfoReceived:forRequest:)])
-				[_delegate userInfoReceived:parsedObjects forRequest:identifier];
-            break;
-        case MGTwitterDirectMessages:
-        case MGTwitterDirectMessage:
-			if ([self _isValidDelegateForSelector:@selector(directMessagesReceived:forRequest:)])
-				[_delegate directMessagesReceived:parsedObjects forRequest:identifier];
-            break;
-		case MGTwitterMiscellaneous:
-			if ([self _isValidDelegateForSelector:@selector(miscInfoReceived:forRequest:)])
-				[_delegate miscInfoReceived:parsedObjects forRequest:identifier];
-			break;
+    MGTwitterHTTPURLConnection * connection = [_connections objectForKey:identifier];
+    if ([connection error]) {
+        if ([self _isValidDelegateForSelector:@selector(requestFailed:withError:)]) {
+            NSError * error = [connection error];
+            NSDictionary * userInfo = error.userInfo;
+            NSMutableDictionary * mutableInfo = userInfo ? [userInfo mutableCopy] : [[NSMutableDictionary alloc] init];
+            NSString * errorMessage = [[parsedObjects objectAtIndex:0] objectForKey:@"error"];
+            if (errorMessage) {
+                [mutableInfo setObject:errorMessage forKey:NSLocalizedDescriptionKey];
+                [connection setError:[NSError errorWithDomain:@"Twitter API" code:error.code userInfo:mutableInfo]];
+            }
+            [mutableInfo release];
+            [_delegate requestFailed:identifier withError:[connection error]];
+        }
+    } else {
+        // Forward appropriate message to _delegate, depending on responseType.
+        switch (responseType) {
+            case MGTwitterStatuses:
+            case MGTwitterStatus:
+                if ([self _isValidDelegateForSelector:@selector(statusesReceived:forRequest:)])
+                    [_delegate statusesReceived:parsedObjects forRequest:identifier];
+                break;
+            case MGTwitterUsers:
+            case MGTwitterUser:
+                if ([self _isValidDelegateForSelector:@selector(userInfoReceived:forRequest:)])
+                    [_delegate userInfoReceived:parsedObjects forRequest:identifier];
+                break;
+            case MGTwitterDirectMessages:
+            case MGTwitterDirectMessage:
+                if ([self _isValidDelegateForSelector:@selector(directMessagesReceived:forRequest:)])
+                    [_delegate directMessagesReceived:parsedObjects forRequest:identifier];
+                break;
+            case MGTwitterMiscellaneous:
+                if ([self _isValidDelegateForSelector:@selector(miscInfoReceived:forRequest:)])
+                    [_delegate miscInfoReceived:parsedObjects forRequest:identifier];
+                break;
 #if YAJL_AVAILABLE
-		case MGTwitterSearchResults:
-			if ([self _isValidDelegateForSelector:@selector(searchResultsReceived:forRequest:)])
-				[_delegate searchResultsReceived:parsedObjects forRequest:identifier];
-			break;
+            case MGTwitterSearchResults:
+                if ([self _isValidDelegateForSelector:@selector(searchResultsReceived:forRequest:)])
+                    [_delegate searchResultsReceived:parsedObjects forRequest:identifier];
+                break;
 #endif
-        default:
-            break;
+            default:
+                break;
+        }
     }
 }
 
@@ -777,22 +793,10 @@
     NSHTTPURLResponse *resp = (NSHTTPURLResponse *)response;
     int statusCode = [resp statusCode];
     
-    if (statusCode >= 400) {
-        // Assume failure, and report to delegate.
-        NSError *error = [NSError errorWithDomain:@"HTTP" code:statusCode userInfo:nil];
-		if ([self _isValidDelegateForSelector:@selector(requestFailed:withError:)])
-			[_delegate requestFailed:[connection identifier] withError:error];
-
-        /* jad: commenting out so we can receive and parse the Twitter error
-         * message.
-         */
-        // Destroy the connection.
-        [connection cancel];
-        [_connections removeObjectForKey:[connection identifier]];
-		if ([self _isValidDelegateForSelector:@selector(connectionFinished)])
-			[_delegate connectionFinished];
-        
-    } else if (statusCode == 304 || [connection responseType] == MGTwitterGeneric) {
+    if (statusCode >= 400)
+        // save for later; we want to parse any error strings we've received from Twitter
+        [connection setError:[NSError errorWithDomain:@"HTTP" code:statusCode userInfo:nil]];
+    else if (statusCode == 304 || [connection responseType] == MGTwitterGeneric) {
         // Not modified, or generic success.
 		if ([self _isValidDelegateForSelector:@selector(requestSucceeded:)])
 			[_delegate requestSucceeded:[connection identifier]];
@@ -843,7 +847,7 @@
 - (void)connectionDidFinishLoading:(MGTwitterHTTPURLConnection *)connection
 {
     // Inform delegate.
-	if ([self _isValidDelegateForSelector:@selector(requestSucceeded:)])
+    if ([connection error] && [self _isValidDelegateForSelector:@selector(requestSucceeded:)])
 		[_delegate requestSucceeded:[connection identifier]];
     
     NSData *receivedData = [connection data];
