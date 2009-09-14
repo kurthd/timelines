@@ -139,8 +139,9 @@
         UIGraphicsBeginImageContext(self.mapView.bounds.size);
         [self.mapView.layer renderInContext:UIGraphicsGetCurrentContext()];
         UIImage * viewImage = UIGraphicsGetImageFromCurrentImageContext();
+        [viewImage retain]; // Hack: not sure why, but this needs to be retained
         UIGraphicsEndImageContext();
-
+        
         CGRect mapViewRect =
             CGRectMake(TOP_MARGIN + 1, LEFT_MARGIN + 1, MAP_WIDTH, MAP_HEIGHT);
         [viewImage drawInRect:mapViewRect
