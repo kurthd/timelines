@@ -309,7 +309,9 @@ static UIImage * defaultAvatar;
     [User setAvatar:avatarImage forUrl:urlAsString];
     NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
     if (NSEqualRanges([urlAsString rangeOfString:@"_normal."], notFoundRange) &&
-        avatarImage)
+        avatarImage &&
+        ([user.avatar.thumbnailImageUrl isEqual:urlAsString] ||
+        [user.avatar.fullImageUrl isEqual:urlAsString]))
         [avatarView setImage:avatarImage];
 }
 
