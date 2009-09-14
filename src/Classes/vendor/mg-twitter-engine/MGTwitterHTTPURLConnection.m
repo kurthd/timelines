@@ -25,6 +25,7 @@
         _requestType = requestType;
         _responseType = responseType;
 		_URL = [[request URL] retain];
+        _error = nil;
     }
     
     return self;
@@ -36,6 +37,7 @@
     [_data release];
     [_identifier release];
 	[_URL release];
+    [_error release];
     [super dealloc];
 }
 
@@ -87,6 +89,17 @@
     return _responseType;
 }
 
+- (NSError *)error
+{
+    return _error;
+}
+
+- (void)setError:(NSError *)error
+{
+    NSError * tmp = [error retain];
+    [_error release];
+    _error = tmp;
+}
 
 - (NSString *)description
 {
