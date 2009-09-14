@@ -10,6 +10,8 @@
 #import "ErrorState.h"
 #import "SearchDataSource.h"
 #import "RegexKitLite.h"
+#import "SettingsReader.h"
+#import "NearbySearchDataSource.h"
 
 @interface FindPeopleSearchDisplayMgr ()
 
@@ -541,6 +543,58 @@
         forceRefresh:NO allPagesLoaded:NO];
     dataSource.delegate = self.timelineDisplayMgr;
     
+    [dataSource setCredentials:credentials];
+    [netAwareController.navigationController
+        pushViewController:self.nextWrapperController
+        animated:YES];
+}
+
+- (void)showResultsForNearbySearchWithLatitude:(NSNumber *)latitude
+    longitude:(NSNumber *)longitude
+{
+    NSLog(@"Find people display manager: showing results for nearby search");
+    self.nextWrapperController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    NSString * title =
+        NSLocalizedString(@"timelinedisplaymgr.nearbysearch", @"");
+    self.timelineDisplayMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:nextWrapperController
+        title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
+    self.timelineDisplayMgr.displayAsConversation = NO;
+    self.timelineDisplayMgr.setUserToFirstTweeter = NO;
+    self.timelineDisplayMgr.currentUsername = nil;
+
+    [self.timelineDisplayMgr setCredentials:credentials];
+    self.nextWrapperController.navigationItem.rightBarButtonItem =
+        nil;
+
+    self.nextWrapperController.delegate = self.timelineDisplayMgr;
+
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil context:context]
+        autorelease];
+
+    NSNumber * radius =
+        [NSNumber numberWithInt:[SettingsReader nearbySearchRadius]];
+
+    NearbySearchDataSource * dataSource =
+        [[[NearbySearchDataSource alloc]
+        initWithTwitterService:twitterService
+        latitude:latitude longitude:longitude radiusInKm:radius]
+        autorelease];
+
+    self.credentialsPublisher =
+        [[CredentialsActivatedPublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+
+    twitterService.delegate = dataSource;
+    [self.timelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO allPagesLoaded:NO];
+    dataSource.delegate = self.timelineDisplayMgr;
+
     [dataSource setCredentials:credentials];
     [netAwareController.navigationController
         pushViewController:self.nextWrapperController

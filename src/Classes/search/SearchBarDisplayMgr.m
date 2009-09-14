@@ -7,6 +7,7 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "RegexKitLite.h"
 #import "UIColor+TwitchColors.h"
+#import "ErrorState.h"
 
 @interface SearchBarDisplayMgr ()
 
@@ -32,6 +33,10 @@
 
 @property (nonatomic, copy) NSArray * autocompleteArray;
 @property (nonatomic, readonly) UIView * autocompleteView;
+
+@property (nonatomic, readonly) UIBarButtonItem * nearbySearchProgressView;
+@property (nonatomic, readonly) CLLocationManager * locationMgr;
+@property (nonatomic, readonly) UIBarButtonItem * locationButton;
 
 - (void)displayBookmarksView;
 
@@ -82,6 +87,9 @@
     self.darkTransparentView = nil;
     [autocompleteArray release];
     [autoCompleteTableView release];
+    [nearbySearchProgressView release];
+    [locationMgr release];
+    [locationButton release];
     [super dealloc];
 }
 
@@ -115,13 +123,7 @@
             barHeight);
         searchBar.bounds = searchBarRect;
 
-        UIBarButtonItem * locationButton =
-            [[[UIBarButtonItem alloc]
-            initWithImage:[UIImage imageNamed:@"Location.png"]
-            style:UIBarButtonItemStyleBordered target:self
-            action:@selector(toggleNearbySearchValue)]
-            autorelease];
-        navItem.leftBarButtonItem = locationButton;
+        navItem.leftBarButtonItem = self.locationButton;
 
         self.timelineDisplayMgr = aTimelineDisplayMgr;
         searchDisplayMgr =
@@ -200,7 +202,6 @@
     NSLog(@"Searching Twitter for: '%@'...", self.searchQuery);
     [self.searchDisplayMgr displaySearchResults:self.searchQuery
                                       withTitle:self.searchQuery];
-    self.searchDisplayMgr.nearbySearch = nearbySearch;
     [self.timelineDisplayMgr setService:self.searchDisplayMgr
                                  tweets:nil
                                    page:[self.searchPage integerValue]
@@ -432,6 +433,29 @@
     [self.autocompleteView removeFromSuperview];
 }
 
+#pragma mark CLLocationManagerDelegate implementation
+
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+    fromLocation:(CLLocation *)oldLocation
+{
+    self.searchDisplayMgr.nearbySearchLocation = newLocation;
+    [self.networkAwareViewController.navigationItem
+        setLeftBarButtonItem:self.locationButton animated:YES];
+    if (searchBar.text && ![searchBar.text isEqual:@""])
+        [self searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+    didFailWithError:(NSError *)error
+{
+    [self.networkAwareViewController.navigationItem
+        setLeftBarButtonItem:self.locationButton animated:YES];
+    locationButton.style = UIBarButtonItemStyleBordered;
+    NSString * title = NSLocalizedString(@"search.location.failed", @"");
+    [[ErrorState instance] displayErrorWithTitle:title error:error];
+}
+
 #pragma mark Accessors
 
 - (SearchBookmarksDisplayMgr *)searchBookmarksDisplayMgr
@@ -554,22 +578,67 @@
 - (void)toggleNearbySearchValue
 {
     nearbySearch = !nearbySearch;
-    UIBarButtonItem * locationButton =
-        self.networkAwareViewController.navigationItem.leftBarButtonItem;
-    locationButton.style =
+    self.locationButton.style =
         nearbySearch ? UIBarButtonItemStyleDone : UIBarButtonItemStyleBordered;
 
-    if (searchBar.text && ![searchBar.text isEqual:@""])
+    if (!nearbySearch)
+        self.searchDisplayMgr.nearbySearchLocation = nil;
+
+    if (searchBar.text && ![searchBar.text isEqual:@""] &&
+        (!nearbySearch || self.locationMgr.location))
         [self searchBarSearchButtonClicked:searchBar];
+    else if (nearbySearch && !self.locationMgr.location) {
+        [self.locationMgr startUpdatingLocation];
+        [self.networkAwareViewController.navigationItem
+            setLeftBarButtonItem:[self nearbySearchProgressView] animated:YES];
+    }
 }
 
 - (void)setNearbySearch:(BOOL)nearbySearchValue
 {
     nearbySearch = nearbySearchValue;
-    UIBarButtonItem * locationButton =
-        self.networkAwareViewController.navigationItem.leftBarButtonItem;
-    locationButton.style =
+    self.locationButton.style =
         nearbySearch ? UIBarButtonItemStyleDone : UIBarButtonItemStyleBordered;
+}
+
+- (UIBarButtonItem *)nearbySearchProgressView
+{
+    if (!nearbySearchProgressView) {
+        UIActivityIndicatorView * view =
+            [[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+
+        nearbySearchProgressView =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [view startAnimating];
+
+        [view release];
+    }
+
+    return nearbySearchProgressView;
+}
+
+- (CLLocationManager *)locationMgr
+{
+    if (!locationMgr) {
+        locationMgr = [[CLLocationManager alloc] init];
+        locationMgr.delegate = self;
+    }
+
+    return locationMgr;
+}
+
+- (UIBarButtonItem *)locationButton
+{
+    if (!locationButton)
+        locationButton =
+            [[UIBarButtonItem alloc]
+            initWithImage:[UIImage imageNamed:@"Location.png"]
+            style:UIBarButtonItemStyleBordered target:self
+            action:@selector(toggleNearbySearchValue)];
+
+    return locationButton;
 }
 
 @end

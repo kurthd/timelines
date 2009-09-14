@@ -22,13 +22,14 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 @property (nonatomic, copy) NSString * currentSender;
 @property (nonatomic, copy) NSString * textViewText;
+@property (nonatomic, copy) NSString * currentRecipient;
 
 @end
 
 @implementation ComposeTweetViewController
 
 @synthesize delegate, sendButton, cancelButton, currentSender, textViewText,
-    displayingActivity;
+    displayingActivity, currentRecipient;
 
 - (void)dealloc
 {
@@ -45,9 +46,10 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [recipientTextField release];
 
     [activityView release];
-    
+
     [currentSender release];
     [textViewText release];
+    [currentRecipient release];
 
     [super dealloc];
 }
@@ -58,12 +60,14 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     if (hideRecipientView)
         [self hideRecipientView];
-    
+
     if (self.currentSender)
         accountLabel.text =
             [NSString stringWithFormat:@"@%@", self.currentSender];
     if (self.textViewText)
         textView.text = self.textViewText;
+    if (self.currentRecipient)
+        recipientTextField.text = self.currentRecipient;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -205,6 +209,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     self.currentSender = sender;
     self.textViewText = text;
+    self.currentRecipient = recipient;
 
     textView.text = text;
     accountLabel.text = [NSString stringWithFormat:@"@%@", sender];

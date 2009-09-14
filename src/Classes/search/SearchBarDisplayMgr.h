@@ -13,7 +13,8 @@
 @interface SearchBarDisplayMgr : NSObject
     <TwitterServiceDelegate, UISearchBarDelegate,
     SearchBookmarksDisplayMgrDelegate, UITableViewDataSource,
-    UITableViewDelegate, NetworkAwareViewControllerDelegate>
+    UITableViewDelegate, NetworkAwareViewControllerDelegate,
+    CLLocationManagerDelegate>
 {
     TwitterService * service;
     NSManagedObjectContext * context;
@@ -43,6 +44,9 @@
 
     BOOL hasBeenDisplayed;
     BOOL nearbySearch;
+    UIBarButtonItem * nearbySearchProgressView;
+    CLLocationManager * locationMgr;
+    UIBarButtonItem * locationButton;
 }
 
 @property (nonatomic, copy) NSString * searchQuery;

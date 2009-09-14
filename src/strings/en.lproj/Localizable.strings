@@ -50,6 +50,7 @@ timelinedisplaymgr.error.deletetweet = "Failed to delete tweet";
 timelinedisplaymgr.error.deletedirectmessage = "Failed to delete direct message";
 timelinedisplaymgr.error.unblock = "Failed to unblock user %@";
 timelinedisplaymgr.error.block = "Failed to block user %@";
+timelinedisplaymgr.nearbysearch = "Nearby Tweets";
 
 /* DirectMessageDisplayMgr */
 directmessage.actions.cancel = "Cancel";
@@ -144,6 +145,7 @@ userlisttableview.following.title = "Following";
 /* Search */
 search.view.title = "Search";
 search.fetch.failed = "Search Failed";
+search.location.failed = "Failed to Determine Location";
 
 /* Search Bookmarks */
 searchbookmarks.savedsearches.prompt = "Choose a saved search";

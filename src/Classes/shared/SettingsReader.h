@@ -16,5 +16,7 @@ typedef enum {
 + (NSInteger)defaultFetchQuantity;
 + (BOOL)shortenURLs;
 + (ComposeTweetImageQuality)imageQuality;
++ (NSInteger)nearbySearchRadius;
++ (NSInteger)defaultNearbySearchRadius;
 
 @end

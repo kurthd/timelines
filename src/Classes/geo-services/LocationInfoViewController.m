@@ -102,6 +102,16 @@ enum {
         case kLocationInfoSectionSearch:
             if (indexPath.row == kLocationInfoSearchLocation)
                 [delegate showResultsForSearch:titleLabel.text];
+            else {
+                NSNumber * latitude =
+                    [NSNumber
+                    numberWithDouble:mapView.centerCoordinate.latitude];
+                NSNumber * longitude =
+                    [NSNumber
+                    numberWithDouble:mapView.centerCoordinate.longitude];
+                [delegate showResultsForNearbySearchWithLatitude:latitude
+                    longitude:longitude];
+            }
             break;
         case kLocationInfoSectionDirections:
             directionChar =
@@ -191,13 +201,15 @@ enum {
 {
     foundAddress = YES;
     self.street =
-        streetLevel ?
+        streetLevel && placemark.subThoroughfare && placemark.thoroughfare ?
         [NSString stringWithFormat:@"%@ %@",
         placemark.subThoroughfare, placemark.thoroughfare] :
         nil;
+    NSString * administrativeArea =
+        placemark.administrativeArea ? placemark.administrativeArea : @"";
     self.city =
         [NSString stringWithFormat:@"%@ %@", placemark.locality,
-        placemark.administrativeArea];
+        administrativeArea];
     self.country = placemark.country;
     [self.addressCell setStreet:self.street city:self.city
         country:self.country];

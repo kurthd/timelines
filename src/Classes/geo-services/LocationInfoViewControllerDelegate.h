@@ -7,5 +7,7 @@
 @protocol LocationInfoViewControllerDelegate
 
 - (void)showResultsForSearch:(NSString *)query;
+- (void)showResultsForNearbySearchWithLatitude:(NSNumber *)latitude
+    longitude:(NSNumber *)longitude;
 
 @end

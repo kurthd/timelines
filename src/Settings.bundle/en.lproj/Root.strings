@@ -27,3 +27,9 @@
 "imagequality.high" = "High";
 
 "shortenurls" = "Shorten Links";
+
+"searchradius" = "Nearby Search Radius";
+"searchradius.two" = "2 km";
+"searchradius.ten" = "10 km";
+"searchradius.fifty" = "50 km";
+"searchradius.twofifty" = "250 km";

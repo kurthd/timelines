@@ -28,6 +28,7 @@
     BOOL hideRecipientView;
     NSString * currentSender;
     NSString * textViewText;
+    NSString * currentRecipient;
 }
 
 @property (nonatomic, assign) id<ComposeTweetViewControllerDelegate> delegate;
