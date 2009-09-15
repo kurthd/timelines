@@ -364,9 +364,7 @@ enum {
         nearbyTweetsCell.accessoryType =
             UITableViewCellAccessoryDisclosureIndicator;
         nearbyTweetsCell.imageView.image =
-            [UIImage imageNamed:@"LocationDark.png"];
-        nearbyTweetsCell.imageView.highlightedImage =
-            [UIImage imageNamed:@"Location.png"];
+            [UIImage imageNamed:@"NearbyTweetsButtonIcon.png"];
     }
 
     return nearbyTweetsCell;

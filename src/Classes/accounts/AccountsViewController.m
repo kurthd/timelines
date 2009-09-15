@@ -47,7 +47,8 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
     self.accounts = [[self.delegate accounts]
         sortedArrayUsingFunction:usernameSort context:NULL];
-    self.selectedAccount = [self.delegate currentActiveAccount];
+    if (!self.selectedAccount)
+        self.selectedAccount = [self.delegate currentActiveAccount];
 
     [self setEditing:NO animated:animated];
 }

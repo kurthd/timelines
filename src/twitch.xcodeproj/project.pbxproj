@@ -396,6 +396,8 @@
 		918F7155104744FF00FE7ABF /* NSString+WebViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 918F7154104744FF00FE7ABF /* NSString+WebViewAdditions.m */; };
 		918F7167104745D000FE7ABF /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 918F7166104745D000FE7ABF /* style.css */; };
 		919CCC5C1059CD6B0029C0A1 /* NearbySearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 919CCC5B1059CD6B0029C0A1 /* NearbySearchDataSource.m */; };
+		919CCCBC105EB0600029C0A1 /* DeleteTweetButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 919CCCBB105EB0600029C0A1 /* DeleteTweetButtonIcon.png */; };
+		919CCCBE105EB0760029C0A1 /* NearbyTweetsButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 919CCCBD105EB0760029C0A1 /* NearbyTweetsButtonIcon.png */; };
 		91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD5A3C100FED36009C2179 /* MessageUI.framework */; };
 		91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
 		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
@@ -1075,6 +1077,8 @@
 		918F7166104745D000FE7ABF /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		919CCC5A1059CD6B0029C0A1 /* NearbySearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NearbySearchDataSource.h; path = timeline/NearbySearchDataSource.h; sourceTree = "<group>"; };
 		919CCC5B1059CD6B0029C0A1 /* NearbySearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NearbySearchDataSource.m; path = timeline/NearbySearchDataSource.m; sourceTree = "<group>"; };
+		919CCCBB105EB0600029C0A1 /* DeleteTweetButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweetButtonIcon.png; path = images/DeleteTweetButtonIcon.png; sourceTree = "<group>"; };
+		919CCCBD105EB0760029C0A1 /* NearbyTweetsButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NearbyTweetsButtonIcon.png; path = images/NearbyTweetsButtonIcon.png; sourceTree = "<group>"; };
 		91A247640FFE7EF400538F29 /* TweetDetailsFooterGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsFooterGradient.png; path = images/TweetDetailsFooterGradient.png; sourceTree = "<group>"; };
 		91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadowReversed.png; path = images/DropShadowReversed.png; sourceTree = "<group>"; };
 		91A247720FFE81D300538F29 /* DeleteTweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweet.png; path = images/DeleteTweet.png; sourceTree = "<group>"; };
@@ -2038,6 +2042,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				919CCCBD105EB0760029C0A1 /* NearbyTweetsButtonIcon.png */,
+				919CCCBB105EB0600029C0A1 /* DeleteTweetButtonIcon.png */,
 				91257DB91058449C006F5DBD /* CancelButton.png */,
 				91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */,
 				91257799104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png */,
@@ -2434,6 +2440,8 @@
 				9125779A104C7A53006F5DBD /* DarkenedTableViewCellGradient.png in Resources */,
 				9125779B104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png in Resources */,
 				91257DBA1058449C006F5DBD /* CancelButton.png in Resources */,
+				919CCCBC105EB0600029C0A1 /* DeleteTweetButtonIcon.png in Resources */,
+				919CCCBE105EB0760029C0A1 /* NearbyTweetsButtonIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
