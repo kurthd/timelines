@@ -22,6 +22,7 @@
 #import "ErrorState.h"
 #import "JSON.h"
 #import "NSString+HtmlEncodingAdditions.h"
+#import "UIImage+GeneralHelpers.h"
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -638,7 +639,10 @@
         PhotoService * photoService =
             [[PhotoService photoServiceWithServiceName:serviceName] retain];
         photoService.delegate = self;
-        [photoService sendImage:image withCredentials:c];
+
+        UIImage * rotatedImage =
+            [image imageByRotatingByOrientation:image.imageOrientation];
+        [photoService sendImage:rotatedImage withCredentials:c];
     }
 
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];

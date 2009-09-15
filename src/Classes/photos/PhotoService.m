@@ -76,10 +76,7 @@
             break;
     }
 
-    NSData * data = UIImageJPEGRepresentation(anImage, compression);
-    NSLog(@"Image data: %d", data.length);
-
-    return data;
+    return UIImageJPEGRepresentation(anImage, compression);
 }
 
 - (NSString *)mimeTypeForImage:(UIImage *)anImage
