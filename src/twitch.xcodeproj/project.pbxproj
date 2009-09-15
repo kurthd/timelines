@@ -127,6 +127,7 @@
 		05C7B9F8103B8D360017874C /* YfrogLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B9F7103B8D360017874C /* YfrogLogo.png */; };
 		05C7BA09103B90310017874C /* TwitVidLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7BA08103B90310017874C /* TwitVidLogo.png */; };
 		05C886D4101639050097FEFF /* AccountSettingsChangedPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */; };
+		05D4C4E3105EF94C0038BDF0 /* UIImage+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D4C4E2105EF94C0038BDF0 /* UIImage+GeneralHelpers.m */; };
 		05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */; };
 		05DB29C9102CD879001E8C30 /* DirectMessageButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29C8102CD879001E8C30 /* DirectMessageButtonIcon.png */; };
 		05DB2A00102CDB6B001E8C30 /* RetweetButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29FF102CDB6B001E8C30 /* RetweetButtonIcon.png */; };
@@ -798,6 +799,8 @@
 		05D173E20FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TwitterCredentials+KeychainAdditions.m"; path = "twitter/TwitterCredentials+KeychainAdditions.m"; sourceTree = "<group>"; };
 		05D174050FF69FC500DCB22D /* Mention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mention.h; path = tweets/Mention.h; sourceTree = "<group>"; };
 		05D174060FF69FC500DCB22D /* Mention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mention.m; path = tweets/Mention.m; sourceTree = "<group>"; };
+		05D4C4E1105EF94C0038BDF0 /* UIImage+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+GeneralHelpers.h"; path = "shared/UIImage+GeneralHelpers.h"; sourceTree = "<group>"; };
+		05D4C4E2105EF94C0038BDF0 /* UIImage+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+GeneralHelpers.m"; path = "shared/UIImage+GeneralHelpers.m"; sourceTree = "<group>"; };
 		05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2-v1.1.xcmappingmodel"; path = "data-model/v2-v1.1.xcmappingmodel"; sourceTree = "<group>"; };
 		05DB29C8102CD879001E8C30 /* DirectMessageButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DirectMessageButtonIcon.png; path = images/DirectMessageButtonIcon.png; sourceTree = "<group>"; };
 		05DB29FF102CDB6B001E8C30 /* RetweetButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RetweetButtonIcon.png; path = images/RetweetButtonIcon.png; sourceTree = "<group>"; };
@@ -1554,6 +1557,8 @@
 				054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */,
 				0519C9CA10446B2500C2C7BD /* NSNumber+EncodingAdditions.h */,
 				0519C9CB10446B2500C2C7BD /* NSNumber+EncodingAdditions.m */,
+				05D4C4E1105EF94C0038BDF0 /* UIImage+GeneralHelpers.h */,
+				05D4C4E2105EF94C0038BDF0 /* UIImage+GeneralHelpers.m */,
 				05DB97391025107E00D06489 /* UIImage+DrawingAdditions.h */,
 				05DB973A1025107E00D06489 /* UIImage+DrawingAdditions.m */,
 				9130FE0C1034C792004E3030 /* ErrorState.h */,
@@ -2720,6 +2725,7 @@
 				05B7C8D1105899E00043298A /* SBJsonWriter.m in Sources */,
 				05B7C9CE10599D1F0043298A /* NearbySearchResponseProcessor.m in Sources */,
 				919CCC5C1059CD6B0029C0A1 /* NearbySearchDataSource.m in Sources */,
+				05D4C4E3105EF94C0038BDF0 /* UIImage+GeneralHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
