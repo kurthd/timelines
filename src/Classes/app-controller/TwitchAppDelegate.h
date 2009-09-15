@@ -15,6 +15,7 @@
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "InstapaperService.h"
 #import "InstapaperLogInDisplayMgr.h"
+#import "UIState.h"
 
 @class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class SearchBarDisplayMgr;
@@ -76,6 +77,8 @@
     InstapaperService * instapaperService;
     NSString * savingInstapaperUrl;
     InstapaperLogInDisplayMgr * instapaperLogInDisplayMgr;
+
+    UIState * uiState;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;

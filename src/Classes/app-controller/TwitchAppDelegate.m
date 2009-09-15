@@ -20,7 +20,6 @@
 #import "AccountsDisplayMgr.h"
 #import "ActiveTwitterCredentials.h"
 #import "UIStatePersistenceStore.h"
-#import "UIState.h"
 #import "UserTweet.h"
 #import "Mention.h"
 #import "DirectMessage.h"
@@ -134,6 +133,8 @@
     [savingInstapaperUrl release];
     [instapaperLogInDisplayMgr release];
 
+    [uiState release];
+
     [super dealloc];
 }
 
@@ -169,10 +170,6 @@
         initWithContext:[self managedObjectContext]
         findPeopleBookmarkMgr:findPeopleBookmarkMgr];
 
-    [self initHomeTab];
-    [self initMessagesTab];
-    [self initFindPeopleTab];
-    [self initSearchTab];
     [self initAccountsTab];
 
     if (self.credentials.count == 0) {
@@ -192,15 +189,7 @@
 
         TwitterCredentials * c = self.activeCredentials.credentials;
         NSLog(@"Active credentials on startup: '%@'.", c);
-
-        [timelineDisplayMgr setCredentials:c];
-        [directMessageDisplayMgr setCredentials:c];
-        [searchBarDisplayMgr setCredentials:c];
-        [findPeopleSearchDisplayMgr setCredentials:c];
         [self.composeTweetDisplayMgr setCredentials:c];
-
-        [self loadHomeViewWithCachedData:c];
-        [self loadMessagesViewWithCachedData:c];
     }
 
     [self setUIStateFromPersistence];
@@ -240,6 +229,7 @@
     // the accounts tab bar item is selected
     if (tabBarController.selectedViewController.tabBarItem.tag == 3) {
         // make sure account changes get saved
+
         TwitterCredentials * activeAccount =
             [accountsDisplayMgr selectedAccount];
         self.activeCredentials.credentials = activeAccount;
@@ -465,6 +455,8 @@
 
 - (void)initHomeTab
 {
+    NSLog(@"Initializing home tab");
+
     NSString * homeTabTitle =
         NSLocalizedString(@"appdelegate.hometabtitle", @"");
     timelineDisplayMgr =
@@ -505,10 +497,19 @@
         initWithListener:personalFeedSelectionMgr
         action:@selector(setCredentials:)];
 
-    UIStatePersistenceStore * uiStatePersistenceStore =
-        [[[UIStatePersistenceStore alloc] init] autorelease];
-    UIState * uiState = [uiStatePersistenceStore load];
     timelineDisplayMgr.tweetIdToShow = uiState.viewedTweetId;
+
+    // HACK: Force tab selected to be called when selected index is zero, which
+    // is the default
+    if (uiState.selectedTimelineFeed == 0) {
+        UISegmentedControl * control = (UISegmentedControl *)
+            homeNetAwareViewController.navigationItem.titleView;
+        [personalFeedSelectionMgr tabSelected:control];
+    }
+
+    TwitterCredentials * c = self.activeCredentials.credentials;
+    [timelineDisplayMgr setCredentials:c];
+    [self loadHomeViewWithCachedData:c];
 }
 
 - (void)initMessagesTab
@@ -524,6 +525,17 @@
     directMessageAcctMgr =
         [[DirectMessageAcctMgr alloc]
         initWithDirectMessagesDisplayMgr:directMessageDisplayMgr];
+
+    TwitterCredentials * c = self.activeCredentials.credentials;
+    [directMessageDisplayMgr setCredentials:c];
+    [self loadMessagesViewWithCachedData:c];
+
+    NewDirectMessagesPersistenceStore * newDirectMessagesPersistenceStore =
+        [[[NewDirectMessagesPersistenceStore alloc] init] autorelease];
+    directMessageDisplayMgr.newDirectMessagesState =
+        [newDirectMessagesPersistenceStore load];
+    [directMessageAcctMgr setWithDirectMessageCountsByAccount:
+        [newDirectMessagesPersistenceStore loadNewMessageCountsForAllAccounts]];
 }
 
 - (void)initFindPeopleTab
@@ -569,6 +581,14 @@
     [[CredentialsActivatedPublisher alloc]
         initWithListener:findPeopleSearchDisplayMgr
         action:@selector(setCredentials:)];
+
+    [findPeopleSearchDisplayMgr
+        setCredentials:self.activeCredentials.credentials];
+
+    [findPeopleSearchDisplayMgr
+        setSelectedBookmarkSegment:uiState.selectedPeopleBookmarkIndex];
+
+    findPeopleSearchDisplayMgr.currentSearchUsername = uiState.findPeopleText;
 }
 
 - (void)initSearchTab
@@ -593,6 +613,17 @@
             timelineDisplayMgr:displayMgr
                        context:[self managedObjectContext]];
     searchNetAwareViewController.delegate = searchBarDisplayMgr;
+
+    [searchBarDisplayMgr setCredentials:self.activeCredentials.credentials];
+    
+    [searchBarDisplayMgr
+        setSelectedBookmarkSegment:uiState.selectedSearchBookmarkIndex];
+
+    searchBarDisplayMgr.searchQuery = uiState.searchText;
+    searchBarDisplayMgr.nearbySearch = uiState.nearbySearch;
+
+    // HACK: Let the search view do some custom drawing when it appears
+    [searchBarDisplayMgr searchBarViewWillAppear:NO];
 }
 
 - (void)initAccountsTab
@@ -649,6 +680,26 @@
     return YES;
 }
 
+- (void)tabBarController:(UITabBarController *)tbc
+    didSelectViewController:(UIViewController *)viewController
+{
+    if (viewController == homeNetAwareViewController.navigationController &&
+        !timelineDisplayMgr)
+        [self initHomeTab];
+    else if (viewController ==
+        messagesNetAwareViewController.navigationController &&
+        !directMessageDisplayMgr)
+        [self initMessagesTab];
+    else if (viewController ==
+        findPeopleNetAwareViewController.navigationController &&
+        !findPeopleSearchDisplayMgr)
+        [self initFindPeopleTab];
+    else if (viewController ==
+        searchNetAwareViewController.navigationController &&
+        !searchBarDisplayMgr)
+        [self initSearchTab];
+}
+    
 #pragma mark -
 #pragma mark Core Data stack
 
@@ -1139,46 +1190,35 @@
 {
     UIStatePersistenceStore * uiStatePersistenceStore =
         [[[UIStatePersistenceStore alloc] init] autorelease];
-    UIState * uiState = [uiStatePersistenceStore load];
-
-    tabBarController.selectedIndex = uiState.selectedTab;
+    uiState = [[uiStatePersistenceStore load] retain];
 
     UISegmentedControl * control = (UISegmentedControl *)
         homeNetAwareViewController.navigationItem.titleView;
-    
-    [searchBarDisplayMgr
-        setSelectedBookmarkSegment:uiState.selectedSearchBookmarkIndex];
-    [findPeopleSearchDisplayMgr
-        setSelectedBookmarkSegment:uiState.selectedPeopleBookmarkIndex];
+
+    tabBarController.selectedIndex = uiState.selectedTab;
 
     control.selectedSegmentIndex = uiState.selectedTimelineFeed;
 
-    // HACK: Force tab selected to be called when selected index is zero, which
-    // is the default
-    if (uiState.selectedTimelineFeed == 0)
-        [personalFeedSelectionMgr tabSelected:control];
-
-    // HACK: Let the search view do some custom drawing when it appears
-    if (uiState.selectedTab == 3)
-        [searchBarDisplayMgr searchBarViewWillAppear:NO];
-
-    NewDirectMessagesPersistenceStore * newDirectMessagesPersistenceStore =
-        [[[NewDirectMessagesPersistenceStore alloc] init] autorelease];
-    directMessageDisplayMgr.newDirectMessagesState =
-        [newDirectMessagesPersistenceStore load];
-    [directMessageAcctMgr setWithDirectMessageCountsByAccount:
-        [newDirectMessagesPersistenceStore loadNewMessageCountsForAllAccounts]];
-    findPeopleSearchDisplayMgr.currentSearchUsername = uiState.findPeopleText;
-    searchBarDisplayMgr.searchQuery = uiState.searchText;
-
-    searchBarDisplayMgr.nearbySearch = uiState.nearbySearch;
+    switch (uiState.selectedTab) {
+        case 0:
+            [self initHomeTab];
+            break;
+        case 1:
+            [self initMessagesTab];
+            break;
+        case 2:
+            [self initSearchTab];
+            break;
+        case 3:
+            [self initFindPeopleTab];
+            break;
+    }
 }
 
 - (void)persistUIState
 {
     UIStatePersistenceStore * uiStatePersistenceStore =
         [[[UIStatePersistenceStore alloc] init] autorelease];
-    UIState * uiState = [[[UIState alloc] init] autorelease];
     uiState.selectedTab = tabBarController.selectedIndex;
     UISegmentedControl * control = (UISegmentedControl *)
         homeNetAwareViewController.navigationItem.titleView;
@@ -1193,31 +1233,38 @@
         [tabOrder addObject:tagNumber];
     }
     uiState.tabOrder = tabOrder;
-    
-    uiState.selectedSearchBookmarkIndex =
-        [searchBarDisplayMgr selectedBookmarkSegment];
-    uiState.selectedPeopleBookmarkIndex =
-        [findPeopleSearchDisplayMgr selectedBookmarkSegment];
 
-    uiState.findPeopleText = findPeopleSearchDisplayMgr.currentSearchUsername;
-    uiState.searchText = searchBarDisplayMgr.searchQuery;
-    uiState.nearbySearch = searchBarDisplayMgr.nearbySearch;
+    if (findPeopleSearchDisplayMgr) {
+        uiState.findPeopleText =
+            findPeopleSearchDisplayMgr.currentSearchUsername;
+        uiState.selectedPeopleBookmarkIndex =
+            [findPeopleSearchDisplayMgr selectedBookmarkSegment];
+    }
+
+    if (searchBarDisplayMgr) {
+        uiState.searchText = searchBarDisplayMgr.searchQuery;
+        uiState.nearbySearch = searchBarDisplayMgr.nearbySearch;
+        uiState.selectedSearchBookmarkIndex =
+            [searchBarDisplayMgr selectedBookmarkSegment];
+    }
 
     [uiStatePersistenceStore save:uiState];
 
-    NewDirectMessagesPersistenceStore * newDirectMessagesPersistenceStore =
-        [[[NewDirectMessagesPersistenceStore alloc] init] autorelease];
-    [newDirectMessagesPersistenceStore
-        save:directMessageDisplayMgr.newDirectMessagesState];
+    if (directMessageDisplayMgr) {
+        NewDirectMessagesPersistenceStore * newDirectMessagesPersistenceStore =
+            [[[NewDirectMessagesPersistenceStore alloc] init] autorelease];
+        [newDirectMessagesPersistenceStore
+            save:directMessageDisplayMgr.newDirectMessagesState];
 
-    [newDirectMessagesPersistenceStore
-        saveNewMessageCountsForAllAccounts:
-        [directMessageAcctMgr directMessageCountsByAccount]];
+        [newDirectMessagesPersistenceStore
+            saveNewMessageCountsForAllAccounts:
+            [directMessageAcctMgr directMessageCountsByAccount]];
 
-    NSUInteger numUnreadMessages =
-        directMessageDisplayMgr.newDirectMessagesState.numNewMessages;
-    [[UIApplication sharedApplication]
-        setApplicationIconBadgeNumber:numUnreadMessages];
+        NSUInteger numUnreadMessages =
+            directMessageDisplayMgr.newDirectMessagesState.numNewMessages;
+        [[UIApplication sharedApplication]
+            setApplicationIconBadgeNumber:numUnreadMessages];
+    }
 }
 
 #pragma mark Accessors
