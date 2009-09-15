@@ -949,7 +949,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
     NSLog(@"Message display manager: setting credentials to '%@'",
-        someCredentials);
+        someCredentials.username);
 
     [someCredentials retain];
     [credentials release];

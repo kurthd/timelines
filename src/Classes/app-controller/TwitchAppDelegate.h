@@ -52,7 +52,6 @@
     // Root view controllers
     IBOutlet NetworkAwareViewController * homeNetAwareViewController;
     IBOutlet NetworkAwareViewController * messagesNetAwareViewController;
-    IBOutlet NetworkAwareViewController * profileNetAwareViewController;
     IBOutlet NetworkAwareViewController * searchNetAwareViewController;
     IBOutlet AccountsViewController * accountsViewController;
     IBOutlet NetworkAwareViewController * findPeopleNetAwareViewController;
@@ -62,7 +61,6 @@
     DirectMessagesDisplayMgr * directMessageDisplayMgr;
     DirectMessageAcctMgr * directMessageAcctMgr;
     TimelineDisplayMgr * timelineDisplayMgr;
-    TimelineDisplayMgr * profileTimelineDisplayMgr;
     PersonalFeedSelectionMgr * personalFeedSelectionMgr;
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
@@ -72,7 +70,6 @@
     AccountsDisplayMgr * accountsDisplayMgr;
 
     UIBarButtonItem * homeSendingTweetProgressView;
-    UIBarButtonItem * profileSendingTweetProgressView;
 
     SavedSearchMgr * findPeopleBookmarkMgr;
 
