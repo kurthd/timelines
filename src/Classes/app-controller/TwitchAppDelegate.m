@@ -200,7 +200,7 @@
     [self performSelector:
         @selector(finishInitializationWithTimeInsensitiveOperations)
         withObject:nil
-        afterDelay:1.0];
+        afterDelay:0.7];
 
     NSLog(@"Application did finish initializing");
 }
