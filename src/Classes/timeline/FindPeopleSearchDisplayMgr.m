@@ -738,7 +738,7 @@
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
     NSLog(@"Find people display manager: setting credentials: %@",
-        someCredentials);
+        someCredentials.username);
 
     [someCredentials retain];
     [credentials release];

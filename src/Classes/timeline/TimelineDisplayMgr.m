@@ -1232,8 +1232,8 @@ static BOOL scrollToTopValueAlreadyRead;
 
     [aTimelineSource setCredentials:credentials];
 
-    [self.timelineController.tableView
-        scrollRectToVisible:self.timelineController.tableView.frame
+    // HACK: forces timeline to scroll to top
+    [timelineController.tableView setContentOffset:CGPointMake(0, 300)
         animated:NO];
 
     [timelineController setTweets:[timeline allValues] page:pagesShown
@@ -1252,14 +1252,14 @@ static BOOL scrollToTopValueAlreadyRead;
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
     NSLog(@"Timeline display manager: setting new credentials to: %@",
-        someCredentials);
+        someCredentials.username);
 
     TwitterCredentials * oldCredentials = credentials;
 
     [someCredentials retain];
     [credentials autorelease];
     credentials = someCredentials;
-
+    
     if (displayAsConversation) {
         NSArray * invertedCellUsernames =
             [NSArray arrayWithObject:someCredentials.username];
@@ -1295,15 +1295,15 @@ static BOOL scrollToTopValueAlreadyRead;
 
         needsRefresh = YES;
         pagesShown = 1;
+
+        // HACK: forces timeline to scroll to top
+        [timelineController.tableView setContentOffset:CGPointMake(0, 300)
+            animated:NO];
     } else if (hasBeenDisplayed) {// set for first time and persisted data shown
         NSLog(@"Timeline display manager: setting account for first time");
         [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
     }
-
-    [self.timelineController.tableView
-        scrollRectToVisible:self.timelineController.tableView.frame
-        animated:NO];
 }
 
 - (void)setUser:(User *)aUser

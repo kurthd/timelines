@@ -17,9 +17,14 @@
 - (void)request:(id)rid succeededWithResponse:(id)response;
 - (void)request:(id)rid failed:(NSError *)error;
 
++ (OAToken *)tokenFromCredentials:(TwitterCredentials *)credentials;
++ (NSMutableDictionary *)oaTokens;
+
 @end
 
 @implementation TwitterService
+
+static NSMutableDictionary * oaTokens;
 
 @synthesize delegate, credentials;
 
@@ -627,16 +632,35 @@
     if (credentials != someCredentials) {
         [credentials release];
         credentials = [someCredentials retain];
-
-        OAToken * token = [[OAToken alloc] initWithKey:credentials.key
-                                                secret:credentials.secret];
-        twitter.accessToken = token;
-        [token release];
+        
+        twitter.accessToken =
+            [[self class] tokenFromCredentials:someCredentials];
 
         // when the credentials are changed, we don't want to send back any
         // responses received for the previous credentials
         [self removeAllPendingRequests];
     }
+}
+
++ (OAToken *)tokenFromCredentials:(TwitterCredentials *)creds
+{
+    OAToken * token = [[[self class] oaTokens] objectForKey:creds.key];
+    if (!token) {
+        token =
+            [[[OAToken alloc] initWithKey:creds.key secret:creds.secret]
+            autorelease];
+        [[[self class] oaTokens] setObject:token forKey:creds.key];
+    }
+
+    return token;
+}
+
++ (NSMutableDictionary *)oaTokens
+{
+    if (!oaTokens)
+        oaTokens = [[NSMutableDictionary dictionary] retain];
+
+    return oaTokens;
 }
 
 @end

@@ -54,8 +54,14 @@
 
 - (void)tabSelectedWithIndex:(NSInteger)index
 {
-    NSLog(@"Tab selected");
+    NSLog(@"Timeline segmented control index selected");
     switch (previousTab) {
+        case -1: // first time
+            if (index == 0)
+                allTimelineRefresh = NO;
+            else if (index == 1)
+                mentionsTimelineRefresh = NO;
+            break;
         case 0:
             self.allTimelineTweets = timelineDisplayMgr.timeline;
             allTimelinePagesShown = timelineDisplayMgr.pagesShown;
