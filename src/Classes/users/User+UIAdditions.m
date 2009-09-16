@@ -82,9 +82,16 @@ static NSMutableDictionary * followersDescriptions;
     if (!followersDescription) {
         NSString * followingFormatString =
             NSLocalizedString(@"userlisttableview.following", @"");
+        NSNumberFormatter * formatter =
+            [[[NSNumberFormatter alloc] init] autorelease];
+        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        NSString * followingString =
+            [formatter stringFromNumber:self.friendsCount];
+        NSString * followersString =
+            [formatter stringFromNumber:self.followersCount];;
         followersDescription =
-            [NSString stringWithFormat:followingFormatString, self.friendsCount,
-            self.followersCount];
+            [NSString stringWithFormat:followingFormatString, followingString,
+            followersString];
         [[[self class] followersDescriptionCache]
             setObject:followersDescription forKey:self.identifier];
     }
