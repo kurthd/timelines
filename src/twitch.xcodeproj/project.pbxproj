@@ -409,6 +409,9 @@
 		91D36976100D44D200B59D12 /* AvatarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36975100D44D200B59D12 /* AvatarBackground.png */; };
 		91DEF180101B7118001354D5 /* FindPeopleSearchDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DEF17F101B7118001354D5 /* FindPeopleSearchDisplayMgr.m */; };
 		91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6C44101A51F800354D67 /* PersonSearch.png */; };
+		91FDD58D1061581C000F7527 /* BitlyLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91FDD58C1061581C000F7527 /* BitlyLogInDisplayMgr.m */; };
+		91FDD59010615849000F7527 /* BitlyLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91FDD58F10615849000F7527 /* BitlyLogInViewController.m */; };
+		91FDD5A510616854000F7527 /* BitlyLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91FDD5A310616854000F7527 /* BitlyLogInView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1111,6 +1114,11 @@
 		91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsHeaderGradient.png; path = images/TweetDetailsHeaderGradient.png; sourceTree = "<group>"; };
 		91E000940FEFFCC700BCE9BC /* DropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadow.png; path = images/DropShadow.png; sourceTree = "<group>"; };
 		91FC6C44101A51F800354D67 /* PersonSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PersonSearch.png; path = images/PersonSearch.png; sourceTree = "<group>"; };
+		91FDD58B1061581C000F7527 /* BitlyLogInDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitlyLogInDisplayMgr.h; path = bitly/BitlyLogInDisplayMgr.h; sourceTree = "<group>"; };
+		91FDD58C1061581C000F7527 /* BitlyLogInDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BitlyLogInDisplayMgr.m; path = bitly/BitlyLogInDisplayMgr.m; sourceTree = "<group>"; };
+		91FDD58E10615849000F7527 /* BitlyLogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitlyLogInViewController.h; path = bitly/BitlyLogInViewController.h; sourceTree = "<group>"; };
+		91FDD58F10615849000F7527 /* BitlyLogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BitlyLogInViewController.m; path = bitly/BitlyLogInViewController.m; sourceTree = "<group>"; };
+		91FDD5A410616854000F7527 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/BitlyLogInView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1580,6 +1588,7 @@
 		05B239440FEDD0E400A6A2E6 /* nibs */ = {
 			isa = PBXGroup;
 			children = (
+				91FDD5A310616854000F7527 /* BitlyLogInView.xib */,
 				05B238820FEDC34200A6A2E6 /* MainWindow.xib */,
 				916BD7ED0FEEB958007143A9 /* NoDataView.xib */,
 				05B238880FEDC35400A6A2E6 /* LogInView.xib */,
@@ -1881,6 +1890,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				91FDD58A106157EF000F7527 /* bitly */,
 				918F7140104741F900FE7ABF /* web */,
 				918F3733103F47E9000236AE /* geo-services */,
 				9152E14A1014F68B0033B63B /* direct-messages */,
@@ -2264,6 +2274,17 @@
 			name = web;
 			sourceTree = "<group>";
 		};
+		91FDD58A106157EF000F7527 /* bitly */ = {
+			isa = PBXGroup;
+			children = (
+				91FDD58B1061581C000F7527 /* BitlyLogInDisplayMgr.h */,
+				91FDD58C1061581C000F7527 /* BitlyLogInDisplayMgr.m */,
+				91FDD58E10615849000F7527 /* BitlyLogInViewController.h */,
+				91FDD58F10615849000F7527 /* BitlyLogInViewController.m */,
+			);
+			name = bitly;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2442,6 +2463,7 @@
 				91257DBA1058449C006F5DBD /* CancelButton.png in Resources */,
 				919CCCBC105EB0600029C0A1 /* DeleteTweetButtonIcon.png in Resources */,
 				919CCCBE105EB0760029C0A1 /* NearbyTweetsButtonIcon.png in Resources */,
+				91FDD5A510616854000F7527 /* BitlyLogInView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2726,6 +2748,8 @@
 				05B7C9CE10599D1F0043298A /* NearbySearchResponseProcessor.m in Sources */,
 				919CCC5C1059CD6B0029C0A1 /* NearbySearchDataSource.m in Sources */,
 				05D4C4E3105EF94C0038BDF0 /* UIImage+GeneralHelpers.m in Sources */,
+				91FDD58D1061581C000F7527 /* BitlyLogInDisplayMgr.m in Sources */,
+				91FDD59010615849000F7527 /* BitlyLogInViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3035,6 +3059,14 @@
 				91CD821A0FF5403F004D04D5 /* en */,
 			);
 			name = TwitchBrowserView.xib;
+			sourceTree = "<group>";
+		};
+		91FDD5A310616854000F7527 /* BitlyLogInView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91FDD5A410616854000F7527 /* en */,
+			);
+			name = BitlyLogInView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

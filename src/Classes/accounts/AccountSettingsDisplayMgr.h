@@ -7,13 +7,15 @@
 #import "AccountSettingsViewController.h"
 #import "PhotoServicesDisplayMgr.h"
 #import "InstapaperLogInDisplayMgr.h"
+#import "BitlyLogInDisplayMgr.h"
 
 @protocol AccountSettingsDisplayMgrDelegate
 @end
 
 @interface AccountSettingsDisplayMgr :
     NSObject <AccountSettingsViewControllerDelegate,
-    PhotoServicesDisplayMgrDelegate, InstapaperLogInDisplayMgrDelegate>
+    PhotoServicesDisplayMgrDelegate, InstapaperLogInDisplayMgrDelegate,
+    BitlyLogInDisplayMgrDelegate>
 {
     id<AccountSettingsDisplayMgrDelegate> delegate;
 
@@ -22,6 +24,7 @@
 
     PhotoServicesDisplayMgr * photoServicesDisplayMgr;
     InstapaperLogInDisplayMgr * instapaperDisplayMgr;
+    BitlyLogInDisplayMgr * bitlyDisplayMgr;
 
     NSManagedObjectContext * context;
 }

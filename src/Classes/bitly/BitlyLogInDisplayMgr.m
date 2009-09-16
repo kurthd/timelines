@@ -1,0 +1,196 @@
+//
+//  Copyright 2009 High Order Bit, Inc. All rights reserved.
+//
+
+#import "BitlyLogInDisplayMgr.h"
+#import "UIAlertView+InstantiationAdditions.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
+
+@interface BitlyLogInDisplayMgr ()
+
+@property (nonatomic, retain) BitlyLogInViewController * viewController;
+@property (nonatomic, retain) UIViewController * rootViewController;
+@property (nonatomic, retain) UINavigationController * navigationController;
+
+@property (nonatomic, retain) NSManagedObjectContext * context;
+
+- (void)dismissLogInViewController;
+
+@end
+
+@implementation BitlyLogInDisplayMgr
+
+@synthesize delegate;
+@synthesize viewController, navigationController, rootViewController;
+@synthesize credentials , context;
+
+- (void)dealloc
+{
+    self.delegate = nil;
+
+    self.viewController = nil;
+    self.rootViewController = nil;
+    self.navigationController = nil;
+
+    self.credentials = nil;
+    self.context = nil;
+
+    [super dealloc];
+}
+
+- (id)initWithContext:(NSManagedObjectContext *)aContext
+{
+    if (self = [super init]) {
+        self.context = aContext;
+        authenticating = NO;
+    }
+
+    return self;
+}
+
+- (void)logInModallyForViewController:(UIViewController *)aRootViewController
+{
+    self.viewController = nil;
+    self.rootViewController = aRootViewController;
+
+    UINavigationController * navController =
+        [[UINavigationController alloc]
+        initWithRootViewController:self.viewController];
+    self.navigationController = navController;
+    [navController release];
+
+    [self.rootViewController
+        presentModalViewController:self.navigationController animated:YES];
+}
+
+- (void)configureExistingAccountWithNavigationController:
+    (UINavigationController *)aNavigationController
+{
+    self.viewController = nil;
+    self.rootViewController = nil;
+    self.navigationController = aNavigationController;
+
+    [self.navigationController pushViewController:self.viewController
+                                         animated:YES];
+//    self.viewController.credentials = self.credentials.bitlyCredentials;
+    // self.viewController.editingExistingAccount =
+    //     !!self.credentials.bitlyCredentials;
+}
+
+#pragma mark BitlyLogInViewControllerDelegate implementation
+
+- (void)userDidSave:(NSString *)username password:(NSString *)password
+{
+    [self.viewController displayActivity];
+
+    NSLog(@"Authenticating Bitly username: '%@'.", username);
+//    [self.instapaperService authenticateUsername:username password:password];
+    authenticating = YES;
+}
+
+- (void)userDidCancel
+{
+    [self dismissLogInViewController];
+    // if (authenticating)
+    //     [self.instapaperService cancelAuthentication];
+
+    // InstapaperCredentials * instapaperCredentials =
+    //     self.credentials.instapaperCredentials;
+    // if (instapaperCredentials)
+    //     [self.delegate editingAccountCancelled:instapaperCredentials];
+    // else
+    //     [self.delegate accountCreationCancelled];
+}
+
+// - (void)deleteAccount:(InstapaperCredentials *)instapaperCredentials
+// {
+//     [self.delegate accountWillBeDeleted:instapaperCredentials];
+//     
+//     [self.context deleteObject:instapaperCredentials];
+//     [self.context save:NULL];
+//     
+//     [self dismissInstapaperLogInViewController];
+// }
+
+#pragma mark InstapaperServiceDelegate implementation
+
+-(void)authenticatedUsername:(NSString *)username
+                    password:(NSString *)password
+{
+    // NSLog(@"'%@': Successfully authenticated Bitly account.", username);
+    // 
+    // BOOL changingExisting = !!self.credentials.instapaperCredentials;
+    // 
+    // InstapaperCredentials * instapaperCredentials =
+    //     changingExisting ?
+    //     self.credentials.instapaperCredentials :
+    //     [InstapaperCredentials createInstance:self.context];
+    // instapaperCredentials.username = username;
+    // [instapaperCredentials setPassword:password];
+    // instapaperCredentials.credentials = self.credentials;
+    // [self.context save:NULL];
+    // 
+    // [self.viewController hideActivity];
+    // [self dismissInstapaperLogInViewController];
+    // authenticating = NO;
+    // 
+    // if (changingExisting)
+    //     [self.delegate accountEdited:instapaperCredentials];
+    // else
+    //     [self.delegate accountCreated:instapaperCredentials];
+}
+
+- (void)failedToAuthenticateUsername:(NSString *)username
+                            password:(NSString *)password
+                               error:(NSError *)error
+{
+    NSString * title =
+        NSLocalizedString(@"bitly.login.failed.alert.title", @"");
+    NSString * message = error.localizedDescription;
+
+    [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
+
+    [self.viewController hideActivity];
+    authenticating = NO;
+}
+
+- (void)postedUrl:(NSString *)url
+{
+}
+
+- (void)failedToPostUrl:(NSString *)url error:(NSError *)error
+{
+}
+
+#pragma mark Private implementation
+
+- (void)dismissLogInViewController
+{
+    if (self.rootViewController)
+        [self.rootViewController dismissModalViewControllerAnimated:YES];
+    else
+        [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark Accessors
+
+- (BitlyLogInViewController *)viewController
+{
+    if (!viewController)
+        viewController =
+            [[BitlyLogInViewController alloc] initWithDelegate:self];
+
+    return viewController;
+}
+
+// - (InstapaperService *)instapaperService
+// {
+//     if (!instapaperService) {
+//         instapaperService = [[InstapaperService alloc] init];
+//         instapaperService.delegate = self;
+//     }
+// 
+//     return instapaperService;
+// }
+
+@end

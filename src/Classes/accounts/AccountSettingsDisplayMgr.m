@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) PhotoServicesDisplayMgr * photoServicesDisplayMgr;
 @property (nonatomic, retain) InstapaperLogInDisplayMgr * instapaperDisplayMgr;
+@property (nonatomic, retain) BitlyLogInDisplayMgr * bitlyDisplayMgr;
 
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
@@ -23,7 +24,7 @@
 
 @synthesize delegate;
 @synthesize navigationController, accountSettingsViewController;
-@synthesize photoServicesDisplayMgr, instapaperDisplayMgr;
+@synthesize photoServicesDisplayMgr, instapaperDisplayMgr, bitlyDisplayMgr;
 @synthesize context;
 
 - (void)dealloc
@@ -95,6 +96,14 @@
 {
     self.instapaperDisplayMgr.credentials = credentials;
     [self.instapaperDisplayMgr
+        configureExistingAccountWithNavigationController:
+        self.navigationController];
+}
+
+- (void)userWantsToConfigureBitlyForAccount:(TwitterCredentials *)credentials
+{
+    self.bitlyDisplayMgr.credentials = credentials;
+    [self.bitlyDisplayMgr
         configureExistingAccountWithNavigationController:
         self.navigationController];
 }
@@ -196,6 +205,17 @@
     }
 
     return instapaperDisplayMgr;
+}
+
+- (BitlyLogInDisplayMgr *)bitlyDisplayMgr
+{
+    if (!bitlyDisplayMgr) {
+        bitlyDisplayMgr =
+            [[BitlyLogInDisplayMgr alloc] initWithContext:self.context];
+        bitlyDisplayMgr.delegate = self;
+    }
+
+    return bitlyDisplayMgr;
 }
 
 @end

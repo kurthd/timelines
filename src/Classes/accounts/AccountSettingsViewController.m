@@ -18,10 +18,11 @@ enum {
     kDirectMessagesRow
 };
 
-static const NSInteger NUM_INTEGRATION_ROWS = 2;
+static const NSInteger NUM_INTEGRATION_ROWS = 2; // don't show bitly for now
 enum {
     kPhotAndVideoRow,
-    kInstapaperRow
+    kInstapaperRow,
+    kBitlyRow
 };
 
 @interface AccountSettingsViewController ()
@@ -179,6 +180,32 @@ enum {
             @"accountsettings.integration.instapaper.notconfigured.label",
             @"");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    } else if (indexPath.section == kIntegrationSection &&
+        indexPath.row == kBitlyRow) {
+        static NSString * CellIdentifier =
+            @"AccountSettingsIntegrationTableViewCell";
+
+        cell = [tv dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!cell)
+            cell =
+                [[[UITableViewCell alloc]
+                initWithStyle:UITableViewCellStyleValue1
+                reuseIdentifier:CellIdentifier]
+                autorelease];
+
+        cell.textLabel.text =
+            NSLocalizedString(
+            @"accountsettings.integration.bitly.label", @"");
+
+        // TODO: add bitlyCredentials to credentials
+        id bitlyCreds = nil;
+        cell.detailTextLabel.text =
+            bitlyCreds ?
+            /* bitlyCreds.username */ @"" :
+            NSLocalizedString(
+            @"accountsettings.integration.bitly.notconfigured.label",
+            @"");
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
     return cell;
@@ -196,6 +223,9 @@ enum {
         else if (indexPath.row == kInstapaperRow)
             [self.delegate
                 userWantsToConfigureInstapaperForAccount:self.credentials];
+        else if (indexPath.row == kBitlyRow)
+            [self.delegate
+                userWantsToConfigureBitlyForAccount:self.credentials];
     }
 }
 

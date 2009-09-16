@@ -16,6 +16,7 @@
 
 - (void)userWantsToConfigureInstapaperForAccount:
     (TwitterCredentials *)credentials;
+- (void)userWantsToConfigureBitlyForAccount:(TwitterCredentials *)credentials;
 
 @end
 
