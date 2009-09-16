@@ -450,7 +450,9 @@ enum TweetActionSheets {
     [User setAvatar:avatar forUrl:urlAsString];
     NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
     if (NSEqualRanges([urlAsString rangeOfString:@"_normal."], notFoundRange) &&
-        avatar)
+        avatar &&
+        ([tweet.user.avatar.thumbnailImageUrl isEqual:urlAsString] ||
+        [tweet.user.avatar.fullImageUrl isEqual:urlAsString]))
         [avatarImage setImage:avatar];
 }
 
