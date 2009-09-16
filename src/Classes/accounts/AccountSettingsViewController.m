@@ -6,10 +6,9 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "InstapaperCredentials.h"
 
-static const NSInteger NUM_SECTIONS = 3;
+static const NSInteger NUM_SECTIONS = 2;
 enum {
     kPushNotificationSection,
-    kPhotoSection,
     kIntegrationSection
 };
 
@@ -19,13 +18,9 @@ enum {
     kDirectMessagesRow
 };
 
-static const NSInteger NUM_PHOTO_ROWS = 1;
+static const NSInteger NUM_INTEGRATION_ROWS = 2;
 enum {
-    kIntegrationRow
-};
-
-static const NSInteger NUM_INTEGRATION_ROWS = 1;
-enum {
+    kPhotAndVideoRow,
     kInstapaperRow
 };
 
@@ -114,23 +109,10 @@ enum {
 
     if (section == kPushNotificationSection)
         title = NSLocalizedString(@"accountsettings.push.header", @"");
-    else if (section == kPhotoSection)
-        title = NSLocalizedString(@"accountsettings.photo.header", @"");
     else if (section == kIntegrationSection)
         title = NSLocalizedString(@"accountsettings.integration.header", @"");
 
     return title;
-}
-
-- (NSString *)tableView:(UITableView *)tableView
-    titleForFooterInSection:(NSInteger)section
-{
-    NSString * footer = nil;
-
-    if (section == kPushNotificationSection)
-        footer = NSLocalizedString(@"accountsettings.push.footer", @"");
-
-    return footer;
 }
 
 - (NSInteger)tableView:(UITableView *)tv
@@ -140,8 +122,6 @@ enum {
 
     if (section == kPushNotificationSection)
         nrows = NUM_PUSH_NOTIFICATION_ROWS;
-    else if (section == kPhotoSection)
-        nrows = NUM_PHOTO_ROWS;
     else if (section == kIntegrationSection)
         nrows = NUM_INTEGRATION_ROWS;
 
@@ -155,7 +135,8 @@ enum {
 
     if (indexPath.section == kPushNotificationSection)
         cell = [self.pushSettingTableViewCells objectAtIndex:indexPath.row];
-    else if (indexPath.section == kPhotoSection) {
+    else if (indexPath.section == kIntegrationSection &&
+        indexPath.row == kPhotAndVideoRow) {
         static NSString * CellIdentifier = @"AccountSettingsPhotoTableViewCell";
 
         cell = [tv dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -166,14 +147,14 @@ enum {
                 reuseIdentifier:CellIdentifier]
                 autorelease];
 
-        if (indexPath.row == kIntegrationRow)
-            cell.textLabel.text =
-                NSLocalizedString(
-                @"accountsettings.photo.integration.label", @"");
+
+        cell.textLabel.text =
+            NSLocalizedString(@"accountsettings.photo.integration.label", @"");
 
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-    } else if (indexPath.section == kIntegrationSection) {
+    } else if (indexPath.section == kIntegrationSection &&
+        indexPath.row == kInstapaperRow) {
         static NSString * CellIdentifier =
             @"AccountSettingsIntegrationTableViewCell";
 
@@ -185,21 +166,19 @@ enum {
                 reuseIdentifier:CellIdentifier]
                 autorelease];
 
-        if (indexPath.row == kInstapaperRow) {
-            cell.textLabel.text =
-                NSLocalizedString(
-                @"accountsettings.integration.instapaper.label", @"");
+        cell.textLabel.text =
+            NSLocalizedString(
+            @"accountsettings.integration.instapaper.label", @"");
 
-            InstapaperCredentials * ic =
-                self.credentials.instapaperCredentials;
-            cell.detailTextLabel.text =
-                ic ?
-                ic.username :
-                NSLocalizedString(
-                @"accountsettings.integration.instapaper.notconfigured.label",
-                @"");
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
+        InstapaperCredentials * ic =
+            self.credentials.instapaperCredentials;
+        cell.detailTextLabel.text =
+            ic ?
+            ic.username :
+            NSLocalizedString(
+            @"accountsettings.integration.instapaper.notconfigured.label",
+            @"");
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
     return cell;
@@ -210,13 +189,14 @@ enum {
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == kPhotoSection)
-        if (indexPath.row == kIntegrationRow)
+    if (indexPath.section == kIntegrationSection) {
+        if (indexPath.row == kPhotAndVideoRow)
             [self.delegate
                 userWantsToConfigurePhotoServicesForAccount:self.credentials];
-    else if (indexPath.section == kIntegrationSection)
-        [self.delegate
-            userWantsToConfigureInstapaperForAccount:self.credentials];
+        else if (indexPath.row == kInstapaperRow)
+            [self.delegate
+                userWantsToConfigureInstapaperForAccount:self.credentials];
+    }
 }
 
 #pragma mark Public interface implementation

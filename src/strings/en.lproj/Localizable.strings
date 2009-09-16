@@ -124,9 +124,9 @@ account.deletion.failed.alert.title = "Failed to Remove %@";
 accountsettings.push.header = "Push Notifications";
 accountsettings.push.footer = "Twitbit can send push notifications for \nmentions and direct messages.";
 accountsettings.photo.header = "Photo & Video";
-accountsettings.photo.integration.label = "Photo & Video Services";
+accountsettings.photo.integration.label = "Photo & Video";
 accountsettings.photo.compression.label = "Compression";
-accountsettings.integration.header = "Other Services";
+accountsettings.integration.header = "Services";
 accountsettings.integration.instapaper.label = "Instapaper";
 accountsettings.integration.instapaper.notconfigured.label = "not configured";
 
