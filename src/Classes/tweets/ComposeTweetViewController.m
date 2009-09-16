@@ -7,6 +7,28 @@
 
 static const NSInteger MAX_TWEET_LENGTH = 140;
 
+@interface UIApplication (KeyboardView)
+
+- (UIView *)keyboardView;
+
+@end
+
+@implementation UIApplication (KeyboardView)
+
+- (UIView *)keyboardView
+{
+    NSArray *windows = [self windows];
+    for (UIWindow *window in [windows reverseObjectEnumerator])
+        for (UIView *view in [window subviews])
+            if (!strcmp(object_getClassName(view), "UIKeyboard"))
+                return view;
+    
+    return nil;
+}
+
+@end
+
+
 @interface ComposeTweetViewController ()
 
 - (void)showRecipientView;
@@ -244,7 +266,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                              cache:YES];
 
     activityView.alpha = 0.75;
-    [self.view addSubview:activityView];
+    UIView * keyboardView = [[UIApplication sharedApplication] keyboardView];
+    UIView * keyView = keyboardView ? [keyboardView superview] : self.view;
+    [keyView addSubview:activityView];
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
 
