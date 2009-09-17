@@ -222,7 +222,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
         updatingLabel.shadowOffset = CGSizeMake(0, 1);
         updatingLabel.shadowColor = [UIColor blackColor];
         [updatingView addSubview:updatingLabel];
-        
+
         const CGFloat ACTIVITY_INDICATOR_MARGIN =
             (VIEW_HEIGHT - ACTIVITY_INDICATOR_LENGTH) / 2;
         CGRect activityIndicatorFrame =

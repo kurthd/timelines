@@ -1405,8 +1405,11 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         subject = self.selectedMessage.text;
     [picker setSubject:subject];
 
+    // NSString * body =
+    //     [NSString stringWithFormat:@"%@", self.selectedMessage.text];
     NSString * body =
-        [NSString stringWithFormat:@"%@", self.selectedMessage.text];
+        [NSString stringWithFormat:@"\"%@\"\n- %@",
+        self.selectedMessage.text, self.selectedMessage.sender.username];
     [picker setMessageBody:body isHTML:NO];
 
     [self.tweetViewController presentModalViewController:picker animated:YES];
