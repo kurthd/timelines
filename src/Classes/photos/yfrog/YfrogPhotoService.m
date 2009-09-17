@@ -19,6 +19,10 @@
 
 @property (nonatomic, retain) YfrogResponseParser * parser;
 
+- (void)sendData:(NSData *)sendableData
+      ofMimeType:(NSString *)mimeType
+ withCredentials:(YfrogCredentials *)someCredentials;
+
 + (NSURLRequest *)requestForPostingData:(NSData *)data
                              ofMimeType:(NSString *)mimeType
                                   toUrl:(NSURL *)url
@@ -55,29 +59,6 @@
 
 #pragma mark Public Implementation
 
-- (void)sendData:(NSData *)sendableData
-      ofMimeType:(NSString *)mimeType
- withCredentials:(YfrogCredentials *)someCredentials
-{
-    NSURL * url = [NSURL URLWithString:self.yfrogUrl];
-    NSURLRequest * request =
-        [[self class] requestForPostingData:sendableData
-                                 ofMimeType:mimeType
-                                      toUrl:url
-                               withUsername:someCredentials.username
-                                   password:someCredentials.password];
-
-    self.connection =
-        [[[NSURLConnection alloc] initWithRequest:request
-                                         delegate:self
-                                 startImmediately:YES] autorelease];
-
-    self.data = [NSMutableData data];
-
-    // HACK
-    [[UIApplication sharedApplication] networkActivityIsStarting];
-}
-
 - (void)sendImage:(UIImage *)anImage
   withCredentials:(YfrogCredentials *)ctls
 {
@@ -95,6 +76,12 @@
 
     NSData * video = [NSData dataWithContentsOfURL:url];
     [self sendData:video ofMimeType:@"video/quicktime" withCredentials:ctls];
+}
+
+- (void)cancelUpload
+{
+    [super cancelUpload];
+    [self.connection cancel];
 }
 
 #pragma mark NSURLConnection delegate methods
@@ -137,7 +124,31 @@
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
-#pragma mark Helpers for building the post body
+#pragma mark Private implementation
+
+- (void)sendData:(NSData *)sendableData
+      ofMimeType:(NSString *)mimeType
+ withCredentials:(YfrogCredentials *)someCredentials
+{
+    NSURL * url = [NSURL URLWithString:self.yfrogUrl];
+    NSURLRequest * request =
+        [[self class] requestForPostingData:sendableData
+                                 ofMimeType:mimeType
+                                      toUrl:url
+                               withUsername:someCredentials.username
+                                   password:someCredentials.password];
+
+    self.connection =
+        [[[NSURLConnection alloc] initWithRequest:request
+                                         delegate:self
+                                 startImmediately:YES] autorelease];
+
+    self.data = [NSMutableData data];
+
+    // HACK
+    [[UIApplication sharedApplication] networkActivityIsStarting];
+}
+
 
 + (NSURLRequest *)requestForPostingData:(NSData *)data
                              ofMimeType:(NSString *)mimeType

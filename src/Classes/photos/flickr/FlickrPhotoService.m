@@ -153,6 +153,12 @@
     [[UIApplication sharedApplication] networkActivityIsStarting];
 }
 
+- (void)cancelUpload
+{
+    if (self.uploadRequest)
+        [self.uploadRequest cancel];
+}
+
 - (void)setTitle:(NSString *)title forPhotoWithUrl:(NSString *)photoUrl
     credentials:(FlickrCredentials *)someCredentials
 {

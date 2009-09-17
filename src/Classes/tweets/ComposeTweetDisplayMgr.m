@@ -49,6 +49,8 @@
 
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
+@property (nonatomic, retain) PhotoService * photoService;
+
 @property (nonatomic, retain) NSMutableArray * attachedPhotos;
 @property (nonatomic, retain) NSMutableArray * attachedVideos;
 
@@ -83,6 +85,7 @@
 @synthesize draftMgr;
 @synthesize addPhotoServiceDisplayMgr;
 @synthesize attachedPhotos, attachedVideos;
+@synthesize photoService;
 @synthesize linkShorteningView, shorteningUrl;
 
 - (void)dealloc
@@ -98,6 +101,7 @@
     self.origUsername = nil;
     self.origTweetId = nil;
     self.draftMgr = nil;
+    self.photoService = nil;
     self.attachedPhotos = nil;
     self.attachedVideos = nil;
     self.linkShorteningView = nil;
@@ -439,6 +443,14 @@
         [self.addPhotoServiceDisplayMgr addPhotoService:credentials];
 }
 
+- (void)userDidCancelActivity
+{
+    if (self.photoService) {
+        [self.photoService cancelUpload];
+        [self.composeTweetViewController hideActivityView];
+    }
+}
+
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)tweetSentSuccessfully:(Tweet *)tweet
@@ -524,7 +536,7 @@
 
 #pragma mark PhotoServiceDelegate implementation
 
-- (void)service:(PhotoService *)photoService didPostImageToUrl:(NSString *)url
+- (void)service:(PhotoService *)aPhotoService didPostImageToUrl:(NSString *)url
 {
     NSLog(@"Successfully posted image to URL: '%@'.", url);
 
@@ -534,9 +546,10 @@
     [self.attachedPhotos addObject:url];
 
     [photoService autorelease];
+    photoService = nil;
 }
 
-- (void)service:(PhotoService *)photoService didPostVideoToUrl:(NSString *)url
+- (void)service:(PhotoService *)aPhotoService didPostVideoToUrl:(NSString *)url
 {
     NSLog(@"Successfully posted video to URL: '%@'.", url);
 
@@ -546,9 +559,10 @@
     [self.attachedVideos addObject:url];
 
     [photoService autorelease];
+    photoService = nil;
 }
 
-- (void)service:(PhotoService *)photoService failedToPostImage:(NSError *)error
+- (void)service:(PhotoService *)aPhotoService failedToPostImage:(NSError *)error
 {
     NSLog(@"Failed to post image to URL: '%@'.", error);
 
@@ -560,9 +574,10 @@
     [self.composeTweetViewController hideActivityView];
 
     [photoService autorelease];
+    photoService = nil;
 }
 
-- (void)service:(PhotoService *)photoService failedToPostVideo:(NSError *)error
+- (void)service:(PhotoService *)aPhotoService failedToPostVideo:(NSError *)error
 {
     NSLog(@"Failed to post video to URL: '%@'.", error);
 
@@ -574,32 +589,33 @@
     [self.composeTweetViewController hideActivityView];
 
     [photoService autorelease];
+    photoService = nil;
 }
 
-- (void)serviceDidUpdatePhotoTitle:(PhotoService *)photoService
+- (void)serviceDidUpdatePhotoTitle:(PhotoService *)aPhotoService
 {
     NSLog(@"Successfully updated photo title.");
-    [photoService autorelease];
+    [aPhotoService autorelease];
 }
 
-- (void)service:(PhotoService *)photoService
+- (void)service:(PhotoService *)aPhotoService
     failedToUpdatePhotoTitle:(NSError *)error
 {
     NSLog(@"Failed to update photo title: %@", error);
-    [photoService autorelease];
+    [aPhotoService autorelease];
 }
 
-- (void)serviceDidUpdateVideoTitle:(PhotoService *)photoService
+- (void)serviceDidUpdateVideoTitle:(PhotoService *)aPhotoService
 {
     NSLog(@"Successfully updated video title.");
-    [photoService autorelease];
+    [aPhotoService autorelease];
 }
 
-- (void)service:(PhotoService *)photoService
+- (void)service:(PhotoService *)aPhotoService
     failedToUpdateVideoTitle:(NSError *)error
 {
     NSLog(@"Failed to update video title: %@", error);
-    [photoService autorelease];
+    [aPhotoService autorelease];
 }
 
 #pragma mark UIImagePickerControllerDelegate implementation
@@ -616,11 +632,11 @@
         NSString * serviceName = [c serviceName];
         NSLog(@"Uploading video to: '%@'.", serviceName);
 
-        PhotoService * photoService =
-            [[PhotoService photoServiceWithServiceName:serviceName] retain];
-        photoService.delegate = self;
+        self.photoService =
+            [PhotoService photoServiceWithServiceName:serviceName];
+        self.photoService.delegate = self;
 
-        [photoService sendVideoAtUrl:videoUrl withCredentials:c];
+        [self.photoService sendVideoAtUrl:videoUrl withCredentials:c];
     } else if ([mediaType isEqualToString:(NSString *) kUTTypeImage]) {
         NSLog(@"Cropped image: %@.",
            [info objectForKey:UIImagePickerControllerEditedImage]);
@@ -636,13 +652,13 @@
             [service.credentials defaultPhotoServiceCredentials];
         NSString * serviceName = [c serviceName];
         NSLog(@"Uploading photo to: '%@'", serviceName);
-        PhotoService * photoService =
-            [[PhotoService photoServiceWithServiceName:serviceName] retain];
-        photoService.delegate = self;
+        self.photoService =
+            [PhotoService photoServiceWithServiceName:serviceName];
+        self.photoService.delegate = self;
 
         UIImage * rotatedImage =
             [image imageByRotatingByOrientation:image.imageOrientation];
-        [photoService sendImage:rotatedImage withCredentials:c];
+        [self.photoService sendImage:rotatedImage withCredentials:c];
     }
 
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
@@ -665,8 +681,8 @@
     AccountSettings * settings =
         [AccountSettings settingsForKey:settingsKey];
 
-    NSString * photoService = [settings photoServiceName];
-    if (!photoService && [credentials supportsPhotos])
+    NSString * photoServiceName = [settings photoServiceName];
+    if (!photoServiceName && [credentials supportsPhotos])
         [settings setPhotoServiceName:serviceName];
 
     NSString * videoService = [settings videoServiceName];
@@ -869,14 +885,15 @@
             [service.credentials defaultPhotoServiceCredentials];
         NSString * serviceName = [photoCredentials serviceName];
 
-        PhotoService * photoService =
-            [[PhotoService photoServiceWithServiceName:serviceName] retain];
-        photoService.delegate = self;
-
         for (NSString * photoUrl in self.attachedPhotos)
-            if ([text containsString:photoUrl])
-                [photoService setTitle:title forPhotoWithUrl:photoUrl
+            if ([text containsString:photoUrl]) {
+                PhotoService * aPhotoService =
+                    [[PhotoService
+                    photoServiceWithServiceName:serviceName] retain];
+                aPhotoService.delegate = self;
+                [aPhotoService setTitle:title forPhotoWithUrl:photoUrl
                     credentials:photoCredentials];
+            }
     }
 
     if (self.attachedVideos.count > 0) {
@@ -884,14 +901,15 @@
             [service.credentials defaultVideoServiceCredentials];
         NSString * serviceName = [photoCredentials serviceName];
 
-        PhotoService * photoService =
-            [[PhotoService photoServiceWithServiceName:serviceName] retain];
-        photoService.delegate = self;
-
         for (NSString * videoUrl in self.attachedVideos)
-            if ([text containsString:videoUrl])
-                [photoService setTitle:title forVideoWithUrl:videoUrl
+            if ([text containsString:videoUrl]) {
+                PhotoService * aPhotoService =
+                    [[PhotoService
+                    photoServiceWithServiceName:serviceName] retain];
+                aPhotoService.delegate = self;
+                [aPhotoService setTitle:title forVideoWithUrl:videoUrl
                     credentials:photoCredentials];
+            }
     }
 }
 

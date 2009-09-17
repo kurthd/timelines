@@ -20,4 +20,6 @@
 
 - (void)userWantsToSelectPhoto;
 
+- (void)userDidCancelActivity;
+
 @end

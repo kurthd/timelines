@@ -48,6 +48,7 @@
     CredentialsSetChangedPublisher * credentialsSetChangedPublisher;
 
     AddPhotoServiceDisplayMgr * addPhotoServiceDisplayMgr;
+    PhotoService * photoService;
 
     NSMutableArray * attachedPhotos;
     NSMutableArray * attachedVideos;

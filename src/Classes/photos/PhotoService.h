@@ -44,6 +44,8 @@
 - (void)sendVideoAtUrl:(NSURL *)url
   withCredentials:(PhotoServiceCredentials *)credentials;
 
+- (void)cancelUpload;
+
 - (void)setTitle:(NSString *)text forPhotoWithUrl:(NSString *)photoUrl
     credentials:(PhotoServiceCredentials *)credentials;
 - (void)setTitle:(NSString *)text forVideoWithUrl:(NSString *)photoUrl

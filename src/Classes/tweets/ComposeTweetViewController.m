@@ -390,6 +390,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [delegate userWantsToSelectPhoto];
 }
 
+- (IBAction)userDidCancelActivity
+{
+    [delegate userDidCancelActivity];
+}
+
 #pragma mark UIActionSheetDelegate implementation
 
 - (void)actionSheet:(UIActionSheet *)actionSheet

@@ -86,6 +86,12 @@
         NO, @"Trying to send a video via TwitPic, which does not support it.");
 }
 
+- (void)cancelUpload
+{
+    [super cancelUpload];
+    [self.connection cancel];
+}
+
 #pragma mark NSURLConnection delegate methods
 
 - (void)connection:(NSURLConnection *)connection

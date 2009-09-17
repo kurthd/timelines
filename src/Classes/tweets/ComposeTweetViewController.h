@@ -56,5 +56,6 @@
 - (IBAction)userDidSave;
 - (IBAction)userDidCancel;
 - (IBAction)choosePhoto;
+- (IBAction)userDidCancelActivity;
 
 @end

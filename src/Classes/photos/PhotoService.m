@@ -59,6 +59,10 @@
     self.credentials = someCredentials;
 }
 
+- (void)cancelUpload
+{
+}
+
 - (NSData *)dataForImageUsingCompressionSettings:(UIImage *)anImage
 {
     ComposeTweetImageQuality quality = [SettingsReader imageQuality];

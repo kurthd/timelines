@@ -62,6 +62,10 @@
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
+- (void)cancelUpload
+{
+}
+
 #pragma mark TwitVidDelegate implementation
 
 - (void)request:(TwitVidRequest*)request 
