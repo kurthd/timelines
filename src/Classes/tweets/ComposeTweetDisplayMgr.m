@@ -448,6 +448,8 @@
     if (self.photoService) {
         [self.photoService cancelUpload];
         [self.composeTweetViewController hideActivityView];
+
+        self.photoService = nil;
     }
 }
 
