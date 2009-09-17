@@ -19,11 +19,8 @@
     NSArray * tweets;
     NSString * segregatedSenderUsername;
 
-    NSMutableDictionary * avatarCache;
     NSMutableDictionary * alreadySent;
     NSArray * sortedTweetCache;
-
-    BOOL delayedRefreshTriggered;
 }
 
 @property (nonatomic, assign)

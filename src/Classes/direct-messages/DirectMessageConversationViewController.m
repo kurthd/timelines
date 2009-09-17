@@ -9,14 +9,13 @@
 #import "AsynchronousNetworkFetcher.h"
 #import "UIColor+TwitchColors.h"
 #import "DirectMessage+UIAdditions.h"
+#import "User+UIAdditions.h"
 
 @interface DirectMessageConversationViewController ()
 
-- (UIImage *)getAvatarForUrl:(NSString *)url;
+- (UIImage *)getThumbnailAvatarForUser:(User *)aUser;
 - (UIImage *)convertUrlToImage:(NSString *)url;
 - (NSArray *)sortedTweets;
-- (void)triggerDelayedRefresh;
-- (void)processDelayedRefresh;
 
 - (NSInteger)indexForTweetId:(NSString *)tweetId;
 - (NSInteger)sortedIndexForTweetId:(NSString *)tweetId;
@@ -36,7 +35,6 @@ static UIImage * defaultAvatar;
     [headerView release];
     [footerView release];
     [tweets release];
-    [avatarCache release];
     [alreadySent release];
     [sortedTweetCache release];
     [segregatedSenderUsername release];
@@ -46,7 +44,6 @@ static UIImage * defaultAvatar;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    avatarCache = [[NSMutableDictionary dictionary] retain];
     alreadySent = [[NSMutableDictionary dictionary] retain];
     self.tableView.tableFooterView = footerView;
     self.tableView.tableHeaderView = headerView;
@@ -78,9 +75,9 @@ static UIImage * defaultAvatar;
 
     TimelineTableViewCell * cell = [message cell];
 
-    UIImage * avatarImage =
-        [self getAvatarForUrl:message.sender.avatar.thumbnailImageUrl];
-    [cell setAvatarImage:avatarImage];
+    UIImage * defaultAvatar = [[self class] defaultAvatar];
+    if (![cell avatarImage] || [cell avatarImage] == defaultAvatar)
+        [cell setAvatarImage:[self getThumbnailAvatarForUser:message.sender]];
 
     [cell setName:@""];
     TimelineTableViewCellType displayType;
@@ -98,8 +95,7 @@ static UIImage * defaultAvatar;
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DirectMessage * message = [[self sortedTweets] objectAtIndex:indexPath.row];
-    UIImage * avatar =
-        [avatarCache objectForKey:message.sender.avatar.thumbnailImageUrl];
+    UIImage * avatar = [message.sender thumbnailAvatar];
     [delegate selectedTweet:message avatarImage:avatar];
 }
 
@@ -123,8 +119,10 @@ static UIImage * defaultAvatar;
     NSString * urlAsString = [url absoluteString];
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
-        [avatarCache setObject:avatarImage forKey:urlAsString];
-        [self triggerDelayedRefresh];
+        NSArray * visibleCells = self.tableView.visibleCells;
+        for (TimelineTableViewCell * cell in visibleCells)
+            if ([cell.avatarImageUrl isEqualToString:urlAsString])
+                [cell setAvatarImage:avatarImage];
     }
 }
 
@@ -193,11 +191,12 @@ static UIImage * defaultAvatar;
     [self.tableView reloadData];
 }
 
-- (UIImage *)getAvatarForUrl:(NSString *)url
+- (UIImage *)getThumbnailAvatarForUser:(User *)aUser
 {
-    UIImage * avatarImage = [avatarCache objectForKey:url];
+    UIImage * avatarImage = [aUser thumbnailAvatar];
     if (!avatarImage) {
         avatarImage = [[self class] defaultAvatar];
+        NSString * url = aUser.avatar.thumbnailImageUrl;
         if (![alreadySent objectForKey:url]) {
             NSURL * avatarUrl = [NSURL URLWithString:url];
             [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
@@ -223,21 +222,6 @@ static UIImage * defaultAvatar;
             [tweets sortedArrayUsingSelector:@selector(compare:)];
 
     return self.sortedTweetCache;
-}
-
-- (void)triggerDelayedRefresh
-{
-    if (!delayedRefreshTriggered)
-        [self performSelector:@selector(processDelayedRefresh) withObject:nil
-            afterDelay:0.5];
-
-    delayedRefreshTriggered = YES;
-}
-
-- (void)processDelayedRefresh
-{
-    [self.tableView reloadData];
-    delayedRefreshTriggered = NO;
 }
 
 - (NSInteger)indexForTweetId:(NSString *)tweetId
