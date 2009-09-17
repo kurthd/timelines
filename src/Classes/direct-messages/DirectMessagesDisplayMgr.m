@@ -1405,8 +1405,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         subject = self.selectedMessage.text;
     [picker setSubject:subject];
 
-    // NSString * body =
-    //     [NSString stringWithFormat:@"%@", self.selectedMessage.text];
     NSString * body =
         [NSString stringWithFormat:@"\"%@\"\n- %@",
         self.selectedMessage.text, self.selectedMessage.sender.username];
@@ -1533,11 +1531,17 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         setRightBarButtonItem:[self sendingTweetProgressView] animated:YES];
 }
 
+- (void)updateDisplayForFailedDirectMessage:(NSString *)recipient
+{
+    [self.conversationController.navigationItem
+        setRightBarButtonItem:[self newMessageButtonItem] animated:YES];
+}
+
 - (void)addDirectMessage:(DirectMessage *)dm
 {
     NSLog(@"Direct message display manager: adding direct message");
 
-    if ([dm.recipient.identifier isEqual:self.currentConversationUserId]){
+    if ([dm.recipient.identifier isEqual:self.currentConversationUserId]) {
         [self.conversationController.navigationItem
             setRightBarButtonItem:[self newMessageButtonItem] animated:YES];
         [self.conversationController addTweet:dm];

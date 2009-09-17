@@ -357,6 +357,8 @@
 
 - (void)userFailedToSendDirectMessage:(NSString *)dm to:(NSString *)username
 {
+    [directMessageDisplayMgr updateDisplayForFailedDirectMessage:username];
+
     NSDictionary * userInfo =
         [NSDictionary dictionaryWithObjectsAndKeys:
         dm, @"dm",

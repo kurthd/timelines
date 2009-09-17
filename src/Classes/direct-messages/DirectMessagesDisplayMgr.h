@@ -182,6 +182,7 @@
 - (void)viewAppearedForFirstTimeAfterCredentialChange;
 
 - (void)updateDisplayForSendingDirectMessage;
+- (void)updateDisplayForFailedDirectMessage:(NSString *)recipient;
 - (void)addDirectMessage:(DirectMessage *)dm;
 
 @end
