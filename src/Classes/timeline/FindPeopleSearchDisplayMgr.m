@@ -158,16 +158,17 @@
 - (void)userInfo:(User *)user fetchedForUsername:(NSString *)username
 {
     NSLog(@"Fetched user info for '%@'", username);
-    self.currentSearchUsername = username;
-    
-    [netAwareController setUpdatingState:kConnectedAndNotUpdating];
-    [netAwareController setCachedDataAvailable:YES];
 
-    // this forces the tableview to scroll to top
-    [userInfoController.tableView setContentOffset:CGPointMake(0, 300)
-        animated:NO];
+    if ([self.currentSearchUsername isEqual:username]) {
+        [netAwareController setUpdatingState:kConnectedAndNotUpdating];
+        [netAwareController setCachedDataAvailable:YES];
 
-    [userInfoController setUser:user];
+        // this forces the tableview to scroll to top
+        [userInfoController.tableView setContentOffset:CGPointMake(0, 300)
+            animated:NO];
+
+        [userInfoController setUser:user];
+    }
 }
 
 - (void)failedToFetchUserInfoForUsername:(NSString *)username
@@ -627,7 +628,10 @@
         [[query stringByTrimmingCharactersInSet:validUsernameCharSet] 
         stringByReplacingOccurrencesOfString:@" " withString:@""];
     [self.recentSearchMgr addRecentSearch:searchName];
+
     searchBar.text = searchName;
+    self.currentSearchUsername = searchName;
+
     NSString * noConnFormatString =
         NSLocalizedString(@"findpeople.nouser", @"");
     NSString * noConnText =
