@@ -721,7 +721,7 @@ static BOOL scrollToTopValueAlreadyRead;
         NSLog(@"Timeline display manager: setting tweet to 'favorite'");
     else
         NSLog(@"Timeline display manager: setting tweet to 'not favorite'");
-
+    [[ErrorState instance] exitErrorState];
     [service markTweet:selectedTweet.identifier asFavorite:favorite];
 }
 
