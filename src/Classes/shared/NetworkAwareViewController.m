@@ -219,6 +219,8 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
         updatingLabel.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
         updatingLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
         updatingLabel.font = [UIFont boldSystemFontOfSize:18];
+        updatingLabel.shadowOffset = CGSizeMake(0, 1);
+        updatingLabel.shadowColor = [UIColor blackColor];
         [updatingView addSubview:updatingLabel];
         
         const CGFloat ACTIVITY_INDICATOR_MARGIN =
