@@ -412,6 +412,7 @@
 		91FDD58D1061581C000F7527 /* BitlyLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91FDD58C1061581C000F7527 /* BitlyLogInDisplayMgr.m */; };
 		91FDD59010615849000F7527 /* BitlyLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91FDD58F10615849000F7527 /* BitlyLogInViewController.m */; };
 		91FDD5A510616854000F7527 /* BitlyLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91FDD5A310616854000F7527 /* BitlyLogInView.xib */; };
+		91FDD5F41062DC41000F7527 /* Avatar+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91FDD5F31062DC41000F7527 /* Avatar+UIAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1119,6 +1120,8 @@
 		91FDD58E10615849000F7527 /* BitlyLogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitlyLogInViewController.h; path = bitly/BitlyLogInViewController.h; sourceTree = "<group>"; };
 		91FDD58F10615849000F7527 /* BitlyLogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BitlyLogInViewController.m; path = bitly/BitlyLogInViewController.m; sourceTree = "<group>"; };
 		91FDD5A410616854000F7527 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/BitlyLogInView.xib; sourceTree = "<group>"; };
+		91FDD5F21062DC41000F7527 /* Avatar+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Avatar+UIAdditions.h"; path = "users/Avatar+UIAdditions.h"; sourceTree = "<group>"; };
+		91FDD5F31062DC41000F7527 /* Avatar+UIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Avatar+UIAdditions.m"; path = "users/Avatar+UIAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1491,6 +1494,8 @@
 				05F45A500FF01D5E00EBAFC7 /* User+CoreDataAdditions.m */,
 				9145F022100573AF00C2E485 /* User+UIAdditions.h */,
 				9145F023100573AF00C2E485 /* User+UIAdditions.m */,
+				91FDD5F21062DC41000F7527 /* Avatar+UIAdditions.h */,
+				91FDD5F31062DC41000F7527 /* Avatar+UIAdditions.m */,
 			);
 			name = users;
 			sourceTree = "<group>";
@@ -2750,6 +2755,7 @@
 				05D4C4E3105EF94C0038BDF0 /* UIImage+GeneralHelpers.m in Sources */,
 				91FDD58D1061581C000F7527 /* BitlyLogInDisplayMgr.m in Sources */,
 				91FDD59010615849000F7527 /* BitlyLogInViewController.m in Sources */,
+				91FDD5F41062DC41000F7527 /* Avatar+UIAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
