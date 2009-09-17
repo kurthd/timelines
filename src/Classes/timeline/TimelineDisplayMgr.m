@@ -308,14 +308,23 @@ static BOOL scrollToTopValueAlreadyRead;
 
 - (void)userIsBlocked:(NSString *)username
 {
+    NSLog(@"Timeline display manager: %@ is blocked", username);
     if ([self.currentUsername isEqual:username])
         [self.userInfoController setBlocked:YES];
 }
 
 - (void)userIsNotBlocked:(NSString *)username
 {
+    NSLog(@"Timeline display manager: %@ is not blocked", username);
     if ([self.currentUsername isEqual:username])
         [self.userInfoController setBlocked:NO];
+}
+
+- (void)failedToCheckIfUserIsBlocked:(NSString *)username
+                               error:(NSError *)error
+{
+    NSLog(@"Timeline display manager: failed to check if %@ is blocked; %@",
+        username, error);
 }
 
 - (void)blockedUser:(User *)user withUsername:(NSString *)username
