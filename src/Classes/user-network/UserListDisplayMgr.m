@@ -679,8 +679,8 @@
     BOOL allLoaded = oldCacheSize == newCacheSize;
     [userListController setAllPagesLoaded:allLoaded];
     [userListController setUsers:[cache allValues] page:[page intValue]];
-    [wrapperController setCachedDataAvailable:YES];
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
+    [wrapperController setCachedDataAvailable:YES];
     failedState = NO;
 }
 
