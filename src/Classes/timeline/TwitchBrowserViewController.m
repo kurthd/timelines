@@ -12,6 +12,7 @@
 - (void)updatePageTitle;
 - (void)animatedActivityIndicators:(BOOL)animating;
 - (void)displayComposerMailSheet;
+- (void)displayForPortraitMode;
 
 @end
 
@@ -31,6 +32,12 @@
     [super dealloc];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self displayForPortraitMode];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:
     (UIInterfaceOrientation)orientation
 {
@@ -41,16 +48,9 @@
                                 duration:(NSTimeInterval)duration
 {
     if (orientation == UIInterfaceOrientationPortrait ||
-        orientation == UIInterfaceOrientationPortraitUpsideDown) {
-
-        CGRect activityIndicatorFrame = activityIndicator.frame;
-        activityIndicatorFrame.origin.x = 291;
-        activityIndicator.frame = activityIndicatorFrame;
-
-        CGRect titleLabelFrame = titleLabel.frame;
-        titleLabelFrame.size.width = 218;
-        titleLabel.frame = titleLabelFrame;
-    } else {
+        orientation == UIInterfaceOrientationPortraitUpsideDown)
+        [self displayForPortraitMode];
+    else {
         CGRect activityIndicatorFrame = activityIndicator.frame;
         activityIndicatorFrame.origin.x = 451;
         activityIndicator.frame = activityIndicatorFrame;
@@ -59,6 +59,17 @@
         titleLabelFrame.size.width = 378;
         titleLabel.frame = titleLabelFrame;
     }
+}
+
+- (void)displayForPortraitMode
+{
+    CGRect activityIndicatorFrame = activityIndicator.frame;
+    activityIndicatorFrame.origin.x = 291;
+    activityIndicator.frame = activityIndicatorFrame;
+
+    CGRect titleLabelFrame = titleLabel.frame;
+    titleLabelFrame.size.width = 218;
+    titleLabel.frame = titleLabelFrame;
 }
 
 #pragma mark UIWebViewDelegate implementation
