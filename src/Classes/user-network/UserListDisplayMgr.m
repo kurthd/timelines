@@ -264,8 +264,7 @@
     if ([userInfoUsername isEqual:followee])
         [self.userInfoController setFailedToQueryFollowing];
 
-    [self.userInfoController setFollowing:NO];
-    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
 }
 
 - (void)userIsBlocked:(NSString *)aUsername
