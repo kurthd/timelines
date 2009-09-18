@@ -9,6 +9,7 @@
 #import "SearchDataSource.h"
 #import "SettingsReader.h"
 #import "NearbySearchDataSource.h"
+#import "UIColor+TwitchColors.h"
 
 @interface UserListDisplayMgr ()
 
@@ -743,6 +744,11 @@
     CGRect buttonFrame = CGRectMake(20, 7, 280, 37);
     UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = buttonFrame;
+    
+    CGRect grayLineFrame = CGRectMake(0, 50, 320, 1);
+    UIView * grayLineView =
+        [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
+    grayLineView.backgroundColor = [UIColor twitchLightGrayColor];
 
     UIImage * background =
         [UIImage imageNamed:@"SaveSearchButtonBackground.png"];
@@ -764,6 +770,7 @@
     [button addTarget:self action:action forControlEvents:events];
 
     [view addSubview:button];
+    [view addSubview:grayLineView];
 
     return [view autorelease];
 }
