@@ -116,13 +116,18 @@ static UIImage * defaultAvatar;
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
     didReceiveData:(NSData *)data fromUrl:(NSURL *)url
 {
-    NSString * urlAsString = [url absoluteString];
     UIImage * avatarImage = [UIImage imageWithData:data];
     if (avatarImage) {
+        NSString * urlAsString = [url absoluteString];
+        [User setAvatar:avatarImage forUrl:urlAsString];
+
         NSArray * visibleCells = self.tableView.visibleCells;
-        for (TimelineTableViewCell * cell in visibleCells)
+        for (TimelineTableViewCell * cell in visibleCells) {
+            NSLog(@"cell.avatarImageUrl: %@", cell.avatarImageUrl);
+            NSLog(@"urlAsString: %@", urlAsString);
             if ([cell.avatarImageUrl isEqualToString:urlAsString])
                 [cell setAvatarImage:avatarImage];
+        }
     }
 }
 

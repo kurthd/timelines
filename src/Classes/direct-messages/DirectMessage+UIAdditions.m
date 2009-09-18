@@ -44,6 +44,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     timelineCell.longTimeDescription = YES;
     [timelineCell setDate:self.created];
     [timelineCell setTweetText:self.text];
+    timelineCell.avatarImageUrl = self.sender.avatar.thumbnailImageUrl;
     UIImage * avatar = [self.sender thumbnailAvatar];
     if (avatar)
         [timelineCell setAvatarImage:avatar];
