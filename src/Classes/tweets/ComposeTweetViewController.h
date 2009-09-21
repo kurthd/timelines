@@ -25,6 +25,7 @@
     IBOutlet UIView * activityView;
     IBOutlet UIProgressView * activityProgressView;
     BOOL displayingActivity;
+    UIButton * activityCancelButton;
     
     BOOL hideRecipientView;
     NSString * currentSender;
