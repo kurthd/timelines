@@ -72,6 +72,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [activityView release];
     [activityProgressView release];
+    [activityCancelButton release];
 
     [currentSender release];
     [textViewText release];
@@ -94,6 +95,32 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         textView.text = self.textViewText;
     if (self.currentRecipient)
         recipientTextField.text = self.currentRecipient;
+
+    static const NSInteger BUTTON_WIDTH = 134;
+    CGRect buttonFrame =
+        CGRectMake((320 - BUTTON_WIDTH) / 2, 156, BUTTON_WIDTH, 46);
+    activityCancelButton =
+        [[[UIButton alloc] initWithFrame:buttonFrame] autorelease];
+    NSString * cancelButtonTitle =
+        NSLocalizedString(@"composetweet.cancelshortening", @"");
+    [activityCancelButton setTitle:cancelButtonTitle
+        forState:UIControlStateNormal];
+    UIImage * normalImage =
+        [[UIImage imageNamed:@"CancelButton.png"]
+        stretchableImageWithLeftCapWidth:13.0 topCapHeight:0.0];
+    [activityCancelButton setBackgroundImage:normalImage
+        forState:UIControlStateNormal];
+    activityCancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    [activityCancelButton setTitleColor:[UIColor whiteColor]
+        forState:UIControlStateNormal];
+    [activityCancelButton setTitleColor:[UIColor grayColor]
+        forState:UIControlStateHighlighted];
+    [activityCancelButton setTitleShadowColor:[UIColor twitchDarkGrayColor]
+        forState:UIControlStateNormal];
+    activityCancelButton.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
+    [activityCancelButton addTarget:self action:@selector(userDidCancelActivity)
+        forControlEvents:UIControlEventTouchUpInside];
+    [activityView addSubview:activityCancelButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -276,16 +303,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)updateActivityProgress:(CGFloat)uploadProgress
 {
-    if (activityProgressView.progress != uploadProgress) {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationTransition:UIViewAnimationTransitionNone
-                               forView:activityView
-                                 cache:NO];
-
+    if (activityProgressView.progress != uploadProgress)
         activityProgressView.progress = uploadProgress;
-
-        [UIView commitAnimations];
-    }
 }
 
 - (void)displayActivityView
@@ -296,7 +315,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                            forView:activityView
                              cache:YES];
 
-    activityView.alpha = 0.75;
+    activityView.alpha = 0.8;
     UIView * keyboardView = [[UIApplication sharedApplication] keyboardView];
     UIView * keyView = keyboardView ? [keyboardView superview] : self.view;
     [keyView addSubview:activityView];
@@ -310,7 +329,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)hideActivityView
 {
-    activityView.alpha = 0.75;
+    activityView.alpha = 0.8;
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationTransition:UIViewAnimationTransitionNone
                            forView:activityView

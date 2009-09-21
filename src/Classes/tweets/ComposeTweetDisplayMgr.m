@@ -1080,7 +1080,7 @@
             [[[UIView alloc] initWithFrame:darkTransparentViewFrame]
             autorelease];
         darkTransparentView.backgroundColor = [UIColor blackColor];
-        darkTransparentView.alpha = 0.9;
+        darkTransparentView.alpha = 0.8;
 
         UIActivityIndicatorView * activityIndicator =
             [[[UIActivityIndicatorView alloc]
