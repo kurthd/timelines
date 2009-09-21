@@ -114,8 +114,9 @@
                      forQuery:(NSString *)query
                          page:(NSNumber *)page
 {
-    self.searchResults = newSearchResults;
-    if ([query isEqualToString:self.queryString]) {
+    if ([query isEqualToString:self.queryString] &&
+        !self.nearbySearchLocation) {
+        self.searchResults = newSearchResults;
         NSMutableArray * tweetInfoTimeline = [NSMutableArray array];
         for (Tweet * tweet in searchResults) {
             TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
@@ -145,8 +146,8 @@
                              radius:(NSNumber *)radius
                     radiusIsInMiles:(BOOL)radiusIsInMiles
 {
-    self.searchResults = newSearchResults;
-    if ([query isEqualToString:self.queryString]) {
+    if ([query isEqualToString:self.queryString] && self.nearbySearchLocation) {
+        self.searchResults = newSearchResults;
         NSMutableArray * tweetInfoTimeline = [NSMutableArray array];
         for (Tweet * tweet in searchResults) {
             TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
