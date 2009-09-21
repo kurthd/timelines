@@ -11,10 +11,6 @@
 
 @interface PhotoService ()
 
-@property (nonatomic, retain) UIImage * image;
-@property (nonatomic, retain) NSURL * videoUrl;
-@property (nonatomic, retain) PhotoServiceCredentials * credentials;
-
 @property (nonatomic, retain) ASINetworkQueue * queue;
 
 - (ASIHTTPRequest *)requestForUploadingImage:(UIImage *)anImage

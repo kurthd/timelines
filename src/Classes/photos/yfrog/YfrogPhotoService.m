@@ -116,7 +116,6 @@
     [req setPostValue:[[self class] devKey] forKey:@"key"];
     [req setPostValue:ctls.username forKey:@"username"];
     [req setPostValue:ctls.password forKey:@"password"];
-    //[req setData:data forKey:@"media"];
     [req setData:data withFileName:@"file"
         andContentType:mimeType forKey:@"media"];
 

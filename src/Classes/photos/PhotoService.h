@@ -41,9 +41,9 @@
 }
 
 @property (nonatomic, assign) id<PhotoServiceDelegate> delegate;
-@property (nonatomic, retain, readonly) UIImage * image;
-@property (nonatomic, retain, readonly) NSURL * videoUrl;
-@property (nonatomic, retain, readonly) PhotoServiceCredentials * credentials;
+@property (nonatomic, retain) UIImage * image;
+@property (nonatomic, retain) NSURL * videoUrl;
+@property (nonatomic, retain) PhotoServiceCredentials * credentials;
 
 - (void)sendImage:(UIImage *)image
   withCredentials:(PhotoServiceCredentials *)credentials;
