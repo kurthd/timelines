@@ -15,6 +15,9 @@
 - (void)service:(PhotoService *)service didPostVideoToUrl:(NSString *)url;
 - (void)service:(PhotoService *)service failedToPostVideo:(NSError *)error;
 
+- (void)service:(PhotoService *)service
+    updateUploadProgress:(CGFloat)uploadProgress;
+
 - (void)serviceDidUpdatePhotoTitle:(PhotoService *)service;
 - (void)service:(PhotoService *)service
     failedToUpdatePhotoTitle:(NSError *)error;

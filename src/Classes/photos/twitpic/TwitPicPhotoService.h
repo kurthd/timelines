@@ -5,14 +5,14 @@
 #import <Foundation/Foundation.h>
 #import "PhotoService.h"
 
-@class TwitPicResponseParser;
+@class ASIHTTPRequest, ASINetworkQueue, TwitPicResponseParser;
 
 @interface TwitPicPhotoService : PhotoService
 {
     NSString * twitPicUrl;
 
-    NSMutableData * data;
-    NSURLConnection * connection;
+    ASIHTTPRequest * request;
+    ASINetworkQueue * queue;
 
     TwitPicResponseParser * parser;
 }

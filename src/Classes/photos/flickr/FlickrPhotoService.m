@@ -259,7 +259,10 @@
     imageUploadSentBytes:(NSUInteger)inSentBytes
               totalBytes:(NSUInteger)inTotalBytes
 {
-    NSLog(@"Request uploaded %d of %d bytes", inSentBytes, inTotalBytes);
+    CGFloat progress = (CGFloat) inSentBytes / (CGFloat) inTotalBytes;
+    NSLog(@"Request uploaded %d of %d bytes (%f, %d%%)", inSentBytes,
+        inTotalBytes, progress, progress * 100.0);
+    [self.delegate service:self updateUploadProgress:progress];
 }
 
 #pragma mark Private implementation

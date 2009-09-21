@@ -68,6 +68,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [recipientTextField release];
 
     [activityView release];
+    [activityProgressView release];
 
     [currentSender release];
     [textViewText release];
@@ -255,6 +256,20 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [self enableSendButtonFromInterface];
     [self updateCharacterCountFromText:textView.text];
+}
+
+- (void)updateActivityProgress:(CGFloat)uploadProgress
+{
+    if (activityProgressView.progress != uploadProgress) {
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationTransition:UIViewAnimationTransitionNone
+                               forView:activityView
+                                 cache:NO];
+
+        activityProgressView.progress = uploadProgress;
+
+        [UIView commitAnimations];
+    }
 }
 
 - (void)displayActivityView

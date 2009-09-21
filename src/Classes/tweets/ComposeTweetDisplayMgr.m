@@ -594,6 +594,12 @@
     photoService = nil;
 }
 
+- (void)service:(PhotoService *)service
+    updateUploadProgress:(CGFloat)uploadProgress
+{
+    [self.composeTweetViewController updateActivityProgress:uploadProgress];
+}
+
 - (void)serviceDidUpdatePhotoTitle:(PhotoService *)aPhotoService
 {
     NSLog(@"Successfully updated photo title.");
@@ -664,6 +670,7 @@
     }
 
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
+    [self.composeTweetViewController updateActivityProgress:0.0];
     [self.composeTweetViewController displayActivityView];
 }
 

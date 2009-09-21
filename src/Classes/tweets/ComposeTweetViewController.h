@@ -23,6 +23,7 @@
     IBOutlet UITextField * recipientTextField;
 
     IBOutlet UIView * activityView;
+    IBOutlet UIProgressView * activityProgressView;
     BOOL displayingActivity;
     
     BOOL hideRecipientView;
@@ -49,6 +50,8 @@
                           to:(NSString *)recipient;
 
 - (void)addTextToMessage:(NSString *)text;
+
+- (void)updateActivityProgress:(CGFloat)uploadProgress;
 
 - (void)displayActivityView;
 - (void)hideActivityView;

@@ -9,35 +9,36 @@
 #import "NSManagedObject+TediousCodeAdditions.h"
 #import "TwitPicCredentials+KeychainAdditions.h"
 #import "InfoPlistConfigReader.h"
+#import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
+#import "ASINetworkQueue.h"
 
 @interface TwitPicPhotoService ()
 
 @property (nonatomic, copy) NSString * twitPicUrl;
 
-@property (nonatomic, retain) NSMutableData * data;
-@property (nonatomic, retain) NSURLConnection * connection;
+@property (nonatomic, retain) ASIHTTPRequest * request;
+@property (nonatomic, retain) ASINetworkQueue * queue;
 
 @property (nonatomic, retain) TwitPicResponseParser * parser;
 
-- (NSURLRequest *)requestForPostingImage:(NSData *)image
-                                mimeType:(NSString *)mimeType
-                                   toUrl:(NSURL *)url
-                            withUsername:(NSString *)username
-                                password:(NSString *)password;
+- (void)uploadData:(NSData *)data toUrl:(NSURL *)url;
+
++ (NSString *)devKey;
 
 @end
 
 @implementation TwitPicPhotoService
 
 @synthesize twitPicUrl;
-@synthesize data, connection;
+@synthesize request, queue;
 @synthesize parser;
 
 - (void)dealloc
 {
     self.twitPicUrl = nil;
-    self.connection = nil;
-    self.data = nil;
+    self.request = nil;
+    self.queue = nil;
     self.parser = nil;
     [super dealloc];
 }
@@ -48,6 +49,7 @@
         self.twitPicUrl =
             [[InfoPlistConfigReader reader] valueForKey:@"TwitPicPostUrl"];
         parser = [[TwitPicResponseParser alloc] init];
+        queue = [[ASINetworkQueue alloc] init];
     }
 
     return self;
@@ -56,26 +58,56 @@
 - (void)sendImage:(UIImage *)anImage
   withCredentials:(TwitPicCredentials *)someCredentials
 {
+    SEL selector = @selector(sendImageOnTimer:);
+    NSDictionary * userInfo =
+        [NSDictionary dictionaryWithObjectsAndKeys:
+        anImage, @"image",
+        someCredentials, @"credentials",
+        nil];
+
+    // exit from here quickly so the modal view disappears
+    [NSTimer scheduledTimerWithTimeInterval:0.3
+                                     target:self
+                                   selector:selector
+                                   userInfo:userInfo
+                                    repeats:NO];
+}
+
+- (void)sendImageOnTimer:(NSTimer *)timer
+{
+    NSDictionary * userInfo = timer.userInfo;
+    UIImage * anImage = [userInfo objectForKey:@"image"];
+    TwitPicCredentials * someCredentials =
+        [userInfo objectForKey:@"credentials"];
     [super sendImage:anImage withCredentials:someCredentials];
 
     NSData * imageData = [self dataForImageUsingCompressionSettings:anImage];
-    NSString * mimeType = [self mimeTypeForImage:anImage];
+    NSString * username = someCredentials.username;
+    NSString * password = someCredentials.password;
+
     NSURL * url = [NSURL URLWithString:self.twitPicUrl];
-    NSURLRequest * request =
-        [self requestForPostingImage:imageData
-                            mimeType:mimeType
-                               toUrl:url
-                        withUsername:someCredentials.username
-                            password:someCredentials.password];
 
-    self.connection =
-        [[[NSURLConnection alloc] initWithRequest:request
-                                         delegate:self
-                                 startImmediately:YES] autorelease];
+    ASIFormDataRequest * req = [[ASIFormDataRequest alloc] initWithURL:url];
 
-    self.data = [NSMutableData data];
+    [req setPostValue:[[self class] devKey] forKey:@"key"];
+    [req setPostValue:username forKey:@"username"];
+    [req setPostValue:password forKey:@"password"];
+    [req setData:imageData forKey:@"media"];
 
-    // HACK
+    [req setDelegate:self];
+    [req setDidFinishSelector:@selector(requestDidFinishLoading:)];
+    [req setDidFailSelector:@selector(requestDidFail:)];
+
+    [self.queue setUploadProgressDelegate:self];
+    [self.queue setShowAccurateProgress:YES];
+    [self.queue addOperation:req];
+
+    [self.queue go];
+
+    self.request = req;
+
+    [req release];
+
     [[UIApplication sharedApplication] networkActivityIsStarting];
 }
 
@@ -89,23 +121,19 @@
 - (void)cancelUpload
 {
     [super cancelUpload];
-    [self.connection cancel];
+    [self.queue cancelAllOperations];
 }
 
-#pragma mark NSURLConnection delegate methods
+#pragma mark ASIHTTPRequest delegate implementation
 
-- (void)connection:(NSURLConnection *)connection
-    didReceiveData:(NSData *)fragment
+- (void)requestDidFinishLoading:(ASIHTTPRequest *)theRequest
 {
-    [data appendData:fragment];
-}
+    NSData * response = [theRequest responseData];
+    NSLog(@"Received response from TwitPic: '%@'.",
+        [[[NSString alloc]
+        initWithData:response encoding:NSUTF8StringEncoding] autorelease]);
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)conn
-{
-    NSLog(@"Received response from TwitPic: '%@'.", [[[NSString alloc]
-           initWithData:data encoding:4] autorelease]);
-
-    [self.parser parse:data];
+    [self.parser parse:response];
 
     if (self.parser.error) {
         NSError * error =
@@ -117,75 +145,41 @@
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
-- (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error
+- (void)requestDidFail:(ASIHTTPRequest *)failedRequest
 {
-    [self.delegate service:self failedToPostImage:error];
-
+    NSError * error = [failedRequest error];
+    if (!([error.domain isEqualToString:NetworkRequestErrorDomain] &&
+        error.code == ASIRequestCancelledErrorType)) {
+        NSLog(@"Received error: %@", error);
+        [self.delegate service:self failedToPostImage:error];
+    }
     [[UIApplication sharedApplication] networkActivityDidFinish];
+}
+
+- (void)setProgress:(float)newProgress
+{
+    [self.delegate service:self updateUploadProgress:newProgress];
 }
 
 #pragma mark Helpers for building the post body
 
-- (NSURLRequest *)requestForPostingImage:(NSData *)imageData
-                                mimeType:(NSString *)mimeType
-                                   toUrl:(NSURL *)url
-                            withUsername:(NSString *)username
-                                password:(NSString *)password
+- (void)uploadData:(NSData *)data toUrl:(NSURL *)url
 {
-    static NSString * devKey = @"023AGLTUc7533b166461ddb3bc523c54ab082240";
+    ASIHTTPRequest * theRequest = [[ASIHTTPRequest alloc] initWithURL:url];
+    [theRequest setDelegate:self];
+    [theRequest setDidFinishSelector:@selector(requestDidFinishLoading:)];
+    [theRequest setDidFailSelector:@selector(requestDidFail:)];
+    [theRequest appendPostData:data];
 
-    NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:url];
-    [postRequest setHTTPMethod:@"POST"];
+    [self.queue addOperation:theRequest];
 
-    NSString * stringBoundary = @"0xKhTmLbOuNdArY";
-    NSString * contentType = [NSString 
-        stringWithFormat:@"multipart/form-data; boundary=%@",
-        stringBoundary];
-    [postRequest addValue:contentType forHTTPHeaderField:@"Content-Type"];
+    self.request = theRequest;
+    [theRequest release];
+}
 
-    NSMutableData * postBody = [NSMutableData data];
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n\r\n--%@\r\n", 
-                stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-       @"Content-Disposition: form-data; name=\"key\"\r\n\r\n"] 
-       dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:devKey] 
-       dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", 
-            stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-   @"Content-Disposition: form-data; name=\"username\"\r\n\r\n"]
-   dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[username dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",
-            stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-   @"Content-Disposition: form-data; name=\"password\"\r\n\r\n"] 
-   dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[password dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",
-            stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-   @"Content-Disposition: form-data; name=\"media\"; filename=\"file\"\r\n"]
-       dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:
-          @"Content-Type: %@\r\n", mimeType] 
-       dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithString:
-            @"Content-Transfer-Encoding: binary\r\n\r\n"] 
-                      dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [postBody appendData:imageData];
-
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",
-            stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [postRequest setHTTPBody:postBody];
-
-    return postRequest;
++ (NSString *)devKey
+{
+    return @"023AGLTUc7533b166461ddb3bc523c54ab082240";
 }
 
 @end
