@@ -4,6 +4,10 @@
 
 #import "PhotoService.h"
 #import "SettingsReader.h"
+#import "UIApplication+NetworkActivityIndicatorAdditions.h"
+#import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
+#import "ASINetworkQueue.h"
 
 @interface PhotoService ()
 
@@ -11,11 +15,20 @@
 @property (nonatomic, retain) NSURL * videoUrl;
 @property (nonatomic, retain) PhotoServiceCredentials * credentials;
 
+@property (nonatomic, retain) ASINetworkQueue * queue;
+
+- (ASIHTTPRequest *)requestForUploadingImage:(UIImage *)anImage
+                             withCredentials:(PhotoServiceCredentials *)ctls;
+
+- (void)processImageUploadResponse:(NSData *)response;
+- (void)processImageUploadFailure:(NSError *)error;
+
 @end
 
 @implementation PhotoService
 
 @synthesize delegate, image, videoUrl, credentials;
+@synthesize queue;
 
 - (void)dealloc
 {
@@ -23,6 +36,8 @@
     self.image = nil;
     self.videoUrl = nil;
     self.credentials = nil;
+
+    self.queue = nil;
 
     [super dealloc];
 }
@@ -33,6 +48,14 @@
     self.image = anImage;
     self.videoUrl = nil;
     self.credentials = someCredentials;
+
+    // exit from this function quickly so the app can continue functioning
+    SEL selector = @selector(sendImageOnTimer:);
+    [NSTimer scheduledTimerWithTimeInterval:0.3
+                                     target:self
+                                   selector:selector
+                                   userInfo:nil
+                                    repeats:NO];
 }
 
 - (void)sendVideoAtUrl:(NSURL *)url
@@ -61,6 +84,7 @@
 
 - (void)cancelUpload
 {
+    [self.queue cancelAllOperations];
 }
 
 - (NSData *)dataForImageUsingCompressionSettings:(UIImage *)anImage
@@ -86,6 +110,70 @@
 - (NSString *)mimeTypeForImage:(UIImage *)anImage
 {
     return @"image/jpeg";
+}
+
+#pragma mark Private implementation
+
+- (void)sendImageOnTimer:(NSTimer *)timer
+{
+    ASIHTTPRequest * req = [self requestForUploadingImage:self.image
+                                          withCredentials:self.credentials];
+
+    [req setDelegate:self];
+    [req setDidFinishSelector:@selector(requestDidFinishLoading:)];
+    [req setDidFailSelector:@selector(requestDidFail:)];
+
+    [self.queue setUploadProgressDelegate:self];
+    [self.queue setShowAccurateProgress:YES];
+    [self.queue addOperation:req];
+
+    [self.queue go];
+
+    [[UIApplication sharedApplication] networkActivityIsStarting];
+}
+
+#pragma mark ASIHTTPRequest delegate implementation
+
+- (void)requestDidFinishLoading:(ASIHTTPRequest *)request
+{
+    NSData * response = [request responseData];
+    if (self.image)
+        [self processImageUploadResponse:response];
+
+    [[UIApplication sharedApplication] networkActivityDidFinish];
+}
+
+- (void)requestDidFail:(ASIHTTPRequest *)request
+{
+    NSError * error = [request error];
+    if (self.image)
+        [self processImageUploadFailure:error];
+
+    [[UIApplication sharedApplication] networkActivityDidFinish];
+}
+
+- (void)setProgress:(float)newProgress
+{
+    [self.delegate service:self updateUploadProgress:newProgress];
+}
+
+#pragma mark Private interface to be implemented by subclasses
+
+- (ASIHTTPRequest *)requestForUploadingImage:(UIImage *)anImage
+                             withCredentials:(PhotoServiceCredentials *)ctls
+{
+    NSAssert(NO, @"Must be implemented by subclasses.");
+    return nil;
+}
+
+- (void)processImageUploadResponse:(NSData *)response
+{
+    NSAssert(NO, @"Must be implemented by subclasses.");
+}
+
+- (void)processImageUploadFailure:(NSError *)error
+{
+    NSAssert(NO, @"Must be implemented by subclasses.");
 }
 
 @end

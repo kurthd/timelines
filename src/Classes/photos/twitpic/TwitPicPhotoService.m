@@ -4,7 +4,6 @@
 
 #import "TwitPicPhotoService.h"
 #import "TwitPicResponseParser.h"
-#import "UIApplication+NetworkActivityIndicatorAdditions.h"
 #import "NSError+InstantiationAdditions.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
 #import "TwitPicCredentials+KeychainAdditions.h"
@@ -17,9 +16,6 @@
 
 @property (nonatomic, copy) NSString * twitPicUrl;
 
-@property (nonatomic, retain) ASIHTTPRequest * request;
-@property (nonatomic, retain) ASINetworkQueue * queue;
-
 @property (nonatomic, retain) TwitPicResponseParser * parser;
 
 + (NSString *)devKey;
@@ -29,14 +25,11 @@
 @implementation TwitPicPhotoService
 
 @synthesize twitPicUrl;
-@synthesize request, queue;
 @synthesize parser;
 
 - (void)dealloc
 {
     self.twitPicUrl = nil;
-    self.request = nil;
-    self.queue = nil;
     self.parser = nil;
     [super dealloc];
 }
@@ -53,35 +46,12 @@
     return self;
 }
 
-- (void)sendImage:(UIImage *)anImage
-  withCredentials:(TwitPicCredentials *)someCredentials
+- (ASIHTTPRequest *)requestForUploadingImage:(UIImage *)anImage
+                             withCredentials:(TwitPicCredentials *)ctls
 {
-    SEL selector = @selector(sendImageOnTimer:);
-    NSDictionary * userInfo =
-        [NSDictionary dictionaryWithObjectsAndKeys:
-        anImage, @"image",
-        someCredentials, @"credentials",
-        nil];
-
-    // exit from here quickly so the modal view disappears
-    [NSTimer scheduledTimerWithTimeInterval:0.3
-                                     target:self
-                                   selector:selector
-                                   userInfo:userInfo
-                                    repeats:NO];
-}
-
-- (void)sendImageOnTimer:(NSTimer *)timer
-{
-    NSDictionary * userInfo = timer.userInfo;
-    UIImage * anImage = [userInfo objectForKey:@"image"];
-    TwitPicCredentials * someCredentials =
-        [userInfo objectForKey:@"credentials"];
-    [super sendImage:anImage withCredentials:someCredentials];
-
     NSData * imageData = [self dataForImageUsingCompressionSettings:anImage];
-    NSString * username = someCredentials.username;
-    NSString * password = someCredentials.password;
+    NSString * username = ctls.username;
+    NSString * password = ctls.password;
 
     NSURL * url = [NSURL URLWithString:self.twitPicUrl];
 
@@ -92,21 +62,7 @@
     [req setPostValue:password forKey:@"password"];
     [req setData:imageData forKey:@"media"];
 
-    [req setDelegate:self];
-    [req setDidFinishSelector:@selector(requestDidFinishLoading:)];
-    [req setDidFailSelector:@selector(requestDidFail:)];
-
-    [self.queue setUploadProgressDelegate:self];
-    [self.queue setShowAccurateProgress:YES];
-    [self.queue addOperation:req];
-
-    [self.queue go];
-
-    self.request = req;
-
-    [req release];
-
-    [[UIApplication sharedApplication] networkActivityIsStarting];
+    return [req autorelease];
 }
 
 - (void)sendVideo:(NSData *)aVideo
@@ -116,21 +72,10 @@
         NO, @"Trying to send a video via TwitPic, which does not support it.");
 }
 
-- (void)cancelUpload
+#pragma mark Private implementation
+
+- (void)processImageUploadResponse:(NSData *)response
 {
-    [super cancelUpload];
-    [self.queue cancelAllOperations];
-}
-
-#pragma mark ASIHTTPRequest delegate implementation
-
-- (void)requestDidFinishLoading:(ASIHTTPRequest *)theRequest
-{
-    NSData * response = [theRequest responseData];
-    NSLog(@"Received response from TwitPic: '%@'.",
-        [[[NSString alloc]
-        initWithData:response encoding:NSUTF8StringEncoding] autorelease]);
-
     [self.parser parse:response];
 
     if (self.parser.error) {
@@ -139,24 +84,15 @@
         [self.delegate service:self failedToPostImage:error];
     } else
         [self.delegate service:self didPostImageToUrl:self.parser.mediaUrl];
-
-    [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
-- (void)requestDidFail:(ASIHTTPRequest *)failedRequest
+- (void)processImageUploadFailure:(NSError *)error
 {
-    NSError * error = [failedRequest error];
     if (!([error.domain isEqualToString:NetworkRequestErrorDomain] &&
         error.code == ASIRequestCancelledErrorType)) {
         NSLog(@"Received error: %@", error);
         [self.delegate service:self failedToPostImage:error];
     }
-    [[UIApplication sharedApplication] networkActivityDidFinish];
-}
-
-- (void)setProgress:(float)newProgress
-{
-    [self.delegate service:self updateUploadProgress:newProgress];
 }
 
 #pragma mark Private implementation

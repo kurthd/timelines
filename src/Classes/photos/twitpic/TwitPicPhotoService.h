@@ -11,9 +11,6 @@
 {
     NSString * twitPicUrl;
 
-    ASIHTTPRequest * request;
-    ASINetworkQueue * queue;
-
     TwitPicResponseParser * parser;
 }
 

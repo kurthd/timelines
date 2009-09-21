@@ -27,6 +27,7 @@
 
 @end
 
+@class ASINetworkQueue;
 
 @interface PhotoService : NSObject
 {
@@ -35,6 +36,8 @@
     UIImage * image;
     NSURL * videoUrl;
     PhotoServiceCredentials * credentials;
+
+    ASINetworkQueue * queue;
 }
 
 @property (nonatomic, assign) id<PhotoServiceDelegate> delegate;
