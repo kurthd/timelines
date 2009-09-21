@@ -286,6 +286,8 @@
         @"<\\s*/?\\s*title\\s*>" withString:@""];
     title =
         [title stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "];
+    title =
+        [title stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
 
     NSString * loadedPage =
         title ? title : [[webView.request URL] absoluteString];
