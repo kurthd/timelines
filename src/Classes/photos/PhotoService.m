@@ -76,6 +76,14 @@
     self.image = nil;
     self.videoUrl = url;
     self.credentials = someCredentials;
+
+    // exit from this function quickly so the app can continue functioning
+    SEL selector = @selector(sendVideoOnTimer:);
+    [NSTimer scheduledTimerWithTimeInterval:0.3
+                                     target:self
+                                   selector:selector
+                                   userInfo:nil
+                                    repeats:NO];
 }
 
 - (void)setTitle:(NSString *)text forPhotoWithUrl:(NSString *)photoUrl
@@ -129,6 +137,25 @@
 - (void)sendImageOnTimer:(NSTimer *)timer
 {
     ASIHTTPRequest * req = [self requestForUploadingImage:self.image
+                                          withCredentials:self.credentials];
+
+    [req setDelegate:self];
+    [req setDidFinishSelector:@selector(requestDidFinishLoading:)];
+    [req setDidFailSelector:@selector(requestDidFail:)];
+
+    [self.queue setUploadProgressDelegate:self];
+    [self.queue setShowAccurateProgress:YES];
+    [self.queue addOperation:req];
+
+    [self.queue go];
+
+    [[UIApplication sharedApplication] networkActivityIsStarting];
+}
+
+- (void)sendVideoOnTimer:(NSTimer *)timer
+{
+    NSData * videoData = [NSData dataWithContentsOfURL:self.videoUrl];
+    ASIHTTPRequest * req = [self requestForUploadingVideo:videoData
                                           withCredentials:self.credentials];
 
     [req setDelegate:self];
