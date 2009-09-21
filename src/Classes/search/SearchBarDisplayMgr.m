@@ -55,6 +55,8 @@
 
 - (void)toggleNearbySearchValue;
 
+- (void)updateSearchButtonWithDoneState;
+
 @end
 
 @implementation SearchBarDisplayMgr
@@ -297,8 +299,23 @@
 {
     if (!hasBeenDisplayed && self.searchQuery) {
         hasBeenDisplayed = YES;
-        [self searchFor:self.searchQuery];
+        if (nearbySearch) {
+            self.locationButton.style = UIBarButtonItemStyleDone;
+            self.searchBar.text = self.searchQuery;
+
+            [self.locationMgr startUpdatingLocation];
+            [self performSelector:@selector(updateSearchButtonWithDoneState)
+                withObject:nil afterDelay:0.1];
+        } else
+            [self searchFor:self.searchQuery];
     }
+}
+
+- (void)updateSearchButtonWithDoneState
+{
+    [self.networkAwareViewController.navigationItem
+        setLeftBarButtonItem:[self nearbySearchProgressView]
+        animated:YES];
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -592,13 +609,6 @@
         [self.networkAwareViewController.navigationItem
             setLeftBarButtonItem:[self nearbySearchProgressView] animated:YES];
     }
-}
-
-- (void)setNearbySearch:(BOOL)nearbySearchValue
-{
-    nearbySearch = nearbySearchValue;
-    self.locationButton.style =
-        nearbySearch ? UIBarButtonItemStyleDone : UIBarButtonItemStyleBordered;
 }
 
 - (UIBarButtonItem *)nearbySearchProgressView
