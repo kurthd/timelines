@@ -22,8 +22,6 @@
 
 @property (nonatomic, retain) TwitPicResponseParser * parser;
 
-- (void)uploadData:(NSData *)data toUrl:(NSURL *)url;
-
 + (NSString *)devKey;
 
 @end
@@ -161,21 +159,7 @@
     [self.delegate service:self updateUploadProgress:newProgress];
 }
 
-#pragma mark Helpers for building the post body
-
-- (void)uploadData:(NSData *)data toUrl:(NSURL *)url
-{
-    ASIHTTPRequest * theRequest = [[ASIHTTPRequest alloc] initWithURL:url];
-    [theRequest setDelegate:self];
-    [theRequest setDidFinishSelector:@selector(requestDidFinishLoading:)];
-    [theRequest setDidFailSelector:@selector(requestDidFail:)];
-    [theRequest appendPostData:data];
-
-    [self.queue addOperation:theRequest];
-
-    self.request = theRequest;
-    [theRequest release];
-}
+#pragma mark Private implementation
 
 + (NSString *)devKey
 {
