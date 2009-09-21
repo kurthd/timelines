@@ -10,16 +10,18 @@
 @interface TwitVidPhotoService ()
 
 @property (nonatomic, retain) TwitVid * twitVid;
+@property (nonatomic, retain) TwitVidRequest * request;
 
 @end
 
 @implementation TwitVidPhotoService
 
-@synthesize twitVid;
+@synthesize twitVid, request;
 
 - (void)dealloc
 {
     self.twitVid = nil;
+    self.request = nil;
     [super dealloc];
 }
 
@@ -39,31 +41,22 @@
 - (void)sendVideoAtUrl:(NSURL *)url
   withCredentials:(TwitVidCredentials *)ctls
 {
-    [super sendVideoAtUrl:url withCredentials:ctls];
+    self.image = nil;
+    self.videoUrl = url;
+    self.credentials = ctls;
 
-    self.twitVid = [TwitVid twitVidWithUsername:ctls.username
-                                       password:ctls.password
-                                       delegate:self];
-
-    [self.twitVid uploadWithMediaFileAtURL:url
-                                   message:nil
-                                playlistId:nil
-                         vidResponseParent:nil
-                           youtubeUsername:nil
-                           youtubePassword:nil
-                                  userTags:nil
-                               geoLatitude:nil
-                              geoLongitude:nil
-                               posterImage:nil
-                                    source:@"Twitbit"
-                                  realtime:NO];
-
-    // HACK
-    [[UIApplication sharedApplication] networkActivityDidFinish];
+    // exit from this function quickly so the app can continue functioning
+    SEL selector = @selector(sendVideoOnTimer:);
+    [NSTimer scheduledTimerWithTimeInterval:0.3
+                                     target:self
+                                   selector:selector
+                                   userInfo:nil
+                                    repeats:NO];
 }
 
 - (void)cancelUpload
 {
+    [self.request stop];
 }
 
 #pragma mark TwitVidDelegate implementation
@@ -86,12 +79,41 @@
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
-- (void)request:(TwitVidRequest*)request 
+- (void)request:(TwitVidRequest*)theRequest 
    didSendBytes:(uint64_t)bytesSent 
   totalExpected:(uint64_t)expectedBytes
 {
-    NSLog(@"Request: %@ did send bytes: %d, total expected: %d", request,
-        bytesSent, expectedBytes);
+    CGFloat progress = ((CGFloat) bytesSent) / ((CGFloat) expectedBytes);
+    [self.delegate service:self updateUploadProgress:progress];
+}
+
+#pragma mark Private implementation
+
+- (void)sendVideoOnTimer:(NSTimer *)timer
+{
+    TwitVidCredentials * ctls = (TwitVidCredentials *) self.credentials;
+
+    self.twitVid = [TwitVid twitVidWithUsername:ctls.username
+                                       password:ctls.password
+                                       delegate:self];
+
+    NSString * source =
+        @"<a href=\"http://twitbitapp.com\">Twitbit for iPhone</a>";
+    self.request = [self.twitVid uploadWithMediaFileAtURL:self.videoUrl
+                                                  message:nil
+                                               playlistId:nil
+                                        vidResponseParent:nil
+                                          youtubeUsername:nil
+                                          youtubePassword:nil
+                                                 userTags:nil
+                                              geoLatitude:nil
+                                             geoLongitude:nil
+                                              posterImage:nil
+                                                   source:source
+                                                 realtime:NO];
+
+    // HACK
+    [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 @end
