@@ -576,7 +576,7 @@
 - (void)_parseDataForConnection:(MGTwitterHTTPURLConnection *)connection
 {
     NSString *identifier = [[[connection identifier] copy] autorelease];
-    NSData *jsonData = [[[connection data] copy] autorelease];
+    NSData *jsonData = [connection data];
     MGTwitterRequestType requestType = [connection requestType];
     MGTwitterResponseType responseType = [connection responseType];
 
@@ -621,7 +621,7 @@
 - (void)_parseDataForConnection:(MGTwitterHTTPURLConnection *)connection
 {
     NSString *identifier = [[[connection identifier] copy] autorelease];
-    NSData *xmlData = [[[connection data] copy] autorelease];
+    NSData *xmlData = [connection data];
     MGTwitterRequestType requestType = [connection requestType];
     MGTwitterResponseType responseType = [connection responseType];
     
