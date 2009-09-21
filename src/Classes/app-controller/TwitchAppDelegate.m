@@ -625,8 +625,6 @@
 
     searchBarDisplayMgr.searchQuery = uiState.searchText;
     searchBarDisplayMgr.nearbySearch = uiState.nearbySearch;
-
-    // HACK: Let the search view do some custom drawing when it appears
     [searchBarDisplayMgr searchBarViewWillAppear:NO];
 }
 
