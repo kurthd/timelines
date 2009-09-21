@@ -43,6 +43,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)updateCharacterCountFromText:(NSString *)text;
 
 - (void)displayForPortraitMode;
+- (void)correctCharacterCountFrameWhenDisplayed;
 
 @property (nonatomic, copy) NSString * currentSender;
 @property (nonatomic, copy) NSString * textViewText;
@@ -102,13 +103,20 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [self updateCharacterCountFromText:textView.text];
 
-    CGRect characterCountFrame = characterCount.frame;
-    // hack -- this needs to be 167 when displayed, but 104 after a rotation
-    // <sarcasm>it makes sense</sarcasm>
-    characterCountFrame.origin.y = 167;
-    characterCount.frame = characterCountFrame;
+    // HACK: character count label doesn't properly display when shown from
+    // landscape mode otherwise
+    [self performSelector:@selector(correctCharacterCountFrameWhenDisplayed)
+        withObject:nil afterDelay:0];
 
     [textView becomeFirstResponder];
+}
+
+- (void)correctCharacterCountFrameWhenDisplayed
+{
+    CGRect characterCountFrame = characterCount.frame;
+    // hack -- this needs to be 167 when displayed, but 104 after a rotation
+    characterCountFrame.origin.y = 167;
+    characterCount.frame = characterCountFrame;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
