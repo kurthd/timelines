@@ -8,9 +8,7 @@
 #import "NSManagedObject+TediousCodeAdditions.h"
 #import "TwitPicCredentials+KeychainAdditions.h"
 #import "InfoPlistConfigReader.h"
-#import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
-#import "ASINetworkQueue.h"
 
 @interface TwitPicPhotoService ()
 
@@ -40,7 +38,6 @@
         self.twitPicUrl =
             [[InfoPlistConfigReader reader] valueForKey:@"TwitPicPostUrl"];
         parser = [[TwitPicResponseParser alloc] init];
-        queue = [[ASINetworkQueue alloc] init];
     }
 
     return self;

@@ -19,9 +19,13 @@
 
 - (ASIHTTPRequest *)requestForUploadingImage:(UIImage *)anImage
                              withCredentials:(PhotoServiceCredentials *)ctls;
+- (ASIHTTPRequest *)requestForUploadingVideo:(NSData *)aVideo
+                             withCredentials:(PhotoServiceCredentials *)ctls;
 
 - (void)processImageUploadResponse:(NSData *)response;
+- (void)processVideoUploadResponse:(NSData *)response;
 - (void)processImageUploadFailure:(NSError *)error;
+- (void)processVideoUploadFailure:(NSError *)error;
 
 @end
 
@@ -40,6 +44,14 @@
     self.queue = nil;
 
     [super dealloc];
+}
+
+- (id)init
+{
+    if (self = [super init])
+        queue = [[ASINetworkQueue alloc] init];
+
+    return self;
 }
 
 - (void)sendImage:(UIImage *)anImage
@@ -139,6 +151,8 @@
     NSData * response = [request responseData];
     if (self.image)
         [self processImageUploadResponse:response];
+    else if (self.videoUrl)
+        [self processVideoUploadResponse:response];
 
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
@@ -148,6 +162,8 @@
     NSError * error = [request error];
     if (self.image)
         [self processImageUploadFailure:error];
+    else if (self.videoUrl)
+        [self processVideoUploadFailure:error];
 
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }
@@ -166,12 +182,29 @@
     return nil;
 }
 
+- (ASIHTTPRequest *)requestForUploadingVideo:(NSData *)aVideo
+                             withCredentials:(PhotoServiceCredentials *)ctls
+{
+    NSAssert(NO, @"Must be implemented by subclasses.");
+    return nil;
+}
+
 - (void)processImageUploadResponse:(NSData *)response
 {
     NSAssert(NO, @"Must be implemented by subclasses.");
 }
 
+- (void)processVideoUploadResponse:(NSData *)response
+{
+    NSAssert(NO, @"Must be implemented by subclasses.");
+}
+
 - (void)processImageUploadFailure:(NSError *)error
+{
+    NSAssert(NO, @"Must be implemented by subclasses.");
+}
+
+- (void)processVideoUploadFailure:(NSError *)error
 {
     NSAssert(NO, @"Must be implemented by subclasses.");
 }

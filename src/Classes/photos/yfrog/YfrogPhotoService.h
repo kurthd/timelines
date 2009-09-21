@@ -11,9 +11,6 @@
 {
     NSString * yfrogUrl;
 
-    NSMutableData * data;
-    NSURLConnection * connection;
-
     YfrogResponseParser * parser;
 }
 
