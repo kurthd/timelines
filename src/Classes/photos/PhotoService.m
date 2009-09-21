@@ -160,10 +160,19 @@
 - (void)requestDidFail:(ASIHTTPRequest *)request
 {
     NSError * error = [request error];
-    if (self.image)
-        [self processImageUploadFailure:error];
-    else if (self.videoUrl)
-        [self processVideoUploadFailure:error];
+
+    // if the user cancels the upload, it shows up as an error, which we
+    // want to suppress
+    BOOL requestWasCancelled =
+        ([error.domain isEqualToString:NetworkRequestErrorDomain] &&
+        error.code == ASIRequestCancelledErrorType);
+
+    if (!requestWasCancelled) {
+        if (self.image)
+            [self processImageUploadFailure:error];
+        else if (self.videoUrl)
+            [self processVideoUploadFailure:error];
+    }
 
     [[UIApplication sharedApplication] networkActivityDidFinish];
 }

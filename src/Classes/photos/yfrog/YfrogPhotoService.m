@@ -117,7 +117,6 @@
     [req setPostValue:ctls.username forKey:@"username"];
     [req setPostValue:ctls.password forKey:@"password"];
     [req setData:data forKey:@"media"];
-    //[req setFile:data withFileName:@"file" andContentType:mimeType forKey:@"media"];
 
     return [req autorelease];
 }

@@ -85,11 +85,7 @@
 
 - (void)processImageUploadFailure:(NSError *)error
 {
-    if (!([error.domain isEqualToString:NetworkRequestErrorDomain] &&
-        error.code == ASIRequestCancelledErrorType)) {
-        NSLog(@"Received error: %@", error);
-        [self.delegate service:self failedToPostImage:error];
-    }
+    [self.delegate service:self failedToPostImage:error];
 }
 
 #pragma mark Private implementation
