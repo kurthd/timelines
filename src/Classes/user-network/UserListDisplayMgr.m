@@ -9,6 +9,7 @@
 #import "SearchDataSource.h"
 #import "SettingsReader.h"
 #import "NearbySearchDataSource.h"
+#import "UIColor+TwitchColors.h"
 
 @interface UserListDisplayMgr ()
 
@@ -263,8 +264,7 @@
     if ([userInfoUsername isEqual:followee])
         [self.userInfoController setFailedToQueryFollowing];
 
-    [self.userInfoController setFollowing:NO];
-    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
 }
 
 - (void)userIsBlocked:(NSString *)aUsername
@@ -678,8 +678,8 @@
     BOOL allLoaded = oldCacheSize == newCacheSize;
     [userListController setAllPagesLoaded:allLoaded];
     [userListController setUsers:[cache allValues] page:[page intValue]];
-    [wrapperController setCachedDataAvailable:YES];
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
+    [wrapperController setCachedDataAvailable:YES];
     failedState = NO;
 }
 
@@ -743,6 +743,11 @@
     CGRect buttonFrame = CGRectMake(20, 7, 280, 37);
     UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = buttonFrame;
+    
+    CGRect grayLineFrame = CGRectMake(0, 50, 320, 1);
+    UIView * grayLineView =
+        [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
+    grayLineView.backgroundColor = [UIColor twitchLightGrayColor];
 
     UIImage * background =
         [UIImage imageNamed:@"SaveSearchButtonBackground.png"];
@@ -764,6 +769,7 @@
     [button addTarget:self action:action forControlEvents:events];
 
     [view addSubview:button];
+    [view addSubview:grayLineView];
 
     return [view autorelease];
 }

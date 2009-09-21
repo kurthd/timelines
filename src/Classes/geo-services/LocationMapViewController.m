@@ -83,6 +83,7 @@
 {
     for (MKAnnotationView * view in views) {
         if (view.annotation == mapView.userLocation) {
+            didAddUserLocationAnnotation = YES;
             [mapView setCenterCoordinate:view.annotation.coordinate
                 animated:YES];
             self.navigationItem.rightBarButtonItem = userLocationButton;
@@ -108,12 +109,13 @@
 - (void)setLocation:(NSString *)locationText
 {
     NSLog(@"Setting location to %@", locationText);
-
+    
     self.mapAnnotation.title = locationText;
 
     [mapView removeAnnotation:self.mapAnnotation];
 
     showingUserLocation = NO;
+    didAddUserLocationAnnotation = NO;
     mapView.showsUserLocation = NO;
     if (self.userLocationButton)
         self.navigationItem.rightBarButtonItem = self.userLocationButton;
@@ -218,7 +220,7 @@
     mapView.showsUserLocation = showingUserLocation;
     sender.style = showingUserLocation ?
         UIBarButtonItemStyleDone : UIBarButtonItemStyleBordered;
-    if (showingUserLocation)
+    if (showingUserLocation && !didAddUserLocationAnnotation)
         self.navigationItem.rightBarButtonItem = self.activityIndicator;
 }
 

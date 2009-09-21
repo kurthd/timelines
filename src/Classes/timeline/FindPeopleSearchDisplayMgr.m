@@ -12,6 +12,7 @@
 #import "RegexKitLite.h"
 #import "SettingsReader.h"
 #import "NearbySearchDataSource.h"
+#import "UIColor+TwitchColors.h"
 
 @interface FindPeopleSearchDisplayMgr ()
 
@@ -969,6 +970,11 @@
     UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = buttonFrame;
 
+    CGRect grayLineFrame = CGRectMake(0, 50, 320, 1);
+    UIView * grayLineView =
+        [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
+    grayLineView.backgroundColor = [UIColor twitchLightGrayColor];
+
     UIImage * background =
         [UIImage imageNamed:@"SaveSearchButtonBackground.png"];
     UIImage * selectedBackground =
@@ -989,6 +995,7 @@
     [button addTarget:self action:action forControlEvents:events];
 
     [view addSubview:button];
+    [view addSubview:grayLineView];
 
     return [view autorelease];
 }

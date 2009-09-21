@@ -24,6 +24,7 @@
     UIBarButtonItem * userLocationButton;
     UIBarButtonItem * activityIndicator;
     BOOL showingUserLocation;
+    BOOL didAddUserLocationAnnotation;
 }
 
 @property (nonatomic, assign) id<LocationMapViewControllerDelegate> delegate;

@@ -25,6 +25,8 @@
 - (void)addSentDirectMessages:(NSArray *)newDirectMessages;
 - (NSDictionary *)sentDirectMessages;
 
+- (void)removeDirectMessageWithId:(NSString *)identifier;
+
 - (void)clear;
 
 @end

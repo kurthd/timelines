@@ -5,6 +5,7 @@
 #import "User+UIAdditions.h"
 #import "AsynchronousNetworkFetcher.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
+#import "Avatar+UIAdditions.h"
 
 @interface User (Private)
 
@@ -88,7 +89,7 @@ static NSMutableDictionary * followersDescriptions;
         NSString * followingString =
             [formatter stringFromNumber:self.friendsCount];
         NSString * followersString =
-            [formatter stringFromNumber:self.followersCount];;
+            [formatter stringFromNumber:self.followersCount];
         followersDescription =
             [NSString stringWithFormat:followingFormatString, followingString,
             followersString];
@@ -101,8 +102,7 @@ static NSMutableDictionary * followersDescriptions;
 
 - (UIImage *)thumbnailAvatar
 {
-    NSData * imageData = self.avatar.thumbnailImage;
-    return imageData ? [UIImage imageWithData:imageData] : nil;
+    return [self.avatar actualThumbnailImage];
 }
 
 - (UIImage *)fullAvatar

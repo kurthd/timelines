@@ -85,6 +85,8 @@
         NSNumber * latitude =
             [NSNumber numberWithInt:
             self.nearbySearchLocation.coordinate.longitude];
+        NSLog(@"Searching for '%@' in a radius of %@km.", self.queryString,
+            radius);
         [service searchFor:self.queryString page:page latitude:latitude
             longitude:longitude radius:radius radiusIsInMiles:NO];
     } else

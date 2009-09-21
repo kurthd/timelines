@@ -510,8 +510,10 @@
     }
 
     TwitterCredentials * c = self.activeCredentials.credentials;
-    [timelineDisplayMgr setCredentials:c];
-    [self loadHomeViewWithCachedData:c];
+    if (c) {
+        [timelineDisplayMgr setCredentials:c];
+        [self loadHomeViewWithCachedData:c];
+    }
 }
 
 - (void)initMessagesTab

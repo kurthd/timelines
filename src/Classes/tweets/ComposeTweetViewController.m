@@ -42,6 +42,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)updateCharacterCountFromInterface;
 - (void)updateCharacterCountFromText:(NSString *)text;
 
+- (void)displayForPortraitMode;
+- (void)correctCharacterCountFrameWhenDisplayed;
+
 @property (nonatomic, copy) NSString * currentSender;
 @property (nonatomic, copy) NSString * textViewText;
 @property (nonatomic, copy) NSString * currentRecipient;
@@ -101,18 +104,27 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [self updateCharacterCountFromText:textView.text];
 
-    CGRect characterCountFrame = characterCount.frame;
-    // hack -- this needs to be 167 when displayed, but 104 after a rotation
-    // <sarcasm>it makes sense</sarcasm>
-    characterCountFrame.origin.y = 167;
-    characterCount.frame = characterCountFrame;
+    // HACK: character count label doesn't properly display when shown from
+    // landscape mode otherwise
+    [self performSelector:@selector(correctCharacterCountFrameWhenDisplayed)
+        withObject:nil afterDelay:0];
 
     [textView becomeFirstResponder];
+}
+
+- (void)correctCharacterCountFrameWhenDisplayed
+{
+    CGRect characterCountFrame = characterCount.frame;
+    // hack -- this needs to be 167 when displayed, but 104 after a rotation
+    characterCountFrame.origin.y = 167;
+    characterCount.frame = characterCountFrame;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+
+    [self displayForPortraitMode];
 
     [recipientTextField resignFirstResponder];
     [textView resignFirstResponder];
@@ -129,28 +141,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     NSLog(@"Did rotate to interface orientation.");
     if (orientation == UIInterfaceOrientationPortrait ||
-        orientation == UIInterfaceOrientationPortraitUpsideDown) {
-
-        if (!recipientView.hidden) {
-            CGRect recipientViewFrame = recipientView.frame;
-            recipientViewFrame.size.height = 39;
-            recipientView.frame = recipientViewFrame;
-
-            CGRect textViewFrame = textView.frame;
-            textViewFrame.origin.y = 39;
-            textView.frame = textViewFrame;
-        }
-
-        CGRect characterCountFrame = characterCount.frame;
-        characterCountFrame.origin.y = 104;
-        characterCount.frame = characterCountFrame;
-
-        characterCount.textColor = [UIColor whiteColor];
-        characterCount.backgroundColor = [UIColor clearColor];
-
-        toolbar.hidden = NO;
-        accountLabel.hidden = NO;
-    } else {
+        orientation == UIInterfaceOrientationPortraitUpsideDown)
+        [self displayForPortraitMode];
+    else {
         if (!recipientView.hidden) {
             CGRect recipientViewFrame = recipientView.frame;
             recipientViewFrame.size.height = 29;
@@ -171,6 +164,29 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         toolbar.hidden = YES;
         accountLabel.hidden = YES;
     }
+}
+
+- (void)displayForPortraitMode
+{
+    if (!recipientView.hidden) {
+        CGRect recipientViewFrame = recipientView.frame;
+        recipientViewFrame.size.height = 39;
+        recipientView.frame = recipientViewFrame;
+
+        CGRect textViewFrame = textView.frame;
+        textViewFrame.origin.y = 39;
+        textView.frame = textViewFrame;
+    }
+
+    CGRect characterCountFrame = characterCount.frame;
+    characterCountFrame.origin.y = 104;
+    characterCount.frame = characterCountFrame;
+
+    characterCount.textColor = [UIColor whiteColor];
+    characterCount.backgroundColor = [UIColor clearColor];
+
+    toolbar.hidden = NO;
+    accountLabel.hidden = NO;
 }
 
 - (void)composeTweet:(NSString *)text from:(NSString *)sender

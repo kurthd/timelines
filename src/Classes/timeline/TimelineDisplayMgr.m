@@ -548,6 +548,8 @@ static BOOL scrollToTopValueAlreadyRead;
 
 - (void)deleteTweet:(NSString *)tweetId
 {
+    NSLog(@"Removing tweet with id %@", tweetId);
+    [timeline removeObjectForKey:tweetId];
     [service deleteTweet:tweetId];
     [timelineController performSelector:@selector(deleteTweet:)
         withObject:tweetId afterDelay:0.5];

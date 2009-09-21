@@ -54,6 +54,12 @@
         [sentDirectMessages setObject:message forKey:message.identifier];
 }
 
+- (void)removeDirectMessageWithId:(NSString *)identifier
+{
+    [sentDirectMessages removeObjectForKey:identifier];
+    [receivedDirectMessages removeObjectForKey:identifier];
+}
+
 - (NSDictionary *)sentDirectMessages
 {
     return [[sentDirectMessages copy] autorelease];

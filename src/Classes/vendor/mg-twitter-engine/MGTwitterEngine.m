@@ -847,7 +847,7 @@
 - (void)connectionDidFinishLoading:(MGTwitterHTTPURLConnection *)connection
 {
     // Inform delegate.
-    if ([connection error] && [self _isValidDelegateForSelector:@selector(requestSucceeded:)])
+    if (![connection error] && [self _isValidDelegateForSelector:@selector(requestSucceeded:)])
 		[_delegate requestSucceeded:[connection identifier]];
     
     NSData *receivedData = [connection data];

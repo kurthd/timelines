@@ -18,6 +18,7 @@
 #import "ErrorState.h"
 #import "NearbySearchDataSource.h"
 #import "SettingsReader.h"
+#import "UIColor+TwitchColors.h"
 
 @interface DirectMessagesDisplayMgr ()
 
@@ -369,6 +370,19 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
 
+- (void)deletedDirectMessageWithId:(NSString *)directMessageId
+{
+    [directMessageCache removeDirectMessageWithId:directMessageId];
+    // for (NSMutableArray * convo in [sortedConversations allValues]) {
+    //     for (DirectMessage * dm in convo) {
+    //         if ([dm.identifier isEqual:directMessageId]) {
+    //             [convo removeObject:dm];
+    //             return;
+    //         }
+    //     }
+    // }
+}
+
 - (void)failedToDeleteDirectMessageWithId:(NSString *)directMessageId
     error:(NSError *)error;
 {
@@ -464,8 +478,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     TweetInfo * tweetInfo = [TweetInfo createFromDirectMessage:message];
     [self.tweetViewController displayTweet:tweetInfo
         onNavigationController:wrapperController.navigationController];
-    self.tweetViewController.allowDeletion =
-        [message.sender.username isEqual:activeAcctUsername];
+    self.tweetViewController.allowDeletion = YES;
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
@@ -890,6 +903,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)deleteTweet:(NSString *)tweetId
 {
+    [self clearState];
     [service deleteDirectMessage:tweetId];
     [conversationController performSelector:@selector(deleteTweet:)
         withObject:tweetId afterDelay:0.5];
@@ -1342,6 +1356,11 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = buttonFrame;
 
+    CGRect grayLineFrame = CGRectMake(0, 50, 320, 1);
+    UIView * grayLineView =
+        [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
+    grayLineView.backgroundColor = [UIColor twitchLightGrayColor];
+
     UIImage * background =
         [UIImage imageNamed:@"SaveSearchButtonBackground.png"];
     UIImage * selectedBackground =
@@ -1362,6 +1381,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [button addTarget:self action:action forControlEvents:events];
 
     [view addSubview:button];
+    [view addSubview:grayLineView];
 
     return [view autorelease];
 }
