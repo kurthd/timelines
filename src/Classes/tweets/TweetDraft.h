@@ -2,7 +2,7 @@
 //  TweetDraft.h
 //  twitch
 //
-//  Created by John A. Debay on 7/14/09.
+//  Created by John Debay on 9/21/09.
 //  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
@@ -14,6 +14,8 @@
 {
 }
 
+@property (nonatomic, retain) NSString * inReplyToTweetId;
+@property (nonatomic, retain) NSString * inReplyToUsername;
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) TwitterCredentials * credentials;
 

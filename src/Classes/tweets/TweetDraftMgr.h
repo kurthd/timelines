@@ -20,6 +20,11 @@
 - (BOOL)saveTweetDraft:(NSString *)text
            credentials:(TwitterCredentials *)credentials
                  error:(NSError **)error;
+- (BOOL)saveTweetDraft:(NSString *)text
+           credentials:(TwitterCredentials *)credentials
+      inReplyToTweetId:(NSString *)tweetId
+     inReplyToUsername:(NSString *)username
+                 error:(NSError **)error;
 - (BOOL)deleteTweetDraftForCredentials:(TwitterCredentials *)credentials
                                  error:(NSError **)error;
 

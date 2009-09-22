@@ -142,7 +142,12 @@
         [self.draftMgr tweetDraftForCredentials:self.service.credentials];
 
     NSString * text = draft ? draft.text : @"";
-    [self composeTweetWithText:text];
+    if (self.origTweetId && self.origUsername)
+        [self composeReplyToTweet:draft.inReplyToTweetId
+                         fromUser:draft.inReplyToUsername
+                         withText:text];
+    else
+        [self composeTweetWithText:text];
 }
 
 - (void)composeTweetWithText:(NSString *)tweet
@@ -349,9 +354,16 @@
     [self.rootViewController dismissModalViewControllerAnimated:YES];
 
     NSError * error = nil;
-    [self.draftMgr saveTweetDraft:text
-                      credentials:self.service.credentials
-                            error:&error];
+    if (self.origTweetId && self.origUsername)
+        [self.draftMgr saveTweetDraft:text
+                          credentials:self.service.credentials
+                     inReplyToTweetId:self.origTweetId
+                    inReplyToUsername:self.origUsername
+                                error:&error];
+    else
+        [self.draftMgr saveTweetDraft:text
+                          credentials:self.service.credentials
+                                error:&error];
 
     if (error) {
         NSLog(@"Failed to save tweet drafts: '%@', '%@'.", error,

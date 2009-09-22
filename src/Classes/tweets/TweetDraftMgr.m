@@ -42,12 +42,27 @@
            credentials:(TwitterCredentials *)credentials
                  error:(NSError **)error
 {
+    return [self saveTweetDraft:text
+                    credentials:credentials
+               inReplyToTweetId:nil
+              inReplyToUsername:nil
+                          error:error];
+}
+
+- (BOOL)saveTweetDraft:(NSString *)text
+           credentials:(TwitterCredentials *)credentials
+      inReplyToTweetId:(NSString *)tweetId
+     inReplyToUsername:(NSString *)username
+                 error:(NSError **)error
+{
     TweetDraft * draft = [self tweetDraftForCredentials:credentials];
     if (!draft) {
         draft = [TweetDraft createInstance:self.context];
         draft.credentials = credentials;
     }
     draft.text = text;
+    draft.inReplyToTweetId = tweetId;
+    draft.inReplyToUsername = username;
 
     *error = nil;
     return [self.context save:error];
