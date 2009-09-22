@@ -30,6 +30,7 @@ typedef enum {
 - (void)setDate:(NSDate *)date;
 - (void)setTweetText:(NSString *)tweetText;
 - (void)setDisplayType:(TimelineTableViewCellType)displayType;
+- (void)setFavorite:(BOOL)favorite;
 - (void)setHighlightForMention:(BOOL)highlight;
 - (void)setDarkenForOld:(BOOL)darken;
 

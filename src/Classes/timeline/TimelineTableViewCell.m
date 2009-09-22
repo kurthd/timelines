@@ -82,6 +82,11 @@ static UIImage * topGradientImage;
     timelineView.text = tweetText;
 }
 
+- (void)setFavorite:(BOOL)favorite
+{
+    timelineView.favorite = favorite;
+}
+
 - (void)setDisplayType:(TimelineTableViewCellType)displayType
 {
     timelineView.cellType = displayType;

@@ -135,6 +135,8 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         self.mentionRegex ?
         [tweet.text isMatchedByRegex:self.mentionRegex] : NO;
     [cell setHighlightForMention:highlightForMention];
+    
+    [cell setFavorite:[tweet.favorited boolValue]];
 
     return cell;
 }
