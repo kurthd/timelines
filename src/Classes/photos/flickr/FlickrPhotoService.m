@@ -59,7 +59,10 @@
 - (void)sendImage:(UIImage *)anImage
   withCredentials:(FlickrCredentials *)ctls
 {
-    [super sendImage:anImage withCredentials:ctls];
+    self.image = anImage;
+    self.videoUrl = nil;
+    self.credentials = ctls;
+
     [flickrContext setAuthToken:ctls.token];
 
     self.uploadRequest =
@@ -119,7 +122,10 @@
 - (void)sendVideoAtUrl:(NSURL *)url
   withCredentials:(FlickrCredentials *)ctls
 {
-    [super sendVideoAtUrl:url withCredentials:ctls];
+    self.image = nil;
+    self.videoUrl = url;
+    self.credentials = ctls;
+
     [flickrContext setAuthToken:ctls.token];
 
     self.uploadRequest =
