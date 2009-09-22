@@ -33,12 +33,16 @@ static UIImage * darkenedTopImage;
 - (void)setStringValue:(NSString **)dest to:(NSString *)source;
 + (CGFloat)degreesToRadians:(CGFloat)degrees;
 
++ (NSString *)starText;
+
 @end
 
 @implementation TimelineTableViewCellView
 
+static NSString * starText;
+
 @synthesize text, author, timestamp, avatar, cellType, highlightForMention,
-    darkenForOld;
+    darkenForOld, favorite;
 @synthesize highlighted;
 
 + (void)initialize
@@ -96,7 +100,7 @@ static UIImage * darkenedTopImage;
 {
     if (self = [super initWithFrame:frame]) {
         self.opaque = YES;
-        
+
         self.backgroundColor =
             highlightForMention ?
             [UIColor darkCellBackgroundColor] : [UIColor whiteColor];
@@ -152,6 +156,8 @@ static UIImage * darkenedTopImage;
 
     UIColor * textColor = nil;
     UIFont * textFont = [UIFont systemFontOfSize:14.0];
+    
+    UIColor * favoriteColor = nil;
 
     CGRect contentRect = self.bounds;
 
@@ -162,11 +168,13 @@ static UIImage * darkenedTopImage;
         authorColor = [UIColor whiteColor];
         timestampColor = [UIColor whiteColor];
         textColor = [UIColor whiteColor];
+        favoriteColor = [UIColor whiteColor];
         [self drawHighlightedAvatarBorderWithTopMargin:6 leftMargin:6];
     } else {
         authorColor = [UIColor blackColor];
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
+        favoriteColor = [UIColor grayColor];
 
         UIImage * bottomImage;
         UIImage * topImage;
@@ -211,13 +219,31 @@ static UIImage * darkenedTopImage;
     //
 
     [authorColor set];
-    size = CGSizeMake(point.x - 5.0 - AUTHOR_LEFT_MARGIN, authorFont.pointSize);
+    CGFloat padding = favorite ? 19.0 : 5.0;
+    size =
+        CGSizeMake(point.x - padding - AUTHOR_LEFT_MARGIN,
+        authorFont.pointSize);
     point = CGPointMake(AUTHOR_LEFT_MARGIN, AUTHOR_TOP_MARGIN);
 
     [author drawAtPoint:point forWidth:size.width withFont:authorFont
         fontSize:authorFont.pointSize
         lineBreakMode:UILineBreakModeTailTruncation
         baselineAdjustment:UIBaselineAdjustmentNone];
+    
+    CGFloat authorWidth = size.width;
+    
+    if (favorite) {
+        [favoriteColor set];
+        size = CGSizeMake(13, authorFont.pointSize);
+        point =
+            CGPointMake(AUTHOR_LEFT_MARGIN + authorWidth + 2,
+            AUTHOR_TOP_MARGIN);
+
+        [[[self class] starText] drawAtPoint:point forWidth:size.width
+            withFont:authorFont fontSize:authorFont.pointSize
+            lineBreakMode:UILineBreakModeTailTruncation
+            baselineAdjustment:UIBaselineAdjustmentNone];
+    }
 
     //
     // Draw the main text.
@@ -263,6 +289,8 @@ static UIImage * darkenedTopImage;
 
     UIColor * textColor = nil;
     UIFont * textFont = [UIFont systemFontOfSize:14.0];
+    
+    UIColor * favoriteColor = nil;
 
     CGPoint point;
     CGSize size;
@@ -270,10 +298,12 @@ static UIImage * darkenedTopImage;
     if (highlighted) {
         timestampColor = [UIColor whiteColor];
         textColor = [UIColor whiteColor];
+        favoriteColor = [UIColor whiteColor];
         [self drawHighlightedAvatarBorderWithTopMargin:6 leftMargin:245];
     } else {
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
+        favoriteColor = [UIColor grayColor];
 
         UIImage * bottomImage;
         UIImage * topImage;
@@ -307,6 +337,22 @@ static UIImage * darkenedTopImage;
     point = CGPointMake(TIMESTAMP_LEFT_MARGIN, TIMESTAMP_TOP_MARGIN);
 
     [timestamp drawAtPoint:point withFont:timestampFont];
+
+    CGFloat timestampWidth = size.width;
+
+    if (favorite) {
+        [favoriteColor set];
+        UIFont * favoriteFont = [UIFont boldSystemFontOfSize:16.0];
+        size = CGSizeMake(13, favoriteFont.pointSize);
+        point =
+            CGPointMake(TEXT_LEFT_MARGIN + timestampWidth + 5,
+            TIMESTAMP_TOP_MARGIN - 2);
+
+        [[[self class] starText] drawAtPoint:point forWidth:size.width
+            withFont:favoriteFont fontSize:favoriteFont.pointSize
+            lineBreakMode:UILineBreakModeTailTruncation
+            baselineAdjustment:UIBaselineAdjustmentNone];
+    }
 
     //
     // Draw the main text.
@@ -349,6 +395,8 @@ static UIImage * darkenedTopImage;
 
     UIColor * textColor = nil;
     UIFont * textFont = [UIFont systemFontOfSize:14.0];
+    
+    UIColor * favoriteColor = nil;
 
     CGPoint point;
     CGSize size;
@@ -356,9 +404,11 @@ static UIImage * darkenedTopImage;
     if (highlighted) {
         timestampColor = [UIColor whiteColor];
         textColor = [UIColor whiteColor];
+        favoriteColor = [UIColor whiteColor];
     } else {
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
+        favoriteColor = [UIColor grayColor];
 
         UIImage * bottomImage;
         UIImage * topImage;
@@ -390,6 +440,22 @@ static UIImage * darkenedTopImage;
     size = [timestamp sizeWithFont:timestampFont];
     point = CGPointMake(TIMESTAMP_LEFT_MARGIN, TIMESTAMP_TOP_MARGIN);
     [timestamp drawAtPoint:point withFont:timestampFont];
+
+    CGFloat timestampWidth = size.width;
+
+    if (favorite) {
+        [favoriteColor set];
+        UIFont * favoriteFont = [UIFont boldSystemFontOfSize:16.0];
+        size = CGSizeMake(13, favoriteFont.pointSize);
+        point =
+            CGPointMake(TEXT_LEFT_MARGIN + timestampWidth + 5,
+            TIMESTAMP_TOP_MARGIN - 2);
+
+        [[[self class] starText] drawAtPoint:point forWidth:size.width
+            withFont:favoriteFont fontSize:favoriteFont.pointSize
+            lineBreakMode:UILineBreakModeTailTruncation
+            baselineAdjustment:UIBaselineAdjustmentNone];
+    }
 
     //
     // Draw the main text.
@@ -561,6 +627,14 @@ static UIImage * darkenedTopImage;
     }
 }
 
+- (void)setFavorite:(BOOL)fav
+{
+    if (favorite != fav) {
+        favorite = fav;
+        [self setNeedsDisplay];
+    }
+}
+
 - (void)setDarkenForOld:(BOOL)darken
 {
     if (darkenForOld != darken) {
@@ -653,6 +727,14 @@ static UIColor * mentionCellColor;
 + (CGFloat)degreesToRadians:(CGFloat)degrees
 {
     return degrees / 57.2958;
+}
+
++ (NSString *)starText
+{
+    if (!starText)
+        starText = @"★";
+
+    return starText;
 }
 
 @end

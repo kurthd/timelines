@@ -12,6 +12,7 @@
     NSString * timestamp;
     UIImage * avatar;
     TimelineTableViewCellType cellType;
+    BOOL favorite;
     BOOL highlightForMention;
     BOOL darkenForOld;
 
@@ -23,6 +24,7 @@
 @property (nonatomic, copy) NSString * timestamp;
 @property (nonatomic, retain) UIImage * avatar;
 @property (nonatomic, assign) TimelineTableViewCellType cellType;
+@property (nonatomic, assign) BOOL favorite;
 @property (nonatomic, assign) BOOL highlightForMention;
 @property (nonatomic, assign) BOOL darkenForOld;
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;
