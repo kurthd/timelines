@@ -138,7 +138,10 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [self performSelector:@selector(correctCharacterCountFrameWhenDisplayed)
         withObject:nil afterDelay:0];
 
-    [textView becomeFirstResponder];
+    if (hideRecipientView)
+        [textView becomeFirstResponder];
+    else
+        [recipientTextField becomeFirstResponder];
 }
 
 - (void)correctCharacterCountFrameWhenDisplayed
