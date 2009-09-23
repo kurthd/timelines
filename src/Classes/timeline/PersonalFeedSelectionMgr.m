@@ -3,6 +3,7 @@
 //
 
 #import "PersonalFeedSelectionMgr.h"
+#import "SettingsReader.h"
 
 @implementation PersonalFeedSelectionMgr
 
@@ -105,6 +106,32 @@
     }
 
     previousTab = index;
+}
+
+- (void)setAllTimelineTweets:(NSDictionary *)tweets
+{
+    NSDictionary * tempTweets = [tweets copy];
+    [allTimelineTweets release];
+    allTimelineTweets = tempTweets;
+
+    // determine num pages
+    NSInteger tweetCount = [[tweets allKeys] count];
+    NSInteger fetchQty = [SettingsReader fetchQuantity];
+    allTimelinePagesShown =
+        tweetCount > 0 ? (tweetCount + fetchQty - 1) / fetchQty : 1;
+}
+
+- (void)setMentionsTimelineTweets:(NSDictionary *)tweets
+{
+    NSDictionary * tempTweets = [tweets copy];
+    [mentionsTimelineTweets release];
+    mentionsTimelineTweets = tempTweets;
+    
+    // determine num pages
+    NSInteger tweetCount = [[tweets allKeys] count];
+    NSInteger fetchQty = [SettingsReader fetchQuantity];
+    allTimelinePagesShown =
+        tweetCount > 0 ? (tweetCount + fetchQty - 1) / fetchQty : 1;
 }
 
 - (void)refreshCurrentTabData
