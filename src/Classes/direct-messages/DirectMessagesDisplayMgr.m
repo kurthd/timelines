@@ -65,6 +65,8 @@
     
 @property (nonatomic, copy) NSString * userInfoUsername;
 
+@property (nonatomic, retain) UIBarButtonItem * inboxViewComposeTweetButton;
+
 @end
 
 @implementation DirectMessagesDisplayMgr
@@ -77,7 +79,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     tweetDetailsCredentialsPublisher, userListNetAwareViewController,
     userListDisplayMgr, directMessageCache, newDirectMessages,
     newDirectMessagesState, currentConversationUserId, currentSearch,
-    savedSearchMgr, userInfoController, userInfoUsername;
+    savedSearchMgr, userInfoController, userInfoUsername,
+    inboxViewComposeTweetButton;
 
 - (void)dealloc
 {
@@ -109,6 +112,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [userInfoTwitterService release];
     [locationMapViewController release];
     [locationInfoViewController release];
+    [inboxViewComposeTweetButton release];
     [super dealloc];
 }
 
@@ -143,10 +147,11 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         conversations = [[NSMutableDictionary dictionary] retain];
         sortedConversations = [[NSMutableDictionary dictionary] retain];
 
-        UIBarButtonItem * composeDirectMessageButton =
+        self.inboxViewComposeTweetButton =
             wrapperController.navigationItem.rightBarButtonItem;
-        composeDirectMessageButton.target = self;
-        composeDirectMessageButton.action = @selector(composeNewDirectMessage);
+        self.inboxViewComposeTweetButton.target = self;
+        self.inboxViewComposeTweetButton.action =
+            @selector(composeNewDirectMessage);
 
         UIBarButtonItem * refreshButton =
             wrapperController.navigationItem.leftBarButtonItem;
@@ -1557,23 +1562,28 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     [self.conversationController.navigationItem
         setRightBarButtonItem:[self sendingTweetProgressView] animated:YES];
+    [wrapperController.navigationItem
+        setRightBarButtonItem:[self sendingTweetProgressView] animated:YES];
 }
 
 - (void)updateDisplayForFailedDirectMessage:(NSString *)recipient
 {
     [self.conversationController.navigationItem
         setRightBarButtonItem:[self newMessageButtonItem] animated:YES];
+    [wrapperController.navigationItem
+        setRightBarButtonItem:self.inboxViewComposeTweetButton animated:YES];
 }
 
 - (void)addDirectMessage:(DirectMessage *)dm
 {
     NSLog(@"Direct message display manager: adding direct message");
 
-    if ([dm.recipient.identifier isEqual:self.currentConversationUserId]) {
-        [self.conversationController.navigationItem
-            setRightBarButtonItem:[self newMessageButtonItem] animated:YES];
+    [self.conversationController.navigationItem
+        setRightBarButtonItem:[self newMessageButtonItem] animated:YES];
+    [wrapperController.navigationItem
+        setRightBarButtonItem:self.inboxViewComposeTweetButton animated:YES];
+    if ([dm.recipient.identifier isEqual:self.currentConversationUserId])
         [self.conversationController addTweet:dm];
-    }
 
     [directMessageCache addSentDirectMessage:dm];
     [self updateViewsWithNewMessages];

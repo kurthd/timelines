@@ -347,16 +347,19 @@
 
 - (void)userIsSendingDirectMessage:(NSString *)dm to:(NSString *)username
 {
+    NSLog(@"Twitch app delegate: sending direct message");
     [directMessageDisplayMgr updateDisplayForSendingDirectMessage];
 }
 
 - (void)userDidSendDirectMessage:(DirectMessage *)dm
 {
+    NSLog(@"Twitch app delegate: sent direct message");
     [directMessageDisplayMgr addDirectMessage:dm];
 }
 
 - (void)userFailedToSendDirectMessage:(NSString *)dm to:(NSString *)username
 {
+    NSLog(@"Twitch app delegate: failed to send direct message");
     [directMessageDisplayMgr updateDisplayForFailedDirectMessage:username];
 
     NSDictionary * userInfo =

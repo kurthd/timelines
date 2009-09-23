@@ -113,6 +113,7 @@
     NSUInteger loadMoreSentNextPage;
     NSUInteger loadMoreReceivedNextPage;
 
+    UIBarButtonItem * inboxViewComposeTweetButton;
     UIBarButtonItem * sendingTweetProgressView;
 
     NSNumber * currentConversationUserId;
