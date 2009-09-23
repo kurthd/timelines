@@ -501,6 +501,11 @@
 
     timelineDisplayMgr.tweetIdToShow = uiState.viewedTweetId;
 
+    UISegmentedControl * control = (UISegmentedControl *)
+        homeNetAwareViewController.navigationItem.titleView;
+
+    control.selectedSegmentIndex = uiState.selectedTimelineFeed;
+
     // HACK: Force tab selected to be called when selected index is zero, which
     // is the default
     if (uiState.selectedTimelineFeed == 0) {
@@ -1194,12 +1199,7 @@
         [[[UIStatePersistenceStore alloc] init] autorelease];
     uiState = [[uiStatePersistenceStore load] retain];
 
-    UISegmentedControl * control = (UISegmentedControl *)
-        homeNetAwareViewController.navigationItem.titleView;
-
     tabBarController.selectedIndex = uiState.selectedTab;
-
-    control.selectedSegmentIndex = uiState.selectedTimelineFeed;
 
     switch (uiState.selectedTab) {
         case 0:

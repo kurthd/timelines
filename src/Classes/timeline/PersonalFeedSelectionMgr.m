@@ -54,7 +54,7 @@
 
 - (void)tabSelectedWithIndex:(NSInteger)index
 {
-    NSLog(@"Timeline segmented control index selected");
+    NSLog(@"Timeline segmented control index selected: %d", index);
     switch (previousTab) {
         case -1: // first time
             if (index == 0)
