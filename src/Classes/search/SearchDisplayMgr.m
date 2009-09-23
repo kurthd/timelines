@@ -75,6 +75,7 @@
 
 - (void)fetchTimelineSince:(NSNumber *)anUpdateId page:(NSNumber *)page
 {
+    NSLog(@"Search display manager: fetching timeline");
     self.updateId = anUpdateId;
     if (self.nearbySearchLocation) {
         NSNumber * radius =
