@@ -707,10 +707,14 @@
             NSError * error = [connection error];
             NSDictionary * userInfo = error.userInfo;
             NSMutableDictionary * mutableInfo = userInfo ? [userInfo mutableCopy] : [[NSMutableDictionary alloc] init];
-            NSString * errorMessage = [[parsedObjects objectAtIndex:0] objectForKey:@"error"];
+
+            NSString * errorMessage = nil;
+            if (parsedObjects.count > 0 && [[parsedObjects objectAtIndex:0] objectForKey:@"error"] != nil)
+                errorMessage = [[parsedObjects objectAtIndex:0] objectForKey:@"error"];
             if (errorMessage) {
                 [mutableInfo setObject:errorMessage forKey:NSLocalizedDescriptionKey];
-                [connection setError:[NSError errorWithDomain:@"Twitter API" code:error.code userInfo:mutableInfo]];
+                NSString * errorDomain = [[self class] twitterApiErrorDomain];
+                [connection setError:[NSError errorWithDomain:errorDomain code:error.code userInfo:mutableInfo]];
             }
             [mutableInfo release];
             [_delegate requestFailed:identifier withError:[connection error]];
@@ -1776,5 +1780,10 @@
 
 
 #endif
+
++ (NSString *)twitterApiErrorDomain
+{
+    return @"Twitter API";
+}
 
 @end

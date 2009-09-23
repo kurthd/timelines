@@ -222,4 +222,6 @@
 
 #endif
 
++ (NSString *)twitterApiErrorDomain;
+
 @end
