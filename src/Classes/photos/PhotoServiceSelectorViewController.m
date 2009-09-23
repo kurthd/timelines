@@ -110,9 +110,8 @@
     // view's rect is not set correctly (the height is wrong; the width
     // doesn't change), so we query for the value manually.
     CGRect imageFrame = logoView.frame;
-    CGRect contentViewFrame = cell.contentView.frame;
     imageFrame.origin.x =
-        (contentViewFrame.size.width - imageFrame.size.width) / 2.0;
+        (298 - imageFrame.size.width) / 2.0;
     imageFrame.origin.y =
         ([self tableView:tv heightForRowAtIndexPath:indexPath] -
         logo.size.height) / 2;
