@@ -958,7 +958,7 @@
             NSLocalizedString(@"composetweet.navigationitem.send", @"");
         UIBarButtonItem * sendButton =
             [[[UIBarButtonItem alloc]
-            initWithTitle:sendButtonText style:UIBarButtonItemStyleBordered
+            initWithTitle:sendButtonText style:UIBarButtonItemStyleDone
             target:composeTweetViewController action:@selector(userDidSave)]
             autorelease];
         composeTweetViewController.navigationItem.rightBarButtonItem =
