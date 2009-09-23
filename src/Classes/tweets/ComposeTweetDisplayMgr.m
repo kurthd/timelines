@@ -350,8 +350,10 @@
 }
 
 - (void)userDidSaveTweetDraft:(NSString *)text
+                  dismissView:(BOOL)dismissView
 {
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
+    if (dismissView)
+        [self.rootViewController dismissModalViewControllerAnimated:YES];
 
     NSError * error = nil;
     if (self.origTweetId && self.origUsername)
@@ -377,13 +379,16 @@
         [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
     }
 
-    [self.delegate userDidCancelComposingTweet];
+    if (dismissView)
+        [self.delegate userDidCancelComposingTweet];
 }
 
 - (void)userDidSaveDirectMessageDraft:(NSString *)text
                           toRecipient:(NSString *)recipient
+                          dismissView:(BOOL)dismissView
 {
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
+    if (dismissView)
+        [self.rootViewController dismissModalViewControllerAnimated:YES];
 
     TwitterCredentials * credentials = self.service.credentials;
     NSError * error = nil;
@@ -410,7 +415,8 @@
         [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
     }
 
-    [self.delegate userDidCancelComposingTweet];
+    if (dismissView)
+        [self.delegate userDidCancelComposingTweet];
 }
 
 - (void)userDidCancelComposingTweet:(NSString *)text
