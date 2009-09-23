@@ -165,7 +165,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (BOOL)shouldAutorotateToInterfaceOrientation:
     (UIInterfaceOrientation)orientation
 {
-    return YES;
+    return !displayingActivity;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
