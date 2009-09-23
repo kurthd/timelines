@@ -3,6 +3,8 @@
 //
 
 #import "DeleteTweetResponseProcessor.h"
+#import "Tweet.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @interface DeleteTweetResponseProcessor ()
 
@@ -54,8 +56,17 @@
 
     NSLog(@"Deleted tweet %@: %@.", tweetId, statuses);
 
+    // Notify the delegate first so it can do whatever it needs to do with the
+    // tweet.
     SEL sel = @selector(deletedTweetWithId:);
     [self invokeSelector:sel withTarget:delegate args:tweetId, nil];
+
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:@"identifier == %@", tweetId];
+    Tweet * tweet = [Tweet findFirst:predicate context:context];
+    NSAssert1(tweet, @"Failed to find deleted tweet with ID: '%@'", tweetId);
+    [context deleteObject:tweet];
+    [context save:NULL];
 
     return YES;
 }

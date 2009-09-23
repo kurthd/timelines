@@ -3,6 +3,8 @@
 //
 
 #import "DeleteDirectMessageResponseProcessor.h"
+#import "DirectMessage.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
 
 @interface DeleteDirectMessageResponseProcessor ()
 
@@ -54,8 +56,18 @@
 
     NSLog(@"Deleted direct message %@: %@.", directMessageId, statuses);
 
+    // Notify the delegate first so it can do whatever it needs to do with the
+    // Direct Message object.
     SEL sel = @selector(deletedDirectMessageWithId:);
     [self invokeSelector:sel withTarget:delegate args:directMessageId, nil];
+
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:@"identifier == %@", directMessageId];
+    DirectMessage * dm = [DirectMessage findFirst:predicate context:context];
+    NSAssert1(dm, @"Failed to find expected direct message with ID so it can "
+        "be deleted: '%@'.", directMessageId);
+    [context deleteObject:dm];
+    [context save:NULL];
 
     return YES;
 }
