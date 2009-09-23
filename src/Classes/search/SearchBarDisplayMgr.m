@@ -297,7 +297,7 @@
 
 - (void)networkAwareViewWillAppear
 {
-    if (!hasBeenDisplayed && self.searchQuery) {
+    if (!hasBeenDisplayed) {
         hasBeenDisplayed = YES;
         if (nearbySearch) {
             self.locationButton.style = UIBarButtonItemStyleDone;
@@ -306,16 +306,17 @@
             [self.locationMgr startUpdatingLocation];
             [self performSelector:@selector(updateSearchButtonWithDoneState)
                 withObject:nil afterDelay:0.1];
-        } else
+        } else if (self.searchQuery && ![self.searchQuery isEqual:@""])
             [self searchFor:self.searchQuery];
     }
 }
 
 - (void)updateSearchButtonWithDoneState
 {
-    [self.networkAwareViewController.navigationItem
-        setLeftBarButtonItem:[self nearbySearchProgressView]
-        animated:YES];
+    if (!self.locationMgr.location)
+        [self.networkAwareViewController.navigationItem
+            setLeftBarButtonItem:[self nearbySearchProgressView]
+            animated:YES];
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -456,16 +457,18 @@
     didUpdateToLocation:(CLLocation *)newLocation
     fromLocation:(CLLocation *)oldLocation
 {
+    NSLog(@"Search display manager: obtained location");
+    [manager stopUpdatingLocation];
     self.searchDisplayMgr.nearbySearchLocation = newLocation;
     [self.networkAwareViewController.navigationItem
         setLeftBarButtonItem:self.locationButton animated:YES];
-    if (searchBar.text && ![searchBar.text isEqual:@""])
-        [self searchBarSearchButtonClicked:searchBar];
+    [self searchBarSearchButtonClicked:searchBar];
 }
 
 - (void)locationManager:(CLLocationManager *)manager
     didFailWithError:(NSError *)error
 {
+    [manager stopUpdatingLocation];
     [self.networkAwareViewController.navigationItem
         setLeftBarButtonItem:self.locationButton animated:YES];
     locationButton.style = UIBarButtonItemStyleBordered;
@@ -601,13 +604,21 @@
     if (!nearbySearch)
         self.searchDisplayMgr.nearbySearchLocation = nil;
 
-    if (searchBar.text && ![searchBar.text isEqual:@""] &&
-        (!nearbySearch || self.locationMgr.location))
+    if (searchBar.text && ![searchBar.text isEqual:@""] && !nearbySearch) {
         [self searchBarSearchButtonClicked:searchBar];
-    else if (nearbySearch && !self.locationMgr.location) {
-        [self.locationMgr startUpdatingLocation];
-        [self.networkAwareViewController.navigationItem
-            setLeftBarButtonItem:[self nearbySearchProgressView] animated:YES];
+    } else if (nearbySearch) {
+        if (!self.locationMgr.location) {
+            [self.locationMgr startUpdatingLocation];
+            [self.networkAwareViewController.navigationItem
+                setLeftBarButtonItem:[self nearbySearchProgressView]
+                animated:YES];
+        } else {
+            [self.networkAwareViewController.navigationItem
+                setLeftBarButtonItem:self.locationButton animated:YES];
+            self.searchDisplayMgr.nearbySearchLocation =
+                self.locationMgr.location;
+           [self searchBarSearchButtonClicked:searchBar];
+        }
     }
 }
 
