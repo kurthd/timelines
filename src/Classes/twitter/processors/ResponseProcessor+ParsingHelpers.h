@@ -10,6 +10,11 @@
 
 @interface ResponseProcessor (ParsingHelpers)
 
+- (Tweet *)createTweetFromStatus:(NSDictionary *)status
+                        username:(NSString *)username
+                     credentials:(TwitterCredentials *)credentials
+                         context:(NSManagedObjectContext *)context;
+
 - (void)populateUser:(User *)user fromData:(NSDictionary *)data;
 - (void)populateTweet:(Tweet *)tweet fromData:(NSDictionary *)data;
 - (void)populateDirectMessage:(DirectMessage *)dm fromData:(NSDictionary *)data;

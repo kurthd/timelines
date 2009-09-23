@@ -116,42 +116,13 @@
         return NO;
 
     NSMutableArray * tweets = [NSMutableArray arrayWithCapacity:statuses.count];
-    NSMutableSet * uniqueUsers = [NSMutableSet set];
-    for (id status in statuses) {
-        NSDictionary * userData = [status objectForKey:@"user"];
-        // If the user has an empty timeline, there will be one element and none
-        // of the required data will be available.
-        if (!userData)
-            continue;
-
-        NSString * userId = [[userData objectForKey:@"id"] description];
-        User * tweetAuthor = [User findOrCreateWithId:userId context:context];
-
-        // only set user data the first time we see it, so we are saving
-        // the freshest data
-        if (![uniqueUsers containsObject:userId]) {
-            [self populateUser:tweetAuthor fromData:userData];
-            [uniqueUsers addObject:userId];
-        }
-
-        NSDictionary * tweetData = status;
-
-        NSString * tweetId = [[tweetData objectForKey:@"id"] description];
-        Tweet * tweet = [Tweet tweetWithId:tweetId context:context];
-        if (!tweet) {
-            if (self.username)
-                tweet = [Tweet createInstance:context];
-            else {
-                UserTweet * userTweet = [UserTweet createInstance:context];
-                userTweet.credentials = self.credentials;
-                tweet = userTweet;
-            }
-        }
-
-        [self populateTweet:tweet fromData:tweetData];
-        tweet.user = tweetAuthor;
-
-        [tweets addObject:tweet];
+    for (NSDictionary * status in statuses) {
+        Tweet * tweet = [self createTweetFromStatus:status
+                                           username:self.username
+                                        credentials:self.credentials
+                                            context:self.context];
+        if (tweet)
+            [tweets addObject:tweet];
     }
 
     NSError * error;

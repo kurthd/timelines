@@ -5,6 +5,11 @@
 #import "ResponseProcessor+ParsingHelpers.h"
 #import "NSDate+TwitterStringHelpers.h"
 #import "Avatar.h"
+#import "NSManagedObject+TediousCodeAdditions.h"
+#import "User+CoreDataAdditions.h"
+#import "Tweet.h"
+#import "Tweet+CoreDataAdditions.h"
+#import "UserTweet.h"
 #import "User+UIAdditions.h"
 
 @interface NSDictionary (ParsingHelpers)
@@ -20,6 +25,85 @@
 @end
 
 @implementation ResponseProcessor (ParsingHelpers)
+
+- (Tweet *)createTweetFromStatus:(NSDictionary *)status
+                        username:(NSString *)username
+                     credentials:(TwitterCredentials *)credentials
+                         context:(NSManagedObjectContext *)context
+{
+    NSDictionary * userData = [status objectForKey:@"user"];
+    NSDictionary * tweetData = status;
+
+    // If the user has an empty timeline, there will be one element and none
+    // of the required data will be available.
+    if (!userData)
+        return nil;
+
+    if (![userData objectForKey:@"profile_image_url"]) {
+        if ([userData objectForKey:@"text"]) {
+            //
+            // This is a retweet message. It comes down with fields in the
+            // wrong places, so we're going to normalize the data so
+            // parsing can proceed normally.
+            //
+
+            NSMutableDictionary * userDataMutable = [tweetData mutableCopy];
+            NSMutableDictionary * tweetDataMutable = [userData mutableCopy];
+
+            //
+            // Swap the IDs and created dates of the user and tweet
+            //
+
+            NSNumber * userId = [tweetData objectForKey:@"id"];
+            NSNumber * tweetId = [userData objectForKey:@"id"];
+            [userDataMutable setObject:userId forKey:@"id"];
+            [tweetDataMutable setObject:tweetId forKey:@"id"];
+
+            //
+            // Extract user fields that are in the tweet section of the
+            // data and insert them into the user section.
+            //
+
+            NSString * username =
+                [tweetDataMutable objectForKey:@"screen_name"];
+            NSString * description =
+                [tweetDataMutable objectForKey:@"description"];
+            NSString * url = [tweetDataMutable objectForKey:@"url"];
+            NSNumber * nfollowers =
+                [tweetDataMutable objectForKey:@"followers_count"];
+
+            [userDataMutable setObject:username forKey:@"screen_name"];
+            [userDataMutable setObject:description forKey:@"description"];
+            [userDataMutable setObject:url forKey:@"url"];
+            [userDataMutable setObject:nfollowers forKey:@"followers_count"];
+
+            userData = userDataMutable;
+            tweetData = tweetDataMutable;
+        } else
+            return nil;
+    }
+
+    NSString * userId = [[userData objectForKey:@"id"] description];
+    User * tweetAuthor = [User findOrCreateWithId:userId context:context];
+    [self populateUser:tweetAuthor fromData:userData];
+
+    NSString * tweetId = [[tweetData objectForKey:@"id"] description];
+    Tweet * tweet = [Tweet tweetWithId:tweetId context:context];
+    if (!tweet) {
+        if (username)
+            tweet = [Tweet createInstance:context];
+        else {
+            UserTweet * userTweet = [UserTweet createInstance:context];
+            userTweet.credentials = credentials;
+            tweet = userTweet;
+        }
+    }
+
+    [self populateTweet:tweet fromData:tweetData];
+    tweet.user = tweetAuthor;
+
+    return tweet;
+}
 
 - (void)populateUser:(User *)user fromData:(NSDictionary *)data
 {

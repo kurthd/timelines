@@ -62,24 +62,10 @@
         "%d.", statuses.count);
 
     NSDictionary * status = [statuses objectAtIndex:0];
-
-    NSDictionary * userData = [status objectForKey:@"user"];
-    NSString * userId = [[userData objectForKey:@"id"] description];
-    User * user = [User findOrCreateWithId:userId context:context];
-
-    [self populateUser:user fromData:userData];
-
-    NSDictionary * tweetData = status;
-
-    NSString * receivedTweetId = [[tweetData objectForKey:@"id"] description];
-    NSAssert2([tweetId isEqual:receivedTweetId], @"Expected to receive tweet "
-        "with id '%@' but received '%@' instead.", tweetId, receivedTweetId);
-    Tweet * tweet = [Tweet tweetWithId:receivedTweetId context:context];
-    if (!tweet)
-        tweet = [Tweet createInstance:context];
-
-    [self populateTweet:tweet fromData:tweetData];
-    tweet.user = user;
+    Tweet * tweet = [self createTweetFromStatus:status
+                                       username:nil
+                                    credentials:nil
+                                        context:self.context];
 
     SEL sel = @selector(fetchedTweet:withId:);
     [self invokeSelector:sel withTarget:delegate args:tweet, tweetId, nil];
