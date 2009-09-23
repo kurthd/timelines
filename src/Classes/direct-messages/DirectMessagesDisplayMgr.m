@@ -904,9 +904,17 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)deleteTweet:(NSString *)tweetId
 {
     [self clearState];
-    [service deleteDirectMessage:tweetId];
+
     [conversationController performSelector:@selector(deleteTweet:)
         withObject:tweetId afterDelay:0.5];
+
+    // Delete the direct message from Twitter after a longer delay than used
+    // for the deleteTweet: method above. The DirectMessage object is deleted
+    // when we receive confirmation from Twitter that they've deleted it. If
+    // this happens before deleteTweet: executes, the method will crash because
+    // the DirectMessage object is expected to be alive.
+    [service performSelector:@selector(deleteDirectMessage:)
+        withObject:tweetId afterDelay:1.0];
 }
 
 #pragma mark UIActionSheetDelegate implementation

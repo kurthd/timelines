@@ -550,9 +550,16 @@ static BOOL scrollToTopValueAlreadyRead;
 {
     NSLog(@"Removing tweet with id %@", tweetId);
     [timeline removeObjectForKey:tweetId];
-    [service deleteTweet:tweetId];
     [timelineController performSelector:@selector(deleteTweet:)
         withObject:tweetId afterDelay:0.5];
+
+    // Delete the tweet from Twitter after a longer delay than used for the
+    // deleteTweet: method above. The Tweet object is deleted when we receive
+    // confirmation from Twitter that they've deleted it. If this happens before
+    // deleteTweet: executes, the method will crash because the Tweet object is
+    // expected to be alive.
+    [service performSelector:@selector(deleteTweet:)
+        withObject:tweetId afterDelay:1.0];
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
