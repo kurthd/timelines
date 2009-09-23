@@ -12,7 +12,8 @@
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "PhotoBrowserDisplayMgr.h"
 
-static NSString * usernameRegex = @"\\B(@[\\w_]+)";
+static NSString * usernameRegex = @"x-twitbit://user\\?screen_name=@([\\w_]+)";
+static NSString * hashRegex = @"x-twitbit://search\\?query=(.+)";
 
 static const NSInteger NUM_SECTIONS = 3;
 enum Sections {
@@ -295,13 +296,12 @@ enum TweetActionSheets {
              "\\.jpg$|\\.jpeg$|\\.bmp|\\.gif|\\.png";
         if ([webpage isMatchedByRegex:usernameRegex]) {
             NSString * username =
-                [[webpage stringByMatching:usernameRegex] substringFromIndex:1];
+                [webpage stringByMatching:usernameRegex capture:1];
             NSLog(@"Showing user info for user: %@", username);
             [delegate showUserInfoForUsername:username];
-        } else if ([webpage isMatchedByRegex:@"/\\B(#[\\w_]+)"]) {
+        } else if ([webpage isMatchedByRegex:hashRegex]) {
             NSString * query =
-                [[webpage stringByMatching:@"/\\B(#[\\w_]+)"]
-                substringFromIndex:1];
+                [webpage stringByMatching:hashRegex capture:1];
             NSLog(@"Showing search results for '%@'", query);
             [delegate showResultsForSearch:query];
         } else if (inReplyToString = [webpage stringByMatching:@"#\\d*"]) {

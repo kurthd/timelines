@@ -197,7 +197,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             [NSString stringWithFormat:@"\\B(%@)\\b", mention];
         bodyWithUserLinks =
             [bodyWithUserLinks stringByReplacingOccurrencesOfRegex:mentionRegex
-            withString:@"<a href=\"#$1\">$1</a>"];
+            withString:@"<a href=\"x-twitbit://user?screen_name=$1\">$1</a>"];
     }
 
     return bodyWithUserLinks;
@@ -230,7 +230,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             [NSString stringWithFormat:@"\\B(%@)\\b", mention];
         bodyWithHashLinks =
             [bodyWithHashLinks stringByReplacingOccurrencesOfRegex:mentionRegex
-            withString:@"<a href=\"$1\">$1</a>"];
+            withString:@"<a href=\"x-twitbit://search?query=$1\">$1</a>"];
     }
 
     return bodyWithHashLinks;
