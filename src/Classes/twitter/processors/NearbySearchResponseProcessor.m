@@ -183,7 +183,7 @@
 
     SEL sel =
         @selector(failedToFetchNearbySearchResultsForQuery:page:latitude:\
-        longitude:radius:radiusIsInMilesh:error:);
+        longitude:radius:radiusIsInMiles:error:);
 
     // HACK: cast to the correct type to suppress compiler warnings
     id<TwitterServiceDelegate> theDelegate =
