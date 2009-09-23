@@ -10,9 +10,11 @@
 - (void)userWantsToSendDirectMessage:(NSString *)text
                          toRecipient:(NSString *)recipient;
 
-- (void)userDidSaveTweetDraft:(NSString *)text;
+- (void)userDidSaveTweetDraft:(NSString *)text
+                  dismissView:(BOOL)dismissView;
 - (void)userDidSaveDirectMessageDraft:(NSString *)text
-                          toRecipient:(NSString *)recipient;
+                          toRecipient:(NSString *)recipient
+                          dismissView:(BOOL)dismissView;
 
 - (void)userDidCancelComposingTweet:(NSString *)text;
 - (void)userDidCancelComposingDirectMessage:(NSString *)text

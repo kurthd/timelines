@@ -45,6 +45,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)displayForPortraitMode;
 - (void)correctCharacterCountFrameWhenDisplayed;
 
+- (BOOL)composingDirectMessage;
+
 @property (nonatomic, copy) NSString * currentSender;
 @property (nonatomic, copy) NSString * textViewText;
 @property (nonatomic, copy) NSString * currentRecipient;
@@ -171,7 +173,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         orientation == UIInterfaceOrientationPortraitUpsideDown)
         [self displayForPortraitMode];
     else {
-        if (!recipientView.hidden) {
+        if ([self composingDirectMessage]) {
             CGRect recipientViewFrame = recipientView.frame;
             recipientViewFrame.size.height = 29;
             recipientView.frame = recipientViewFrame;
@@ -195,7 +197,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)displayForPortraitMode
 {
-    if (!recipientView.hidden) {
+    if ([self composingDirectMessage]) {
         CGRect recipientViewFrame = recipientView.frame;
         recipientViewFrame.size.height = 39;
         recipientView.frame = recipientViewFrame;
@@ -388,10 +390,15 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [self updateCharacterCountFromText:s];
 
-    if (recipientView.hidden)
-        [self enableSendButtonFromText:s];
-    else
+    if ([self composingDirectMessage]) {
         [self enableSendButtonFromText:s andRecipient:recipientTextField.text];
+        [delegate userDidSaveDirectMessageDraft:s
+                                    toRecipient:recipientTextField.text
+                                    dismissView:NO];
+    } else {
+        [self enableSendButtonFromText:s];
+        [delegate userDidSaveTweetDraft:s dismissView:NO];
+    }
 
     return YES;
 }
@@ -400,22 +407,22 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (IBAction)userDidSave
 {
-    if (recipientView.hidden)
-        [delegate userWantsToSendTweet:textView.text];
-    else
+    if ([self composingDirectMessage])
         [delegate userWantsToSendDirectMessage:textView.text
                                    toRecipient:recipientTextField.text];
+    else
+        [delegate userWantsToSendTweet:textView.text];
 }
 
 - (IBAction)userDidCancel
 {
     if (textView.text.length == 0) {
-        if (recipientView.hidden)
-            [delegate userDidCancelComposingTweet:textView.text];
-        else
+        if ([self composingDirectMessage])
             [delegate
                 userDidCancelComposingDirectMessage:textView.text
                                         toRecipient:recipientTextField.text];
+        else
+            [delegate userDidCancelComposingTweet:textView.text];
     } else {
         NSString * cancelTitle =
             NSLocalizedString(@"composetweet.cancel.confirm.cancel", @"");
@@ -452,21 +459,20 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     switch (buttonIndex) {
         case 0:  // save as draft
-            if (recipientView.hidden)
-                [delegate userDidSaveTweetDraft:textView.text];
+            if ([self composingDirectMessage])
+                [delegate userDidSaveDirectMessageDraft:textView.text
+                                            toRecipient:recipientTextField.text
+                                            dismissView:YES];
             else
-                [delegate
-                    userDidSaveDirectMessageDraft:textView.text
-                                      toRecipient:recipientTextField.text];
+                [delegate userDidSaveTweetDraft:textView.text dismissView:YES];
             break;
         case 1:  // user confirmed the cancel
-            if (recipientView.hidden)
-                [delegate userDidCancelComposingTweet:textView.text];
-            else {
+            if ([self composingDirectMessage]) {
                 NSString * recipient = recipientTextField.text;
                 [delegate userDidCancelComposingDirectMessage:textView.text
                                                   toRecipient:recipient];
-            }
+            } else
+                [delegate userDidCancelComposingTweet:textView.text];
             break;
     }
 
@@ -508,11 +514,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 // convenience method
 - (void)enableSendButtonFromInterface
 {
-    if (recipientView.hidden)
-        [self enableSendButtonFromText:textView.text];
-    else
+    if ([self composingDirectMessage])
         [self enableSendButtonFromText:textView.text
                           andRecipient:recipientTextField.text];
+    else
+        [self enableSendButtonFromText:textView.text];
 }
 
 - (void)enableSendButtonFromText:(NSString *)text
@@ -539,6 +545,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     characterCount.text =
         [NSString stringWithFormat:@"%d", MAX_TWEET_LENGTH - text.length];
 
+}
+
+- (BOOL)composingDirectMessage
+{
+    return recipientView.hidden == NO;
 }
 
 @end
