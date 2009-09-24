@@ -11,6 +11,7 @@
 #import "Tweet+CoreDataAdditions.h"
 #import "UserTweet.h"
 #import "User+UIAdditions.h"
+#import "NSDictionary+GeneralHelpers.h"
 
 @interface NSDictionary (ParsingHelpers)
 - (id)safeObjectForKey:(id)key;
@@ -28,6 +29,9 @@
 
 - (BOOL)normalizeTweetDataIfNecessary:(NSMutableDictionary **)tweetDataPtr
                              userData:(NSMutableDictionary **)userDataPtr;
+
+- (BOOL)isValidUserData:(NSDictionary *)userData;
+- (BOOL)isValidTweetData:(NSDictionary *)tweetData;
 
 @end
 
@@ -49,6 +53,13 @@
 
     [self normalizeTweetDataIfNecessary:&tweetData userData:&userData];
 
+    BOOL isValidData =
+        [self isValidUserData:userData] && [self isValidTweetData:tweetData];
+    if (!isValidData) {
+        NSLog(@"WARNING: Skipping parsing of invalid tweet: %@.", status);
+        return nil;
+    }
+
     NSString * userId = [[userData objectForKey:@"id"] description];
     User * tweetAuthor = [User findOrCreateWithId:userId context:context];
     [self populateUser:tweetAuthor fromData:userData];
@@ -68,10 +79,8 @@
     [self populateTweet:tweet fromData:tweetData];
     tweet.user = tweetAuthor;
 
-    if (tweet.source == nil)
-        NSLog(@"Invalid tweet: '%@'.", tweet.text);
-    if (tweetAuthor.username == nil)
-        NSLog(@"Invalid user: '%@'.", tweetAuthor);
+    NSAssert1(tweet.source, @"Failed to parse tweet: %@", status);
+    NSAssert1(tweetAuthor.username, @"Failed to parse tweet: %@", status);
 
     return tweet;
 }
@@ -90,6 +99,13 @@
     NSMutableDictionary * tweetData = [[status mutableCopy] autorelease];
 
     [self normalizeTweetDataIfNecessary:&tweetData userData:&userData];
+
+    BOOL isValidData =
+        [self isValidUserData:userData] && [self isValidTweetData:tweetData];
+    if (!isValidData) {
+        NSLog(@"WARNING: Skipping parsing of invalid mention: %@.", status);
+        return nil;
+    }
 
     NSString * userId = [[userData objectForKey:@"id"] description];
     User * tweetAuthor = [User findOrCreateWithId:userId context:context];
@@ -227,6 +243,30 @@
     }
 
     return NO;
+}
+
+- (BOOL)isValidUserData:(NSDictionary *)userData
+{
+    static NSArray * requiredFields = nil;
+    if (!requiredFields)
+        requiredFields =
+            [[NSArray alloc] initWithObjects:
+            @"id", @"screen_name", @"name", @"friends_count",
+            @"followers_count", @"created_at", @"profile_image_url", nil];
+
+    return [userData containsKeys:requiredFields];
+}
+
+- (BOOL)isValidTweetData:(NSDictionary *)tweetData
+{
+    static NSArray * requiredFields = nil;
+    if (!requiredFields)
+        requiredFields =
+            [[NSArray alloc] initWithObjects:
+            @"id", @"text", @"source", @"created_at", @"truncated", @"favorited",
+            nil];
+
+    return [tweetData containsKeys:requiredFields];
 }
 
 @end
