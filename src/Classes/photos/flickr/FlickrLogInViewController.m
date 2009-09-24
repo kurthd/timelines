@@ -78,13 +78,13 @@
 - (void)webViewDidStartLoad:(UIWebView *)aWebView
 {
     [self.navigationItem setRightBarButtonItem:self.activityButton
-                                      animated:YES];
+                                      animated:NO];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView
 {
     [self.navigationItem setRightBarButtonItem:self.doneButton
-                                      animated:YES];
+                                      animated:NO];
 }
 
 #pragma mark Accessors

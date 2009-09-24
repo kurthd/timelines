@@ -41,6 +41,8 @@
 
     TwitterCredentials * credentials;
     NSManagedObjectContext * context;
+    
+    BOOL selectingPhotoService;
 }
 
 @property (nonatomic, assign) id<PhotoServicesDisplayMgrDelegate> delegate;

@@ -126,7 +126,7 @@
     NSDictionary * tempTweets = [tweets copy];
     [mentionsTimelineTweets release];
     mentionsTimelineTweets = tempTweets;
-    
+
     // determine num pages
     NSInteger tweetCount = [[tweets allKeys] count];
     NSInteger fetchQty = [SettingsReader fetchQuantity];

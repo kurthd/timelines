@@ -1265,7 +1265,7 @@ static BOOL scrollToTopValueAlreadyRead;
     [self.wrapperController
         setCachedDataAvailable:[[someTweets allKeys] count] > 0];
 
-    firstFetchReceived = !refresh;
+    firstFetchReceived = firstFetchReceived && !refresh;
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
