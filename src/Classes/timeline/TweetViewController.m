@@ -258,9 +258,12 @@ enum TweetActionSheets {
 
 - (void)webViewDidFinishLoad:(UIWebView *)view
 {
+    // first shrink the frame so 'sizeThatFits' calculates properly
+    CGRect frame = CGRectMake(5, 0, 290, 31);
+    tweetContentView.frame = frame;
+
     CGSize size = [tweetContentView sizeThatFits:CGSizeZero];
 
-    CGRect frame = tweetContentView.frame;
     frame.size.width = size.width;
     frame.size.height = size.height;
     tweetContentView.frame = frame;
@@ -572,7 +575,7 @@ enum TweetActionSheets {
 
 - (void)loadTweetWebView
 {
-    CGRect frame = CGRectMake(5, 0, 290, 20);
+    CGRect frame = CGRectMake(5, 0, 290, 145);
     UIWebView * contentView = [[UIWebView alloc] initWithFrame:frame];
     contentView.delegate = self;
     contentView.backgroundColor = [UIColor clearColor];
