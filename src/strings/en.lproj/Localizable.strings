@@ -253,8 +253,8 @@ locationinfo.actions.maps = "Open in Maps";
 
 /* ExplainFlickrAuthView */
 explainflickrauthview.title = "Log In to Flickr";
-explainflickrauthview.header = "";
-explainflickrauthview.footer = "";
+explainflickrauthview.header = "Twitbit requires your authorization";
+explainflickrauthview.footer = "Flickr is a popular photo sharing service.\nYou will be provided with a Flickr log in\nscreen and given the option to give Twitbit access to your account.";
 
 /* FlickrLogInView */
 flickrloginview.title = "Authorize";
