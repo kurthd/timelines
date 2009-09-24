@@ -1230,6 +1230,7 @@ static BOOL scrollToTopValueAlreadyRead;
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page
     forceRefresh:(BOOL)refresh allPagesLoaded:(BOOL)newAllPagesLoaded
 {
+    NSLog(@"Setting service; page: %d", page);
     [aTimelineSource retain];
     [timelineSource release];
     timelineSource = aTimelineSource;

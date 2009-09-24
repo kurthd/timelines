@@ -130,7 +130,7 @@
     // determine num pages
     NSInteger tweetCount = [[tweets allKeys] count];
     NSInteger fetchQty = [SettingsReader fetchQuantity];
-    allTimelinePagesShown =
+    mentionsTimelinePagesShown =
         tweetCount > 0 ? (tweetCount + fetchQty - 1) / fetchQty : 1;
 }
 
