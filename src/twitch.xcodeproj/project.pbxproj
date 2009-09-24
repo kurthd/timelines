@@ -1741,6 +1741,8 @@
 		05B23B3C0FEED50E00A6A2E6 /* processors */ = {
 			isa = PBXGroup;
 			children = (
+				05F45A690FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.h */,
+				05F45A6A0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m */,
 				05B23B4D0FEED7DD00A6A2E6 /* ResponseProcessors.h */,
 				05B23B440FEED55100A6A2E6 /* ResponseProcessor.h */,
 				05B23B450FEED55100A6A2E6 /* ResponseProcessor.m */,
@@ -1770,8 +1772,6 @@
 				05AE711A0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m */,
 				057E82DD0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.h */,
 				057E82DE0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.m */,
-				05F45A690FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.h */,
-				05F45A6A0FF01EB900EBAFC7 /* ResponseProcessor+ParsingHelpers.m */,
 				05C5E7B00FF455B00073E7F2 /* FetchTrendsResponseProcessor.h */,
 				05C5E7B10FF455B00073E7F2 /* FetchTrendsResponseProcessor.m */,
 				05C5E9C20FF494390073E7F2 /* SearchResponseProcessor.h */,
