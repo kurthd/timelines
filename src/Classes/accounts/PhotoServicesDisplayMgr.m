@@ -34,6 +34,7 @@ NSInteger serviceNameSort(PhotoServiceCredentials * service1,
 
 - (NSArray *)availablePhotoServices;
 - (NSArray *)availableVideoServices;
+- (NSString *)currentlySelectedServiceName;
 
 @end
 
@@ -97,6 +98,13 @@ NSInteger serviceNameSort(PhotoServiceCredentials * service1,
     return [self.delegate currentlySelectedVideoServiceName:self.credentials];
 }
 
+- (NSString *)currentlySelectedServiceName
+{
+    return selectingPhotoService ?
+        [self currentlySelectedPhotoServiceName] :
+        [self currentlySelectedVideoServiceName];
+}
+
 - (BOOL)canSelectPhotoService
 {
     return [self availablePhotoServices].count > 0;
@@ -109,6 +117,7 @@ NSInteger serviceNameSort(PhotoServiceCredentials * service1,
 
 - (void)selectServiceForPhotos
 {
+    selectingPhotoService = YES;
     [self.navigationController
         pushViewController:self.photoServiceSelectionViewController
                   animated:YES];
@@ -116,6 +125,7 @@ NSInteger serviceNameSort(PhotoServiceCredentials * service1,
 
 - (void)selectServiceForVideos
 {
+    selectingPhotoService = NO;
     [self.navigationController
         pushViewController:self.videoServiceSelectionViewController
                   animated:YES];
@@ -251,7 +261,7 @@ NSInteger serviceNameSort(PhotoServiceCredentials * service1,
 
 - (NSInteger)initialSelectedIndex:(SelectionViewController *)controller
 {
-    NSString * selection = [self currentlySelectedPhotoServiceName];
+    NSString * selection = [self currentlySelectedServiceName];
     NSArray * choices = [self allChoices:controller];
 
     return [choices indexOfObject:selection];
