@@ -1004,7 +1004,8 @@
             [tweet isKindOfClass:[UserTweet class]] ||
             [tweet isKindOfClass:[Mention class]];
         if (!isOwned) {
-            NSLog(@"Deleting tweet: '%@': '%@'.", tweet.user.name, tweet.text);
+            NSLog(@"Deleting tweet: '%@': '%@'.", tweet.user.username,
+                tweet.text);
             [context deleteObject:tweet];
         }
     }
