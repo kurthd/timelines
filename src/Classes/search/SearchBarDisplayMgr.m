@@ -196,6 +196,8 @@
     [self.networkAwareViewController setUpdatingState:kConnectedAndUpdating];
     [self.networkAwareViewController setCachedDataAvailable:NO];
 
+    [[ErrorState instance] exitErrorState];
+
     self.searchResults = nil;
     self.searchQuery = self.searchBar.text;
     self.searchPage = [NSNumber numberWithInteger:1];
@@ -543,6 +545,9 @@
                       forState:UIControlStateHighlighted];
 
     [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+    
+    button.enabled = searchBar.text && ![searchBar.text isEqual:@""];
 
     UIColor * color = [UIColor colorWithRed:.353 green:.4 blue:.494 alpha:1.0];
     [button setTitleColor:color forState:UIControlStateNormal];
