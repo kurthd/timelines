@@ -198,7 +198,8 @@
     self.searchResults = nil;
     self.searchQuery = self.searchBar.text;
     self.searchPage = [NSNumber numberWithInteger:1];
-    [self.searchBookmarksDisplayMgr addRecentSearch:self.searchQuery];
+    if (self.searchQuery.length)
+        [self.searchBookmarksDisplayMgr addRecentSearch:self.searchQuery];
 
     NSLog(@"Searching Twitter for: '%@'...", self.searchQuery);
     [self.searchDisplayMgr displaySearchResults:self.searchQuery
