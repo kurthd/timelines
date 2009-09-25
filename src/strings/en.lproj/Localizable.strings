@@ -95,7 +95,7 @@ imagepicker.choose.cancel = "Cancel";
 imagepicker.choose.camera = "Take Photo";
 imagepicker.choose.camerawithvideo = "Take Photo or Video";
 imagepicker.choose.photos = "Choose Existing Photo";
-imagepicker.choose.photoswithvideo = "Choose from Library";
+imagepicker.choose.photoswithvideo = "Choose Existing";
 imageupload.failed.title = "Failed to Upload Photo";
 videoupload.failed.title = "Failed to Upload Video";
 
