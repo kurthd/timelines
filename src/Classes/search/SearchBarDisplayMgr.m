@@ -193,9 +193,6 @@
     [self.searchBar resignFirstResponder];
     [self.searchBar setShowsCancelButton:NO animated:YES];
 
-    [self.networkAwareViewController setUpdatingState:kConnectedAndUpdating];
-    [self.networkAwareViewController setCachedDataAvailable:NO];
-
     [[ErrorState instance] exitErrorState];
 
     self.searchResults = nil;
