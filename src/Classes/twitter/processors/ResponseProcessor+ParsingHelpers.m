@@ -11,6 +11,7 @@
 #import "Tweet+CoreDataAdditions.h"
 #import "UserTweet.h"
 #import "User+UIAdditions.h"
+#import "NSDictionary+GeneralHelpers.h"
 
 @interface NSDictionary (ParsingHelpers)
 - (id)safeObjectForKey:(id)key;
@@ -24,6 +25,16 @@
 }
 @end
 
+@interface ResponseProcessor (PrivateParsingHelpers)
+
+- (BOOL)normalizeTweetDataIfNecessary:(NSMutableDictionary **)tweetDataPtr
+                             userData:(NSMutableDictionary **)userDataPtr;
+
+- (BOOL)isValidUserData:(NSDictionary *)userData;
+- (BOOL)isValidTweetData:(NSDictionary *)tweetData;
+
+@end
+
 @implementation ResponseProcessor (ParsingHelpers)
 
 - (Tweet *)createTweetFromStatus:(NSDictionary *)status
@@ -31,56 +42,22 @@
                      credentials:(TwitterCredentials *)credentials
                          context:(NSManagedObjectContext *)context
 {
-    NSDictionary * userData = [status objectForKey:@"user"];
-    NSDictionary * tweetData = status;
-
     // If the user has an empty timeline, there will be one element and none
     // of the required data will be available.
-    if (!userData)
+    if (![status objectForKey:@"user"])
         return nil;
 
-    if (![userData objectForKey:@"profile_image_url"]) {
-        if ([userData objectForKey:@"text"]) {
-            //
-            // This is a retweet message. It comes down with fields in the
-            // wrong places, so we're going to normalize the data so
-            // parsing can proceed normally.
-            //
+    NSMutableDictionary * userData =
+        [[[status objectForKey:@"user"] mutableCopy] autorelease];
+    NSMutableDictionary * tweetData = [[status mutableCopy] autorelease];
 
-            NSMutableDictionary * userDataMutable = [tweetData mutableCopy];
-            NSMutableDictionary * tweetDataMutable = [userData mutableCopy];
+    [self normalizeTweetDataIfNecessary:&tweetData userData:&userData];
 
-            //
-            // Swap the IDs and created dates of the user and tweet
-            //
-
-            NSNumber * userId = [tweetData objectForKey:@"id"];
-            NSNumber * tweetId = [userData objectForKey:@"id"];
-            [userDataMutable setObject:userId forKey:@"id"];
-            [tweetDataMutable setObject:tweetId forKey:@"id"];
-
-            //
-            // Extract user fields that are in the tweet section of the
-            // data and insert them into the user section.
-            //
-
-            NSString * username =
-                [tweetDataMutable objectForKey:@"screen_name"];
-            NSString * description =
-                [tweetDataMutable objectForKey:@"description"];
-            NSString * url = [tweetDataMutable objectForKey:@"url"];
-            NSNumber * nfollowers =
-                [tweetDataMutable objectForKey:@"followers_count"];
-
-            [userDataMutable setObject:username forKey:@"screen_name"];
-            [userDataMutable setObject:description forKey:@"description"];
-            [userDataMutable setObject:url forKey:@"url"];
-            [userDataMutable setObject:nfollowers forKey:@"followers_count"];
-
-            userData = userDataMutable;
-            tweetData = tweetDataMutable;
-        } else
-            return nil;
+    BOOL isValidData =
+        [self isValidUserData:userData] && [self isValidTweetData:tweetData];
+    if (!isValidData) {
+        NSLog(@"WARNING: Skipping parsing of invalid tweet: %@.", status);
+        return nil;
     }
 
     NSString * userId = [[userData objectForKey:@"id"] description];
@@ -102,11 +79,52 @@
     [self populateTweet:tweet fromData:tweetData];
     tweet.user = tweetAuthor;
 
+    NSAssert1(tweet.source, @"Failed to parse tweet: %@", status);
+    NSAssert1(tweetAuthor.username, @"Failed to parse tweet: %@", status);
+
+    return tweet;
+}
+
+- (Mention *)createMentionFromStatus:(NSDictionary *)status
+                         credentials:(TwitterCredentials *)credentials
+                             context:(NSManagedObjectContext *)context
+{
+    // If the user has an empty timeline, there will be one element and none
+    // of the required data will be available.
+    if (![status objectForKey:@"user"])
+        return nil;
+
+    NSMutableDictionary * userData =
+        [[[status objectForKey:@"user"] mutableCopy] autorelease];
+    NSMutableDictionary * tweetData = [[status mutableCopy] autorelease];
+
+    [self normalizeTweetDataIfNecessary:&tweetData userData:&userData];
+
+    BOOL isValidData =
+        [self isValidUserData:userData] && [self isValidTweetData:tweetData];
+    if (!isValidData) {
+        NSLog(@"WARNING: Skipping parsing of invalid mention: %@.", status);
+        return nil;
+    }
+
+    NSString * userId = [[userData objectForKey:@"id"] description];
+    User * tweetAuthor = [User findOrCreateWithId:userId context:context];
+    [self populateUser:tweetAuthor fromData:userData];
+
+    NSString * tweetId = [[tweetData objectForKey:@"id"] description];
+    Mention * tweet = [Mention tweetWithId:tweetId context:context];
+    if (!tweet)
+        tweet = [Mention createInstance:context];
+    [self populateTweet:tweet fromData:tweetData];
+    tweet.user = tweetAuthor;
+    tweet.credentials = credentials;
+
     return tweet;
 }
 
 - (void)populateUser:(User *)user fromData:(NSDictionary *)data
 {
+    user.identifier = [[data safeObjectForKey:@"id"] description];
     user.username = [data safeObjectForKey:@"screen_name"];
     user.name = [data safeObjectForKey:@"name"];
     user.bio = [data safeObjectForKey:@"description"];
@@ -123,13 +141,16 @@
     user.followersCount = followersCount;
 
     user.created = [data safeObjectForKey:@"created_at"];
-
     user.webpage = [data safeObjectForKey:@"url"];
-    user.identifier = [[data safeObjectForKey:@"id"] description];
-    user.avatar.thumbnailImageUrl =
-        [data safeObjectForKey:@"profile_image_url"];
-    user.avatar.fullImageUrl =
-        [User fullAvatarUrlForUrl:user.avatar.thumbnailImageUrl];
+
+    NSString * thumbnailImageUrl = [data safeObjectForKey:@"profile_image_url"];
+    if (![thumbnailImageUrl isEqualToString:user.avatar.thumbnailImageUrl]) {
+        // clear cached image data
+        user.avatar.thumbnailImage = nil;
+        user.avatar.fullImage = nil;
+    }
+    user.avatar.thumbnailImageUrl = thumbnailImageUrl;
+    user.avatar.fullImageUrl = [User fullAvatarUrlForUrl:thumbnailImageUrl];
 
     [user setValue:[data objectForKey:@"statuses_count"]
             forKey:@"statusesCount"];
@@ -170,6 +191,86 @@
         [[data objectForKey:@"source_api_request_type"] description];
 
     dm.created = [data objectForKey:@"created_at"];
+}
+
+#pragma mark Private implementation
+
+- (BOOL)normalizeTweetDataIfNecessary:(NSMutableDictionary **)tweetDataPtr
+                             userData:(NSMutableDictionary **)userDataPtr
+{
+    NSMutableDictionary * tweetData = *tweetDataPtr;
+    NSMutableDictionary * userData = *userDataPtr;
+
+    if (![userData objectForKey:@"profile_image_url"]) {
+        if ([userData objectForKey:@"text"]) {
+            //
+            // This is a retweet message. It comes down with fields in the
+            // wrong places, so we're going to normalize the data so
+            // parsing can proceed normally.
+            //
+
+            NSMutableDictionary * actualUserData = tweetData;
+            NSMutableDictionary * actualTweetData = userData;
+
+            //
+            // Swap the IDs and created dates of the user and tweet
+            //
+
+            NSNumber * userId = [tweetData objectForKey:@"id"];
+            NSNumber * tweetId = [userData objectForKey:@"id"];
+            [actualUserData setObject:userId forKey:@"id"];
+            [actualTweetData setObject:tweetId forKey:@"id"];
+
+            //
+            // Extract user fields that are in the tweet section of the
+            // data and insert them into the user section.
+            //
+
+            NSString * username =
+                [actualTweetData objectForKey:@"screen_name"];
+            NSString * description =
+                [actualTweetData objectForKey:@"description"];
+            NSString * url = [actualTweetData objectForKey:@"url"];
+            NSNumber * nfollowers =
+                [actualTweetData objectForKey:@"followers_count"];
+
+            [actualUserData setObject:username forKey:@"screen_name"];
+            [actualUserData setObject:description forKey:@"description"];
+            [actualUserData setObject:url forKey:@"url"];
+            [actualUserData setObject:nfollowers forKey:@"followers_count"];
+
+            *tweetDataPtr = actualTweetData;
+            *userDataPtr = actualUserData;
+
+            return YES;
+        }
+    }
+
+    return NO;
+}
+
+- (BOOL)isValidUserData:(NSDictionary *)userData
+{
+    static NSArray * requiredFields = nil;
+    if (!requiredFields)
+        requiredFields =
+            [[NSArray alloc] initWithObjects:
+            @"id", @"screen_name", @"name", @"friends_count",
+            @"followers_count", @"created_at", @"profile_image_url", nil];
+
+    return [userData containsKeys:requiredFields];
+}
+
+- (BOOL)isValidTweetData:(NSDictionary *)tweetData
+{
+    static NSArray * requiredFields = nil;
+    if (!requiredFields)
+        requiredFields =
+            [[NSArray alloc] initWithObjects:
+            @"id", @"text", @"source", @"created_at", @"truncated", @"favorited",
+            nil];
+
+    return [tweetData containsKeys:requiredFields];
 }
 
 @end

@@ -80,10 +80,10 @@
     if (self.nearbySearchLocation) {
         NSNumber * radius =
             [NSNumber numberWithInt:[SettingsReader nearbySearchRadius]];
-        NSNumber * longitude =
+        NSNumber * latitude =
             [NSNumber numberWithDouble:
             self.nearbySearchLocation.coordinate.latitude];
-        NSNumber * latitude =
+        NSNumber * longitude =
             [NSNumber numberWithDouble:
             self.nearbySearchLocation.coordinate.longitude];
         NSLog(@"Searching for '%@' in a radius of %@km.", self.queryString,

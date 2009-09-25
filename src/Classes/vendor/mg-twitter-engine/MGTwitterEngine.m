@@ -1732,7 +1732,7 @@
     }
 
     NSString * geocode =
-        [NSString stringWithFormat:@"geocode=%.6f%%2C%.f%%%d%@",
+        [NSString stringWithFormat:@"%.6f,%.6f,%d%@",
         latitude, longitude, radius, radiusIsInMiles ? @"mi" : @"km"];
     [params setObject:geocode forKey:@"geocode"];
 	

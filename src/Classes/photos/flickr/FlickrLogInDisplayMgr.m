@@ -6,6 +6,7 @@
 #import "FlickrCredentials.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
 #import "FlickrPhotoService.h"
+#import "UIAlertView+InstantiationAdditions.h"
 
 @interface FlickrLogInDisplayMgr ()
 
@@ -186,7 +187,12 @@
 {
     NSLog(@"Request failed with error: %@", inError);
 
-    // jad: IMPLEMENT ME
+    NSString * title =
+        NSLocalizedString(@"flickr.login.failed.alert.title", @"");
+    NSString * message = inError.localizedDescription;
+    [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
+
+    [self.explainViewController showButtonView];
 
     [inRequest autorelease];
 }

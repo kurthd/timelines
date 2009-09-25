@@ -251,6 +251,9 @@ locationinfo.directionsfrom = "Directions From Here";
 locationinfo.actions.cancel = "Cancel";
 locationinfo.actions.maps = "Open in Maps";
 
+/* Flickr */
+flickr.login.failed.alert.title = "Log In Failed";
+
 /* ExplainFlickrAuthView */
 explainflickrauthview.title = "Log In to Flickr";
 explainflickrauthview.header = "Twitbit requires your authorization";

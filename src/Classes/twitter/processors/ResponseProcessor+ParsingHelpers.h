@@ -6,6 +6,7 @@
 #import "ResponseProcessor.h"
 #import "User.h"
 #import "Tweet.h"
+#import "Mention.h"
 #import "DirectMessage.h"
 
 @interface ResponseProcessor (ParsingHelpers)
@@ -14,6 +15,9 @@
                         username:(NSString *)username
                      credentials:(TwitterCredentials *)credentials
                          context:(NSManagedObjectContext *)context;
+- (Mention *)createMentionFromStatus:(NSDictionary *)status
+                         credentials:(TwitterCredentials *)credentials
+                             context:(NSManagedObjectContext *)context;
 
 - (void)populateUser:(User *)user fromData:(NSDictionary *)data;
 - (void)populateTweet:(Tweet *)tweet fromData:(NSDictionary *)data;

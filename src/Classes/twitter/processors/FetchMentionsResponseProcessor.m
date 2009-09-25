@@ -78,10 +78,9 @@
 
     NSMutableArray * tweets = [NSMutableArray arrayWithCapacity:statuses.count];
     for (id status in statuses) {
-        Tweet * tweet = [self createTweetFromStatus:status
-                                           username:nil
-                                        credentials:self.credentials
-                                            context:self.context];
+        Mention * tweet = [self createMentionFromStatus:status
+                                            credentials:self.credentials
+                                                context:self.context];
         if (tweet)
             [tweets addObject:tweet];
     }
