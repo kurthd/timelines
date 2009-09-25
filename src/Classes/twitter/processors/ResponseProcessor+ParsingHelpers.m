@@ -124,6 +124,7 @@
 
 - (void)populateUser:(User *)user fromData:(NSDictionary *)data
 {
+    user.identifier = [[data safeObjectForKey:@"id"] description];
     user.username = [data safeObjectForKey:@"screen_name"];
     user.name = [data safeObjectForKey:@"name"];
     user.bio = [data safeObjectForKey:@"description"];
@@ -140,13 +141,16 @@
     user.followersCount = followersCount;
 
     user.created = [data safeObjectForKey:@"created_at"];
-
     user.webpage = [data safeObjectForKey:@"url"];
-    user.identifier = [[data safeObjectForKey:@"id"] description];
-    user.avatar.thumbnailImageUrl =
-        [data safeObjectForKey:@"profile_image_url"];
-    user.avatar.fullImageUrl =
-        [User fullAvatarUrlForUrl:user.avatar.thumbnailImageUrl];
+
+    NSString * thumbnailImageUrl = [data safeObjectForKey:@"profile_image_url"];
+    if (![thumbnailImageUrl isEqualToString:user.avatar.thumbnailImageUrl]) {
+        // clear cached image data
+        user.avatar.thumbnailImage = nil;
+        user.avatar.fullImage = nil;
+    }
+    user.avatar.thumbnailImageUrl = thumbnailImageUrl;
+    user.avatar.fullImageUrl = [User fullAvatarUrlForUrl:thumbnailImageUrl];
 
     [user setValue:[data objectForKey:@"statuses_count"]
             forKey:@"statusesCount"];
