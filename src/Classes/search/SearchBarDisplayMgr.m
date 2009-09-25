@@ -196,6 +196,8 @@
     [self.networkAwareViewController setUpdatingState:kConnectedAndUpdating];
     [self.networkAwareViewController setCachedDataAvailable:NO];
 
+    [[ErrorState instance] exitErrorState];
+
     self.searchResults = nil;
     self.searchQuery = self.searchBar.text;
     self.searchPage = [NSNumber numberWithInteger:1];
