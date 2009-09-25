@@ -321,8 +321,13 @@ static BOOL alreadyReadHighlightNewTweetsValue;
             NSLog(@"Scrolling to row %d", visibleRow);
             NSIndexPath * scrollIndexPath =
                 [NSIndexPath indexPathForRow:visibleRow inSection:0];
-            [self.tableView scrollToRowAtIndexPath:scrollIndexPath
-                atScrollPosition:UITableViewScrollPositionTop animated:NO];
+            if ([someTweets count] > 6) {
+                // 'if' statement is a hack
+                // for some reason, if the cells don't fill the whole table view
+                // the following call results in a large blank header
+                [self.tableView scrollToRowAtIndexPath:scrollIndexPath
+                    atScrollPosition:UITableViewScrollPositionTop animated:NO];
+            }
             [self.tableView flashScrollIndicators];
         }
     }
