@@ -545,6 +545,9 @@
                       forState:UIControlStateHighlighted];
 
     [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+    
+    button.enabled = searchBar.text && ![searchBar.text isEqual:@""];
 
     UIColor * color = [UIColor colorWithRed:.353 green:.4 blue:.494 alpha:1.0];
     [button setTitleColor:color forState:UIControlStateNormal];
