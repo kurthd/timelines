@@ -500,7 +500,7 @@ static BOOL scrollToTopValueAlreadyRead;
 {
     if ([aUser isComplete]) {
         NSLog(@"Timeline display manager: showing user info for user: %@",
-            aUser);
+            aUser.username);
         self.currentUsername = aUser.username;
 
         // HACK: forces to scroll to top
