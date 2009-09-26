@@ -10,6 +10,7 @@
 		0502249610485CCA00BCB903 /* DeleteTweetResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0502249510485CCA00BCB903 /* DeleteTweetResponseProcessor.m */; };
 		050224D810488ED500BCB903 /* BlockUserResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 050224D710488ED500BCB903 /* BlockUserResponseProcessor.m */; };
 		050B9F28106C256100EC2E88 /* NSDictionary+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 050B9F27106C256100EC2E88 /* NSDictionary+GeneralHelpers.m */; };
+		050BA144106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 050BA143106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel */; };
 		0511067F102A25FC00915638 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0511067E102A25FC00915638 /* Settings.bundle */; };
 		0515675C1047035500A26F17 /* EditTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0515675A1047035500A26F17 /* EditTextView.xib */; };
 		05156760104703FA00A26F17 /* EditTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0515675F104703FA00A26F17 /* EditTextViewController.m */; };
@@ -434,6 +435,7 @@
 		050224D710488ED500BCB903 /* BlockUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BlockUserResponseProcessor.m; path = twitter/processors/BlockUserResponseProcessor.m; sourceTree = "<group>"; };
 		050B9F26106C256100EC2E88 /* NSDictionary+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+GeneralHelpers.h"; path = "shared/NSDictionary+GeneralHelpers.h"; sourceTree = "<group>"; };
 		050B9F27106C256100EC2E88 /* NSDictionary+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+GeneralHelpers.m"; path = "shared/NSDictionary+GeneralHelpers.m"; sourceTree = "<group>"; };
+		050BA143106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v1.1-v2.0.xcmappingmodel"; path = "data-model/v1.1-v2.0.xcmappingmodel"; sourceTree = "<group>"; };
 		050F7DE810323394007C6F04 /* twitch-v2.0.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.0.xcdatamodel"; sourceTree = "<group>"; };
 		0511067E102A25FC00915638 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		0515675B1047035500A26F17 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/EditTextView.xib; sourceTree = "<group>"; };
@@ -1187,6 +1189,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		050BA141106D711600EC2E88 /* core-data */ = {
+			isa = PBXGroup;
+			children = (
+				050BA142106D711A00EC2E88 /* migrations */,
+			);
+			name = "core-data";
+			sourceTree = "<group>";
+		};
+		050BA142106D711A00EC2E88 /* migrations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = migrations;
+			sourceTree = "<group>";
+		};
 		0519C710104346C800C2C7BD /* objective-flickr */ = {
 			isa = PBXGroup;
 			children = (
@@ -1729,6 +1746,7 @@
 				0599416A0FFB32F100842518 /* twitch.xcdatamodeld */,
 				059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */,
 				05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */,
+				050BA143106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel */,
 			);
 			name = "data-model";
 			sourceTree = "<group>";
@@ -2080,6 +2098,7 @@
 		910BE3670FF32040005342EE /* persistence */ = {
 			isa = PBXGroup;
 			children = (
+				050BA141106D711600EC2E88 /* core-data */,
 				910BE3680FF32059005342EE /* UIState.h */,
 				910BE3690FF32059005342EE /* UIState.m */,
 				910BE36B0FF32137005342EE /* UIStatePersistenceStore.h */,
@@ -2834,6 +2853,7 @@
 				91FDD5F41062DC41000F7527 /* Avatar+UIAdditions.m in Sources */,
 				0525762B10684A2E00F68594 /* TweetDraft.m in Sources */,
 				050B9F28106C256100EC2E88 /* NSDictionary+GeneralHelpers.m in Sources */,
+				050BA144106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
