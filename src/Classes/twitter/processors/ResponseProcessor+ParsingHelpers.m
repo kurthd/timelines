@@ -38,7 +38,7 @@
 @implementation ResponseProcessor (ParsingHelpers)
 
 - (Tweet *)createTweetFromStatus:(NSDictionary *)status
-                        username:(NSString *)username
+                     isUserTweet:(BOOL)isUserTweet
                      credentials:(TwitterCredentials *)credentials
                          context:(NSManagedObjectContext *)context
 {
@@ -67,13 +67,12 @@
     NSString * tweetId = [[tweetData objectForKey:@"id"] description];
     Tweet * tweet = [Tweet tweetWithId:tweetId context:context];
     if (!tweet) {
-        if (username)
-            tweet = [Tweet createInstance:context];
-        else {
+        if (isUserTweet) {
             UserTweet * userTweet = [UserTweet createInstance:context];
             userTweet.credentials = credentials;
             tweet = userTweet;
-        }
+        } else
+            tweet = [Tweet createInstance:context];
     }
 
     [self populateTweet:tweet fromData:tweetData];

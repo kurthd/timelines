@@ -12,7 +12,7 @@
 @interface ResponseProcessor (ParsingHelpers)
 
 - (Tweet *)createTweetFromStatus:(NSDictionary *)status
-                        username:(NSString *)username
+                     isUserTweet:(BOOL)isUserTweet
                      credentials:(TwitterCredentials *)credentials
                          context:(NSManagedObjectContext *)context;
 - (Mention *)createMentionFromStatus:(NSDictionary *)status

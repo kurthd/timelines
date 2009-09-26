@@ -63,7 +63,7 @@
 
     NSDictionary * status = [statuses objectAtIndex:0];
     Tweet * tweet = [self createTweetFromStatus:status
-                                       username:nil
+                                    isUserTweet:NO
                                     credentials:nil
                                         context:self.context];
 

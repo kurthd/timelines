@@ -118,7 +118,7 @@
     NSMutableArray * tweets = [NSMutableArray arrayWithCapacity:statuses.count];
     for (NSDictionary * status in statuses) {
         Tweet * tweet = [self createTweetFromStatus:status
-                                           username:self.username
+                                        isUserTweet:!self.username
                                         credentials:self.credentials
                                             context:self.context];
         if (tweet)
