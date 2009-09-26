@@ -143,14 +143,10 @@
     user.created = [data safeObjectForKey:@"created_at"];
     user.webpage = [data safeObjectForKey:@"url"];
 
-    NSString * thumbnailImageUrl = [data safeObjectForKey:@"profile_image_url"];
-    if (![thumbnailImageUrl isEqualToString:user.avatar.thumbnailImageUrl]) {
-        // clear cached image data
-        user.avatar.thumbnailImage = nil;
-        user.avatar.fullImage = nil;
-    }
-    user.avatar.thumbnailImageUrl = thumbnailImageUrl;
-    user.avatar.fullImageUrl = [User fullAvatarUrlForUrl:thumbnailImageUrl];
+    user.avatar.thumbnailImageUrl =
+        [data safeObjectForKey:@"profile_image_url"];
+    user.avatar.fullImageUrl =
+        [User fullAvatarUrlForUrl:user.avatar.thumbnailImageUrl];
 
     [user setValue:[data objectForKey:@"statuses_count"]
             forKey:@"statusesCount"];
