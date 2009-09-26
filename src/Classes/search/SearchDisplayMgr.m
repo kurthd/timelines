@@ -133,7 +133,7 @@
                                       page:(NSNumber *)page
                                      error:(NSError *)error
 {
-    if ([query isEqualToString:self.queryString])
+    if ([query isEqualToString:self.queryString] && !self.nearbySearchLocation)
         [self.dataSourceDelegate failedToFetchTimelineSinceUpdateId:updateId
                                                                page:page
                                                               error:error];
@@ -168,7 +168,7 @@
                                  radiusIsInMiles:(BOOL)radiusIsInMiles
                                            error:(NSError *)error
 {
-    if ([query isEqualToString:self.queryString])
+    if ([query isEqualToString:self.queryString] && self.nearbySearchLocation)
         [self.dataSourceDelegate failedToFetchTimelineSinceUpdateId:updateId
                                                                page:page
                                                               error:error];

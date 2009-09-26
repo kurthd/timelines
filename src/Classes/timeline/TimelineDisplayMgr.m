@@ -1057,10 +1057,10 @@ static BOOL scrollToTopValueAlreadyRead;
         hasBeenDisplayed = YES;
         [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0] page:
             [NSNumber numberWithInt:pagesShown]];
+        [wrapperController setUpdatingState:kConnectedAndUpdating];
+        [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
     } else
         NSLog(@"Timeline display manager: not updating due to nil credentials");
-    [wrapperController setUpdatingState:kConnectedAndUpdating];
-    [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 
 - (void)addTweet:(Tweet *)tweet

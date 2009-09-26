@@ -205,10 +205,7 @@
 				</object>
 				<string key="NSFrameSize">{320, 480}</string>
 				<reference key="NSSuperview"/>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC45Njc4NTg3ODI3IDAuOTc1ODk0MDg3IDEAA</bytes>
-				</object>
+				<reference key="IBUIBackgroundColor" ref="919606386"/>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 			</object>
 			<object class="IBUIView" id="578741470">

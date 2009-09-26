@@ -575,7 +575,7 @@ enum TweetActionSheets {
 
 - (void)loadTweetWebView
 {
-    CGRect frame = CGRectMake(5, 0, 290, 145);
+    CGRect frame = CGRectMake(5, 0, 290, 20);
     UIWebView * contentView = [[UIWebView alloc] initWithFrame:frame];
     contentView.delegate = self;
     contentView.backgroundColor = [UIColor clearColor];
