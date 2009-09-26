@@ -62,6 +62,8 @@
         flickrContext =
             [[OFFlickrAPIContext alloc] initWithAPIKey:apiKey
                                           sharedSecret:secret];
+        // use Flickr's iPhone-optimized website for logging in
+        [flickrContext setAuthEndpoint:@"http://m.flickr.com/services/auth/"];
     }
 
     return self;
