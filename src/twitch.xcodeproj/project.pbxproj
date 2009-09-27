@@ -4197,7 +4197,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_LITE_VERSION;
-				INFOPLIST_FILE = "twitbit-info copy.plist";
+				INFOPLIST_FILE = "twitbit-lite-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
@@ -4219,7 +4219,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
-				INFOPLIST_FILE = "twitbit-info copy.plist";
+				INFOPLIST_FILE = "twitbit-lite-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
@@ -4242,7 +4242,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
-				INFOPLIST_FILE = "twitbit-info copy.plist";
+				INFOPLIST_FILE = "twitbit-lite-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
@@ -4263,7 +4263,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
-				INFOPLIST_FILE = "twitbit-info copy.plist";
+				INFOPLIST_FILE = "twitbit-lite-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
@@ -4284,7 +4284,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
-				INFOPLIST_FILE = "twitbit-info copy.plist";
+				INFOPLIST_FILE = "twitbit-lite-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
@@ -4308,7 +4308,7 @@
 					HOB_TWITBIT_LITE_VERSION,
 					NS_BLOCK_ASSERTIONS,
 				);
-				INFOPLIST_FILE = "twitbit-info copy.plist";
+				INFOPLIST_FILE = "twitbit-lite-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
@@ -4334,7 +4334,7 @@
 					HOB_TWITBIT_LITE_VERSION,
 					NS_BLOCK_ASSERTIONS,
 				);
-				INFOPLIST_FILE = "twitbit-info copy.plist";
+				INFOPLIST_FILE = "twitbit-lite-info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
