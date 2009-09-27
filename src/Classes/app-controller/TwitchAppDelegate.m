@@ -188,7 +188,7 @@
         }
 
         TwitterCredentials * c = self.activeCredentials.credentials;
-        NSLog(@"Active credentials on startup: '%@'.", c);
+        NSLog(@"Active credentials on startup: '%@'.", c.username);
         [self.composeTweetDisplayMgr setCredentials:c];
     }
 
