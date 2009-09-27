@@ -36,6 +36,7 @@
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "PhotoBrowserDisplayMgr.h"
 #import "SettingsReader.h"
+#import "UIApplication+ConfigurationAdditions.h"
 
 @interface TwitchAppDelegate ()
 
@@ -881,19 +882,15 @@
 
 - (void)registerDeviceForPushNotifications
 {
+    if (![[UIApplication sharedApplication] isLiteVersion]) {
+        UIRemoteNotificationType notificationTypes =
+        (UIRemoteNotificationTypeBadge |
+        UIRemoteNotificationTypeSound |
+        UIRemoteNotificationTypeAlert);
 
-#if defined(HOB_TWITBIT_PUSH_ENABLE)
-
-    UIRemoteNotificationType notificationTypes =
-    (UIRemoteNotificationTypeBadge |
-     UIRemoteNotificationTypeSound |
-     UIRemoteNotificationTypeAlert);
-
-    [[UIApplication sharedApplication]
-        registerForRemoteNotificationTypes:notificationTypes];
-
-#endif
-
+        [[UIApplication sharedApplication]
+            registerForRemoteNotificationTypes:notificationTypes];
+    }
 }
 
 #pragma mark Application notifications
