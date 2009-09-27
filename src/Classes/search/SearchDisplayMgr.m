@@ -76,6 +76,16 @@
 - (void)fetchTimelineSince:(NSNumber *)anUpdateId page:(NSNumber *)page
 {
     NSLog(@"Search display manager: fetching timeline");
+
+    // HACK: Force the query string to be non-nil here. If the query string
+    // is nil, and the search is submitted, the results will not be
+    // displayed when passed to the delegate method in this class because
+    // a nil query string will be sent to Twitter as '(null)' through the
+    // stringWithFormat: formatter, causing the query string comparison
+    // (comparing what was searched for to what was received) to fail.
+    if (!self.queryString)
+        self.queryString = @"";
+
     self.updateId = anUpdateId;
     if (self.nearbySearchLocation) {
         NSNumber * radius =
@@ -86,6 +96,7 @@
         NSNumber * longitude =
             [NSNumber numberWithDouble:
             self.nearbySearchLocation.coordinate.longitude];
+
         NSLog(@"Searching for '%@' in a radius of %@km.", self.queryString,
             radius);
         [service searchFor:self.queryString page:page latitude:latitude
