@@ -54,6 +54,7 @@
 - (void)setTweets:(NSArray *)tweets page:(NSUInteger)page
     visibleTweetId:(NSString *)visibleTweetId;
 - (void)setAllPagesLoaded:(BOOL)allLoaded;
+- (void)selectTweetId:(NSString *)tweetId;
 
 - (IBAction)loadMoreTweets:(id)sender;
 - (IBAction)showUserInfo:(id)sender;

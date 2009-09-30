@@ -1131,6 +1131,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     DirectMessage * nextTweet = [messages objectAtIndex:nextIndex];
 
+    [conversationController selectTweetId:nextTweet.identifier];
     [self selectedTweet:nextTweet avatarImage:nil];
 }
 
@@ -1149,6 +1150,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         
     DirectMessage * previousTweet = [messages objectAtIndex:previousIndex];
 
+    [conversationController selectTweetId:previousTweet.identifier];
     [self selectedTweet:previousTweet avatarImage:nil];
 }
 

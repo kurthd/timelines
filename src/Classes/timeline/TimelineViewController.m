@@ -333,6 +333,21 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     }
 }
 
+- (void)selectTweetId:(NSString *)tweetId
+{
+    NSInteger index = [self sortedIndexForTweetId:tweetId];
+
+    // there's a bug in the table view that disallows scrolling to the bottom
+    // so, just ignore this if the tweet is near the bottom
+    NSInteger tweetCount = [tweets count];
+    if (index < tweetCount - 5) {
+        NSIndexPath * indexPath =
+            [NSIndexPath indexPathForRow:index inSection:0];
+        [self.tableView selectRowAtIndexPath:indexPath animated:NO
+            scrollPosition:UITableViewScrollPositionTop];
+    }
+}
+
 - (void)setAllPagesLoaded:(BOOL)allLoaded
 {
     loadMoreButton.hidden = allLoaded;

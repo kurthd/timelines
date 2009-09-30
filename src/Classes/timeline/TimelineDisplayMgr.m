@@ -532,6 +532,7 @@ static BOOL scrollToTopValueAlreadyRead;
     NSString * nextTweetId = [self.tweetIndexToIdDict objectForKey:nextIndex];
     TweetInfo * nextTweet = [timeline objectForKey:nextTweetId];
 
+    [timelineController selectTweetId:nextTweetId];
     [self selectedTweet:nextTweet];
 }
 
@@ -550,6 +551,7 @@ static BOOL scrollToTopValueAlreadyRead;
         [self.tweetIndexToIdDict objectForKey:previousIndex];
     TweetInfo * previousTweet = [timeline objectForKey:previousTweetId];
 
+    [timelineController selectTweetId:previousTweetId];
     [self selectedTweet:previousTweet];
 }
 

@@ -196,6 +196,21 @@ static UIImage * defaultAvatar;
     [self.tableView reloadData];
 }
 
+- (void)selectTweetId:(NSString *)tweetId
+{
+    NSInteger index = [self sortedIndexForTweetId:tweetId];
+
+    // there's a bug in the table view that disallows scrolling to the bottom
+    // so, just ignore this if the tweet is near the bottom
+    NSInteger tweetCount = [tweets count];
+    if (index < tweetCount - 7) {
+        NSIndexPath * indexPath =
+            [NSIndexPath indexPathForRow:index inSection:0];
+        [self.tableView selectRowAtIndexPath:indexPath animated:NO
+            scrollPosition:UITableViewScrollPositionTop];
+    }
+}
+
 - (UIImage *)getThumbnailAvatarForUser:(User *)aUser
 {
     UIImage * avatarImage = [aUser thumbnailAvatar];

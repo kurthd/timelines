@@ -32,5 +32,6 @@
 - (void)setMessages:(NSArray *)messages;
 - (void)addTweet:(DirectMessage *)tweet;
 - (void)deleteTweet:(NSString *)tweetId;
+- (void)selectTweetId:(NSString *)tweetId;
 
 @end
