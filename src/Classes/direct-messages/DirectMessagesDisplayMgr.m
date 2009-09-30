@@ -47,6 +47,10 @@
 
 - (void)sendDirectMessageToCurrentUser;
 
+- (void)showNextTweet;
+- (void)showPreviousTweet;
+- (void)updateTweetIndexCache;
+
 + (BOOL)displayWithUsername;
 
 @property (nonatomic, retain) SavedSearchMgr * savedSearchMgr;
@@ -67,6 +71,8 @@
 
 @property (nonatomic, retain) UIBarButtonItem * inboxViewComposeTweetButton;
 
+@property (nonatomic, readonly) NSMutableDictionary * tweetIdToIndexDict;
+
 @end
 
 @implementation DirectMessagesDisplayMgr
@@ -80,7 +86,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     userListDisplayMgr, directMessageCache, newDirectMessages,
     newDirectMessagesState, currentConversationUserId, currentSearch,
     savedSearchMgr, userInfoController, userInfoUsername,
-    inboxViewComposeTweetButton;
+    inboxViewComposeTweetButton, tweetIdToIndexDict;
 
 - (void)dealloc
 {
@@ -113,6 +119,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [locationMapViewController release];
     [locationInfoViewController release];
     [inboxViewComposeTweetButton release];
+
+    [tweetIdToIndexDict release];
+
     [super dealloc];
 }
 
@@ -439,6 +448,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         forUserId:preview.otherUserId];
 
     [self updateBadge];
+
+    [self updateTweetIndexCache];
 }
 
 #pragma mark DirectMessageConversationViewControllerDelegate implementation
@@ -456,20 +467,27 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     BOOL tweetByUser = [message.sender.username isEqual:activeAcctUsername];
     [self.directMessageViewController setUsersTweet:tweetByUser];
 
-    // UIBarButtonItem * rightBarButtonItem =
-    //     [[UIBarButtonItem alloc]
-    //     initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
-    //     action:@selector(presentDirectMessageActions)];
-    // self.tweetViewController.navigationItem.rightBarButtonItem =
-    //     rightBarButtonItem;
-    // [rightBarButtonItem release];
-
-    self.directMessageViewController.navigationItem.title =
-        NSLocalizedString(@"tweetdetailsview.title.directmessage", @"");
-
     TweetInfo * tweetInfo = [TweetInfo createFromDirectMessage:message];
     [self.directMessageViewController displayTweet:tweetInfo
         onNavigationController:wrapperController.navigationController];
+
+    UISegmentedControl * segmentedControl =
+        (UISegmentedControl *)
+        self.directMessageViewController.navigationItem.rightBarButtonItem.
+        customView;
+    NSInteger tweetIndex =
+        [[self.tweetIdToIndexDict objectForKey:selectedMessage.identifier]
+        intValue];
+    NSString * titleFormatString =
+        NSLocalizedString(@"tweetdetailsview.titleformat", @"");
+    NSArray * messages =
+        [sortedConversations objectForKey:self.currentConversationUserId];
+    self.directMessageViewController.navigationItem.title =
+        [NSString stringWithFormat:titleFormatString, tweetIndex + 1,
+        [messages count]];
+    [segmentedControl setEnabled:tweetIndex != 0 forSegmentAtIndex:0];
+    [segmentedControl setEnabled:tweetIndex != [messages count] - 1
+        forSegmentAtIndex:1];
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
@@ -1063,20 +1081,75 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             [[DirectMessageViewController alloc]
             initWithNibName:@"DirectMessageView" bundle:nil];
 
-        // UIBarButtonItem * replyButton =
-        //     [[[UIBarButtonItem alloc]
-        //     initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
-        //     action:@selector(presentTweetActions)]
-        //     autorelease];
-        // [tweetViewController.navigationItem
-        //     setRightBarButtonItem:replyButton];
-        // 
-        // NSString * title = NSLocalizedString(@"tweetdetailsview.title", @"");
-        // tweetViewController.navigationItem.title = title;
+        NSArray * segmentedControlItems =
+            [NSArray arrayWithObjects:[UIImage imageNamed:@"UpButton.png"],
+            [UIImage imageNamed:@"DownButton.png"], nil];
+        UISegmentedControl * segmentedControl =
+            [[[UISegmentedControl alloc] initWithItems:segmentedControlItems]
+            autorelease];
+        segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+        CGRect segmentedControlFrame = segmentedControl.frame;
+        segmentedControlFrame.size.width = 88;
+        segmentedControl.frame = segmentedControlFrame;
+        [segmentedControl addTarget:self action:@selector(handleUpDownButton:)
+            forControlEvents:UIControlEventValueChanged];
+        UIBarButtonItem * rightBarButtonItem =
+            [[[UIBarButtonItem alloc] initWithCustomView:segmentedControl]
+            autorelease];
+        directMessageViewController.navigationItem.rightBarButtonItem =
+            rightBarButtonItem;
+
         directMessageViewController.delegate = self;
     }
 
     return directMessageViewController;
+}
+
+- (void)handleUpDownButton:(UISegmentedControl *)sender
+{
+    if (sender.selectedSegmentIndex == 0)
+        [self showPreviousTweet];
+    else if (sender.selectedSegmentIndex == 1)
+        [self showNextTweet];
+
+    sender.selectedSegmentIndex = -1;
+}
+
+- (void)showNextTweet
+{
+    NSLog(@"Direct message display manager: showing next tweet");
+    NSArray * messages =
+        [sortedConversations objectForKey:self.currentConversationUserId];
+
+    NSNumber * tweetIndex =
+        [self.tweetIdToIndexDict objectForKey:selectedMessage.identifier];
+    NSLog(@"selectedMessage.identifier: %@", selectedMessage.identifier);
+    NSLog(@"Selected tweet index: %@", tweetIndex);
+
+    NSInteger nextIndex = [tweetIndex intValue] + 1;
+    NSLog(@"Next tweet index: %d", nextIndex);
+
+    DirectMessage * nextTweet = [messages objectAtIndex:nextIndex];
+
+    [self selectedTweet:nextTweet avatarImage:nil];
+}
+
+- (void)showPreviousTweet
+{
+    NSLog(@"Direct message display manager: showing previous tweet");
+    NSArray * messages =
+        [sortedConversations objectForKey:self.currentConversationUserId];
+
+    NSNumber * tweetIndex =
+        [self.tweetIdToIndexDict objectForKey:selectedMessage.identifier];
+    NSLog(@"Selected tweet index: %@", tweetIndex);
+
+    NSInteger previousIndex = [tweetIndex intValue] - 1;
+    NSLog(@"Previous tweet index: %d", previousIndex);
+        
+    DirectMessage * previousTweet = [messages objectAtIndex:previousIndex];
+
+    [self selectedTweet:previousTweet avatarImage:nil];
 }
 
 - (void)setDirectMessageCache:(DirectMessageCache *)aMessageCache
@@ -1555,6 +1628,27 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     [directMessageCache addSentDirectMessage:dm];
     [self updateViewsWithNewMessages];
+}
+
+- (NSMutableDictionary *)tweetIdToIndexDict
+{
+    if (!tweetIdToIndexDict)
+        tweetIdToIndexDict = [[NSMutableDictionary dictionary] retain];
+
+    return tweetIdToIndexDict;
+}
+
+- (void)updateTweetIndexCache
+{
+    [self.tweetIdToIndexDict removeAllObjects];
+    NSArray * messages =
+        [sortedConversations objectForKey:self.currentConversationUserId];
+
+    for (NSInteger i = 0; i < [messages count]; i++) {
+        DirectMessage * tweetInfo = [messages objectAtIndex:i];
+        [self.tweetIdToIndexDict setObject:[NSNumber numberWithInt:i]
+            forKey:tweetInfo.identifier];
+    }
 }
 
 #pragma mark static helper methods

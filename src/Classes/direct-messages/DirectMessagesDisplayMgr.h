@@ -129,6 +129,8 @@
 
     LocationMapViewController * locationMapViewController;
     LocationInfoViewController * locationInfoViewController;
+
+    NSMutableDictionary * tweetIdToIndexDict;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;

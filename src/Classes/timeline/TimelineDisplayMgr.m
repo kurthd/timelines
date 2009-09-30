@@ -34,7 +34,6 @@
 
 - (void)showNextTweet;
 - (void)showPreviousTweet;
-
 - (void)updateTweetIndexCache;
 
 + (NSInteger)retweetFormat;
@@ -480,7 +479,7 @@ static BOOL scrollToTopValueAlreadyRead;
         autorelease];
     segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
     CGRect segmentedControlFrame = segmentedControl.frame;
-    segmentedControlFrame.size.width = 90;
+    segmentedControlFrame.size.width = 88;
     segmentedControl.frame = segmentedControlFrame;
     [segmentedControl addTarget:self action:@selector(handleUpDownButton:)
         forControlEvents:UIControlEventValueChanged];
