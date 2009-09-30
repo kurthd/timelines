@@ -1208,6 +1208,12 @@ static BOOL scrollToTopValueAlreadyRead;
 
         NSString * title = NSLocalizedString(@"tweetdetailsview.title", @"");
         tweetDetailsController.navigationItem.title = title;
+        tweetDetailsController.navigationItem.backBarButtonItem =
+            [[[UIBarButtonItem alloc]
+            initWithTitle:title style:UIBarButtonItemStyleBordered target:nil
+            action:nil]
+            autorelease];
+            
         tweetDetailsController.delegate = self;
     }
 

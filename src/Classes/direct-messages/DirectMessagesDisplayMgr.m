@@ -1098,6 +1098,14 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             autorelease];
         directMessageViewController.navigationItem.rightBarButtonItem =
             rightBarButtonItem;
+        
+        NSString * title =
+            NSLocalizedString(@"tweetdetailsview.title.directmessage", @"");
+        directMessageViewController.navigationItem.backBarButtonItem =
+            [[[UIBarButtonItem alloc]
+            initWithTitle:title style:UIBarButtonItemStyleBordered target:nil
+            action:nil]
+            autorelease];
 
         directMessageViewController.delegate = self;
     }
