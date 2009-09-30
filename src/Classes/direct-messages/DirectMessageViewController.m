@@ -1,8 +1,8 @@
 //
-//  Copyright High Order Bit, Inc. 2009. All rights reserved.
+//  Copyright 2009 High Order Bit, Inc. All rights reserved.
 //
 
-#import "TweetViewController.h"
+#import "DirectMessageViewController.h"
 #import "TweetTextTableViewCell.h"
 #import "AsynchronousNetworkFetcher.h"
 #import "UIAlertView+InstantiationAdditions.h"
@@ -21,17 +21,14 @@ enum Sections {
     kTweetActionsSection
 };
 
-static const NSInteger NUM_TWEET_DETAILS_ROWS = 2;
+static const NSInteger NUM_TWEET_DETAILS_ROWS = 1;
 enum TweetDetailsRows {
-    kTweetTextRow,
-    kConversationRow
+    kTweetTextRow
 };
 
-static const NSInteger NUM_TWEET_ACTION_ROWS = 3;
+static const NSInteger NUM_TWEET_ACTION_ROWS = 2;
 enum TweetActionRows {
-    kPublicReplyRow,
-    kRetweetRow,
-    kFavoriteRow,
+    kReplyRow,
     kDeleteRow
 };
 
@@ -40,26 +37,20 @@ enum TweetActionSheets {
     kTweetActionSheetDeleteConfirmation
 };
 
-@interface TweetViewController ()
+@interface DirectMessageViewController ()
 
 @property (nonatomic, retain) UINavigationController * navigationController;
 
 @property (nonatomic, retain) TweetInfo * tweet;
 @property (nonatomic, retain) UIWebView * tweetContentView;
 
-@property (readonly) UITableViewCell * conversationCell;
-@property (readonly) UITableViewCell * publicReplyCell;
-@property (readonly) UITableViewCell * directMessageCell;
-@property (readonly) UITableViewCell * retweetCell;
-@property (readonly) MarkAsFavoriteCell * favoriteCell;
+@property (readonly) UITableViewCell * replyCell;
 @property (readonly) UITableViewCell * deleteTweetCell;
 
 - (void)displayTweet;
 - (void)loadTweetWebView;
 
-- (void)retweet;
 - (void)sendReply;
-- (void)toggleFavoriteValue;
 
 - (void)fetchRemoteImage:(NSString *)avatarUrlString;
 
@@ -72,10 +63,9 @@ enum TweetActionSheets {
 
 @end
 
-@implementation TweetViewController
+@implementation DirectMessageViewController
 
 @synthesize delegate, navigationController, tweetContentView, tweet;
-@synthesize showsExtendedActions, allowDeletion;
 @synthesize realParentViewController;
 
 - (void)dealloc
@@ -89,10 +79,7 @@ enum TweetActionSheets {
     [fullNameLabel release];
     [usernameLabel release];
     
-    [publicReplyCell release];
-    [directMessageCell release];
-    [retweetCell release];
-    [favoriteCell release];
+    [replyCell release];
     [deleteTweetCell release];
 
     [tweetTextTableViewCell release];
@@ -144,17 +131,12 @@ enum TweetActionSheets {
     NSInteger nrows = 0;
     switch (transformedSection) {
         case kTweetDetailsSection:
-            nrows = tweet.inReplyToTwitterTweetId ?
-                NUM_TWEET_DETAILS_ROWS : NUM_TWEET_DETAILS_ROWS - 1;
+            nrows = NUM_TWEET_DETAILS_ROWS;
             break;
         case kTweetActionsSection:
             nrows = NUM_TWEET_ACTION_ROWS;
-            if (!showsFavoriteButton)
+            if (usersTweet)
                 nrows--;
-            if (!showsExtendedActions)
-                nrows--;
-            if (allowDeletion)
-                nrows++;
             break;
     }
 
@@ -169,13 +151,12 @@ enum TweetActionSheets {
     if (indexPath.section == kTweetDetailsSection &&
         indexPath.row == kTweetTextRow)
         rowHeight = tweetContentView.frame.size.height;
-    
+
     return rowHeight;
 }
 
-// Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tv
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+    cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell * cell = nil;
 
@@ -185,25 +166,11 @@ enum TweetActionSheets {
         if (transformedPath.row == kTweetTextRow) {
             [tweetTextTableViewCell.contentView addSubview:tweetContentView];
             cell = tweetTextTableViewCell;
-        } else if (indexPath.row == kConversationRow) {
-            cell = self.conversationCell;
-            NSString * formatString =
-                NSLocalizedString(@"tweetdetailsview.inreplyto.formatstring",
-                @"");
-            cell.textLabel.text =
-                [NSString stringWithFormat:formatString,
-                tweet.inReplyToTwitterUsername];
         }
     } else if (transformedPath.section == kTweetActionsSection) {
-        if (transformedPath.row == kPublicReplyRow)
-            cell = self.publicReplyCell;
-        else if (transformedPath.row == kRetweetRow)
-            cell = self.retweetCell;
-        else if (transformedPath.row == kFavoriteRow) {
-            cell = self.favoriteCell;
-            [self.favoriteCell setMarkedState:[tweet.favorited boolValue]];
-            [self.favoriteCell setUpdatingState:markingFavorite];
-        } else if (transformedPath.row == kDeleteRow)
+        if (transformedPath.row == kReplyRow)
+            cell = self.replyCell;
+        else if (transformedPath.row == kDeleteRow)
             cell = self.deleteTweetCell;
     }
 
@@ -215,16 +182,9 @@ enum TweetActionSheets {
 {
     NSIndexPath * transformedPath = [self indexForActualIndexPath:indexPath];
 
-    if (transformedPath.section == kTweetDetailsSection) {
-        if (transformedPath.row == kConversationRow)
-            [delegate loadConversationFromTweetId:tweet.identifier];
-    } else if (transformedPath.section == kTweetActionsSection) {
-        if (transformedPath.row == kPublicReplyRow)
+    if (transformedPath.section == kTweetActionsSection) {
+        if (transformedPath.row == kReplyRow)
             [self sendReply];
-        else if (transformedPath.row == kRetweetRow)
-            [self retweet];
-        else if (transformedPath.row == kFavoriteRow)
-            [self toggleFavoriteValue];
         else if (transformedPath.row == kDeleteRow)
             [self confirmDeletion];
     }
@@ -261,7 +221,6 @@ enum TweetActionSheets {
     shouldStartLoadWithRequest:(NSURLRequest *)request
     navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSString * inReplyToString;
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         NSString * webpage = [[request URL] absoluteString];
 
@@ -286,10 +245,6 @@ enum TweetActionSheets {
                 [webpage stringByMatching:hashRegex capture:1];
             NSLog(@"Showing search results for '%@'", query);
             [delegate showResultsForSearch:query];
-        } else if (inReplyToString = [webpage stringByMatching:@"#\\d*"]) {
-            NSString * tweetId = [inReplyToString substringFromIndex:1];
-            NSString * replyToUsername = self.tweet.inReplyToTwitterUsername;
-            [delegate loadNewTweetWithId:tweetId username:replyToUsername];
         } else if ([webpage isMatchedByRegex:@"^mailto:"]) {
             NSLog(@"Opening 'Mail' with url: %@", webpage);
             NSURL * url = [[NSURL alloc] initWithString:webpage];
@@ -319,21 +274,9 @@ enum TweetActionSheets {
     [self loadTweetWebView];
 }
 
-- (void)setFavorited:(BOOL)favorited
+- (void)setUsersTweet:(BOOL)usersTweetVal
 {
-    [self.favoriteCell setMarkedState:favorited];
-    [self.favoriteCell setUpdatingState:NO];
-    markingFavorite = NO;
-}
-
-- (void)setUsersTweet:(BOOL)usersTweet
-{
-    // ignore for now
-}
-
-- (void)hideFavoriteButton:(BOOL)hide
-{
-    showsFavoriteButton = !hide;
+    usersTweet = usersTweetVal;
 }
 
 #pragma mark UIActionSheetDelegate implementation
@@ -341,8 +284,10 @@ enum TweetActionSheets {
 - (void)actionSheet:(UIActionSheet *)sheet
     clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self.navigationController popViewControllerAnimated:YES];
-    [delegate deleteTweet:tweet.identifier];
+    if (buttonIndex == 0) {
+        [self.navigationController popViewControllerAnimated:YES];
+        [delegate deleteTweet:tweet.identifier];
+    }
 
     [sheet autorelease];
 }
@@ -352,7 +297,6 @@ enum TweetActionSheets {
 - (void)mailComposeController:(MFMailComposeViewController *)controller
     didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
-    
     if (result == MFMailComposeResultFailed) {
         NSString * title =
             NSLocalizedString(@"photobrowser.emailerror.title", @"");
@@ -408,13 +352,6 @@ enum TweetActionSheets {
     [[PhotoBrowserDisplayMgr instance] showPhotoInBrowser:remotePhoto];
 }
 
-- (IBAction)openTweetInBrowser
-{
-    NSString * webAddress = [tweet tweetUrl];
-    NSLog(@"Opening tweet in browser (%@)...", webAddress);
-    [[TwitchWebBrowserDisplayMgr instance] visitWebpage:webAddress];
-}
-
 - (IBAction)sendInEmail
 {
     NSLog(@"Sending tweet in email...");
@@ -433,8 +370,8 @@ enum TweetActionSheets {
         [picker setSubject:subject];
 
         NSString * body =
-            [NSString stringWithFormat:@"\"%@\"\n- %@\n\n%@", self.tweet.text,
-            self.tweet.user.username, [tweet tweetUrl]];
+            [NSString stringWithFormat:@"\"%@\"\n- %@", self.tweet.text,
+            self.tweet.user.username];
         [picker setMessageBody:body isHTML:NO];
 
         [self.realParentViewController presentModalViewController:picker
@@ -453,88 +390,28 @@ enum TweetActionSheets {
     }
 }
 
-- (void)retweet
-{
-    [delegate reTweetSelected];
-}
-
 - (void)sendReply
 {
-    [delegate replyToTweet];
-}
-
-- (void)toggleFavoriteValue
-{
-    if (!markingFavorite) {
-        markingFavorite = YES;
-        [self.favoriteCell setUpdatingState:YES];
-        [delegate setFavorite:![tweet.favorited boolValue]];
-    }
+    [delegate sendDirectMessageToUser:tweet.user.username];
 }
 
 #pragma mark Private implementation
 
-- (UITableViewCell *)conversationCell
+- (UITableViewCell *)replyCell
 {
-    if (!conversationCell) {
-        conversationCell =
+    if (!replyCell) {
+        replyCell = 
             [[UITableViewCell alloc]
             initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        conversationCell.accessoryType =
-            UITableViewCellAccessoryDisclosureIndicator;
-    }
-
-    return conversationCell;
-}
-
-- (UITableViewCell *)publicReplyCell
-{
-    if (!publicReplyCell) {
-        publicReplyCell = 
-            [[UITableViewCell alloc]
-            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        publicReplyCell.textLabel.text =
-            NSLocalizedString(@"tweetdetailsview.publicreply.label", @"");
-        publicReplyCell.imageView.image =
-            [UIImage imageNamed:@"PublicReplyButtonIcon.png"];
-        publicReplyCell.imageView.highlightedImage =
-            [UIImage imageNamed:@"PublicReplyButtonIconHighlighted.png"];
-    }
-    
-    return publicReplyCell;
-}
-
-- (UITableViewCell *)directMessageCell
-{
-    if (!directMessageCell) {
-        directMessageCell =
-            [[UITableViewCell alloc]
-            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        directMessageCell.textLabel.text =
-            NSLocalizedString(@"tweetdetailsview.directmessage.label", @"");
-        directMessageCell.imageView.image =
+        replyCell.textLabel.text =
+            NSLocalizedString(@"tweetdetailsview.reply.label", @"");
+        replyCell.imageView.image =
             [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
-        directMessageCell.imageView.highlightedImage =
+        replyCell.imageView.highlightedImage =
             [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
     }
 
-    return directMessageCell;
-}
-
-- (UITableViewCell *)retweetCell
-{
-    if (!retweetCell) {
-        retweetCell = 
-            [[UITableViewCell alloc]
-            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        retweetCell.textLabel.text =
-            NSLocalizedString(@"tweetdetailsview.retweet.label", @"");
-        retweetCell.imageView.image = [UIImage imageNamed:@"RetweetButtonIcon.png"];
-        retweetCell.imageView.highlightedImage =
-            [UIImage imageNamed:@"RetweetButtonIconHighlighted.png"];
-    }
-
-    return retweetCell;
+    return replyCell;
 }
 
 - (void)loadTweetWebView
@@ -600,19 +477,6 @@ enum TweetActionSheets {
         self.parentViewController : realParentViewController;
 }
 
-- (MarkAsFavoriteCell *)favoriteCell
-{
-    if (!favoriteCell) {
-        NSArray * nib =
-            [[[NSBundle mainBundle] loadNibNamed:@"MarkAsFavoriteCell"
-            owner:self options:nil] retain];
-
-         favoriteCell = [nib objectAtIndex:0];
-    }
-
-    return favoriteCell;
-}
-
 - (UITableViewCell *)deleteTweetCell
 {
     if (!deleteTweetCell) {
@@ -630,7 +494,12 @@ enum TweetActionSheets {
 
 - (NSIndexPath *)indexForActualIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath;
+    NSInteger row = indexPath.row;
+    if (indexPath.section == kTweetActionsSection &&
+        indexPath.row == kReplyRow && usersTweet)
+        row = kDeleteRow;
+
+    return [NSIndexPath indexPathForRow:row inSection:indexPath.section];
 }
 
 - (NSInteger)sectionForActualSection:(NSInteger)section

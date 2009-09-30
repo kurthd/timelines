@@ -13,8 +13,8 @@
 #import "DirectMessageInboxViewControllerDelegate.h"
 #import "DirectMessageCache.h"
 #import "ComposeTweetDisplayMgr.h"
-#import "TweetViewController.h"
-#import "TweetViewControllerDelegate.h"
+#import "DirectMessageViewController.h"
+#import "DirectMessageViewControllerDelegate.h"
 #import "TwitchBrowserViewController.h"
 #import "PhotoBrowser.h"
 #import "TwitchBrowserViewControllerDelegate.h"
@@ -65,14 +65,14 @@
     NSObject <TwitterServiceDelegate, NetworkAwareViewControllerDelegate,
     DirectMessageInboxViewControllerDelegate,
     DirectMessageConversationViewControllerDelegate,
-    TweetViewControllerDelegate, MFMailComposeViewControllerDelegate,
+    DirectMessageViewControllerDelegate, MFMailComposeViewControllerDelegate,
     UIActionSheetDelegate, UserInfoViewControllerDelegate,
     LocationMapViewControllerDelegate, LocationInfoViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     DirectMessageInboxViewController * inboxController;
     DirectMessageConversationViewController * conversationController;
-    TweetViewController * tweetViewController;
+    DirectMessageViewController * directMessageViewController;
     SavedSearchMgr * findPeopleBookmarkMgr;
     UserListDisplayMgrFactory * userListDisplayMgrFactory;
 
@@ -135,7 +135,7 @@
 
 @property (readonly)
     DirectMessageConversationViewController * conversationController;
-@property (readonly) TweetViewController * tweetViewController;
+@property (readonly) DirectMessageViewController * directMessageViewController;
 
 @property (nonatomic, copy) NSString * activeAcctUsername;
 @property (nonatomic, retain) User * otherUserInConversation;

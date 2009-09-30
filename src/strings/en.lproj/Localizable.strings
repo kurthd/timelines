@@ -58,6 +58,7 @@ directmessage.actions.email = "Email This Message";
 
 /* TweetDetailsViewController */
 tweetdetailsview.title = "Tweet";
+tweetdetailsview.titleformat = "%d of %d";
 tweetdetailsview.title.directmessage = "Direct Message";
 tweetdetailsview.tweetfooter = "%@ from %@";
 tweetdetailsview.tweetheader = "To: %@";
@@ -74,6 +75,7 @@ tweetdetailsview.unfavorite.label = "Unfavorite";
 tweetdetailsview.deletetweet.label = "Delete";
 tweetdetailsview.deletetweet.confirm = "Delete Tweet";
 tweetdetailsview.deletetweet.cancel = "Cancel";
+tweetdetailsview.reply.label = "Reply with Direct Message";
 
 /* Sending tweets */
 sendtweet.failed.alert.title = "Failed to Send Tweet";

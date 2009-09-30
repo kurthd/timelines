@@ -1,20 +1,20 @@
 //
-//  Copyright High Order Bit, Inc. 2009. All rights reserved.
+//  Copyright 2009 High Order Bit, Inc. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
-#import "TweetViewControllerDelegate.h"
+#import "DirectMessageViewControllerDelegate.h"
 #import "TweetInfo.h"
 #import "RoundedImage.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
 #import "MarkAsFavoriteCell.h"
 
-@interface TweetViewController :
+@interface DirectMessageViewController :
     UITableViewController <UIActionSheetDelegate, UIWebViewDelegate,
     AsynchronousNetworkFetcherDelegate, MFMailComposeViewControllerDelegate>
 {
-    NSObject<TweetViewControllerDelegate> * delegate;
+    NSObject<DirectMessageViewControllerDelegate> * delegate;
 
     UINavigationController * navigationController;
 
@@ -25,44 +25,31 @@
     IBOutlet RoundedImage * avatarImage;
 
     UITableViewCell * tweetTextTableViewCell;
-    UITableViewCell * conversationCell;
     UIWebView * tweetContentView;
 
     TweetInfo * tweet;
 
-    // configure the display
-    BOOL showsFavoriteButton;
-    BOOL showsExtendedActions;
-    BOOL allowDeletion;
-
     UIViewController * realParentViewController;
 
-    UITableViewCell * publicReplyCell;
-    UITableViewCell * directMessageCell;
-    UITableViewCell * retweetCell;
-    MarkAsFavoriteCell * favoriteCell;
+    UITableViewCell * replyCell;
     UITableViewCell * deleteTweetCell;
 
-    BOOL markingFavorite;
+    BOOL usersTweet;
 }
 
-@property (nonatomic, assign) NSObject<TweetViewControllerDelegate> * delegate;
+@property (nonatomic, assign)
+    NSObject<DirectMessageViewControllerDelegate> * delegate;
 @property (nonatomic, retain, readonly) TweetInfo * tweet;
-@property (nonatomic, assign) BOOL showsExtendedActions;
-@property (nonatomic, assign) BOOL allowDeletion;
 @property (nonatomic, retain) UIViewController * realParentViewController;
 
 - (void)displayTweet:(TweetInfo *)tweet
     onNavigationController:(UINavigationController *)navController;
-- (void)setFavorited:(BOOL)favorited;
 - (void)setUsersTweet:(BOOL)usersTweet;
-- (void)hideFavoriteButton:(BOOL)hide;
 
 #pragma mark Button actions
 
 - (IBAction)showUserTweets:(id)sender;
 - (IBAction)showFullProfileImage:(id)sender;
-- (IBAction)openTweetInBrowser;
 - (IBAction)sendInEmail;
 
 @end

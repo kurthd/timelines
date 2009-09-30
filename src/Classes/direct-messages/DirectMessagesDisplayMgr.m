@@ -86,7 +86,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     [wrapperController release];
     [inboxController release];
-    [tweetViewController release];
+    [directMessageViewController release];
     [service release];
     [directMessageCache release];
     [conversations release];
@@ -378,14 +378,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)deletedDirectMessageWithId:(NSString *)directMessageId
 {
     [directMessageCache removeDirectMessageWithId:directMessageId];
-    // for (NSMutableArray * convo in [sortedConversations allValues]) {
-    //     for (DirectMessage * dm in convo) {
-    //         if ([dm.identifier isEqual:directMessageId]) {
-    //             [convo removeObject:dm];
-    //             return;
-    //         }
-    //     }
-    // }
 }
 
 - (void)failedToDeleteDirectMessageWithId:(NSString *)directMessageId
@@ -455,35 +447,29 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     avatarImage:(UIImage *)avatarImage
 {
     // HACK: forces to scroll to top
-    [self.tweetViewController.tableView setContentOffset:CGPointMake(0, 300)
-        animated:NO];
+    [self.directMessageViewController.tableView
+        setContentOffset:CGPointMake(0, 300) animated:NO];
 
     NSLog(@"Message display manager: selected message: %@", message);
     self.selectedMessage = message;
 
     BOOL tweetByUser = [message.sender.username isEqual:activeAcctUsername];
-    self.tweetViewController.navigationItem.rightBarButtonItem.enabled =
-        !tweetByUser;
-    [self.tweetViewController setUsersTweet:tweetByUser];
-    self.tweetViewController.showsExtendedActions = NO;
+    [self.directMessageViewController setUsersTweet:tweetByUser];
 
-    UIBarButtonItem * rightBarButtonItem =
-        [[UIBarButtonItem alloc]
-        initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
-        action:@selector(presentDirectMessageActions)];
-    self.tweetViewController.navigationItem.rightBarButtonItem =
-        rightBarButtonItem;
-    [rightBarButtonItem release];
+    // UIBarButtonItem * rightBarButtonItem =
+    //     [[UIBarButtonItem alloc]
+    //     initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
+    //     action:@selector(presentDirectMessageActions)];
+    // self.tweetViewController.navigationItem.rightBarButtonItem =
+    //     rightBarButtonItem;
+    // [rightBarButtonItem release];
 
-    self.tweetViewController.navigationItem.title =
+    self.directMessageViewController.navigationItem.title =
         NSLocalizedString(@"tweetdetailsview.title.directmessage", @"");
-    [self.tweetViewController setUsersTweet:YES];
-    [self.tweetViewController hideFavoriteButton:YES];
 
     TweetInfo * tweetInfo = [TweetInfo createFromDirectMessage:message];
-    [self.tweetViewController displayTweet:tweetInfo
+    [self.directMessageViewController displayTweet:tweetInfo
         onNavigationController:wrapperController.navigationController];
-    self.tweetViewController.allowDeletion = YES;
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
@@ -731,30 +717,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         coordinate:coordinate];
 }
 
-- (void)showingTweetDetails:(TweetViewController *)tweetController
+- (void)showingTweetDetails:(DirectMessageViewController *)tweetController
 {
     NSLog(@"Messages Display Manager: showing tweet details...");
     [self deallocateTweetDetailsNode];
-}
-
-- (void)loadNewTweetWithId:(NSString *)tweetId username:(NSString *)username
-{
-    // not supported for direct messages
-}
-
-- (void)setCurrentTweetDetailsUser:(NSString *)username
-{
-    // not supported for direct messages
-}
-
-- (void)reTweetSelected
-{
-    // not supported for direct messages
-}
-
-- (void)replyToTweet
-{
-    [self sendDirectMessageToOtherUserInConversation];
 }
 
 - (void)sendDirectMessageToUser:(NSString *)aUsername
@@ -908,6 +874,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)deleteTweet:(NSString *)tweetId
 {
+    NSLog(@"Direct message display manager: deleting tweet");
     [self clearState];
 
     [conversationController performSelector:@selector(deleteTweet:)
@@ -1089,27 +1056,27 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     return conversationController;
 }
 
-- (TweetViewController *)tweetViewController
+- (DirectMessageViewController *)directMessageViewController
 {
-    if (!tweetViewController) {
-        tweetViewController =
-            [[TweetViewController alloc]
-            initWithNibName:@"TweetView" bundle:nil];
+    if (!directMessageViewController) {
+        directMessageViewController =
+            [[DirectMessageViewController alloc]
+            initWithNibName:@"DirectMessageView" bundle:nil];
 
-        UIBarButtonItem * replyButton =
-            [[[UIBarButtonItem alloc]
-            initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
-            action:@selector(presentTweetActions)]
-            autorelease];
-        [tweetViewController.navigationItem
-            setRightBarButtonItem:replyButton];
-
-        NSString * title = NSLocalizedString(@"tweetdetailsview.title", @"");
-        tweetViewController.navigationItem.title = title;
-        tweetViewController.delegate = self;
+        // UIBarButtonItem * replyButton =
+        //     [[[UIBarButtonItem alloc]
+        //     initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
+        //     action:@selector(presentTweetActions)]
+        //     autorelease];
+        // [tweetViewController.navigationItem
+        //     setRightBarButtonItem:replyButton];
+        // 
+        // NSString * title = NSLocalizedString(@"tweetdetailsview.title", @"");
+        // tweetViewController.navigationItem.title = title;
+        directMessageViewController.delegate = self;
     }
 
-    return tweetViewController;
+    return directMessageViewController;
 }
 
 - (void)setDirectMessageCache:(DirectMessageCache *)aMessageCache
@@ -1443,7 +1410,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         self.selectedMessage.text, self.selectedMessage.sender.username];
     [picker setMessageBody:body isHTML:NO];
 
-    [self.tweetViewController presentModalViewController:picker animated:YES];
+    [self.directMessageViewController presentModalViewController:picker
+        animated:YES];
 
     [picker release];
 }

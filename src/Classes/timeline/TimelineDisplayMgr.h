@@ -107,6 +107,9 @@
 
     LocationMapViewController * locationMapViewController;
     LocationInfoViewController * locationInfoViewController;
+
+    NSMutableDictionary * tweetIdToIndexDict;
+    NSMutableDictionary * tweetIndexToIdDict;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;

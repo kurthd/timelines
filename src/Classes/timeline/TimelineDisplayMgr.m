@@ -23,11 +23,6 @@
 - (void)replyToTweetWithMessage;
 - (NetworkAwareViewController *)newTweetDetailsWrapperController;
 - (TweetViewController *)newTweetDetailsController;
-- (void)presentActionsForCurrentTweetDetailsUser;
-
-- (void)presentTweetActions;
-- (void)presentActionsForCurrentTweetDetailsUser;
-- (void)presentTweetActionsForTarget:(id)target;
 
 - (void)removeSearch:(NSString *)search;
 - (void)saveSearch:(NSString *)search;
@@ -36,6 +31,11 @@
 - (UIView *)removeSearchView;
 - (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
     action:(SEL)action;
+
+- (void)showNextTweet;
+- (void)showPreviousTweet;
+
+- (void)updateTweetIndexCache;
 
 + (NSInteger)retweetFormat;
 + (BOOL)scrollToTop;
@@ -47,6 +47,9 @@
     LocationMapViewController * locationMapViewController;
 @property (nonatomic, readonly)
     LocationInfoViewController * locationInfoViewController;
+    
+@property (nonatomic, readonly) NSMutableDictionary * tweetIdToIndexDict;
+@property (nonatomic, readonly) NSMutableDictionary * tweetIndexToIdDict;
 
 @end
 
@@ -71,7 +74,7 @@ static BOOL scrollToTopValueAlreadyRead;
     currentUsername, allPagesLoaded,setUserToAuthenticatedUser,
     firstFetchReceived, tweetIdToShow, suppressTimelineFailures, credentials,
     savedSearchMgr, currentSearch, userListDisplayMgr,
-    userListNetAwareViewController, showMentions;
+    userListNetAwareViewController, showMentions, tweetIdToIndexDict;
 
 - (void)dealloc
 {
@@ -115,6 +118,8 @@ static BOOL scrollToTopValueAlreadyRead;
 
     [locationMapViewController release];
     [locationInfoViewController release];
+
+    [tweetIdToIndexDict release];
 
     [super dealloc];
 }
@@ -177,6 +182,7 @@ static BOOL scrollToTopValueAlreadyRead;
         [timeline removeAllObjects];
     for (TweetInfo * tweet in aTimeline)
         [timeline setObject:tweet forKey:tweet.identifier];
+
     NSInteger newTimelineCount = [[timeline allKeys] count];
 
     if (!refreshingTweets) { // loading more
@@ -217,6 +223,23 @@ static BOOL scrollToTopValueAlreadyRead;
     [[ErrorState instance] exitErrorState];
     firstFetchReceived = YES;
     self.tweetIdToShow = nil;
+
+    [self updateTweetIndexCache];
+}
+
+- (void)updateTweetIndexCache
+{
+    [self.tweetIdToIndexDict removeAllObjects];
+    [self.tweetIndexToIdDict removeAllObjects];
+    NSArray * sortedTweets =
+        [[timeline allValues] sortedArrayUsingSelector:@selector(compare:)];
+    for (NSInteger i = 0; i < [sortedTweets count]; i++) {
+        TweetInfo * tweetInfo = [sortedTweets objectAtIndex:i];
+        [self.tweetIdToIndexDict setObject:[NSNumber numberWithInt:i]
+            forKey:tweetInfo.identifier];
+        [self.tweetIndexToIdDict setObject:tweetInfo.identifier
+            forKey:[NSNumber numberWithInt:i]];
+    }
 }
 
 - (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)anUpdateId
@@ -448,26 +471,24 @@ static BOOL scrollToTopValueAlreadyRead;
     self.tweetDetailsController.navigationItem.rightBarButtonItem.enabled =
         !tweetByUser;
     [self.tweetDetailsController setUsersTweet:tweetByUser];
-    if (tweet.recipient) { // direct message
-        UIBarButtonItem * rightBarButtonItem =
-            [[UIBarButtonItem alloc]
-            initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self
-            action:@selector(replyToTweetWithMessage)];
-        self.tweetDetailsController.navigationItem.rightBarButtonItem =
-            rightBarButtonItem;
-        self.tweetDetailsController.navigationItem.title =
-            NSLocalizedString(@"tweetdetailsview.title.directmessage", @"");
-        [self.tweetDetailsController setUsersTweet:YES];
-    } else {
-        UIBarButtonItem * rightBarButtonItem =
-            [[UIBarButtonItem alloc]
-            initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
-            action:@selector(presentTweetActions)];
-        self.tweetDetailsController.navigationItem.rightBarButtonItem =
-            rightBarButtonItem;
-        self.tweetDetailsController.navigationItem.title =
-            NSLocalizedString(@"tweetdetailsview.title", @"");
-    }
+
+    NSArray * segmentedControlItems =
+        [NSArray arrayWithObjects:[UIImage imageNamed:@"UpButton.png"],
+        [UIImage imageNamed:@"DownButton.png"], nil];
+    UISegmentedControl * segmentedControl =
+        [[[UISegmentedControl alloc] initWithItems:segmentedControlItems]
+        autorelease];
+    segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    CGRect segmentedControlFrame = segmentedControl.frame;
+    segmentedControlFrame.size.width = 90;
+    segmentedControl.frame = segmentedControlFrame;
+    [segmentedControl addTarget:self action:@selector(handleUpDownButton:)
+        forControlEvents:UIControlEventValueChanged];
+    UIBarButtonItem * rightBarButtonItem =
+        [[[UIBarButtonItem alloc] initWithCustomView:segmentedControl]
+        autorelease];
+    self.tweetDetailsController.navigationItem.rightBarButtonItem =
+        rightBarButtonItem;
 
     [self.tweetDetailsController hideFavoriteButton:NO];
     self.tweetDetailsController.showsExtendedActions = YES;
@@ -475,6 +496,62 @@ static BOOL scrollToTopValueAlreadyRead;
         onNavigationController:self.wrapperController.navigationController];
     self.tweetDetailsController.allowDeletion =
         [tweet.user.username isEqual:credentials.username];
+        
+    NSInteger tweetIndex =
+        [[self.tweetIdToIndexDict objectForKey:selectedTweet.identifier]
+        intValue];
+    NSString * titleFormatString =
+        NSLocalizedString(@"tweetdetailsview.titleformat", @"");
+    self.tweetDetailsController.navigationItem.title =
+        [NSString stringWithFormat:titleFormatString, tweetIndex + 1,
+        [timeline count]];
+    [segmentedControl setEnabled:tweetIndex != 0 forSegmentAtIndex:0];
+    [segmentedControl setEnabled:tweetIndex != [timeline count] - 1
+        forSegmentAtIndex:1];
+}
+
+- (void)handleUpDownButton:(UISegmentedControl *)sender
+{
+    if (sender.selectedSegmentIndex == 0)
+        [self showPreviousTweet];
+    else if (sender.selectedSegmentIndex == 1)
+        [self showNextTweet];
+
+    sender.selectedSegmentIndex = -1;
+}
+
+- (void)showNextTweet
+{
+    NSLog(@"Timeline display manager: showing next tweet");
+    NSNumber * tweetIndex =
+        [self.tweetIdToIndexDict objectForKey:selectedTweet.identifier];
+    NSLog(@"Selected tweet index: %@", tweetIndex);
+
+    NSNumber * nextIndex = [NSNumber numberWithInt:[tweetIndex intValue] + 1];
+    NSLog(@"Next tweet index: %@", nextIndex);
+
+    NSString * nextTweetId = [self.tweetIndexToIdDict objectForKey:nextIndex];
+    TweetInfo * nextTweet = [timeline objectForKey:nextTweetId];
+
+    [self selectedTweet:nextTweet];
+}
+
+- (void)showPreviousTweet
+{
+    NSLog(@"Timeline display manager: showing previous tweet");
+    NSNumber * tweetIndex =
+        [self.tweetIdToIndexDict objectForKey:selectedTweet.identifier];
+    NSLog(@"Selected tweet index: %@", tweetIndex);
+
+    NSNumber * previousIndex =
+        [NSNumber numberWithInt:[tweetIndex intValue] - 1];
+    NSLog(@"Previous tweet index: %@", previousIndex);
+        
+    NSString * previousTweetId =
+        [self.tweetIndexToIdDict objectForKey:previousIndex];
+    TweetInfo * previousTweet = [timeline objectForKey:previousTweetId];
+
+    [self selectedTweet:previousTweet];
 }
 
 - (void)loadMoreTweets
@@ -560,6 +637,8 @@ static BOOL scrollToTopValueAlreadyRead;
     // expected to be alive.
     [service performSelector:@selector(deleteTweet:)
         withObject:tweetId afterDelay:1.0];
+
+    [self updateTweetIndexCache];
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
@@ -749,47 +828,6 @@ static BOOL scrollToTopValueAlreadyRead;
     [composeTweetDisplayMgr
         composeReplyToTweet:selectedTweet.identifier
         fromUser:selectedTweet.user.username];
-}
-
-- (void)presentTweetActions
-{   
-    [self presentTweetActionsForTarget:self.tweetDetailsController];
-}
-
-- (void)presentActionsForCurrentTweetDetailsUser
-{
-    NSLog(@"Presenting actions for current tweet details user");
-    NetworkAwareViewController * topNetworkAwareViewController =
-        (NetworkAwareViewController *)
-        [wrapperController.navigationController topViewController];
-    [self presentTweetActionsForTarget:
-        topNetworkAwareViewController.targetViewController];
-}
-
-- (void)presentTweetActionsForTarget:(id)target
-{
-    NSString * cancel =
-        NSLocalizedString(@"tweetdetailsview.actions.cancel", @"");
-    NSString * browser =
-        NSLocalizedString(@"tweetdetailsview.actions.browser", @"");
-    NSString * email =
-        NSLocalizedString(@"tweetdetailsview.actions.email", @"");
-
-    UIActionSheet * sheet =
-        [[UIActionSheet alloc]
-        initWithTitle:nil delegate:target
-        cancelButtonTitle:cancel destructiveButtonTitle:nil
-        otherButtonTitles:browser, email, nil];
-
-    // The alert sheet needs to be displayed in the UITabBarController's view.
-    // If it's displayed in a child view, the action sheet will appear to be
-    // modal on top of the tab bar, but it will not intercept any touches that
-    // occur within the tab bar's bounds. Thus about 3/4 of the 'Cancel' button
-    // becomes unusable. Reaching for the UITabBarController in this way is
-    // definitely a hack, but fixes the problem for now.
-    UIView * rootView =
-        self.wrapperController.parentViewController.parentViewController.view;
-    [sheet showInView:rootView];
 }
 
 - (void)showingTweetDetails:(TweetViewController *)tweetController
@@ -1266,6 +1304,8 @@ static BOOL scrollToTopValueAlreadyRead;
         setCachedDataAvailable:[[someTweets allKeys] count] > 0];
 
     firstFetchReceived = firstFetchReceived && !refresh;
+
+    [self updateTweetIndexCache];
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
@@ -1494,6 +1534,22 @@ static BOOL scrollToTopValueAlreadyRead;
     }
 
     return locationInfoViewController;
+}
+
+- (NSMutableDictionary *)tweetIdToIndexDict
+{
+    if (!tweetIdToIndexDict)
+        tweetIdToIndexDict = [[NSMutableDictionary dictionary] retain];
+
+    return tweetIdToIndexDict;
+}
+
+- (NSMutableDictionary *)tweetIndexToIdDict
+{
+    if (!tweetIndexToIdDict)
+        tweetIndexToIdDict = [[NSMutableDictionary dictionary] retain];
+
+    return tweetIndexToIdDict;
 }
 
 + (NSInteger)retweetFormat

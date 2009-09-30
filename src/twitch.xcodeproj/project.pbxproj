@@ -842,6 +842,10 @@
 		91D36956100D12B300B59D12 /* ButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36955100D12B300B59D12 /* ButtonBackground.png */; };
 		91D36965100D1CC900B59D12 /* ButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */; };
 		91D36976100D44D200B59D12 /* AvatarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36975100D44D200B59D12 /* AvatarBackground.png */; };
+		91DCE7851072755400095FD0 /* DownButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DCE7841072755400095FD0 /* DownButton.png */; };
+		91DCE7871072756000095FD0 /* UpButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DCE7861072756000095FD0 /* UpButton.png */; };
+		91DCE8F21073BE7B00095FD0 /* DirectMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DCE8F01073BE7B00095FD0 /* DirectMessageViewController.m */; };
+		91DCE9091073C58D00095FD0 /* DirectMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91DCE9071073C58D00095FD0 /* DirectMessageView.xib */; };
 		91DEF180101B7118001354D5 /* FindPeopleSearchDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DEF17F101B7118001354D5 /* FindPeopleSearchDisplayMgr.m */; };
 		91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6C44101A51F800354D67 /* PersonSearch.png */; };
 		91FDD58D1061581C000F7527 /* BitlyLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91FDD58C1061581C000F7527 /* BitlyLogInDisplayMgr.m */; };
@@ -1571,6 +1575,12 @@
 		91D36955100D12B300B59D12 /* ButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ButtonBackground.png; path = images/ButtonBackground.png; sourceTree = "<group>"; };
 		91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ButtonBackgroundHighlighted.png; path = images/ButtonBackgroundHighlighted.png; sourceTree = "<group>"; };
 		91D36975100D44D200B59D12 /* AvatarBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AvatarBackground.png; path = images/AvatarBackground.png; sourceTree = "<group>"; };
+		91DCE7841072755400095FD0 /* DownButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DownButton.png; path = images/DownButton.png; sourceTree = "<group>"; };
+		91DCE7861072756000095FD0 /* UpButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UpButton.png; path = images/UpButton.png; sourceTree = "<group>"; };
+		91DCE8EF1073BE7B00095FD0 /* DirectMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageViewController.h; path = "direct-messages/DirectMessageViewController.h"; sourceTree = "<group>"; };
+		91DCE8F01073BE7B00095FD0 /* DirectMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageViewController.m; path = "direct-messages/DirectMessageViewController.m"; sourceTree = "<group>"; };
+		91DCE8F11073BE7B00095FD0 /* DirectMessageViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageViewControllerDelegate.h; path = "direct-messages/DirectMessageViewControllerDelegate.h"; sourceTree = "<group>"; };
+		91DCE9081073C58D00095FD0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/DirectMessageView.xib; sourceTree = "<group>"; };
 		91DEF17E101B7118001354D5 /* FindPeopleSearchDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FindPeopleSearchDisplayMgr.h; path = timeline/FindPeopleSearchDisplayMgr.h; sourceTree = "<group>"; };
 		91DEF17F101B7118001354D5 /* FindPeopleSearchDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindPeopleSearchDisplayMgr.m; path = timeline/FindPeopleSearchDisplayMgr.m; sourceTree = "<group>"; };
 		91E000420FEF76E800BCE9BC /* Favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Favorite.png; path = images/Favorite.png; sourceTree = "<group>"; };
@@ -2128,6 +2138,7 @@
 		05B239440FEDD0E400A6A2E6 /* nibs */ = {
 			isa = PBXGroup;
 			children = (
+				91DCE9071073C58D00095FD0 /* DirectMessageView.xib */,
 				91FDD5A310616854000F7527 /* BitlyLogInView.xib */,
 				05B238820FEDC34200A6A2E6 /* MainWindow.xib */,
 				916BD7ED0FEEB958007143A9 /* NoDataView.xib */,
@@ -2564,6 +2575,9 @@
 		9152E14A1014F68B0033B63B /* direct-messages */ = {
 			isa = PBXGroup;
 			children = (
+				91DCE8EF1073BE7B00095FD0 /* DirectMessageViewController.h */,
+				91DCE8F01073BE7B00095FD0 /* DirectMessageViewController.m */,
+				91DCE8F11073BE7B00095FD0 /* DirectMessageViewControllerDelegate.h */,
 				9152E14C1014F6B70033B63B /* DirectMessagesDisplayMgr.h */,
 				9152E14D1014F6B70033B63B /* DirectMessagesDisplayMgr.m */,
 				9152E14F1014F8260033B63B /* DirectMessageInboxViewController.h */,
@@ -2597,6 +2611,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91DCE7861072756000095FD0 /* UpButton.png */,
+				91DCE7841072755400095FD0 /* DownButton.png */,
 				919CCCBD105EB0760029C0A1 /* NearbyTweetsButtonIcon.png */,
 				919CCCBB105EB0600029C0A1 /* DeleteTweetButtonIcon.png */,
 				91257DB91058449C006F5DBD /* CancelButton.png */,
@@ -3165,6 +3181,9 @@
 				919CCCBE105EB0760029C0A1 /* NearbyTweetsButtonIcon.png in Resources */,
 				91FDD5A510616854000F7527 /* BitlyLogInView.xib in Resources */,
 				052E05BC10700B7E005CEC5F /* twitbit-lite-info.plist in Resources */,
+				91DCE7851072755400095FD0 /* DownButton.png in Resources */,
+				91DCE7871072756000095FD0 /* UpButton.png in Resources */,
+				91DCE9091073C58D00095FD0 /* DirectMessageView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3759,6 +3778,7 @@
 				050B9F28106C256100EC2E88 /* NSDictionary+GeneralHelpers.m in Sources */,
 				050BA144106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel in Sources */,
 				052E05B01070093F005CEC5F /* UIApplication+ConfigurationAdditions.m in Sources */,
+				91DCE8F21073BE7B00095FD0 /* DirectMessageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4068,6 +4088,14 @@
 				91CD821A0FF5403F004D04D5 /* en */,
 			);
 			name = TwitchBrowserView.xib;
+			sourceTree = "<group>";
+		};
+		91DCE9071073C58D00095FD0 /* DirectMessageView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91DCE9081073C58D00095FD0 /* en */,
+			);
+			name = DirectMessageView.xib;
 			sourceTree = "<group>";
 		};
 		91FDD5A310616854000F7527 /* BitlyLogInView.xib */ = {
