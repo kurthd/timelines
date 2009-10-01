@@ -70,13 +70,6 @@ static UIImage * avatarBackgroundImage;
 #define AVATAR_WIDTH 58
 #define AVATAR_HEIGHT 58
 
-    // draw white line across the top
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
-    CGContextMoveToPoint(ctx, 0, 0);
-    CGContextAddLineToPoint(ctx, 320, 0);
-    CGContextStrokePath(ctx);
-
     UIColor * nameLabelTextColor = nil;
     UIFont * nameLabelFont = [UIFont boldSystemFontOfSize:NAME_LABEL_FONT_SIZE];
 
