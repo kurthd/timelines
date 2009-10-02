@@ -10,24 +10,27 @@
 - (NoDataViewController *)noDataViewController;
 - (void)updateView;
 - (UIView *)updatingView;
+- (void)addUpdatingViewAsSubview;
+- (void)removeUpdatingViewFromSuperview;
 
-+ (CGRect)shownUpdatingViewFrame;
-+ (CGRect)hiddenUpdatingViewFrame;
-+ (CGFloat)leftUpdatingViewMargin;
+- (CGRect)shownUpdatingViewFrame;
+- (CGRect)hiddenUpdatingViewFrame;
+- (CGFloat)y;
+- (CGFloat)leftUpdatingViewMargin;
+- (CGFloat)screenWidth;
+- (CGFloat)viewLength;
+- (CGFloat)viewHeight;
 
 @end
 
-static const CGFloat Y = 338;
-static const CGFloat SCREEN_WIDTH = 320;
-static const CGFloat VIEW_LENGTH = 320;
-static const CGFloat VIEW_HEIGHT = 30;
 static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 
 @implementation NetworkAwareViewController
 
 @synthesize delegate, targetViewController, cachedDataAvailable;
 
-- (void)dealloc {
+- (void)dealloc
+{
     [delegate release];
 
     [targetViewController release];
@@ -85,19 +88,37 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
     [super viewDidAppear:animated];
     visible = YES;
     
-    // HACK: When a net aware view controller is on the 'more' tab, the
-    // 'updating' view consumes the whole screen.  If the view isn't added, it
-    // doesn't appear as early as it should, so this hacks just the case when
-    // the tab is on the 'more' tab.
-    if (!self.tabBarController || self.tabBarController.selectedIndex < 4)
-        [targetViewController.view.superview addSubview:[self updatingView]];
+    [self addUpdatingViewAsSubview];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     visible = NO;
-    [[self updatingView] removeFromSuperview];
+    [self removeUpdatingViewFromSuperview];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
+                                duration:(NSTimeInterval)duration
+{
+    [targetViewController willRotateToInterfaceOrientation:orientation
+        duration:duration];
+
+    [self updatingView].hidden = YES;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)orientation
+{
+    [targetViewController didRotateFromInterfaceOrientation:orientation];
+
+    [self updatingView].frame = [self hiddenUpdatingViewFrame];
+    [self updatingView].hidden = NO;
 }
 
 #pragma mark State updating methods
@@ -115,12 +136,12 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
     // Leaving the code structure in place for now in case it needs to be
     // reversed
     BOOL transitioningToAvailable = YES;
-//        !cachedDataAvailable && available && ![[self updatingView] superview];
+    // !cachedDataAvailable && available && ![[self updatingView] superview];
     cachedDataAvailable = available;
     [self updateView];
     if (transitioningToAvailable && visible) {
         NSLog(@"Showing updating view");
-        [targetViewController.view.superview addSubview:[self updatingView]];
+        [self addUpdatingViewAsSubview];
     }
 }
 
@@ -189,9 +210,9 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 
     // position updating view
     if (cachedDataAvailable && updatingState == kConnectedAndUpdating)
-        self.updatingView.frame = [[self class] shownUpdatingViewFrame];
+        self.updatingView.frame = [self shownUpdatingViewFrame];
     else
-        self.updatingView.frame = [[self class] hiddenUpdatingViewFrame];
+        self.updatingView.frame = [self hiddenUpdatingViewFrame];
 
     [UIView commitAnimations];
 
@@ -207,12 +228,13 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
     if (!updatingView) {
         updatingView =
             [[UIView alloc]
-            initWithFrame:[[self class] hiddenUpdatingViewFrame]];
+            initWithFrame:[self hiddenUpdatingViewFrame]];
         updatingView.backgroundColor =
             [[UIColor blackColor] colorWithAlphaComponent:0.7];
         
         CGRect labelFrame =
-            CGRectMake(VIEW_HEIGHT, 0, VIEW_LENGTH - VIEW_HEIGHT, VIEW_HEIGHT);
+            CGRectMake([self viewHeight], 0,
+            [self viewLength] - [self viewHeight], [self viewHeight]);
         UILabel * updatingLabel = [[UILabel alloc] initWithFrame:labelFrame];
         updatingLabel.text = updatingText;
         updatingLabel.textColor = [UIColor whiteColor];
@@ -224,7 +246,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
         [updatingView addSubview:updatingLabel];
 
         const CGFloat ACTIVITY_INDICATOR_MARGIN =
-            (VIEW_HEIGHT - ACTIVITY_INDICATOR_LENGTH) / 2;
+            ([self viewHeight] - ACTIVITY_INDICATOR_LENGTH) / 2;
         CGRect activityIndicatorFrame =
             CGRectMake(ACTIVITY_INDICATOR_MARGIN, ACTIVITY_INDICATOR_MARGIN, 20,
             20);
@@ -239,23 +261,61 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
     return updatingView;
 }
 
+- (void)addUpdatingViewAsSubview
+{
+    NSLog(@"Adding updating view as subview");
+    [targetViewController.view.superview addSubview:[self updatingView]];
+}
+
+- (void)removeUpdatingViewFromSuperview
+{
+    NSLog(@"Removing updating view from superview");
+    [[self updatingView] removeFromSuperview];
+}
+
 #pragma mark Static helper methods
 
-+ (CGRect)shownUpdatingViewFrame
+- (CGRect)shownUpdatingViewFrame
 {
-    return CGRectMake([NetworkAwareViewController leftUpdatingViewMargin], Y,
-        VIEW_LENGTH, VIEW_HEIGHT);
+    return CGRectMake([self leftUpdatingViewMargin], [self y],
+        [self viewLength], [self viewHeight]);
 }
 
-+ (CGRect)hiddenUpdatingViewFrame
+- (CGRect)hiddenUpdatingViewFrame
 {
-    return CGRectMake([NetworkAwareViewController leftUpdatingViewMargin],
-        Y + VIEW_HEIGHT, VIEW_LENGTH, VIEW_HEIGHT);
+    return CGRectMake([self leftUpdatingViewMargin],
+        [self y] + [self viewHeight], [self viewLength], [self viewHeight]);
 }
 
-+ (CGFloat)leftUpdatingViewMargin
+- (CGFloat)leftUpdatingViewMargin
 {
-    return (SCREEN_WIDTH - VIEW_LENGTH) / 2;
+    return ([self screenWidth] - [self viewLength]) / 2;
+}
+
+- (CGFloat)y
+{
+    return self.interfaceOrientation == UIInterfaceOrientationPortrait || 
+        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ? 
+        338 : 190;
+}
+
+- (CGFloat)screenWidth
+{
+    return self.interfaceOrientation == UIInterfaceOrientationPortrait || 
+        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ?
+        320 : 480;
+}
+
+- (CGFloat)viewLength
+{
+    return self.interfaceOrientation == UIInterfaceOrientationPortrait || 
+        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ?
+        320 : 480;
+}
+
+- (CGFloat)viewHeight
+{
+    return 30;
 }
 
 @end

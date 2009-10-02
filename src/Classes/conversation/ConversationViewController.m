@@ -56,6 +56,19 @@
     return self;
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
+    duration:(NSTimeInterval)duration
+{
+    orientation = o;
+    [self.tableView reloadData];
+}
+
 #pragma mark Public Interface
 
 - (void)loadConversationStartingWithTweets:(NSArray *)tweets
@@ -184,6 +197,11 @@
     [cell setDate:tweet.timestamp];
     [cell setTweetText:tweet.text];
 
+    BOOL landscape =
+        orientation == UIInterfaceOrientationLandscapeLeft ||
+        orientation == UIInterfaceOrientationLandscapeRight;
+    [cell setLandscape:landscape];
+
     if ([delegate isCurrentUser:tweet.user.username])
         [cell setDisplayType:kTimelineTableViewCellTypeInverted];
     else
@@ -203,7 +221,12 @@
     TweetInfo * tweet = [conversation objectAtIndex:indexPath.row];
     TimelineTableViewCellType type = kTimelineTableViewCellTypeNormal;
 
-    return [TimelineTableViewCell heightForContent:tweet.text displayType:type];
+    BOOL landscape =
+        orientation == UIInterfaceOrientationLandscapeLeft ||
+        orientation == UIInterfaceOrientationLandscapeRight;
+
+    return [TimelineTableViewCell heightForContent:tweet.text displayType:type
+        landscape:landscape];
 }
 
 - (void)tableView:(UITableView *)tv

@@ -7,7 +7,9 @@
 #import "UIImage+DrawingAdditions.h"
 
 static const CGFloat TEXT_WIDTH_WITHOUT_AVATAR = 290.0;
+static const CGFloat TEXT_WIDTH_WITHOUT_AVATAR_LANDSCAPE = 450.0;
 static const CGFloat TEXT_WIDTH_WITH_AVATAR = 235.0;
+static const CGFloat TEXT_WIDTH_WITH_AVATAR_LANDSCAPE = 395.0;
 
 static const CGFloat AVATAR_WIDTH = 50.0;
 static const CGFloat AVATAR_HEIGHT = 50.0;
@@ -44,6 +46,7 @@ static NSString * starText;
 @synthesize text, author, timestamp, avatar, cellType, highlightForMention,
     darkenForOld, favorite;
 @synthesize highlighted;
+@synthesize landscape;
 
 + (void)initialize
 {
@@ -64,10 +67,16 @@ static NSString * starText;
 
 + (CGFloat)heightForContent:(NSString *)tweetText
                    cellType:(TimelineTableViewCellType)cellType
+                  landscape:(BOOL)landscape
 {
+    CGFloat textWidthWithoutAvatar =
+        !landscape ?
+        TEXT_WIDTH_WITHOUT_AVATAR : TEXT_WIDTH_WITHOUT_AVATAR_LANDSCAPE;
+    CGFloat textWidthWithAvatar =
+        !landscape ? TEXT_WIDTH_WITH_AVATAR : TEXT_WIDTH_WITH_AVATAR_LANDSCAPE;
     CGFloat tweetTextLabelWidth =
         cellType == kTimelineTableViewCellTypeNoAvatar ?
-        TEXT_WIDTH_WITHOUT_AVATAR : TEXT_WIDTH_WITH_AVATAR;
+        textWidthWithoutAvatar : textWidthWithAvatar;
     CGSize maxSize = CGSizeMake(tweetTextLabelWidth, 999999.0);
 
     UIFont * font = [UIFont systemFontOfSize:14.0];
@@ -156,7 +165,7 @@ static NSString * starText;
 
     UIColor * textColor = nil;
     UIFont * textFont = [UIFont systemFontOfSize:14.0];
-    
+
     UIColor * favoriteColor = nil;
 
     CGRect contentRect = self.bounds;
@@ -190,11 +199,11 @@ static NSString * starText;
         }
         CGRect backgroundImageRect =
             CGRectMake(0, self.bounds.size.height - bottomImage.size.height,
-            320.0, backgroundImage.size.height);
+            480.0, backgroundImage.size.height);
         [bottomImage drawInRect:backgroundImageRect];
-
+        
         CGRect topGradientImageRect =
-            CGRectMake(0, 0, 320.0, topImage.size.height);
+            CGRectMake(0, 0, 480.0, topImage.size.height);
         [topImage drawInRect:topGradientImageRect];
     }
 
@@ -248,9 +257,10 @@ static NSString * starText;
     //
     // Draw the main text.
     //
-
     [textColor set];
-    CGSize textSize = CGSizeMake(TEXT_WIDTH_WITH_AVATAR, 999999.0);
+    CGFloat textWidth =
+        !landscape ? TEXT_WIDTH_WITH_AVATAR : TEXT_WIDTH_WITH_AVATAR_LANDSCAPE;
+    CGSize textSize = CGSizeMake(textWidth, 999999.0);
     size = [text sizeWithFont:textFont
             constrainedToSize:textSize
                 lineBreakMode:UILineBreakModeWordWrap];
@@ -267,8 +277,8 @@ static NSString * starText;
     // Draw the avatar.
     //
     CGRect avatarRect =
-        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN,
-        AVATAR_WIDTH, AVATAR_HEIGHT);
+        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN, AVATAR_WIDTH,
+        AVATAR_HEIGHT);
     [avatar drawInRect:avatarRect
         withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
 }
@@ -282,6 +292,7 @@ static NSString * starText;
     static const CGFloat TEXT_TOP_MARGIN = 27.0;
 
     static const CGFloat AVATAR_LEFT_MARGIN = 246.0;
+    static const CGFloat AVATAR_LEFT_MARGIN_LANDSCAPE = 406.0;
     static const CGFloat AVATAR_TOP_MARGIN = 7.0;
 
     UIColor * timestampColor = nil;
@@ -295,11 +306,15 @@ static NSString * starText;
     CGPoint point;
     CGSize size;
 
+    CGFloat avatarLeftMargin =
+        !landscape ? AVATAR_LEFT_MARGIN : AVATAR_LEFT_MARGIN_LANDSCAPE;
+
     if (highlighted) {
         timestampColor = [UIColor whiteColor];
         textColor = [UIColor whiteColor];
         favoriteColor = [UIColor whiteColor];
-        [self drawHighlightedAvatarBorderWithTopMargin:6 leftMargin:245];
+        [self drawHighlightedAvatarBorderWithTopMargin:6
+            leftMargin:avatarLeftMargin - 1];
     } else {
         timestampColor = [UIColor twitchBlueColor];
         textColor = [UIColor blackColor];
@@ -319,11 +334,11 @@ static NSString * starText;
         }
         CGRect backgroundImageRect =
             CGRectMake(0, self.bounds.size.height - bottomImage.size.height,
-            320.0, backgroundImage.size.height);
+            480.0, backgroundImage.size.height);
         [bottomImage drawInRect:backgroundImageRect];
 
         CGRect topGradientImageRect =
-            CGRectMake(0, 0, 320.0, topImage.size.height);
+            CGRectMake(0, 0, 480.0, topImage.size.height);
         [topImage drawInRect:topGradientImageRect];
     }
 
@@ -357,9 +372,10 @@ static NSString * starText;
     //
     // Draw the main text.
     //
-
     [textColor set];
-    CGSize textSize = CGSizeMake(TEXT_WIDTH_WITH_AVATAR, 999999.0);
+    CGFloat textWidth =
+        !landscape ? TEXT_WIDTH_WITH_AVATAR : TEXT_WIDTH_WITH_AVATAR_LANDSCAPE;
+    CGSize textSize = CGSizeMake(textWidth, 999999.0);
     size = [text sizeWithFont:textFont
             constrainedToSize:textSize
                 lineBreakMode:UILineBreakModeWordWrap];
@@ -376,8 +392,8 @@ static NSString * starText;
     // Draw the avatar.
     //
     CGRect avatarRect =
-        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN,
-        AVATAR_WIDTH, AVATAR_HEIGHT);
+        CGRectMake(avatarLeftMargin, AVATAR_TOP_MARGIN, AVATAR_WIDTH,
+        AVATAR_HEIGHT);
     [avatar drawInRect:avatarRect
         withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
 }
@@ -424,11 +440,11 @@ static NSString * starText;
         }
         CGRect backgroundImageRect =
             CGRectMake(0, self.bounds.size.height - bottomImage.size.height,
-            320.0, backgroundImage.size.height);
+            480.0, backgroundImage.size.height);
         [bottomImage drawInRect:backgroundImageRect];
 
         CGRect topGradientImageRect =
-            CGRectMake(0, 0, 320.0, topImage.size.height);
+            CGRectMake(0, 0, 480.0, topImage.size.height);
         [topImage drawInRect:topGradientImageRect];
     }
 
@@ -460,9 +476,11 @@ static NSString * starText;
     //
     // Draw the main text.
     //
-
+    CGFloat textWidth =
+        !landscape ?
+        TEXT_WIDTH_WITHOUT_AVATAR : TEXT_WIDTH_WITHOUT_AVATAR_LANDSCAPE;
     [textColor set];
-    CGSize textSize = CGSizeMake(TEXT_WIDTH_WITHOUT_AVATAR, 999999.0);
+    CGSize textSize = CGSizeMake(textWidth, 999999.0);
     size = [text sizeWithFont:textFont
             constrainedToSize:textSize
                 lineBreakMode:UILineBreakModeWordWrap];
@@ -518,11 +536,11 @@ static NSString * starText;
         }
         CGRect backgroundImageRect =
             CGRectMake(0, self.bounds.size.height - bottomImage.size.height,
-            320.0, backgroundImage.size.height);
+            480.0, backgroundImage.size.height);
         [bottomImage drawInRect:backgroundImageRect];
 
         CGRect topGradientImageRect =
-            CGRectMake(0, 0, 320.0, topImage.size.height);
+            CGRectMake(0, 0, 480.0, topImage.size.height);
         [topImage drawInRect:topGradientImageRect];
     }
 
@@ -540,9 +558,10 @@ static NSString * starText;
     //
     // Draw the main text.
     //
-
+    CGFloat textWidth =
+        !landscape ? TEXT_WIDTH_WITH_AVATAR : TEXT_WIDTH_WITH_AVATAR_LANDSCAPE;
     [textColor set];
-    CGSize textSize = CGSizeMake(TEXT_WIDTH_WITH_AVATAR, 99999.0);
+    CGSize textSize = CGSizeMake(textWidth, 99999.0);
     size = [text sizeWithFont:textFont
             constrainedToSize:textSize
                 lineBreakMode:UILineBreakModeWordWrap];
@@ -559,8 +578,8 @@ static NSString * starText;
     // Draw the avatar.
     //
     CGRect avatarRect =
-        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN,
-        AVATAR_WIDTH, AVATAR_HEIGHT);
+        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN, AVATAR_WIDTH,
+        AVATAR_HEIGHT);
     [avatar drawInRect:avatarRect
         withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
 }
@@ -596,6 +615,14 @@ static NSString * starText;
 {
     if (highlighted != b) {
         highlighted = b;
+        [self setNeedsDisplay];
+    }
+}
+
+- (void)setLandscape:(BOOL)l
+{
+    if (landscape != l) {
+        landscape = l;
         [self setNeedsDisplay];
     }
 }

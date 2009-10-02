@@ -33,9 +33,11 @@ typedef enum {
 - (void)setFavorite:(BOOL)favorite;
 - (void)setHighlightForMention:(BOOL)highlight;
 - (void)setDarkenForOld:(BOOL)darken;
+- (void)setLandscape:(BOOL)landscape;
 
 + (NSString *)reuseIdentifier;
 + (CGFloat)heightForContent:(NSString *)tweetText
-    displayType:(TimelineTableViewCellType)displayType;
+    displayType:(TimelineTableViewCellType)displayType
+    landscape:(BOOL)landscape;
 
 @end

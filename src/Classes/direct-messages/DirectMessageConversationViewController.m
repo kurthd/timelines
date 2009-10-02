@@ -55,6 +55,19 @@ static UIImage * defaultAvatar;
     [self.tableView reloadData];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
+    duration:(NSTimeInterval)duration
+{
+    orientation = o;
+    [self.tableView reloadData];
+}
+
 #pragma mark UITableViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -87,6 +100,10 @@ static UIImage * defaultAvatar;
         displayType = kTimelineTableViewCellTypeInverted;
 
     [cell setDisplayType:displayType];
+    BOOL landscape =
+        orientation == UIInterfaceOrientationLandscapeLeft ||
+        orientation == UIInterfaceOrientationLandscapeRight;
+    [cell setLandscape:landscape];
 
     return cell;
 }
@@ -107,8 +124,12 @@ static UIImage * defaultAvatar;
     DirectMessage * message = [[self sortedTweets] objectAtIndex:indexPath.row];
     NSString * tweetText = message.text;
 
+    BOOL landscape =
+        orientation == UIInterfaceOrientationLandscapeLeft ||
+        orientation == UIInterfaceOrientationLandscapeRight;
+
     return [TimelineTableViewCell heightForContent:tweetText
-        displayType:kTimelineTableViewCellTypeNormal];
+        displayType:kTimelineTableViewCellTypeNormal landscape:landscape];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation

@@ -17,6 +17,8 @@
     BOOL darkenForOld;
 
     BOOL highlighted;
+    
+    BOOL landscape;
 }
 
 @property (nonatomic, copy) NSString * text;
@@ -28,10 +30,11 @@
 @property (nonatomic, assign) BOOL highlightForMention;
 @property (nonatomic, assign) BOOL darkenForOld;
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;
+@property (nonatomic, assign) BOOL landscape;
 
 + (CGFloat)heightForContent:(NSString *)tweetText
-                   cellType:(TimelineTableViewCellType)cellType;
-
+                   cellType:(TimelineTableViewCellType)cellType
+                  landscape:(BOOL)landscape;
 + (UIColor *)defaultTimelineCellColor;
 + (UIColor *)mentionCellColor;
 + (UIColor *)darkenedCellColor;

@@ -49,10 +49,10 @@ static UIImage * darkenedTopImage;
 
     CGRect backgroundImageRect =
         CGRectMake(0, self.bounds.size.height - bottomImage.size.height,
-        320.0, backgroundImage.size.height);
+        480.0, backgroundImage.size.height);
     [bottomImage drawInRect:backgroundImageRect];
 
-    CGRect topGradientImageRect = CGRectMake(0, 0, 320.0, topImage.size.height);
+    CGRect topGradientImageRect = CGRectMake(0, 0, 480.0, topImage.size.height);
     [topImage drawInRect:topGradientImageRect];
 }
 

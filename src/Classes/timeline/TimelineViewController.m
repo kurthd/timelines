@@ -90,6 +90,19 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     [self.tableView flashScrollIndicators];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
+    duration:(NSTimeInterval)duration
+{
+    orientation = o;
+    [self.tableView reloadData];
+}
+
 #pragma mark UITableViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -123,6 +136,10 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         displayType = kTimelineTableViewCellTypeNormal;
 
     [cell setDisplayType:displayType];
+    BOOL landscape =
+        orientation == UIInterfaceOrientationLandscapeLeft ||
+        orientation == UIInterfaceOrientationLandscapeRight;
+    [cell setLandscape:landscape];
     
     BOOL newerThanVisibleTweetId =
         self.visibleTweetId &&
@@ -160,8 +177,12 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         kTimelineTableViewCellTypeNoAvatar :
         kTimelineTableViewCellTypeNormal;
 
+    BOOL landscape =
+        orientation == UIInterfaceOrientationLandscapeLeft ||
+        orientation == UIInterfaceOrientationLandscapeRight;
+
     return [TimelineTableViewCell heightForContent:tweetText
-        displayType:displayType];
+        displayType:displayType landscape:landscape];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation

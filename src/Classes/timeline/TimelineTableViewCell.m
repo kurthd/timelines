@@ -41,6 +41,7 @@ static UIImage * topGradientImage;
         timelineView.autoresizingMask =
             UIViewAutoresizingFlexibleWidth |
             UIViewAutoresizingFlexibleHeight;
+        timelineView.contentMode = UIViewContentModeTopLeft;
 
         [self.contentView addSubview:timelineView];
 
@@ -119,6 +120,11 @@ static UIImage * topGradientImage;
         [TimelineTableViewCellView defaultTimelineCellColor];
 }
 
+- (void)setLandscape:(BOOL)landscape
+{
+    timelineView.landscape = landscape;
+}
+
 + (NSString *)reuseIdentifier
 {
     return @"TimelineTableViewCell";
@@ -126,9 +132,11 @@ static UIImage * topGradientImage;
 
 + (CGFloat)heightForContent:(NSString *)tweetText
     displayType:(TimelineTableViewCellType)displayType
+    landscape:(BOOL)landscape
 {
     return [TimelineTableViewCellView heightForContent:tweetText
-                                              cellType:displayType];
+                                              cellType:displayType
+                                             landscape:landscape];
 }
 
 @end
