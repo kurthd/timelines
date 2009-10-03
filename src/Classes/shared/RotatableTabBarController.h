@@ -9,4 +9,6 @@
     IBOutlet UIView * homeTitleView;
 }
 
++ (RotatableTabBarController *)instance;
+
 @end

@@ -20,6 +20,8 @@
 
     IBOutlet UIView * headerView;
     IBOutlet UIView * footerView;
+    IBOutlet UIView * openInBrowserButton;
+    IBOutlet UIView * emailButton;
     IBOutlet UILabel * fullNameLabel;
     IBOutlet UILabel * usernameLabel;
     IBOutlet RoundedImage * avatarImage;

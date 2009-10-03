@@ -11,9 +11,13 @@
 #import "User+UIAdditions.h"
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "PhotoBrowserDisplayMgr.h"
+#import "RotatableTabBarController.h"
 
 static NSString * usernameRegex = @"x-twitbit://user\\?screen_name=@([\\w_]+)";
 static NSString * hashRegex = @"x-twitbit://search\\?query=(.+)";
+
+const CGFloat WEB_VIEW_WIDTH = 290;
+const CGFloat WEB_VIEW_WIDTH_LANDSCAPE = 450;
 
 static const NSInteger NUM_SECTIONS = 2;
 enum Sections {
@@ -68,6 +72,8 @@ enum TweetActionSheets {
 
 - (void)confirmDeletion;
 
+- (void)updateButtonsForOrientation:(UIInterfaceOrientation)o;
+
 + (UIImage *)defaultAvatar;
 
 @end
@@ -86,9 +92,11 @@ enum TweetActionSheets {
 
     [headerView release];
     [footerView release];
+    [openInBrowserButton release];
+    [emailButton release];
     [fullNameLabel release];
     [usernameLabel release];
-    
+
     [publicReplyCell release];
     [directMessageCell release];
     [retweetCell release];
@@ -127,6 +135,50 @@ enum TweetActionSheets {
 
     [delegate showingTweetDetails:self];
     [self.tableView flashScrollIndicators];
+    
+    UIInterfaceOrientation orientation =
+        [[RotatableTabBarController instance] interfaceOrientation];
+    [self updateButtonsForOrientation:orientation];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
+    duration:(NSTimeInterval)duration
+{
+    [self updateButtonsForOrientation:o];
+}
+
+- (void)updateButtonsForOrientation:(UIInterfaceOrientation)o
+{
+    CGFloat buttonWidth;
+    CGFloat emailButtonX;
+    if (o == UIInterfaceOrientationPortrait ||
+        o == UIInterfaceOrientationPortraitUpsideDown) {
+        buttonWidth = 147;
+        emailButtonX = 164;
+    } else {
+        buttonWidth = 227;
+        emailButtonX = 244;
+    }
+
+    CGRect openInBrowserButtonFrame = openInBrowserButton.frame;
+    openInBrowserButtonFrame.size.width = buttonWidth;
+    openInBrowserButton.frame = openInBrowserButtonFrame;
+
+    CGRect emailButtonFrame = emailButton.frame;
+    emailButtonFrame.size.width = buttonWidth;
+    emailButtonFrame.origin.x = emailButtonX;
+    emailButton.frame = emailButtonFrame;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)o
+{
+    [self loadTweetWebView];
 }
 
 #pragma mark Table view methods
@@ -237,7 +289,16 @@ enum TweetActionSheets {
 - (void)webViewDidFinishLoad:(UIWebView *)view
 {
     // first shrink the frame so 'sizeThatFits' calculates properly
-    CGRect frame = CGRectMake(5, 0, 290, 31);
+    // HACK: self.interfaceOrientation does not seem to be set, so trying to
+    // determine from status bar
+    UIInterfaceOrientation orientation =
+        [[RotatableTabBarController instance] interfaceOrientation];
+    CGFloat width =
+        orientation == UIInterfaceOrientationPortrait ||
+        orientation == UIInterfaceOrientationPortraitUpsideDown ?
+        WEB_VIEW_WIDTH : WEB_VIEW_WIDTH_LANDSCAPE;
+    CGRect frame = CGRectMake(5, 0, width, 31);
+    NSLog(@"width: %f", width);
     tweetContentView.frame = frame;
 
     CGSize size = [tweetContentView sizeThatFits:CGSizeZero];
@@ -529,7 +590,8 @@ enum TweetActionSheets {
             initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
         retweetCell.textLabel.text =
             NSLocalizedString(@"tweetdetailsview.retweet.label", @"");
-        retweetCell.imageView.image = [UIImage imageNamed:@"RetweetButtonIcon.png"];
+        retweetCell.imageView.image =
+            [UIImage imageNamed:@"RetweetButtonIcon.png"];
         retweetCell.imageView.highlightedImage =
             [UIImage imageNamed:@"RetweetButtonIconHighlighted.png"];
     }
@@ -539,7 +601,15 @@ enum TweetActionSheets {
 
 - (void)loadTweetWebView
 {
-    CGRect frame = CGRectMake(5, 0, 290, 20);
+    // HACK: self.interfaceOrientation does not seem to be set, so trying to
+    // determine from status bar
+    UIInterfaceOrientation orientation =
+        [[RotatableTabBarController instance] interfaceOrientation];
+    CGFloat width =
+        orientation == UIInterfaceOrientationPortrait ||
+        orientation == UIInterfaceOrientationPortraitUpsideDown ?
+        WEB_VIEW_WIDTH : WEB_VIEW_WIDTH_LANDSCAPE;
+    CGRect frame = CGRectMake(5, 0, width, 20);
     UIWebView * contentView = [[UIWebView alloc] initWithFrame:frame];
     contentView.delegate = self;
     contentView.backgroundColor = [UIColor clearColor];

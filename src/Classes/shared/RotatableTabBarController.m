@@ -6,6 +6,18 @@
 
 @implementation RotatableTabBarController
 
+static RotatableTabBarController * gInstance = NULL;
+
++ (RotatableTabBarController *)instance
+{
+    return gInstance;
+}
+
+- (void)viewDidLoad
+{
+    gInstance = self;
+}
+
 - (void)dealloc
 {
     [homeTitleView release];
