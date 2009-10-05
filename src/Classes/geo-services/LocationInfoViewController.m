@@ -5,6 +5,7 @@
 #import <QuartzCore/CALayer.h>
 #import "LocationInfoViewController.h"
 #import "RegexKitLite.h"
+#import "RotatableTabBarController.h"
 
 enum {
     kLocationInfoSectionAddress,
@@ -49,6 +50,8 @@ enum {
 - (NSInteger)correctedSectionForSection:(NSInteger)section;
 - (NSInteger)addressCellHeight;
 
+- (void)layoutViews;
+
 @end
 
 @implementation LocationInfoViewController
@@ -85,6 +88,26 @@ enum {
 {
     [super viewDidLoad];
     self.tableView.tableHeaderView = headerView;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
+    duration:(NSTimeInterval)duration
+{
+    [self layoutViews];
+}
+
+- (void)layoutViews
+{
+    CGRect titleLabelFrame = titleLabel.frame;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    titleLabelFrame.size.width = landscape ? 369 : 209;
+    titleLabel.frame = titleLabelFrame;
 }
 
 #pragma mark UITableViewDelegate implementation
