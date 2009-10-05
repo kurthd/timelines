@@ -14,5 +14,6 @@
 
 - (void)setLocationText:(NSString *)locationText;
 - (void)redisplay;
+- (void)setLandscape:(BOOL)landscape;
 
 @end

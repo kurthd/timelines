@@ -8,6 +8,8 @@
 
 static RotatableTabBarController * gInstance = NULL;
 
+@synthesize effectiveOrientation;
+
 + (RotatableTabBarController *)instance
 {
     return gInstance;
@@ -26,6 +28,8 @@ static RotatableTabBarController * gInstance = NULL;
 
 // - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)o
 // {
+//     effectiveOrientation = o;
+// 
 //     CGFloat homeTitleWidth;
 //     if (o == UIInterfaceOrientationPortrait ||
 //         o == UIInterfaceOrientationPortraitUpsideDown)
@@ -39,5 +43,11 @@ static RotatableTabBarController * gInstance = NULL;
 // 
 //     return YES;
 // }
+
+- (BOOL)landscape
+{
+    return effectiveOrientation == UIInterfaceOrientationLandscapeLeft ||
+        effectiveOrientation == UIInterfaceOrientationLandscapeRight;
+}
 
 @end

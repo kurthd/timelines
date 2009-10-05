@@ -20,9 +20,12 @@
     BasicMapAnnotation * mapAnnotation;
 
     double mapSpan;
+
+    BOOL landscape;
 }
 
 @property (nonatomic, copy) NSString * locationText;
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;
+@property (nonatomic, assign) BOOL landscape;
 
 @end

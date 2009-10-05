@@ -26,7 +26,7 @@
 #define MAP_WIDTH 86
 #define MAP_HEIGHT 48
 
-@synthesize locationText, highlighted, geocoder;
+@synthesize locationText, highlighted, geocoder, landscape;
 
 - (void)dealloc
 {
@@ -57,11 +57,20 @@
 	}
 }
 
+- (void)setLandscape:(BOOL)l
+{
+    if (landscape != l) {
+        landscape = l;
+        [self setNeedsDisplay];
+    }
+}
+
 - (void)drawRect:(CGRect)rect
 {
 #define LEFT_MARGIN 2
 #define TOP_MARGIN 2
 #define LABEL_WIDTH 167
+#define LABEL_WIDTH_LANDSCAPE 327
 #define LABEL_HEIGHT 50
 
 #define LOCATION_LABEL_LEFT_MARGIN 103
@@ -83,8 +92,10 @@
 
     CGFloat boundsX = contentRect.origin.x;
 
+    CGFloat labelWidth =
+        !landscape ? LABEL_WIDTH : LABEL_WIDTH_LANDSCAPE;
     [locationTextLabelColor set];
-    CGSize maxLabelSize = CGSizeMake(LABEL_WIDTH, LABEL_HEIGHT);
+    CGSize maxLabelSize = CGSizeMake(labelWidth, LABEL_HEIGHT);
     CGSize size =
         [self.locationText sizeWithFont:locationTextLabelFont
         constrainedToSize:maxLabelSize

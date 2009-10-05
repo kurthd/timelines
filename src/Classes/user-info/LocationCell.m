@@ -25,6 +25,7 @@
             [[LocationCellView alloc] initWithFrame:cellViewFrame];
         locationCellView.autoresizingMask =
             UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        locationCellView.contentMode = UIViewContentModeTopLeft;
         [self.contentView addSubview:locationCellView];
 
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -36,6 +37,11 @@
 - (void)setLocationText:(NSString *)locationText
 {
     [locationCellView setLocationText:locationText];
+}
+
+- (void)setLandscape:(BOOL)landscape
+{
+    locationCellView.landscape = landscape;
 }
 
 - (void)redisplay {

@@ -11,6 +11,7 @@
 #import "User+UIAdditions.h"
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "PhotoBrowserDisplayMgr.h"
+#import "RotatableTabBarController.h"
 
 enum {
     kUserInfoSectionDetails,
@@ -37,6 +38,7 @@ enum {
 - (void)layoutViews;
 - (void)updateDisplayForFollwoing:(BOOL)following;
 - (void)updateDisplayForProcessingFollowingRequest:(BOOL)following;
+- (void)updateButtonsForOrientation:(UIInterfaceOrientation)o;
 - (UITableViewCell *)getBasicCell;
 - (UITableViewCell *)getLabelCell;
 
@@ -96,6 +98,43 @@ static UIImage * defaultAvatar;
     [delegate showingUserInfoView];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
+    duration:(NSTimeInterval)duration
+{
+    [self updateButtonsForOrientation:o];
+    [self.tableView reloadData];
+    [self layoutViews];
+}
+
+- (void)updateButtonsForOrientation:(UIInterfaceOrientation)o
+{
+    CGFloat buttonWidth;
+    CGFloat bookmarkButtonX;
+    if (o == UIInterfaceOrientationPortrait ||
+        o == UIInterfaceOrientationPortraitUpsideDown) {
+        buttonWidth = 147;
+        bookmarkButtonX = 164;
+    } else {
+        buttonWidth = 227;
+        bookmarkButtonX = 244;
+    }
+
+    CGRect blockButtonFrame = blockButton.frame;
+    blockButtonFrame.size.width = buttonWidth;
+    blockButton.frame = blockButtonFrame;
+
+    CGRect bookmarkButtonFrame = bookmarkButton.frame;
+    bookmarkButtonFrame.size.width = buttonWidth;
+    bookmarkButtonFrame.origin.x = bookmarkButtonX;
+    bookmarkButton.frame = bookmarkButtonFrame;
+}
+
 #pragma mark UITableViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -133,8 +172,10 @@ static UIImage * defaultAvatar;
     UITableViewCell * cell;
     NSString * formatString;
     UserInfoLabelCell * userInfoLabelCell;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
     switch (indexPath.section) {
         case kUserInfoSectionDetails:
+            [self.locationCell setLandscape:landscape];
             cell = self.locationCell;
             break;
         case kUserInfoSectionNetwork:
@@ -438,7 +479,13 @@ static UIImage * defaultAvatar;
 
 - (void)layoutViews
 {
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    CGFloat labelWidth = landscape ? 440 : 280;
+
     CGRect bioLabelFrame = bioLabel.frame;
+    bioLabelFrame.size.width = labelWidth;
+    bioLabel.frame = bioLabelFrame;
+
     bioLabelFrame.size.height = [bioLabel heightForString:bioLabel.text];
     bioLabel.frame = bioLabelFrame;
 
@@ -447,6 +494,7 @@ static UIImage * defaultAvatar;
     webAddressFrame.origin.y =
         bioLabel.text.length > 0 ?
         bioLabelFrame.size.height + 388.0 : 388.0;
+    webAddressFrame.size.width = labelWidth;
     webAddressButton.frame = webAddressFrame;
 
     CGRect headerViewFrame = headerView.frame;
