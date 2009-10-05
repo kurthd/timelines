@@ -11,9 +11,13 @@
 #import "User+UIAdditions.h"
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "PhotoBrowserDisplayMgr.h"
+#import "RotatableTabBarController.h"
 
 static NSString * usernameRegex = @"x-twitbit://user\\?screen_name=@([\\w_]+)";
 static NSString * hashRegex = @"x-twitbit://search\\?query=(.+)";
+
+const CGFloat TEXT_VIEW_WIDTH = 290;
+const CGFloat TEXT_VIEW_WIDTH_LANDSCAPE = 450;
 
 static const NSInteger NUM_SECTIONS = 2;
 enum Sections {
@@ -116,6 +120,18 @@ enum TweetActionSheets {
     [self.tableView flashScrollIndicators];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
+    duration:(NSTimeInterval)duration
+{
+    [self loadTweetWebView];
+}
+
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv
@@ -196,8 +212,11 @@ enum TweetActionSheets {
 
 - (void)webViewDidFinishLoad:(UIWebView *)view
 {
+    BOOL landscape =
+        [[RotatableTabBarController instance] landscape];
+    CGFloat width = !landscape ? TEXT_VIEW_WIDTH : TEXT_VIEW_WIDTH_LANDSCAPE;
     // first shrink the frame so 'sizeThatFits' calculates properly
-    CGRect frame = CGRectMake(5, 0, 290, 31);
+    CGRect frame = CGRectMake(5, 0, width, 31);
     tweetContentView.frame = frame;
 
     CGSize size = [tweetContentView sizeThatFits:CGSizeZero];
@@ -416,7 +435,10 @@ enum TweetActionSheets {
 
 - (void)loadTweetWebView
 {
-    CGRect frame = CGRectMake(5, 0, 290, 20);
+    BOOL landscape =
+        [[RotatableTabBarController instance] landscape];
+    CGFloat width = !landscape ? TEXT_VIEW_WIDTH : TEXT_VIEW_WIDTH_LANDSCAPE;
+    CGRect frame = CGRectMake(5, 0, width, 20);
     UIWebView * contentView = [[UIWebView alloc] initWithFrame:frame];
     contentView.delegate = self;
     contentView.backgroundColor = [UIColor clearColor];

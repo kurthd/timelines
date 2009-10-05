@@ -151,6 +151,7 @@ enum TweetActionSheets {
     duration:(NSTimeInterval)duration
 {
     [self updateButtonsForOrientation:o];
+    [self loadTweetWebView];
 }
 
 - (void)updateButtonsForOrientation:(UIInterfaceOrientation)o
@@ -174,11 +175,6 @@ enum TweetActionSheets {
     emailButtonFrame.size.width = buttonWidth;
     emailButtonFrame.origin.x = emailButtonX;
     emailButton.frame = emailButtonFrame;
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)o
-{
-    [self loadTweetWebView];
 }
 
 #pragma mark Table view methods
@@ -289,14 +285,8 @@ enum TweetActionSheets {
 - (void)webViewDidFinishLoad:(UIWebView *)view
 {
     // first shrink the frame so 'sizeThatFits' calculates properly
-    // HACK: self.interfaceOrientation does not seem to be set, so trying to
-    // determine from status bar
-    UIInterfaceOrientation orientation =
-        [[RotatableTabBarController instance] interfaceOrientation];
-    CGFloat width =
-        orientation == UIInterfaceOrientationPortrait ||
-        orientation == UIInterfaceOrientationPortraitUpsideDown ?
-        WEB_VIEW_WIDTH : WEB_VIEW_WIDTH_LANDSCAPE;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    CGFloat width = !landscape ? WEB_VIEW_WIDTH : WEB_VIEW_WIDTH_LANDSCAPE;
     CGRect frame = CGRectMake(5, 0, width, 31);
     NSLog(@"width: %f", width);
     tweetContentView.frame = frame;
@@ -601,14 +591,8 @@ enum TweetActionSheets {
 
 - (void)loadTweetWebView
 {
-    // HACK: self.interfaceOrientation does not seem to be set, so trying to
-    // determine from status bar
-    UIInterfaceOrientation orientation =
-        [[RotatableTabBarController instance] interfaceOrientation];
-    CGFloat width =
-        orientation == UIInterfaceOrientationPortrait ||
-        orientation == UIInterfaceOrientationPortraitUpsideDown ?
-        WEB_VIEW_WIDTH : WEB_VIEW_WIDTH_LANDSCAPE;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    CGFloat width = !landscape ? WEB_VIEW_WIDTH : WEB_VIEW_WIDTH_LANDSCAPE;
     CGRect frame = CGRectMake(5, 0, width, 20);
     UIWebView * contentView = [[UIWebView alloc] initWithFrame:frame];
     contentView.delegate = self;
