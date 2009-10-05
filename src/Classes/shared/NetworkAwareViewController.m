@@ -109,6 +109,8 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 {
     [targetViewController willRotateToInterfaceOrientation:orientation
         duration:duration];
+    [noDataViewController willRotateToInterfaceOrientation:orientation
+        duration:duration];
 
     [self updatingView].hidden = YES;
 }
