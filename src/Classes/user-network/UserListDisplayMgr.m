@@ -748,11 +748,14 @@
     UIView * grayLineView =
         [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
     grayLineView.backgroundColor = [UIColor twitchLightGrayColor];
+    grayLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     UIImage * background =
-        [UIImage imageNamed:@"SaveSearchButtonBackground.png"];
+        [[UIImage imageNamed:@"SaveSearchButtonBackground.png"]
+        stretchableImageWithLeftCapWidth:10 topCapHeight:0];
     UIImage * selectedBackground =
-        [UIImage imageNamed:@"SaveSearchButtonBackgroundHighlighted.png"];
+        [[UIImage imageNamed:@"SaveSearchButtonBackgroundHighlighted.png"]
+        stretchableImageWithLeftCapWidth:10 topCapHeight:0];
     [button setBackgroundImage:background forState:UIControlStateNormal];
     [button setBackgroundImage:selectedBackground
                       forState:UIControlStateHighlighted];
@@ -770,6 +773,8 @@
 
     [view addSubview:button];
     [view addSubview:grayLineView];
+
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     return [view autorelease];
 }

@@ -124,6 +124,8 @@
             self.networkAwareViewController.view.bounds.size.width - 10.0,
             barHeight);
         searchBar.bounds = searchBarRect;
+        searchBar.autoresizingMask =
+            UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
         navItem.leftBarButtonItem = self.locationButton;
 
@@ -533,11 +535,14 @@
     UIView * grayLineView =
         [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
     grayLineView.backgroundColor = [UIColor twitchLightGrayColor];
+    grayLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     UIImage * background =
-        [UIImage imageNamed:@"SaveSearchButtonBackground.png"];
+        [[UIImage imageNamed:@"SaveSearchButtonBackground.png"]
+        stretchableImageWithLeftCapWidth:10 topCapHeight:0];
     UIImage * selectedBackground =
-        [UIImage imageNamed:@"SaveSearchButtonBackgroundHighlighted.png"];
+        [[UIImage imageNamed:@"SaveSearchButtonBackgroundHighlighted.png"]
+        stretchableImageWithLeftCapWidth:10 topCapHeight:0];
     [button setBackgroundImage:background forState:UIControlStateNormal];
     [button setBackgroundImage:selectedBackground
                       forState:UIControlStateHighlighted];
@@ -546,6 +551,7 @@
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
     
     button.enabled = searchBar.text && ![searchBar.text isEqual:@""];
+    button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     UIColor * color = [UIColor colorWithRed:.353 green:.4 blue:.494 alpha:1.0];
     [button setTitleColor:color forState:UIControlStateNormal];
@@ -558,6 +564,8 @@
 
     [view addSubview:button];
     [view addSubview:grayLineView];
+    
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     return [view autorelease];
 }
