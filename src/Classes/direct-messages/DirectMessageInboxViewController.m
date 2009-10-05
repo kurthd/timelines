@@ -6,6 +6,7 @@
 #import "DirectMessageInboxCell.h"
 #import "ConversationPreview.h"
 #import "UIColor+TwitchColors.h"
+#import "RotatableTabBarController.h"
 
 @implementation DirectMessageInboxViewController
 
@@ -31,6 +32,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
+    duration:(NSTimeInterval)duration
+{
     [self.tableView reloadData];
 }
 
@@ -67,6 +80,8 @@
     ConversationPreview * preview =
         [conversationPreviews objectAtIndex:indexPath.row];
     [cell setConversationPreview:preview];
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    [cell setLandscape:landscape];
 
     return cell;
 }

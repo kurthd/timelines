@@ -14,7 +14,7 @@
 @property (nonatomic, retain) DirectMessageInboxCellView * cellView;
 
 - (void)setConversationPreview:(ConversationPreview *)preview;
-
+- (void)setLandscape:(BOOL)landscape;
 - (void)redisplay;
 
 @end

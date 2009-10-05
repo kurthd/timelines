@@ -15,8 +15,8 @@
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style
-    reuseIdentifier:(NSString *)reuseIdentifier {
-
+    reuseIdentifier:(NSString *)reuseIdentifier
+{
 	if (self = [super initWithStyle:UITableViewCellStyleDefault
 	    reuseIdentifier:reuseIdentifier]) {
 
@@ -27,6 +27,7 @@
 		    [[DirectMessageInboxCellView alloc] initWithFrame:cellViewFrame];
 		cellView.autoresizingMask =
 		    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        cellView.contentMode = UIViewContentModeTopLeft;
 		[self.contentView addSubview:cellView];
 		self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
@@ -34,8 +35,14 @@
 	return self;
 }
 
-- (void)redisplay {
+- (void)redisplay
+{
 	[cellView setNeedsDisplay];
+}
+
+- (void)setLandscape:(BOOL)landscape
+{
+    cellView.landscape = landscape;
 }
 
 - (void)setConversationPreview:(ConversationPreview *)preview

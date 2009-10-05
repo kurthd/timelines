@@ -9,9 +9,11 @@
 {
     ConversationPreview * preview;
 	BOOL highlighted;
+    BOOL landscape;
 }
 
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;
+@property (nonatomic, assign) BOOL landscape;
 
 - (void)setConversationPreview:(ConversationPreview *)preview;
 

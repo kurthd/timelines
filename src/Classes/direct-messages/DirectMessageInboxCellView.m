@@ -15,7 +15,7 @@
 
 static UIImage * dotImage;
 
-@synthesize highlighted;
+@synthesize highlighted, landscape;
 
 - (void)dealloc
 {
@@ -40,6 +40,14 @@ static UIImage * dotImage;
 	}
 }
 
+- (void)setLandscape:(BOOL)l
+{
+    if (landscape != l) {
+        landscape = l;
+        [self setNeedsDisplay];
+    }
+}
+
 - (void)drawRect:(CGRect)rect
 {
 #define LEFT_MARGIN 32
@@ -57,6 +65,7 @@ static UIImage * dotImage;
 
 #define PREVIEW_LABEL_TOP_MARGIN 23
 #define PREVIEW_LABEL_WIDTH 259
+#define PREVIEW_LABEL_WIDTH_LANDSCAPE 419
 #define PREVIEW_LABEL_HEIGHT 34
 
 #define DOT_IMAGE_TOP_MARGIN 23
@@ -81,7 +90,7 @@ static UIImage * dotImage;
 		previewLabelTextColor = [UIColor twitchGrayColor];
 		self.backgroundColor = [UIColor whiteColor];
 	}
-	
+
 	CGRect contentRect = self.bounds;
 	
 	CGFloat boundsX = contentRect.origin.x;
@@ -110,8 +119,10 @@ static UIImage * dotImage;
 	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
 
     [previewLabelTextColor set];
+    CGFloat previewLabelWidth = 
+        !landscape ? PREVIEW_LABEL_WIDTH : PREVIEW_LABEL_WIDTH_LANDSCAPE;
     CGSize maxPreviewSize =
-        CGSizeMake(PREVIEW_LABEL_WIDTH, PREVIEW_LABEL_HEIGHT);
+        CGSizeMake(previewLabelWidth, PREVIEW_LABEL_HEIGHT);
     size =
         [preview.mostRecentMessage sizeWithFont:previewLabelFont
         constrainedToSize:maxPreviewSize
