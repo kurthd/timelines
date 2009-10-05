@@ -4,6 +4,7 @@
 
 #import "PhotoServiceSelectorViewController.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "RotatableTabBarController.h"
 
 @interface PhotoServiceSelectorViewController ()
 
@@ -63,6 +64,18 @@
     [self.tableView reloadData];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
+    duration:(NSTimeInterval)duration
+{
+    [self.tableView reloadData];
+}
+
 #pragma mark UITableViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv
@@ -110,8 +123,9 @@
     // view's rect is not set correctly (the height is wrong; the width
     // doesn't change), so we query for the value manually.
     CGRect imageFrame = logoView.frame;
-    imageFrame.origin.x =
-        (298 - imageFrame.size.width) / 2.0;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    CGFloat cellContentWidth = landscape ? 458 : 298;
+    imageFrame.origin.x = (cellContentWidth - imageFrame.size.width) / 2.0;
     imageFrame.origin.y =
         ([self tableView:tv heightForRowAtIndexPath:indexPath] -
         logo.size.height) / 2;

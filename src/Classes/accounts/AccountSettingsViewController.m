@@ -68,6 +68,12 @@ enum {
     [super dealloc];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
 #pragma mark UIViewController overrides
 
 - (void)viewDidLoad

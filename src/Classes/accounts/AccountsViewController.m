@@ -53,6 +53,12 @@ NSInteger usernameSort(TwitterCredentials * user1,
     [self setEditing:NO animated:animated];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
 #pragma mark Button actions
 
 - (IBAction)userWantsToAddAccount:(id)sender
