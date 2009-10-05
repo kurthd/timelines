@@ -12,8 +12,8 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="53"/>
 			<integer value="10"/>
+			<integer value="53"/>
 			<integer value="6"/>
 			<integer value="28"/>
 		</object>
@@ -257,7 +257,7 @@
 			</object>
 			<object class="IBUIView" id="693405201">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">292</int>
+				<int key="NSvFlags">294</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBUIButton" id="496461998">
@@ -304,7 +304,7 @@
 					</object>
 					<object class="IBUILabel" id="1050419128">
 						<reference key="NSNextResponder" ref="693405201"/>
-						<int key="NSvFlags">-2147483356</int>
+						<int key="NSvFlags">-2147483354</int>
 						<string key="NSFrame">{{20, 14}, {280, 24}}</string>
 						<reference key="NSSuperview" ref="693405201"/>
 						<bool key="IBUIOpaque">NO</bool>
