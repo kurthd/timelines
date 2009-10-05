@@ -133,6 +133,8 @@
             netAwareController.view.bounds.size.width - 10.0,
             barHeight);
         searchBar.bounds = searchBarRect;
+        searchBar.autoresizingMask =
+            UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
         [netAwareController setUpdatingState:kDisconnected];
         [netAwareController setCachedDataAvailable:NO];
