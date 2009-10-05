@@ -44,6 +44,12 @@ static RotatableTabBarController * gInstance = NULL;
 //     return YES;
 // }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)o
+{
+    return o == UIInterfaceOrientationPortrait ||
+        o == UIInterfaceOrientationPortraitUpsideDown;
+}
+
 - (BOOL)landscape
 {
     return effectiveOrientation == UIInterfaceOrientationLandscapeLeft ||

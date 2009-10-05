@@ -12,12 +12,12 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="7"/>
 			<integer value="3"/>
-			<integer value="23"/>
 			<integer value="21"/>
-			<integer value="11"/>
+			<integer value="7"/>
 			<integer value="17"/>
+			<integer value="23"/>
+			<integer value="11"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -61,7 +61,7 @@
 			</object>
 			<object class="IBUIView" id="977640421">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">294</int>
+				<int key="NSvFlags">293</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBUILabel" id="419769695">
@@ -173,7 +173,7 @@
 			<object class="IBUIView" id="152447123">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">294</int>
-				<string key="NSFrameSize">{320, 700}</string>
+				<string key="NSFrameSize">{480, 700}</string>
 				<reference key="NSSuperview"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
@@ -410,14 +410,14 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{590, 788}, {320, 50}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{455, 108}, {320, 700}}</string>
+					<string>{{455, 108}, {480, 700}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{358, 282}, {320, 392}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{320, 396}, {320, 460}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{590, 788}, {320, 50}}</string>
+					<string>{{352, 471}, {320, 50}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
