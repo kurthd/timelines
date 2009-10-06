@@ -52,6 +52,12 @@
     self.pinTextField.text = @"";
 }
 
+// - (BOOL)shouldAutorotateToInterfaceOrientation:
+//     (UIInterfaceOrientation)orientation
+// {
+//     return YES;
+// }
+
 - (IBAction)userDidCancel
 {
     [self.delegate userDidCancel];

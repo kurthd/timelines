@@ -51,6 +51,12 @@
     [self showButtonView];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
 - (void)userDidCancel
 {
     [self.delegate userDidCancelExplanation];

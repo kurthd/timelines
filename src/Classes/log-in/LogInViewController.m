@@ -87,6 +87,12 @@ enum CredentialRows
     self.cancelButton.enabled = [delegate userCanCancel];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
 #pragma mark UITableViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
