@@ -6,6 +6,9 @@
 
 @protocol NetworkAwareViewControllerDelegate
 
+@optional
+
 - (void)networkAwareViewWillAppear;
+- (void)viewWillRotateToOrientation:(UIInterfaceOrientation)orientation;
 
 @end

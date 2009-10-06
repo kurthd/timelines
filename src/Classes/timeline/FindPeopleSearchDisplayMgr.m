@@ -13,6 +13,7 @@
 #import "SettingsReader.h"
 #import "NearbySearchDataSource.h"
 #import "UIColor+TwitchColors.h"
+#import "RotatableTabBarController.h"
 
 @interface FindPeopleSearchDisplayMgr ()
 
@@ -32,6 +33,7 @@
 - (void)updateAutocompleteView;
 - (void)showAutocompleteResults;
 - (void)hideAutocompleteResults;
+- (void)updateAutocompleteViewFrame;
 
 @property (nonatomic, readonly)
     FindPeopleBookmarkViewController * bookmarkController;
@@ -154,6 +156,11 @@
             ![self.currentSearchUsername isEqual:@""])
             [self userDidSelectSearchQuery:self.currentSearchUsername];
     }
+}
+
+- (void)viewWillRotateToOrientation:(UIInterfaceOrientation)orientation
+{
+    [self updateAutocompleteViewFrame];
 }
 
 #pragma mark TwitterServiceDelegate implementation
@@ -881,6 +888,7 @@
     showingAutocompleteResults = YES;
     [netAwareController.view.superview.superview
         addSubview:self.autocompleteView];
+    [self updateAutocompleteViewFrame];
 }
 
 - (void)hideAutocompleteResults
@@ -894,13 +902,13 @@
 - (UIView *)darkTransparentView
 {
     if (!darkTransparentView) {
-        CGRect darkTransparentViewFrame = CGRectMake(0, 0, 320, 480);
+        CGRect darkTransparentViewFrame = CGRectMake(0, 0, 480, 480);
         darkTransparentView =
             [[UIView alloc] initWithFrame:darkTransparentViewFrame];
         darkTransparentView.backgroundColor = [UIColor blackColor];
         darkTransparentView.alpha = 0.0;
     }
-    
+
     return darkTransparentView;
 }
 
@@ -1021,27 +1029,35 @@
 - (UIView *)autocompleteView
 {
     if (!autocompleteView) {
-        static const CGFloat HEIGHT = 200;
-        static const CGFloat WIDTH = 320;
+        autocompleteView = [[UIView alloc] initWithFrame:CGRectZero];
 
-        CGRect frame = CGRectMake(0, 64, WIDTH, HEIGHT);
-        autocompleteView = [[UIView alloc] initWithFrame:frame];
-
-        CGRect tableViewFrame = CGRectMake(0, 0, WIDTH, HEIGHT);
         autoCompleteTableView =
             [[UITableView alloc]
-            initWithFrame:tableViewFrame style:UITableViewStylePlain];
+            initWithFrame:CGRectZero style:UITableViewStylePlain];
         autoCompleteTableView.dataSource = self;
         autoCompleteTableView.delegate = self;
+        autoCompleteTableView.autoresizingMask =
+            UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [autocompleteView addSubview:autoCompleteTableView];
 
         UIImage * shadowImage = [UIImage imageNamed:@"DropShadow.png"];
         UIImageView * shadowView =
             [[[UIImageView alloc] initWithImage:shadowImage] autorelease];
+        shadowView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [autocompleteView addSubview:shadowView];
     }
 
     return autocompleteView;
+}
+
+- (void)updateAutocompleteViewFrame
+{
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    CGRect autocompleteViewFrame = self.autocompleteView.frame;
+    autocompleteViewFrame.size.width = !landscape ? 320 : 480;
+    autocompleteViewFrame.size.height = !landscape ? 200 : 108;
+    autocompleteViewFrame.origin.y = !landscape ? 64 : 50;
+    autocompleteView.frame = autocompleteViewFrame;
 }
 
 - (LocationMapViewController *)locationMapViewController

@@ -80,7 +80,8 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
     [super viewWillAppear:animated];
     if (self.view == targetViewController.view)
         [targetViewController viewWillAppear:animated];
-    [delegate networkAwareViewWillAppear];
+    if ([delegate respondsToSelector:@selector(networkAwareViewWillAppear)])
+        [delegate networkAwareViewWillAppear];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -111,6 +112,8 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
         duration:duration];
     [noDataViewController willRotateToInterfaceOrientation:orientation
         duration:duration];
+    if ([delegate respondsToSelector:@selector(viewWillRotateToOrientation:)])
+        [delegate viewWillRotateToOrientation:orientation];
 
     [self updatingView].hidden = YES;
 }
