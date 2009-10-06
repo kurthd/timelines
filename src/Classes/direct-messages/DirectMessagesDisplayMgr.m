@@ -1416,7 +1416,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     BOOL landscape = [[RotatableTabBarController instance] landscape];
 
     CGFloat viewWidth = landscape ? 480 : 320;
-
     CGRect viewFrame = CGRectMake(0, 0, viewWidth, 51);
     UIView * view = [[UIView alloc] initWithFrame:viewFrame];
 
@@ -1424,6 +1423,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     CGRect buttonFrame = CGRectMake(20, 7, buttonWidth, 37);
     UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = buttonFrame;
+    button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     CGRect grayLineFrame = CGRectMake(0, 50, viewWidth, 1);
     UIView * grayLineView =

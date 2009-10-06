@@ -82,12 +82,19 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     showInbox = YES;
     self.tableView.tableHeaderView = plainHeaderView;
     self.tableView.contentInset = UIEdgeInsetsMake(-392, 0, 0, 0);
+
+    // this ensures that any header set before the view is showed scales
+    // correctly when changing orientation
+    CGRect timelineFrame = self.view.frame;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    timelineFrame.size.width = landscape ? 480 : 320;
+    self.view.frame = timelineFrame;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     [self.tableView reloadData];
     [self.tableView flashScrollIndicators];
 }

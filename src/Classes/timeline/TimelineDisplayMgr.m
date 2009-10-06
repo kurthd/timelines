@@ -1453,12 +1453,13 @@ static BOOL scrollToTopValueAlreadyRead;
     CGFloat viewWidth = landscape ? 480 : 320;
     CGRect viewFrame = CGRectMake(0, 0, viewWidth, 51);
     UIView * view = [[UIView alloc] initWithFrame:viewFrame];
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     CGFloat buttonWidth = landscape ? 440 : 280;
     CGRect buttonFrame = CGRectMake(20, 7, buttonWidth, 37);
     UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = buttonFrame;
-    
+
     CGRect grayLineFrame = CGRectMake(0, 50, viewWidth, 1);
     UIView * grayLineView =
         [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
@@ -1482,14 +1483,13 @@ static BOOL scrollToTopValueAlreadyRead;
 
     button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
     button.titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     UIControlEvents events = UIControlEventTouchUpInside;
     [button addTarget:self action:action forControlEvents:events];
 
     [view addSubview:button];
     [view addSubview:grayLineView];
-
-    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     return [view autorelease];
 }

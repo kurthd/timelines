@@ -977,17 +977,20 @@
     CGFloat viewWidth = landscape ? 480 : 320;
     CGRect viewFrame = CGRectMake(0, 0, viewWidth, 51);
     UIView * view = [[UIView alloc] initWithFrame:viewFrame];
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     CGFloat buttonWidth = landscape ? 440 : 280;
     CGRect buttonFrame = CGRectMake(20, 7, buttonWidth, 37);
     UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = buttonFrame;
+    button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     CGRect grayLineFrame = CGRectMake(0, 50, viewWidth, 1);
     UIView * grayLineView =
         [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
     grayLineView.backgroundColor = [UIColor twitchLightGrayColor];
-
+    grayLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    
     UIImage * background =
         [[UIImage imageNamed:@"SaveSearchButtonBackground.png"]
         stretchableImageWithLeftCapWidth:10 topCapHeight:0];
@@ -1052,11 +1055,12 @@
 
 - (void)updateAutocompleteViewFrame
 {
-    NSLog(@"Updating save search header frame");
-    UIView * headerView =
-        [self.generalSavedSearchMgr isSearchSaved:self.currentSearch] ?
-        [self removeSearchView] : [self saveSearchView];
-    [self.timelineDisplayMgr setTimelineHeaderView:headerView];
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    CGRect autocompleteViewFrame = self.autocompleteView.frame;
+    autocompleteViewFrame.size.width = !landscape ? 320 : 480;
+    autocompleteViewFrame.size.height = !landscape ? 200 : 108;
+    autocompleteViewFrame.origin.y = !landscape ? 64 : 50;
+    self.autocompleteView.frame = autocompleteViewFrame;
 }
 
 - (LocationMapViewController *)locationMapViewController

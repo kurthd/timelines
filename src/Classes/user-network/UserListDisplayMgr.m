@@ -743,12 +743,14 @@
     CGFloat viewWidth = landscape ? 480 : 320;
     CGRect viewFrame = CGRectMake(0, 0, viewWidth, 51);
     UIView * view = [[UIView alloc] initWithFrame:viewFrame];
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     CGFloat buttonWidth = landscape ? 440 : 280;
     CGRect buttonFrame = CGRectMake(20, 7, buttonWidth, 37);
     UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = buttonFrame;
-    
+    button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
     CGRect grayLineFrame = CGRectMake(0, 50, viewWidth, 1);
     UIView * grayLineView =
         [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
