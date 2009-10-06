@@ -5,6 +5,7 @@
 #import "TwitchBrowserViewController.h"
 #import "RegexKitLite.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "RotatableTabBarController.h"
 
 @interface TwitchBrowserViewController ()
 
@@ -13,6 +14,7 @@
 - (void)animatedActivityIndicators:(BOOL)animating;
 - (void)displayComposerMailSheet;
 - (void)displayForPortraitMode;
+- (void)displayForOrientation:(UIInterfaceOrientation)orientation;
 
 @end
 
@@ -32,6 +34,15 @@
     [super dealloc];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    UIInterfaceOrientation orientation =
+        [[RotatableTabBarController instance] effectiveOrientation];
+    [self displayForOrientation:orientation];
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -46,6 +57,11 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
                                 duration:(NSTimeInterval)duration
+{
+    [self displayForOrientation:orientation];
+}
+
+- (void)displayForOrientation:(UIInterfaceOrientation)orientation
 {
     if (orientation == UIInterfaceOrientationPortrait ||
         orientation == UIInterfaceOrientationPortraitUpsideDown)
