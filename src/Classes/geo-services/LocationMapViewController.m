@@ -46,6 +46,12 @@
     }
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
 #pragma mark GeocoderDelegate implementation
 
 - (void)geocoder:(Geocoder *)coder

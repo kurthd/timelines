@@ -19,6 +19,7 @@
 #import "NearbySearchDataSource.h"
 #import "SettingsReader.h"
 #import "UIColor+TwitchColors.h"
+#import "RotatableTabBarController.h"
 
 @interface DirectMessagesDisplayMgr ()
 
@@ -1412,14 +1413,19 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
     action:(SEL)action
 {
-    CGRect viewFrame = CGRectMake(0, 0, 320, 51);
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+
+    CGFloat viewWidth = landscape ? 480 : 320;
+
+    CGRect viewFrame = CGRectMake(0, 0, viewWidth, 51);
     UIView * view = [[UIView alloc] initWithFrame:viewFrame];
 
-    CGRect buttonFrame = CGRectMake(20, 7, 280, 37);
+    CGFloat buttonWidth = landscape ? 440 : 280;
+    CGRect buttonFrame = CGRectMake(20, 7, buttonWidth, 37);
     UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = buttonFrame;
 
-    CGRect grayLineFrame = CGRectMake(0, 50, 320, 1);
+    CGRect grayLineFrame = CGRectMake(0, 50, viewWidth, 1);
     UIView * grayLineView =
         [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
     grayLineView.backgroundColor = [UIColor twitchLightGrayColor];

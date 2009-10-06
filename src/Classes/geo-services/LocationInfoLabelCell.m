@@ -3,10 +3,12 @@
 //
 
 #import "LocationInfoLabelCell.h"
+#import "RotatableTabBarController.h"
 
 @interface LocationInfoLabelCell ()
 
 - (NSInteger)cellHeight;
+- (NSInteger)cellWidth;
 
 @end
 
@@ -34,6 +36,11 @@
 {
     [super layoutSubviews];
 
+    CGRect activityIndicatorFrame = activityIndicator.frame;
+    activityIndicatorFrame.origin.y = ([self cellHeight] - 20) / 2;
+    activityIndicatorFrame.origin.x = ([self cellWidth] - 20) / 2;
+    activityIndicator.frame = activityIndicatorFrame;
+
     CGRect streetLabelFrame = streetLabel.frame;
 
     CGRect cityLabelFrame = cityLabel.frame;
@@ -49,10 +56,6 @@
 
 - (void)setLoading
 {
-    CGRect activityIndicatorFrame = activityIndicator.frame;
-    activityIndicatorFrame.origin.y = ([self cellHeight] - 20) / 2;
-    activityIndicator.frame = activityIndicatorFrame;
-    
     [activityIndicator startAnimating];
     streetLabel.hidden = YES;
     cityLabel.hidden = YES;
@@ -82,6 +85,13 @@
     }
 
     return height;
+}
+
+- (NSInteger)cellWidth
+{
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+
+    return landscape ? 458 : 298;
 }
 
 @end

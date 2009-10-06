@@ -78,8 +78,13 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    [self updatingView].frame = [self hiddenUpdatingViewFrame];
+    [self updatingView].hidden = NO;
+
     if (self.view == targetViewController.view)
         [targetViewController viewWillAppear:animated];
+    [noDataViewController viewWillAppear:animated];
     if ([delegate respondsToSelector:@selector(networkAwareViewWillAppear)])
         [delegate networkAwareViewWillAppear];
 }
@@ -88,7 +93,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 {
     [super viewDidAppear:animated];
     visible = YES;
-    
+
     [self addUpdatingViewAsSubview];
 }
 

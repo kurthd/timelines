@@ -593,7 +593,7 @@ enum TweetActionSheets {
 {
     BOOL landscape = [[RotatableTabBarController instance] landscape];
     CGFloat width = !landscape ? WEB_VIEW_WIDTH : WEB_VIEW_WIDTH_LANDSCAPE;
-    CGRect frame = CGRectMake(5, 0, width, 20);
+    CGRect frame = CGRectMake(5, 0, width, 1);
     UIWebView * contentView = [[UIWebView alloc] initWithFrame:frame];
     contentView.delegate = self;
     contentView.backgroundColor = [UIColor clearColor];

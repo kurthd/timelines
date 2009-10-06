@@ -12,6 +12,7 @@
 #import "User+UIAdditions.h"
 #import "PhotoBrowserDisplayMgr.h"
 #import "RegexKitLite.h"
+#import "RotatableTabBarController.h"
 
 @interface TimelineViewController ()
 
@@ -86,6 +87,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     [self.tableView reloadData];
     [self.tableView flashScrollIndicators];
 }
@@ -99,7 +101,6 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
     duration:(NSTimeInterval)duration
 {
-    orientation = o;
     [self.tableView reloadData];
 }
 
@@ -136,9 +137,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         displayType = kTimelineTableViewCellTypeNormal;
 
     [cell setDisplayType:displayType];
-    BOOL landscape =
-        orientation == UIInterfaceOrientationLandscapeLeft ||
-        orientation == UIInterfaceOrientationLandscapeRight;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
     [cell setLandscape:landscape];
     
     BOOL newerThanVisibleTweetId =
@@ -177,9 +176,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         kTimelineTableViewCellTypeNoAvatar :
         kTimelineTableViewCellTypeNormal;
 
-    BOOL landscape =
-        orientation == UIInterfaceOrientationLandscapeLeft ||
-        orientation == UIInterfaceOrientationLandscapeRight;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
 
     return [TimelineTableViewCell heightForContent:tweetText
         displayType:displayType landscape:landscape];

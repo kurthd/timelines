@@ -10,6 +10,7 @@
 #import "UIColor+TwitchColors.h"
 #import "DirectMessage+UIAdditions.h"
 #import "User+UIAdditions.h"
+#import "RotatableTabBarController.h"
 
 @interface DirectMessageConversationViewController ()
 
@@ -64,7 +65,6 @@ static UIImage * defaultAvatar;
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
     duration:(NSTimeInterval)duration
 {
-    orientation = o;
     [self.tableView reloadData];
 }
 
@@ -100,9 +100,7 @@ static UIImage * defaultAvatar;
         displayType = kTimelineTableViewCellTypeInverted;
 
     [cell setDisplayType:displayType];
-    BOOL landscape =
-        orientation == UIInterfaceOrientationLandscapeLeft ||
-        orientation == UIInterfaceOrientationLandscapeRight;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
     [cell setLandscape:landscape];
 
     return cell;
@@ -124,9 +122,7 @@ static UIImage * defaultAvatar;
     DirectMessage * message = [[self sortedTweets] objectAtIndex:indexPath.row];
     NSString * tweetText = message.text;
 
-    BOOL landscape =
-        orientation == UIInterfaceOrientationLandscapeLeft ||
-        orientation == UIInterfaceOrientationLandscapeRight;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
 
     return [TimelineTableViewCell heightForContent:tweetText
         displayType:kTimelineTableViewCellTypeNormal landscape:landscape];

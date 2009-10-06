@@ -38,8 +38,6 @@
     NSString * mentionRegex;
 
     NSString * visibleTweetId;
-
-    UIInterfaceOrientation orientation;
 }
 
 @property (nonatomic, assign)

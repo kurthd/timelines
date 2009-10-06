@@ -96,6 +96,9 @@ static UIImage * defaultAvatar;
 {
     [super viewWillAppear:animated];
     [delegate showingUserInfoView];
+    UIInterfaceOrientation orientation =
+        [[RotatableTabBarController instance] effectiveOrientation];
+    [self updateButtonsForOrientation:orientation];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:

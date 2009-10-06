@@ -21,8 +21,6 @@
 
     NSMutableDictionary * alreadySent;
     NSArray * sortedTweetCache;
-
-    UIInterfaceOrientation orientation;
 }
 
 @property (nonatomic, assign)
