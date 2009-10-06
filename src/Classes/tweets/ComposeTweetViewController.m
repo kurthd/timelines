@@ -4,6 +4,7 @@
 
 #import "ComposeTweetViewController.h"
 #import "UIColor+TwitchColors.h"
+#import "RotatableTabBarController.h"
 
 static const NSInteger MAX_TWEET_LENGTH = 140;
 
@@ -42,6 +43,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)updateCharacterCountFromInterface;
 - (void)updateCharacterCountFromText:(NSString *)text;
 
+- (void)displayForOrientation:(UIInterfaceOrientation)orientation;
 - (void)displayForPortraitMode;
 - (void)correctCharacterCountFrameWhenDisplayed;
 
@@ -142,13 +144,18 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         [textView becomeFirstResponder];
     else
         [recipientTextField becomeFirstResponder];
+    
+    UIInterfaceOrientation orientation =
+        [[RotatableTabBarController instance] effectiveOrientation];
+    [self displayForOrientation:orientation];
 }
 
 - (void)correctCharacterCountFrameWhenDisplayed
 {
     CGRect characterCountFrame = characterCount.frame;
     // hack -- this needs to be 167 when displayed, but 104 after a rotation
-    characterCountFrame.origin.y = 167;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    characterCountFrame.origin.y = landscape ? 80 : 167;
     characterCount.frame = characterCountFrame;
 }
 
@@ -171,7 +178,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
                                 duration:(NSTimeInterval)duration
 {
-    NSLog(@"Did rotate to interface orientation.");
+    [self displayForOrientation:orientation];
+}
+
+- (void)displayForOrientation:(UIInterfaceOrientation)orientation
+{
     if (orientation == UIInterfaceOrientationPortrait ||
         orientation == UIInterfaceOrientationPortraitUpsideDown)
         [self displayForPortraitMode];
