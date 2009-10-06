@@ -12,6 +12,7 @@
 - (UIView *)updatingView;
 - (void)addUpdatingViewAsSubview;
 - (void)removeUpdatingViewFromSuperview;
+- (void)resetUpdatingView;
 
 - (CGRect)shownUpdatingViewFrame;
 - (CGRect)hiddenUpdatingViewFrame;
@@ -79,14 +80,15 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 {
     [super viewWillAppear:animated];
 
-    [self updatingView].frame = [self hiddenUpdatingViewFrame];
-    [self updatingView].hidden = NO;
-
     if (self.view == targetViewController.view)
         [targetViewController viewWillAppear:animated];
     [noDataViewController viewWillAppear:animated];
     if ([delegate respondsToSelector:@selector(networkAwareViewWillAppear)])
         [delegate networkAwareViewWillAppear];
+
+    // yep
+    [self performSelector:@selector(resetUpdatingView) withObject:nil
+        afterDelay:0];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -127,6 +129,11 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 {
     [targetViewController didRotateFromInterfaceOrientation:orientation];
 
+    [self resetUpdatingView];
+}
+
+- (void)resetUpdatingView
+{
     [self updatingView].frame = [self hiddenUpdatingViewFrame];
     [self updatingView].hidden = NO;
 }
