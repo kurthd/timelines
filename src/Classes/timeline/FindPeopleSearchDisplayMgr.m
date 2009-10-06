@@ -130,10 +130,9 @@
         navItem.titleView = searchBar;
 
         CGFloat barHeight = navItem.titleView.superview.bounds.size.height;
-        CGRect searchBarRect =
-            CGRectMake(0.0, 0.0,
-            netAwareController.view.bounds.size.width - 10.0,
-            barHeight);
+        BOOL landscape = [[RotatableTabBarController instance] landscape];
+        CGFloat viewWidth = landscape ? 470 : 310;
+        CGRect searchBarRect = CGRectMake(0.0, 0.0, viewWidth, barHeight);
         searchBar.bounds = searchBarRect;
         searchBar.autoresizingMask =
             UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -988,7 +987,6 @@
     UIView * grayLineView =
         [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
     grayLineView.backgroundColor = [UIColor twitchLightGrayColor];
-    grayLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     UIImage * background =
         [[UIImage imageNamed:@"SaveSearchButtonBackground.png"]
@@ -1013,8 +1011,6 @@
 
     [view addSubview:button];
     [view addSubview:grayLineView];
-
-    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     return [view autorelease];
 }
@@ -1056,12 +1052,11 @@
 
 - (void)updateAutocompleteViewFrame
 {
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
-    CGRect autocompleteViewFrame = self.autocompleteView.frame;
-    autocompleteViewFrame.size.width = !landscape ? 320 : 480;
-    autocompleteViewFrame.size.height = !landscape ? 200 : 108;
-    autocompleteViewFrame.origin.y = !landscape ? 64 : 50;
-    autocompleteView.frame = autocompleteViewFrame;
+    NSLog(@"Updating save search header frame");
+    UIView * headerView =
+        [self.generalSavedSearchMgr isSearchSaved:self.currentSearch] ?
+        [self removeSearchView] : [self saveSearchView];
+    [self.timelineDisplayMgr setTimelineHeaderView:headerView];
 }
 
 - (LocationMapViewController *)locationMapViewController

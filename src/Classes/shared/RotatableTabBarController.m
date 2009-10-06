@@ -26,29 +26,29 @@ static RotatableTabBarController * gInstance = NULL;
     [super dealloc];
 }
 
-// - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)o
-// {
-//     effectiveOrientation = o;
-// 
-//     CGFloat homeTitleWidth;
-//     if (o == UIInterfaceOrientationPortrait ||
-//         o == UIInterfaceOrientationPortraitUpsideDown)
-//         homeTitleWidth = 181;
-//     else
-//         homeTitleWidth = 250;
-// 
-//     CGRect homeTitleViewFrame = homeTitleView.frame;
-//     homeTitleViewFrame.size.width = homeTitleWidth;
-//     homeTitleView.frame = homeTitleViewFrame;
-// 
-//     return YES;
-// }
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)o
 {
-    return o == UIInterfaceOrientationPortrait ||
-        o == UIInterfaceOrientationPortraitUpsideDown;
+    effectiveOrientation = o;
+
+    CGFloat homeTitleWidth;
+    if (o == UIInterfaceOrientationPortrait ||
+        o == UIInterfaceOrientationPortraitUpsideDown)
+        homeTitleWidth = 181;
+    else
+        homeTitleWidth = 250;
+
+    CGRect homeTitleViewFrame = homeTitleView.frame;
+    homeTitleViewFrame.size.width = homeTitleWidth;
+    homeTitleView.frame = homeTitleViewFrame;
+
+    return YES;
 }
+
+// - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)o
+// {
+//     return o == UIInterfaceOrientationPortrait ||
+//         o == UIInterfaceOrientationPortraitUpsideDown;
+// }
 
 - (BOOL)landscape
 {

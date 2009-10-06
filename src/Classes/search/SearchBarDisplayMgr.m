@@ -122,10 +122,9 @@
 
         navItem.titleView = searchBar;
         CGFloat barHeight = navItem.titleView.superview.bounds.size.height;
-        CGRect searchBarRect =
-            CGRectMake(0.0, 0.0,
-            self.networkAwareViewController.view.bounds.size.width - 10.0,
-            barHeight);
+        BOOL landscape = [[RotatableTabBarController instance] landscape];
+        CGFloat viewWidth = landscape ? 470 : 310;
+        CGRect searchBarRect = CGRectMake(0.0, 0.0, viewWidth, barHeight);
         searchBar.bounds = searchBarRect;
         searchBar.autoresizingMask =
             UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -548,7 +547,6 @@
     UIView * grayLineView =
         [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
     grayLineView.backgroundColor = [UIColor twitchLightGrayColor];
-    grayLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     UIImage * background =
         [[UIImage imageNamed:@"SaveSearchButtonBackground.png"]
@@ -562,9 +560,8 @@
 
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
-    
+
     button.enabled = searchBar.text && ![searchBar.text isEqual:@""];
-    button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     UIColor * color = [UIColor colorWithRed:.353 green:.4 blue:.494 alpha:1.0];
     [button setTitleColor:color forState:UIControlStateNormal];
@@ -578,8 +575,6 @@
     [view addSubview:button];
     [view addSubview:grayLineView];
     
-    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
     return [view autorelease];
 }
 
@@ -609,12 +604,11 @@
 
 - (void)updateAutocompleteViewFrame
 {
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
-    CGRect autocompleteViewFrame = self.autocompleteView.frame;
-    autocompleteViewFrame.size.width = !landscape ? 320 : 480;
-    autocompleteViewFrame.size.height = !landscape ? 200 : 108;
-    autocompleteViewFrame.origin.y = !landscape ? 64 : 50;
-    autocompleteView.frame = autocompleteViewFrame;
+    NSLog(@"Updating save search header frame");
+    if ([self.searchBookmarksDisplayMgr isSearchSaved:self.searchQuery])
+        [self.timelineDisplayMgr setTimelineHeaderView:[self removeSearchView]];
+    else
+        [self.timelineDisplayMgr setTimelineHeaderView:[self saveSearchView]];
 }
 
 - (NSInteger)selectedBookmarkSegment
