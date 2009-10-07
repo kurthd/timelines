@@ -29,7 +29,8 @@
 
 - (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page;
 {
-    NSLog(@"'All' data source: fetching timeline");
+    NSLog(@"'All' data source: fetching timeline (updateId: %@, page: %@)",
+        updateId, page);
     [service fetchTimelineSinceUpdateId:updateId page:page
         count:[NSNumber numberWithInt:[SettingsReader fetchQuantity]]];
 }

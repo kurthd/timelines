@@ -298,7 +298,6 @@ enum TweetActionSheets {
     BOOL landscape = [[RotatableTabBarController instance] landscape];
     CGFloat width = !landscape ? WEB_VIEW_WIDTH : WEB_VIEW_WIDTH_LANDSCAPE;
     CGRect frame = CGRectMake(5, 0, width, 31);
-    NSLog(@"width: %f", width);
     tweetContentView.frame = frame;
 
     CGSize size = [tweetContentView sizeThatFits:CGSizeZero];

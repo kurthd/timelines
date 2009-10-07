@@ -912,7 +912,8 @@ static BOOL scrollToTopValueAlreadyRead;
     if (((!hasBeenDisplayed && [timelineSource credentials]) || needsRefresh) &&
         [timelineSource readyForQuery]) {
 
-        NSLog(@"Timeline display manager: fetching new timeline when shown...");
+        NSLog(@"Timeline display manager:\
+            fetching new timeline when shown for first time...");
         [self.wrapperController setUpdatingState:kConnectedAndUpdating];
         [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
@@ -1305,8 +1306,11 @@ static BOOL scrollToTopValueAlreadyRead;
         visibleTweetId:self.tweetIdToShow];
     [timelineController setAllPagesLoaded:allPagesLoaded];
 
-    if (refresh || [[someTweets allKeys] count] == 0)
+    if (refresh || [[someTweets allKeys] count] == 0) {
+        NSLog(@"Timeline display manager: \
+            refreshing current pages due to new service");
         [self refreshWithCurrentPages];
+    }
 
     [self.wrapperController
         setCachedDataAvailable:[[someTweets allKeys] count] > 0];
@@ -1367,7 +1371,8 @@ static BOOL scrollToTopValueAlreadyRead;
         [timelineController.tableView setContentOffset:CGPointMake(0, 300)
             animated:NO];
     } else if (hasBeenDisplayed) {// set for first time and persisted data shown
-        NSLog(@"Timeline display manager: setting account for first time");
+        NSLog(@"Timeline display manager: setting account for first time; \
+            fetching timeline with page parameter %d", pagesShown);
         [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
     }
@@ -1393,9 +1398,9 @@ static BOOL scrollToTopValueAlreadyRead;
 - (void)setDisplayAsConversation:(BOOL)conversation
 {
     if (conversation)
-        NSLog(@"Timeline display manager init: displaying as conversation");
+        NSLog(@"Timeline display manager: displaying as conversation");
     else
-        NSLog(@"Timeline display manager init: not displaying as conversation");
+        NSLog(@"Timeline display manager: not displaying as conversation");
 
     displayAsConversation = conversation;
     NSArray * invertedCellUsernames =
@@ -1490,7 +1495,7 @@ static BOOL scrollToTopValueAlreadyRead;
 
     [view addSubview:button];
     [view addSubview:grayLineView];
-
+    
     return [view autorelease];
 }
 
