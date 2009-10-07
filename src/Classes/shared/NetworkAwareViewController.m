@@ -86,6 +86,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
     if ([delegate respondsToSelector:@selector(networkAwareViewWillAppear)])
         [delegate networkAwareViewWillAppear];
 
+    [self resetUpdatingView];
     // yep
     [self performSelector:@selector(resetUpdatingView) withObject:nil
         afterDelay:0];
@@ -134,7 +135,9 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 
 - (void)resetUpdatingView
 {
-    [self updatingView].frame = [self hiddenUpdatingViewFrame];
+    [self updatingView].frame =
+        updatingState == kConnectedAndUpdating && cachedDataAvailable ?
+        [self shownUpdatingViewFrame] : [self hiddenUpdatingViewFrame];
     [self updatingView].hidden = NO;
 }
 
