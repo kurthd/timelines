@@ -8,6 +8,7 @@
 #import "AsynchronousNetworkFetcher.h"
 #import "UIColor+TwitchColors.h"
 #import "User+UIAdditions.h"
+#import "RotatableTabBarController.h"
 
 @interface User (Sorting)
 - (NSComparisonResult)compare:(User *)user;
@@ -72,6 +73,18 @@ static UIImage * defaultAvatar;
     [delegate userListViewWillAppear];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
+    duration:(NSTimeInterval)duration
+{
+    [self.tableView reloadData];
+}
+
 #pragma mark UITableViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -112,10 +125,13 @@ static UIImage * defaultAvatar;
 
     User * user = [[self sortedUsers] objectAtIndex:indexPath.row];
     [cell setUser:user];
-    
+
     UIImage * avatarImage = [self getAvatarForUser:user];
     [cell setAvatarImage:avatarImage];
-    
+
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    [cell setLandscape:landscape];
+
     return cell;
 }
 

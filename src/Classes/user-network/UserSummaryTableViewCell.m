@@ -49,6 +49,11 @@
     [userSummaryView setUser:user];
 }
 
+- (void)setLandscape:(BOOL)landscape
+{
+    userSummaryView.landscape = landscape;
+}
+
 - (void)setAvatarImage:(UIImage *)avatarImage
 {
     userSummaryView.avatar = avatarImage;

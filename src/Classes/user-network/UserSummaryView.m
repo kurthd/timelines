@@ -22,7 +22,7 @@ static UIColor * lighterTextColor;
 static UIColor * darkerTextColor;
 static UIImage * avatarBackgroundImage;
 
-@synthesize avatar, highlighted;
+@synthesize avatar, highlighted, landscape;
 
 - (void)dealloc
 {
@@ -48,11 +48,20 @@ static UIImage * avatarBackgroundImage;
 	}
 }
 
+- (void)setLandscape:(BOOL)l
+{
+    if (landscape != l) {
+        landscape = l;
+        [self setNeedsDisplay];
+    }
+}
+
 - (void)drawRect:(CGRect)rect
 {
 #define LEFT_MARGIN 73
 #define TOP_MARGIN 6
 #define LABEL_WIDTH 220
+#define LABEL_WIDTH_LANDSCAPE 380
 
 #define NAME_LABEL_FONT_SIZE 18
 
@@ -92,9 +101,9 @@ static UIImage * avatarBackgroundImage;
 	}
 
 	CGRect contentRect = self.bounds;
-
 	CGFloat boundsX = contentRect.origin.x;
 	CGPoint point;
+    CGFloat labelWidth = landscape ? LABEL_WIDTH_LANDSCAPE : LABEL_WIDTH;
 
     NSString * username =
         [NSString stringWithFormat:[[self class] usernameFormatString],
@@ -102,21 +111,20 @@ static UIImage * avatarBackgroundImage;
     if (!self.highlighted) {
     	// draw white drop shadows
     	[[UIColor whiteColor] set];
-    	point =
-    	    CGPointMake(boundsX + LEFT_MARGIN, TOP_MARGIN + 1);
-    	[user.name drawAtPoint:point forWidth:LABEL_WIDTH
+    	point = CGPointMake(boundsX + LEFT_MARGIN, TOP_MARGIN + 1);
+    	[user.name drawAtPoint:point forWidth:labelWidth
     	    withFont:nameLabelFont minFontSize:NAME_LABEL_FONT_SIZE
     	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
     	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
     	point =
     	    CGPointMake(boundsX + LEFT_MARGIN, USERNAME_TOP_MARGIN + 1);
-    	[username drawAtPoint:point forWidth:LABEL_WIDTH
+    	[username drawAtPoint:point forWidth:labelWidth
     	    withFont:usernameLabelFont minFontSize:USERNAME_LABEL_FONT_SIZE
     	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
     	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
     	point =
     	    CGPointMake(boundsX + LEFT_MARGIN, FOLLOWERS_TOP_MARGIN + 1);
-        [[user followersDescription] drawAtPoint:point forWidth:LABEL_WIDTH
+        [[user followersDescription] drawAtPoint:point forWidth:labelWidth
     	    withFont:followersLabelFont minFontSize:FOLLOWERS_LABEL_FONT_SIZE
     	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
     	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
@@ -125,7 +133,7 @@ static UIImage * avatarBackgroundImage;
 	[nameLabelTextColor set];
 	point =
 	    CGPointMake(boundsX + LEFT_MARGIN, TOP_MARGIN);
-	[user.name drawAtPoint:point forWidth:LABEL_WIDTH
+	[user.name drawAtPoint:point forWidth:labelWidth
 	    withFont:nameLabelFont minFontSize:NAME_LABEL_FONT_SIZE
 	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
 	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
@@ -133,7 +141,7 @@ static UIImage * avatarBackgroundImage;
 	[usernameLabelTextColor set];
 	point =
 	    CGPointMake(boundsX + LEFT_MARGIN, USERNAME_TOP_MARGIN);
-	[username drawAtPoint:point forWidth:LABEL_WIDTH
+	[username drawAtPoint:point forWidth:labelWidth
 	    withFont:usernameLabelFont minFontSize:USERNAME_LABEL_FONT_SIZE
 	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
 	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
@@ -141,7 +149,7 @@ static UIImage * avatarBackgroundImage;
 	[followersLabelTextColor set];
 	point =
 	    CGPointMake(boundsX + LEFT_MARGIN, FOLLOWERS_TOP_MARGIN);
-    [[user followersDescription] drawAtPoint:point forWidth:LABEL_WIDTH
+    [[user followersDescription] drawAtPoint:point forWidth:labelWidth
 	    withFont:followersLabelFont minFontSize:FOLLOWERS_LABEL_FONT_SIZE
 	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
 	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];

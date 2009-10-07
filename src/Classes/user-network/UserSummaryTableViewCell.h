@@ -21,6 +21,7 @@
 
 - (void)setUser:(User *)user;
 - (void)setAvatarImage:(UIImage *)avatarImage;
+- (void)setLandscape:(BOOL)landscape;
 
 - (void)redisplay;
 
