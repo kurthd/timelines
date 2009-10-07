@@ -139,6 +139,16 @@ enum TweetActionSheets {
     UIInterfaceOrientation orientation =
         [[RotatableTabBarController instance] interfaceOrientation];
     [self updateButtonsForOrientation:orientation];
+
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    if (lastDisplayedInLandscape != landscape)
+        [self loadTweetWebView];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    lastDisplayedInLandscape = [[RotatableTabBarController instance] landscape];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:

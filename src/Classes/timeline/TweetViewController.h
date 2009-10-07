@@ -46,6 +46,8 @@
     UITableViewCell * deleteTweetCell;
 
     BOOL markingFavorite;
+
+    BOOL lastDisplayedInLandscape;
 }
 
 @property (nonatomic, assign) NSObject<TweetViewControllerDelegate> * delegate;
