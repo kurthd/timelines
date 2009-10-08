@@ -536,6 +536,7 @@
 		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A1F5C91028C06A009F5B3E /* RegexKitLite.m */; };
 		05A6675B107E5B3E0077343D /* NSObject+TweetHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */; };
+		05A667C7107E64E80077343D /* UserTweet+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A667C6107E64E80077343D /* UserTweet+CoreDataAdditions.m */; };
 		05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05AC573C1029F0EF00F727A2 /* QuartzCore.framework */; };
 		05B7C8CC105899E00043298A /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B7C8C1105899E00043298A /* NSObject+SBJSON.m */; };
 		05B7C8CD105899E00043298A /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B7C8C3105899E00043298A /* NSString+SBJSON.m */; };
@@ -1117,6 +1118,8 @@
 		05A1F5C91028C06A009F5B3E /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		05A66759107E5B3E0077343D /* NSObject+TweetHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+TweetHelpers.h"; path = "shared/NSObject+TweetHelpers.h"; sourceTree = "<group>"; };
 		05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+TweetHelpers.m"; path = "shared/NSObject+TweetHelpers.m"; sourceTree = "<group>"; };
+		05A667C5107E64E80077343D /* UserTweet+CoreDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UserTweet+CoreDataAdditions.h"; path = "tweets/UserTweet+CoreDataAdditions.h"; sourceTree = "<group>"; };
+		05A667C6107E64E80077343D /* UserTweet+CoreDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UserTweet+CoreDataAdditions.m"; path = "tweets/UserTweet+CoreDataAdditions.m"; sourceTree = "<group>"; };
 		05AC573C1029F0EF00F727A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		05AE708C0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFavoritesForUserResponseProcessor.h; path = twitter/processors/FetchFavoritesForUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFavoritesForUserResponseProcessor.m; path = twitter/processors/FetchFavoritesForUserResponseProcessor.m; sourceTree = "<group>"; };
@@ -2293,10 +2296,12 @@
 			children = (
 				05B23C190FEEEFC700A6A2E6 /* Tweet.h */,
 				05B23C1A0FEEEFC700A6A2E6 /* Tweet.m */,
-				05761AFD0FF6ADD600392ADC /* UserTweet.h */,
-				05761AFE0FF6ADD600392ADC /* UserTweet.m */,
 				05F45A520FF01DE000EBAFC7 /* Tweet+CoreDataAdditions.h */,
 				05F45A530FF01DE000EBAFC7 /* Tweet+CoreDataAdditions.m */,
+				05761AFD0FF6ADD600392ADC /* UserTweet.h */,
+				05761AFE0FF6ADD600392ADC /* UserTweet.m */,
+				05A667C5107E64E80077343D /* UserTweet+CoreDataAdditions.h */,
+				05A667C6107E64E80077343D /* UserTweet+CoreDataAdditions.m */,
 				05D174050FF69FC500DCB22D /* Mention.h */,
 				05D174060FF69FC500DCB22D /* Mention.m */,
 				05F45A2E0FF0181600EBAFC7 /* DirectMessage.h */,
@@ -3791,6 +3796,7 @@
 				91DCE8F21073BE7B00095FD0 /* DirectMessageViewController.m in Sources */,
 				91DCEB3F107511DB00095FD0 /* RotatableTabBarController.m in Sources */,
 				05A6675B107E5B3E0077343D /* NSObject+TweetHelpers.m in Sources */,
+				05A667C7107E64E80077343D /* UserTweet+CoreDataAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,7 @@
 #import "Tweet.h"
 #import "Tweet+CoreDataAdditions.h"
 #import "UserTweet.h"
+#import "UserTweet+CoreDataAdditions.h"
 #import "User+UIAdditions.h"
 #import "NSDictionary+GeneralHelpers.h"
 
@@ -65,7 +66,14 @@
     [self populateUser:tweetAuthor fromData:userData];
 
     NSString * tweetId = [[tweetData objectForKey:@"id"] description];
-    Tweet * tweet = [Tweet tweetWithId:tweetId context:context];
+    Tweet * tweet = nil;
+    if (isUserTweet)
+        tweet = [UserTweet tweetWithId:tweetId
+                           credentials:credentials
+                               context:context];
+    else
+        [Tweet tweetWithId:tweetId context:context];
+
     if (!tweet) {
         if (isUserTweet) {
             UserTweet * userTweet = [UserTweet createInstance:context];
