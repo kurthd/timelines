@@ -25,7 +25,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 @synthesize timestamp, truncated, identifier, text, source, user, recipient,
     favorited, inReplyToTwitterUsername, inReplyToTwitterTweetId,
-    inReplyToTwitterUserId;
+    inReplyToTwitterUserId, location;
 
 - (void)dealloc
 {
@@ -75,6 +75,11 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     tweetInfo.inReplyToTwitterUsername = tweet.inReplyToTwitterUsername;
     tweetInfo.inReplyToTwitterTweetId = tweet.inReplyToTwitterTweetId;
     tweetInfo.inReplyToTwitterUserId = tweet.inReplyToTwitterUserId;
+
+    // TODO: set location
+    // tweetInfo.location =
+    //     [[[CLLocation alloc] initWithLatitude:45.696768 longitude:-73.578957]
+    //     autorelease];
 
     return tweetInfo;
 }

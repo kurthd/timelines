@@ -3,11 +3,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 #import "User.h"
 #import "Tweet.h"
 #import "DirectMessage.h"
 
-@interface TweetInfo : NSObject 
+@interface TweetInfo : NSObject
 {
     NSDate * timestamp;
     NSNumber * truncated;
@@ -20,6 +21,7 @@
     NSString * inReplyToTwitterUsername;
     NSString * inReplyToTwitterTweetId;
     NSString * inReplyToTwitterUserId;
+    CLLocation * location;
 }
 
 @property (nonatomic, retain) NSDate * timestamp;
@@ -33,6 +35,7 @@
 @property (nonatomic, retain) NSString * inReplyToTwitterUsername;
 @property (nonatomic, retain) NSString * inReplyToTwitterTweetId;
 @property (nonatomic, retain) NSString * inReplyToTwitterUserId;
+@property (nonatomic, retain) CLLocation * location;
 
 - (NSComparisonResult)compare:(TweetInfo *)tweetInfo;
 
