@@ -223,6 +223,13 @@
         self.networkAwareViewController.targetViewController;
     tvc.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     tvc.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+
+    networkAwareViewController.navigationItem.title = self.searchQuery;
+    networkAwareViewController.navigationItem.backBarButtonItem =
+        [[[UIBarButtonItem alloc]
+        initWithTitle:self.searchQuery style:UIBarButtonItemStyleBordered
+        target:nil action:nil]
+        autorelease];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar
