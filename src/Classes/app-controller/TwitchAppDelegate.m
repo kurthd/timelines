@@ -1049,7 +1049,7 @@
             }
 
             // finally, insert the tweet if it should be saved
-            if (perTweetType.count < NUM_TWEETS_TO_KEEP) {
+            if (perTweetType.count <= NUM_TWEETS_TO_KEEP) {
                 [perTweetType addObject:t];  // it lives
                 [sparedUsers addObject:t.user];
             } else
