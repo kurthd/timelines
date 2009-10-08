@@ -1103,18 +1103,24 @@
      * 481 has been resolved.
      */
 
+    NSLog(@"***************** Persistence check *****************");
     NSArray * persistedCredentials = [TwitterCredentials findAll:context];
     for (TwitterCredentials * c in persistedCredentials) {
         NSArray * persistedTweets = [[c.userTimeline allObjects] sortedArray];
-        NSLog(@"%@: %d persisted tweets", c.username, persistedTweets.count);
-        Tweet * firstTweet = [persistedTweets objectAtIndex:0];
-        Tweet * lastTweet = [persistedTweets lastObject];
-        NSLog(@"First tweet: %@: %@", firstTweet.user.username, firstTweet.text);
-        NSLog(@"Last tweet: %@: %@", lastTweet.user.username, lastTweet.text);
-        NSAssert2(persistedTweets.count > NUM_TWEETS_TO_KEEP,
+        NSLog(@"** %@: %d persisted tweets", c.username, persistedTweets.count);
+        Tweet * newestTweet = [persistedTweets objectAtIndex:0];
+        Tweet * oldestTweet = [persistedTweets lastObject];
+        NSLog(@"**  Newest tweet saved to persistence: '%@': '%@': '%@'",
+            newestTweet.identifier, newestTweet.user.username,
+            newestTweet.text);
+        NSLog(@"** Oldest tweet saved to persistence: '%@': '%@': '%@'",
+            oldestTweet.identifier, oldestTweet.user.username,
+            oldestTweet.text);
+        NSAssert2(persistedTweets.count <= NUM_TWEETS_TO_KEEP,
             @"WARNING: Persisted too many tweets! Should persist %d but did "
             "persist %d.", NUM_TWEETS_TO_KEEP, persistedTweets.count);
     }
+    NSLog(@"***************** Persistence check *****************");
 }
 
 - (void)loadHomeViewWithCachedData:(TwitterCredentials *)account
@@ -1134,10 +1140,19 @@
                                      context:context
                           prefetchedKeyPaths:paths];
 
-    NSLog(@"%@: Loaded %d persisted tweets and %d persisted mentions.",
+    NSLog(@"** %@: Loaded %d persisted tweets and %d persisted mentions.",
         account.username, allTweets.count, allMentions.count);
+    allTweets = [allTweets sortedArrayUsingSelector:@selector(compare:)];
+    Tweet * newestTweet = [allTweets objectAtIndex:0];
+    Tweet * oldestTweet = [allTweets lastObject];
+    NSLog(@"***************** Persistence check *****************");
+    NSLog(@"** Newest tweet loaded from persistence: '%@': '%@': '%@'",
+        newestTweet.identifier, newestTweet.user.username, newestTweet.text);
+    NSLog(@"** Oldest tweet loaded from persistence: '%@': '%@': '%@'",
+        oldestTweet.identifier, oldestTweet.user.username, oldestTweet.text);
+    NSLog(@"***************** Persistence check *****************");
 
-    // convert them all to dictionaries
+    // convert them all to dictionaries with TweetInfo objects as values
     NSMutableDictionary * tweets =
         [NSMutableDictionary dictionaryWithCapacity:allTweets.count];
     NSMutableDictionary * mentions =
