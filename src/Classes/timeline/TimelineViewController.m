@@ -13,6 +13,7 @@
 #import "PhotoBrowserDisplayMgr.h"
 #import "RegexKitLite.h"
 #import "RotatableTabBarController.h"
+#import "NSArray+IterationAdditions.h"
 
 @interface TimelineViewController ()
 
@@ -424,7 +425,8 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 {
     if (!self.sortedTweetCache)
         self.sortedTweetCache =
-            [tweets sortedArrayUsingSelector:@selector(compare:)];
+            [[tweets sortedArrayUsingSelector:@selector(compare:)]
+            arrayByReversingContents];
 
     return self.sortedTweetCache;
 }

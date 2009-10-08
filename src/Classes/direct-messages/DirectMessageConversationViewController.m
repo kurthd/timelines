@@ -11,6 +11,7 @@
 #import "DirectMessage+UIAdditions.h"
 #import "User+UIAdditions.h"
 #import "RotatableTabBarController.h"
+#import "NSArray+IterationAdditions.h"
 
 @interface DirectMessageConversationViewController ()
 
@@ -256,7 +257,8 @@ static UIImage * defaultAvatar;
 {
     if (!self.sortedTweetCache)
         self.sortedTweetCache =
-            [tweets sortedArrayUsingSelector:@selector(compare:)];
+            [[tweets sortedArrayUsingSelector:@selector(compare:)]
+            arrayByReversingContents];
 
     return self.sortedTweetCache;
 }

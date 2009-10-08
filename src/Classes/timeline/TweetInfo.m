@@ -5,6 +5,7 @@
 #import "TweetInfo.h"
 #import "RegexKitLite.h"
 #import "NSString+HtmlEncodingAdditions.h"
+#import "NSObject+TweetHelpers.h"
 
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 static NSString * hashRegex = @"\\B(#[\\w_]+)";
@@ -45,12 +46,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (NSComparisonResult)compare:(TweetInfo *)tweetInfo
 {
-    NSNumber * myId =
-        [NSNumber numberWithLongLong:[self.identifier longLongValue]];
-    NSNumber * theirId =
-        [NSNumber numberWithLongLong:[tweetInfo.identifier longLongValue]];
-
-    return [theirId compare:myId];
+    return [[self class] compareTweetId:self.identifier
+                                   toId:tweetInfo.identifier];
 }
 
 - (NSString *)description

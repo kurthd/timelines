@@ -535,6 +535,7 @@
 		059F6EE71017EDD900B323D7 /* DirectMessageDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 059F6EE61017EDD900B323D7 /* DirectMessageDraft.m */; };
 		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A1F5C91028C06A009F5B3E /* RegexKitLite.m */; };
+		05A6675B107E5B3E0077343D /* NSObject+TweetHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */; };
 		05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05AC573C1029F0EF00F727A2 /* QuartzCore.framework */; };
 		05B7C8CC105899E00043298A /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B7C8C1105899E00043298A /* NSObject+SBJSON.m */; };
 		05B7C8CD105899E00043298A /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B7C8C3105899E00043298A /* NSString+SBJSON.m */; };
@@ -1114,6 +1115,8 @@
 		059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v1-to-v2.xcmappingmodel"; path = "data-model/v1-to-v2.xcmappingmodel"; sourceTree = "<group>"; };
 		05A1F5C81028C06A009F5B3E /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		05A1F5C91028C06A009F5B3E /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		05A66759107E5B3E0077343D /* NSObject+TweetHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+TweetHelpers.h"; path = "shared/NSObject+TweetHelpers.h"; sourceTree = "<group>"; };
+		05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+TweetHelpers.m"; path = "shared/NSObject+TweetHelpers.m"; sourceTree = "<group>"; };
 		05AC573C1029F0EF00F727A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		05AE708C0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFavoritesForUserResponseProcessor.h; path = twitter/processors/FetchFavoritesForUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFavoritesForUserResponseProcessor.m; path = twitter/processors/FetchFavoritesForUserResponseProcessor.m; sourceTree = "<group>"; };
@@ -2136,6 +2139,8 @@
 				052E05AF1070093F005CEC5F /* UIApplication+ConfigurationAdditions.m */,
 				91DCEB3D107511DB00095FD0 /* RotatableTabBarController.h */,
 				91DCEB3E107511DB00095FD0 /* RotatableTabBarController.m */,
+				05A66759107E5B3E0077343D /* NSObject+TweetHelpers.h */,
+				05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -3785,6 +3790,7 @@
 				052E05B01070093F005CEC5F /* UIApplication+ConfigurationAdditions.m in Sources */,
 				91DCE8F21073BE7B00095FD0 /* DirectMessageViewController.m in Sources */,
 				91DCEB3F107511DB00095FD0 /* RotatableTabBarController.m in Sources */,
+				05A6675B107E5B3E0077343D /* NSObject+TweetHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

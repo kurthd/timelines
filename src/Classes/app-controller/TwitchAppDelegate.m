@@ -1019,7 +1019,8 @@
 
     // won't include deleted tweets
     allTweets =
-        [[Tweet findAll:context] sortedArrayUsingSelector:@selector(compare:)];
+        [[[Tweet findAll:context] sortedArrayUsingSelector:@selector(compare:)]
+        arrayByReversingContents];
 
     for (NSInteger i = 0, count = allTweets.count; i < count; ++i) {
         Tweet * t = [allTweets objectAtIndex:i];
@@ -1069,8 +1070,8 @@
     [hitList removeAllObjects];
 
     NSArray * allDms =
-        [[DirectMessage findAll:context]
-         sortedArrayUsingSelector:@selector(compare:)];
+        [[[DirectMessage findAll:context]
+        sortedArrayUsingSelector:@selector(compare:)] arrayByReversingContents];
 
     for (DirectMessage * dm in allDms) {
         TwitterCredentials * c = dm.credentials;
@@ -1110,7 +1111,7 @@
         NSLog(@"** %@: %d persisted tweets", c.username, persistedTweets.count);
         Tweet * newestTweet = [persistedTweets objectAtIndex:0];
         Tweet * oldestTweet = [persistedTweets lastObject];
-        NSLog(@"**  Newest tweet saved to persistence: '%@': '%@': '%@'",
+        NSLog(@"** Newest tweet saved to persistence: '%@': '%@': '%@'",
             newestTweet.identifier, newestTweet.user.username,
             newestTweet.text);
         NSLog(@"** Oldest tweet saved to persistence: '%@': '%@': '%@'",
@@ -1140,12 +1141,12 @@
                                      context:context
                           prefetchedKeyPaths:paths];
 
+    NSLog(@"***************** Persistence check *****************");
     NSLog(@"** %@: Loaded %d persisted tweets and %d persisted mentions.",
         account.username, allTweets.count, allMentions.count);
     allTweets = [allTweets sortedArrayUsingSelector:@selector(compare:)];
-    Tweet * newestTweet = [allTweets objectAtIndex:0];
-    Tweet * oldestTweet = [allTweets lastObject];
-    NSLog(@"***************** Persistence check *****************");
+    Tweet * newestTweet = [allTweets lastObject];
+    Tweet * oldestTweet = [allTweets objectAtIndex:0];
     NSLog(@"** Newest tweet loaded from persistence: '%@': '%@': '%@'",
         newestTweet.identifier, newestTweet.user.username, newestTweet.text);
     NSLog(@"** Oldest tweet loaded from persistence: '%@': '%@': '%@'",

@@ -22,7 +22,7 @@
     NSNumber * theirId =
         [NSNumber numberWithLongLong:[user.identifier longLongValue]];
 
-    return [theirId compare:myId];
+    return [myId compare:theirId];
 }
 @end
 

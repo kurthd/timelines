@@ -16,6 +16,7 @@
 #import "NearbySearchDataSource.h"
 #import "SettingsReader.h"
 #import "RotatableTabBarController.h"
+#import "NSArray+IterationAdditions.h"
 
 @interface TimelineDisplayMgr ()
 
@@ -170,7 +171,8 @@ static BOOL scrollToTopValueAlreadyRead;
 
     if ([aTimeline count] > 0) {
         NSArray * sortedTimeline =
-            [aTimeline sortedArrayUsingSelector:@selector(compare:)];
+            [[aTimeline sortedArrayUsingSelector:@selector(compare:)]
+            arrayByReversingContents];
         TweetInfo * mostRecentTweetInfo = [sortedTimeline objectAtIndex:0];
         long long updateIdAsLongLong =
             [mostRecentTweetInfo.identifier longLongValue];
@@ -232,7 +234,8 @@ static BOOL scrollToTopValueAlreadyRead;
     [self.tweetIdToIndexDict removeAllObjects];
     [self.tweetIndexToIdDict removeAllObjects];
     NSArray * sortedTweets =
-        [[timeline allValues] sortedArrayUsingSelector:@selector(compare:)];
+        [[[timeline allValues] sortedArrayUsingSelector:@selector(compare:)]
+        arrayByReversingContents];
     for (NSInteger i = 0; i < [sortedTweets count]; i++) {
         TweetInfo * tweetInfo = [sortedTweets objectAtIndex:i];
         [self.tweetIdToIndexDict setObject:[NSNumber numberWithInt:i]

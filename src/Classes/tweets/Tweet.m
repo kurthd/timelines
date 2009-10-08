@@ -7,8 +7,8 @@
 //
 
 #import "Tweet.h"
-
 #import "User.h"
+#import "NSObject+TweetHelpers.h"
 
 @implementation Tweet 
 
@@ -25,12 +25,7 @@
 
 - (NSComparisonResult)compare:(Tweet *)tweet
 {
-    NSNumber * myId =
-        [NSNumber numberWithLongLong:[self.identifier longLongValue]];
-    NSNumber * theirId =
-        [NSNumber numberWithLongLong:[tweet.identifier longLongValue]];
-
-    return [theirId compare:myId];
+    return [[self class] compareTweetId:self.identifier toId:tweet.identifier];
 }
 
 @end

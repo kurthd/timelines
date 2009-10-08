@@ -20,6 +20,7 @@
 #import "SettingsReader.h"
 #import "UIColor+TwitchColors.h"
 #import "RotatableTabBarController.h"
+#import "NSArray+IterationAdditions.h"
 
 @interface DirectMessagesDisplayMgr ()
 
@@ -191,7 +192,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     if ([directMessages count] > 0) {
         NSArray * sortedDirectMessages =
-            [directMessages sortedArrayUsingSelector:@selector(compare:)];
+            [[directMessages sortedArrayUsingSelector:@selector(compare:)]
+            arrayByReversingContents];
         DirectMessage * mostRecentMessage =
             [sortedDirectMessages objectAtIndex:0];
         long long updateIdAsLongLong =
@@ -243,7 +245,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     if ([directMessages count] > 0) {
         NSArray * sortedDirectMessages =
-            [directMessages sortedArrayUsingSelector:@selector(compare:)];
+            [[directMessages sortedArrayUsingSelector:@selector(compare:)]
+            arrayByReversingContents];
         DirectMessage * mostRecentMessage =
             [sortedDirectMessages objectAtIndex:0];
         long long updateIdAsLongLong =
@@ -1304,7 +1307,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     for (NSString * userId in [conversations allKeys]) {
         NSDictionary * conversation = [conversations objectForKey:userId];
         NSArray * sortedMessageIds =
-            [conversation keysSortedByValueUsingSelector:@selector(compare:)];
+            [[conversation keysSortedByValueUsingSelector:@selector(compare:)]
+            arrayByReversingContents];
         NSMutableArray * sortedConversation = [NSMutableArray array];
         for (NSString * messageId in sortedMessageIds) {
             DirectMessage * message = [conversation objectForKey:messageId];
