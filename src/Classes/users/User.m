@@ -2,7 +2,7 @@
 //  User.m
 //  twitch
 //
-//  Created by John A. Debay on 8/14/09.
+//  Created by John A. Debay on 10/8/09.
 //  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 
 @implementation User 
 
+@dynamic statusesCount;
 @dynamic followersCount;
 @dynamic webpage;
 @dynamic friendsCount;
@@ -22,11 +23,11 @@
 @dynamic location;
 @dynamic created;
 @dynamic username;
+@dynamic geoEnabled;
 @dynamic name;
-@dynamic statusesCount;
-@dynamic sentDirectMessages;
 @dynamic tweets;
 @dynamic receivedDirectMessages;
 @dynamic avatar;
+@dynamic sentDirectMessages;
 
 @end

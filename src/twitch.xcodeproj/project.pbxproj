@@ -346,7 +346,6 @@
 		052E052410700858005CEC5F /* PhotoBrowserDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FEAC1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m */; };
 		052E052510700858005CEC5F /* MarkAsFavoriteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FF251035E1F6004E3030 /* MarkAsFavoriteCell.m */; };
 		052E052610700858005CEC5F /* Avatar.m in Sources */ = {isa = PBXBuildFile; fileRef = 055C92E110362DC2000B9A00 /* Avatar.m */; };
-		052E052710700858005CEC5F /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 055C92E610362E1D000B9A00 /* User.m */; };
 		052E052810700858005CEC5F /* TimelineTableViewCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FFD8103623DA004E3030 /* TimelineTableViewCellBackground.m */; };
 		052E052910700858005CEC5F /* AccountSettingsDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0519767A103A291E00883FAC /* AccountSettingsDisplayMgr.m */; };
 		052E052A10700858005CEC5F /* TwitPicCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C7B896103B59D70017874C /* TwitPicCredentials+KeychainAdditions.m */; };
@@ -489,7 +488,6 @@
 		054F3EF910243FAA005B6805 /* DefaultAvatar50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */; };
 		055777141063018D006596DB /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 055777131063018D006596DB /* libz.1.2.3.dylib */; };
 		055C92E210362DC2000B9A00 /* Avatar.m in Sources */ = {isa = PBXBuildFile; fileRef = 055C92E110362DC2000B9A00 /* Avatar.m */; };
-		055C92E710362E1D000B9A00 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 055C92E610362E1D000B9A00 /* User.m */; };
 		058207C11017744C00DFC051 /* ComposeRecipientGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 058207C01017744C00DFC051 /* ComposeRecipientGradient.png */; };
 		0590E1FC1062FF2B009D1C11 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0590E1EB1062FF2B009D1C11 /* ASIAuthenticationDialog.m */; };
 		0590E1FD1062FF2B009D1C11 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0590E1ED1062FF2B009D1C11 /* ASIFormDataRequest.m */; };
@@ -537,6 +535,7 @@
 		05A1F5CA1028C06A009F5B3E /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A1F5C91028C06A009F5B3E /* RegexKitLite.m */; };
 		05A6675B107E5B3E0077343D /* NSObject+TweetHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */; };
 		05A667C7107E64E80077343D /* UserTweet+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A667C6107E64E80077343D /* UserTweet+CoreDataAdditions.m */; };
+		05A66867107E70680077343D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A66866107E70680077343D /* User.m */; };
 		05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05AC573C1029F0EF00F727A2 /* QuartzCore.framework */; };
 		05B7C8CC105899E00043298A /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B7C8C1105899E00043298A /* NSObject+SBJSON.m */; };
 		05B7C8CD105899E00043298A /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B7C8C3105899E00043298A /* NSString+SBJSON.m */; };
@@ -988,8 +987,6 @@
 		055777131063018D006596DB /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = /usr/lib/libz.1.2.3.dylib; sourceTree = "<absolute>"; };
 		055C92E010362DC2000B9A00 /* Avatar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Avatar.h; path = users/Avatar.h; sourceTree = "<group>"; };
 		055C92E110362DC2000B9A00 /* Avatar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Avatar.m; path = users/Avatar.m; sourceTree = "<group>"; };
-		055C92E510362E1D000B9A00 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = users/User.h; sourceTree = "<group>"; };
-		055C92E610362E1D000B9A00 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = users/User.m; sourceTree = "<group>"; };
 		0562BE2D0FF6AB6B005DA549 /* FetchTweetResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTweetResponseProcessor.h; path = twitter/processors/FetchTweetResponseProcessor.h; sourceTree = "<group>"; };
 		0562BE2E0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchTweetResponseProcessor.m; path = twitter/processors/FetchTweetResponseProcessor.m; sourceTree = "<group>"; };
 		05761AFD0FF6ADD600392ADC /* UserTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTweet.h; path = tweets/UserTweet.h; sourceTree = "<group>"; };
@@ -1120,6 +1117,9 @@
 		05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+TweetHelpers.m"; path = "shared/NSObject+TweetHelpers.m"; sourceTree = "<group>"; };
 		05A667C5107E64E80077343D /* UserTweet+CoreDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UserTweet+CoreDataAdditions.h"; path = "tweets/UserTweet+CoreDataAdditions.h"; sourceTree = "<group>"; };
 		05A667C6107E64E80077343D /* UserTweet+CoreDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UserTweet+CoreDataAdditions.m"; path = "tweets/UserTweet+CoreDataAdditions.m"; sourceTree = "<group>"; };
+		05A667F4107E6B090077343D /* twitch-v2.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.1.xcdatamodel"; sourceTree = "<group>"; };
+		05A66865107E70680077343D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = users/User.h; sourceTree = "<group>"; };
+		05A66866107E70680077343D /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = users/User.m; sourceTree = "<group>"; };
 		05AC573C1029F0EF00F727A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		05AE708C0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFavoritesForUserResponseProcessor.h; path = twitter/processors/FetchFavoritesForUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFavoritesForUserResponseProcessor.m; path = twitter/processors/FetchFavoritesForUserResponseProcessor.m; sourceTree = "<group>"; };
@@ -2036,8 +2036,8 @@
 		05B238F30FEDC85300A6A2E6 /* users */ = {
 			isa = PBXGroup;
 			children = (
-				055C92E510362E1D000B9A00 /* User.h */,
-				055C92E610362E1D000B9A00 /* User.m */,
+				05A66865107E70680077343D /* User.h */,
+				05A66866107E70680077343D /* User.m */,
 				055C92E010362DC2000B9A00 /* Avatar.h */,
 				055C92E110362DC2000B9A00 /* Avatar.m */,
 				05F45A4F0FF01D5E00EBAFC7 /* User+CoreDataAdditions.h */,
@@ -3409,7 +3409,6 @@
 				052E052410700858005CEC5F /* PhotoBrowserDisplayMgr.m in Sources */,
 				052E052510700858005CEC5F /* MarkAsFavoriteCell.m in Sources */,
 				052E052610700858005CEC5F /* Avatar.m in Sources */,
-				052E052710700858005CEC5F /* User.m in Sources */,
 				052E052810700858005CEC5F /* TimelineTableViewCellBackground.m in Sources */,
 				052E052910700858005CEC5F /* AccountSettingsDisplayMgr.m in Sources */,
 				052E052A10700858005CEC5F /* TwitPicCredentials+KeychainAdditions.m in Sources */,
@@ -3690,7 +3689,6 @@
 				9130FEAD1034DDBA004E3030 /* PhotoBrowserDisplayMgr.m in Sources */,
 				9130FF261035E1F6004E3030 /* MarkAsFavoriteCell.m in Sources */,
 				055C92E210362DC2000B9A00 /* Avatar.m in Sources */,
-				055C92E710362E1D000B9A00 /* User.m in Sources */,
 				9130FFD9103623DA004E3030 /* TimelineTableViewCellBackground.m in Sources */,
 				0519767B103A291E00883FAC /* AccountSettingsDisplayMgr.m in Sources */,
 				05C7B89D103B59D70017874C /* TwitPicCredentials+KeychainAdditions.m in Sources */,
@@ -3797,6 +3795,7 @@
 				91DCEB3F107511DB00095FD0 /* RotatableTabBarController.m in Sources */,
 				05A6675B107E5B3E0077343D /* NSObject+TweetHelpers.m in Sources */,
 				05A667C7107E64E80077343D /* UserTweet+CoreDataAdditions.m in Sources */,
+				05A66867107E70680077343D /* User.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4726,8 +4725,9 @@
 				0599416D0FFB32F100842518 /* twitch-v2.xcdatamodel */,
 				05340B32101A5B0D0077E7C0 /* twitch-v1.1.xcdatamodel */,
 				050F7DE810323394007C6F04 /* twitch-v2.0.xcdatamodel */,
+				05A667F4107E6B090077343D /* twitch-v2.1.xcdatamodel */,
 			);
-			currentVersion = 050F7DE810323394007C6F04 /* twitch-v2.0.xcdatamodel */;
+			currentVersion = 05A667F4107E6B090077343D /* twitch-v2.1.xcdatamodel */;
 			name = twitch.xcdatamodeld;
 			path = "data-model/twitch.xcdatamodeld";
 			sourceTree = "<group>";

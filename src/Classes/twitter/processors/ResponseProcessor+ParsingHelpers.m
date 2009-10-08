@@ -133,6 +133,10 @@
 {
     user.identifier = [[data safeObjectForKey:@"id"] description];
     user.username = [data safeObjectForKey:@"screen_name"];
+
+    if ([user.username isEqual:@"raffi"])
+        NSLog(@"found it");
+
     user.name = [data safeObjectForKey:@"name"];
     user.bio = [data safeObjectForKey:@"description"];
     user.location = [data safeObjectForKey:@"location"];
@@ -157,6 +161,9 @@
 
     [user setValue:[data objectForKey:@"statuses_count"]
             forKey:@"statusesCount"];
+
+    NSNumber * geoEnabled = [data objectForKey:@"geo_enabled"];
+    user.geoEnabled = [NSNumber numberWithBool:[geoEnabled integerValue] == 1];
 }
 
 - (void)populateTweet:(Tweet *)tweet fromData:(NSDictionary *)data
