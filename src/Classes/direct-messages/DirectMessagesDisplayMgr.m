@@ -1250,8 +1250,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [self setUpdatingState];
     if (outstandingReceivedRequests == 0 && outstandingSentRequests == 0) {
         [self constructConversationsFromMessages];
-        [inboxController setConversationPreviews:
-            [self constructConversationPreviewsFromMessages]];
+        NSArray * convoPreviews =
+            [self constructConversationPreviewsFromMessages];
+        [inboxController setConversationPreviews:convoPreviews];
             
         BOOL cachedData =
             receivedQueryResponse ||
@@ -1265,6 +1266,14 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         NSUInteger numSent = [[directMessageCache sentDirectMessages] count];
         [inboxController setNumReceivedMessages:numReceived
             sentMessages:numSent];
+
+        // if currently viewing a conversation, update convo view
+        if (self.currentConversationUserId) {
+            NSArray * messages =
+                [sortedConversations
+                objectForKey:self.currentConversationUserId];
+            [self.conversationController setMessages:messages];
+        }
     }
 }
 
