@@ -28,8 +28,8 @@ enum Sections {
 static const NSInteger NUM_TWEET_DETAILS_ROWS = 1;
 enum TweetDetailsRows {
     kTweetTextRow,
-    kConversationRow,
-    kLocationRow
+    kLocationRow,
+    kConversationRow
 };
 
 static const NSInteger NUM_TWEET_ACTION_ROWS = 3;
@@ -76,7 +76,6 @@ enum TweetActionSheets {
 - (void)updateButtonsForOrientation:(UIInterfaceOrientation)o;
 
 + (UIImage *)defaultAvatar;
-+ (NSString *)locationAsString:(CLLocation *)location;
 
 @end
 
@@ -291,7 +290,15 @@ enum TweetActionSheets {
     if (transformedPath.section == kTweetDetailsSection) {
         if (transformedPath.row == kConversationRow)
             [delegate loadConversationFromTweetId:tweet.identifier];
+        else if (transformedPath.row == kLocationRow) {
+            CLLocationCoordinate2D coord = tweet.location.coordinate;
+            NSString * locationAsString =
+                [NSString stringWithFormat:@"%f, %f", coord.latitude,
+                coord.longitude];
+            [delegate showLocationOnMap:locationAsString];
+        }
     } else if (transformedPath.section == kTweetActionsSection) {
+        [self.tableView deselectRowAtIndexPath:transformedPath animated:YES];
         if (transformedPath.row == kPublicReplyRow)
             [self sendReply];
         else if (transformedPath.row == kRetweetRow)
@@ -301,8 +308,6 @@ enum TweetActionSheets {
         else if (transformedPath.row == kDeleteRow)
             [self confirmDeletion];
     }
-
-    [self.tableView deselectRowAtIndexPath:transformedPath animated:YES];
 }
 
 #pragma mark UIWebViewDelegate implementation
@@ -399,8 +404,7 @@ enum TweetActionSheets {
 
     [self loadTweetWebView];
 
-    NSString * locationString = [[self class] locationAsString:tweet.location];
-    [self.locationCell setLocationText:locationString];
+    [self.locationCell setLocation:self.tweet.location];
 }
 
 - (void)setFavorited:(BOOL)favorited
@@ -718,9 +722,9 @@ enum TweetActionSheets {
 - (NSIndexPath *)indexForActualIndexPath:(NSIndexPath *)actual
 {
     NSInteger row;
-    if (actual.section == kTweetDetailsSection &&
-        !tweet.inReplyToTwitterTweetId && actual.row == kConversationRow)
-        row = kLocationRow;
+    if (actual.section == kTweetDetailsSection && !tweet.location &&
+        actual.row == kLocationRow)
+        row = kConversationRow;
     else
         row = actual.row;
 
@@ -751,12 +755,12 @@ enum TweetActionSheets {
     [sheet showInView:rootView];
 }
 
-- (LocationCell *)locationCell
+- (TweetLocationCell *)locationCell
 {
     if (!locationCell)
         locationCell =
-            [[LocationCell alloc] initWithStyle:UITableViewCellStyleDefault
-            reuseIdentifier:@"LocationCell"];
+            [[TweetLocationCell alloc] initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:@"TweetLocationCell"];
 
     return locationCell;
 }
@@ -769,12 +773,6 @@ enum TweetActionSheets {
         defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar.png"] retain];
 
     return defaultAvatar;
-}
-
-+ (NSString *)locationAsString:(CLLocation *)location
-{
-    return [NSString stringWithFormat:@"Coord: %f,\n%f", location.coordinate.latitude,
-        location.coordinate.longitude];
 }
 
 @end
