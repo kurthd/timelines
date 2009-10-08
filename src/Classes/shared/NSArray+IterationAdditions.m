@@ -66,4 +66,9 @@
     return s;
 }
 
+- (NSArray *)sortedArray
+{
+    return [self sortedArrayUsingSelector:@selector(compare:)];
+}
+
 @end

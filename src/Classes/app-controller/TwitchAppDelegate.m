@@ -37,6 +37,7 @@
 #import "PhotoBrowserDisplayMgr.h"
 #import "SettingsReader.h"
 #import "UIApplication+ConfigurationAdditions.h"
+#import "NSArray+IterationAdditions.h"
 
 @interface TwitchAppDelegate ()
 
@@ -1096,6 +1097,24 @@
             NSLog(@"Deleting user: '%@'.", user.username);
             [context deleteObject:user];
         }
+
+    /*
+     * Re-read what exists in persistence. This code can be removed once issue
+     * 481 has been resolved.
+     */
+
+    NSArray * persistedCredentials = [TwitterCredentials findAll:context];
+    for (TwitterCredentials * c in persistedCredentials) {
+        NSArray * persistedTweets = [[c.userTimeline allObjects] sortedArray];
+        NSLog(@"%@: %d persisted tweets", c.username, persistedTweets.count);
+        Tweet * firstTweet = [persistedTweets objectAtIndex:0];
+        Tweet * lastTweet = [persistedTweets lastObject];
+        NSLog(@"First tweet: %@: %@", firstTweet.user.username, firstTweet.text);
+        NSLog(@"Last tweet: %@: %@", lastTweet.user.username, lastTweet.text);
+        NSAssert2(persistedTweets.count > NUM_TWEETS_TO_KEEP,
+            @"WARNING: Persisted too many tweets! Should persist %d but did "
+            "persist %d.", NUM_TWEETS_TO_KEEP, persistedTweets.count);
+    }
 }
 
 - (void)loadHomeViewWithCachedData:(TwitterCredentials *)account

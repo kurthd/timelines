@@ -15,4 +15,7 @@
 
 - (NSString *)join:(NSString *)component;
 
+// convenience function to sort using the default compare: function
+- (NSArray *)sortedArray;
+
 @end
