@@ -26,3 +26,7 @@
 - (void)populateDirectMessage:(DirectMessage *)dm fromData:(NSDictionary *)data;
 
 @end
+
+@interface NSString (ParsingHelpers)
+- (NSDate *)twitterDateValue;
+@end

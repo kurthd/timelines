@@ -27,10 +27,6 @@
 }
 @end
 
-@interface NSString (ParsingHelpers)
-- (NSDate *)twitterDateValue;
-@end
-
 @implementation NSString (ParsingHelpers)
 
 - (NSDate *)twitterDateValue

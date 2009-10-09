@@ -75,10 +75,13 @@
 
 #pragma mark Processing responses
 
-- (BOOL)processResponse:(NSArray *)results
+- (BOOL)processResponse:(NSArray *)rawSearchResults
 {
-    if (!results)
+    if (!rawSearchResults)
         return NO;
+
+    NSDictionary * searchResults = [rawSearchResults objectAtIndex:0];
+    NSArray * results = [searchResults objectForKey:@"results"];
 
     NSMutableArray * tweets = [NSMutableArray arrayWithCapacity:results.count];
     for (NSDictionary * result in results) {
@@ -119,7 +122,8 @@
         tweet.identifier = tweetId;
         tweet.text = [tweetData safeObjectForKey:@"text"];
         tweet.source = [tweetData safeObjectForKey:@"source"];
-        tweet.timestamp = [tweetData objectForKey:@"created_at"];
+        tweet.timestamp =
+            [[tweetData objectForKey:@"created_at"] twitterDateValue];
 
         // fill in the rest of the required tweet fields that are not
         // provided as part of the search results
