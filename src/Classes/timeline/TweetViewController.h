@@ -9,6 +9,7 @@
 #import "RoundedImage.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
 #import "MarkAsFavoriteCell.h"
+#import "TweetLocationCell.h"
 
 @interface TweetViewController :
     UITableViewController <UIActionSheetDelegate, UIWebViewDelegate,
@@ -39,12 +40,13 @@
 
     UIViewController * realParentViewController;
 
+    TweetLocationCell * locationCell;
     UITableViewCell * publicReplyCell;
     UITableViewCell * directMessageCell;
     UITableViewCell * retweetCell;
     MarkAsFavoriteCell * favoriteCell;
     UITableViewCell * deleteTweetCell;
-
+        
     BOOL markingFavorite;
 
     BOOL lastDisplayedInLandscape;
@@ -55,6 +57,7 @@
 @property (nonatomic, assign) BOOL showsExtendedActions;
 @property (nonatomic, assign) BOOL allowDeletion;
 @property (nonatomic, retain) UIViewController * realParentViewController;
+@property (nonatomic, readonly) TweetLocationCell * locationCell;
 
 - (void)displayTweet:(TweetInfo *)tweet
     onNavigationController:(UINavigationController *)navController;

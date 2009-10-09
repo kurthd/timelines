@@ -23,5 +23,6 @@
 - (void)replyToTweet;
 - (void)loadConversationFromTweetId:(NSString *)tweetId;
 - (void)deleteTweet:(NSString *)tweetId;
+- (void)showLocationOnMap:(NSString *)location;
 
 @end

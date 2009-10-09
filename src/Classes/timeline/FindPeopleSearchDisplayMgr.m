@@ -177,6 +177,13 @@
             animated:NO];
 
         [userInfoController setUser:user];
+
+        netAwareController.navigationItem.title = username;
+        netAwareController.navigationItem.backBarButtonItem =
+            [[[UIBarButtonItem alloc]
+            initWithTitle:username style:UIBarButtonItemStyleBordered target:nil
+            action:nil]
+            autorelease];
     }
 }
 

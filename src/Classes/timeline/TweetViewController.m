@@ -25,9 +25,10 @@ enum Sections {
     kTweetActionsSection
 };
 
-static const NSInteger NUM_TWEET_DETAILS_ROWS = 2;
+static const NSInteger NUM_TWEET_DETAILS_ROWS = 1;
 enum TweetDetailsRows {
     kTweetTextRow,
+    kLocationRow,
     kConversationRow
 };
 
@@ -97,6 +98,7 @@ enum TweetActionSheets {
     [fullNameLabel release];
     [usernameLabel release];
 
+    [locationCell release];
     [publicReplyCell release];
     [directMessageCell release];
     [retweetCell release];
@@ -202,8 +204,11 @@ enum TweetActionSheets {
     NSInteger nrows = 0;
     switch (transformedSection) {
         case kTweetDetailsSection:
-            nrows = tweet.inReplyToTwitterTweetId ?
-                NUM_TWEET_DETAILS_ROWS : NUM_TWEET_DETAILS_ROWS - 1;
+            nrows = NUM_TWEET_DETAILS_ROWS;
+            if (tweet.inReplyToTwitterTweetId)
+                nrows++;
+            if (tweet.location)
+                nrows++;
             break;
         case kTweetActionsSection:
             nrows = NUM_TWEET_ACTION_ROWS;
@@ -224,10 +229,15 @@ enum TweetActionSheets {
 {
     CGFloat rowHeight = 44;
 
-    if (indexPath.section == kTweetDetailsSection &&
-        indexPath.row == kTweetTextRow)
+    NSIndexPath * transformedPath = [self indexForActualIndexPath:indexPath];
+
+    if (transformedPath.section == kTweetDetailsSection &&
+        transformedPath.row == kTweetTextRow)
         rowHeight = tweetContentView.frame.size.height;
-    
+    else if (transformedPath.section == kTweetDetailsSection &&
+        transformedPath.row == kLocationRow)
+        rowHeight = 64;
+
     return rowHeight;
 }
 
@@ -243,7 +253,7 @@ enum TweetActionSheets {
         if (transformedPath.row == kTweetTextRow) {
             [tweetTextTableViewCell.contentView addSubview:tweetContentView];
             cell = tweetTextTableViewCell;
-        } else if (indexPath.row == kConversationRow) {
+        } else if (transformedPath.row == kConversationRow) {
             cell = self.conversationCell;
             NSString * formatString =
                 NSLocalizedString(@"tweetdetailsview.inreplyto.formatstring",
@@ -251,6 +261,10 @@ enum TweetActionSheets {
             cell.textLabel.text =
                 [NSString stringWithFormat:formatString,
                 tweet.inReplyToTwitterUsername];
+        } else if (transformedPath.row == kLocationRow) {
+            BOOL landscape = [[RotatableTabBarController instance] landscape];
+            [self.locationCell setLandscape:landscape];
+            cell = self.locationCell;
         }
     } else if (transformedPath.section == kTweetActionsSection) {
         if (transformedPath.row == kPublicReplyRow)
@@ -276,7 +290,15 @@ enum TweetActionSheets {
     if (transformedPath.section == kTweetDetailsSection) {
         if (transformedPath.row == kConversationRow)
             [delegate loadConversationFromTweetId:tweet.identifier];
+        else if (transformedPath.row == kLocationRow) {
+            CLLocationCoordinate2D coord = tweet.location.coordinate;
+            NSString * locationAsString =
+                [NSString stringWithFormat:@"%f, %f", coord.latitude,
+                coord.longitude];
+            [delegate showLocationOnMap:locationAsString];
+        }
     } else if (transformedPath.section == kTweetActionsSection) {
+        [self.tableView deselectRowAtIndexPath:transformedPath animated:YES];
         if (transformedPath.row == kPublicReplyRow)
             [self sendReply];
         else if (transformedPath.row == kRetweetRow)
@@ -286,8 +308,6 @@ enum TweetActionSheets {
         else if (transformedPath.row == kDeleteRow)
             [self confirmDeletion];
     }
-
-    [self.tableView deselectRowAtIndexPath:transformedPath animated:YES];
 }
 
 #pragma mark UIWebViewDelegate implementation
@@ -298,7 +318,6 @@ enum TweetActionSheets {
     BOOL landscape = [[RotatableTabBarController instance] landscape];
     CGFloat width = !landscape ? WEB_VIEW_WIDTH : WEB_VIEW_WIDTH_LANDSCAPE;
     CGRect frame = CGRectMake(5, 0, width, 31);
-    NSLog(@"width: %f", width);
     tweetContentView.frame = frame;
 
     CGSize size = [tweetContentView sizeThatFits:CGSizeZero];
@@ -374,10 +393,18 @@ enum TweetActionSheets {
 - (void)displayTweet:(TweetInfo *)aTweet
     onNavigationController:(UINavigationController *)navController
 {
+    // sucks but the map span doesn't seem to set properly if we don't recreate
+    if (locationCell) {
+        [locationCell release];
+        locationCell = nil;
+    }
+
     self.tweet = aTweet;
     self.navigationController = navController;
 
     [self loadTweetWebView];
+
+    [self.locationCell setLocation:self.tweet.location];
 }
 
 - (void)setFavorited:(BOOL)favorited
@@ -692,9 +719,16 @@ enum TweetActionSheets {
     return deleteTweetCell;
 }
 
-- (NSIndexPath *)indexForActualIndexPath:(NSIndexPath *)indexPath
+- (NSIndexPath *)indexForActualIndexPath:(NSIndexPath *)actual
 {
-    return indexPath;
+    NSInteger row;
+    if (actual.section == kTweetDetailsSection && !tweet.location &&
+        actual.row == kLocationRow)
+        row = kConversationRow;
+    else
+        row = actual.row;
+
+    return [NSIndexPath indexPathForRow:row inSection:actual.section];
 }
 
 - (NSInteger)sectionForActualSection:(NSInteger)section
@@ -719,6 +753,16 @@ enum TweetActionSheets {
     UIView * rootView =
         navigationController.parentViewController.view;
     [sheet showInView:rootView];
+}
+
+- (TweetLocationCell *)locationCell
+{
+    if (!locationCell)
+        locationCell =
+            [[TweetLocationCell alloc] initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:@"TweetLocationCell"];
+
+    return locationCell;
 }
 
 + (UIImage *)defaultAvatar

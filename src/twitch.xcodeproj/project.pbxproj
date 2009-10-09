@@ -852,6 +852,8 @@
 		91DCE8F21073BE7B00095FD0 /* DirectMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DCE8F01073BE7B00095FD0 /* DirectMessageViewController.m */; };
 		91DCE9091073C58D00095FD0 /* DirectMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91DCE9071073C58D00095FD0 /* DirectMessageView.xib */; };
 		91DCEB3F107511DB00095FD0 /* RotatableTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DCEB3E107511DB00095FD0 /* RotatableTabBarController.m */; };
+		91DCF354107E4ECB00095FD0 /* TweetLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DCF351107E4ECB00095FD0 /* TweetLocationCell.m */; };
+		91DCF355107E4ECB00095FD0 /* TweetLocationCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DCF353107E4ECB00095FD0 /* TweetLocationCellView.m */; };
 		91DEF180101B7118001354D5 /* FindPeopleSearchDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DEF17F101B7118001354D5 /* FindPeopleSearchDisplayMgr.m */; };
 		91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6C44101A51F800354D67 /* PersonSearch.png */; };
 		91FDD58D1061581C000F7527 /* BitlyLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91FDD58C1061581C000F7527 /* BitlyLogInDisplayMgr.m */; };
@@ -1199,6 +1201,7 @@
 		05B23B4A0FEED5C600A6A2E6 /* FetchTimelineResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTimelineResponseProcessor.h; path = twitter/processors/FetchTimelineResponseProcessor.h; sourceTree = "<group>"; };
 		05B23B4B0FEED5C600A6A2E6 /* FetchTimelineResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchTimelineResponseProcessor.m; path = twitter/processors/FetchTimelineResponseProcessor.m; sourceTree = "<group>"; };
 		05B23B4D0FEED7DD00A6A2E6 /* ResponseProcessors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResponseProcessors.h; path = twitter/processors/ResponseProcessors.h; sourceTree = "<group>"; };
+		05B23C1A0FEEEFC700A6A2E6 /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tweet.m; path = /Users/jad/src/hob/twitbit/src/Classes/tweets/Tweet.m; sourceTree = "<absolute>"; };
 		05B7C8BF105899E00043298A /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSON.h; path = vendor/json/JSON.h; sourceTree = "<group>"; };
 		05B7C8C0105899E00043298A /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+SBJSON.h"; path = "vendor/json/NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		05B7C8C1105899E00043298A /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+SBJSON.m"; path = "vendor/json/NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -1598,6 +1601,10 @@
 		91DCE9081073C58D00095FD0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/DirectMessageView.xib; sourceTree = "<group>"; };
 		91DCEB3D107511DB00095FD0 /* RotatableTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RotatableTabBarController.h; path = shared/RotatableTabBarController.h; sourceTree = "<group>"; };
 		91DCEB3E107511DB00095FD0 /* RotatableTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotatableTabBarController.m; path = shared/RotatableTabBarController.m; sourceTree = "<group>"; };
+		91DCF350107E4ECB00095FD0 /* TweetLocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetLocationCell.h; path = tweets/TweetLocationCell.h; sourceTree = "<group>"; };
+		91DCF351107E4ECB00095FD0 /* TweetLocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetLocationCell.m; path = tweets/TweetLocationCell.m; sourceTree = "<group>"; };
+		91DCF352107E4ECB00095FD0 /* TweetLocationCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetLocationCellView.h; path = tweets/TweetLocationCellView.h; sourceTree = "<group>"; };
+		91DCF353107E4ECB00095FD0 /* TweetLocationCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetLocationCellView.m; path = tweets/TweetLocationCellView.m; sourceTree = "<group>"; };
 		91DEF17E101B7118001354D5 /* FindPeopleSearchDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FindPeopleSearchDisplayMgr.h; path = timeline/FindPeopleSearchDisplayMgr.h; sourceTree = "<group>"; };
 		91DEF17F101B7118001354D5 /* FindPeopleSearchDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindPeopleSearchDisplayMgr.m; path = timeline/FindPeopleSearchDisplayMgr.m; sourceTree = "<group>"; };
 		91E000420FEF76E800BCE9BC /* Favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Favorite.png; path = images/Favorite.png; sourceTree = "<group>"; };
@@ -2308,6 +2315,13 @@
 				0531DA45107FEDEC003DC0D6 /* Tweet.m */,
 				05A66AD0107EBAD60077343D /* TweetLocation.h */,
 				05A66AD1107EBAD60077343D /* TweetLocation.m */,
+				91DCF350107E4ECB00095FD0 /* TweetLocationCell.h */,
+				91DCF351107E4ECB00095FD0 /* TweetLocationCell.m */,
+				91DCF352107E4ECB00095FD0 /* TweetLocationCellView.h */,
+				91DCF353107E4ECB00095FD0 /* TweetLocationCellView.m */,
+				05B23C1A0FEEEFC700A6A2E6 /* Tweet.m */,
+				05761AFD0FF6ADD600392ADC /* UserTweet.h */,
+				05761AFE0FF6ADD600392ADC /* UserTweet.m */,
 				05F45A520FF01DE000EBAFC7 /* Tweet+CoreDataAdditions.h */,
 				05F45A530FF01DE000EBAFC7 /* Tweet+CoreDataAdditions.m */,
 				05761AFD0FF6ADD600392ADC /* UserTweet.h */,
@@ -3812,6 +3826,8 @@
 				05A669F7107EAAEE0077343D /* MGTwitterJSONParser.m in Sources */,
 				05A66AD2107EBAD60077343D /* TweetLocation.m in Sources */,
 				0531DA46107FEDEC003DC0D6 /* Tweet.m in Sources */,
+				91DCF354107E4ECB00095FD0 /* TweetLocationCell.m in Sources */,
+				91DCF355107E4ECB00095FD0 /* TweetLocationCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
