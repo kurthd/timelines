@@ -13,6 +13,7 @@
 #import "UserTweet+CoreDataAdditions.h"
 #import "User+UIAdditions.h"
 #import "NSDictionary+GeneralHelpers.h"
+#import "TweetLocation.h"
 
 @interface NSDictionary (ParsingHelpers)
 - (id)safeObjectForKey:(id)key;
@@ -114,7 +115,7 @@
             tweet = [Tweet createInstance:context];
     }
 
-    [self populateTweet:tweet fromData:tweetData];
+    [self populateTweet:tweet fromData:tweetData context:context];
     tweet.user = tweetAuthor;
 
     NSAssert1(tweet.source, @"Failed to parse tweet: %@", status);
@@ -153,7 +154,7 @@
     Mention * tweet = [Mention tweetWithId:tweetId context:context];
     if (!tweet)
         tweet = [Mention createInstance:context];
-    [self populateTweet:tweet fromData:tweetData];
+    [self populateTweet:tweet fromData:tweetData context:context];
     tweet.user = tweetAuthor;
     tweet.credentials = credentials;
 
@@ -194,7 +195,9 @@
     user.geoEnabled = [NSNumber numberWithBool:[geoEnabled integerValue] == 1];
 }
 
-- (void)populateTweet:(Tweet *)tweet fromData:(NSDictionary *)data
+- (void)populateTweet:(Tweet *)tweet
+             fromData:(NSDictionary *)data
+              context:(NSManagedObjectContext *)context
 {
     tweet.identifier = [[data safeObjectForKey:@"id"] description];
     tweet.text = [data safeObjectForKey:@"text"];
@@ -220,9 +223,23 @@
     tweet.inReplyToTwitterUserId =
         [[data safeObjectForKey:@"in_reply_to_user_id"] description];
 
+    if ([tweet.text isEqual:@"i finally (blanked) the (blank). whew"])
+        NSLog(@"here's the tweet: %@", data);
+
     NSDictionary * geodata = [data objectForKey:@"geo"];
     if (geodata && ![geodata isEqual:[NSNull null]]) {
         NSLog(@"Have geo data");
+        NSArray * coordinates = [geodata objectForKey:@"coordinates"];
+        NSNumber * latitude = [coordinates objectAtIndex:0];
+        NSNumber * longitude = [coordinates objectAtIndex:1];
+
+        TweetLocation * loc = tweet.location;
+        if (!loc) {
+            loc = [TweetLocation createInstance:context];
+            tweet.location = loc;
+        }
+        loc.latitude = latitude;
+        loc.longitude = longitude;
     }
 }
 

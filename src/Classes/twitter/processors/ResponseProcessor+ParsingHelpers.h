@@ -20,7 +20,9 @@
                              context:(NSManagedObjectContext *)context;
 
 - (void)populateUser:(User *)user fromData:(NSDictionary *)data;
-- (void)populateTweet:(Tweet *)tweet fromData:(NSDictionary *)data;
+- (void)populateTweet:(Tweet *)tweet
+             fromData:(NSDictionary *)data
+              context:(NSManagedObjectContext *)context;
 - (void)populateDirectMessage:(DirectMessage *)dm fromData:(NSDictionary *)data;
 
 @end

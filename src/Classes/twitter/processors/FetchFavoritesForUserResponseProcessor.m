@@ -91,7 +91,7 @@
         if (!tweet)
             tweet = [Tweet createInstance:context];
 
-        [self populateTweet:tweet fromData:tweetData];
+        [self populateTweet:tweet fromData:tweetData context:context];
         tweet.user = tweetAuthor;
 
         [tweets addObject:tweet];
