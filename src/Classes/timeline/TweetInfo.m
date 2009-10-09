@@ -180,9 +180,13 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
 
     NSMutableDictionary * uniqueMentions = [NSMutableDictionary dictionary];
+    NSMutableDictionary * excludedMentions = [NSMutableDictionary dictionary];
+
     NSRange currentRange = [body rangeOfRegex:usernameRegex];
     while (!NSEqualRanges(currentRange, notFoundRange)) {
         NSString * mention = [body substringWithRange:currentRange];
+        if ([uniqueMentions objectForKey:mention])
+            [excludedMentions setObject:mention forKey:mention];
         [uniqueMentions setObject:mention forKey:mention];
 
         NSUInteger startingPosition =
@@ -198,11 +202,15 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     NSString * bodyWithUserLinks = [[body copy] autorelease];
     for (NSString * mention in [uniqueMentions allKeys]) {
-        NSString * mentionRegex =
-            [NSString stringWithFormat:@"\\B(%@)\\b", mention];
-        bodyWithUserLinks =
-            [bodyWithUserLinks stringByReplacingOccurrencesOfRegex:mentionRegex
-            withString:@"<a href=\"x-twitbit://user?screen_name=$1\">$1</a>"];
+        if (![excludedMentions objectForKey:mention]) {
+            NSString * mentionRegex =
+                [NSString stringWithFormat:@"\\B(%@)\\b", mention];
+            bodyWithUserLinks =
+                [bodyWithUserLinks
+                stringByReplacingOccurrencesOfRegex:mentionRegex
+                withString:
+                @"<a href=\"x-twitbit://user?screen_name=$1\">$1</a>"];
+        }
     }
 
     return bodyWithUserLinks;
@@ -213,9 +221,13 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
 
     NSMutableDictionary * uniqueMentions = [NSMutableDictionary dictionary];
+    NSMutableDictionary * excludedMentions = [NSMutableDictionary dictionary];
+
     NSRange currentRange = [body rangeOfRegex:hashRegex];
     while (!NSEqualRanges(currentRange, notFoundRange)) {
         NSString * mention = [body substringWithRange:currentRange];
+        if ([uniqueMentions objectForKey:mention])
+            [excludedMentions setObject:mention forKey:mention];            
         [uniqueMentions setObject:mention forKey:mention];
 
         NSUInteger startingPosition =
@@ -231,11 +243,14 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     NSString * bodyWithHashLinks = [[body copy] autorelease];
     for (NSString * mention in [uniqueMentions allKeys]) {
-        NSString * mentionRegex =
-            [NSString stringWithFormat:@"\\B(%@)\\b", mention];
-        bodyWithHashLinks =
-            [bodyWithHashLinks stringByReplacingOccurrencesOfRegex:mentionRegex
-            withString:@"<a href=\"x-twitbit://search?query=$1\">$1</a>"];
+        if (![excludedMentions objectForKey:mention]) {
+            NSString * mentionRegex =
+                [NSString stringWithFormat:@"\\B(%@)\\b", mention];
+            bodyWithHashLinks =
+                [bodyWithHashLinks
+                stringByReplacingOccurrencesOfRegex:mentionRegex
+                withString:@"<a href=\"x-twitbit://search?query=$1\">$1</a>"];
+        }
     }
 
     return bodyWithHashLinks;
