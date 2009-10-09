@@ -40,5 +40,6 @@
  instantatiating a large collection and then enumerating over the items.
 */
 
-#define YAJL_AVAILABLE 1
+#define YAJL_AVAILABLE 0
+#define JSON_AVAILABLE 1
 

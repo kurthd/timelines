@@ -13,9 +13,15 @@
 
 #define USE_LIBXML 0
 
-#if YAJL_AVAILABLE
+#if JSON_AVAILABLE || YAJL_AVAILABLE
 	#define API_FORMAT @"json"
+#endif
 
+#if JSON_AVAILABLE
+
+    #import "MGTwitterJSONParser.h"
+
+#elif YAJL_AVAILABLE
 	#import "MGTwitterStatusesYAJLParser.h"
 	#import "MGTwitterMessagesYAJLParser.h"
 	#import "MGTwitterUsersYAJLParser.h"
@@ -38,7 +44,7 @@
 #endif
 
 #define TWITTER_DOMAIN          @"twitter.com"
-#if YAJL_AVAILABLE
+#if JSON_AVAILABLE || YAJL_AVAILABLE
 	#define TWITTER_SEARCH_DOMAIN	@"search.twitter.com"
 #endif
 #define HTTP_POST_METHOD        @"POST"
@@ -101,7 +107,7 @@
         _clientURL = [DEFAULT_CLIENT_URL retain];
 		_clientSourceToken = [DEFAULT_CLIENT_TOKEN retain];
 		_APIDomain = [TWITTER_DOMAIN retain];
-#if YAJL_AVAILABLE
+#if JSON_AVAILABLE || YAJL_AVAILABLE
 		_searchDomain = [TWITTER_SEARCH_DOMAIN retain];
 #endif
 
@@ -130,7 +136,7 @@
     [_clientURL release];
     [_clientSourceToken release];
 	[_APIDomain release];
-#if YAJL_AVAILABLE
+#if JSON_AVAILABLE || YAJL_AVAILABLE
 	[_searchDomain release];
 #endif
     
@@ -247,7 +253,7 @@
 }
 
 
-#if YAJL_AVAILABLE
+#if JSON_AVAILABLE || YAJL_AVAILABLE
 
 - (NSString *)searchDomain
 {
@@ -458,7 +464,7 @@
         fullPath = [self _queryStringWithBase:fullPath parameters:params prefixed:YES];
     }
 
-#if YAJL_AVAILABLE
+#if JSON_AVAILABLE || YAJL_AVAILABLE
 	NSString *domain = nil;
 	NSString *connectionType = nil;
 	if (requestType == MGTwitterSearchRequest)
@@ -572,7 +578,27 @@
 
 #pragma mark Parsing methods
 
-#if YAJL_AVAILABLE
+#if JSON_AVAILABLE
+
+- (void)_parseDataForConnection:(MGTwitterHTTPURLConnection *)connection
+{
+    NSString * identifier = [[[connection identifier] copy] autorelease];
+    NSData * jsonData = [connection data];
+    MGTwitterRequestType requestType = [connection requestType];
+    MGTwitterResponseType responseType = [connection responseType];
+
+	NSURL *URL = [connection URL];
+
+    [MGTwitterJSONParser parserWithJSON:jsonData
+                               delegate:self
+                   connectionIdentifier:identifier
+                            requestType:requestType
+                           responseType:responseType
+                                    URL:URL];
+}
+
+#elif YAJL_AVAILABLE
+
 - (void)_parseDataForConnection:(MGTwitterHTTPURLConnection *)connection
 {
     NSString *identifier = [[[connection identifier] copy] autorelease];
@@ -741,7 +767,7 @@
                 if ([self _isValidDelegateForSelector:@selector(miscInfoReceived:forRequest:)])
                     [_delegate miscInfoReceived:parsedObjects forRequest:identifier];
                 break;
-#if YAJL_AVAILABLE
+#if JSON_AVAILABLE || YAJL_AVAILABLE
             case MGTwitterSearchResults:
                 if ([self _isValidDelegateForSelector:@selector(searchResultsReceived:forRequest:)])
                     [_delegate searchResultsReceived:parsedObjects forRequest:identifier];
@@ -1656,7 +1682,7 @@
                            responseType:MGTwitterDirectMessage];
 }
 
-#if YAJL_AVAILABLE
+#if JSON_AVAILABLE || YAJL_AVAILABLE
 
 #pragma mark Search
 

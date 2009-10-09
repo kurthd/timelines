@@ -361,9 +361,14 @@ static yajl_callbacks callbacks = {
 
 - (void)_parsedObject:(NSDictionary *)dictionary
 {
+    /* jad: temporarily removing to remove compiler warning while trying to move
+     * from yajl to json-framework.
+     */
+    /*
 	if (deliveryOptions & MGTwitterEngineDeliveryIndividualResultsOption)
 		if ([self _isValidDelegateForSelector:@selector(parsedObject:forRequest:ofResponseType:)])
 			[delegate parsedObject:(NSDictionary *)dictionary forRequest:identifier ofResponseType:responseType];
+     */
 }
 
 

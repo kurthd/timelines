@@ -536,6 +536,7 @@
 		05A6675B107E5B3E0077343D /* NSObject+TweetHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */; };
 		05A667C7107E64E80077343D /* UserTweet+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A667C6107E64E80077343D /* UserTweet+CoreDataAdditions.m */; };
 		05A66867107E70680077343D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A66866107E70680077343D /* User.m */; };
+		05A669F7107EAAEE0077343D /* MGTwitterJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A669F6107EAAEE0077343D /* MGTwitterJSONParser.m */; };
 		05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05AC573C1029F0EF00F727A2 /* QuartzCore.framework */; };
 		05B7C8CC105899E00043298A /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B7C8C1105899E00043298A /* NSObject+SBJSON.m */; };
 		05B7C8CD105899E00043298A /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B7C8C3105899E00043298A /* NSString+SBJSON.m */; };
@@ -1120,6 +1121,8 @@
 		05A667F4107E6B090077343D /* twitch-v2.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.1.xcdatamodel"; sourceTree = "<group>"; };
 		05A66865107E70680077343D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = users/User.h; sourceTree = "<group>"; };
 		05A66866107E70680077343D /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = users/User.m; sourceTree = "<group>"; };
+		05A669F5107EAAEE0077343D /* MGTwitterJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTwitterJSONParser.h; path = "vendor/mg-twitter-engine/MGTwitterJSONParser.h"; sourceTree = "<group>"; };
+		05A669F6107EAAEE0077343D /* MGTwitterJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTwitterJSONParser.m; path = "vendor/mg-twitter-engine/MGTwitterJSONParser.m"; sourceTree = "<group>"; };
 		05AC573C1029F0EF00F727A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		05AE708C0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFavoritesForUserResponseProcessor.h; path = twitter/processors/FetchFavoritesForUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFavoritesForUserResponseProcessor.m; path = twitter/processors/FetchFavoritesForUserResponseProcessor.m; sourceTree = "<group>"; };
@@ -2017,6 +2020,8 @@
 				05B2380A0FEDB20900A6A2E6 /* NSData+Base64.m */,
 				05B2380B0FEDB20900A6A2E6 /* NSString+UUID.h */,
 				05B2380C0FEDB20900A6A2E6 /* NSString+UUID.m */,
+				05A669F5107EAAEE0077343D /* MGTwitterJSONParser.h */,
+				05A669F6107EAAEE0077343D /* MGTwitterJSONParser.m */,
 			);
 			name = "mg-twitter-engine";
 			sourceTree = "<group>";
@@ -3796,6 +3801,7 @@
 				05A6675B107E5B3E0077343D /* NSObject+TweetHelpers.m in Sources */,
 				05A667C7107E64E80077343D /* UserTweet+CoreDataAdditions.m in Sources */,
 				05A66867107E70680077343D /* User.m in Sources */,
+				05A669F7107EAAEE0077343D /* MGTwitterJSONParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4129,6 +4135,7 @@
 		052E03B0106FFE61005CEC5F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ADDITIONAL_SDKS = "";
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVICE_REGISTRATION_DOMAIN = sandbox.twitbit.highorderbit.com;

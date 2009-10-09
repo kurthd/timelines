@@ -21,7 +21,7 @@
     NSString *_clientURL;
     NSString *_clientSourceToken;
 	NSString *_APIDomain;
-#if YAJL_AVAILABLE
+#if JSON_AVAILABLE || YAJL_AVAILABLE
 	NSString *_searchDomain;
 #endif
     BOOL _secureConnection;
@@ -49,7 +49,7 @@
 - (void)setClientName:(NSString *)name version:(NSString *)version URL:(NSString *)url token:(NSString *)token;
 - (NSString *)APIDomain;
 - (void)setAPIDomain:(NSString *)domain;
-#if YAJL_AVAILABLE
+#if JSON_AVAILABLE || YAJL_AVAILABLE
 - (NSString *)searchDomain;
 - (void)setSearchDomain:(NSString *)domain;
 #endif
@@ -197,7 +197,7 @@
 // All methods below return a unique connection identifier.
 // ======================================================================================================
 
-#if YAJL_AVAILABLE
+#if JSON_AVAILABLE || YAJL_AVAILABLE
 
 // Search method - http://apiwiki.twitter.com/Search+API+Documentation#Search
 

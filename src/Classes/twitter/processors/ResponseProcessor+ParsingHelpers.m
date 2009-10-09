@@ -26,6 +26,35 @@
 }
 @end
 
+@interface NSString (ParsingHelpers)
+- (NSDate *)twitterDateValue;
+@end
+
+@implementation NSString (ParsingHelpers)
+
+- (NSDate *)twitterDateValue
+{
+    struct tm theTime;
+    strptime([self UTF8String], "%a %b %d %H:%M:%S +0000 %Y", &theTime);
+    time_t epochTime = timegm(&theTime);
+
+    // jad: HACK: Search results are returned with a different format
+    // than tweets, so if parsing the string failed, try the search
+    // results format.
+    //
+    // This code should be changed to just return the string value and
+    // the date can be parsed at a higher level.
+    if (epochTime == -1) {
+        strptime([self UTF8String], "%a, %d %b %Y %H:%M:%S +0000", &theTime);
+        epochTime = timegm(&theTime);
+    }
+
+    return [NSDate dateWithTimeIntervalSince1970:epochTime];
+}
+
+@end
+
+
 @interface ResponseProcessor (PrivateParsingHelpers)
 
 - (BOOL)normalizeTweetDataIfNecessary:(NSMutableDictionary **)tweetDataPtr
@@ -33,6 +62,8 @@
 
 - (BOOL)isValidUserData:(NSDictionary *)userData;
 - (BOOL)isValidTweetData:(NSDictionary *)tweetData;
+
+- (NSDate *)dateValue:(NSString *)s;
 
 @end
 
@@ -134,9 +165,6 @@
     user.identifier = [[data safeObjectForKey:@"id"] description];
     user.username = [data safeObjectForKey:@"screen_name"];
 
-    if ([user.username isEqual:@"raffi"])
-        NSLog(@"found it");
-
     user.name = [data safeObjectForKey:@"name"];
     user.bio = [data safeObjectForKey:@"description"];
     user.location = [data safeObjectForKey:@"location"];
@@ -151,7 +179,7 @@
         [[data safeObjectForKey:@"followers_count"] longLongValue]];
     user.followersCount = followersCount;
 
-    user.created = [data safeObjectForKey:@"created_at"];
+    user.created = [[data safeObjectForKey:@"created_at"] twitterDateValue];
     user.webpage = [data safeObjectForKey:@"url"];
 
     user.avatar.thumbnailImageUrl =
@@ -172,7 +200,7 @@
     tweet.text = [data safeObjectForKey:@"text"];
     tweet.source = [data safeObjectForKey:@"source"];
 
-    tweet.timestamp = [data safeObjectForKey:@"created_at"];
+    tweet.timestamp = [[data safeObjectForKey:@"created_at"] twitterDateValue];
 
     [tweet setValue:[data safeObjectForKey:@"truncated"]
              forKey:@"truncated"];
@@ -191,6 +219,11 @@
         [[data safeObjectForKey:@"in_reply_to_status_id"] description];
     tweet.inReplyToTwitterUserId =
         [[data safeObjectForKey:@"in_reply_to_user_id"] description];
+
+    NSDictionary * geodata = [data objectForKey:@"geo"];
+    if (geodata && ![geodata isEqual:[NSNull null]]) {
+        NSLog(@"Have geo data");
+    }
 }
 
 - (void)populateDirectMessage:(DirectMessage *)dm fromData:(NSDictionary *)data
@@ -200,7 +233,7 @@
     dm.sourceApiRequestType =
         [[data objectForKey:@"source_api_request_type"] description];
 
-    dm.created = [data objectForKey:@"created_at"];
+    dm.created = [[data objectForKey:@"created_at"] twitterDateValue];
 }
 
 #pragma mark Private implementation
