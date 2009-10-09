@@ -224,7 +224,7 @@
 
     NSDictionary * geodata = [data objectForKey:@"geo"];
     if (geodata && ![geodata isEqual:[NSNull null]]) {
-        NSLog(@"Have geo data");
+        NSLog(@"Have geo data: %@", geodata);
         NSArray * coordinates = [geodata objectForKey:@"coordinates"];
         NSNumber * latitude = [coordinates objectAtIndex:0];
         NSNumber * longitude = [coordinates objectAtIndex:1];
