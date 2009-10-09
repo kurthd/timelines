@@ -6,6 +6,7 @@
 #import "RegexKitLite.h"
 #import "NSString+HtmlEncodingAdditions.h"
 #import "NSObject+TweetHelpers.h"
+#import "TweetLocation.h"
 
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 static NSString * hashRegex = @"\\B(#[\\w_]+)";
@@ -73,7 +74,15 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     tweetInfo.inReplyToTwitterTweetId = tweet.inReplyToTwitterTweetId;
     tweetInfo.inReplyToTwitterUserId = tweet.inReplyToTwitterUserId;
 
-    // TODO: set location
+    if (tweet.location) {
+        double latitude = [tweet.location.latitude doubleValue];
+        double longitude = [tweet.location.longitude doubleValue];
+        CLLocation * location =
+            [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+        tweetInfo.location = location;
+        [location release];
+    }
+
     // tweetInfo.location =
     //     [[[CLLocation alloc] initWithLatitude:45.696768 longitude:-73.578957]
     //     autorelease];
