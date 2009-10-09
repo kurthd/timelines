@@ -71,7 +71,6 @@ connectionIdentifier:(NSString *)identifier
 
     NSString * s =
         [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
-    NSLog(@"My json: '%@'", s);
     id results = [s JSONValue];
     [s release];
 
