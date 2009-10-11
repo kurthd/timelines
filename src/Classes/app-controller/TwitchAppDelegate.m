@@ -1145,12 +1145,16 @@
     NSLog(@"** %@: Loaded %d persisted tweets and %d persisted mentions.",
         account.username, allTweets.count, allMentions.count);
     allTweets = [allTweets sortedArrayUsingSelector:@selector(compare:)];
-    Tweet * newestTweet = [allTweets lastObject];
-    Tweet * oldestTweet = [allTweets objectAtIndex:0];
-    NSLog(@"** Newest tweet loaded from persistence: '%@': '%@': '%@'",
-        newestTweet.identifier, newestTweet.user.username, newestTweet.text);
-    NSLog(@"** Oldest tweet loaded from persistence: '%@': '%@': '%@'",
-        oldestTweet.identifier, oldestTweet.user.username, oldestTweet.text);
+    if (allTweets.count) {
+        Tweet * newestTweet = [allTweets lastObject];
+        Tweet * oldestTweet = [allTweets objectAtIndex:0];
+        NSLog(@"** Newest tweet loaded from persistence: '%@': '%@': '%@'",
+            newestTweet.identifier, newestTweet.user.username,
+            newestTweet.text);
+        NSLog(@"** Oldest tweet loaded from persistence: '%@': '%@': '%@'",
+            oldestTweet.identifier, oldestTweet.user.username,
+            oldestTweet.text);
+    }
     NSLog(@"***************** Persistence check *****************");
 
     // convert them all to dictionaries with TweetInfo objects as values
