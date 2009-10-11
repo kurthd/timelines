@@ -1109,14 +1109,16 @@
     for (TwitterCredentials * c in persistedCredentials) {
         NSArray * persistedTweets = [[c.userTimeline allObjects] sortedArray];
         NSLog(@"** %@: %d persisted tweets", c.username, persistedTweets.count);
-        Tweet * newestTweet = [persistedTweets objectAtIndex:0];
-        Tweet * oldestTweet = [persistedTweets lastObject];
-        NSLog(@"** Newest tweet saved to persistence: '%@': '%@': '%@'",
-            newestTweet.identifier, newestTweet.user.username,
-            newestTweet.text);
-        NSLog(@"** Oldest tweet saved to persistence: '%@': '%@': '%@'",
-            oldestTweet.identifier, oldestTweet.user.username,
-            oldestTweet.text);
+        if (persistedTweets.count) {
+            Tweet * newestTweet = [persistedTweets objectAtIndex:0];
+            Tweet * oldestTweet = [persistedTweets lastObject];
+            NSLog(@"** Newest tweet saved to persistence: '%@': '%@': '%@'",
+                newestTweet.identifier, newestTweet.user.username,
+                newestTweet.text);
+            NSLog(@"** Oldest tweet saved to persistence: '%@': '%@': '%@'",
+                oldestTweet.identifier, oldestTweet.user.username,
+                oldestTweet.text);
+        }
         NSAssert2(persistedTweets.count <= NUM_TWEETS_TO_KEEP,
             @"WARNING: Persisted too many tweets! Should persist %d but did "
             "persist %d.", NUM_TWEETS_TO_KEEP, persistedTweets.count);
@@ -1177,6 +1179,8 @@
 
 - (void)loadMessagesViewWithCachedData:(TwitterCredentials *)account
 {
+    NSLog(@"Loading cached direct messages for: '%@'.", account.username);
+
     // important to access the context via the accessor
     NSManagedObjectContext * context = [self managedObjectContext];
 
@@ -1210,8 +1214,8 @@
     }
 
     NSLog(@"Loading direct messages from persistence:");
-    NSLog(@"Sent up to %@:", largestSentId);
-    NSLog(@"Received up to %@:", largestRecvdId);
+    NSLog(@"\tSent up to %@:", largestSentId);
+    NSLog(@"\tReceived up to %@:", largestRecvdId);
 
     DirectMessageCache * cache = [[DirectMessageCache alloc] init];
 
