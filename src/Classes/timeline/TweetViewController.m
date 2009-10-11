@@ -404,7 +404,8 @@ enum TweetActionSheets {
 
     [self loadTweetWebView];
 
-    [self.locationCell setLocation:self.tweet.location];
+    if (self.tweet.location)
+        [self.locationCell setLocation:self.tweet.location];
 }
 
 - (void)setFavorited:(BOOL)favorited

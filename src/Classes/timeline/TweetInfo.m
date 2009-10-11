@@ -83,10 +83,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         [location release];
     }
 
-    // tweetInfo.location =
-    //     [[[CLLocation alloc] initWithLatitude:45.696768 longitude:-73.578957]
-    //     autorelease];
-
     return tweetInfo;
 }
 
