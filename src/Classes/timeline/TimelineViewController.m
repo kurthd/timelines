@@ -288,8 +288,15 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         self.tableView.tableHeaderView = plainHeaderView;
         self.tableView.contentInset = UIEdgeInsetsMake(-392, 0, 0, 0);
     } else {
+        CGRect headerViewFrame = self.view.frame;
+        BOOL landscape = [[RotatableTabBarController instance] landscape];
+        headerViewFrame.size.width = landscape ? 480 : 320;
+        headerViewFrame.size.height = 392;
+        headerView.frame = headerViewFrame;
+
         self.tableView.contentInset = UIEdgeInsetsMake(-317, 0, 0, 0);
         self.tableView.tableHeaderView = headerView;
+
         fullNameLabel.text =
             user.name && user.name.length > 0 &&
             ![[self class] displayWithUsername] ?
