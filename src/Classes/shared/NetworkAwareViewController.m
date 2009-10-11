@@ -98,6 +98,9 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
     visible = YES;
 
     [self addUpdatingViewAsSubview];
+
+    if (self.view == targetViewController.view)
+        [targetViewController viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -105,6 +108,9 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
     [super viewWillDisappear:animated];
     visible = NO;
     [self removeUpdatingViewFromSuperview];
+
+    if (self.view == targetViewController.view)
+        [targetViewController viewWillDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
