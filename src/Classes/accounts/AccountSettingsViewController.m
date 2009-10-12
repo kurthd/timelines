@@ -5,6 +5,7 @@
 #import "AccountSettingsViewController.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "InstapaperCredentials.h"
+#import "UIApplication+ConfigurationAdditions.h"
 
 static const NSInteger NUM_SECTIONS = 2;
 enum {
@@ -39,6 +40,7 @@ enum {
 @property (nonatomic, copy) AccountSettings * settings;
 
 - (void)syncDisplayWithSettings;
+- (NSInteger)effectiveSectionForSection:(NSInteger)section;
 
 @end
 
@@ -106,13 +108,15 @@ enum {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv
 {
-    return NUM_SECTIONS;
+    return [[UIApplication sharedApplication] isLiteVersion] ?
+        NUM_SECTIONS - 1 : NUM_SECTIONS;
 }
 
 - (NSString *)tableView:(UITableView *)tableView
     titleForHeaderInSection:(NSInteger)section
 {
     NSString * title = nil;
+    section = [self effectiveSectionForSection:section];
 
     if (section == kPushNotificationSection)
         title = NSLocalizedString(@"accountsettings.push.header", @"");
@@ -126,6 +130,7 @@ enum {
  numberOfRowsInSection:(NSInteger)section
 {
     NSInteger nrows = 0;
+    section = [self effectiveSectionForSection:section];
 
     if (section == kPushNotificationSection)
         nrows = NUM_PUSH_NOTIFICATION_ROWS;
@@ -139,10 +144,11 @@ enum {
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell * cell = nil;
+    NSInteger section = [self effectiveSectionForSection:indexPath.section];
 
-    if (indexPath.section == kPushNotificationSection)
+    if (section == kPushNotificationSection)
         cell = [self.pushSettingTableViewCells objectAtIndex:indexPath.row];
-    else if (indexPath.section == kIntegrationSection &&
+    else if (section == kIntegrationSection &&
         indexPath.row == kPhotAndVideoRow) {
         static NSString * CellIdentifier = @"AccountSettingsPhotoTableViewCell";
 
@@ -160,7 +166,7 @@ enum {
 
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-    } else if (indexPath.section == kIntegrationSection &&
+    } else if (section == kIntegrationSection &&
         indexPath.row == kInstapaperRow) {
         static NSString * CellIdentifier =
             @"AccountSettingsIntegrationTableViewCell";
@@ -186,7 +192,7 @@ enum {
             @"accountsettings.integration.instapaper.notconfigured.label",
             @"");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else if (indexPath.section == kIntegrationSection &&
+    } else if (section == kIntegrationSection &&
         indexPath.row == kBitlyRow) {
         static NSString * CellIdentifier =
             @"AccountSettingsIntegrationTableViewCell";
@@ -222,7 +228,9 @@ enum {
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == kIntegrationSection) {
+    NSInteger section = [self effectiveSectionForSection:indexPath.section];
+
+    if (section == kIntegrationSection) {
         if (indexPath.row == kPhotAndVideoRow)
             [self.delegate
                 userWantsToConfigurePhotoServicesForAccount:self.credentials];
@@ -264,6 +272,12 @@ enum {
 {
     [pushMentionsSwitch setOn:[settings pushMentions] animated:NO];
     [pushDirectMessagesSwitch setOn:[settings pushDirectMessages] animated:NO];
+}
+
+- (NSInteger)effectiveSectionForSection:(NSInteger)section
+{
+    return [[UIApplication sharedApplication] isLiteVersion] ?
+        kIntegrationSection : section;
 }
 
 @end
