@@ -27,7 +27,7 @@
 
 @property (nonatomic, copy) NSArray * sortedUserCache;
 
-- (void)setUsers:(NSArray *)users page:(NSUInteger)page;
+- (void)setUsers:(NSArray *)users;
 - (void)setAllPagesLoaded:(BOOL)allLoaded;
 
 - (IBAction)loadMoreUsers:(id)sender;

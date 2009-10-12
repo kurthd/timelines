@@ -100,8 +100,8 @@
 
 #pragma mark Social graph
 
-- (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page;
-- (void)fetchFollowersForUser:(NSString *)user page:(NSNumber *)page;
+- (void)fetchFriendsForUser:(NSString *)user cursor:(NSString *)cursor;
+- (void)fetchFollowersForUser:(NSString *)user cursor:(NSString *)cursor;
 - (void)isUser:(NSString *)user following:(NSString *)followee;
 
 #pragma mark Trends

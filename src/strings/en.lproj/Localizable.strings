@@ -145,6 +145,8 @@ photoservices.service.supportsboth = "Photos & Video";
 userlisttableview.following = "%@ following, %@ followers";
 userlisttableview.followers.title = "Followers";
 userlisttableview.following.title = "Following";
+userlisttableview.footerstring.singular = "Showing %d user";
+userlisttableview.footerstring.plural = "Showing %d users";
 
 /* Search */
 search.view.title = "Search";

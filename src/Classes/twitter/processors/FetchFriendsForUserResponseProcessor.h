@@ -8,17 +8,17 @@
 @interface FetchFriendsForUserResponseProcessor : ResponseProcessor
 {
     NSString * username;
-    NSNumber * page;
+    NSString * cursor;
     NSManagedObjectContext * context;
     id delegate;
 }
 
 + (id)processorWithUsername:(NSString *)aUsername
-                       page:(NSNumber *)aPage
+                     cursor:(NSString *)aCursor
                     context:(NSManagedObjectContext *)aContext
                    delegate:(id)aDelegate;
 - (id)initWithUsername:(NSString *)aUsername
-                  page:(NSNumber *)aPage
+                cursor:(NSString *)aCursor
                context:(NSManagedObjectContext *)aContext
               delegate:(id)aDelegate;
 

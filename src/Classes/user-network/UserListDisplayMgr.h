@@ -47,7 +47,7 @@
     NetworkAwareViewController * nextWrapperController;
     CredentialsActivatedPublisher * credentialsPublisher;
     TwitterCredentials * credentials;
-    NSUInteger pagesShown;
+    NSString * cursor;
     BOOL failedState;
     NSMutableDictionary * cache;
     UserInfoViewController * userInfoController;
