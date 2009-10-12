@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		050BA144106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 050BA143106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel */; };
 		0511067F102A25FC00915638 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0511067E102A25FC00915638 /* Settings.bundle */; };
 		0515675C1047035500A26F17 /* EditTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0515675A1047035500A26F17 /* EditTextView.xib */; };
 		051975FA103A119100883FAC /* AccountSelectedCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 051975F9103A119100883FAC /* AccountSelectedCheckmark.png */; };
@@ -150,9 +149,6 @@
 		052E047910700858005CEC5F /* NearbyTweetsButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 919CCCBD105EB0760029C0A1 /* NearbyTweetsButtonIcon.png */; };
 		052E047A10700858005CEC5F /* BitlyLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91FDD5A310616854000F7527 /* BitlyLogInView.xib */; };
 		052E049010700858005CEC5F /* twitch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0599416A0FFB32F100842518 /* twitch.xcdatamodeld */; };
-		052E050810700858005CEC5F /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
-		052E051310700858005CEC5F /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */; };
-		052E058C10700858005CEC5F /* v1.1-v2.0.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 050BA143106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel */; };
 		052E058E10700858005CEC5F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		052E058F10700858005CEC5F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		052E059010700858005CEC5F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
@@ -189,7 +185,6 @@
 		059A7091103DAE4A00B7500C /* SelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A708F103DAE4A00B7500C /* SelectionView.xib */; };
 		059A72AA103E1C7800B7500C /* YfrogSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72A8103E1C7800B7500C /* YfrogSettingsView.xib */; };
 		059A7301103E221E00B7500C /* TwitVidSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72FF103E221E00B7500C /* TwitVidSettingsView.xib */; };
-		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05AC573C1029F0EF00F727A2 /* QuartzCore.framework */; };
 		05C7B8BA103B5FAF0017874C /* PhotoServicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B8B8103B5FAF0017874C /* PhotoServicesView.xib */; };
 		05C7B962103B791A0017874C /* PhotoServiceSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B960103B791A0017874C /* PhotoServiceSelectorView.xib */; };
@@ -197,7 +192,6 @@
 		05C7B99E103B7E1D0017874C /* TwitPicLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B99C103B7E1D0017874C /* TwitPicLogo.png */; };
 		05C7B9F8103B8D360017874C /* YfrogLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B9F7103B8D360017874C /* YfrogLogo.png */; };
 		05C7BA09103B90310017874C /* TwitVidLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7BA08103B90310017874C /* TwitVidLogo.png */; };
-		05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */; };
 		05DB29C9102CD879001E8C30 /* DirectMessageButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29C8102CD879001E8C30 /* DirectMessageButtonIcon.png */; };
 		05DB2A00102CDB6B001E8C30 /* RetweetButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29FF102CDB6B001E8C30 /* RetweetButtonIcon.png */; };
 		05DB2A0A102CDEC0001E8C30 /* PublicReplyButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB2A09102CDEC0001E8C30 /* PublicReplyButtonIcon.png */; };
@@ -3268,9 +3262,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				052E049010700858005CEC5F /* twitch.xcdatamodeld in Sources */,
-				052E050810700858005CEC5F /* v1-to-v2.xcmappingmodel in Sources */,
-				052E051310700858005CEC5F /* v2-v1.1.xcmappingmodel in Sources */,
-				052E058C10700858005CEC5F /* v1.1-v2.0.xcmappingmodel in Sources */,
 				0531DA47107FEDEC003DC0D6 /* Tweet.m in Sources */,
 				05DBF2131082E76B004AB521 /* BitlyLogInDisplayMgr.m in Sources */,
 				05DBF2141082E76B004AB521 /* BitlyLogInViewController.m in Sources */,
@@ -3557,9 +3548,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0599416C0FFB32F100842518 /* twitch.xcdatamodeld in Sources */,
-				059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */,
-				05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */,
-				050BA144106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel in Sources */,
 				0531DA46107FEDEC003DC0D6 /* Tweet.m in Sources */,
 				05DBF3281082E76D004AB521 /* BitlyLogInDisplayMgr.m in Sources */,
 				05DBF3291082E76D004AB521 /* BitlyLogInViewController.m in Sources */,
