@@ -32,8 +32,6 @@
     NSUInteger waitingFor;
 
     NSMutableDictionary * alreadySent;
-
-    UIInterfaceOrientation orientation;
 }
 
 @property (nonatomic, assign) id<ConversationViewControllerDelegate> delegate;
