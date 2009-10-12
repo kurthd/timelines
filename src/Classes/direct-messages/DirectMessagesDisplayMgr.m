@@ -1282,6 +1282,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)constructConversationsFromMessages
 {
+    [conversations removeAllObjects];
+    [sortedConversations removeAllObjects];
+
     NSDictionary * receivedDirectMessages =
         directMessageCache.receivedDirectMessages;
     NSDictionary * sentDirectMessages = directMessageCache.sentDirectMessages;

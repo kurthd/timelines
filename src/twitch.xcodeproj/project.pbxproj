@@ -4287,94 +4287,6 @@
 			};
 			name = Release;
 		};
-		052E05A310700858005CEC5F /* Debug - John */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
-				INFOPLIST_FILE = "twitbit-lite-info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
-					"\\\"$(SRCROOT)/Classes/vendor/twitvid\\\"",
-					"\"$(SRCROOT)/Classes/vendor/yajl\"",
-					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
-				);
-				PRODUCT_NAME = Twitbit;
-			};
-			name = "Debug - John";
-		};
-		052E05A410700858005CEC5F /* Debug - Doug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Douglas Kurth";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
-				INFOPLIST_FILE = "twitbit-lite-info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
-					"\\\"$(SRCROOT)/Classes/vendor/twitvid\\\"",
-					"\"$(SRCROOT)/Classes/vendor/yajl\"",
-					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
-				);
-				PRODUCT_NAME = Twitbit;
-				PROVISIONING_PROFILE = "8CBB76EA-5187-4D9C-98F8-B96A1354A1AD";
-			};
-			name = "Debug - Doug";
-		};
-		052E05A510700858005CEC5F /* Release - John */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
-				INFOPLIST_FILE = "twitbit-lite-info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
-					"\\\"$(SRCROOT)/Classes/vendor/twitvid\\\"",
-					"\"$(SRCROOT)/Classes/vendor/yajl\"",
-					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
-				);
-				PRODUCT_NAME = Twitbit;
-			};
-			name = "Release - John";
-		};
-		052E05A610700858005CEC5F /* Release - Doug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Douglas Kurth";
-				COPY_PHASE_STRIP = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
-				INFOPLIST_FILE = "twitbit-lite-info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/Classes/vendor/yajl\\\"",
-					"\\\"$(SRCROOT)/Classes/vendor/twitvid\\\"",
-					"\"$(SRCROOT)/Classes/vendor/yajl\"",
-					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
-				);
-				PRODUCT_NAME = Twitbit;
-				PROVISIONING_PROFILE = "8CBB76EA-5187-4D9C-98F8-B96A1354A1AD";
-			};
-			name = "Release - Doug";
-		};
 		052E05A710700858005CEC5F /* Distribution - Ad Hoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -4503,134 +4415,6 @@
 			};
 			name = "Distribution - Ad Hoc";
 		};
-		05B239D20FEEA62C00A6A2E6 /* Release - Doug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Douglas Kurth";
-				DEVICE_REGISTRATION_DOMAIN = sandbox.twitbit.highorderbit.com;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					/usr/local/include,
-					$SDKROOT/usr/include/libxml2,
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-					"-licucore",
-				);
-				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8CBB76EA-5187-4D9C-98F8-B96A1354A1AD";
-				SDKROOT = iphoneos3.0;
-			};
-			name = "Release - Doug";
-		};
-		05B239D40FEEA63500A6A2E6 /* Debug - Doug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Douglas Kurth";
-				DEVICE_REGISTRATION_DOMAIN = sandbox.twitbit.highorderbit.com;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					/usr/local/include,
-					$SDKROOT/usr/include/libxml2,
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-					"-licucore",
-				);
-				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8CBB76EA-5187-4D9C-98F8-B96A1354A1AD";
-				SDKROOT = iphoneos3.0;
-			};
-			name = "Debug - Doug";
-		};
-		05EF418A0FFADF95007B59F1 /* Debug - John */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
-				INFOPLIST_FILE = "twitbit-info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Classes/vendor/yajl\"",
-					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
-				);
-				PRODUCT_NAME = Twitbit;
-			};
-			name = "Debug - John";
-		};
-		05EF418B0FFADF95007B59F1 /* Debug - Doug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Douglas Kurth";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
-				INFOPLIST_FILE = "twitbit-info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Classes/vendor/yajl\"",
-					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
-				);
-				PRODUCT_NAME = Twitbit;
-				PROVISIONING_PROFILE = "8CBB76EA-5187-4D9C-98F8-B96A1354A1AD";
-			};
-			name = "Debug - Doug";
-		};
-		05EF418C0FFADF95007B59F1 /* Release - John */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
-				INFOPLIST_FILE = "twitbit-info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Classes/vendor/yajl\"",
-					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
-				);
-				PRODUCT_NAME = Twitbit;
-			};
-			name = "Release - John";
-		};
-		05EF418D0FFADF95007B59F1 /* Release - Doug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Douglas Kurth";
-				COPY_PHASE_STRIP = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = twitch_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = HOB_TWITBIT_PUSH_ENABLE;
-				INFOPLIST_FILE = "twitbit-info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Classes/vendor/yajl\"",
-					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
-				);
-				PRODUCT_NAME = Twitbit;
-				PROVISIONING_PROFILE = "8CBB76EA-5187-4D9C-98F8-B96A1354A1AD";
-			};
-			name = "Release - Doug";
-		};
 		05EF418E0FFADF95007B59F1 /* Distribution - Ad Hoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -4652,54 +4436,6 @@
 			};
 			name = "Distribution - Ad Hoc";
 		};
-		C01FCF4F08A954540054247B /* Debug - John */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Debay";
-				DEVICE_REGISTRATION_DOMAIN = sandbox.twitbit.highorderbit.com;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					/usr/local/include,
-					$SDKROOT/usr/include/libxml2,
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-					"-licucore",
-				);
-				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4D2CFC7-162B-42E3-8B03-4F8F61F670A4";
-				SDKROOT = iphoneos3.0;
-			};
-			name = "Debug - John";
-		};
-		C01FCF5008A954540054247B /* Release - John */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Debay";
-				DEVICE_REGISTRATION_DOMAIN = sandbox.twitbit.highorderbit.com;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					/usr/local/include,
-					$SDKROOT/usr/include/libxml2,
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-					"-licucore",
-				);
-				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4D2CFC7-162B-42E3-8B03-4F8F61F670A4";
-				SDKROOT = iphoneos3.0;
-			};
-			name = "Release - John";
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -4708,45 +4444,33 @@
 			buildConfigurations = (
 				052E05A110700858005CEC5F /* Debug */,
 				052E05A210700858005CEC5F /* Release */,
-				052E05A310700858005CEC5F /* Debug - John */,
-				052E05A410700858005CEC5F /* Debug - Doug */,
-				052E05A510700858005CEC5F /* Release - John */,
-				052E05A610700858005CEC5F /* Release - Doug */,
 				052E05A710700858005CEC5F /* Distribution - Ad Hoc */,
 				052E05A810700858005CEC5F /* Distribution - App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Release - John";
+			defaultConfigurationName = Debug;
 		};
 		05EF41890FFADF95007B59F1 /* Build configuration list for PBXNativeTarget "Twitbit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				052E03B1106FFE61005CEC5F /* Debug */,
 				052E03B3106FFE67005CEC5F /* Release */,
-				05EF418A0FFADF95007B59F1 /* Debug - John */,
-				05EF418B0FFADF95007B59F1 /* Debug - Doug */,
-				05EF418C0FFADF95007B59F1 /* Release - John */,
-				05EF418D0FFADF95007B59F1 /* Release - Doug */,
 				05EF418E0FFADF95007B59F1 /* Distribution - Ad Hoc */,
 				059942450FFB6E9A00842518 /* Distribution - App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Release - John";
+			defaultConfigurationName = Debug;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "twitch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				052E03B0106FFE61005CEC5F /* Debug */,
 				052E03B2106FFE67005CEC5F /* Release */,
-				C01FCF4F08A954540054247B /* Debug - John */,
-				05B239D40FEEA63500A6A2E6 /* Debug - Doug */,
-				C01FCF5008A954540054247B /* Release - John */,
-				05B239D20FEEA62C00A6A2E6 /* Release - Doug */,
 				05B239D00FEEA62800A6A2E6 /* Distribution - Ad Hoc */,
 				059942430FFB6E9A00842518 /* Distribution - App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Release - John";
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 
