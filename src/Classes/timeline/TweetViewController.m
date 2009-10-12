@@ -232,9 +232,10 @@ enum TweetActionSheets {
     NSIndexPath * transformedPath = [self indexForActualIndexPath:indexPath];
 
     if (transformedPath.section == kTweetDetailsSection &&
-        transformedPath.row == kTweetTextRow)
-        rowHeight = tweetContentView.frame.size.height;
-    else if (transformedPath.section == kTweetDetailsSection &&
+        transformedPath.row == kTweetTextRow) {
+        CGFloat tweetTextHeight = tweetContentView.frame.size.height;
+        rowHeight = tweetTextHeight > 63 ? tweetTextHeight : 63;
+    } else if (transformedPath.section == kTweetDetailsSection &&
         transformedPath.row == kLocationRow)
         rowHeight = 64;
 
