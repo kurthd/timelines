@@ -83,6 +83,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
     if (self.view == targetViewController.view)
         [targetViewController viewWillAppear:animated];
     [noDataViewController viewWillAppear:animated];
+
     if ([delegate respondsToSelector:@selector(networkAwareViewWillAppear)])
         [delegate networkAwareViewWillAppear];
 

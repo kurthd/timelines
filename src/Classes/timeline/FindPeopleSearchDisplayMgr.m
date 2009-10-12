@@ -34,6 +34,7 @@
 - (void)showAutocompleteResults;
 - (void)hideAutocompleteResults;
 - (void)updateAutocompleteViewFrame;
+- (void)setSearchBarFrame;
 
 @property (nonatomic, readonly)
     FindPeopleBookmarkViewController * bookmarkController;
@@ -128,14 +129,7 @@
 
         UINavigationItem * navItem = netAwareController.navigationItem;
         navItem.titleView = searchBar;
-
-        CGFloat barHeight = navItem.titleView.superview.bounds.size.height;
-        BOOL landscape = [[RotatableTabBarController instance] landscape];
-        CGFloat viewWidth = landscape ? 470 : 310;
-        CGRect searchBarRect = CGRectMake(0.0, 0.0, viewWidth, barHeight);
-        searchBar.bounds = searchBarRect;
-        searchBar.autoresizingMask =
-            UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self setSearchBarFrame];
 
         [netAwareController setUpdatingState:kDisconnected];
         [netAwareController setCachedDataAvailable:NO];
@@ -143,6 +137,15 @@
     }
 
     return self;
+}
+
+- (void)setSearchBarFrame
+{
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    CGFloat viewWidth = landscape ? 470 : 310;
+    CGFloat barHeight = landscape ? 32 : 44;
+    CGRect searchBarRect = CGRectMake(0.0, 0.0, viewWidth, barHeight);
+    searchBar.bounds = searchBarRect;
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation
@@ -155,11 +158,15 @@
             ![self.currentSearchUsername isEqual:@""])
             [self userDidSelectSearchQuery:self.currentSearchUsername];
     }
+    [self performSelector:@selector(setSearchBarFrame) withObject:nil
+        afterDelay:0];
 }
 
 - (void)viewWillRotateToOrientation:(UIInterfaceOrientation)orientation
 {
     [self updateAutocompleteViewFrame];
+    [self performSelector:@selector(setSearchBarFrame) withObject:nil
+        afterDelay:0];
 }
 
 #pragma mark TwitterServiceDelegate implementation
@@ -333,7 +340,7 @@
 
     self.nextWrapperController.navigationItem.rightBarButtonItem = sendDMButton;
 
-    netAwareController.delegate = self.timelineDisplayMgr;
+    self.nextWrapperController.delegate = self.timelineDisplayMgr;
     
     TwitterService * twitterService =
         [[[TwitterService alloc] initWithTwitterCredentials:nil
