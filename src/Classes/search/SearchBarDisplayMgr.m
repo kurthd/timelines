@@ -60,6 +60,8 @@
 
 - (void)updateAutocompleteViewFrame;
 
+- (void)setSearchBarFrame;
+
 @end
 
 @implementation SearchBarDisplayMgr
@@ -121,13 +123,7 @@
         searchBar.delegate = self;
 
         navItem.titleView = searchBar;
-        CGFloat barHeight = navItem.titleView.superview.bounds.size.height;
-        BOOL landscape = [[RotatableTabBarController instance] landscape];
-        CGFloat viewWidth = landscape ? 470 : 310;
-        CGRect searchBarRect = CGRectMake(0.0, 0.0, viewWidth, barHeight);
-        searchBar.bounds = searchBarRect;
-        searchBar.autoresizingMask =
-            UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self setSearchBarFrame];
 
         navItem.leftBarButtonItem = self.locationButton;
 
@@ -155,6 +151,15 @@
     }
 
     return self;
+}
+
+- (void)setSearchBarFrame
+{
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    CGFloat viewWidth = landscape ? 470 : 310;
+    CGFloat barHeight = landscape ? 32 : 44;
+    CGRect searchBarRect = CGRectMake(0.0, 0.0, viewWidth, barHeight);
+    searchBar.bounds = searchBarRect;
 }
 
 - (void)setCredentials:(TwitterCredentials *)credentials
@@ -320,11 +325,15 @@
         } else if (self.searchQuery && ![self.searchQuery isEqual:@""])
             [self searchFor:self.searchQuery];
     }
+    [self performSelector:@selector(setSearchBarFrame) withObject:nil
+        afterDelay:0];
 }
 
 - (void)viewWillRotateToOrientation:(UIInterfaceOrientation)orientation
 {
     [self updateAutocompleteViewFrame];
+    [self performSelector:@selector(setSearchBarFrame) withObject:nil
+        afterDelay:0];
 }
 
 - (void)updateSearchButtonWithDoneState
