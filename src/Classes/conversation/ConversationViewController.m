@@ -7,6 +7,7 @@
 #import "TweetInfo.h"
 #import "TimelineTableViewCell.h"
 #import "User+UIAdditions.h"
+#import "RotatableTabBarController.h"
 
 @interface ConversationViewController ()
 
@@ -65,7 +66,6 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
     duration:(NSTimeInterval)duration
 {
-    orientation = o;
     [self.tableView reloadData];
 }
 
@@ -152,6 +152,7 @@
     [super viewWillAppear:animated];
 
     [self configureFooterForCurrentState];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -197,9 +198,7 @@
     [cell setDate:tweet.timestamp];
     [cell setTweetText:tweet.text];
 
-    BOOL landscape =
-        orientation == UIInterfaceOrientationLandscapeLeft ||
-        orientation == UIInterfaceOrientationLandscapeRight;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
     [cell setLandscape:landscape];
 
     if ([delegate isCurrentUser:tweet.user.username])
@@ -221,9 +220,7 @@
     TweetInfo * tweet = [conversation objectAtIndex:indexPath.row];
     TimelineTableViewCellType type = kTimelineTableViewCellTypeNormal;
 
-    BOOL landscape =
-        orientation == UIInterfaceOrientationLandscapeLeft ||
-        orientation == UIInterfaceOrientationLandscapeRight;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
 
     return [TimelineTableViewCell heightForContent:tweet.text displayType:type
         landscape:landscape];
