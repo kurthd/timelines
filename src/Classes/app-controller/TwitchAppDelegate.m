@@ -1110,8 +1110,8 @@
         NSArray * persistedTweets = [[c.userTimeline allObjects] sortedArray];
         NSLog(@"** %@: %d persisted tweets", c.username, persistedTweets.count);
         if (persistedTweets.count) {
-            Tweet * newestTweet = [persistedTweets objectAtIndex:0];
-            Tweet * oldestTweet = [persistedTweets lastObject];
+            Tweet * newestTweet = [persistedTweets lastObject];
+            Tweet * oldestTweet = [persistedTweets objectAtIndex:0];
             NSLog(@"** Newest tweet saved to persistence: '%@': '%@': '%@'",
                 newestTweet.identifier, newestTweet.user.username,
                 newestTweet.text);
