@@ -42,15 +42,19 @@
     activityIndicator.frame = activityIndicatorFrame;
 
     CGRect streetLabelFrame = streetLabel.frame;
+    streetLabelFrame.size.width = [self cellWidth] - 87;
+    streetLabel.frame = streetLabelFrame;
 
     CGRect cityLabelFrame = cityLabel.frame;
     cityLabelFrame.origin.y =
         streetLabelFrame.origin.y + (streetLabel.text ? 21 : 0);
+    cityLabelFrame.size.width = [self cellWidth] - 87;
     cityLabel.frame = cityLabelFrame;
 
     CGRect countryLabelFrame = countryLabel.frame;
     countryLabelFrame.origin.y =
         cityLabelFrame.origin.y + (cityLabel.text ? 21 : 0);
+    countryLabelFrame.size.width = [self cellWidth] - 87;
     countryLabel.frame = countryLabelFrame;
 }
 
