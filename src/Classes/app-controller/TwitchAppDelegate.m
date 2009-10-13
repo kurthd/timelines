@@ -1146,6 +1146,8 @@
     NSLog(@"***************** Persistence check *****************");
     NSLog(@"** %@: Loaded %d persisted tweets and %d persisted mentions.",
         account.username, allTweets.count, allMentions.count);
+
+    // allTweets are now sorted in ascending order, e.g. from oldest to newest
     allTweets = [allTweets sortedArrayUsingSelector:@selector(compare:)];
     if (allTweets.count) {
         Tweet * newestTweet = [allTweets lastObject];
@@ -1156,6 +1158,53 @@
         NSLog(@"** Oldest tweet loaded from persistence: '%@': '%@': '%@'",
             oldestTweet.identifier, oldestTweet.user.username,
             oldestTweet.text);
+    }
+
+    /*
+     * The first time we load cached data for an account, make sure we only load
+     * the most recent n tweets, where n is the fetch quantity setting. If, for
+     * example, the application crashed, it's possible there will be more than
+     * n tweets loaded from persistence. This will cause the timeline code to
+     * think it should load a page other than the first page when it does its
+     * initial fetch from Twitter. For example, if n is 20, and 23 tweets are
+     * loaded from persistence, the timeline will fetch page 2.
+     *
+     * We only want to do this pruning the first time we load tweets for an
+     * account. Subsequent times are from account switching, and we want the
+     * full range of tweets to remain.
+     */
+    static NSMutableSet * alreadyLoaded = nil;
+    if (!alreadyLoaded)
+        alreadyLoaded = [[NSMutableSet alloc] init];
+
+    if (![alreadyLoaded containsObject:account.username]) {
+        [alreadyLoaded addObject:account.username];
+
+        const NSUInteger MAX_SIZE = [SettingsReader fetchQuantity];
+        if (allTweets.count > MAX_SIZE) {
+            NSLog(@"Trimming tweets down to %d.", MAX_SIZE);
+
+            NSRange range = NSMakeRange(0, allTweets.count - MAX_SIZE);
+            NSArray * tweetsToDelete = [allTweets subarrayWithRange:range];
+            for (UserTweet * tweet in tweetsToDelete)
+                [context deleteObject:tweet];
+            [self saveContext];
+
+            range = NSMakeRange(allTweets.count - MAX_SIZE, MAX_SIZE);
+            allTweets = [allTweets subarrayWithRange:range];
+        }
+        if (allMentions.count > MAX_SIZE) {
+            NSLog(@"Trimming mentions down to %d.", MAX_SIZE);
+
+            NSRange range = NSMakeRange(0, allMentions.count - MAX_SIZE);
+            NSArray * mentionsToDelete = [allMentions subarrayWithRange:range];
+            for (Mention * mention in mentionsToDelete)
+                [context deleteObject:mention];
+            [self saveContext];
+
+            range = NSMakeRange(allMentions.count - MAX_SIZE, MAX_SIZE);
+            allMentions = [allMentions subarrayWithRange:range];
+        }
     }
     NSLog(@"***************** Persistence check *****************");
 
