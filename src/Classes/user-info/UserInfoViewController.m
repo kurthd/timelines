@@ -12,6 +12,8 @@
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "PhotoBrowserDisplayMgr.h"
 #import "RotatableTabBarController.h"
+#import "SettingsReader.h"
+#import "TimelineTableViewCellView.h"
 
 enum {
     kUserInfoSectionDetails,
@@ -55,6 +57,11 @@ static UIImage * defaultAvatar;
 - (void)dealloc
 {
     [headerView release];
+    [avatarBackgroundView release];
+    [headerBackgroundView release];
+    [headerTopLine release];
+    [headerBottomLine release];
+    [headerViewPadding release];
     [footerView release];
     [avatarView release];
     [nameLabel release];
@@ -89,6 +96,19 @@ static UIImage * defaultAvatar;
     self.tableView.tableHeaderView = headerView;
     self.tableView.tableFooterView = footerView;
     
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        self.tableView.separatorColor = [UIColor grayColor];
+
+        headerBackgroundView.image =
+            [UIImage imageNamed:@"UserHeaderDarkThemeGradient.png"];
+        avatarBackgroundView.image =
+            [UIImage imageNamed:@"AvatarDarkThemeBackground.png"];
+        headerTopLine.backgroundColor = [UIColor blackColor];
+        headerBottomLine.backgroundColor = [UIColor blackColor];
+        headerViewPadding.backgroundColor =
+            [TimelineTableViewCellView defaultDarkThemeCellColor];
+    }
+
     [self layoutViews];
 }
 
