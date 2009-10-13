@@ -126,6 +126,9 @@
         searchBar.placeholder =
             NSLocalizedString(@"findpeople.placeholder", @"");
         searchBar.delegate = self;
+        searchBar.barStyle =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            UIBarStyleBlackOpaque : UIBarStyleDefault;
 
         UINavigationItem * navItem = netAwareController.navigationItem;
         navItem.titleView = searchBar;

@@ -14,6 +14,7 @@
 #import "RegexKitLite.h"
 #import "RotatableTabBarController.h"
 #import "NSArray+IterationAdditions.h"
+#import "SettingsReader.h"
 
 @interface TimelineViewController ()
 
@@ -53,6 +54,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 {
     [headerView release];
     [plainHeaderView release];
+    [plainHeaderViewLine release];
     [footerView release];
     [avatarView release];
     [fullNameLabel release];
@@ -78,6 +80,16 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        plainHeaderView.backgroundColor = [UIColor twitchDarkGrayColor];
+        plainHeaderViewLine.backgroundColor = [UIColor blackColor];
+        footerView.backgroundColor = [UIColor twitchDarkGrayColor];
+        self.tableView.backgroundColor = [UIColor twitchDarkGrayColor];
+        currentPagesLabel.textColor = [UIColor whiteColor];
+        noMorePagesLabel.textColor = [UIColor blackColor];
+    }
+
     self.tableView.tableFooterView = footerView;
     alreadySent = [[NSMutableDictionary dictionary] retain];
     showInbox = YES;
@@ -338,8 +350,11 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
     [self.tableView reloadData];
 
-    [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
-        forState:UIControlStateNormal];
+    UIColor * buttonColor =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [UIColor twitchBlueOnDarkBackgroundColor] : [UIColor twitchBlueColor];
+        
+    [loadMoreButton setTitleColor:buttonColor forState:UIControlStateNormal];
     loadMoreButton.enabled = YES;
 
     if (aVisibleTweetId) {

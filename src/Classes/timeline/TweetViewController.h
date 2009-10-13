@@ -20,9 +20,15 @@
     UINavigationController * navigationController;
 
     IBOutlet UIView * headerView;
+    IBOutlet UIImageView * avatarBackgroundView;
+    IBOutlet UIImageView * headerBackgroundView;
+    IBOutlet UIView * headerTopLine;
+    IBOutlet UIView * headerBottomLine;
+    IBOutlet UIView * headerViewPadding;
+    IBOutlet UIImageView * chatArrowView;
     IBOutlet UIView * footerView;
-    IBOutlet UIView * openInBrowserButton;
-    IBOutlet UIView * emailButton;
+    IBOutlet UIButton * openInBrowserButton;
+    IBOutlet UIButton * emailButton;
     IBOutlet UILabel * fullNameLabel;
     IBOutlet UILabel * usernameLabel;
     IBOutlet RoundedImage * avatarImage;
@@ -42,7 +48,6 @@
 
     TweetLocationCell * locationCell;
     UITableViewCell * publicReplyCell;
-    UITableViewCell * directMessageCell;
     UITableViewCell * retweetCell;
     MarkAsFavoriteCell * favoriteCell;
     UITableViewCell * deleteTweetCell;

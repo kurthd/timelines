@@ -7,6 +7,7 @@
 #import "NSString+HtmlEncodingAdditions.h"
 #import "NSObject+TweetHelpers.h"
 #import "TweetLocation.h"
+#import "SettingsReader.h"
 
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 static NSString * hashRegex = @"\\B(#[\\w_]+)";
@@ -127,6 +128,26 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         @"&nbsp;";
 
     NSString * html =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [NSString stringWithFormat:
+        @"<html>"
+        "  <head>"
+        "   <style media=\"screen\" type=\"text/css\" rel=\"stylesheet\">"
+        "     @import url(dark-theme-tweet-style.css);"
+        "   </style>"
+        "  </head>"
+        "  <body>"
+        "    <p class=\"text\">%@</p>"
+        "    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+        "      width=\"100%%\" class=\"footer\">"
+        "      <tr>"
+        "        <td align=\"left\" valign=\"top\">%@</td>"
+        "        <td align=\"right\" valign=\"top\">%@</td>"
+        "      </tr>"
+        "    </table>"
+        "  </body>"
+        "</html>",
+        body, sourceString, timestampAsString] :
         [NSString stringWithFormat:
         @"<html>"
         "  <head>"

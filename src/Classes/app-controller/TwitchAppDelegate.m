@@ -146,6 +146,11 @@
 {
     NSLog(@"Application did finish launching; initializing");
 
+    if ([SettingsReader displayTheme] == kDisplayThemeDark)
+        [application setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:NO];
+    else
+        [application setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+
     credentialsActivatedPublisher =
         [[CredentialsActivatedPublisher alloc]
         initWithListener:self action:@selector(credentialsActivated:)];
@@ -464,6 +469,10 @@
 {
     NSLog(@"Initializing home tab");
 
+    homeNetAwareViewController.navigationController.navigationBar.barStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIBarStyleBlackOpaque : UIBarStyleDefault;
+
     NSString * homeTabTitle =
         NSLocalizedString(@"appdelegate.hometabtitle", @"");
     timelineDisplayMgr =
@@ -528,6 +537,10 @@
 
 - (void)initMessagesTab
 {
+    messagesNetAwareViewController.navigationController.navigationBar.barStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIBarStyleBlackOpaque : UIBarStyleDefault;
+
     directMessageDisplayMgr =
         [[directMessageDisplayMgrFactory
         createDirectMessageDisplayMgrWithWrapperController:
@@ -554,6 +567,11 @@
 
 - (void)initFindPeopleTab
 {
+    findPeopleNetAwareViewController.navigationController.navigationBar.
+        barStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIBarStyleBlackOpaque : UIBarStyleDefault;
+
     UIBarButtonItem * refreshButton =
         findPeopleNetAwareViewController.navigationItem.leftBarButtonItem;
     refreshButton.action = @selector(refreshWithLatest);
@@ -607,6 +625,10 @@
 
 - (void)initSearchTab
 {
+    searchNetAwareViewController.navigationController.navigationBar.barStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIBarStyleBlackOpaque : UIBarStyleDefault;
+
     TwitterService * searchService =
         [[[TwitterService alloc]
         initWithTwitterCredentials:nil
@@ -640,6 +662,10 @@
 
 - (void)initAccountsTab
 {
+    accountsViewController.navigationController.navigationBar.barStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIBarStyleBlackOpaque : UIBarStyleDefault;
+
     OauthLogInDisplayMgr * displayMgr =
         [[OauthLogInDisplayMgr alloc]
          initWithRootViewController:tabBarController

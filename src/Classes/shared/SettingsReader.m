@@ -79,4 +79,9 @@ static NSInteger nearbySearchRadius;
     return 10;
 }
 
++ (DisplayTheme)displayTheme
+{
+    return kDisplayThemeLight;
+}
+
 @end

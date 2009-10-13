@@ -15,6 +15,7 @@
 
     IBOutlet UIView * headerView;
     IBOutlet UIView * plainHeaderView;
+    IBOutlet UIView * plainHeaderViewLine;
     IBOutlet UIView * footerView;
     IBOutlet RoundedImage * avatarView;
     IBOutlet UILabel * fullNameLabel;

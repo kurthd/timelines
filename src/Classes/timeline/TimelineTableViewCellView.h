@@ -36,6 +36,7 @@
                    cellType:(TimelineTableViewCellType)cellType
                   landscape:(BOOL)landscape;
 + (UIColor *)defaultTimelineCellColor;
++ (UIColor *)defaultDarkThemeCellColor;
 + (UIColor *)mentionCellColor;
 + (UIColor *)darkenedCellColor;
 

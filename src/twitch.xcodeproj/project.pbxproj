@@ -829,6 +829,14 @@
 		9152E1571014F86C0033B63B /* DirectMessageInboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1551014F86C0033B63B /* DirectMessageInboxView.xib */; };
 		9152E15A1014F8850033B63B /* DirectMessageConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1581014F8850033B63B /* DirectMessageConversationView.xib */; };
 		9152E239101557AC0033B63B /* NewMessagesDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9152E238101557AC0033B63B /* NewMessagesDot.png */; };
+		916A24431083E59800C5895D /* DarkThemeBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A24421083E59800C5895D /* DarkThemeBottomGradient.png */; };
+		916A24501083E72300C5895D /* DarkThemeTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A244F1083E72300C5895D /* DarkThemeTopGradient.png */; };
+		916A25431084283D00C5895D /* DarkThemeButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A25421084283D00C5895D /* DarkThemeButtonBackground.png */; };
+		916A25801084303000C5895D /* dark-theme-tweet-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 916A257F1084303000C5895D /* dark-theme-tweet-style.css */; };
+		916A265510845CBA00C5895D /* DarkThemeChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A265410845CBA00C5895D /* DarkThemeChatArrow.png */; };
+		916A26B11084F95100C5895D /* UserHeaderDarkThemeGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A26B01084F95100C5895D /* UserHeaderDarkThemeGradient.png */; };
+		916A27341085085A00C5895D /* AvatarDarkThemeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A27331085085A00C5895D /* AvatarDarkThemeBackground.png */; };
+		916A27891085218D00C5895D /* DarkThemeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A27881085218D00C5895D /* DarkThemeBackground.png */; };
 		916E3E49102CDC2700A879AC /* FavoriteIconForUserViewHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E3E48102CDC2700A879AC /* FavoriteIconForUserViewHighlighted.png */; };
 		917245521025046A007E0DF6 /* FavoriteMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 917245511025046A007E0DF6 /* FavoriteMark.png */; };
 		917245E61028B715007E0DF6 /* FindPeopleBookmarkView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 917245E41028B715007E0DF6 /* FindPeopleBookmarkView.xib */; };
@@ -1442,6 +1450,14 @@
 		9152E27110156CAB0033B63B /* DirectMessageConversationViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageConversationViewControllerDelegate.h; path = "direct-messages/DirectMessageConversationViewControllerDelegate.h"; sourceTree = "<group>"; };
 		9152E2741015729D0033B63B /* DirectMessage+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DirectMessage+UIAdditions.h"; path = "direct-messages/DirectMessage+UIAdditions.h"; sourceTree = "<group>"; };
 		9152E2751015729D0033B63B /* DirectMessage+UIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DirectMessage+UIAdditions.m"; path = "direct-messages/DirectMessage+UIAdditions.m"; sourceTree = "<group>"; };
+		916A24421083E59800C5895D /* DarkThemeBottomGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeBottomGradient.png; path = images/DarkThemeBottomGradient.png; sourceTree = "<group>"; };
+		916A244F1083E72300C5895D /* DarkThemeTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeTopGradient.png; path = images/DarkThemeTopGradient.png; sourceTree = "<group>"; };
+		916A25421084283D00C5895D /* DarkThemeButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeButtonBackground.png; path = images/DarkThemeButtonBackground.png; sourceTree = "<group>"; };
+		916A257F1084303000C5895D /* dark-theme-tweet-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "dark-theme-tweet-style.css"; sourceTree = "<group>"; };
+		916A265410845CBA00C5895D /* DarkThemeChatArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeChatArrow.png; path = images/DarkThemeChatArrow.png; sourceTree = "<group>"; };
+		916A26B01084F95100C5895D /* UserHeaderDarkThemeGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UserHeaderDarkThemeGradient.png; path = images/UserHeaderDarkThemeGradient.png; sourceTree = "<group>"; };
+		916A27331085085A00C5895D /* AvatarDarkThemeBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AvatarDarkThemeBackground.png; path = images/AvatarDarkThemeBackground.png; sourceTree = "<group>"; };
+		916A27881085218D00C5895D /* DarkThemeBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeBackground.png; path = images/DarkThemeBackground.png; sourceTree = "<group>"; };
 		916BD7990FEEADD7007143A9 /* NetworkAwareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkAwareViewController.h; path = shared/NetworkAwareViewController.h; sourceTree = "<group>"; };
 		916BD79A0FEEADD7007143A9 /* NetworkAwareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkAwareViewController.m; path = shared/NetworkAwareViewController.m; sourceTree = "<group>"; };
 		916BD79B0FEEADD7007143A9 /* NetworkAwareViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkAwareViewControllerDelegate.h; path = shared/NetworkAwareViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -2655,6 +2671,13 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				916A27881085218D00C5895D /* DarkThemeBackground.png */,
+				916A27331085085A00C5895D /* AvatarDarkThemeBackground.png */,
+				916A26B01084F95100C5895D /* UserHeaderDarkThemeGradient.png */,
+				916A265410845CBA00C5895D /* DarkThemeChatArrow.png */,
+				916A25421084283D00C5895D /* DarkThemeButtonBackground.png */,
+				916A244F1083E72300C5895D /* DarkThemeTopGradient.png */,
+				916A24421083E59800C5895D /* DarkThemeBottomGradient.png */,
 				91DCE7861072756000095FD0 /* UpButton.png */,
 				91DCE7841072755400095FD0 /* DownButton.png */,
 				919CCCBD105EB0760029C0A1 /* NearbyTweetsButtonIcon.png */,
@@ -2806,6 +2829,7 @@
 		916BDA4C0FEF573A007143A9 /* html */ = {
 			isa = PBXGroup;
 			children = (
+				916A257F1084303000C5895D /* dark-theme-tweet-style.css */,
 				918F7166104745D000FE7ABF /* style.css */,
 				918F713D104741AE00FE7ABF /* log-in-help.html */,
 				916BDA4D0FEF573A007143A9 /* tweet-style.css */,
@@ -3228,6 +3252,14 @@
 				91DCE7851072755400095FD0 /* DownButton.png in Resources */,
 				91DCE7871072756000095FD0 /* UpButton.png in Resources */,
 				91DCE9091073C58D00095FD0 /* DirectMessageView.xib in Resources */,
+				916A24431083E59800C5895D /* DarkThemeBottomGradient.png in Resources */,
+				916A24501083E72300C5895D /* DarkThemeTopGradient.png in Resources */,
+				916A25431084283D00C5895D /* DarkThemeButtonBackground.png in Resources */,
+				916A25801084303000C5895D /* dark-theme-tweet-style.css in Resources */,
+				916A265510845CBA00C5895D /* DarkThemeChatArrow.png in Resources */,
+				916A26B11084F95100C5895D /* UserHeaderDarkThemeGradient.png in Resources */,
+				916A27341085085A00C5895D /* AvatarDarkThemeBackground.png in Resources */,
+				916A27891085218D00C5895D /* DarkThemeBackground.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

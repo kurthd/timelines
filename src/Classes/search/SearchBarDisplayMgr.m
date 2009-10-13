@@ -9,6 +9,7 @@
 #import "UIColor+TwitchColors.h"
 #import "ErrorState.h"
 #import "RotatableTabBarController.h"
+#import "SettingsReader.h"
 
 @interface SearchBarDisplayMgr ()
 
@@ -121,6 +122,9 @@
         searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
         searchBar.showsBookmarkButton = YES;
         searchBar.delegate = self;
+        searchBar.barStyle =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            UIBarStyleBlackOpaque : UIBarStyleDefault;
 
         navItem.titleView = searchBar;
         [self setSearchBarFrame];

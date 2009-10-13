@@ -10,6 +10,11 @@ typedef enum {
     kComposeTweetImageQualityHigh
 } ComposeTweetImageQuality;
 
+typedef enum {
+    kDisplayThemeLight,
+    kDisplayThemeDark
+} DisplayTheme;
+
 @interface SettingsReader : NSObject
 
 + (NSInteger)fetchQuantity;
@@ -17,6 +22,8 @@ typedef enum {
 + (BOOL)shortenURLs;
 + (ComposeTweetImageQuality)imageQuality;
 + (NSInteger)nearbySearchRadius;
++ (DisplayTheme)displayTheme;
++ (NSInteger)defaultNearbySearchRadius;
 + (NSInteger)defaultNearbySearchRadius;
 
 @end

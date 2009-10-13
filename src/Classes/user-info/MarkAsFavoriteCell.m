@@ -40,6 +40,7 @@
     } else {
         iconView.hidden = NO;
         mainLabel.enabled = YES;
+        mainLabel.textColor = self.textLabel.textColor;
         [activityIndicator stopAnimating];
         self.selectionStyle = UITableViewCellSelectionStyleBlue;
     }

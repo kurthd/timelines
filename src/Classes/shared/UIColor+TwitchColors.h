@@ -7,6 +7,7 @@
 @interface UIColor (TwitchColors)
 
 + (UIColor *)twitchBlueColor;
++ (UIColor *)twitchBlueOnDarkBackgroundColor;
 + (UIColor *)twitchGrayColor;
 + (UIColor *)twitchLightGrayColor;
 + (UIColor *)twitchDarkGrayColor;

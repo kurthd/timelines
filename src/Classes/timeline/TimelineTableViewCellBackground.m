@@ -3,6 +3,7 @@
 //
 
 #import "TimelineTableViewCellBackground.h"
+#import "SettingsReader.h"
 
 static UIImage * backgroundImage;
 static UIImage * topGradientImage;
@@ -19,8 +20,12 @@ static UIImage * darkenedTopImage;
 {
     NSAssert(!backgroundImage, @"backgroundImage should be nil.");
     backgroundImage =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[UIImage imageNamed:@"DarkThemeBottomGradient.png"] retain] :
         [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
     topGradientImage =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[UIImage imageNamed:@"DarkThemeTopGradient.png"] retain] :
         [[UIImage imageNamed:@"TableViewCellTopGradient.png"] retain];
     mentionBottomImage =
         [[UIImage imageNamed:@"MentionBottomGradient.png"] retain];

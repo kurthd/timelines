@@ -7,6 +7,7 @@
 @implementation UIColor (TwitchColors)
 
 static UIColor * twitchBlueColor;
+static UIColor * twitchBlueOnDarkBackgroundColor;
 static UIColor * twitchGrayColor;
 static UIColor * twitchLightGrayColor;
 static UIColor * twitchDarkGrayColor;
@@ -30,6 +31,15 @@ static UIColor * darkCellBackgroundColor;
             [[UIColor colorWithRed:0 green:.4 blue:.8 alpha:1] retain];
 
     return twitchBlueColor;
+}
+
++ (UIColor *)twitchBlueOnDarkBackgroundColor
+{
+    if (!twitchBlueOnDarkBackgroundColor)
+        twitchBlueOnDarkBackgroundColor =
+            [[UIColor colorWithRed:.384 green:.576 blue:.733 alpha:1] retain];
+
+    return twitchBlueOnDarkBackgroundColor;
 }
 
 + (UIColor *)twitchGrayColor

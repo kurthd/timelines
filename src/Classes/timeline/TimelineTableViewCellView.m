@@ -5,6 +5,7 @@
 #import "TimelineTableViewCellView.h"
 #import "UIColor+TwitchColors.h"
 #import "UIImage+DrawingAdditions.h"
+#import "SettingsReader.h"
 
 static const CGFloat TEXT_WIDTH_WITHOUT_AVATAR = 290.0;
 static const CGFloat TEXT_WIDTH_WITHOUT_AVATAR_LANDSCAPE = 450.0;
@@ -52,8 +53,12 @@ static NSString * starText;
 {
     NSAssert(!backgroundImage, @"backgroundImage should be nil.");
     backgroundImage =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[UIImage imageNamed:@"DarkThemeBottomGradient.png"] retain] :
         [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
     topGradientImage =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[UIImage imageNamed:@"DarkThemeTopGradient.png"] retain] :
         [[UIImage imageNamed:@"TableViewCellTopGradient.png"] retain];
     mentionBottomImage =
         [[UIImage imageNamed:@"MentionBottomGradient.png"] retain];
@@ -112,7 +117,8 @@ static NSString * starText;
 
         self.backgroundColor =
             highlightForMention ?
-            [UIColor darkCellBackgroundColor] : [UIColor whiteColor];
+            [UIColor darkCellBackgroundColor] :
+            [[self class] defaultTimelineCellColor];
     }
 
     return self;
@@ -180,9 +186,16 @@ static NSString * starText;
         favoriteColor = [UIColor whiteColor];
         [self drawHighlightedAvatarBorderWithTopMargin:6 leftMargin:6];
     } else {
-        authorColor = [UIColor blackColor];
-        timestampColor = [UIColor twitchBlueColor];
-        textColor = [UIColor blackColor];
+         textColor =
+                [SettingsReader displayTheme] == kDisplayThemeDark ?
+                [UIColor twitchLightGrayColor] : [UIColor blackColor];
+        authorColor =
+               [SettingsReader displayTheme] == kDisplayThemeDark ?
+               [UIColor whiteColor] : [UIColor blackColor];
+        timestampColor = [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [UIColor twitchBlueOnDarkBackgroundColor] :
+            [UIColor twitchBlueColor];
+        textColor = textColor;
         favoriteColor = [UIColor grayColor];
 
         UIImage * bottomImage;
@@ -731,7 +744,19 @@ static UIColor * mentionCellColor;
 
 + (UIColor *)defaultTimelineCellColor
 {
-    return [UIColor whiteColor];
+    return [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[self class] defaultDarkThemeCellColor] : [UIColor whiteColor];
+}
+
+static UIColor * defaultDarkThemeCellColor;
++ (UIColor *)defaultDarkThemeCellColor
+{
+    if (!defaultDarkThemeCellColor)
+        defaultDarkThemeCellColor =
+            [[UIColor colorWithRed:0.22 green:0.23 blue:0.24 alpha:1.0]
+            retain];
+
+    return defaultDarkThemeCellColor;
 }
 
 + (UIColor *)darkenedCellColor
