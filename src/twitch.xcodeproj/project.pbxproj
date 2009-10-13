@@ -7,9 +7,96 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		050BA144106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 050BA143106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel */; };
 		0511067F102A25FC00915638 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0511067E102A25FC00915638 /* Settings.bundle */; };
 		0515675C1047035500A26F17 /* EditTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0515675A1047035500A26F17 /* EditTextView.xib */; };
+		0516678E10841EFB000CA4AA /* UpButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DCE7861072756000095FD0 /* UpButton.png */; };
+		0516678F10841EFB000CA4AA /* DownButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DCE7841072755400095FD0 /* DownButton.png */; };
+		0516679010841EFB000CA4AA /* NearbyTweetsButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 919CCCBD105EB0760029C0A1 /* NearbyTweetsButtonIcon.png */; };
+		0516679110841EFB000CA4AA /* DeleteTweetButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 919CCCBB105EB0600029C0A1 /* DeleteTweetButtonIcon.png */; };
+		0516679210841EFB000CA4AA /* CancelButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257DB91058449C006F5DBD /* CancelButton.png */; };
+		0516679310841EFB000CA4AA /* DarkenedTableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */; };
+		0516679410841EFB000CA4AA /* DarkenedTableViewCellTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257799104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png */; };
+		0516679510841EFB000CA4AA /* LoginScreenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F710E1047310F00FE7ABF /* LoginScreenshot.png */; };
+		0516679610841EFB000CA4AA /* DirectMessageButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F705D1045C6B800FE7ABF /* DirectMessageButtonIconHighlighted.png */; };
+		0516679710841EFB000CA4AA /* favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F705E1045C6B800FE7ABF /* favorite.png */; };
+		0516679810841EFB000CA4AA /* PublicMessageButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F705F1045C6B800FE7ABF /* PublicMessageButtonIcon.png */; };
+		0516679910841EFB000CA4AA /* PublicMessageButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F70601045C6B800FE7ABF /* PublicMessageButtonIconHighlighted.png */; };
+		0516679A10841EFB000CA4AA /* LocationDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F397D10435CA1000236AE /* LocationDark.png */; };
+		0516679B10841EFB000CA4AA /* Location.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F3757103F5262000236AE /* Location.png */; };
+		0516679C10841EFB000CA4AA /* DeleteButtonNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 059A6F23103CCE3D00B7500C /* DeleteButtonNormal.png */; };
+		0516679D10841EFB000CA4AA /* DeleteButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 059A6F24103CCE3D00B7500C /* DeleteButtonPressed.png */; };
+		0516679E10841EFB000CA4AA /* TwitVidLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7BA08103B90310017874C /* TwitVidLogo.png */; };
+		0516679F10841EFB000CA4AA /* YfrogLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B9F7103B8D360017874C /* YfrogLogo.png */; };
+		051667A010841EFB000CA4AA /* FlickrLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B99B103B7E1D0017874C /* FlickrLogo.png */; };
+		051667A110841EFB000CA4AA /* TwitPicLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B99C103B7E1D0017874C /* TwitPicLogo.png */; };
+		051667A210841EFB000CA4AA /* AccountSelectedCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 051975F9103A119100883FAC /* AccountSelectedCheckmark.png */; };
+		051667A310841EFB000CA4AA /* AccountSelectedCheckmarkHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */; };
+		051667A410841EFB000CA4AA /* AccountNotSelectedFiller.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519761F103A168600883FAC /* AccountNotSelectedFiller.png */; };
+		051667A510841EFB000CA4AA /* StopFollowingButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA0F61039C62C00421C60 /* StopFollowingButton.png */; };
+		051667A610841EFB000CA4AA /* StopFollowingButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA0F71039C62C00421C60 /* StopFollowingButtonHighlighted.png */; };
+		051667A710841EFB000CA4AA /* MagnifyingGlassHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA0C21038D04F00421C60 /* MagnifyingGlassHighlighted.png */; };
+		051667A810841EFB000CA4AA /* MagnifyingGlass.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA09D1038CB8000421C60 /* MagnifyingGlass.png */; };
+		051667A910841EFB000CA4AA /* BookmarkHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA01C103879AC00421C60 /* BookmarkHighlighted.png */; };
+		051667AA10841EFB000CA4AA /* Bookmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA01A1038791F00421C60 /* Bookmark.png */; };
+		051667AB10841EFB000CA4AA /* FollowButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914C9FFB10377C8000421C60 /* FollowButtonHighlighted.png */; };
+		051667AC10841EFB000CA4AA /* FollowButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 913000AF10377454004E3030 /* FollowButton.png */; };
+		051667AD10841EFB000CA4AA /* MentionBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9130002010363177004E3030 /* MentionBottomGradient.png */; };
+		051667AE10841EFB000CA4AA /* MentionTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9130002110363177004E3030 /* MentionTopGradient.png */; };
+		051667AF10841EFB000CA4AA /* RetweetButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 9176A477103219F5001656E0 /* RetweetButtonIconHighlighted.png */; };
+		051667B010841EFB000CA4AA /* PublicReplyButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 9176A47510321999001656E0 /* PublicReplyButtonIconHighlighted.png */; };
+		051667B110841EFB000CA4AA /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
+		051667B210841EFB000CA4AA /* TableViewCellTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91724999102CBAFB007E0DF6 /* TableViewCellTopGradient.png */; };
+		051667B310841EFB000CA4AA /* PublicReplyButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB2A09102CDEC0001E8C30 /* PublicReplyButtonIcon.png */; };
+		051667B410841EFB000CA4AA /* RetweetButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29FF102CDB6B001E8C30 /* RetweetButtonIcon.png */; };
+		051667B510841EFB000CA4AA /* DirectMessageButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29C8102CD879001E8C30 /* DirectMessageButtonIcon.png */; };
+		051667B610841EFB000CA4AA /* FavoriteIconForUserViewHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E3E48102CDC2700A879AC /* FavoriteIconForUserViewHighlighted.png */; };
+		051667B710841EFB000CA4AA /* FavoriteIconForUserView.png in Resources */ = {isa = PBXBuildFile; fileRef = 917249C4102CCEEE007E0DF6 /* FavoriteIconForUserView.png */; };
+		051667B810841EFB000CA4AA /* CellBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 917246E8102A02F2007E0DF6 /* CellBackground.png */; };
+		051667B910841EFB000CA4AA /* SelectedCellBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 917246E5102A0257007E0DF6 /* SelectedCellBackground.png */; };
+		051667BA10841EFB000CA4AA /* FavoriteMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 917245511025046A007E0DF6 /* FavoriteMark.png */; };
+		051667BB10841EFB000CA4AA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
+		051667BC10841EFB000CA4AA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
+		051667BD10841EFB000CA4AA /* PersonSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6C44101A51F800354D67 /* PersonSearch.png */; };
+		051667BE10841EFB000CA4AA /* ComposeRecipientGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 058207C01017744C00DFC051 /* ComposeRecipientGradient.png */; };
+		051667BF10841EFB000CA4AA /* NewMessagesDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9152E238101557AC0033B63B /* NewMessagesDot.png */; };
+		051667C010841EFB000CA4AA /* ButtonBackground-108x35.png in Resources */ = {isa = PBXBuildFile; fileRef = 9180B6C4101244CD0096DFA1 /* ButtonBackground-108x35.png */; };
+		051667C110841EFB000CA4AA /* ButtonBackground-92x35.png in Resources */ = {isa = PBXBuildFile; fileRef = 9180B6BE101240B60096DFA1 /* ButtonBackground-92x35.png */; };
+		051667C210841EFB000CA4AA /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
+		051667C310841EFB000CA4AA /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
+		051667C410841EFB000CA4AA /* AvatarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36975100D44D200B59D12 /* AvatarBackground.png */; };
+		051667C510841EFB000CA4AA /* ButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */; };
+		051667C610841EFB000CA4AA /* ButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36955100D12B300B59D12 /* ButtonBackground.png */; };
+		051667C710841EFB000CA4AA /* BlueEnvelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 9145EFFA10054D9400C2E485 /* BlueEnvelope.png */; };
+		051667C810841EFB000CA4AA /* Re-tweetDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 9145EFC91005276100C2E485 /* Re-tweetDisabled.png */; };
+		051667C910841EFB000CA4AA /* DeleteTweetDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247A60FFE9ED300538F29 /* DeleteTweetDisabled.png */; };
+		051667CA10841EFB000CA4AA /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
+		051667CB10841EFB000CA4AA /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
+		051667CC10841EFB000CA4AA /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
+		051667CD10841EFB000CA4AA /* DeleteTweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247720FFE81D300538F29 /* DeleteTweet.png */; };
+		051667CE10841EFB000CA4AA /* DropShadowReversed.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */; };
+		051667CF10841EFB000CA4AA /* TweetDetailsFooterGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247640FFE7EF400538F29 /* TweetDetailsFooterGradient.png */; };
+		051667D010841EFB000CA4AA /* Refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82B60FF558FE004D04D5 /* Refresh.png */; };
+		051667D110841EFB000CA4AA /* StopLoading.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82AC0FF55751004D04D5 /* StopLoading.png */; };
+		051667D210841EFB000CA4AA /* BackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82AA0FF55536004D04D5 /* BackButton.png */; };
+		051667D310841EFB000CA4AA /* ForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82A40FF5543E004D04D5 /* ForwardButton.png */; };
+		051667D410841EFB000CA4AA /* DropShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000940FEFFCC700BCE9BC /* DropShadow.png */; };
+		051667D510841EFB000CA4AA /* TweetDetailsHeaderGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */; };
+		051667D610841EFB000CA4AA /* NotFavorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E0004B0FEF786300BCE9BC /* NotFavorite.png */; };
+		051667D710841EFB000CA4AA /* Favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000420FEF76E800BCE9BC /* Favorite.png */; };
+		051667D810841EFB000CA4AA /* UserHeaderGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8A20FEEDFBD007143A9 /* UserHeaderGradient.png */; };
+		051667D910841EFB000CA4AA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8940FEEDAD9007143A9 /* Default.png */; };
+		051667DA10841EFB000CA4AA /* DefaultAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8950FEEDAD9007143A9 /* DefaultAvatar.png */; };
+		051667DB10841EFB000CA4AA /* DefaultAvatar50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */; };
+		051667DC10841EFB000CA4AA /* TableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD88D0FEED9DE007143A9 /* TableViewCellGradient.png */; };
+		051667DD10841EFB000CA4AA /* Gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7DA0FEEB839007143A9 /* Gear.png */; };
+		051667DE10841EFB000CA4AA /* House.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7DB0FEEB839007143A9 /* House.png */; };
+		051667DF10841EFB000CA4AA /* Profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D80FEEB770007143A9 /* Profile.png */; };
+		051667E010841EFB000CA4AA /* Star.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D60FEEB5CB007143A9 /* Star.png */; };
+		051667E110841EFB000CA4AA /* Envelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D20FEEB49B007143A9 /* Envelope.png */; };
+		051667E210841EFB000CA4AA /* LineChart.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D30FEEB49B007143A9 /* LineChart.png */; };
+		051667E310841EFB000CA4AA /* MentionsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D00FEEB2DE007143A9 /* MentionsIcon.png */; };
+		051667E410841EFB000CA4AA /* HomeIconWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7CE0FEEB193007143A9 /* HomeIconWhite.png */; };
+		051667E510841EFB000CA4AA /* HomeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7CC0FEEB11F007143A9 /* HomeIcon.png */; };
 		051975FA103A119100883FAC /* AccountSelectedCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 051975F9103A119100883FAC /* AccountSelectedCheckmark.png */; };
 		0519760E103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */; };
 		05197620103A168600883FAC /* AccountNotSelectedFiller.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519761F103A168600883FAC /* AccountNotSelectedFiller.png */; };
@@ -23,136 +110,47 @@
 		052E03FA10700858005CEC5F /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		052E03FB10700858005CEC5F /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
 		052E03FC10700858005CEC5F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 05B239470FEDD10900A6A2E6 /* Localizable.strings */; };
-		052E03FD10700858005CEC5F /* HomeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7CC0FEEB11F007143A9 /* HomeIcon.png */; };
-		052E03FE10700858005CEC5F /* HomeIconWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7CE0FEEB193007143A9 /* HomeIconWhite.png */; };
-		052E03FF10700858005CEC5F /* MentionsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D00FEEB2DE007143A9 /* MentionsIcon.png */; };
-		052E040010700858005CEC5F /* Envelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D20FEEB49B007143A9 /* Envelope.png */; };
-		052E040110700858005CEC5F /* LineChart.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D30FEEB49B007143A9 /* LineChart.png */; };
-		052E040210700858005CEC5F /* Star.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D60FEEB5CB007143A9 /* Star.png */; };
-		052E040310700858005CEC5F /* Profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7D80FEEB770007143A9 /* Profile.png */; };
-		052E040410700858005CEC5F /* Gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7DA0FEEB839007143A9 /* Gear.png */; };
-		052E040510700858005CEC5F /* House.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7DB0FEEB839007143A9 /* House.png */; };
 		052E040610700858005CEC5F /* NoDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7ED0FEEB958007143A9 /* NoDataView.xib */; };
 		052E040710700858005CEC5F /* TimelineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8020FEEBD56007143A9 /* TimelineView.xib */; };
-		052E040810700858005CEC5F /* TableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD88D0FEED9DE007143A9 /* TableViewCellGradient.png */; };
-		052E040910700858005CEC5F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8940FEEDAD9007143A9 /* Default.png */; };
-		052E040A10700858005CEC5F /* DefaultAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8950FEEDAD9007143A9 /* DefaultAvatar.png */; };
-		052E040B10700858005CEC5F /* UserHeaderGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8A20FEEDFBD007143A9 /* UserHeaderGradient.png */; };
 		052E040C10700858005CEC5F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05977A3B0FEF0C9700E37B9C /* Icon.png */; };
 		052E040D10700858005CEC5F /* tweet-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 916BDA4D0FEF573A007143A9 /* tweet-style.css */; };
-		052E040E10700858005CEC5F /* Favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000420FEF76E800BCE9BC /* Favorite.png */; };
-		052E040F10700858005CEC5F /* NotFavorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E0004B0FEF786300BCE9BC /* NotFavorite.png */; };
-		052E041010700858005CEC5F /* TweetDetailsHeaderGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */; };
-		052E041110700858005CEC5F /* DropShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E000940FEFFCC700BCE9BC /* DropShadow.png */; };
 		052E041210700858005CEC5F /* ComposeTweetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05F45CFF0FF059B400EBAFC7 /* ComposeTweetView.xib */; };
 		052E041310700858005CEC5F /* UserInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E89580FF1863C0042BBEE /* UserInfoView.xib */; };
 		052E041410700858005CEC5F /* UserInfoLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */; };
 		052E041510700858005CEC5F /* UserListTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910BE2020FF2BA17005342EE /* UserListTableView.xib */; };
 		052E041610700858005CEC5F /* TwitchBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82190FF5403F004D04D5 /* TwitchBrowserView.xib */; };
-		052E041710700858005CEC5F /* ForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82A40FF5543E004D04D5 /* ForwardButton.png */; };
-		052E041810700858005CEC5F /* BackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82AA0FF55536004D04D5 /* BackButton.png */; };
-		052E041910700858005CEC5F /* StopLoading.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82AC0FF55751004D04D5 /* StopLoading.png */; };
-		052E041A10700858005CEC5F /* Refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 91CD82B60FF558FE004D04D5 /* Refresh.png */; };
 		052E041B10700858005CEC5F /* OauthLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 057620320FF736D600392ADC /* OauthLogInView.xib */; };
 		052E041C10700858005CEC5F /* ExplainOauthView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7051B0FF88C4100936E4C /* ExplainOauthView.xib */; };
-		052E041D10700858005CEC5F /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
-		052E041E10700858005CEC5F /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
-		052E041F10700858005CEC5F /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
-		052E042010700858005CEC5F /* DeleteTweetDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247A60FFE9ED300538F29 /* DeleteTweetDisabled.png */; };
-		052E042110700858005CEC5F /* DeleteTweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247720FFE81D300538F29 /* DeleteTweet.png */; };
-		052E042210700858005CEC5F /* DropShadowReversed.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2476A0FFE7FA300538F29 /* DropShadowReversed.png */; };
-		052E042310700858005CEC5F /* TweetDetailsFooterGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247640FFE7EF400538F29 /* TweetDetailsFooterGradient.png */; };
-		052E042410700858005CEC5F /* Re-tweetDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 9145EFC91005276100C2E485 /* Re-tweetDisabled.png */; };
-		052E042510700858005CEC5F /* BlueEnvelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 9145EFFA10054D9400C2E485 /* BlueEnvelope.png */; };
 		052E042610700858005CEC5F /* PhotoBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BD11391006736F0082D209 /* PhotoBrowserView.xib */; };
-		052E042710700858005CEC5F /* ButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36955100D12B300B59D12 /* ButtonBackground.png */; };
-		052E042810700858005CEC5F /* ButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */; };
-		052E042910700858005CEC5F /* AvatarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36975100D44D200B59D12 /* AvatarBackground.png */; };
-		052E042A10700858005CEC5F /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
-		052E042B10700858005CEC5F /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
-		052E042C10700858005CEC5F /* ButtonBackground-92x35.png in Resources */ = {isa = PBXBuildFile; fileRef = 9180B6BE101240B60096DFA1 /* ButtonBackground-92x35.png */; };
-		052E042D10700858005CEC5F /* ButtonBackground-108x35.png in Resources */ = {isa = PBXBuildFile; fileRef = 9180B6C4101244CD0096DFA1 /* ButtonBackground-108x35.png */; };
 		052E042E10700858005CEC5F /* DirectMessageInboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1551014F86C0033B63B /* DirectMessageInboxView.xib */; };
 		052E042F10700858005CEC5F /* DirectMessageConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1581014F8850033B63B /* DirectMessageConversationView.xib */; };
-		052E043010700858005CEC5F /* NewMessagesDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9152E238101557AC0033B63B /* NewMessagesDot.png */; };
 		052E043110700858005CEC5F /* AccountSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05948993101569D500C37C98 /* AccountSettingsView.xib */; };
-		052E043210700858005CEC5F /* ComposeRecipientGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 058207C01017744C00DFC051 /* ComposeRecipientGradient.png */; };
 		052E043310700858005CEC5F /* SearchBookmarksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05340AB8101A3DAD0077E7C0 /* SearchBookmarksView.xib */; };
-		052E043410700858005CEC5F /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
-		052E043510700858005CEC5F /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
-		052E043610700858005CEC5F /* PersonSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6C44101A51F800354D67 /* PersonSearch.png */; };
-		052E043710700858005CEC5F /* FavoriteMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 917245511025046A007E0DF6 /* FavoriteMark.png */; };
-		052E043810700858005CEC5F /* DefaultAvatar50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */; };
 		052E043910700858005CEC5F /* FindPeopleBookmarkView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 917245E41028B715007E0DF6 /* FindPeopleBookmarkView.xib */; };
 		052E043A10700858005CEC5F /* TweetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05EDAF0A1029FAAB00D0B62B /* TweetView.xib */; };
 		052E043B10700858005CEC5F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0511067E102A25FC00915638 /* Settings.bundle */; };
-		052E043C10700858005CEC5F /* DirectMessageButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29C8102CD879001E8C30 /* DirectMessageButtonIcon.png */; };
-		052E043D10700858005CEC5F /* RetweetButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29FF102CDB6B001E8C30 /* RetweetButtonIcon.png */; };
-		052E043E10700858005CEC5F /* PublicReplyButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB2A09102CDEC0001E8C30 /* PublicReplyButtonIcon.png */; };
-		052E043F10700858005CEC5F /* SelectedCellBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 917246E5102A0257007E0DF6 /* SelectedCellBackground.png */; };
-		052E044010700858005CEC5F /* CellBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 917246E8102A02F2007E0DF6 /* CellBackground.png */; };
-		052E044110700858005CEC5F /* TableViewCellTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91724999102CBAFB007E0DF6 /* TableViewCellTopGradient.png */; };
-		052E044210700858005CEC5F /* FavoriteIconForUserView.png in Resources */ = {isa = PBXBuildFile; fileRef = 917249C4102CCEEE007E0DF6 /* FavoriteIconForUserView.png */; };
-		052E044310700858005CEC5F /* FavoriteIconForUserViewHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E3E48102CDC2700A879AC /* FavoriteIconForUserViewHighlighted.png */; };
-		052E044410700858005CEC5F /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
-		052E044510700858005CEC5F /* PublicReplyButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 9176A47510321999001656E0 /* PublicReplyButtonIconHighlighted.png */; };
-		052E044610700858005CEC5F /* RetweetButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 9176A477103219F5001656E0 /* RetweetButtonIconHighlighted.png */; };
 		052E044710700858005CEC5F /* ConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05F9CF24103335490010409B /* ConversationView.xib */; };
 		052E044810700858005CEC5F /* MarkAsFavoriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9130FF201035E07B004E3030 /* MarkAsFavoriteCell.xib */; };
-		052E044910700858005CEC5F /* MentionBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9130002010363177004E3030 /* MentionBottomGradient.png */; };
-		052E044A10700858005CEC5F /* MentionTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9130002110363177004E3030 /* MentionTopGradient.png */; };
-		052E044B10700858005CEC5F /* FollowButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 913000AF10377454004E3030 /* FollowButton.png */; };
-		052E044C10700858005CEC5F /* FollowButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914C9FFB10377C8000421C60 /* FollowButtonHighlighted.png */; };
-		052E044D10700858005CEC5F /* Bookmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA01A1038791F00421C60 /* Bookmark.png */; };
-		052E044E10700858005CEC5F /* BookmarkHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA01C103879AC00421C60 /* BookmarkHighlighted.png */; };
-		052E044F10700858005CEC5F /* MagnifyingGlass.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA09D1038CB8000421C60 /* MagnifyingGlass.png */; };
-		052E045010700858005CEC5F /* MagnifyingGlassHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA0C21038D04F00421C60 /* MagnifyingGlassHighlighted.png */; };
-		052E045110700858005CEC5F /* StopFollowingButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA0F61039C62C00421C60 /* StopFollowingButton.png */; };
-		052E045210700858005CEC5F /* StopFollowingButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA0F71039C62C00421C60 /* StopFollowingButtonHighlighted.png */; };
-		052E045310700858005CEC5F /* AccountSelectedCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 051975F9103A119100883FAC /* AccountSelectedCheckmark.png */; };
-		052E045410700858005CEC5F /* AccountSelectedCheckmarkHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */; };
-		052E045510700858005CEC5F /* AccountNotSelectedFiller.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519761F103A168600883FAC /* AccountNotSelectedFiller.png */; };
 		052E045610700858005CEC5F /* LocationMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918F372F103F478D000236AE /* LocationMapView.xib */; };
-		052E045710700858005CEC5F /* Location.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F3757103F5262000236AE /* Location.png */; };
 		052E045810700858005CEC5F /* PhotoServicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B8B8103B5FAF0017874C /* PhotoServicesView.xib */; };
 		052E045910700858005CEC5F /* PhotoServiceSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B960103B791A0017874C /* PhotoServiceSelectorView.xib */; };
-		052E045A10700858005CEC5F /* FlickrLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B99B103B7E1D0017874C /* FlickrLogo.png */; };
-		052E045B10700858005CEC5F /* TwitPicLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B99C103B7E1D0017874C /* TwitPicLogo.png */; };
-		052E045C10700858005CEC5F /* YfrogLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B9F7103B8D360017874C /* YfrogLogo.png */; };
-		052E045D10700858005CEC5F /* TwitVidLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7BA08103B90310017874C /* TwitVidLogo.png */; };
 		052E045E10700858005CEC5F /* TwitPicSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A6E9C103CA27400B7500C /* TwitPicSettingsView.xib */; };
-		052E045F10700858005CEC5F /* DeleteButtonNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 059A6F23103CCE3D00B7500C /* DeleteButtonNormal.png */; };
-		052E046010700858005CEC5F /* DeleteButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 059A6F24103CCE3D00B7500C /* DeleteButtonPressed.png */; };
 		052E046110700858005CEC5F /* SelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A708F103DAE4A00B7500C /* SelectionView.xib */; };
 		052E046210700858005CEC5F /* YfrogSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72A8103E1C7800B7500C /* YfrogSettingsView.xib */; };
 		052E046310700858005CEC5F /* TwitVidSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72FF103E221E00B7500C /* TwitVidSettingsView.xib */; };
 		052E046410700858005CEC5F /* LocationInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918F38F61042129C000236AE /* LocationInfoView.xib */; };
 		052E046510700858005CEC5F /* LocationInfoLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918F392810433325000236AE /* LocationInfoLabelCell.xib */; };
 		052E046610700858005CEC5F /* ButtonCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918F393110433DE7000236AE /* ButtonCellView.xib */; };
-		052E046710700858005CEC5F /* LocationDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F397D10435CA1000236AE /* LocationDark.png */; };
 		052E046810700858005CEC5F /* ExplainFlickrAuthView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0519C76010434BD000C2C7BD /* ExplainFlickrAuthView.xib */; };
 		052E046910700858005CEC5F /* FlickrLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0519C76310434C0B00C2C7BD /* FlickrLogInView.xib */; };
 		052E046A10700858005CEC5F /* FlickrSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0519C8F01044502A00C2C7BD /* FlickrSettingsView.xib */; };
 		052E046B10700858005CEC5F /* FlickrTagsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0519CBD21045C42E00C2C7BD /* FlickrTagsView.xib */; };
-		052E046C10700858005CEC5F /* DirectMessageButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F705D1045C6B800FE7ABF /* DirectMessageButtonIconHighlighted.png */; };
-		052E046D10700858005CEC5F /* favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F705E1045C6B800FE7ABF /* favorite.png */; };
-		052E046E10700858005CEC5F /* PublicMessageButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F705F1045C6B800FE7ABF /* PublicMessageButtonIcon.png */; };
-		052E046F10700858005CEC5F /* PublicMessageButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F70601045C6B800FE7ABF /* PublicMessageButtonIconHighlighted.png */; };
 		052E047010700858005CEC5F /* EditTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0515675A1047035500A26F17 /* EditTextView.xib */; };
-		052E047110700858005CEC5F /* LoginScreenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 918F710E1047310F00FE7ABF /* LoginScreenshot.png */; };
 		052E047210700858005CEC5F /* log-in-help.html in Resources */ = {isa = PBXBuildFile; fileRef = 918F713D104741AE00FE7ABF /* log-in-help.html */; };
 		052E047310700858005CEC5F /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 918F7166104745D000FE7ABF /* style.css */; };
 		052E047410700858005CEC5F /* InstapaperLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0538FE95104C7897009E50CE /* InstapaperLogInView.xib */; };
-		052E047510700858005CEC5F /* DarkenedTableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */; };
-		052E047610700858005CEC5F /* DarkenedTableViewCellTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257799104C7A53006F5DBD /* DarkenedTableViewCellTopGradient.png */; };
-		052E047710700858005CEC5F /* CancelButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257DB91058449C006F5DBD /* CancelButton.png */; };
-		052E047810700858005CEC5F /* DeleteTweetButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 919CCCBB105EB0600029C0A1 /* DeleteTweetButtonIcon.png */; };
-		052E047910700858005CEC5F /* NearbyTweetsButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 919CCCBD105EB0760029C0A1 /* NearbyTweetsButtonIcon.png */; };
 		052E047A10700858005CEC5F /* BitlyLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91FDD5A310616854000F7527 /* BitlyLogInView.xib */; };
 		052E049010700858005CEC5F /* twitch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0599416A0FFB32F100842518 /* twitch.xcdatamodeld */; };
-		052E050810700858005CEC5F /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
-		052E051310700858005CEC5F /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */; };
-		052E058C10700858005CEC5F /* v1.1-v2.0.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 050BA143106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel */; };
 		052E058E10700858005CEC5F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		052E058F10700858005CEC5F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		052E059010700858005CEC5F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
@@ -189,7 +187,6 @@
 		059A7091103DAE4A00B7500C /* SelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A708F103DAE4A00B7500C /* SelectionView.xib */; };
 		059A72AA103E1C7800B7500C /* YfrogSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72A8103E1C7800B7500C /* YfrogSettingsView.xib */; };
 		059A7301103E221E00B7500C /* TwitVidSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72FF103E221E00B7500C /* TwitVidSettingsView.xib */; };
-		059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */; };
 		05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05AC573C1029F0EF00F727A2 /* QuartzCore.framework */; };
 		05C7B8BA103B5FAF0017874C /* PhotoServicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B8B8103B5FAF0017874C /* PhotoServicesView.xib */; };
 		05C7B962103B791A0017874C /* PhotoServiceSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B960103B791A0017874C /* PhotoServiceSelectorView.xib */; };
@@ -197,7 +194,6 @@
 		05C7B99E103B7E1D0017874C /* TwitPicLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B99C103B7E1D0017874C /* TwitPicLogo.png */; };
 		05C7B9F8103B8D360017874C /* YfrogLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B9F7103B8D360017874C /* YfrogLogo.png */; };
 		05C7BA09103B90310017874C /* TwitVidLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7BA08103B90310017874C /* TwitVidLogo.png */; };
-		05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */; };
 		05DB29C9102CD879001E8C30 /* DirectMessageButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29C8102CD879001E8C30 /* DirectMessageButtonIcon.png */; };
 		05DB2A00102CDB6B001E8C30 /* RetweetButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB29FF102CDB6B001E8C30 /* RetweetButtonIcon.png */; };
 		05DB2A0A102CDEC0001E8C30 /* PublicReplyButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 05DB2A09102CDEC0001E8C30 /* PublicReplyButtonIcon.png */; };
@@ -2986,132 +2982,134 @@
 				052E03FA10700858005CEC5F /* MainWindow.xib in Resources */,
 				052E03FB10700858005CEC5F /* LogInView.xib in Resources */,
 				052E03FC10700858005CEC5F /* Localizable.strings in Resources */,
-				052E03FD10700858005CEC5F /* HomeIcon.png in Resources */,
-				052E03FE10700858005CEC5F /* HomeIconWhite.png in Resources */,
-				052E03FF10700858005CEC5F /* MentionsIcon.png in Resources */,
-				052E040010700858005CEC5F /* Envelope.png in Resources */,
-				052E040110700858005CEC5F /* LineChart.png in Resources */,
-				052E040210700858005CEC5F /* Star.png in Resources */,
-				052E040310700858005CEC5F /* Profile.png in Resources */,
-				052E040410700858005CEC5F /* Gear.png in Resources */,
-				052E040510700858005CEC5F /* House.png in Resources */,
 				052E040610700858005CEC5F /* NoDataView.xib in Resources */,
 				052E040710700858005CEC5F /* TimelineView.xib in Resources */,
-				052E040810700858005CEC5F /* TableViewCellGradient.png in Resources */,
-				052E040910700858005CEC5F /* Default.png in Resources */,
-				052E040A10700858005CEC5F /* DefaultAvatar.png in Resources */,
-				052E040B10700858005CEC5F /* UserHeaderGradient.png in Resources */,
 				052E040C10700858005CEC5F /* Icon.png in Resources */,
 				052E040D10700858005CEC5F /* tweet-style.css in Resources */,
-				052E040E10700858005CEC5F /* Favorite.png in Resources */,
-				052E040F10700858005CEC5F /* NotFavorite.png in Resources */,
-				052E041010700858005CEC5F /* TweetDetailsHeaderGradient.png in Resources */,
-				052E041110700858005CEC5F /* DropShadow.png in Resources */,
 				052E041210700858005CEC5F /* ComposeTweetView.xib in Resources */,
 				052E041310700858005CEC5F /* UserInfoView.xib in Resources */,
 				052E041410700858005CEC5F /* UserInfoLabelCell.xib in Resources */,
 				052E041510700858005CEC5F /* UserListTableView.xib in Resources */,
 				052E041610700858005CEC5F /* TwitchBrowserView.xib in Resources */,
-				052E041710700858005CEC5F /* ForwardButton.png in Resources */,
-				052E041810700858005CEC5F /* BackButton.png in Resources */,
-				052E041910700858005CEC5F /* StopLoading.png in Resources */,
-				052E041A10700858005CEC5F /* Refresh.png in Resources */,
 				052E041B10700858005CEC5F /* OauthLogInView.xib in Resources */,
 				052E041C10700858005CEC5F /* ExplainOauthView.xib in Resources */,
-				052E041D10700858005CEC5F /* Re-tweet.png in Resources */,
-				052E041E10700858005CEC5F /* Re-tweetSelected.png in Resources */,
-				052E041F10700858005CEC5F /* DeleteTweetSelected.png in Resources */,
-				052E042010700858005CEC5F /* DeleteTweetDisabled.png in Resources */,
-				052E042110700858005CEC5F /* DeleteTweet.png in Resources */,
-				052E042210700858005CEC5F /* DropShadowReversed.png in Resources */,
-				052E042310700858005CEC5F /* TweetDetailsFooterGradient.png in Resources */,
-				052E042410700858005CEC5F /* Re-tweetDisabled.png in Resources */,
-				052E042510700858005CEC5F /* BlueEnvelope.png in Resources */,
 				052E042610700858005CEC5F /* PhotoBrowserView.xib in Resources */,
-				052E042710700858005CEC5F /* ButtonBackground.png in Resources */,
-				052E042810700858005CEC5F /* ButtonBackgroundHighlighted.png in Resources */,
-				052E042910700858005CEC5F /* AvatarBackground.png in Resources */,
-				052E042A10700858005CEC5F /* PhotoBackButton.png in Resources */,
-				052E042B10700858005CEC5F /* PhotoForwardButton.png in Resources */,
-				052E042C10700858005CEC5F /* ButtonBackground-92x35.png in Resources */,
-				052E042D10700858005CEC5F /* ButtonBackground-108x35.png in Resources */,
 				052E042E10700858005CEC5F /* DirectMessageInboxView.xib in Resources */,
 				052E042F10700858005CEC5F /* DirectMessageConversationView.xib in Resources */,
-				052E043010700858005CEC5F /* NewMessagesDot.png in Resources */,
 				052E043110700858005CEC5F /* AccountSettingsView.xib in Resources */,
-				052E043210700858005CEC5F /* ComposeRecipientGradient.png in Resources */,
 				052E043310700858005CEC5F /* SearchBookmarksView.xib in Resources */,
-				052E043410700858005CEC5F /* SaveSearchButtonBackground.png in Resources */,
-				052E043510700858005CEC5F /* SaveSearchButtonBackgroundHighlighted.png in Resources */,
-				052E043610700858005CEC5F /* PersonSearch.png in Resources */,
-				052E043710700858005CEC5F /* FavoriteMark.png in Resources */,
-				052E043810700858005CEC5F /* DefaultAvatar50x50.png in Resources */,
 				052E043910700858005CEC5F /* FindPeopleBookmarkView.xib in Resources */,
 				052E043A10700858005CEC5F /* TweetView.xib in Resources */,
 				052E043B10700858005CEC5F /* Settings.bundle in Resources */,
-				052E043C10700858005CEC5F /* DirectMessageButtonIcon.png in Resources */,
-				052E043D10700858005CEC5F /* RetweetButtonIcon.png in Resources */,
-				052E043E10700858005CEC5F /* PublicReplyButtonIcon.png in Resources */,
-				052E043F10700858005CEC5F /* SelectedCellBackground.png in Resources */,
-				052E044010700858005CEC5F /* CellBackground.png in Resources */,
-				052E044110700858005CEC5F /* TableViewCellTopGradient.png in Resources */,
-				052E044210700858005CEC5F /* FavoriteIconForUserView.png in Resources */,
-				052E044310700858005CEC5F /* FavoriteIconForUserViewHighlighted.png in Resources */,
-				052E044410700858005CEC5F /* ChatArrow.png in Resources */,
-				052E044510700858005CEC5F /* PublicReplyButtonIconHighlighted.png in Resources */,
-				052E044610700858005CEC5F /* RetweetButtonIconHighlighted.png in Resources */,
 				052E044710700858005CEC5F /* ConversationView.xib in Resources */,
 				052E044810700858005CEC5F /* MarkAsFavoriteCell.xib in Resources */,
-				052E044910700858005CEC5F /* MentionBottomGradient.png in Resources */,
-				052E044A10700858005CEC5F /* MentionTopGradient.png in Resources */,
-				052E044B10700858005CEC5F /* FollowButton.png in Resources */,
-				052E044C10700858005CEC5F /* FollowButtonHighlighted.png in Resources */,
-				052E044D10700858005CEC5F /* Bookmark.png in Resources */,
-				052E044E10700858005CEC5F /* BookmarkHighlighted.png in Resources */,
-				052E044F10700858005CEC5F /* MagnifyingGlass.png in Resources */,
-				052E045010700858005CEC5F /* MagnifyingGlassHighlighted.png in Resources */,
-				052E045110700858005CEC5F /* StopFollowingButton.png in Resources */,
-				052E045210700858005CEC5F /* StopFollowingButtonHighlighted.png in Resources */,
-				052E045310700858005CEC5F /* AccountSelectedCheckmark.png in Resources */,
-				052E045410700858005CEC5F /* AccountSelectedCheckmarkHighlighted.png in Resources */,
-				052E045510700858005CEC5F /* AccountNotSelectedFiller.png in Resources */,
 				052E045610700858005CEC5F /* LocationMapView.xib in Resources */,
-				052E045710700858005CEC5F /* Location.png in Resources */,
 				052E045810700858005CEC5F /* PhotoServicesView.xib in Resources */,
 				052E045910700858005CEC5F /* PhotoServiceSelectorView.xib in Resources */,
-				052E045A10700858005CEC5F /* FlickrLogo.png in Resources */,
-				052E045B10700858005CEC5F /* TwitPicLogo.png in Resources */,
-				052E045C10700858005CEC5F /* YfrogLogo.png in Resources */,
-				052E045D10700858005CEC5F /* TwitVidLogo.png in Resources */,
 				052E045E10700858005CEC5F /* TwitPicSettingsView.xib in Resources */,
-				052E045F10700858005CEC5F /* DeleteButtonNormal.png in Resources */,
-				052E046010700858005CEC5F /* DeleteButtonPressed.png in Resources */,
 				052E046110700858005CEC5F /* SelectionView.xib in Resources */,
 				052E046210700858005CEC5F /* YfrogSettingsView.xib in Resources */,
 				052E046310700858005CEC5F /* TwitVidSettingsView.xib in Resources */,
 				052E046410700858005CEC5F /* LocationInfoView.xib in Resources */,
 				052E046510700858005CEC5F /* LocationInfoLabelCell.xib in Resources */,
 				052E046610700858005CEC5F /* ButtonCellView.xib in Resources */,
-				052E046710700858005CEC5F /* LocationDark.png in Resources */,
 				052E046810700858005CEC5F /* ExplainFlickrAuthView.xib in Resources */,
 				052E046910700858005CEC5F /* FlickrLogInView.xib in Resources */,
 				052E046A10700858005CEC5F /* FlickrSettingsView.xib in Resources */,
 				052E046B10700858005CEC5F /* FlickrTagsView.xib in Resources */,
-				052E046C10700858005CEC5F /* DirectMessageButtonIconHighlighted.png in Resources */,
-				052E046D10700858005CEC5F /* favorite.png in Resources */,
-				052E046E10700858005CEC5F /* PublicMessageButtonIcon.png in Resources */,
-				052E046F10700858005CEC5F /* PublicMessageButtonIconHighlighted.png in Resources */,
 				052E047010700858005CEC5F /* EditTextView.xib in Resources */,
-				052E047110700858005CEC5F /* LoginScreenshot.png in Resources */,
 				052E047210700858005CEC5F /* log-in-help.html in Resources */,
 				052E047310700858005CEC5F /* style.css in Resources */,
 				052E047410700858005CEC5F /* InstapaperLogInView.xib in Resources */,
-				052E047510700858005CEC5F /* DarkenedTableViewCellGradient.png in Resources */,
-				052E047610700858005CEC5F /* DarkenedTableViewCellTopGradient.png in Resources */,
-				052E047710700858005CEC5F /* CancelButton.png in Resources */,
-				052E047810700858005CEC5F /* DeleteTweetButtonIcon.png in Resources */,
-				052E047910700858005CEC5F /* NearbyTweetsButtonIcon.png in Resources */,
 				052E047A10700858005CEC5F /* BitlyLogInView.xib in Resources */,
+				0516678E10841EFB000CA4AA /* UpButton.png in Resources */,
+				0516678F10841EFB000CA4AA /* DownButton.png in Resources */,
+				0516679010841EFB000CA4AA /* NearbyTweetsButtonIcon.png in Resources */,
+				0516679110841EFB000CA4AA /* DeleteTweetButtonIcon.png in Resources */,
+				0516679210841EFB000CA4AA /* CancelButton.png in Resources */,
+				0516679310841EFB000CA4AA /* DarkenedTableViewCellGradient.png in Resources */,
+				0516679410841EFB000CA4AA /* DarkenedTableViewCellTopGradient.png in Resources */,
+				0516679510841EFB000CA4AA /* LoginScreenshot.png in Resources */,
+				0516679610841EFB000CA4AA /* DirectMessageButtonIconHighlighted.png in Resources */,
+				0516679710841EFB000CA4AA /* favorite.png in Resources */,
+				0516679810841EFB000CA4AA /* PublicMessageButtonIcon.png in Resources */,
+				0516679910841EFB000CA4AA /* PublicMessageButtonIconHighlighted.png in Resources */,
+				0516679A10841EFB000CA4AA /* LocationDark.png in Resources */,
+				0516679B10841EFB000CA4AA /* Location.png in Resources */,
+				0516679C10841EFB000CA4AA /* DeleteButtonNormal.png in Resources */,
+				0516679D10841EFB000CA4AA /* DeleteButtonPressed.png in Resources */,
+				0516679E10841EFB000CA4AA /* TwitVidLogo.png in Resources */,
+				0516679F10841EFB000CA4AA /* YfrogLogo.png in Resources */,
+				051667A010841EFB000CA4AA /* FlickrLogo.png in Resources */,
+				051667A110841EFB000CA4AA /* TwitPicLogo.png in Resources */,
+				051667A210841EFB000CA4AA /* AccountSelectedCheckmark.png in Resources */,
+				051667A310841EFB000CA4AA /* AccountSelectedCheckmarkHighlighted.png in Resources */,
+				051667A410841EFB000CA4AA /* AccountNotSelectedFiller.png in Resources */,
+				051667A510841EFB000CA4AA /* StopFollowingButton.png in Resources */,
+				051667A610841EFB000CA4AA /* StopFollowingButtonHighlighted.png in Resources */,
+				051667A710841EFB000CA4AA /* MagnifyingGlassHighlighted.png in Resources */,
+				051667A810841EFB000CA4AA /* MagnifyingGlass.png in Resources */,
+				051667A910841EFB000CA4AA /* BookmarkHighlighted.png in Resources */,
+				051667AA10841EFB000CA4AA /* Bookmark.png in Resources */,
+				051667AB10841EFB000CA4AA /* FollowButtonHighlighted.png in Resources */,
+				051667AC10841EFB000CA4AA /* FollowButton.png in Resources */,
+				051667AD10841EFB000CA4AA /* MentionBottomGradient.png in Resources */,
+				051667AE10841EFB000CA4AA /* MentionTopGradient.png in Resources */,
+				051667AF10841EFB000CA4AA /* RetweetButtonIconHighlighted.png in Resources */,
+				051667B010841EFB000CA4AA /* PublicReplyButtonIconHighlighted.png in Resources */,
+				051667B110841EFB000CA4AA /* ChatArrow.png in Resources */,
+				051667B210841EFB000CA4AA /* TableViewCellTopGradient.png in Resources */,
+				051667B310841EFB000CA4AA /* PublicReplyButtonIcon.png in Resources */,
+				051667B410841EFB000CA4AA /* RetweetButtonIcon.png in Resources */,
+				051667B510841EFB000CA4AA /* DirectMessageButtonIcon.png in Resources */,
+				051667B610841EFB000CA4AA /* FavoriteIconForUserViewHighlighted.png in Resources */,
+				051667B710841EFB000CA4AA /* FavoriteIconForUserView.png in Resources */,
+				051667B810841EFB000CA4AA /* CellBackground.png in Resources */,
+				051667B910841EFB000CA4AA /* SelectedCellBackground.png in Resources */,
+				051667BA10841EFB000CA4AA /* FavoriteMark.png in Resources */,
+				051667BB10841EFB000CA4AA /* SaveSearchButtonBackgroundHighlighted.png in Resources */,
+				051667BC10841EFB000CA4AA /* SaveSearchButtonBackground.png in Resources */,
+				051667BD10841EFB000CA4AA /* PersonSearch.png in Resources */,
+				051667BE10841EFB000CA4AA /* ComposeRecipientGradient.png in Resources */,
+				051667BF10841EFB000CA4AA /* NewMessagesDot.png in Resources */,
+				051667C010841EFB000CA4AA /* ButtonBackground-108x35.png in Resources */,
+				051667C110841EFB000CA4AA /* ButtonBackground-92x35.png in Resources */,
+				051667C210841EFB000CA4AA /* PhotoForwardButton.png in Resources */,
+				051667C310841EFB000CA4AA /* PhotoBackButton.png in Resources */,
+				051667C410841EFB000CA4AA /* AvatarBackground.png in Resources */,
+				051667C510841EFB000CA4AA /* ButtonBackgroundHighlighted.png in Resources */,
+				051667C610841EFB000CA4AA /* ButtonBackground.png in Resources */,
+				051667C710841EFB000CA4AA /* BlueEnvelope.png in Resources */,
+				051667C810841EFB000CA4AA /* Re-tweetDisabled.png in Resources */,
+				051667C910841EFB000CA4AA /* DeleteTweetDisabled.png in Resources */,
+				051667CA10841EFB000CA4AA /* DeleteTweetSelected.png in Resources */,
+				051667CB10841EFB000CA4AA /* Re-tweetSelected.png in Resources */,
+				051667CC10841EFB000CA4AA /* Re-tweet.png in Resources */,
+				051667CD10841EFB000CA4AA /* DeleteTweet.png in Resources */,
+				051667CE10841EFB000CA4AA /* DropShadowReversed.png in Resources */,
+				051667CF10841EFB000CA4AA /* TweetDetailsFooterGradient.png in Resources */,
+				051667D010841EFB000CA4AA /* Refresh.png in Resources */,
+				051667D110841EFB000CA4AA /* StopLoading.png in Resources */,
+				051667D210841EFB000CA4AA /* BackButton.png in Resources */,
+				051667D310841EFB000CA4AA /* ForwardButton.png in Resources */,
+				051667D410841EFB000CA4AA /* DropShadow.png in Resources */,
+				051667D510841EFB000CA4AA /* TweetDetailsHeaderGradient.png in Resources */,
+				051667D610841EFB000CA4AA /* NotFavorite.png in Resources */,
+				051667D710841EFB000CA4AA /* Favorite.png in Resources */,
+				051667D810841EFB000CA4AA /* UserHeaderGradient.png in Resources */,
+				051667D910841EFB000CA4AA /* Default.png in Resources */,
+				051667DA10841EFB000CA4AA /* DefaultAvatar.png in Resources */,
+				051667DB10841EFB000CA4AA /* DefaultAvatar50x50.png in Resources */,
+				051667DC10841EFB000CA4AA /* TableViewCellGradient.png in Resources */,
+				051667DD10841EFB000CA4AA /* Gear.png in Resources */,
+				051667DE10841EFB000CA4AA /* House.png in Resources */,
+				051667DF10841EFB000CA4AA /* Profile.png in Resources */,
+				051667E010841EFB000CA4AA /* Star.png in Resources */,
+				051667E110841EFB000CA4AA /* Envelope.png in Resources */,
+				051667E210841EFB000CA4AA /* LineChart.png in Resources */,
+				051667E310841EFB000CA4AA /* MentionsIcon.png in Resources */,
+				051667E410841EFB000CA4AA /* HomeIconWhite.png in Resources */,
+				051667E510841EFB000CA4AA /* HomeIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3300,9 +3298,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				052E049010700858005CEC5F /* twitch.xcdatamodeld in Sources */,
-				052E050810700858005CEC5F /* v1-to-v2.xcmappingmodel in Sources */,
-				052E051310700858005CEC5F /* v2-v1.1.xcmappingmodel in Sources */,
-				052E058C10700858005CEC5F /* v1.1-v2.0.xcmappingmodel in Sources */,
 				0531DA47107FEDEC003DC0D6 /* Tweet.m in Sources */,
 				05DBF2131082E76B004AB521 /* BitlyLogInDisplayMgr.m in Sources */,
 				05DBF2141082E76B004AB521 /* BitlyLogInViewController.m in Sources */,
@@ -3589,9 +3584,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0599416C0FFB32F100842518 /* twitch.xcdatamodeld in Sources */,
-				059F6F931017FAB100B323D7 /* v1-to-v2.xcmappingmodel in Sources */,
-				05D8807C101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel in Sources */,
-				050BA144106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel in Sources */,
 				0531DA46107FEDEC003DC0D6 /* Tweet.m in Sources */,
 				05DBF3281082E76D004AB521 /* BitlyLogInDisplayMgr.m in Sources */,
 				05DBF3291082E76D004AB521 /* BitlyLogInViewController.m in Sources */,

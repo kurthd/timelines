@@ -172,7 +172,7 @@ static UIImage * defaultAvatar;
 
 #pragma mark UserListTableViewController implementation
 
-- (void)setUsers:(NSArray *)someUsers page:(NSUInteger)page
+- (void)setUsers:(NSArray *)someUsers
 {
     self.sortedUserCache = nil;
     
@@ -180,14 +180,12 @@ static UIImage * defaultAvatar;
     [users release];
     users = tempUsers;
 
-    NSString * showingMultPagesFormatString =
-        NSLocalizedString(@"timelineview.showingmultiplepages", @"");
-    NSString * showingSinglePageFormatString =
-        NSLocalizedString(@"timelineview.showingsinglepage", @"");
+    NSString * footerFormatString =
+        users.count == 1 ?
+        NSLocalizedString(@"userlisttableview.footerstring.singular", @"") :
+        NSLocalizedString(@"userlisttableview.footerstring.plural", @"");
     currentPagesLabel.text =
-        page > 1 ?
-        [NSString stringWithFormat:showingMultPagesFormatString, page] :
-        showingSinglePageFormatString;
+        [NSString stringWithFormat:footerFormatString, users.count];
 
     [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
         forState:UIControlStateNormal];

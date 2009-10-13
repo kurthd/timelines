@@ -389,31 +389,29 @@ static NSMutableDictionary * oaTokens;
 
 #pragma mark Social graph
 
-- (void)fetchFriendsForUser:(NSString *)user page:(NSNumber *)page
+- (void)fetchFriendsForUser:(NSString *)user cursor:(NSString *)cursor
 {
     ResponseProcessor * processor =
         [FetchFriendsForUserResponseProcessor processorWithUsername:user
-                                                               page:page
+                                                             cursor:cursor
                                                             context:context
                                                            delegate:delegate];
 
     NSString * requestId =
-        [twitter getRecentlyUpdatedFriendsFor:user
-                               startingAtPage:[page integerValue]];
+        [twitter getRecentlyUpdatedFriendsFor:user cursor:cursor];
 
     [self request:requestId isHandledBy:processor];
 }
 
-- (void)fetchFollowersForUser:(NSString *)user page:(NSNumber *)page
+- (void)fetchFollowersForUser:(NSString *)user cursor:(NSString *)cursor
 {
     ResponseProcessor * processor =
         [FetchFollowersForUserResponseProcessor processorWithUsername:user
-                                                                 page:page
+                                                               cursor:cursor
                                                               context:context
                                                              delegate:delegate];
 
-    NSString * requestId =
-        [twitter getFollowersFor:user startingAtPage:[page integerValue]];
+    NSString * requestId = [twitter getFollowersFor:user cursor:cursor];
 
     [self request:requestId isHandledBy:processor];
 }

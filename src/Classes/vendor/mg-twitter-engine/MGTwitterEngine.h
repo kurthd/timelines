@@ -113,8 +113,10 @@
 
 // User methods - http://apiwiki.twitter.com/REST+API+Documentation#UserMethods
 
-- (NSString *)getRecentlyUpdatedFriendsFor:(NSString *)username startingAtPage:(int)pageNum; // statuses/friends
-- (NSString *)getFollowersFor:(NSString *)username startingAtPage:(int)pageNum;
+- (NSString *)getRecentlyUpdatedFriendsFor:(NSString *)username startingAtPage:(int)pageNum; // DEPRECATED -- statuses/friends
+- (NSString *)getRecentlyUpdatedFriendsFor:(NSString *)username cursor:(NSString *)cursor; // statuses/friends
+- (NSString *)getFollowersFor:(NSString *)username startingAtPage:(int)pageNum;  // DEPRECATED
+- (NSString *)getFollowersFor:(NSString *)username cursor:(NSString *)cursor;
 - (NSString *)getFollowersIncludingCurrentStatus:(BOOL)flag; // statuses/followers
 
 - (NSString *)getUserInformationFor:(NSString *)usernameOrID; // users/show

@@ -31,7 +31,7 @@
     LocationInfoViewController * locationInfoViewController;
 
 - (void)deallocateNode;
-- (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page;
+- (void)updateUserListViewWithUsers:(NSArray *)users cursor:(NSString *)cursor;
 - (void)sendDirectMessageToCurrentUser;
 - (void)removeSearch:(id)sender;
 - (void)saveSearch:(id)sender;
@@ -64,6 +64,7 @@
     [nextWrapperController release];
     [credentialsPublisher release];
     [credentials release];
+    [cursor release];
     [cache release];
     [userInfoController release];
     [currentSearch release];
@@ -98,7 +99,7 @@
         showFollowing = showFollowingValue;
         username = [aUsername retain];
 
-        pagesShown = 1;
+        cursor = @"-1";  // per Twitter's documentation
         failedState = NO;
         cache = [[NSMutableDictionary dictionary] retain];
 
@@ -120,12 +121,10 @@
         NSLog(@"Showing user list for first time");
         if (showFollowing) {
             NSLog(@"Querying for friends list");
-            [service fetchFriendsForUser:username
-                page:[NSNumber numberWithInt:pagesShown]];
+            [service fetchFriendsForUser:username cursor:cursor];
         } else {
             NSLog(@"Querying for followers list");
-            [service fetchFollowersForUser:username
-                page:[NSNumber numberWithInt:pagesShown]];
+            [service fetchFollowersForUser:username cursor:cursor];
         }
 
         [wrapperController setUpdatingState:kConnectedAndUpdating];
@@ -155,11 +154,9 @@
 {
     // Screw polymorphism -- too much work
     if (showFollowing)
-        [service fetchFriendsForUser:username
-            page:[NSNumber numberWithInt:++pagesShown]];
+        [service fetchFriendsForUser:username cursor:cursor];
     else
-        [service fetchFollowersForUser:username
-            page:[NSNumber numberWithInt:++pagesShown]];
+        [service fetchFollowersForUser:username cursor:cursor];
 
     [wrapperController setUpdatingState:kConnectedAndUpdating];
 }
@@ -206,15 +203,19 @@
 }
 
 - (void)friends:(NSArray *)friends fetchedForUsername:(NSString *)username
-    page:(NSNumber *)page
+    cursor:(NSString *)currentCursor nextCursor:(NSString *)nextCursor
 {
     NSLog(@"Received friends list of size %d", [friends count]);
+
+    [cursor release];
+    cursor = [nextCursor copy];
+
     if (showFollowing)
-        [self updateUserListViewWithUsers:friends page:page];
+        [self updateUserListViewWithUsers:friends cursor:cursor];
 }
 
 - (void)failedToFetchFriendsForUsername:(NSString *)aUsername
-    page:(NSNumber *)page error:(NSError *)error
+    cursor:(NSString *)cursor error:(NSError *)error
 {
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
@@ -224,15 +225,19 @@
 }
 
 - (void)followers:(NSArray *)friends fetchedForUsername:(NSString *)aUsername
-    page:(NSNumber *)page
+    cursor:(NSString *)currentCursor nextCursor:(NSString *)nextCursor
 {
     NSLog(@"Received followers list of size %d", [friends count]);
+
+    [cursor release];
+    cursor = [nextCursor copy];
+
     if (!showFollowing)
-        [self updateUserListViewWithUsers:friends page:page];
+        [self updateUserListViewWithUsers:friends cursor:cursor];
 }
 
 - (void)failedToFetchFollowersForUsername:(NSString *)aUsername
-    page:(NSNumber *)page error:(NSError *)error
+    cursor:(NSString *)cursor error:(NSError *)error
 {
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
@@ -648,11 +653,9 @@
     if([service credentials] && username) {
         alreadyBeenDisplayed = YES;
         if (showFollowing)
-            [service fetchFriendsForUser:username
-                page:[NSNumber numberWithInt:pagesShown]];
+            [service fetchFriendsForUser:username cursor:cursor];
         else
-            [service fetchFollowersForUser:username
-                page:[NSNumber numberWithInt:pagesShown]];
+            [service fetchFollowersForUser:username cursor:cursor];
     } else
         NSLog(@"User list display manager: not updating - nil credentials");
     [wrapperController setUpdatingState:kConnectedAndUpdating];
@@ -669,16 +672,14 @@
     self.currentSearch = nil;
 }
 
-- (void)updateUserListViewWithUsers:(NSArray *)users page:(NSNumber *)page
+- (void)updateUserListViewWithUsers:(NSArray *)users cursor:(NSString *)aCursor
 {
     NSLog(@"Received user list of size %d", [users count]);
-    NSInteger oldCacheSize = [[cache allKeys] count];
     for (User * friend in users)
         [cache setObject:friend forKey:friend.username];
-    NSInteger newCacheSize = [[cache allKeys] count];
-    BOOL allLoaded = oldCacheSize == newCacheSize;
+    BOOL allLoaded = [aCursor isEqualToString:@"0"];
     [userListController setAllPagesLoaded:allLoaded];
-    [userListController setUsers:[cache allValues] page:[page intValue]];
+    [userListController setUsers:[cache allValues]];
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
     [wrapperController setCachedDataAvailable:YES];
     failedState = NO;

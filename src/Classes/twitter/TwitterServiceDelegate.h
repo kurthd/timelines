@@ -158,15 +158,15 @@
 @optional
 
 - (void)friends:(NSArray *)friends fetchedForUsername:(NSString *)username
-           page:(NSNumber *)page;
+         cursor:(NSString *)cursor nextCursor:(NSString *)nextCursor;
 - (void)failedToFetchFriendsForUsername:(NSString *)username
-                                   page:(NSNumber *)page
+                                 cursor:(NSString *)cursor
                                   error:(NSError *)error;
 
 - (void)followers:(NSArray *)friends fetchedForUsername:(NSString *)username
-             page:(NSNumber *)page;
+           cursor:(NSString *)cursor nextCursor:(NSString *)nextCursor;
 - (void)failedToFetchFollowersForUsername:(NSString *)username
-                                     page:(NSNumber *)page
+                                   cursor:(NSString *)cursor
                                     error:(NSError *)error;
 
 - (void)user:(NSString *)username isFollowing:(NSString *)followee;

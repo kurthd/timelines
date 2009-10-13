@@ -11,7 +11,7 @@
 @interface FetchFriendsForUserResponseProcessor ()
 
 @property (nonatomic, copy) NSString * username;
-@property (nonatomic, copy) NSNumber * page;
+@property (nonatomic, copy) NSString * cursor;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, assign) id delegate;
 
@@ -19,15 +19,15 @@
 
 @implementation FetchFriendsForUserResponseProcessor
 
-@synthesize username, page, context, delegate;
+@synthesize username, cursor, context, delegate;
 
 + (id)processorWithUsername:(NSString *)aUsername
-                       page:(NSNumber *)aPage
+                     cursor:(NSString *)aCursor
                     context:(NSManagedObjectContext *)aContext
                    delegate:(id)aDelegate
 {
     id obj = [[[self class] alloc] initWithUsername:aUsername
-                                               page:aPage
+                                             cursor:aCursor
                                             context:aContext
                                            delegate:aDelegate];
     return [obj autorelease];
@@ -36,20 +36,20 @@
 - (void)dealloc
 {
     self.username = nil;
-    self.page = nil;
+    self.cursor = nil;
     self.context = nil;
     self.delegate = nil;
     [super dealloc];
 }
 
 - (id)initWithUsername:(NSString *)aUsername
-                  page:(NSNumber *)aPage
+                cursor:(NSString *)aCursor
                context:(NSManagedObjectContext *)aContext
               delegate:(id)aDelegate
 {
     if (self = [super init]) {
         self.username = aUsername;
-        self.page = aPage;
+        self.cursor = aCursor;
         self.context = aContext;
         self.delegate = aDelegate;
     }
@@ -57,10 +57,15 @@
     return self;
 }
 
-- (BOOL)processResponse:(NSArray *)infos
+- (BOOL)processResponse:(NSArray *)rawResponse
 {
-    if (!infos)
+    if (!rawResponse)
         return NO;
+
+    NSDictionary * response = [rawResponse objectAtIndex:0];
+    NSString * nextCursor =
+        [[response objectForKey:@"next_cursor"] description];
+    NSArray * infos = [response objectForKey:@"users"];
 
     NSMutableArray * users = [NSMutableArray arrayWithCapacity:infos.count];
     for (NSDictionary * info in infos) {
@@ -75,17 +80,17 @@
         [users addObject:user];
     }
 
-    SEL sel = @selector(friends:fetchedForUsername:page:);
-    [self invokeSelector:sel withTarget:delegate args:users, username, page,
-        nil];
+    SEL sel = @selector(friends:fetchedForUsername:cursor:nextCursor:);
+    [self invokeSelector:sel withTarget:delegate args:users, username, cursor,
+        nextCursor, nil];
 
     return YES;
 }
 
 - (BOOL)processErrorResponse:(NSError *)error
 {
-    SEL sel = @selector(failedToFetchFriendsForUsername:page:error:);
-    [self invokeSelector:sel withTarget:delegate args:username, page, error,
+    SEL sel = @selector(failedToFetchFriendsForUsername:cursor:error:);
+    [self invokeSelector:sel withTarget:delegate args:username, cursor, error,
         nil];
 
     return YES;
