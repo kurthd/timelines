@@ -46,7 +46,7 @@
 
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         mapToolbar.barStyle = UIBarStyleBlackOpaque;
-//        mapSegmentedControl.tintColor = [UIColor blackColor];
+        mapSegmentedControl.tintColor = [UIColor blackColor];
     }
 }
 
