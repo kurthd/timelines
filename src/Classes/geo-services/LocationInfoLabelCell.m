@@ -98,4 +98,16 @@
     return landscape ? 458 : 298;
 }
 
+- (void)setKeyColor:(UIColor *)color
+{
+    addressLabel.textColor = color;    
+}
+
+- (void)setValueColor:(UIColor *)color
+{
+    streetLabel.textColor = color;
+    cityLabel.textColor = color;
+    countryLabel.textColor = color;
+}
+
 @end

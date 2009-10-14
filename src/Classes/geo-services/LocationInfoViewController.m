@@ -6,6 +6,9 @@
 #import "LocationInfoViewController.h"
 #import "RegexKitLite.h"
 #import "RotatableTabBarController.h"
+#import "SettingsReader.h"
+#import "TimelineTableViewCellView.h"
+#import "UIColor+TwitchColors.h"
 
 enum {
     kLocationInfoSectionAddress,
@@ -63,6 +66,11 @@ enum {
 - (void)dealloc
 {
     [headerView release];
+    [headerBackgroundView release];
+    [avatarBackgroundView release];
+    [headerTopLine release];
+    [headerBottomLine release];
+    [headerViewPadding release];
     [titleLabel release];
     [mapThumbnail release];
 
@@ -87,6 +95,27 @@ enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        self.tableView.separatorColor = [UIColor twitchGrayColor];
+
+        headerBackgroundView.image =
+            [UIImage imageNamed:@"UserHeaderDarkThemeGradient.png"];
+        avatarBackgroundView.image =
+            [UIImage imageNamed:@"AvatarDarkThemeBackground.png"];
+        headerTopLine.backgroundColor = [UIColor blackColor];
+        headerBottomLine.backgroundColor = [UIColor twitchGrayColor];
+        headerViewPadding.backgroundColor =
+            [TimelineTableViewCellView defaultDarkThemeCellColor];
+
+        titleLabel.textColor = [UIColor whiteColor];
+        titleLabel.shadowColor = [UIColor blackColor];
+
+        self.view.backgroundColor =
+            [UIColor colorWithPatternImage:
+            [UIImage imageNamed:@"DarkThemeBackground.png"]];
+    }
+
     self.tableView.tableHeaderView = headerView;
 }
 
@@ -320,6 +349,13 @@ enum {
             loadNibNamed:@"LocationInfoLabelCell" owner:self options:nil];
 
         addressCell = [[nib objectAtIndex:0] retain];
+
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            addressCell.backgroundColor =
+                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            [addressCell setKeyColor:[UIColor twitchBlueOnDarkBackgroundColor]];
+            [addressCell setValueColor:[UIColor whiteColor]];
+        }
     }
 
     return addressCell;
@@ -336,6 +372,13 @@ enum {
 
         [directionsToCell
             setText:NSLocalizedString(@"locationinfo.directionsto", @"")];
+
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            directionsToCell.backgroundColor =
+                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            [directionsToCell
+                setButtonTextColor:[UIColor twitchBlueOnDarkBackgroundColor]];
+        }
     }
 
     return directionsToCell;
@@ -352,6 +395,12 @@ enum {
 
         [directionsFromCell
             setText:NSLocalizedString(@"locationinfo.directionsfrom", @"")];
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            directionsFromCell.backgroundColor =
+                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            [directionsFromCell
+                setButtonTextColor:[UIColor twitchBlueOnDarkBackgroundColor]];
+        }
     }
 
     return directionsFromCell;
@@ -371,6 +420,12 @@ enum {
             [UIImage imageNamed:@"MagnifyingGlass.png"];
         searchLocationCell.imageView.highlightedImage =
             [UIImage imageNamed:@"MagnifyingGlassHighlighted.png"];
+
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            searchLocationCell.backgroundColor =
+                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            searchLocationCell.textLabel.textColor = [UIColor whiteColor];
+        }
     }
 
     return searchLocationCell;
@@ -388,6 +443,12 @@ enum {
             UITableViewCellAccessoryDisclosureIndicator;
         nearbyTweetsCell.imageView.image =
             [UIImage imageNamed:@"NearbyTweetsButtonIcon.png"];
+
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            nearbyTweetsCell.backgroundColor =
+                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            nearbyTweetsCell.textLabel.textColor = [UIColor whiteColor];
+        }
     }
 
     return nearbyTweetsCell;

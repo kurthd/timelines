@@ -17,4 +17,9 @@
     buttonLabel.text = text;
 }
 
+- (void)setButtonTextColor:(UIColor *)color
+{
+    buttonLabel.textColor = color;
+}
+
 @end
