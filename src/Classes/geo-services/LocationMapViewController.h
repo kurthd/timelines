@@ -15,6 +15,9 @@
     id<LocationMapViewControllerDelegate> delegate;
 
     IBOutlet MKMapView * mapView;
+    IBOutlet UIToolbar * mapToolbar;
+    IBOutlet UISegmentedControl * mapSegmentedControl;
+
     Geocoder * geocoder;
     BOOL updatingMap;
     BasicMapAnnotation * mapAnnotation;

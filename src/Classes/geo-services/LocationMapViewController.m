@@ -4,6 +4,7 @@
 
 #import "LocationMapViewController.h"
 #import "RegexKitLite.h"
+#import "SettingsReader.h"
 
 @interface LocationMapViewController ()
 
@@ -29,12 +30,24 @@
 - (void)dealloc
 {
     [mapView release];
+    [mapToolbar release];
+    [mapSegmentedControl release];
     [geocoder release];
     [mapAnnotation release];
     [mapAnnotationView release];
     [activityIndicator release];
     [userLocationButton release];
     [super dealloc];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        mapToolbar.barStyle = UIBarStyleBlackOpaque;
+//        mapSegmentedControl.tintColor = [UIColor blackColor];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

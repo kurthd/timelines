@@ -56,7 +56,7 @@
         NSString * response =
             [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]
             autorelease];
-        NSLog(@"Received geocode response");
+        NSLog(@"Received geocode response: %@", response);
         NSString * coordinatesAsString =
             [response stringByMatching:
             @"\"coordinates\":\\s*\\[\\s*([-\\d\\.]+\\s*,\\s*[-\\d\\.]+)\\s*,\\s*[-\\d\\.]+\\s*\\]" capture:1];
@@ -90,7 +90,7 @@
         [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString * urlString =
         [NSString stringWithFormat:
-        @"http://maps.google.com/maps/geo?q=%@=&output=json&oe=utf8&sensor=true_or_false&key=%@",
+        @"http://maps.google.com/maps/geo?q=%@=&output=json&oe=utf8&sensor=false&key=%@",
         formattedQuery, apiKey];
     
     return [NSURL URLWithString:urlString];
