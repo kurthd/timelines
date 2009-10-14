@@ -81,7 +81,7 @@ static NSInteger nearbySearchRadius;
 
 + (DisplayTheme)displayTheme
 {
-    return kDisplayThemeDark;
+    return kDisplayThemeLight;
 }
 
 @end
