@@ -15,5 +15,6 @@
 - (void)setLocationText:(NSString *)locationText;
 - (void)redisplay;
 - (void)setLandscape:(BOOL)landscape;
+- (void)setLabelTextColor:(UIColor *)color;
 
 @end

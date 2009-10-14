@@ -23,4 +23,14 @@
     valueLabel.text = text;
 }
 
+- (void)setKeyColor:(UIColor *)color
+{
+    keyLabel.textColor = color;
+}
+
+- (void)setValueColor:(UIColor *)color
+{
+    valueLabel.textColor = color;
+}
+
 @end

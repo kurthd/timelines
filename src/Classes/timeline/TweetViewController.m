@@ -130,7 +130,7 @@ enum TweetActionSheets {
         reuseIdentifier:@"TweetTextTableViewCell"];
 
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-        self.tableView.separatorColor = [UIColor grayColor];
+        self.tableView.separatorColor = [UIColor twitchGrayColor];
         
         headerBackgroundView.image =
             [UIImage imageNamed:@"UserHeaderDarkThemeGradient.png"];
@@ -146,7 +146,7 @@ enum TweetActionSheets {
         avatarImage.frame = avatarImageFrame;
 
         headerTopLine.backgroundColor = [UIColor blackColor];
-        headerBottomLine.backgroundColor = [UIColor blackColor];
+        headerBottomLine.backgroundColor = [UIColor twitchGrayColor];
         headerViewPadding.backgroundColor =
             [TimelineTableViewCellView defaultDarkThemeCellColor];
 
@@ -292,8 +292,6 @@ enum TweetActionSheets {
         transformedPath.row == kTweetTextRow) {
         CGFloat tweetTextHeight = tweetContentView.frame.size.height;
         rowHeight = tweetTextHeight > 63 ? tweetTextHeight : 63;
-        // if ([SettingsReader displayTheme] == kDisplayThemeDark)
-        //     rowHeight += 10;
     } else if (transformedPath.section == kTweetDetailsSection &&
         transformedPath.row == kLocationRow)
         rowHeight = 64;

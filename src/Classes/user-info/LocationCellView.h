@@ -18,6 +18,7 @@
     UIActivityIndicatorView * activityIndicator;
     BOOL updatingMap;
     BasicMapAnnotation * mapAnnotation;
+    UIColor * textColor;
 
     double mapSpan;
 
@@ -27,5 +28,6 @@
 @property (nonatomic, copy) NSString * locationText;
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;
 @property (nonatomic, assign) BOOL landscape;
+@property (nonatomic, retain) UIColor * textColor;
 
 @end

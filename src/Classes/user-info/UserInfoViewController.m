@@ -97,16 +97,77 @@ static UIImage * defaultAvatar;
     self.tableView.tableFooterView = footerView;
     
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-        self.tableView.separatorColor = [UIColor grayColor];
+        self.tableView.separatorColor = [UIColor twitchGrayColor];
 
         headerBackgroundView.image =
             [UIImage imageNamed:@"UserHeaderDarkThemeGradient.png"];
         avatarBackgroundView.image =
             [UIImage imageNamed:@"AvatarDarkThemeBackground.png"];
         headerTopLine.backgroundColor = [UIColor blackColor];
-        headerBottomLine.backgroundColor = [UIColor blackColor];
+        headerBottomLine.backgroundColor = [UIColor twitchGrayColor];
         headerViewPadding.backgroundColor =
             [TimelineTableViewCellView defaultDarkThemeCellColor];
+
+        nameLabel.textColor = [UIColor whiteColor];
+        nameLabel.shadowColor = [UIColor blackColor];
+
+        followingLoadingLabel.shadowColor =
+            [UIColor colorWithRed:.1 green:.1 blue:.1 alpha:1];
+
+        [stopFollowingButton
+            setBackgroundImage:
+            [UIImage imageNamed:@"StopFollowingButtonDarkTheme.png"]
+            forState:UIControlStateNormal];
+        [stopFollowingButton
+            setBackgroundImage:
+            [UIImage imageNamed:@"StopFollowingButtonDarkThemeHighlighted.png"]
+            forState:UIControlStateHighlighted];
+        [stopFollowingButton
+            setTitleShadowColor:
+            [UIColor colorWithRed:.1 green:.1 blue:.1 alpha:1]
+            forState:UIControlStateNormal];
+        [stopFollowingButton setTitleColor:[UIColor lightGrayColor]
+            forState:UIControlStateNormal];
+
+        [followButton
+            setBackgroundImage:
+            [UIImage imageNamed:@"FollowButtonDarkTheme.png"]
+            forState:UIControlStateNormal];
+        [followButton
+            setBackgroundImage:
+            [UIImage imageNamed:@"FollowButtonDarkThemeHighlighted.png"]
+            forState:UIControlStateHighlighted];
+        [followButton
+            setTitleShadowColor:
+            [UIColor colorWithRed:.1 green:.1 blue:.1 alpha:1]
+            forState:UIControlStateNormal];
+        [followButton setTitleColor:[UIColor lightGrayColor]
+            forState:UIControlStateNormal];
+
+        self.view.backgroundColor =
+            [UIColor colorWithPatternImage:
+            [UIImage imageNamed:@"DarkThemeBackground.png"]];
+
+        bioLabel.textColor = [UIColor lightGrayColor];
+        bioLabel.shadowColor = [UIColor blackColor];
+
+        [webAddressButton
+            setTitleColor:[UIColor twitchBlueOnDarkBackgroundColor]
+            forState:UIControlStateNormal];
+        [webAddressButton setTitleShadowColor:[UIColor blackColor]
+            forState:UIControlStateNormal];
+
+        UIImage * buttonImage =
+            [[UIImage imageNamed:@"DarkThemeButtonBackground.png"]
+            stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+        [blockButton setBackgroundImage:buttonImage
+            forState:UIControlStateNormal];
+        [bookmarkButton setBackgroundImage:buttonImage
+            forState:UIControlStateNormal];
+        [blockButton setTitleColor:[UIColor twitchBlueOnDarkBackgroundColor]
+            forState:UIControlStateNormal];
+        [bookmarkButton setTitleColor:[UIColor twitchBlueOnDarkBackgroundColor]
+            forState:UIControlStateNormal];
     }
 
     [self layoutViews];
@@ -630,11 +691,18 @@ static UIImage * defaultAvatar;
     UITableViewCell * cell =
         [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
-    if (!cell)
+    if (!cell) {
         cell =
             [[[UITableViewCell alloc]
             initWithFrame:CGRectZero reuseIdentifier:cellIdentifier]
             autorelease];
+
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            cell.backgroundColor =
+                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            cell.textLabel.textColor = [UIColor whiteColor];
+        }
+    }
 
     return cell;
 }
@@ -643,7 +711,8 @@ static UIImage * defaultAvatar;
 {
     static NSString * cellIdentifier = @"UserInfoLabelCell";
 
-    UITableViewCell * cell =
+    UserInfoLabelCell * cell =
+        (UserInfoLabelCell *)
         [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
     if (!cell) {
@@ -652,6 +721,12 @@ static UIImage * defaultAvatar;
             loadNibNamed:cellIdentifier owner:self options:nil];
 
         cell = [nib objectAtIndex:0];
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            cell.backgroundColor =
+                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            [cell setKeyColor:[UIColor twitchBlueOnDarkBackgroundColor]];
+            [cell setValueColor:[UIColor whiteColor]];
+        }
     }
 
     return cell;
@@ -659,10 +734,16 @@ static UIImage * defaultAvatar;
 
 - (LocationCell *)locationCell
 {
-    if (!locationCell)
+    if (!locationCell) {
         locationCell =
             [[LocationCell alloc] initWithStyle:UITableViewCellStyleDefault
             reuseIdentifier:@"LocationCell"];
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            locationCell.backgroundColor =
+                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            [locationCell setLabelTextColor:[UIColor whiteColor]];
+        }
+    }
 
     return locationCell;
 }

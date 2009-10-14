@@ -26,6 +26,7 @@
         locationCellView.autoresizingMask =
             UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         locationCellView.contentMode = UIViewContentModeTopLeft;
+        locationCellView.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:locationCellView];
 
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -46,6 +47,11 @@
 
 - (void)redisplay {
 	[locationCellView setNeedsDisplay];
+}
+
+- (void)setLabelTextColor:(UIColor *)color
+{
+    locationCellView.textColor = color;
 }
 
 @end

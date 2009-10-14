@@ -13,4 +13,7 @@
 - (void)setKeyText:(NSString *)text;
 - (void)setValueText:(NSString *)text;
 
+- (void)setKeyColor:(UIColor *)color;
+- (void)setValueColor:(UIColor *)color;
+
 @end
