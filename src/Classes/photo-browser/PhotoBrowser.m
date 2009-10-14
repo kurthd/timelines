@@ -7,6 +7,7 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "CommonTwitterServicePhotoSource.h"
 #import "TwitchWebBrowserDisplayMgr.h"
+#import "SettingsReader.h"
 
 @interface PhotoBrowser ()
 
@@ -228,8 +229,11 @@
 - (IBAction)done:(id)sender
 {
     isDisplayed = NO;
+    UIStatusBarStyle statusBarStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIStatusBarStyleBlackOpaque : UIStatusBarStyleDefault;
     [[UIApplication sharedApplication]
-        setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+        setStatusBarStyle:statusBarStyle animated:YES];
     [self dismissModalViewControllerAnimated:YES];
 }
 
