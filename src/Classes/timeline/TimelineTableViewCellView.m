@@ -188,7 +188,7 @@ static NSString * starText;
     } else {
          textColor =
                 [SettingsReader displayTheme] == kDisplayThemeDark ?
-                [UIColor twitchLightGrayColor] : [UIColor blackColor];
+                [UIColor twitchLightLightGrayColor] : [UIColor blackColor];
         authorColor =
                [SettingsReader displayTheme] == kDisplayThemeDark ?
                [UIColor whiteColor] : [UIColor blackColor];

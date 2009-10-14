@@ -7,6 +7,7 @@
 #import "UIImage+DrawingAdditions.h"
 #import "UIColor+TwitchColors.h"
 #import "RegexKitLite.h"
+#import "SettingsReader.h"
 
 @interface TweetLocationCellView ()
 
@@ -29,7 +30,7 @@
 #define MAP_HEIGHT 48
 
 @synthesize location, highlighted, reverseGeocoder, landscape,
-    locationDescription;
+    locationDescription, textColor;
 
 - (void)dealloc
 {
@@ -38,6 +39,7 @@
     [mapView release];
     [activityIndicator release];
     [mapAnnotation release];
+    [textColor release];
     [super dealloc];
 }
 
@@ -45,7 +47,6 @@
 {
 	if (self = [super initWithFrame:frame]) {
 		self.opaque = YES;
-		self.backgroundColor = [UIColor whiteColor];
 		
         [self addSubview:self.activityIndicator];
 	}
@@ -86,10 +87,8 @@
     
     if (self.highlighted)
         locationTextLabelColor = [UIColor whiteColor];
-    else {
-        locationTextLabelColor = [UIColor blackColor];
-        self.backgroundColor = [UIColor whiteColor];
-    }
+    else
+        locationTextLabelColor = self.textColor;
 
     CGRect contentRect = self.bounds;
 
@@ -100,8 +99,11 @@
 
     CGContextRef context = UIGraphicsGetCurrentContext();
 
+    UIColor * darkColor =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [UIColor blackColor] : [UIColor twitchDarkGrayColor];
     UIColor * rectColor =
-        self.highlighted ? [UIColor whiteColor] : [UIColor twitchDarkGrayColor];
+        self.highlighted ? [UIColor whiteColor] : darkColor;
 
     CGContextSetFillColorWithColor(context, [rectColor CGColor]);
 

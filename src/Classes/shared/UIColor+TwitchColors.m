@@ -10,6 +10,7 @@ static UIColor * twitchBlueColor;
 static UIColor * twitchBlueOnDarkBackgroundColor;
 static UIColor * twitchGrayColor;
 static UIColor * twitchLightGrayColor;
+static UIColor * twitchLightLightGrayColor;
 static UIColor * twitchDarkGrayColor;
 static UIColor * twitchLabelColor;
 static UIColor * twitchBackgroundColor;
@@ -37,7 +38,7 @@ static UIColor * darkCellBackgroundColor;
 {
     if (!twitchBlueOnDarkBackgroundColor)
         twitchBlueOnDarkBackgroundColor =
-            [[UIColor colorWithRed:.384 green:.576 blue:.733 alpha:1] retain];
+            [[UIColor colorWithRed:.447 green:.627 blue:.773 alpha:1] retain];
 
     return twitchBlueOnDarkBackgroundColor;
 }
@@ -58,6 +59,15 @@ static UIColor * darkCellBackgroundColor;
             [[UIColor colorWithRed:.75 green:.75 blue:.75 alpha:1] retain];
 
     return twitchLightGrayColor;
+}
+
++ (UIColor *)twitchLightLightGrayColor
+{
+    if (!twitchLightLightGrayColor)
+        twitchLightLightGrayColor =
+            [[UIColor colorWithRed:.85 green:.85 blue:.85 alpha:1] retain];
+
+    return twitchLightLightGrayColor;
 }
 
 + (UIColor *)twitchDarkGrayColor

@@ -828,7 +828,7 @@ enum TweetActionSheets {
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
             locationCell.backgroundColor =
                 [TimelineTableViewCellView defaultDarkThemeCellColor];
-            locationCell.textLabel.textColor = [UIColor whiteColor];
+            [locationCell setLabelTextColor:[UIColor whiteColor]];
         }
     }
 
