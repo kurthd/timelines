@@ -28,13 +28,21 @@ static UIImage * darkenedTopImage;
         [[UIImage imageNamed:@"DarkThemeTopGradient.png"] retain] :
         [[UIImage imageNamed:@"TableViewCellTopGradient.png"] retain];
     mentionBottomImage =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[UIImage imageNamed:@"MentionBottomGradientDarkTheme.png"] retain] :
         [[UIImage imageNamed:@"MentionBottomGradient.png"] retain];
     mentionTopImage =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[UIImage imageNamed:@"MentionTopGradientDarkTheme.png"] retain] :
         [[UIImage imageNamed:@"MentionTopGradient.png"] retain];
     darkenedBottomImage =
-        [[UIImage imageNamed:@"DarkenedTableViewCellGradient.png"] retain];
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[UIImage imageNamed:@"DarkenedDarkThemeBottomGradient.png"] retain] :
+        [[UIImage imageNamed:@"DarkThemeBottomGradient.png"] retain];
     darkenedTopImage =
-        [[UIImage imageNamed:@"DarkenedTableViewCellTopGradient.png"] retain];
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[UIImage imageNamed:@"DarkenedDarkThemeTopGradient.png"] retain] :
+        [[UIImage imageNamed:@"DarkThemeTopGradient.png"] retain];
 }
 
 - (void)drawRect:(CGRect)rect

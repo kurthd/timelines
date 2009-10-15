@@ -837,6 +837,10 @@
 		916A29291086607000C5895D /* FollowButtonDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A29281086607000C5895D /* FollowButtonDarkTheme.png */; };
 		916A293A1086628600C5895D /* FollowButtonDarkThemeHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A29391086628600C5895D /* FollowButtonDarkThemeHighlighted.png */; };
 		916A293C1086629200C5895D /* StopFollowingButtonDarkThemeHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A293B1086629200C5895D /* StopFollowingButtonDarkThemeHighlighted.png */; };
+		916A2A4D1086A69600C5895D /* MentionBottomGradientDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A2A4B1086A69600C5895D /* MentionBottomGradientDarkTheme.png */; };
+		916A2A4E1086A69600C5895D /* MentionTopGradientDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A2A4C1086A69600C5895D /* MentionTopGradientDarkTheme.png */; };
+		916A2A8E1087912E00C5895D /* DarkenedDarkThemeBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A2A8C1087912E00C5895D /* DarkenedDarkThemeBottomGradient.png */; };
+		916A2A8F1087912E00C5895D /* DarkenedDarkThemeTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A2A8D1087912E00C5895D /* DarkenedDarkThemeTopGradient.png */; };
 		916E3E49102CDC2700A879AC /* FavoriteIconForUserViewHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E3E48102CDC2700A879AC /* FavoriteIconForUserViewHighlighted.png */; };
 		917245521025046A007E0DF6 /* FavoriteMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 917245511025046A007E0DF6 /* FavoriteMark.png */; };
 		917245E61028B715007E0DF6 /* FindPeopleBookmarkView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 917245E41028B715007E0DF6 /* FindPeopleBookmarkView.xib */; };
@@ -1462,6 +1466,10 @@
 		916A29281086607000C5895D /* FollowButtonDarkTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FollowButtonDarkTheme.png; path = images/FollowButtonDarkTheme.png; sourceTree = "<group>"; };
 		916A29391086628600C5895D /* FollowButtonDarkThemeHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FollowButtonDarkThemeHighlighted.png; path = images/FollowButtonDarkThemeHighlighted.png; sourceTree = "<group>"; };
 		916A293B1086629200C5895D /* StopFollowingButtonDarkThemeHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StopFollowingButtonDarkThemeHighlighted.png; path = images/StopFollowingButtonDarkThemeHighlighted.png; sourceTree = "<group>"; };
+		916A2A4B1086A69600C5895D /* MentionBottomGradientDarkTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MentionBottomGradientDarkTheme.png; path = images/MentionBottomGradientDarkTheme.png; sourceTree = "<group>"; };
+		916A2A4C1086A69600C5895D /* MentionTopGradientDarkTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MentionTopGradientDarkTheme.png; path = images/MentionTopGradientDarkTheme.png; sourceTree = "<group>"; };
+		916A2A8C1087912E00C5895D /* DarkenedDarkThemeBottomGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkenedDarkThemeBottomGradient.png; path = images/DarkenedDarkThemeBottomGradient.png; sourceTree = "<group>"; };
+		916A2A8D1087912E00C5895D /* DarkenedDarkThemeTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkenedDarkThemeTopGradient.png; path = images/DarkenedDarkThemeTopGradient.png; sourceTree = "<group>"; };
 		916BD7990FEEADD7007143A9 /* NetworkAwareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkAwareViewController.h; path = shared/NetworkAwareViewController.h; sourceTree = "<group>"; };
 		916BD79A0FEEADD7007143A9 /* NetworkAwareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkAwareViewController.m; path = shared/NetworkAwareViewController.m; sourceTree = "<group>"; };
 		916BD79B0FEEADD7007143A9 /* NetworkAwareViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkAwareViewControllerDelegate.h; path = shared/NetworkAwareViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -2675,6 +2683,10 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				916A2A8C1087912E00C5895D /* DarkenedDarkThemeBottomGradient.png */,
+				916A2A8D1087912E00C5895D /* DarkenedDarkThemeTopGradient.png */,
+				916A2A4B1086A69600C5895D /* MentionBottomGradientDarkTheme.png */,
+				916A2A4C1086A69600C5895D /* MentionTopGradientDarkTheme.png */,
 				916A293B1086629200C5895D /* StopFollowingButtonDarkThemeHighlighted.png */,
 				916A29391086628600C5895D /* FollowButtonDarkThemeHighlighted.png */,
 				916A29281086607000C5895D /* FollowButtonDarkTheme.png */,
@@ -3274,6 +3286,10 @@
 				916A29291086607000C5895D /* FollowButtonDarkTheme.png in Resources */,
 				916A293A1086628600C5895D /* FollowButtonDarkThemeHighlighted.png in Resources */,
 				916A293C1086629200C5895D /* StopFollowingButtonDarkThemeHighlighted.png in Resources */,
+				916A2A4D1086A69600C5895D /* MentionBottomGradientDarkTheme.png in Resources */,
+				916A2A4E1086A69600C5895D /* MentionTopGradientDarkTheme.png in Resources */,
+				916A2A8E1087912E00C5895D /* DarkenedDarkThemeBottomGradient.png in Resources */,
+				916A2A8F1087912E00C5895D /* DarkenedDarkThemeTopGradient.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
