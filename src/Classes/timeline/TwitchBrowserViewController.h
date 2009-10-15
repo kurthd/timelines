@@ -11,6 +11,8 @@
     MFMailComposeViewControllerDelegate>
 {
     IBOutlet UINavigationItem * navItem;
+    IBOutlet UIToolbar * browserToolbar;
+    IBOutlet UINavigationBar * browserNavBar;
     IBOutlet UIWebView * webView;
     IBOutlet UIBarButtonItem * backButton;
     IBOutlet UIBarButtonItem * forwardButton;

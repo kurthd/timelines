@@ -6,6 +6,7 @@
 #import "RegexKitLite.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "RotatableTabBarController.h"
+#import "SettingsReader.h"
 
 @interface TwitchBrowserViewController ()
 
@@ -25,6 +26,8 @@
 - (void)dealloc
 {
     [navItem release];
+    [browserToolbar release];
+    [browserNavBar release];
     [webView release];
     [backButton release];
     [forwardButton release];
@@ -32,6 +35,16 @@
     [titleLabel release];
     [activityIndicator release];
     [super dealloc];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        browserToolbar.barStyle = UIBarStyleBlackOpaque;
+        browserNavBar.barStyle = UIBarStyleBlackOpaque;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
