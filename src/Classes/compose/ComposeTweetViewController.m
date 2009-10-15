@@ -154,7 +154,19 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)addTextToMessage:(NSString *)text
 {
     NSString * current = textView.text;
-    textView.text = [current stringByAppendingFormat:@" %@", text];
+
+    NSCharacterSet * whitespace =
+        [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    NSRange where = [current rangeOfCharacterFromSet:whitespace
+                                             options:NSBackwardsSearch];
+    NSRange notFound = NSMakeRange(NSNotFound, 0);
+
+    NSString * padding =
+        (current.length == 0 || !NSEqualRanges(where, notFound)) ?
+        @"" :  // no padding needed
+        @" ";  // padding needed
+
+    textView.text = [current stringByAppendingFormat:@"%@%@", padding, text];
 
     [self enableSendButtonFromInterface];
     [self updateCharacterCountFromText:textView.text];
