@@ -178,6 +178,8 @@ static UIImage * defaultAvatar;
             forState:UIControlStateDisabled];
         [bookmarkButton setBackgroundImage:buttonImage
             forState:UIControlStateDisabled];
+            
+        activeAcctLabel.shadowColor = [UIColor blackColor];
     }
 
     [self layoutViews];

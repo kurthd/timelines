@@ -33,3 +33,7 @@
 "searchradius.ten" = "10 km";
 "searchradius.fifty" = "50 km";
 "searchradius.twofifty" = "250 km";
+
+"theme" = "Theme";
+"theme.light" = "Light";
+"theme.dark" = "Dark";

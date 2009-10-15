@@ -20,10 +20,13 @@
     id<ConversationViewControllerDelegate> delegate;
 
     IBOutlet UIView * headerView;
+    IBOutlet UIView * headerViewLine;
     IBOutlet UIView * footerView;
     IBOutlet UIView * plainFooterView;
 
     IBOutlet UIView * loadingView;
+    IBOutlet UIButton * loadMoreButton;
+    IBOutlet UILabel * loadingLabel;
     IBOutlet UIView * loadMoreView;
 
     NSMutableArray * conversation;

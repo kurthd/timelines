@@ -167,6 +167,30 @@
 			<string>PSGroupSpecifier</string>
 		</dict>
 		<dict>
+			<key>DefaultValue</key>
+			<integer>0</integer>
+			<key>Title</key>
+			<string>theme</string>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>theme.light</string>
+				<string>theme.dark</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Key</key>
+			<string>theme</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
 			<key>Title</key>

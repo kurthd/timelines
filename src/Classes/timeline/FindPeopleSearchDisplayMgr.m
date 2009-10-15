@@ -998,29 +998,45 @@
 
     CGFloat buttonWidth = landscape ? 440 : 280;
     CGRect buttonFrame = CGRectMake(20, 7, buttonWidth, 37);
-    UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = buttonFrame;
     button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     CGRect grayLineFrame = CGRectMake(0, 50, viewWidth, 1);
     UIView * grayLineView =
         [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
-    grayLineView.backgroundColor = [UIColor twitchLightGrayColor];
+    grayLineView.backgroundColor =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [UIColor blackColor] : [UIColor twitchLightGrayColor];
     grayLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    
+
+    NSString * backgroundImageName =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        @"SaveSearchDarkThemeButtonBackground.png" :
+        @"SaveSearchButtonBackground.png";
     UIImage * background =
-        [[UIImage imageNamed:@"SaveSearchButtonBackground.png"]
+        [[UIImage imageNamed:backgroundImageName]
         stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+    NSString * highlightedBackgroundImageName =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        @"SaveSearchDarkThemeButtonBackgroundHighlighted.png" :
+        @"SaveSearchButtonBackgroundHighlighted.png";
     UIImage * selectedBackground =
-        [[UIImage imageNamed:@"SaveSearchButtonBackgroundHighlighted.png"]
+        [[UIImage imageNamed:highlightedBackgroundImageName]
         stretchableImageWithLeftCapWidth:10 topCapHeight:0];
     [button setBackgroundImage:background forState:UIControlStateNormal];
     [button setBackgroundImage:selectedBackground
                       forState:UIControlStateHighlighted];
 
     [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+    
+    button.enabled = searchBar.text && ![searchBar.text isEqual:@""];
 
-    UIColor * color = [UIColor colorWithRed:.353 green:.4 blue:.494 alpha:1.0];
+    UIColor * color =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [UIColor twitchBlueOnDarkBackgroundColor] :
+        [UIColor colorWithRed:.353 green:.4 blue:.494 alpha:1.0];
     [button setTitleColor:color forState:UIControlStateNormal];
 
     button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
@@ -1031,7 +1047,7 @@
 
     [view addSubview:button];
     [view addSubview:grayLineView];
-
+    
     return [view autorelease];
 }
 

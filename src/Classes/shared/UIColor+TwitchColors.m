@@ -3,6 +3,7 @@
 //
 
 #import "UIColor+TwitchColors.h"
+#import "SettingsReader.h"
 
 @implementation UIColor (TwitchColors)
 
@@ -90,9 +91,13 @@ static UIColor * darkCellBackgroundColor;
 
 + (UIColor *)twitchBackgroundColor
 {
-    if (!twitchBackgroundColor)
+    if (!twitchBackgroundColor) {
         twitchBackgroundColor =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [[UIColor colorWithPatternImage:
+            [UIImage imageNamed:@"DarkThemeBackground.png"]] retain] :
             [[UIColor groupTableViewBackgroundColor] retain];
+    }
 
     return twitchBackgroundColor;
 }

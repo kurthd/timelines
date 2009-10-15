@@ -4,6 +4,7 @@
 
 #import "NoDataViewController.h"
 #import "RotatableTabBarController.h"
+#import "SettingsReader.h"
 
 @interface NoDataViewController ()
 
@@ -17,6 +18,16 @@
     [label release];
     [activityIndicator release];
     [super dealloc];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        label.textColor = [UIColor whiteColor];
+        label.shadowColor = [UIColor blackColor];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

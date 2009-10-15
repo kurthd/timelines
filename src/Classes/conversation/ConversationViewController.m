@@ -8,6 +8,8 @@
 #import "TimelineTableViewCell.h"
 #import "User+UIAdditions.h"
 #import "RotatableTabBarController.h"
+#import "SettingsReader.h"
+#import "UIColor+TwitchColors.h"
 
 @interface ConversationViewController ()
 
@@ -38,9 +40,12 @@
     self.delegate = nil;
 
     [headerView release];
+    [headerViewLine release];
     self.footerView = nil;
     [plainFooterView release];
     self.loadingView = nil;
+    [loadMoreButton release];
+    [loadingLabel release];
     self.loadMoreView = nil;
 
     self.conversation = nil;
@@ -134,6 +139,36 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        self.view.backgroundColor = [UIColor twitchDarkGrayColor];
+        headerView.backgroundColor = [UIColor twitchDarkGrayColor];
+        plainFooterView.backgroundColor = [UIColor twitchDarkGrayColor];
+        headerViewLine.backgroundColor = [UIColor blackColor];
+        loadingView.backgroundColor = [UIColor twitchDarkGrayColor];
+        loadingLabel.textColor = [UIColor lightGrayColor];
+        footerView.backgroundColor = [UIColor twitchDarkGrayColor];
+        loadMoreView.backgroundColor = [UIColor twitchDarkGrayColor];
+
+        NSString * backgroundImageName =
+            @"SaveSearchDarkThemeButtonBackground.png";
+        UIImage * background =
+            [[UIImage imageNamed:backgroundImageName]
+            stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+        NSString * highlightedBackgroundImageName =
+            @"SaveSearchDarkThemeButtonBackgroundHighlighted.png";
+        UIImage * selectedBackground =
+            [[UIImage imageNamed:highlightedBackgroundImageName]
+            stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+        [loadMoreButton setBackgroundImage:background
+            forState:UIControlStateNormal];
+        [loadMoreButton setBackgroundImage:selectedBackground
+            forState:UIControlStateHighlighted];
+        [loadMoreButton setTitleColor:[UIColor twitchBlueOnDarkBackgroundColor]
+            forState:UIControlStateNormal];
+        [loadMoreButton setTitleColor:[UIColor grayColor]
+            forState:UIControlStateDisabled];
+    }
 
     self.navigationItem.title =
         NSLocalizedString(@"conversationview.title", @"");

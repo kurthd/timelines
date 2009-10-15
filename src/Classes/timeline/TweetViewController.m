@@ -630,6 +630,12 @@ enum TweetActionSheets {
             initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
         conversationCell.accessoryType =
             UITableViewCellAccessoryDisclosureIndicator;
+
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            conversationCell.backgroundColor =
+                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            conversationCell.textLabel.textColor = [UIColor whiteColor];
+        }
     }
 
     return conversationCell;

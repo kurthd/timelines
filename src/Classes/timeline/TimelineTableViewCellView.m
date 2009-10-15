@@ -435,7 +435,7 @@ static NSString * starText;
 
     UIColor * textColor = nil;
     UIFont * textFont = [UIFont systemFontOfSize:14.0];
-    
+
     UIColor * favoriteColor = nil;
 
     CGPoint point;
@@ -773,7 +773,7 @@ static UIColor * defaultDarkThemeCellColor;
 {
     if (!defaultDarkThemeCellColor)
         defaultDarkThemeCellColor =
-            [[UIColor colorWithRed:0.21 green:0.22 blue:0.23 alpha:1.0]
+            [[UIColor colorWithRed:0.22 green:0.23 blue:0.24 alpha:1.0]
             retain];
 
     return defaultDarkThemeCellColor;

@@ -18,6 +18,9 @@ static ComposeTweetImageQuality imageQuality;
 static BOOL alreadyReadNearbySearchRadiusValue;
 static NSInteger nearbySearchRadius;
 
+static BOOL alreadyReadThemeValue;
+static NSInteger theme;
+
 + (NSInteger)fetchQuantity
 {
     if (!alreadyReadFetchQuantityValue) {
@@ -81,7 +84,15 @@ static NSInteger nearbySearchRadius;
 
 + (DisplayTheme)displayTheme
 {
-    return kDisplayThemeDark;
+    if (!alreadyReadThemeValue) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger themeValAsNumber = [defaults integerForKey:@"theme"];
+        theme = themeValAsNumber;
+    }
+
+    alreadyReadThemeValue = YES;
+
+    return theme;
 }
 
 @end
