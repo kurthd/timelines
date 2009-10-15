@@ -183,15 +183,35 @@
 - (void)composeReplyToTweet:(NSString *)tweetId
                    fromUser:(NSString *)user
 {
-    [self composeReplyToTweet:tweetId
-                     fromUser:user
-                     withText:[NSString stringWithFormat:@"@%@ ", user]];
+    self.origTweetId = tweetId;
+    self.origUsername = user;
+
+    NSString * tweetText = nil;
+
+    // See if we're resuming a saved reply
+    TweetDraft * draft =
+        [self.draftMgr tweetDraftForCredentials:self.service.credentials];
+    if ([draft.inReplyToTweetId isEqualToString:tweetId])
+        tweetText = draft.text;
+    else
+        tweetText = [NSString stringWithFormat:@"@%@ ", user];
+
+    NSString * username = self.service.credentials.username;
+    [self.composeTweetViewController composeTweet:tweetText
+                                             from:username
+                                        inReplyTo:user];
+    [self.rootViewController presentModalViewController:self.navController
+                                               animated:YES];
 }
 
 - (void)composeReplyToTweet:(NSString *)tweetId
                    fromUser:(NSString *)user
                    withText:(NSString *)text
 {
+    /*
+     * Ignore any drafts and accept the text as given.
+     */
+
     self.origTweetId = tweetId;
     self.origUsername = user;
 
