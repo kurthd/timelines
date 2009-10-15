@@ -38,4 +38,13 @@ static NSMutableDictionary * actualThumbnailImages;
     return actualThumbnailImages;
 }
 
++ (UIImage *)defaultAvatar
+{
+    static UIImage * defaultAvatar = nil;
+    if (!defaultAvatar)
+        defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar50x50.png"] retain];
+
+    return defaultAvatar;
+}
+
 @end

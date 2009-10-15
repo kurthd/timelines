@@ -161,3 +161,12 @@ static NSMutableDictionary * followersDescriptions;
 }
 
 @end
+
+@implementation User (SortingAdditions)
+
+- (NSComparisonResult)caseInsensitiveUsernameCompare:(User *)otherUser
+{
+    return [self.username caseInsensitiveCompare:otherUser.username];
+}
+
+@end

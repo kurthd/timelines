@@ -9,4 +9,6 @@
 
 - (UIImage *)actualThumbnailImage;
 
++ (UIImage *)defaultAvatar;
+
 @end

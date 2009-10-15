@@ -314,3 +314,6 @@ bitlyloginview.deleteaccount.button.title = "Delete Account";
 bitlyloginview.deleteaccount.confirm.title = "Are you sure you want to delete your bit.ly account?";
 bitlyloginview.deleteaccount.confirm.cancel = "Cancel";
 bitlyloginview.deleteaccount.confirm.delete = "Delete Account";
+
+/* SelectPersonView */
+selectpersonview.title = "Find a Person";

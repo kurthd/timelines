@@ -57,6 +57,8 @@
 @property (nonatomic, retain) UIView * linkShorteningView;
 @property (nonatomic, copy) NSString * shorteningUrl;
 
+@property (nonatomic, retain) PersonSelector * personSelector;
+
 - (void)promptForPhotoSource:(UIViewController *)controller;
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source
                 controller:(UIViewController *)controller;
@@ -87,6 +89,7 @@
 @synthesize attachedPhotos, attachedVideos;
 @synthesize photoService;
 @synthesize linkShorteningView, shorteningUrl;
+@synthesize personSelector;
 
 - (void)dealloc
 {
@@ -106,6 +109,8 @@
     self.attachedVideos = nil;
     self.linkShorteningView = nil;
     self.shorteningUrl = nil;
+    self.personSelector = nil;
+
     [super dealloc];
 }
 
@@ -345,13 +350,7 @@
 }
 
 - (void)userDidSaveTweetDraft:(NSString *)text
-                  //dismissView:(BOOL)dismissView
 {
-    /*
-    if (dismissView)
-        [self.rootViewController dismissModalViewControllerAnimated:YES];
-    */
-
     NSError * error = nil;
     if (self.origTweetId && self.origUsername)
         [self.draftMgr saveTweetDraft:text
@@ -379,13 +378,7 @@
 
 - (void)userDidSaveDirectMessageDraft:(NSString *)text
                           toRecipient:(NSString *)recipient
-                          //dismissView:(BOOL)dismissView
 {
-    /*
-    if (dismissView)
-        [self.rootViewController dismissModalViewControllerAnimated:YES];
-    */
-
     TwitterCredentials * credentials = self.service.credentials;
     NSError * error = nil;
     if (fromHomeScreen)
@@ -421,6 +414,12 @@
         [self promptForPhotoSource:self.composeTweetViewController];
     else
         [self.addPhotoServiceDisplayMgr addPhotoService:credentials];
+}
+
+- (void)userWantsToSelectPerson
+{
+    [self.personSelector
+        promptToSelectUserModally:self.composeTweetViewController];
 }
 
 - (void)userDidCancelActivity
@@ -778,6 +777,23 @@
         [self removeShorteningLinkView];
         self.shorteningUrl = nil;
     }
+}
+
+#pragma mark PersonSelectorDelegate implementation
+
+- (void)userDidSelectPerson:(User *)user
+{
+    [self.composeTweetViewController
+        addTextToMessage:[NSString stringWithFormat:@"@%@", user.username]];
+
+    [personSelector autorelease];
+    personSelector = nil;
+}
+
+- (void)userDidCancelPersonSelection
+{
+    [personSelector autorelease];
+    personSelector = nil;
 }
 
 #pragma mark UIImagePicker helper methods
@@ -1150,6 +1166,17 @@
     }
 
     return linkShorteningView;
+}
+
+- (PersonSelector *)personSelector
+{
+    if (!personSelector) {
+        personSelector =
+            [[PersonSelector alloc] initWithContext:self.context];
+        personSelector.delegate = self;
+    }
+
+    return personSelector;
 }
 
 @end

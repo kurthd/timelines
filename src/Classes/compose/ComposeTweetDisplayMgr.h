@@ -11,6 +11,7 @@
 #import "LogInDisplayMgr.h"
 #import "AddPhotoServiceDisplayMgr.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
+#import "PersonSelector.h"
 
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
 @class TweetDraft, DirectMessageDraft;
@@ -22,7 +23,7 @@
     PhotoServiceDelegate, LogInDisplayMgrDelegate,
     UIImagePickerControllerDelegate, UINavigationControllerDelegate,
     UIActionSheetDelegate, AddPhotoServiceDisplayMgrDelegate,
-    AsynchronousNetworkFetcherDelegate>
+    AsynchronousNetworkFetcherDelegate, PersonSelectorDelegate>
 {
     id<ComposeTweetDisplayMgrDelegate> delegate;
 
@@ -55,6 +56,8 @@
     UIView * linkShorteningView;
     BOOL canceledLinkShortening;
     NSString * shorteningUrl;
+
+    PersonSelector * personSelector;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;

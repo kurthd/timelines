@@ -158,6 +158,12 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [self enableSendButtonFromInterface];
     [self updateCharacterCountFromText:textView.text];
+
+    if ([self composingDirectMessage])
+        [delegate userDidSaveDirectMessageDraft:textView.text
+                                    toRecipient:recipientTextField.text];
+    else
+        [delegate userDidSaveTweetDraft:textView.text];
 }
 
 - (void)displayActivityView
@@ -392,11 +398,10 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     if ([self composingDirectMessage]) {
         [self enableSendButtonFromText:s andRecipient:recipientTextField.text];
         [delegate userDidSaveDirectMessageDraft:s
-                                    toRecipient:recipientTextField.text
-                                    /*dismissView:NO*/];
+                                    toRecipient:recipientTextField.text];
     } else {
         [self enableSendButtonFromText:s];
-        [delegate userDidSaveTweetDraft:s /*dismissView:NO*/];
+        [delegate userDidSaveTweetDraft:s];
     }
 
     return YES;
@@ -441,6 +446,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (IBAction)choosePhoto
 {
     [delegate userWantsToSelectPhoto];
+}
+
+- (IBAction)choosePerson
+{
+    [delegate userWantsToSelectPerson];
 }
 
 - (IBAction)userDidCancelActivity

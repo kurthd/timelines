@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050ACC2B1087D11A004B6C2D /* PersonDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 050ACC2A1087D11A004B6C2D /* PersonDirectory.m */; };
+		050ACC2C1087D11A004B6C2D /* PersonDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 050ACC2A1087D11A004B6C2D /* PersonDirectory.m */; };
 		0511067F102A25FC00915638 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0511067E102A25FC00915638 /* Settings.bundle */; };
 		0515675C1047035500A26F17 /* EditTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0515675A1047035500A26F17 /* EditTextView.xib */; };
 		0516678E10841EFB000CA4AA /* UpButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DCE7861072756000095FD0 /* UpButton.png */; };
@@ -794,6 +796,12 @@
 		05EF41860FFADF95007B59F1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B23A310FEEB29D00A6A2E6 /* CoreData.framework */; };
 		05EF41870FFADF95007B59F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0524C4510FF2AEEE00A6099B /* Security.framework */; };
 		05EF41880FFADF95007B59F1 /* libYAJLIPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */; };
+		05F51C3910879E8200C6AD97 /* PersonSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F51C3810879E8200C6AD97 /* PersonSelector.m */; };
+		05F51C3A10879E8200C6AD97 /* PersonSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F51C3810879E8200C6AD97 /* PersonSelector.m */; };
+		05F51C3D1087A1DD00C6AD97 /* SelectPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F51C3C1087A1DD00C6AD97 /* SelectPersonViewController.m */; };
+		05F51C3E1087A1DD00C6AD97 /* SelectPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F51C3C1087A1DD00C6AD97 /* SelectPersonViewController.m */; };
+		05F51C6C1087A6AF00C6AD97 /* SelectPersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05F51C6A1087A6AF00C6AD97 /* SelectPersonView.xib */; };
+		05F51C6D1087A6AF00C6AD97 /* SelectPersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05F51C6A1087A6AF00C6AD97 /* SelectPersonView.xib */; };
 		05F9CF26103335490010409B /* ConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05F9CF24103335490010409B /* ConversationView.xib */; };
 		910EFE1D1017E391002083D6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 910EFE1C1017E391002083D6 /* AudioToolbox.framework */; };
 		9112EAB5102E236E002715DC /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
@@ -882,6 +890,8 @@
 		0502249510485CCA00BCB903 /* DeleteTweetResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeleteTweetResponseProcessor.m; path = twitter/processors/DeleteTweetResponseProcessor.m; sourceTree = "<group>"; };
 		050224D610488ED500BCB903 /* BlockUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlockUserResponseProcessor.h; path = twitter/processors/BlockUserResponseProcessor.h; sourceTree = "<group>"; };
 		050224D710488ED500BCB903 /* BlockUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BlockUserResponseProcessor.m; path = twitter/processors/BlockUserResponseProcessor.m; sourceTree = "<group>"; };
+		050ACC291087D11A004B6C2D /* PersonDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonDirectory.h; path = compose/PersonDirectory.h; sourceTree = "<group>"; };
+		050ACC2A1087D11A004B6C2D /* PersonDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonDirectory.m; path = compose/PersonDirectory.m; sourceTree = "<group>"; };
 		050B9F26106C256100EC2E88 /* NSDictionary+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+GeneralHelpers.h"; path = "shared/NSDictionary+GeneralHelpers.h"; sourceTree = "<group>"; };
 		050B9F27106C256100EC2E88 /* NSDictionary+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+GeneralHelpers.m"; path = "shared/NSDictionary+GeneralHelpers.m"; sourceTree = "<group>"; };
 		050BA143106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v1.1-v2.0.xcmappingmodel"; path = "data-model/v1.1-v2.0.xcmappingmodel"; sourceTree = "<group>"; };
@@ -1350,6 +1360,11 @@
 		05F45C9A0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsynchronousNetworkFetcher.m; path = shared/AsynchronousNetworkFetcher.m; sourceTree = "<group>"; };
 		05F45CF20FF056DF00EBAFC7 /* AsynchronousNetworkFetcherDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsynchronousNetworkFetcherDelegate.h; path = shared/AsynchronousNetworkFetcherDelegate.h; sourceTree = "<group>"; };
 		05F45D000FF059B400EBAFC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/ComposeTweetView.xib; sourceTree = "<group>"; };
+		05F51C3710879E8200C6AD97 /* PersonSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonSelector.h; path = compose/PersonSelector.h; sourceTree = "<group>"; };
+		05F51C3810879E8200C6AD97 /* PersonSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonSelector.m; path = compose/PersonSelector.m; sourceTree = "<group>"; };
+		05F51C3B1087A1DD00C6AD97 /* SelectPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectPersonViewController.h; path = compose/SelectPersonViewController.h; sourceTree = "<group>"; };
+		05F51C3C1087A1DD00C6AD97 /* SelectPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectPersonViewController.m; path = compose/SelectPersonViewController.m; sourceTree = "<group>"; };
+		05F51C6B1087A6AF00C6AD97 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/SelectPersonView.xib; sourceTree = "<group>"; };
 		05F9CF1E103335200010409B /* ConversationDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConversationDisplayMgr.h; path = conversation/ConversationDisplayMgr.h; sourceTree = "<group>"; };
 		05F9CF1F103335200010409B /* ConversationDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationDisplayMgr.m; path = conversation/ConversationDisplayMgr.m; sourceTree = "<group>"; };
 		05F9CF21103335310010409B /* ConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConversationViewController.h; path = conversation/ConversationViewController.h; sourceTree = "<group>"; };
@@ -1698,21 +1713,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		050BA141106D711600EC2E88 /* core-data */ = {
-			isa = PBXGroup;
-			children = (
-				050BA142106D711A00EC2E88 /* migrations */,
-			);
-			name = "core-data";
-			sourceTree = "<group>";
-		};
-		050BA142106D711A00EC2E88 /* migrations */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = migrations;
-			sourceTree = "<group>";
-		};
 		0516693E108646A0000CA4AA /* compose */ = {
 			isa = PBXGroup;
 			children = (
@@ -1727,6 +1727,12 @@
 				05166949108646B6000CA4AA /* TweetDraft.m */,
 				0516694A108646B6000CA4AA /* TweetDraftMgr.h */,
 				0516694B108646B6000CA4AA /* TweetDraftMgr.m */,
+				05F51C3710879E8200C6AD97 /* PersonSelector.h */,
+				05F51C3810879E8200C6AD97 /* PersonSelector.m */,
+				05F51C3B1087A1DD00C6AD97 /* SelectPersonViewController.h */,
+				05F51C3C1087A1DD00C6AD97 /* SelectPersonViewController.m */,
+				050ACC291087D11A004B6C2D /* PersonDirectory.h */,
+				050ACC2A1087D11A004B6C2D /* PersonDirectory.m */,
 			);
 			name = compose;
 			sourceTree = "<group>";
@@ -2220,6 +2226,7 @@
 				05EDAF0A1029FAAB00D0B62B /* TweetView.xib */,
 				05F9CF24103335490010409B /* ConversationView.xib */,
 				05F45CFF0FF059B400EBAFC7 /* ComposeTweetView.xib */,
+				05F51C6A1087A6AF00C6AD97 /* SelectPersonView.xib */,
 				918E89580FF1863C0042BBEE /* UserInfoView.xib */,
 				918E8A5D0FF1C5560042BBEE /* UserInfoLabelCell.xib */,
 				910BE2020FF2BA17005342EE /* UserListTableView.xib */,
@@ -2633,7 +2640,6 @@
 		910BE3670FF32040005342EE /* persistence */ = {
 			isa = PBXGroup;
 			children = (
-				050BA141106D711600EC2E88 /* core-data */,
 				910BE3680FF32059005342EE /* UIState.h */,
 				910BE3690FF32059005342EE /* UIState.m */,
 				910BE36B0FF32137005342EE /* UIStatePersistenceStore.h */,
@@ -3128,6 +3134,7 @@
 				051667E310841EFB000CA4AA /* MentionsIcon.png in Resources */,
 				051667E410841EFB000CA4AA /* HomeIconWhite.png in Resources */,
 				051667E510841EFB000CA4AA /* HomeIcon.png in Resources */,
+				05F51C6C1087A6AF00C6AD97 /* SelectPersonView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3280,6 +3287,7 @@
 				916A29291086607000C5895D /* FollowButtonDarkTheme.png in Resources */,
 				916A293A1086628600C5895D /* FollowButtonDarkThemeHighlighted.png in Resources */,
 				916A293C1086629200C5895D /* StopFollowingButtonDarkThemeHighlighted.png in Resources */,
+				05F51C6D1087A6AF00C6AD97 /* SelectPersonView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3598,6 +3606,9 @@
 				0516694E108646B6000CA4AA /* DirectMessageDraft.m in Sources */,
 				0516694F108646B6000CA4AA /* TweetDraft.m in Sources */,
 				05166950108646B6000CA4AA /* TweetDraftMgr.m in Sources */,
+				05F51C3910879E8200C6AD97 /* PersonSelector.m in Sources */,
+				05F51C3D1087A1DD00C6AD97 /* SelectPersonViewController.m in Sources */,
+				050ACC2B1087D11A004B6C2D /* PersonDirectory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3884,6 +3895,9 @@
 				05166953108646B6000CA4AA /* DirectMessageDraft.m in Sources */,
 				05166954108646B6000CA4AA /* TweetDraft.m in Sources */,
 				05166955108646B6000CA4AA /* TweetDraftMgr.m in Sources */,
+				05F51C3A10879E8200C6AD97 /* PersonSelector.m in Sources */,
+				05F51C3E1087A1DD00C6AD97 /* SelectPersonViewController.m in Sources */,
+				050ACC2C1087D11A004B6C2D /* PersonDirectory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4057,6 +4071,14 @@
 				05F45D000FF059B400EBAFC7 /* en */,
 			);
 			name = ComposeTweetView.xib;
+			sourceTree = "<group>";
+		};
+		05F51C6A1087A6AF00C6AD97 /* SelectPersonView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				05F51C6B1087A6AF00C6AD97 /* en */,
+			);
+			name = SelectPersonView.xib;
 			sourceTree = "<group>";
 		};
 		05F9CF24103335490010409B /* ConversationView.xib */ = {

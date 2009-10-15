@@ -66,6 +66,7 @@
 - (IBAction)userDidClose;
 - (IBAction)promptToClearTweet;
 - (IBAction)choosePhoto;
+- (IBAction)choosePerson;
 - (IBAction)userDidCancelActivity;
 
 @end
@@ -82,15 +83,13 @@
                           toRecipient:(NSString *)recipient;
 
 - (void)userWantsToSelectPhoto;
+- (void)userWantsToSelectPerson;
 
 - (void)userDidCancelActivity;
-
-
 
 - (BOOL)clearCurrentDirectMessageDraftTo:(NSString *)recipient;
 - (BOOL)clearCurrentTweetDraft;
 
 - (void)closeView;
-
 
 @end
