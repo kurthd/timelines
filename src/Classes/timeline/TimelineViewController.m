@@ -86,7 +86,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         plainHeaderViewLine.backgroundColor = [UIColor blackColor];
         footerView.backgroundColor = [UIColor twitchDarkGrayColor];
         self.tableView.backgroundColor = [UIColor twitchDarkGrayColor];
-        currentPagesLabel.textColor = [UIColor whiteColor];
+        currentPagesLabel.textColor = [UIColor twitchLightLightGrayColor];
         noMorePagesLabel.textColor = [UIColor blackColor];
     }
 

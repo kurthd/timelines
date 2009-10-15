@@ -71,11 +71,11 @@ static NSString * starText;
     darkenedBottomImage =
         [SettingsReader displayTheme] == kDisplayThemeDark ?
         [[UIImage imageNamed:@"DarkenedDarkThemeBottomGradient.png"] retain] :
-        [[UIImage imageNamed:@"DarkThemeBottomGradient.png"] retain];
+        [[UIImage imageNamed:@"DarkenedTableViewCellGradient.png"] retain];
     darkenedTopImage =
         [SettingsReader displayTheme] == kDisplayThemeDark ?
         [[UIImage imageNamed:@"DarkenedDarkThemeTopGradient.png"] retain] :
-        [[UIImage imageNamed:@"DarkThemeTopGradient.png"] retain];
+        [[UIImage imageNamed:@"DarkenedTableViewCellTopGradient.png"] retain];
 }
 
 + (CGFloat)heightForContent:(NSString *)tweetText

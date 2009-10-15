@@ -4,6 +4,8 @@
 
 #import "DirectMessageInboxCellView.h"
 #import "UIColor+TwitchColors.h"
+#import "SettingsReader.h"
+#import "TimelineTableViewCellView.h"
 
 @interface DirectMessageInboxCellView ()
 
@@ -27,7 +29,10 @@ static UIImage * dotImage;
 {
 	if (self = [super initWithFrame:frame]) {
 		self.opaque = YES;
-		self.backgroundColor = [UIColor whiteColor];
+		self.backgroundColor =
+		    [SettingsReader displayTheme] == kDisplayThemeDark ?
+		    [TimelineTableViewCellView defaultDarkThemeCellColor] :
+		    [UIColor whiteColor];
 	}
 
 	return self;
@@ -85,10 +90,22 @@ static UIImage * dotImage;
 		dateLabelTextColor = [UIColor whiteColor];
 		previewLabelTextColor = [UIColor whiteColor];
 	} else {
-		nameLabelTextColor = [UIColor blackColor];
-		dateLabelTextColor = [UIColor twitchBlueColor];
-		previewLabelTextColor = [UIColor twitchGrayColor];
-		self.backgroundColor = [UIColor whiteColor];
+		nameLabelTextColor =
+		    [SettingsReader displayTheme] == kDisplayThemeDark ?
+		    [UIColor whiteColor] :
+		    [UIColor blackColor];
+		dateLabelTextColor =
+		    [SettingsReader displayTheme] == kDisplayThemeDark ?
+		    [UIColor twitchBlueOnDarkBackgroundColor] :
+		    [UIColor twitchBlueColor];
+		previewLabelTextColor = 
+		    [SettingsReader displayTheme] == kDisplayThemeDark ?
+		    [UIColor twitchLightLightGrayColor] :
+		    [UIColor twitchGrayColor];
+		self.backgroundColor =
+		    [SettingsReader displayTheme] == kDisplayThemeDark ?
+		    [TimelineTableViewCellView defaultDarkThemeCellColor] :
+		    [UIColor whiteColor];
 	}
 
 	CGRect contentRect = self.bounds;

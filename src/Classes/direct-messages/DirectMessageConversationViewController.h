@@ -13,6 +13,7 @@
 {
     IBOutlet UIView * footerView;
     IBOutlet UIView * headerView;
+    IBOutlet UIView * headerLine;
 
     NSObject<DirectMessageConversationViewControllerDelegate> * delegate;
 

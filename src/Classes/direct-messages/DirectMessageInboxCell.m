@@ -3,6 +3,8 @@
 //
 
 #import "DirectMessageInboxCell.h"
+#import "SettingsReader.h"
+#import "TimelineTableViewCellView.h"
 
 @implementation DirectMessageInboxCell
 
@@ -30,6 +32,13 @@
         cellView.contentMode = UIViewContentModeTopLeft;
 		[self.contentView addSubview:cellView];
 		self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		
+        self.backgroundView = [[[UIView alloc] init] autorelease];
+        self.backgroundView.backgroundColor =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [TimelineTableViewCellView defaultDarkThemeCellColor] :
+            [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
 	}
 
 	return self;
