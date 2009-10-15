@@ -49,6 +49,14 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (BOOL)composingDirectMessage;
 
+- (void)initializeView;
+- (BOOL)viewNeedsInitialization;
+- (void)setViewNeedsInitialization:(BOOL)needsInitialization;
+- (void)resetView;
+- (void)setTitleView;
+
+- (void)clearTweet;
+
 @property (nonatomic, copy) NSString * currentSender;
 @property (nonatomic, copy) NSString * textViewText;
 @property (nonatomic, copy) NSString * currentRecipient;
@@ -85,6 +93,118 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [super dealloc];
 }
 
+#pragma mark Public implementation
+
+- (void)composeTweet:(NSString *)text from:(NSString *)sender
+{
+    self.currentSender = sender;
+    self.currentRecipient = nil;
+    self.textViewText = text;
+
+    textView.text = text;
+    recipientTextField.text = @"";
+
+    [self hideRecipientView];
+    [self setViewNeedsInitialization:YES];
+}
+
+- (void)composeTweet:(NSString *)text
+                from:(NSString *)sender
+           inReplyTo:(NSString *)recipient
+{
+    self.currentSender = sender;
+    self.currentRecipient = recipient;
+    self.textViewText = text;
+
+    textView.text = text;
+    recipientTextField.text = @"";
+
+    [self hideRecipientView];
+    [self setViewNeedsInitialization:YES];
+}
+
+- (void)composeDirectMessage:(NSString *)text from:(NSString *)sender
+{
+    self.currentSender = sender;
+    self.currentRecipient = nil;
+    self.textViewText = text;
+
+    textView.text = text;
+    recipientTextField.text = @"";
+
+    [self showRecipientView];
+    [self setViewNeedsInitialization:YES];
+}
+
+- (void)composeDirectMessage:(NSString *)text
+                        from:(NSString *)sender
+                          to:(NSString *)recipient
+{
+    self.currentSender = sender;
+    self.textViewText = text;
+    self.currentRecipient = recipient;
+
+    textView.text = text;
+    recipientTextField.text = recipient;
+
+    [self showRecipientView];
+    [self setViewNeedsInitialization:YES];
+}
+
+- (void)addTextToMessage:(NSString *)text
+{
+    NSString * current = textView.text;
+    textView.text = [current stringByAppendingFormat:@" %@", text];
+
+    [self enableSendButtonFromInterface];
+    [self updateCharacterCountFromText:textView.text];
+}
+
+- (void)displayActivityView
+{
+    activityView.alpha = 0.0;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone
+                           forView:activityView
+                             cache:YES];
+
+    activityView.alpha = 0.8;
+    UIView * keyboardView = [[UIApplication sharedApplication] keyboardView];
+    UIView * keyView = keyboardView ? [keyboardView superview] : self.view;
+    [keyView addSubview:activityView];
+    [[UIApplication sharedApplication]
+        setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
+
+    [UIView commitAnimations];
+
+    displayingActivity = YES;
+}
+
+- (void)updateActivityProgress:(CGFloat)uploadProgress
+{
+    if (activityProgressView.progress != uploadProgress)
+        activityProgressView.progress = uploadProgress;
+}
+
+- (void)hideActivityView
+{
+    activityView.alpha = 0.8;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone
+                           forView:activityView
+                             cache:YES];
+
+    activityView.alpha = 0.0;
+    [[UIApplication sharedApplication]
+        setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+
+    [UIView commitAnimations];
+
+    displayingActivity = NO;
+}
+
+#pragma mark UIViewController overrides
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -92,9 +212,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     if (hideRecipientView)
         [self hideRecipientView];
 
-    if (self.currentSender)
-        accountLabel.text =
-            [NSString stringWithFormat:@"@%@", self.currentSender];
     if (self.textViewText)
         textView.text = self.textViewText;
     if (self.currentRecipient)
@@ -125,6 +242,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [activityCancelButton addTarget:self action:@selector(userDidCancelActivity)
         forControlEvents:UIControlEventTouchUpInside];
     [activityView addSubview:activityCancelButton];
+
+    [self setViewNeedsInitialization:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -140,14 +259,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [self performSelector:@selector(correctCharacterCountFrameWhenDisplayed)
         withObject:nil afterDelay:0];
 
-    if (hideRecipientView)
-        [textView becomeFirstResponder];
-    else
-        [recipientTextField becomeFirstResponder];
-    
-    UIInterfaceOrientation orientation =
-        [[RotatableTabBarController instance] effectiveOrientation];
-    [self displayForOrientation:orientation];
+    if ([self viewNeedsInitialization])
+        [self initializeView];
 }
 
 - (void)correctCharacterCountFrameWhenDisplayed
@@ -222,7 +335,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     }
 
     CGRect characterCountFrame = characterCount.frame;
-    characterCountFrame.origin.y = 104;
+    characterCountFrame.origin.y = 167;
     characterCount.frame = characterCountFrame;
 
     characterCount.textColor = [UIColor whiteColor];
@@ -230,134 +343,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     toolbar.hidden = NO;
     accountLabel.hidden = NO;
-}
-
-- (void)composeTweet:(NSString *)text from:(NSString *)sender
-{
-    self.currentSender = sender;
-    self.textViewText = text;
-
-    textView.text = text;
-    accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
-    recipientTextField.text = @"";
-
-    [self hideRecipientView];
-    [textView becomeFirstResponder];
-    [self enableSendButtonFromInterface];
-    [self updateCharacterCountFromText:text];
-
-    self.navigationItem.title =
-        NSLocalizedString(@"composetweet.view.title", @"");
-}
-
-- (void)composeTweet:(NSString *)text
-                from:(NSString *)sender
-           inReplyTo:(NSString *)recipient
-{
-    self.currentSender = sender;
-    self.textViewText = text;
-
-    textView.text = text;
-    accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
-    recipientTextField.text = @"";
-
-    [self hideRecipientView];
-    [textView becomeFirstResponder];
-    [self enableSendButtonFromInterface];
-    [self updateCharacterCountFromText:text];
-
-    self.navigationItem.title =
-        NSLocalizedString(@"composetweet.view.title", @"");
-}
-
-- (void)composeDirectMessage:(NSString *)text from:(NSString *)sender
-{
-    self.currentSender = sender;
-    self.textViewText = text;
-
-    textView.text = text;
-    accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
-    recipientTextField.text = @"";
-
-    [self showRecipientView];
-    [recipientTextField becomeFirstResponder];
-    [self enableSendButtonFromInterface];
-    [self updateCharacterCountFromText:text];
-}
-
-- (void)composeDirectMessage:(NSString *)text
-                        from:(NSString *)sender
-                          to:(NSString *)recipient
-{
-    self.currentSender = sender;
-    self.textViewText = text;
-    self.currentRecipient = recipient;
-
-    textView.text = text;
-    accountLabel.text = [NSString stringWithFormat:@"@%@", sender];
-    recipientTextField.text = recipient;
-
-    [self showRecipientView];
-    NSLog(@"Recipient: '%@'", recipient);
-    if (recipient.length)
-        [textView becomeFirstResponder];
-    else
-        [recipientTextField becomeFirstResponder];
-    [self enableSendButtonFromInterface];
-    [self updateCharacterCountFromText:text];
-    self.navigationItem.title = @"Direct Message";
-}
-
-- (void)addTextToMessage:(NSString *)text
-{
-    NSString * current = textView.text;
-    textView.text = [current stringByAppendingFormat:@" %@", text];
-
-    [self enableSendButtonFromInterface];
-    [self updateCharacterCountFromText:textView.text];
-}
-
-- (void)updateActivityProgress:(CGFloat)uploadProgress
-{
-    if (activityProgressView.progress != uploadProgress)
-        activityProgressView.progress = uploadProgress;
-}
-
-- (void)displayActivityView
-{
-    activityView.alpha = 0.0;
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationTransition:UIViewAnimationTransitionNone
-                           forView:activityView
-                             cache:YES];
-
-    activityView.alpha = 0.8;
-    UIView * keyboardView = [[UIApplication sharedApplication] keyboardView];
-    UIView * keyView = keyboardView ? [keyboardView superview] : self.view;
-    [keyView addSubview:activityView];
-    [[UIApplication sharedApplication]
-        setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
-
-    [UIView commitAnimations];
-
-    displayingActivity = YES;
-}
-
-- (void)hideActivityView
-{
-    activityView.alpha = 0.8;
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationTransition:UIViewAnimationTransitionNone
-                           forView:activityView
-                             cache:YES];
-
-    activityView.alpha = 0.0;
-    [[UIApplication sharedApplication]
-        setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
-
-    [UIView commitAnimations];
-
-    displayingActivity = NO;
 }
 
 #pragma mark UITextFieldDelegate implementation
@@ -408,10 +393,10 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         [self enableSendButtonFromText:s andRecipient:recipientTextField.text];
         [delegate userDidSaveDirectMessageDraft:s
                                     toRecipient:recipientTextField.text
-                                    dismissView:NO];
+                                    /*dismissView:NO*/];
     } else {
         [self enableSendButtonFromText:s];
-        [delegate userDidSaveTweetDraft:s dismissView:NO];
+        [delegate userDidSaveTweetDraft:s /*dismissView:NO*/];
     }
 
     return YES;
@@ -419,7 +404,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 #pragma mark Button actions
 
-- (IBAction)userDidSave
+- (IBAction)userDidSend
 {
     if ([self composingDirectMessage])
         [delegate userWantsToSendDirectMessage:textView.text
@@ -428,32 +413,29 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         [delegate userWantsToSendTweet:textView.text];
 }
 
-- (IBAction)userDidCancel
+- (IBAction)userDidClose
 {
-    if (textView.text.length == 0) {
-        if ([self composingDirectMessage])
-            [delegate
-                userDidCancelComposingDirectMessage:textView.text
-                                        toRecipient:recipientTextField.text];
-        else
-            [delegate userDidCancelComposingTweet:textView.text];
-    } else {
-        NSString * cancelTitle =
-            NSLocalizedString(@"composetweet.cancel.confirm.cancel", @"");
-        NSString * saveTitle =
-            NSLocalizedString(@"composetweet.cancel.confirm.save", @"");
-        NSString * dontSaveTitle =
-            NSLocalizedString(@"composetweet.cancel.confirm.dontsave", @"");
+    if (textView.text.length == 0)
+        [self clearTweet];
 
-        UIActionSheet * sheet =
-            [[UIActionSheet alloc] initWithTitle:nil
-                                        delegate:self
-                               cancelButtonTitle:cancelTitle
-                          destructiveButtonTitle:nil
-                               otherButtonTitles:saveTitle, dontSaveTitle, nil];
+    [delegate closeView];
+}
 
-        [sheet showInView:self.view];
-    }
+- (IBAction)promptToClearTweet
+{
+    NSString * cancelTitle =
+        NSLocalizedString(@"composetweet.clear.confirm.cancel", @"");
+    NSString * clearTitle =
+        NSLocalizedString(@"composetweet.clear.confirm.clear", @"");
+ 
+    UIActionSheet * sheet =
+        [[UIActionSheet alloc] initWithTitle:nil
+                                    delegate:self
+                           cancelButtonTitle:cancelTitle
+                      destructiveButtonTitle:clearTitle
+                           otherButtonTitles:nil];
+
+    [sheet showInView:self.view];
 }
 
 - (IBAction)choosePhoto
@@ -471,26 +453,10 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)actionSheet:(UIActionSheet *)actionSheet
     clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (buttonIndex) {
-        case 0:  // save as draft
-            if ([self composingDirectMessage])
-                [delegate userDidSaveDirectMessageDraft:textView.text
-                                            toRecipient:recipientTextField.text
-                                            dismissView:YES];
-            else
-                [delegate userDidSaveTweetDraft:textView.text dismissView:YES];
-            break;
-        case 1:  // user confirmed the cancel
-            if ([self composingDirectMessage]) {
-                NSString * recipient = recipientTextField.text;
-                [delegate userDidCancelComposingDirectMessage:textView.text
-                                                  toRecipient:recipient];
-            } else
-                [delegate userDidCancelComposingTweet:textView.text];
-            break;
+    if (buttonIndex == 0) {
+        [self clearTweet];
+        [self initializeView];
     }
-
-    [actionSheet autorelease];
 }
 
 #pragma mark Helpers
@@ -564,6 +530,83 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (BOOL)composingDirectMessage
 {
     return recipientView.hidden == NO;
+}
+
+- (void)initializeView
+{
+    if (hideRecipientView || recipientTextField.text.length > 0)
+        [textView becomeFirstResponder];
+    else
+        [recipientTextField becomeFirstResponder];
+
+    [self enableSendButtonFromInterface];
+    [self updateCharacterCountFromInterface];
+
+    UIInterfaceOrientation orientation =
+        [[RotatableTabBarController instance] effectiveOrientation];
+    [self displayForOrientation:orientation];
+
+    [self setTitleView];
+}
+
+- (BOOL)viewNeedsInitialization
+{
+    return viewNeedsInitialization;
+}
+
+- (void)setViewNeedsInitialization:(BOOL)needsInitialization
+{
+    viewNeedsInitialization = needsInitialization;
+}
+
+- (void)resetView
+{
+    if ([self composingDirectMessage])
+        recipientTextField.text = @"";
+    textView.text = @"";
+
+    [self setTitleView];
+    [self updateCharacterCountFromInterface];
+    [self enableSendButtonFromInterface];
+}
+
+- (void)setTitleView
+{
+    self.navigationItem.titleView = headerView;
+
+    if ([self composingDirectMessage])
+        titleLabel.text =
+            NSLocalizedString(@"composetweet.view.header.dm.title", @"");
+    else {
+        if (currentRecipient) {  // format for a public reply
+            NSString * titleFormatString =
+                NSLocalizedString(@"composetweet.view.header.tweet.reply.title",
+                        @"");
+            titleLabel.text =
+                [NSString stringWithFormat:titleFormatString, currentRecipient];
+        } else  // format for a regular tweet
+            titleLabel.text =
+                NSLocalizedString(
+                        @"composetweet.view.header.tweet.update.title", @"");
+    }
+
+    NSString * accountFormatString =
+        NSLocalizedString(@"composetweet.view.header.tweet.account", @"");
+    accountLabel.text =
+        [NSString stringWithFormat:accountFormatString, currentSender];
+}
+
+- (void)clearTweet
+{
+    BOOL cleared =
+        [self composingDirectMessage] ?
+        [delegate clearCurrentDirectMessageDraftTo:recipientTextField.text] :
+        [delegate clearCurrentTweetDraft];
+
+    if (cleared) {
+        self.currentRecipient = nil;
+        [self resetView];
+    }
 }
 
 @end

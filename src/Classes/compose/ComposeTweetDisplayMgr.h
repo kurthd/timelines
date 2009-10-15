@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ComposeTweetDisplayMgrDelegate.h"
-#import "ComposeTweetViewControllerDelegate.h"
+#import "ComposeTweetViewController.h"
 #import "TwitterService.h"
 #import "PhotoService.h"
 #import "TwitterCredentials.h"
@@ -12,7 +12,6 @@
 #import "AddPhotoServiceDisplayMgr.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
 
-@class ComposeTweetViewController;
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
 @class TweetDraft, DirectMessageDraft;
 @class TweetDraftMgr;

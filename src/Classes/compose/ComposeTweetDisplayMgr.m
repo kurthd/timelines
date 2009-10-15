@@ -152,26 +152,24 @@
 
 - (void)composeTweetWithText:(NSString *)tweet
 {
-    [self.rootViewController presentModalViewController:self.navController
-        animated:YES];
-
     self.origTweetId = nil;
     self.origUsername = nil;
 
     [self.composeTweetViewController composeTweet:tweet
                                              from:service.credentials.username];
+    [self.rootViewController presentModalViewController:self.navController
+                                               animated:YES];
 }
 
 - (void)composeTweetWithLink:(NSString *)link
 {
-    [self.rootViewController presentModalViewController:self.navController
-        animated:YES];
-
     self.origTweetId = nil;
     self.origUsername = nil;
 
     [self.composeTweetViewController composeTweet:link
         from:service.credentials.username];
+    [self.rootViewController presentModalViewController:self.navController
+                                               animated:YES];
 
     if (![link isMatchedByRegex:@".*bit\\.ly/.*"])
         [self startShorteningLink:link];
@@ -189,16 +187,15 @@
                    fromUser:(NSString *)user
                    withText:(NSString *)text
 {
-    [self.rootViewController
-        presentModalViewController:self.navController
-                          animated:YES];
-
     self.origTweetId = tweetId;
     self.origUsername = user;
 
     [self.composeTweetViewController composeTweet:text
                                              from:service.credentials.username
                                         inReplyTo:user];
+
+    [self.rootViewController presentModalViewController:self.navController
+                                               animated:YES];
 }
 
 - (void)composeDirectMessage
@@ -216,15 +213,14 @@
     NSString * sender = service.credentials.username;
     NSString * text = draft ? draft.text : @"";
 
-    // Present the view before calling 'composeDirectMessage:...' because
-    // otherwise the view elements aren't wired up (they're nil).
-    [self.rootViewController
-        presentModalViewController:self.navController
-                          animated:YES];
-
     [self.composeTweetViewController composeDirectMessage:text
                                                      from:sender
                                                        to:recipient];
+
+    // Present the view before calling 'composeDirectMessage:...' because
+    // otherwise the view elements aren't wired up (they're nil).
+    [self.rootViewController presentModalViewController:self.navController
+                                               animated:YES];
 }
 
 - (void)composeDirectMessageTo:(NSString *)username
@@ -246,16 +242,15 @@
 
     fromHomeScreen = NO;
 
-    // Present the view before calling 'composeDirectMessage:...' because
-    // otherwise the view elements aren't wired up (they're nil).
-    [self.rootViewController
-        presentModalViewController:self.navController
-                          animated:YES];
-
     NSString * sender = service.credentials.username;
     [self.composeTweetViewController composeDirectMessage:text
                                                      from:sender
                                                        to:username];
+    
+    // Present the view before calling 'composeDirectMessage:...' because
+    // otherwise the view elements aren't wired up (they're nil).
+    [self.rootViewController presentModalViewController:self.navController
+                                               animated:YES];
 }
 
 #pragma mark Credentials notifications
@@ -350,10 +345,12 @@
 }
 
 - (void)userDidSaveTweetDraft:(NSString *)text
-                  dismissView:(BOOL)dismissView
+                  //dismissView:(BOOL)dismissView
 {
+    /*
     if (dismissView)
         [self.rootViewController dismissModalViewControllerAnimated:YES];
+    */
 
     NSError * error = nil;
     if (self.origTweetId && self.origUsername)
@@ -378,17 +375,16 @@
             error.localizedDescription;
         [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
     }
-
-    if (dismissView)
-        [self.delegate userDidCancelComposingTweet];
 }
 
 - (void)userDidSaveDirectMessageDraft:(NSString *)text
                           toRecipient:(NSString *)recipient
-                          dismissView:(BOOL)dismissView
+                          //dismissView:(BOOL)dismissView
 {
+    /*
     if (dismissView)
         [self.rootViewController dismissModalViewControllerAnimated:YES];
+    */
 
     TwitterCredentials * credentials = self.service.credentials;
     NSError * error = nil;
@@ -414,40 +410,6 @@
             error.localizedDescription;
         [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
     }
-
-    if (dismissView)
-        [self.delegate userDidCancelComposingTweet];
-}
-
-- (void)userDidCancelComposingTweet:(NSString *)text
-{
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
-
-    NSError * error = nil;
-    [self.draftMgr deleteTweetDraftForCredentials:self.service.credentials
-                                            error:&error];
-
-    [self.delegate userDidCancelComposingTweet];
-}
-
-- (void)userDidCancelComposingDirectMessage:(NSString *)text
-                                toRecipient:(NSString *)recipient
-{
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
-
-    TwitterCredentials * credentials = self.service.credentials;
-    NSError * error = nil;
-
-    if (fromHomeScreen)
-        [self.draftMgr
-            deleteDirectMessageDraftFromHomeScreenForCredentials:credentials
-                                                           error:&error];
-    else
-        [self.draftMgr deleteDirectMessageDraftForRecipient:recipient
-                                                credentials:credentials
-                                                      error:&error];
-
-    [self.delegate userDidCancelComposingTweet];
 }
 
 - (void)userWantsToSelectPhoto
@@ -469,6 +431,38 @@
 
         self.photoService = nil;
     }
+}
+
+- (BOOL)clearCurrentDirectMessageDraftTo:(NSString *)recipient;
+{
+    TwitterCredentials * credentials = self.service.credentials;
+    NSError * error = nil;
+
+    if (fromHomeScreen)
+        [self.draftMgr
+            deleteDirectMessageDraftFromHomeScreenForCredentials:credentials
+                                                           error:&error];
+    else
+        [self.draftMgr deleteDirectMessageDraftForRecipient:recipient
+                                                credentials:credentials
+                                                      error:&error];
+
+    return error == nil;
+}
+
+- (BOOL)clearCurrentTweetDraft
+{
+    NSError * error = nil;
+    [self.draftMgr deleteTweetDraftForCredentials:self.service.credentials
+                                            error:&error];
+
+    return error == nil;
+}
+
+- (void)closeView
+{
+    [self.rootViewController dismissModalViewControllerAnimated:YES];
+    [self.delegate userDidCancelComposingTweet];
 }
 
 #pragma mark TwitterServiceDelegate implementation
@@ -954,7 +948,7 @@
         UIBarButtonItem * cancelButton =
             [[[UIBarButtonItem alloc]
             initWithTitle:cancelButtonText style:UIBarButtonItemStyleBordered
-            target:composeTweetViewController action:@selector(userDidCancel)]
+            target:composeTweetViewController action:@selector(userDidClose)]
             autorelease];
         composeTweetViewController.navigationItem.leftBarButtonItem =
             cancelButton;
@@ -965,13 +959,10 @@
         UIBarButtonItem * sendButton =
             [[[UIBarButtonItem alloc]
             initWithTitle:sendButtonText style:UIBarButtonItemStyleDone
-            target:composeTweetViewController action:@selector(userDidSave)]
+            target:composeTweetViewController action:@selector(userDidSend)]
             autorelease];
         composeTweetViewController.navigationItem.rightBarButtonItem =
             sendButton;
-            
-        composeTweetViewController.navigationItem.title =
-            NSLocalizedString(@"composetweet.navigationitem.title", @"");
         composeTweetViewController.sendButton = sendButton;
     }
 
@@ -1102,7 +1093,8 @@
 
         UIActivityIndicatorView * activityIndicator =
             [[[UIActivityIndicatorView alloc]
-            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge]
+            initWithActivityIndicatorStyle:
+            UIActivityIndicatorViewStyleWhiteLarge]
             autorelease];
         activityIndicator.frame = CGRectMake(50, 87, 37, 37);
         [activityIndicator startAnimating];
