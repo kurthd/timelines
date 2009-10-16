@@ -21,6 +21,7 @@
     UIBarButtonItem * sendButton;
     UIBarButtonItem * cancelButton;
 
+    IBOutlet UIBarButtonItem * shortenLinksButton;
     IBOutlet UILabel * characterCount;
 
     IBOutlet UIView * recipientView;
@@ -64,11 +65,12 @@
 - (void)updateActivityProgress:(CGFloat)uploadProgress;
 - (void)hideActivityView;
 
-- (IBAction)userDidSend;
-- (IBAction)userDidClose;
+- (void)userDidSend;
+- (void)userDidClose;
 - (IBAction)chooseDirectMessageRecipient;
 - (IBAction)promptToClearTweet;
 - (IBAction)choosePhoto;
+- (IBAction)shortenLinks;
 - (IBAction)choosePerson;
 - (IBAction)userDidCancelActivity;
 

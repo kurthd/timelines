@@ -5,6 +5,7 @@
 #import "ComposeTweetViewController.h"
 #import "UIColor+TwitchColors.h"
 #import "RotatableTabBarController.h"
+#import "NSString+UrlAdditions.h"
 
 static const NSInteger MAX_TWEET_LENGTH = 140;
 
@@ -43,6 +44,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)updateCharacterCountFromInterface;
 - (void)updateCharacterCountFromText:(NSString *)text;
 
+- (void)enableUrlShorteningButtonFromInterface;
+- (void)enableUrlShorteningButtonFromText:(NSString *)text;
+
 - (void)displayForOrientation:(UIInterfaceOrientation)orientation;
 - (void)displayForPortraitMode;
 - (void)correctCharacterCountFrameWhenDisplayed;
@@ -76,6 +80,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [sendButton release];
     [cancelButton release];
 
+    [shortenLinksButton release];
     [characterCount release];
     [accountLabel release];
 
@@ -175,7 +180,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     textView.text = [current stringByAppendingFormat:@"%@%@", padding, text];
 
     [self enableSendButtonFromInterface];
-    [self updateCharacterCountFromText:textView.text];
+    [self updateCharacterCountFromInterface];
+    [self enableUrlShorteningButtonFromInterface];
 
     if ([self composingDirectMessage])
         [delegate userDidSaveDirectMessageDraft:textView.text
@@ -287,15 +293,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         [self initializeView];
 }
 
-- (void)correctCharacterCountFrameWhenDisplayed
-{
-    CGRect characterCountFrame = characterCount.frame;
-    // hack -- this needs to be 167 when displayed, but 104 after a rotation
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
-    characterCountFrame.origin.y = landscape ? 80 : 167;
-    characterCount.frame = characterCountFrame;
-}
-
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -403,7 +400,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 }
 
 - (BOOL)textView:(UITextView *)aTextView
-    shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+    shouldChangeTextInRange:(NSRange)range
+            replacementText:(NSString *)text
 {
     if (displayingActivity)
         return NO;
@@ -412,6 +410,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                                                           withString:text];
 
     [self updateCharacterCountFromText:s];
+    [self enableUrlShorteningButtonFromText:s];
 
     if ([self composingDirectMessage]) {
         [self enableSendButtonFromText:s andRecipient:recipientTextField.text];
@@ -471,6 +470,12 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [delegate userWantsToSelectPhoto];
 }
 
+- (IBAction)shortenLinks
+{
+    NSArray * urls = [textView.text extractUrls];
+    NSLog(@"Extracted URLs: %@", urls);
+}
+
 - (IBAction)choosePerson
 {
     [delegate userWantsToSelectPerson];
@@ -493,6 +498,15 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 }
 
 #pragma mark Helpers
+
+- (void)correctCharacterCountFrameWhenDisplayed
+{
+    CGRect characterCountFrame = characterCount.frame;
+    // hack -- this needs to be 167 when displayed, but 104 after a rotation
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    characterCountFrame.origin.y = landscape ? 80 : 167;
+    characterCount.frame = characterCountFrame;
+}
 
 - (void)showRecipientView
 {
@@ -547,7 +561,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         (text.length > 0 && text.length <= MAX_TWEET_LENGTH);
 }
 
-// convenience method
 - (void)updateCharacterCountFromInterface
 {
     [self updateCharacterCountFromText:textView.text];
@@ -558,6 +571,16 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     characterCount.text =
         [NSString stringWithFormat:@"%d", MAX_TWEET_LENGTH - text.length];
 
+}
+
+- (void)enableUrlShorteningButtonFromInterface
+{
+    [self enableUrlShorteningButtonFromText:textView.text];
+}
+
+- (void)enableUrlShorteningButtonFromText:(NSString *)text
+{
+    shortenLinksButton.enabled = [text containsUrls];
 }
 
 - (BOOL)composingDirectMessage
@@ -574,6 +597,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [self enableSendButtonFromInterface];
     [self updateCharacterCountFromInterface];
+    [self enableUrlShorteningButtonFromInterface];
 
     UIInterfaceOrientation orientation =
         [[RotatableTabBarController instance] effectiveOrientation];
@@ -601,6 +625,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [self setTitleView];
     [self updateCharacterCountFromInterface];
     [self enableSendButtonFromInterface];
+    [self enableUrlShorteningButtonFromInterface];
 }
 
 - (void)setTitleView

@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="4"/>
+			<integer value="12"/>
 			<integer value="52"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -95,7 +95,7 @@
 								<reference key="IBUIToolbar" ref="615118956"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
-							<object class="IBUIBarButtonItem" id="617092042">
+							<object class="IBUIBarButtonItem" id="244315353">
 								<bool key="IBUIEnabled">NO</bool>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
@@ -103,7 +103,7 @@
 								</object>
 								<reference key="IBUIToolbar" ref="615118956"/>
 							</object>
-							<object class="IBUIBarButtonItem" id="828957160">
+							<object class="IBUIBarButtonItem" id="94766283">
 								<reference key="IBUIToolbar" ref="615118956"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
@@ -510,6 +510,22 @@
 					</object>
 					<int key="connectionID">80</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">shortenLinksButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="244315353"/>
+					</object>
+					<int key="connectionID">84</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">shortenLinks</string>
+						<reference key="source" ref="244315353"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">85</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -561,8 +577,8 @@
 							<reference ref="824870226"/>
 							<reference ref="991424626"/>
 							<reference ref="676333875"/>
-							<reference ref="617092042"/>
-							<reference ref="828957160"/>
+							<reference ref="244315353"/>
+							<reference ref="94766283"/>
 						</object>
 						<reference key="parent" ref="431717833"/>
 					</object>
@@ -679,12 +695,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">81</int>
-						<reference key="object" ref="617092042"/>
+						<reference key="object" ref="244315353"/>
 						<reference key="parent" ref="615118956"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">83</int>
-						<reference key="object" ref="828957160"/>
+						<reference key="object" ref="94766283"/>
 						<reference key="parent" ref="615118956"/>
 					</object>
 				</object>
@@ -774,7 +790,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">83</int>
+			<int key="maxID">85</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -790,13 +806,11 @@
 							<string>choosePerson</string>
 							<string>choosePhoto</string>
 							<string>promptToClearTweet</string>
+							<string>shortenLinks</string>
 							<string>userDidCancelActivity</string>
-							<string>userDidClose</string>
-							<string>userDidSend</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -817,6 +831,7 @@
 							<string>headerView</string>
 							<string>recipientTextField</string>
 							<string>recipientView</string>
+							<string>shortenLinksButton</string>
 							<string>textView</string>
 							<string>titleLabel</string>
 							<string>toolbar</string>
@@ -831,6 +846,7 @@
 							<string>UIView</string>
 							<string>UITextField</string>
 							<string>UIView</string>
+							<string>UIBarButtonItem</string>
 							<string>UITextView</string>
 							<string>UILabel</string>
 							<string>UIToolbar</string>

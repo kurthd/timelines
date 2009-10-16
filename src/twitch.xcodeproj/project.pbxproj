@@ -191,6 +191,8 @@
 		054F3EF910243FAA005B6805 /* DefaultAvatar50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */; };
 		0552815F1087F7810055A37C /* ShortenLinks.png in Resources */ = {isa = PBXBuildFile; fileRef = 0552815E1087F7810055A37C /* ShortenLinks.png */; };
 		055281601087F7810055A37C /* ShortenLinks.png in Resources */ = {isa = PBXBuildFile; fileRef = 0552815E1087F7810055A37C /* ShortenLinks.png */; };
+		0552818A1088E8020055A37C /* NSString+UrlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 055281891088E8020055A37C /* NSString+UrlAdditions.m */; };
+		0552818B1088E8020055A37C /* NSString+UrlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 055281891088E8020055A37C /* NSString+UrlAdditions.m */; };
 		055777141063018D006596DB /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 055777131063018D006596DB /* libz.1.2.3.dylib */; };
 		058207C11017744C00DFC051 /* ComposeRecipientGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 058207C01017744C00DFC051 /* ComposeRecipientGradient.png */; };
 		05948995101569D500C37C98 /* AccountSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05948993101569D500C37C98 /* AccountSettingsView.xib */; };
@@ -1027,6 +1029,8 @@
 		054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HtmlEncodingAdditions.m"; path = "shared/NSString+HtmlEncodingAdditions.m"; sourceTree = "<group>"; };
 		054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DefaultAvatar50x50.png; path = images/DefaultAvatar50x50.png; sourceTree = "<group>"; };
 		0552815E1087F7810055A37C /* ShortenLinks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ShortenLinks.png; path = images/ShortenLinks.png; sourceTree = "<group>"; };
+		055281881088E8020055A37C /* NSString+UrlAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+UrlAdditions.h"; path = "compose/NSString+UrlAdditions.h"; sourceTree = "<group>"; };
+		055281891088E8020055A37C /* NSString+UrlAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+UrlAdditions.m"; path = "compose/NSString+UrlAdditions.m"; sourceTree = "<group>"; };
 		055777131063018D006596DB /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = /usr/lib/libz.1.2.3.dylib; sourceTree = "<absolute>"; };
 		055C92E010362DC2000B9A00 /* Avatar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Avatar.h; path = users/Avatar.h; sourceTree = "<group>"; };
 		055C92E110362DC2000B9A00 /* Avatar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Avatar.m; path = users/Avatar.m; sourceTree = "<group>"; };
@@ -1736,6 +1740,8 @@
 				05F51C3C1087A1DD00C6AD97 /* SelectPersonViewController.m */,
 				050ACC291087D11A004B6C2D /* PersonDirectory.h */,
 				050ACC2A1087D11A004B6C2D /* PersonDirectory.m */,
+				055281881088E8020055A37C /* NSString+UrlAdditions.h */,
+				055281891088E8020055A37C /* NSString+UrlAdditions.m */,
 			);
 			name = compose;
 			sourceTree = "<group>";
@@ -3615,6 +3621,7 @@
 				05F51C3910879E8200C6AD97 /* PersonSelector.m in Sources */,
 				05F51C3D1087A1DD00C6AD97 /* SelectPersonViewController.m in Sources */,
 				050ACC2B1087D11A004B6C2D /* PersonDirectory.m in Sources */,
+				0552818A1088E8020055A37C /* NSString+UrlAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3904,6 +3911,7 @@
 				05F51C3A10879E8200C6AD97 /* PersonSelector.m in Sources */,
 				05F51C3E1087A1DD00C6AD97 /* SelectPersonViewController.m in Sources */,
 				050ACC2C1087D11A004B6C2D /* PersonDirectory.m in Sources */,
+				0552818B1088E8020055A37C /* NSString+UrlAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
