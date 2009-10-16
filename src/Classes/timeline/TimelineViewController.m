@@ -15,6 +15,7 @@
 #import "RotatableTabBarController.h"
 #import "NSArray+IterationAdditions.h"
 #import "SettingsReader.h"
+#import "TimelineTableViewCellView.h"
 
 @interface TimelineViewController ()
 
@@ -53,6 +54,12 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)dealloc
 {
     [headerView release];
+    [headerBackgroundView release];
+    [avatarBackgroundView release];
+    [headerTopLine release];
+    [headerBottomLine release];
+    [headerViewPadding release];
+    
     [plainHeaderView release];
     [plainHeaderViewLine release];
     [footerView release];
@@ -88,6 +95,23 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         self.tableView.backgroundColor = [UIColor twitchDarkGrayColor];
         currentPagesLabel.textColor = [UIColor twitchLightLightGrayColor];
         noMorePagesLabel.textColor = [UIColor blackColor];
+        
+        headerBackgroundView.image =
+            [UIImage imageNamed:@"UserHeaderDarkThemeGradient.png"];
+
+        avatarBackgroundView.image =
+            [UIImage imageNamed:@"AvatarDarkThemeBackground.png"];
+
+        headerTopLine.backgroundColor = [UIColor blackColor];
+        headerBottomLine.backgroundColor = [UIColor twitchGrayColor];
+        headerViewPadding.backgroundColor =
+            [TimelineTableViewCellView defaultDarkThemeCellColor];
+
+        fullNameLabel.textColor = [UIColor whiteColor];
+        fullNameLabel.shadowColor = [UIColor blackColor];
+
+        numUpdatesLabel.textColor = [UIColor lightGrayColor];
+        numUpdatesLabel.shadowColor = [UIColor blackColor];
     }
 
     self.tableView.tableFooterView = footerView;

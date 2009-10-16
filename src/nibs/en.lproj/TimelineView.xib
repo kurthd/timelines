@@ -12,11 +12,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="10"/>
 			<integer value="53"/>
-			<integer value="28"/>
 			<integer value="6"/>
 			<integer value="2"/>
+			<integer value="10"/>
+			<integer value="28"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -467,6 +467,46 @@
 					</object>
 					<int key="connectionID">64</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">headerViewPadding</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="292106082"/>
+					</object>
+					<int key="connectionID">65</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">headerBackgroundView</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="392175655"/>
+					</object>
+					<int key="connectionID">66</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">avatarBackgroundView</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="576202686"/>
+					</object>
+					<int key="connectionID">67</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">headerBottomLine</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="585475107"/>
+					</object>
+					<int key="connectionID">68</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">headerTopLine</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="922473039"/>
+					</object>
+					<int key="connectionID">69</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -652,7 +692,7 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{0, 598}, {320, 247}}</string>
+					<string>{{72, 532}, {320, 247}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>RoundedImage</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -689,7 +729,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">64</int>
+			<int key="maxID">69</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -770,11 +810,16 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>avatarBackgroundView</string>
 							<string>avatarView</string>
 							<string>currentPagesLabel</string>
 							<string>footerView</string>
 							<string>fullNameLabel</string>
+							<string>headerBackgroundView</string>
+							<string>headerBottomLine</string>
+							<string>headerTopLine</string>
 							<string>headerView</string>
+							<string>headerViewPadding</string>
 							<string>loadMoreButton</string>
 							<string>noMorePagesLabel</string>
 							<string>numUpdatesLabel</string>
@@ -783,10 +828,15 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UIImageView</string>
 							<string>RoundedImage</string>
 							<string>UILabel</string>
 							<string>UIView</string>
 							<string>UILabel</string>
+							<string>UIImageView</string>
+							<string>UIView</string>
+							<string>UIView</string>
+							<string>UIView</string>
 							<string>UIView</string>
 							<string>UIButton</string>
 							<string>UILabel</string>
