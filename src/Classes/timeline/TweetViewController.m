@@ -137,13 +137,6 @@ enum TweetActionSheets {
 
         avatarBackgroundView.image =
             [UIImage imageNamed:@"AvatarDarkThemeBackground.png"];
-        CGRect avatarBackgroundViewFrame = avatarBackgroundView.frame;
-        avatarBackgroundViewFrame.origin.y = 4;
-        avatarBackgroundView.frame = avatarBackgroundViewFrame;
-        
-        CGRect avatarImageFrame = avatarImage.frame;
-        avatarImageFrame.origin.y = 7;
-        avatarImage.frame = avatarImageFrame;
 
         headerTopLine.backgroundColor = [UIColor blackColor];
         headerBottomLine.backgroundColor = [UIColor twitchGrayColor];
