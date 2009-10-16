@@ -57,6 +57,8 @@
 @property (nonatomic, retain) UIView * linkShorteningView;
 @property (nonatomic, copy) NSString * shorteningUrl;
 
+@property (nonatomic, retain) PersonSelector * personSelector;
+
 - (void)promptForPhotoSource:(UIViewController *)controller;
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source
                 controller:(UIViewController *)controller;
@@ -87,6 +89,7 @@
 @synthesize attachedPhotos, attachedVideos;
 @synthesize photoService;
 @synthesize linkShorteningView, shorteningUrl;
+@synthesize personSelector;
 
 - (void)dealloc
 {
@@ -106,6 +109,8 @@
     self.attachedVideos = nil;
     self.linkShorteningView = nil;
     self.shorteningUrl = nil;
+    self.personSelector = nil;
+
     [super dealloc];
 }
 
@@ -142,7 +147,7 @@
         [self.draftMgr tweetDraftForCredentials:self.service.credentials];
 
     NSString * text = draft ? draft.text : @"";
-    if (self.origTweetId && self.origUsername)
+    if (draft.inReplyToTweetId && draft.inReplyToUsername)
         [self composeReplyToTweet:draft.inReplyToTweetId
                          fromUser:draft.inReplyToUsername
                          withText:text];
@@ -152,26 +157,24 @@
 
 - (void)composeTweetWithText:(NSString *)tweet
 {
-    [self.rootViewController presentModalViewController:self.navController
-        animated:YES];
-
     self.origTweetId = nil;
     self.origUsername = nil;
 
     [self.composeTweetViewController composeTweet:tweet
                                              from:service.credentials.username];
+    [self.rootViewController presentModalViewController:self.navController
+                                               animated:YES];
 }
 
 - (void)composeTweetWithLink:(NSString *)link
 {
-    [self.rootViewController presentModalViewController:self.navController
-        animated:YES];
-
     self.origTweetId = nil;
     self.origUsername = nil;
 
     [self.composeTweetViewController composeTweet:link
         from:service.credentials.username];
+    [self.rootViewController presentModalViewController:self.navController
+                                               animated:YES];
 
     if (![link isMatchedByRegex:@".*bit\\.ly/.*"])
         [self startShorteningLink:link];
@@ -180,18 +183,34 @@
 - (void)composeReplyToTweet:(NSString *)tweetId
                    fromUser:(NSString *)user
 {
-    [self composeReplyToTweet:tweetId
-                     fromUser:user
-                     withText:[NSString stringWithFormat:@"@%@ ", user]];
+    self.origTweetId = tweetId;
+    self.origUsername = user;
+
+    NSString * tweetText = nil;
+
+    // See if we're resuming a saved reply
+    TweetDraft * draft =
+        [self.draftMgr tweetDraftForCredentials:self.service.credentials];
+    if ([draft.inReplyToTweetId isEqualToString:tweetId])
+        tweetText = draft.text;
+    else
+        tweetText = [NSString stringWithFormat:@"@%@ ", user];
+
+    NSString * username = self.service.credentials.username;
+    [self.composeTweetViewController composeTweet:tweetText
+                                             from:username
+                                        inReplyTo:user];
+    [self.rootViewController presentModalViewController:self.navController
+                                               animated:YES];
 }
 
 - (void)composeReplyToTweet:(NSString *)tweetId
                    fromUser:(NSString *)user
                    withText:(NSString *)text
 {
-    [self.rootViewController
-        presentModalViewController:self.navController
-                          animated:YES];
+    /*
+     * Ignore any drafts and accept the text as given.
+     */
 
     self.origTweetId = tweetId;
     self.origUsername = user;
@@ -199,6 +218,9 @@
     [self.composeTweetViewController composeTweet:text
                                              from:service.credentials.username
                                         inReplyTo:user];
+
+    [self.rootViewController presentModalViewController:self.navController
+                                               animated:YES];
 }
 
 - (void)composeDirectMessage
@@ -216,15 +238,14 @@
     NSString * sender = service.credentials.username;
     NSString * text = draft ? draft.text : @"";
 
-    // Present the view before calling 'composeDirectMessage:...' because
-    // otherwise the view elements aren't wired up (they're nil).
-    [self.rootViewController
-        presentModalViewController:self.navController
-                          animated:YES];
-
     [self.composeTweetViewController composeDirectMessage:text
                                                      from:sender
                                                        to:recipient];
+
+    // Present the view before calling 'composeDirectMessage:...' because
+    // otherwise the view elements aren't wired up (they're nil).
+    [self.rootViewController presentModalViewController:self.navController
+                                               animated:YES];
 }
 
 - (void)composeDirectMessageTo:(NSString *)username
@@ -246,16 +267,15 @@
 
     fromHomeScreen = NO;
 
-    // Present the view before calling 'composeDirectMessage:...' because
-    // otherwise the view elements aren't wired up (they're nil).
-    [self.rootViewController
-        presentModalViewController:self.navController
-                          animated:YES];
-
     NSString * sender = service.credentials.username;
     [self.composeTweetViewController composeDirectMessage:text
                                                      from:sender
                                                        to:username];
+    
+    // Present the view before calling 'composeDirectMessage:...' because
+    // otherwise the view elements aren't wired up (they're nil).
+    [self.rootViewController presentModalViewController:self.navController
+                                               animated:YES];
 }
 
 #pragma mark Credentials notifications
@@ -350,11 +370,7 @@
 }
 
 - (void)userDidSaveTweetDraft:(NSString *)text
-                  dismissView:(BOOL)dismissView
 {
-    if (dismissView)
-        [self.rootViewController dismissModalViewControllerAnimated:YES];
-
     NSError * error = nil;
     if (self.origTweetId && self.origUsername)
         [self.draftMgr saveTweetDraft:text
@@ -378,18 +394,11 @@
             error.localizedDescription;
         [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
     }
-
-    if (dismissView)
-        [self.delegate userDidCancelComposingTweet];
 }
 
 - (void)userDidSaveDirectMessageDraft:(NSString *)text
                           toRecipient:(NSString *)recipient
-                          dismissView:(BOOL)dismissView
 {
-    if (dismissView)
-        [self.rootViewController dismissModalViewControllerAnimated:YES];
-
     TwitterCredentials * credentials = self.service.credentials;
     NSError * error = nil;
     if (fromHomeScreen)
@@ -414,40 +423,13 @@
             error.localizedDescription;
         [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
     }
-
-    if (dismissView)
-        [self.delegate userDidCancelComposingTweet];
 }
 
-- (void)userDidCancelComposingTweet:(NSString *)text
+- (void)userWantsToSelectDirectMessageRecipient
 {
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
-
-    NSError * error = nil;
-    [self.draftMgr deleteTweetDraftForCredentials:self.service.credentials
-                                            error:&error];
-
-    [self.delegate userDidCancelComposingTweet];
-}
-
-- (void)userDidCancelComposingDirectMessage:(NSString *)text
-                                toRecipient:(NSString *)recipient
-{
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
-
-    TwitterCredentials * credentials = self.service.credentials;
-    NSError * error = nil;
-
-    if (fromHomeScreen)
-        [self.draftMgr
-            deleteDirectMessageDraftFromHomeScreenForCredentials:credentials
-                                                           error:&error];
-    else
-        [self.draftMgr deleteDirectMessageDraftForRecipient:recipient
-                                                credentials:credentials
-                                                      error:&error];
-
-    [self.delegate userDidCancelComposingTweet];
+    selectingRecipient = YES;
+    [self.personSelector
+        promptToSelectUserModally:self.composeTweetViewController];
 }
 
 - (void)userWantsToSelectPhoto
@@ -461,6 +443,13 @@
         [self.addPhotoServiceDisplayMgr addPhotoService:credentials];
 }
 
+- (void)userWantsToSelectPerson
+{
+    selectingRecipient = NO;
+    [self.personSelector
+        promptToSelectUserModally:self.composeTweetViewController];
+}
+
 - (void)userDidCancelActivity
 {
     if (self.photoService) {
@@ -469,6 +458,38 @@
 
         self.photoService = nil;
     }
+}
+
+- (BOOL)clearCurrentDirectMessageDraftTo:(NSString *)recipient;
+{
+    TwitterCredentials * credentials = self.service.credentials;
+    NSError * error = nil;
+
+    if (fromHomeScreen)
+        [self.draftMgr
+            deleteDirectMessageDraftFromHomeScreenForCredentials:credentials
+                                                           error:&error];
+    else
+        [self.draftMgr deleteDirectMessageDraftForRecipient:recipient
+                                                credentials:credentials
+                                                      error:&error];
+
+    return error == nil;
+}
+
+- (BOOL)clearCurrentTweetDraft
+{
+    NSError * error = nil;
+    [self.draftMgr deleteTweetDraftForCredentials:self.service.credentials
+                                            error:&error];
+
+    return error == nil;
+}
+
+- (void)closeView
+{
+    [self.rootViewController dismissModalViewControllerAnimated:YES];
+    [self.delegate userDidCancelComposingTweet];
 }
 
 #pragma mark TwitterServiceDelegate implementation
@@ -786,6 +807,26 @@
     }
 }
 
+#pragma mark PersonSelectorDelegate implementation
+
+- (void)userDidSelectPerson:(User *)user
+{
+    if (selectingRecipient)
+        [self.composeTweetViewController setRecipient:user.username];
+    else
+        [self.composeTweetViewController
+            addTextToMessage:[NSString stringWithFormat:@"@%@", user.username]];
+
+    [personSelector autorelease];
+    personSelector = nil;
+}
+
+- (void)userDidCancelPersonSelection
+{
+    [personSelector autorelease];
+    personSelector = nil;
+}
+
 #pragma mark UIImagePicker helper methods
 
 - (void)promptForPhotoSource:(UIViewController *)controller
@@ -954,7 +995,7 @@
         UIBarButtonItem * cancelButton =
             [[[UIBarButtonItem alloc]
             initWithTitle:cancelButtonText style:UIBarButtonItemStyleBordered
-            target:composeTweetViewController action:@selector(userDidCancel)]
+            target:composeTweetViewController action:@selector(userDidClose)]
             autorelease];
         composeTweetViewController.navigationItem.leftBarButtonItem =
             cancelButton;
@@ -965,13 +1006,10 @@
         UIBarButtonItem * sendButton =
             [[[UIBarButtonItem alloc]
             initWithTitle:sendButtonText style:UIBarButtonItemStyleDone
-            target:composeTweetViewController action:@selector(userDidSave)]
+            target:composeTweetViewController action:@selector(userDidSend)]
             autorelease];
         composeTweetViewController.navigationItem.rightBarButtonItem =
             sendButton;
-            
-        composeTweetViewController.navigationItem.title =
-            NSLocalizedString(@"composetweet.navigationitem.title", @"");
         composeTweetViewController.sendButton = sendButton;
     }
 
@@ -1102,7 +1140,8 @@
 
         UIActivityIndicatorView * activityIndicator =
             [[[UIActivityIndicatorView alloc]
-            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge]
+            initWithActivityIndicatorStyle:
+            UIActivityIndicatorViewStyleWhiteLarge]
             autorelease];
         activityIndicator.frame = CGRectMake(50, 87, 37, 37);
         [activityIndicator startAnimating];
@@ -1158,6 +1197,17 @@
     }
 
     return linkShorteningView;
+}
+
+- (PersonSelector *)personSelector
+{
+    if (!personSelector) {
+        personSelector =
+            [[PersonSelector alloc] initWithContext:self.context];
+        personSelector.delegate = self;
+    }
+
+    return personSelector;
 }
 
 @end

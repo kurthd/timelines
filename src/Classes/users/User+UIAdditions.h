@@ -23,3 +23,10 @@
 + (NSString *)fullAvatarUrlForUrl:(NSString *)url;
 
 @end
+
+
+@interface User (SortingAdditions)
+
+- (NSComparisonResult)caseInsensitiveUsernameCompare:(User *)otherUser;
+
+@end

@@ -79,14 +79,15 @@ tweetdetailsview.reply.label = "Reply with Direct Message";
 
 /* Sending tweets */
 sendtweet.failed.alert.title = "Failed to Send Tweet";
-composetweet.view.title = "New Tweet";
+composetweet.view.header.tweet.update.title = "New Tweet";
+composetweet.view.header.tweet.reply.title = "Reply to @%@";
+composetweet.view.header.tweet.account = "from @%@";
+composetweet.view.header.dm.title = "Direct Message";
 composetweet.cancel.confirm.title = "Are you sure you want to cancel?";
-composetweet.cancel.confirm.dontsave = "Discard Changes";
-composetweet.cancel.confirm.save = "Save Draft";
-composetweet.cancel.confirm.cancel = "Cancel";
-composetweet.navigationitem.cancel = "Cancel";
+composetweet.clear.confirm.cancel = "Cancel";
+composetweet.clear.confirm.clear = "Clear Tweet";
+composetweet.navigationitem.cancel = "Close";
 composetweet.navigationitem.send = "Send";
-composetweet.navigationitem.title = "New Tweet";
 composetweet.shorteninglink = "Shortening link...";
 composetweet.cancelshortening = "Cancel";
 composetweet.shorteningerror = "Failed to Shorten Link";
@@ -313,3 +314,6 @@ bitlyloginview.deleteaccount.button.title = "Delete Account";
 bitlyloginview.deleteaccount.confirm.title = "Are you sure you want to delete your bit.ly account?";
 bitlyloginview.deleteaccount.confirm.cancel = "Cancel";
 bitlyloginview.deleteaccount.confirm.delete = "Delete Account";
+
+/* SelectPersonView */
+selectpersonview.title = "Find a Person";

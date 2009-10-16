@@ -3,12 +3,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ComposeTweetViewControllerDelegate.h"
+
+@protocol ComposeTweetViewControllerDelegate;
 
 @interface ComposeTweetViewController :
     UIViewController <UIActionSheetDelegate, UITextFieldDelegate>
 {
     id<ComposeTweetViewControllerDelegate> delegate;
+
+    IBOutlet UIView * headerView;
+    IBOutlet UILabel * titleLabel;
+    IBOutlet UILabel * accountLabel;
 
     IBOutlet UITextView * textView;
 
@@ -17,20 +22,21 @@
     UIBarButtonItem * cancelButton;
 
     IBOutlet UILabel * characterCount;
-    IBOutlet UILabel * accountLabel;
 
     IBOutlet UIView * recipientView;
     IBOutlet UITextField * recipientTextField;
 
+    BOOL displayingActivity;
     IBOutlet UIView * activityView;
     IBOutlet UIProgressView * activityProgressView;
-    BOOL displayingActivity;
     UIButton * activityCancelButton;
-    
+
     BOOL hideRecipientView;
     NSString * currentSender;
     NSString * textViewText;
     NSString * currentRecipient;
+
+    BOOL viewNeedsInitialization;
 }
 
 @property (nonatomic, assign) id<ComposeTweetViewControllerDelegate> delegate;
@@ -50,16 +56,45 @@
                         from:(NSString *)sender
                           to:(NSString *)recipient;
 
+- (void)setRecipient:(NSString *)recipient;
+
 - (void)addTextToMessage:(NSString *)text;
 
-- (void)updateActivityProgress:(CGFloat)uploadProgress;
-
 - (void)displayActivityView;
+- (void)updateActivityProgress:(CGFloat)uploadProgress;
 - (void)hideActivityView;
 
-- (IBAction)userDidSave;
-- (IBAction)userDidCancel;
+- (IBAction)userDidSend;
+- (IBAction)userDidClose;
+- (IBAction)chooseDirectMessageRecipient;
+- (IBAction)promptToClearTweet;
 - (IBAction)choosePhoto;
+- (IBAction)choosePerson;
 - (IBAction)userDidCancelActivity;
+
+@end
+
+
+@protocol ComposeTweetViewControllerDelegate
+
+- (void)userWantsToSendTweet:(NSString *)text;
+- (void)userWantsToSendDirectMessage:(NSString *)text
+                         toRecipient:(NSString *)recipient;
+
+- (void)userDidSaveTweetDraft:(NSString *)text;
+- (void)userDidSaveDirectMessageDraft:(NSString *)text
+                          toRecipient:(NSString *)recipient;
+
+- (void)userWantsToSelectDirectMessageRecipient;
+
+- (void)userWantsToSelectPhoto;
+- (void)userWantsToSelectPerson;
+
+- (void)userDidCancelActivity;
+
+- (BOOL)clearCurrentDirectMessageDraftTo:(NSString *)recipient;
+- (BOOL)clearCurrentTweetDraft;
+
+- (void)closeView;
 
 @end

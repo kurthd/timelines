@@ -4,15 +4,15 @@
 
 #import <Foundation/Foundation.h>
 #import "ComposeTweetDisplayMgrDelegate.h"
-#import "ComposeTweetViewControllerDelegate.h"
+#import "ComposeTweetViewController.h"
 #import "TwitterService.h"
 #import "PhotoService.h"
 #import "TwitterCredentials.h"
 #import "LogInDisplayMgr.h"
 #import "AddPhotoServiceDisplayMgr.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
+#import "PersonSelector.h"
 
-@class ComposeTweetViewController;
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
 @class TweetDraft, DirectMessageDraft;
 @class TweetDraftMgr;
@@ -23,7 +23,7 @@
     PhotoServiceDelegate, LogInDisplayMgrDelegate,
     UIImagePickerControllerDelegate, UINavigationControllerDelegate,
     UIActionSheetDelegate, AddPhotoServiceDisplayMgrDelegate,
-    AsynchronousNetworkFetcherDelegate>
+    AsynchronousNetworkFetcherDelegate, PersonSelectorDelegate>
 {
     id<ComposeTweetDisplayMgrDelegate> delegate;
 
@@ -56,6 +56,9 @@
     UIView * linkShorteningView;
     BOOL canceledLinkShortening;
     NSString * shorteningUrl;
+
+    PersonSelector * personSelector;
+    BOOL selectingRecipient;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;
