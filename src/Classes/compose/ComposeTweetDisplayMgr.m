@@ -147,7 +147,7 @@
         [self.draftMgr tweetDraftForCredentials:self.service.credentials];
 
     NSString * text = draft ? draft.text : @"";
-    if (self.origTweetId && self.origUsername)
+    if (draft.inReplyToTweetId && draft.inReplyToUsername)
         [self composeReplyToTweet:draft.inReplyToTweetId
                          fromUser:draft.inReplyToUsername
                          withText:text];
@@ -425,6 +425,13 @@
     }
 }
 
+- (void)userWantsToSelectDirectMessageRecipient
+{
+    selectingRecipient = YES;
+    [self.personSelector
+        promptToSelectUserModally:self.composeTweetViewController];
+}
+
 - (void)userWantsToSelectPhoto
 {
     TwitterCredentials * credentials = self.service.credentials;
@@ -438,6 +445,7 @@
 
 - (void)userWantsToSelectPerson
 {
+    selectingRecipient = NO;
     [self.personSelector
         promptToSelectUserModally:self.composeTweetViewController];
 }
@@ -803,8 +811,11 @@
 
 - (void)userDidSelectPerson:(User *)user
 {
-    [self.composeTweetViewController
-        addTextToMessage:[NSString stringWithFormat:@"@%@", user.username]];
+    if (selectingRecipient)
+        [self.composeTweetViewController setRecipient:user.username];
+    else
+        [self.composeTweetViewController
+            addTextToMessage:[NSString stringWithFormat:@"@%@", user.username]];
 
     [personSelector autorelease];
     personSelector = nil;

@@ -56,6 +56,8 @@
                         from:(NSString *)sender
                           to:(NSString *)recipient;
 
+- (void)setRecipient:(NSString *)recipient;
+
 - (void)addTextToMessage:(NSString *)text;
 
 - (void)displayActivityView;
@@ -64,6 +66,7 @@
 
 - (IBAction)userDidSend;
 - (IBAction)userDidClose;
+- (IBAction)chooseDirectMessageRecipient;
 - (IBAction)promptToClearTweet;
 - (IBAction)choosePhoto;
 - (IBAction)choosePerson;
@@ -81,6 +84,8 @@
 - (void)userDidSaveTweetDraft:(NSString *)text;
 - (void)userDidSaveDirectMessageDraft:(NSString *)text
                           toRecipient:(NSString *)recipient;
+
+- (void)userWantsToSelectDirectMessageRecipient;
 
 - (void)userWantsToSelectPhoto;
 - (void)userWantsToSelectPerson;

@@ -58,6 +58,7 @@
     NSString * shorteningUrl;
 
     PersonSelector * personSelector;
+    BOOL selectingRecipient;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;

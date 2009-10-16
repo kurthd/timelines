@@ -151,6 +151,12 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [self setViewNeedsInitialization:YES];
 }
 
+- (void)setRecipient:(NSString *)recipient
+{
+    recipientTextField.text = recipient;
+    [textView becomeFirstResponder];
+}
+
 - (void)addTextToMessage:(NSString *)text
 {
     NSString * current = textView.text;
@@ -436,6 +442,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         [self clearTweet];
 
     [delegate closeView];
+}
+
+- (IBAction)chooseDirectMessageRecipient
+{
+    [delegate userWantsToSelectDirectMessageRecipient];
 }
 
 - (IBAction)promptToClearTweet
