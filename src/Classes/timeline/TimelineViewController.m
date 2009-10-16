@@ -80,7 +80,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         plainHeaderView.backgroundColor = [UIColor twitchDarkGrayColor];
         plainHeaderViewLine.backgroundColor = [UIColor blackColor];
