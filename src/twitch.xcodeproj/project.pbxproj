@@ -189,6 +189,8 @@
 		053A2D89103F575D005BB245 /* libTwitVid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D88103F575D005BB245 /* libTwitVid.a */; };
 		053A2D8D103F57B2005BB245 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D8C103F57B2005BB245 /* SystemConfiguration.framework */; };
 		054F3EF910243FAA005B6805 /* DefaultAvatar50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */; };
+		0552815F1087F7810055A37C /* ShortenLinks.png in Resources */ = {isa = PBXBuildFile; fileRef = 0552815E1087F7810055A37C /* ShortenLinks.png */; };
+		055281601087F7810055A37C /* ShortenLinks.png in Resources */ = {isa = PBXBuildFile; fileRef = 0552815E1087F7810055A37C /* ShortenLinks.png */; };
 		055777141063018D006596DB /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 055777131063018D006596DB /* libz.1.2.3.dylib */; };
 		058207C11017744C00DFC051 /* ComposeRecipientGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 058207C01017744C00DFC051 /* ComposeRecipientGradient.png */; };
 		05948995101569D500C37C98 /* AccountSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05948993101569D500C37C98 /* AccountSettingsView.xib */; };
@@ -1024,6 +1026,7 @@
 		054B6A1E101E153600882C19 /* NSString+HtmlEncodingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HtmlEncodingAdditions.h"; path = "shared/NSString+HtmlEncodingAdditions.h"; sourceTree = "<group>"; };
 		054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HtmlEncodingAdditions.m"; path = "shared/NSString+HtmlEncodingAdditions.m"; sourceTree = "<group>"; };
 		054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DefaultAvatar50x50.png; path = images/DefaultAvatar50x50.png; sourceTree = "<group>"; };
+		0552815E1087F7810055A37C /* ShortenLinks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ShortenLinks.png; path = images/ShortenLinks.png; sourceTree = "<group>"; };
 		055777131063018D006596DB /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = /usr/lib/libz.1.2.3.dylib; sourceTree = "<absolute>"; };
 		055C92E010362DC2000B9A00 /* Avatar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Avatar.h; path = users/Avatar.h; sourceTree = "<group>"; };
 		055C92E110362DC2000B9A00 /* Avatar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Avatar.m; path = users/Avatar.m; sourceTree = "<group>"; };
@@ -2687,6 +2690,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				0552815E1087F7810055A37C /* ShortenLinks.png */,
 				916A293B1086629200C5895D /* StopFollowingButtonDarkThemeHighlighted.png */,
 				916A29391086628600C5895D /* FollowButtonDarkThemeHighlighted.png */,
 				916A29281086607000C5895D /* FollowButtonDarkTheme.png */,
@@ -3135,6 +3139,7 @@
 				051667E410841EFB000CA4AA /* HomeIconWhite.png in Resources */,
 				051667E510841EFB000CA4AA /* HomeIcon.png in Resources */,
 				05F51C6C1087A6AF00C6AD97 /* SelectPersonView.xib in Resources */,
+				0552815F1087F7810055A37C /* ShortenLinks.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3288,6 +3293,7 @@
 				916A293A1086628600C5895D /* FollowButtonDarkThemeHighlighted.png in Resources */,
 				916A293C1086629200C5895D /* StopFollowingButtonDarkThemeHighlighted.png in Resources */,
 				05F51C6D1087A6AF00C6AD97 /* SelectPersonView.xib in Resources */,
+				055281601087F7810055A37C /* ShortenLinks.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
