@@ -6,6 +6,7 @@
 #import "RegexKitLite.h"
 #import "UIApplication+NetworkActivityIndicatorAdditions.h"
 #import "WebViewController.h"
+#import "SettingsReader.h"
 
 @interface OauthLogInViewController ()
 
@@ -44,6 +45,15 @@
     [super dealloc];
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    if ([SettingsReader displayTheme] == kDisplayThemeDark)
+        self.navigationController.navigationBar.barStyle =
+            UIBarStyleBlackOpaque;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -51,12 +61,6 @@
     self.doneButton.enabled = NO;
     self.pinTextField.text = @"";
 }
-
-// - (BOOL)shouldAutorotateToInterfaceOrientation:
-//     (UIInterfaceOrientation)orientation
-// {
-//     return YES;
-// }
 
 - (IBAction)userDidCancel
 {

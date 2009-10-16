@@ -170,6 +170,8 @@ static UIColor * darkCellBackgroundColor;
 {
     if (!twitchCheckedColor)
         twitchCheckedColor =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [[self class] twitchBlueOnDarkBackgroundColor] :
             [[UIColor colorWithRed:0.196 green:0.310 blue:0.522 alpha:1.0]
             retain];
 

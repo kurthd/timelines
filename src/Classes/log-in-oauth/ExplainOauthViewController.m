@@ -4,6 +4,7 @@
 
 #import "ExplainOauthViewController.h"
 #import "UIColor+TwitchColors.h"
+#import "SettingsReader.h"
 
 @interface ExplainOauthViewController ()
 
@@ -42,7 +43,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.backgroundColor = [UIColor twitchBackgroundColor];
+    self.tableView.backgroundColor =
+        [UIColor groupTableViewBackgroundColor];
+    
+    if ([SettingsReader displayTheme] == kDisplayThemeDark)
+        navigationBar.barStyle = UIBarStyleBlackOpaque;
 }
 
 - (void)viewWillAppear:(BOOL)animated
