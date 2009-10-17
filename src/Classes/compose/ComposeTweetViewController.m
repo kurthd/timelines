@@ -61,6 +61,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)clearTweet;
 
++ (NSUInteger)minimumAllowedUrlLength;
+
 @property (nonatomic, copy) NSString * currentSender;
 @property (nonatomic, copy) NSString * textViewText;
 @property (nonatomic, copy) NSString * currentRecipient;
@@ -474,6 +476,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     NSArray * urls = [textView.text extractUrls];
     NSLog(@"Extracted URLs: %@", urls);
+    [self enableUrlShorteningButtonFromText:textView.text];
 }
 
 - (IBAction)choosePerson
@@ -580,7 +583,16 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)enableUrlShorteningButtonFromText:(NSString *)text
 {
-    shortenLinksButton.enabled = [text containsUrls];
+    BOOL enable = NO;
+
+    NSArray * urls = [text extractUrls];
+    for (NSString * url in urls)
+        if (url.length > [[self class] minimumAllowedUrlLength]) {
+            enable = YES;
+            break;
+        }
+
+    shortenLinksButton.enabled = enable;
 }
 
 - (BOOL)composingDirectMessage
@@ -665,6 +677,14 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         self.currentRecipient = nil;
         [self resetView];
     }
+}
+
++ (NSUInteger)minimumAllowedUrlLength
+{
+    // Based on the length of a Flickr URL, for example:
+    //   http://flic.kr/p/77UDDW
+    // which is 23 characters.
+    return 25;
 }
 
 @end

@@ -9,6 +9,11 @@
 
 - (NSArray *)extractUrls
 {
+    // Clearing the string cache on every call is unfortunate, but seems to
+    // be necessary as calling this function multiple times with the same
+    // string as input to the regex seems to return correct results the
+    // first time, but incorrect results after that.
+    [[self class] clearStringCache];
     return [self componentsMatchedByRegex:[[self class] urlRegex]];
 }
 
@@ -19,7 +24,7 @@
 
 + (NSString *)urlRegex
 {
-    return @"\\b(?:http://)[-a-zA-Z0-9+&@#/%?=~_()|!:,.;]*";
+    return @"\\b(?:http://)[-a-zA-Z0-9+&@#/%?=~_()\\|!:,.;]*";
 }
 
 @end
