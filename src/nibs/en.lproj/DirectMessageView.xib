@@ -3,7 +3,7 @@
 	<data>
 		<int key="IBDocument.SystemTarget">768</int>
 		<string key="IBDocument.SystemVersion">10A432</string>
-		<string key="IBDocument.InterfaceBuilderVersion">732</string>
+		<string key="IBDocument.InterfaceBuilderVersion">740</string>
 		<string key="IBDocument.AppKitVersion">1038</string>
 		<string key="IBDocument.HIToolboxVersion">437.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
@@ -12,9 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="62"/>
+			<integer value="37"/>
 			<integer value="53"/>
-			<integer value="28"/>
+			<integer value="62"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -417,6 +417,62 @@
 					</object>
 					<int key="connectionID">68</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">avatarBackgroundView</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="786307387"/>
+					</object>
+					<int key="connectionID">69</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">headerBackgroundView</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="701012251"/>
+					</object>
+					<int key="connectionID">70</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">headerBottomLine</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="14086707"/>
+					</object>
+					<int key="connectionID">71</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">headerTopLine</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="579758285"/>
+					</object>
+					<int key="connectionID">72</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">headerViewPadding</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="443561171"/>
+					</object>
+					<int key="connectionID">73</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">chatArrowView</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="1013016521"/>
+					</object>
+					<int key="connectionID">74</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">emailButton</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="575046903"/>
+					</object>
+					<int key="connectionID">75</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -636,7 +692,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">68</int>
+			<int key="maxID">75</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -663,17 +719,31 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>avatarBackgroundView</string>
 							<string>avatarImage</string>
+							<string>chatArrowView</string>
+							<string>emailButton</string>
 							<string>footerView</string>
 							<string>fullNameLabel</string>
+							<string>headerBackgroundView</string>
+							<string>headerBottomLine</string>
+							<string>headerTopLine</string>
 							<string>headerView</string>
+							<string>headerViewPadding</string>
 							<string>usernameLabel</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UIImageView</string>
 							<string>RoundedImage</string>
+							<string>UIImageView</string>
+							<string>UIButton</string>
 							<string>UIView</string>
 							<string>UILabel</string>
+							<string>UIImageView</string>
+							<string>UIView</string>
+							<string>UIView</string>
+							<string>UIView</string>
 							<string>UIView</string>
 							<string>UILabel</string>
 						</object>
@@ -688,6 +758,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/shared/NSObject+RuntimeAdditions.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/shared/NSObject+TweetHelpers.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

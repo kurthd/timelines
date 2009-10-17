@@ -160,14 +160,26 @@ static UIImage * defaultAvatar;
         UIImage * buttonImage =
             [[UIImage imageNamed:@"DarkThemeButtonBackground.png"]
             stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+
         [blockButton setBackgroundImage:buttonImage
-            forState:UIControlStateNormal];
-        [bookmarkButton setBackgroundImage:buttonImage
             forState:UIControlStateNormal];
         [blockButton setTitleColor:[UIColor twitchBlueOnDarkBackgroundColor]
             forState:UIControlStateNormal];
+        [blockButton setTitleColor:[UIColor darkGrayColor]
+            forState:UIControlStateDisabled];
+        [blockButton setBackgroundImage:buttonImage
+            forState:UIControlStateDisabled];
+
+        [bookmarkButton setBackgroundImage:buttonImage
+            forState:UIControlStateNormal];
         [bookmarkButton setTitleColor:[UIColor twitchBlueOnDarkBackgroundColor]
             forState:UIControlStateNormal];
+        [bookmarkButton setTitleColor:[UIColor darkGrayColor]
+            forState:UIControlStateDisabled];
+        [bookmarkButton setBackgroundImage:buttonImage
+            forState:UIControlStateDisabled];
+            
+        activeAcctLabel.shadowColor = [UIColor blackColor];
     }
 
     [self layoutViews];

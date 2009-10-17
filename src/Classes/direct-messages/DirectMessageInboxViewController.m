@@ -7,6 +7,8 @@
 #import "ConversationPreview.h"
 #import "UIColor+TwitchColors.h"
 #import "RotatableTabBarController.h"
+#import "SettingsReader.h"
+#import "TimelineTableViewCellView.h"
 
 @implementation DirectMessageInboxViewController
 
@@ -27,6 +29,15 @@
 {
     [super viewDidLoad];
     self.tableView.tableFooterView = footerView;
+
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        self.tableView.separatorColor = [UIColor twitchGrayColor];
+        self.view.backgroundColor =
+            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        footerView.backgroundColor =
+            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        numMessagesLabel.textColor = [UIColor twitchLightLightGrayColor];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -121,8 +132,10 @@
     conversationPreviews = tempConversationPreviews;
 
     [self.tableView reloadData];
-
-    [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
+    UIColor * titleColor =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [UIColor twitchBlueOnDarkBackgroundColor] : [UIColor twitchBlueColor];
+    [loadMoreButton setTitleColor:titleColor
         forState:UIControlStateNormal];
     loadMoreButton.enabled = YES;
 }

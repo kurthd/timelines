@@ -144,12 +144,12 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
-    NSLog(@"Application did finish launching; initializing");
-
     if ([SettingsReader displayTheme] == kDisplayThemeDark)
         [application setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:NO];
     else
         [application setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+
+    NSLog(@"Application did finish launching; initializing");
 
     credentialsActivatedPublisher =
         [[CredentialsActivatedPublisher alloc]

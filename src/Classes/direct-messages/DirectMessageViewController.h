@@ -19,10 +19,17 @@
     UINavigationController * navigationController;
 
     IBOutlet UIView * headerView;
+    IBOutlet UIImageView * headerBackgroundView;
+    IBOutlet UIImageView * avatarBackgroundView;
+    IBOutlet UIView * headerTopLine;
+    IBOutlet UIView * headerBottomLine;
+    IBOutlet UIView * headerViewPadding;
+    IBOutlet UIImageView * chatArrowView;
     IBOutlet UIView * footerView;
     IBOutlet UILabel * fullNameLabel;
     IBOutlet UILabel * usernameLabel;
     IBOutlet RoundedImage * avatarImage;
+    IBOutlet UIButton * emailButton;
 
     UITableViewCell * tweetTextTableViewCell;
     UIWebView * tweetContentView;

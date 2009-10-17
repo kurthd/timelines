@@ -80,13 +80,13 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         plainHeaderView.backgroundColor = [UIColor twitchDarkGrayColor];
         plainHeaderViewLine.backgroundColor = [UIColor blackColor];
         footerView.backgroundColor = [UIColor twitchDarkGrayColor];
         self.tableView.backgroundColor = [UIColor twitchDarkGrayColor];
-        currentPagesLabel.textColor = [UIColor whiteColor];
+        currentPagesLabel.textColor = [UIColor twitchLightLightGrayColor];
         noMorePagesLabel.textColor = [UIColor blackColor];
     }
 

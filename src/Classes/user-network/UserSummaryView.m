@@ -5,6 +5,8 @@
 #import "UserSummaryView.h"
 #import "User+UIAdditions.h"
 #import "UIImage+DrawingAdditions.h"
+#import "SettingsReader.h"
+#import "UIColor+TwitchColors.h"
 
 @interface UserSummaryView ()
 
@@ -110,24 +112,27 @@ static UIImage * avatarBackgroundImage;
         user.username];
     if (!self.highlighted) {
     	// draw white drop shadows
-    	[[UIColor whiteColor] set];
-    	point = CGPointMake(boundsX + LEFT_MARGIN, TOP_MARGIN + 1);
-    	[user.name drawAtPoint:point forWidth:labelWidth
-    	    withFont:nameLabelFont minFontSize:NAME_LABEL_FONT_SIZE
-    	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
-    	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
-    	point =
-    	    CGPointMake(boundsX + LEFT_MARGIN, USERNAME_TOP_MARGIN + 1);
-    	[username drawAtPoint:point forWidth:labelWidth
-    	    withFont:usernameLabelFont minFontSize:USERNAME_LABEL_FONT_SIZE
-    	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
-    	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
-    	point =
-    	    CGPointMake(boundsX + LEFT_MARGIN, FOLLOWERS_TOP_MARGIN + 1);
-        [[user followersDescription] drawAtPoint:point forWidth:labelWidth
-    	    withFont:followersLabelFont minFontSize:FOLLOWERS_LABEL_FONT_SIZE
-    	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
-    	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
+    	if ([SettingsReader displayTheme] == kDisplayThemeLight) {
+        	[[UIColor whiteColor] set];
+        	point = CGPointMake(boundsX + LEFT_MARGIN, TOP_MARGIN + 1);
+        	[user.name drawAtPoint:point forWidth:labelWidth
+        	    withFont:nameLabelFont minFontSize:NAME_LABEL_FONT_SIZE
+        	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
+        	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
+        	point =
+        	    CGPointMake(boundsX + LEFT_MARGIN, USERNAME_TOP_MARGIN + 1);
+        	[username drawAtPoint:point forWidth:labelWidth
+        	    withFont:usernameLabelFont minFontSize:USERNAME_LABEL_FONT_SIZE
+        	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
+        	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
+        	point =
+        	    CGPointMake(boundsX + LEFT_MARGIN, FOLLOWERS_TOP_MARGIN + 1);
+            [[user followersDescription] drawAtPoint:point forWidth:labelWidth
+        	    withFont:followersLabelFont
+        	    minFontSize:FOLLOWERS_LABEL_FONT_SIZE
+        	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
+        	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
+	    }
     }
 
 	[nameLabelTextColor set];
@@ -197,6 +202,8 @@ static UIImage * avatarBackgroundImage;
 {
     if (!lighterTextColor)
         lighterTextColor =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [UIColor twitchLightLightGrayColor] :
             [[UIColor colorWithRed:.4 green:.4 blue:.4 alpha:1] retain];
 
     return lighterTextColor;
@@ -205,7 +212,9 @@ static UIImage * avatarBackgroundImage;
 + (UIColor *)darkerTextColor
 {
     if (!darkerTextColor)
-        darkerTextColor = [UIColor blackColor];
+        darkerTextColor =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [UIColor whiteColor] : [UIColor blackColor];
 
     return darkerTextColor;
 }

@@ -19,4 +19,7 @@
 - (void)setLoading;
 - (void)setFinishedLoading;
 
+- (void)setKeyColor:(UIColor *)color;
+- (void)setValueColor:(UIColor *)color;
+
 @end

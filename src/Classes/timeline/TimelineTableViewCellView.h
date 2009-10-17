@@ -17,7 +17,7 @@
     BOOL darkenForOld;
 
     BOOL highlighted;
-    
+
     BOOL landscape;
 }
 

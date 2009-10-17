@@ -12,6 +12,9 @@
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "PhotoBrowserDisplayMgr.h"
 #import "RotatableTabBarController.h"
+#import "SettingsReader.h"
+#import "UIColor+TwitchColors.h"
+#import "TimelineTableViewCellView.h"
 
 static NSString * usernameRegex = @"x-twitbit://user\\?screen_name=@([\\w_]+)";
 static NSString * hashRegex = @"x-twitbit://search\\?query=(.+)";
@@ -79,9 +82,16 @@ enum TweetActionSheets {
     self.navigationController = nil;
 
     [headerView release];
+    [headerBackgroundView release];
+    [avatarBackgroundView release];
+    [headerTopLine release];
+    [headerBottomLine release];
+    [headerViewPadding release];
+    [chatArrowView release];
     [footerView release];
     [fullNameLabel release];
     [usernameLabel release];
+    [emailButton release];
     
     [replyCell release];
     [deleteTweetCell release];
@@ -110,6 +120,45 @@ enum TweetActionSheets {
     if (self.navigationItem && self.navigationItem.title.length == 0)
         self.navigationItem.title =
             NSLocalizedString(@"tweetdetailsview.title", @"");
+
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        self.tableView.separatorColor = [UIColor twitchGrayColor];
+
+        headerBackgroundView.image =
+            [UIImage imageNamed:@"UserHeaderDarkThemeGradient.png"];
+
+        avatarBackgroundView.image =
+            [UIImage imageNamed:@"AvatarDarkThemeBackground.png"];
+
+        headerTopLine.backgroundColor = [UIColor blackColor];
+        headerBottomLine.backgroundColor = [UIColor twitchGrayColor];
+        headerViewPadding.backgroundColor =
+            [TimelineTableViewCellView defaultDarkThemeCellColor];
+
+        chatArrowView.image = [UIImage imageNamed:@"DarkThemeChatArrow.png"];
+        
+        self.view.backgroundColor =
+            [UIColor colorWithPatternImage:
+            [UIImage imageNamed:@"DarkThemeBackground.png"]];
+        
+        UIImage * buttonImage =
+            [[UIImage imageNamed:@"DarkThemeButtonBackground.png"]
+            stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+        [emailButton setBackgroundImage:buttonImage
+            forState:UIControlStateNormal];
+        
+        [emailButton setTitleColor:[UIColor twitchBlueOnDarkBackgroundColor]
+            forState:UIControlStateNormal];
+        
+        fullNameLabel.textColor = [UIColor whiteColor];
+        fullNameLabel.shadowColor = [UIColor blackColor];
+
+        usernameLabel.textColor = [UIColor lightGrayColor];
+        usernameLabel.shadowColor = [UIColor blackColor];
+
+        tweetTextTableViewCell.backgroundColor =
+            [TimelineTableViewCellView defaultDarkThemeCellColor];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -428,6 +477,12 @@ enum TweetActionSheets {
             [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
         replyCell.imageView.highlightedImage =
             [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
+            
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            replyCell.backgroundColor =
+                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            replyCell.textLabel.textColor = [UIColor whiteColor];
+        }
     }
 
     return replyCell;
@@ -509,6 +564,12 @@ enum TweetActionSheets {
             NSLocalizedString(@"tweetdetailsview.deletetweet.label", @"");
         deleteTweetCell.imageView.image =
             [UIImage imageNamed:@"DeleteTweetButtonIcon.png"];
+
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            deleteTweetCell.backgroundColor =
+                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            deleteTweetCell.textLabel.textColor = [UIColor whiteColor];
+        }
     }
 
     return deleteTweetCell;

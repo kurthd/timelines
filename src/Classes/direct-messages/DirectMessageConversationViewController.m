@@ -12,6 +12,7 @@
 #import "User+UIAdditions.h"
 #import "RotatableTabBarController.h"
 #import "NSArray+IterationAdditions.h"
+#import "SettingsReader.h"
 
 @interface DirectMessageConversationViewController ()
 
@@ -35,6 +36,7 @@ static UIImage * defaultAvatar;
 - (void)dealloc
 {
     [headerView release];
+    [headerLine release];
     [footerView release];
     [tweets release];
     [alreadySent release];
@@ -49,6 +51,12 @@ static UIImage * defaultAvatar;
     alreadySent = [[NSMutableDictionary dictionary] retain];
     self.tableView.tableFooterView = footerView;
     self.tableView.tableHeaderView = headerView;
+
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        headerView.backgroundColor = [UIColor twitchDarkGrayColor];
+        headerLine.backgroundColor = [UIColor blackColor];
+        footerView.backgroundColor = [UIColor twitchDarkGrayColor];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

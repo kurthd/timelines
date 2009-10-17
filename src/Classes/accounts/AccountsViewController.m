@@ -5,6 +5,8 @@
 #import "AccountsViewController.h"
 #import "TwitterCredentials.h"
 #import "UIColor+TwitchColors.h"
+#import "SettingsReader.h"
+#import "TimelineTableViewCellView.h"
 
 NSInteger usernameSort(TwitterCredentials * user1,
                        TwitterCredentials * user2,
@@ -39,6 +41,12 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
     [self.navigationItem setLeftBarButtonItem:self.editButtonItem animated:NO];
     self.tableView.allowsSelectionDuringEditing = NO;
+
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        self.tableView.separatorColor = [UIColor twitchGrayColor];
+        self.view.backgroundColor =
+            [TimelineTableViewCellView defaultDarkThemeCellColor];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -127,10 +135,11 @@ NSInteger usernameSort(TwitterCredentials * user1,
     UITableViewCell * cell =
         [tv dequeueReusableCellWithIdentifier:CellIdentifier];
 
-    if (cell == nil)
-        cell = [[[UITableViewCell alloc]
-            initWithStyle:UITableViewCellStyleDefault
-          reuseIdentifier:CellIdentifier] autorelease];
+    if (cell == nil) {
+        cell =
+            [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:CellIdentifier] autorelease];
+    }
 
     TwitterCredentials * account = [self.accounts objectAtIndex:indexPath.row];
     cell.textLabel.text = account.username;
@@ -223,6 +232,8 @@ NSInteger usernameSort(TwitterCredentials * user1,
 {
     cell.textLabel.textColor = [UIColor twitchCheckedColor];
     cell.imageView.image =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [UIImage imageNamed:@"AccountSelectedCheckmarkDarkTheme.png"] :
         [UIImage imageNamed:@"AccountSelectedCheckmark.png"];
     cell.imageView.highlightedImage =
         [UIImage imageNamed:@"AccountSelectedCheckmarkHighlighted.png"];
@@ -230,7 +241,9 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
 + (void)configureNormalAccountCell:(UITableViewCell *)cell
 {
-    cell.textLabel.textColor = [UIColor blackColor];
+    cell.textLabel.textColor =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [UIColor whiteColor] : [UIColor blackColor];
     cell.imageView.image =
         [UIImage imageNamed:@"AccountNotSelectedFiller.png"];
     cell.imageView.highlightedImage =

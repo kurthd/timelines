@@ -1,19 +1,8 @@
-/*
-body {
-    width: 90%;
-    font-family: "Helvetica";
-    padding: 1px;
-    font-size: 12pt;
-    word-wrap: break-word;
-}
-*/
-
 body {
     font-family: "Helvetica";
     font-size: 12pt;
     margin: 0px;
     padding: 7px 0px 0px 5px;
-    /*border: 1px solid black;*/
     word-wrap: break-word;
     background-color: transparent;
     color: #fff;
@@ -21,9 +10,7 @@ body {
 
 a {
     text-decoration: none;
-    color: #2595D7;
-    /* color: #6293bb; */
-    //font-weight: bold;
+    color: #3a9fdb;
 }
 
 .text {

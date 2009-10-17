@@ -10,5 +10,6 @@
 }
 
 - (void)setText:(NSString *)text;
+- (void)setButtonTextColor:(UIColor *)color;
 
 @end

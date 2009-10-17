@@ -61,12 +61,20 @@ static NSString * starText;
         [[UIImage imageNamed:@"DarkThemeTopGradient.png"] retain] :
         [[UIImage imageNamed:@"TableViewCellTopGradient.png"] retain];
     mentionBottomImage =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[UIImage imageNamed:@"MentionBottomGradientDarkTheme.png"] retain] :
         [[UIImage imageNamed:@"MentionBottomGradient.png"] retain];
     mentionTopImage =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[UIImage imageNamed:@"MentionTopGradientDarkTheme.png"] retain] :
         [[UIImage imageNamed:@"MentionTopGradient.png"] retain];
     darkenedBottomImage =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[UIImage imageNamed:@"DarkenedDarkThemeBottomGradient.png"] retain] :
         [[UIImage imageNamed:@"DarkenedTableViewCellGradient.png"] retain];
     darkenedTopImage =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[UIImage imageNamed:@"DarkenedDarkThemeTopGradient.png"] retain] :
         [[UIImage imageNamed:@"DarkenedTableViewCellTopGradient.png"] retain];
 }
 
@@ -186,7 +194,7 @@ static NSString * starText;
         favoriteColor = [UIColor whiteColor];
         [self drawHighlightedAvatarBorderWithTopMargin:6 leftMargin:6];
     } else {
-         textColor =
+        textColor =
                 [SettingsReader displayTheme] == kDisplayThemeDark ?
                 [UIColor twitchLightLightGrayColor] : [UIColor blackColor];
         authorColor =
@@ -195,7 +203,6 @@ static NSString * starText;
         timestampColor = [SettingsReader displayTheme] == kDisplayThemeDark ?
             [UIColor twitchBlueOnDarkBackgroundColor] :
             [UIColor twitchBlueColor];
-        textColor = textColor;
         favoriteColor = [UIColor grayColor];
 
         UIImage * bottomImage;
@@ -329,8 +336,12 @@ static NSString * starText;
         [self drawHighlightedAvatarBorderWithTopMargin:6
             leftMargin:avatarLeftMargin - 1];
     } else {
-        timestampColor = [UIColor twitchBlueColor];
-        textColor = [UIColor blackColor];
+        textColor =
+                [SettingsReader displayTheme] == kDisplayThemeDark ?
+                [UIColor twitchLightLightGrayColor] : [UIColor blackColor];
+        timestampColor = [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [UIColor twitchBlueOnDarkBackgroundColor] :
+            [UIColor twitchBlueColor];
         favoriteColor = [UIColor grayColor];
 
         UIImage * bottomImage;
@@ -424,7 +435,7 @@ static NSString * starText;
 
     UIColor * textColor = nil;
     UIFont * textFont = [UIFont systemFontOfSize:14.0];
-    
+
     UIColor * favoriteColor = nil;
 
     CGPoint point;
@@ -435,8 +446,12 @@ static NSString * starText;
         textColor = [UIColor whiteColor];
         favoriteColor = [UIColor whiteColor];
     } else {
-        timestampColor = [UIColor twitchBlueColor];
-        textColor = [UIColor blackColor];
+        textColor =
+                [SettingsReader displayTheme] == kDisplayThemeDark ?
+                [UIColor twitchLightLightGrayColor] : [UIColor blackColor];
+        timestampColor = [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [UIColor twitchBlueOnDarkBackgroundColor] :
+            [UIColor twitchBlueColor];
         favoriteColor = [UIColor grayColor];
 
         UIImage * bottomImage;
@@ -532,8 +547,12 @@ static NSString * starText;
         textColor = [UIColor whiteColor];
         [self drawHighlightedAvatarBorderWithTopMargin:6 leftMargin:6];
     } else {
-        timestampColor = [UIColor twitchBlueColor];
-        textColor = [UIColor blackColor];
+        textColor =
+                [SettingsReader displayTheme] == kDisplayThemeDark ?
+                [UIColor twitchLightLightGrayColor] : [UIColor blackColor];
+        timestampColor = [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [UIColor twitchBlueOnDarkBackgroundColor] :
+            [UIColor twitchBlueColor];
 
         UIImage * bottomImage;
         UIImage * topImage;
@@ -736,8 +755,9 @@ static UIColor * mentionCellColor;
 {
     if (!mentionCellColor)
         mentionCellColor =
-            [[UIColor colorWithRed:0.886 green:0.988 blue:0.886 alpha:1.0]
-            retain];
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [[UIColor twitchDarkGrayColor] retain] :
+            [[UIColor colorWithRed:0.89 green:0.99 blue:0.89 alpha:1.0] retain];
 
     return mentionCellColor;
 }
@@ -753,7 +773,7 @@ static UIColor * defaultDarkThemeCellColor;
 {
     if (!defaultDarkThemeCellColor)
         defaultDarkThemeCellColor =
-            [[UIColor colorWithRed:0.21 green:0.22 blue:0.23 alpha:1.0]
+            [[UIColor colorWithRed:0.22 green:0.23 blue:0.24 alpha:1.0]
             retain];
 
     return defaultDarkThemeCellColor;
@@ -761,7 +781,9 @@ static UIColor * defaultDarkThemeCellColor;
 
 + (UIColor *)darkenedCellColor
 {
-    return [UIColor darkCellBackgroundColor];
+    return [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [UIColor colorWithRed:0.17 green:0.17 blue:0.17 alpha:1.0] :
+        [UIColor darkCellBackgroundColor];
 }
 
 #pragma mark Private helpers

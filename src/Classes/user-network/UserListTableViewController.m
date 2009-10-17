@@ -9,6 +9,8 @@
 #import "UIColor+TwitchColors.h"
 #import "User+UIAdditions.h"
 #import "RotatableTabBarController.h"
+#import "SettingsReader.h"
+#import "TimelineTableViewCellView.h"
 
 @interface User (Sorting)
 - (NSComparisonResult)compare:(User *)user;
@@ -34,6 +36,9 @@
 - (NSArray *)sortedUsers;
 
 + (UIImage *)defaultAvatar;
+
++ (UIColor *)lightCellColor;
++ (UIColor *)darkCellColor;
 
 @end
 
@@ -65,6 +70,16 @@ static UIImage * defaultAvatar;
     self.tableView.tableFooterView = footerView;
 
     alreadySent = [[NSMutableDictionary dictionary] retain];
+    
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        self.tableView.separatorColor = [UIColor twitchGrayColor];
+        self.view.backgroundColor =
+            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        footerView.backgroundColor =
+            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        noMorePagesLabel.textColor = [UIColor blackColor];
+        currentPagesLabel.textColor = [UIColor twitchLightLightGrayColor];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -112,8 +127,7 @@ static UIImage * defaultAvatar;
     if (cell == nil) {
         UIColor * cellColor =
             indexPath.row % 2 == 0 ?
-            [UIColor whiteColor] :
-            [UIColor darkCellBackgroundColor];
+            [[self class] lightCellColor] : [[self class] darkCellColor];
         cell =
             [[[UserSummaryTableViewCell alloc]
             initWithStyle:UITableViewCellStyleDefault
@@ -186,9 +200,10 @@ static UIImage * defaultAvatar;
         NSLocalizedString(@"userlisttableview.footerstring.plural", @"");
     currentPagesLabel.text =
         [NSString stringWithFormat:footerFormatString, users.count];
-
-    [loadMoreButton setTitleColor:[UIColor twitchBlueColor]
-        forState:UIControlStateNormal];
+    UIColor * titleColor =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [UIColor twitchBlueOnDarkBackgroundColor] : [UIColor twitchBlueColor];
+    [loadMoreButton setTitleColor:titleColor forState:UIControlStateNormal];
     loadMoreButton.enabled = YES;
     
     [self.tableView reloadData];
@@ -241,6 +256,20 @@ static UIImage * defaultAvatar;
         defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar50x50.png"] retain];
 
     return defaultAvatar;
+}
+
++ (UIColor *)lightCellColor
+{
+    return [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [UIColor twitchDarkGrayColor] :
+        [UIColor whiteColor];
+}
+
++ (UIColor *)darkCellColor
+{
+    return [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [TimelineTableViewCellView defaultDarkThemeCellColor] :
+        [UIColor darkCellBackgroundColor];
 }
 
 @end
