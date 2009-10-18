@@ -103,7 +103,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
             [UIImage imageNamed:@"AvatarDarkThemeBackground.png"];
 
         headerTopLine.backgroundColor = [UIColor blackColor];
-        headerBottomLine.backgroundColor = [UIColor twitchGrayColor];
+        headerBottomLine.backgroundColor = [UIColor blackColor];
         headerViewPadding.backgroundColor =
             [TimelineTableViewCellView defaultDarkThemeCellColor];
 
