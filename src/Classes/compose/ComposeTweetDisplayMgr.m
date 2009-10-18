@@ -366,17 +366,9 @@
                           credentials:self.service.credentials
                                 error:&error];
 
-    if (error) {
+    if (error)
         NSLog(@"Failed to save tweet drafts: '%@', '%@'.", error,
             error.userInfo);
-        NSString * title =
-            NSLocalizedString(@"compose.draft.save.failed.title", @"");
-        NSString * message =
-            [error.userInfo valueForKeyPath:@"reason"] ?
-            [error.userInfo valueForKeyPath:@"reason"] :
-            error.localizedDescription;
-        [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
-    }
 }
 
 - (void)userDidSaveDirectMessageDraft:(NSString *)text
@@ -395,17 +387,9 @@
                                   credentials:self.service.credentials
                                         error:&error];
 
-    if (error) {
-        NSLog(@"Failed to save tweet drafts: '%@', '%@'.", error,
+    if (error)
+        NSLog(@"Failed to save direct message drafts: '%@', '%@'.", error,
             error.userInfo);
-        NSString * title =
-            NSLocalizedString(@"compose.draft.save.failed.title", @"");
-        NSString * message =
-            [error.userInfo valueForKeyPath:@"reason"] ?
-            [error.userInfo valueForKeyPath:@"reason"] :
-            error.localizedDescription;
-        [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
-    }
 }
 
 - (void)userWantsToSelectDirectMessageRecipient
