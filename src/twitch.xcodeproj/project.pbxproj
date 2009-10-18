@@ -920,7 +920,6 @@
 		051568681047405900A26F17 /* FlickrCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrCredentials.m; path = photos/flickr/FlickrCredentials.m; sourceTree = "<group>"; };
 		05166940108646B6000CA4AA /* ComposeTweetDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetDisplayMgr.h; path = compose/ComposeTweetDisplayMgr.h; sourceTree = "<group>"; };
 		05166941108646B6000CA4AA /* ComposeTweetDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComposeTweetDisplayMgr.m; path = compose/ComposeTweetDisplayMgr.m; sourceTree = "<group>"; };
-		05166942108646B6000CA4AA /* ComposeTweetDisplayMgrDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetDisplayMgrDelegate.h; path = compose/ComposeTweetDisplayMgrDelegate.h; sourceTree = "<group>"; };
 		05166943108646B6000CA4AA /* ComposeTweetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetViewController.h; path = compose/ComposeTweetViewController.h; sourceTree = "<group>"; };
 		05166944108646B6000CA4AA /* ComposeTweetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComposeTweetViewController.m; path = compose/ComposeTweetViewController.m; sourceTree = "<group>"; };
 		05166946108646B6000CA4AA /* DirectMessageDraft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageDraft.h; path = compose/DirectMessageDraft.h; sourceTree = "<group>"; };
@@ -1744,7 +1743,6 @@
 			children = (
 				05166940108646B6000CA4AA /* ComposeTweetDisplayMgr.h */,
 				05166941108646B6000CA4AA /* ComposeTweetDisplayMgr.m */,
-				05166942108646B6000CA4AA /* ComposeTweetDisplayMgrDelegate.h */,
 				05166943108646B6000CA4AA /* ComposeTweetViewController.h */,
 				05166944108646B6000CA4AA /* ComposeTweetViewController.m */,
 				05166946108646B6000CA4AA /* DirectMessageDraft.h */,

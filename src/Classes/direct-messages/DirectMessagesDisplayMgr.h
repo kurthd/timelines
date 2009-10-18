@@ -24,7 +24,6 @@
 #import "CredentialsActivatedPublisher.h"
 #import "UserListTableViewController.h"
 #import "NewDirectMessagesState.h"
-#import "ComposeTweetDisplayMgrDelegate.h"
 #import "SavedSearchMgr.h"
 #import "UserInfoRequestAdapter.h"
 #import "LocationMapViewController.h"

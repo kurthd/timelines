@@ -8,7 +8,6 @@
 #import "TimelineDisplayMgrFactory.h"
 #import "DirectMessageDisplayMgrFactory.h"
 #import "TwitterServiceDelegate.h"
-#import "ComposeTweetDisplayMgrDelegate.h"
 #import "PersonalFeedSelectionMgr.h"
 #import "DirectMessageAcctMgr.h"
 #import "FindPeopleSearchDisplayMgr.h"

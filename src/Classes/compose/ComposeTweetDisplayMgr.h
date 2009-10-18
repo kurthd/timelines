@@ -3,7 +3,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ComposeTweetDisplayMgrDelegate.h"
 #import "ComposeTweetViewController.h"
 #import "TwitterService.h"
 #import "PhotoService.h"
@@ -17,6 +16,7 @@
 @class TweetDraft, DirectMessageDraft;
 @class TweetDraftMgr;
 @class BitlyUrlShorteningService;
+@protocol ComposeTweetDisplayMgrDelegate;
 
 @interface ComposeTweetDisplayMgr :
     NSObject
@@ -81,5 +81,30 @@
 - (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)tweet;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
+
+@end
+
+
+@protocol ComposeTweetDisplayMgrDelegate
+
+- (void)userDidCancelComposingTweet;
+
+- (void)userIsSendingTweet:(NSString *)tweet;
+- (void)userDidSendTweet:(Tweet *)tweet;
+- (void)userFailedToSendTweet:(NSString *)tweet;
+
+- (void)userIsReplyingToTweet:(NSString *)origTweetId
+                     fromUser:(NSString *)origUsername
+                     withText:(NSString *)text;
+- (void)userDidReplyToTweet:(NSString *)origTweetId
+                   fromUser:(NSString *)origUsername
+                  withTweet:(Tweet *)reply;
+- (void)userFailedToReplyToTweet:(NSString *)origTweetId
+                        fromUser:(NSString *)origUsername
+                        withText:(NSString *)text;
+
+- (void)userIsSendingDirectMessage:(NSString *)dm to:(NSString *)username;
+- (void)userDidSendDirectMessage:(DirectMessage *)dm;
+- (void)userFailedToSendDirectMessage:(NSString *)dm to:(NSString *)username;
 
 @end
