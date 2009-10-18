@@ -144,7 +144,7 @@
         self.view.backgroundColor = [UIColor twitchDarkGrayColor];
         headerView.backgroundColor = [UIColor twitchDarkGrayColor];
         plainFooterView.backgroundColor = [UIColor twitchDarkGrayColor];
-        headerViewLine.backgroundColor = [UIColor blackColor];
+        headerViewLine.backgroundColor = [UIColor twitchDarkDarkGrayColor];
         loadingView.backgroundColor = [UIColor twitchDarkGrayColor];
         loadingLabel.textColor = [UIColor lightGrayColor];
         footerView.backgroundColor = [UIColor twitchDarkGrayColor];

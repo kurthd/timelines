@@ -54,7 +54,7 @@ static UIImage * defaultAvatar;
 
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         headerView.backgroundColor = [UIColor twitchDarkGrayColor];
-        headerLine.backgroundColor = [UIColor blackColor];
+        headerLine.backgroundColor = [UIColor twitchDarkDarkGrayColor];
         footerView.backgroundColor = [UIColor twitchDarkGrayColor];
     }
 }

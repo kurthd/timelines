@@ -12,6 +12,7 @@
 + (UIColor *)twitchLightGrayColor;
 + (UIColor *)twitchLightLightGrayColor;
 + (UIColor *)twitchDarkGrayColor;
++ (UIColor *)twitchDarkDarkGrayColor;
 + (UIColor *)twitchLabelColor;
 + (UIColor *)twitchBackgroundColor;
 + (UIColor *)twitchResolvedColor;
