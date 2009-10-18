@@ -11,9 +11,9 @@
 {
     id<ComposeTweetViewControllerDelegate> delegate;
 
-    IBOutlet UIView * headerView;
-    IBOutlet UILabel * titleLabel;
-    IBOutlet UILabel * accountLabel;
+    IBOutlet UIView * portraitHeaderView;
+    IBOutlet UILabel * portraitTitleLabel;
+    IBOutlet UILabel * portraitAccountLabel;
 
     IBOutlet UITextView * textView;
 
@@ -27,6 +27,7 @@
     BOOL hideRecipientView;
     IBOutlet UIView * recipientView;
     IBOutlet UITextField * recipientTextField;
+    IBOutlet UIButton * addRecipientButton;
 
     /* Displaying activity while uploading media and shortening links. */
 

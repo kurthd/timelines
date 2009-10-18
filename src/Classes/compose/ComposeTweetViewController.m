@@ -94,10 +94,14 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [shortenLinksButton release];
     [characterCount release];
-    [accountLabel release];
+
+    [portraitHeaderView release];
+    [portraitTitleLabel release];
+    [portraitAccountLabel release];
 
     [recipientView release];
     [recipientTextField release];
+    [addRecipientButton release];
 
     [photoUploadView release];
     [photoUploadProgressView release];
@@ -354,6 +358,10 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
             CGRect textViewFrame = textView.frame;
             textViewFrame.origin.y = 29;
             textView.frame = textViewFrame;
+
+            CGRect addRecipientButtonFrame = addRecipientButton.frame;
+            addRecipientButtonFrame.origin.y = 0;
+            addRecipientButton.frame = addRecipientButtonFrame;
         }
 
         CGRect characterCountFrame = characterCount.frame;
@@ -364,7 +372,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         characterCount.backgroundColor = [UIColor whiteColor];
 
         toolbar.hidden = YES;
-        accountLabel.hidden = YES;
+
+        self.navigationItem.titleView = nil;
     }
 }
 
@@ -378,17 +387,22 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         CGRect textViewFrame = textView.frame;
         textViewFrame.origin.y = 39;
         textView.frame = textViewFrame;
+
+        CGRect addRecipientButtonFrame = addRecipientButton.frame;
+        addRecipientButtonFrame.origin.y = 5;
+        addRecipientButton.frame = addRecipientButtonFrame;
     }
 
     CGRect characterCountFrame = characterCount.frame;
-    characterCountFrame.origin.y = 167;
+    characterCountFrame.origin.y = 104;
     characterCount.frame = characterCountFrame;
 
     characterCount.textColor = [UIColor whiteColor];
     characterCount.backgroundColor = [UIColor clearColor];
 
     toolbar.hidden = NO;
-    accountLabel.hidden = NO;
+
+    self.navigationItem.titleView = portraitHeaderView;
 }
 
 #pragma mark UITextFieldDelegate implementation
@@ -532,9 +546,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)correctCharacterCountFrameWhenDisplayed
 {
     CGRect characterCountFrame = characterCount.frame;
-    // hack -- this needs to be 167 when displayed, but 104 after a rotation
+    // hack -- this needs to be 168 when displayed, but 104 after a rotation
     BOOL landscape = [[RotatableTabBarController instance] landscape];
-    characterCountFrame.origin.y = landscape ? 80 : 167;
+    characterCountFrame.origin.y = landscape ? 80 : 168;
     characterCount.frame = characterCountFrame;
 }
 
@@ -669,28 +683,31 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)setTitleView
 {
-    self.navigationItem.titleView = headerView;
-
     if ([self composingDirectMessage])
-        titleLabel.text =
+        portraitTitleLabel.text =
             NSLocalizedString(@"composetweet.view.header.dm.title", @"");
     else {
         if (currentRecipient) {  // format for a public reply
             NSString * titleFormatString =
                 NSLocalizedString(@"composetweet.view.header.tweet.reply.title",
                         @"");
-            titleLabel.text =
+            portraitTitleLabel.text =
                 [NSString stringWithFormat:titleFormatString, currentRecipient];
         } else  // format for a regular tweet
-            titleLabel.text =
+            portraitTitleLabel.text =
                 NSLocalizedString(
                         @"composetweet.view.header.tweet.update.title", @"");
     }
 
     NSString * accountFormatString =
         NSLocalizedString(@"composetweet.view.header.tweet.account", @"");
-    accountLabel.text =
+    portraitAccountLabel.text =
         [NSString stringWithFormat:accountFormatString, currentSender];
+
+    //landscapeTitleLabel.text =
+    self.navigationItem.title =
+        [NSString stringWithFormat:@"%@ %@", portraitTitleLabel.text,
+        portraitAccountLabel.text];
 }
 
 - (void)clearTweet
