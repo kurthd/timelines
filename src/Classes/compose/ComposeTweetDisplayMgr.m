@@ -354,42 +354,46 @@
 
 - (void)userDidSaveTweetDraft:(NSString *)text
 {
-    NSError * error = nil;
-    if (self.origTweetId && self.origUsername)
-        [self.draftMgr saveTweetDraft:text
-                          credentials:self.service.credentials
-                     inReplyToTweetId:self.origTweetId
-                    inReplyToUsername:self.origUsername
-                                error:&error];
-    else
-        [self.draftMgr saveTweetDraft:text
-                          credentials:self.service.credentials
-                                error:&error];
+    if (text) {
+        NSError * error = nil;
+        if (self.origTweetId && self.origUsername)
+            [self.draftMgr saveTweetDraft:text
+                              credentials:self.service.credentials
+                         inReplyToTweetId:self.origTweetId
+                        inReplyToUsername:self.origUsername
+                                    error:&error];
+        else
+            [self.draftMgr saveTweetDraft:text
+                              credentials:self.service.credentials
+                                    error:&error];
 
-    if (error)
-        NSLog(@"Failed to save tweet drafts: '%@', '%@'.", error,
-            error.userInfo);
+        if (error)
+            NSLog(@"Failed to save tweet drafts: '%@', '%@'.", error,
+                error.userInfo);
+    }
 }
 
 - (void)userDidSaveDirectMessageDraft:(NSString *)text
                           toRecipient:(NSString *)recipient
 {
-    TwitterCredentials * credentials = self.service.credentials;
-    NSError * error = nil;
-    if (fromHomeScreen)
-        [self.draftMgr saveDirectMessageDraftFromHomeScreen:text
-                                                  recipient:recipient
-                                                credentials:credentials
-                                                      error:&error];
-    else
-        [self.draftMgr saveDirectMessageDraft:text
-                                    recipient:recipient
-                                  credentials:self.service.credentials
-                                        error:&error];
+    if (text && recipient) {
+        TwitterCredentials * credentials = self.service.credentials;
+        NSError * error = nil;
+        if (fromHomeScreen)
+            [self.draftMgr saveDirectMessageDraftFromHomeScreen:text
+                                                      recipient:recipient
+                                                    credentials:credentials
+                                                          error:&error];
+        else
+            [self.draftMgr saveDirectMessageDraft:text
+                                        recipient:recipient
+                                      credentials:self.service.credentials
+                                            error:&error];
 
-    if (error)
-        NSLog(@"Failed to save direct message drafts: '%@', '%@'.", error,
-            error.userInfo);
+        if (error)
+            NSLog(@"Failed to save direct message drafts: '%@', '%@'.", error,
+                error.userInfo);
+    }
 }
 
 - (void)userWantsToSelectDirectMessageRecipient
