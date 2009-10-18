@@ -316,7 +316,7 @@ bitlyloginview.deleteaccount.confirm.cancel = "Cancel";
 bitlyloginview.deleteaccount.confirm.delete = "Delete Account";
 
 /* Bitly */
-bitly.shortening.failed = "Failed to Shorten Link";
+bitly.shortening.failed = "An unknown error occurred";
 
 /* SelectPersonView */
 selectpersonview.title = "Find a Person";

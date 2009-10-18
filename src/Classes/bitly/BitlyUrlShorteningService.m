@@ -6,6 +6,7 @@
 #import "InfoPlistConfigReader.h"
 #import "NSString+HtmlEncodingAdditions.h"
 #import "NSError+InstantiationAdditions.h"
+#import "NSDictionary+NonRetainedKeyAdditions.h"
 #import "JSON.h"
 
 @interface BitlyUrlShorteningService ()
@@ -14,12 +15,15 @@
 @property (nonatomic, copy) NSString * username;
 @property (nonatomic, copy) NSString * apiKey;
 
+@property (nonatomic, retain) NSMutableDictionary * requests;
+
 @end
 
 @implementation BitlyUrlShorteningService
 
 @synthesize delegate;
 @synthesize version, username, apiKey;
+@synthesize requests;
 
 - (void)dealloc
 {
@@ -28,6 +32,8 @@
     self.version = nil;
     self.username = nil;
     self.apiKey = nil;
+
+    self.requests = nil;
 
     [super dealloc];
 }
@@ -48,6 +54,8 @@
             [[InfoPlistConfigReader reader] valueForKey:@"BitlyUsername"];
         self.apiKey =
             [[InfoPlistConfigReader reader] valueForKey:@"BitlyApiKey"];
+
+        self.requests = [NSMutableDictionary dictionary];
     }
 
     return self;
@@ -67,7 +75,10 @@
     NSLog(@"Link shortening request: %@", urlAsString);
 
     NSURL * theUrl = [NSURL URLWithString:urlAsString];
-    [AsynchronousNetworkFetcher fetcherWithUrl:theUrl delegate:self];
+    AsynchronousNetworkFetcher * fetcher =
+        [AsynchronousNetworkFetcher fetcherWithUrl:theUrl delegate:self];
+
+    [self.requests setObject:url forNonRetainedKey:fetcher];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -78,11 +89,15 @@
     NSString * jsonString =
         [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]
         autorelease];
-    NSDictionary * json = [jsonString JSONValue];
-    NSLog(@"Have json: %@", json);
+    NSError * error = nil;
+    NSDictionary * json = [jsonString JSONValueOrError:&error];
+    NSLog(@"Received response from bit.ly: %@, error: %@", json, error);
     if (!json) {
-        NSString * message = NSLocalizedString(@"bitly.shortening.failed", @"");
-        NSError * error = [NSError errorWithLocalizedDescription:message];
+        if (!error) {
+            NSString * message =
+                NSLocalizedString(@"bitly.shortening.failed.unknown", @"");
+            error = [NSError errorWithLocalizedDescription:message];
+        }
         [self fetcher:fetcher failedToReceiveDataFromUrl:url error:error];
     } else {
         NSDictionary * results = [json objectForKey:@"results"];
@@ -96,6 +111,8 @@
         [self.delegate shorteningService:self
                        didShortenLongUrl:longUrl
                               toShortUrl:shortUrl];
+
+        [self.requests removeObjectForNonRetainedKey:fetcher];
     }
 }
 
@@ -103,6 +120,13 @@
     failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
 {
     NSLog(@"Fetcher failed: '%@'", error);
+
+    NSString * longUrl = [self.requests objectForNonRetainedKey:fetcher];
+    [self.delegate shorteningService:self
+                 didFailToShortenUrl:longUrl
+                               error:error];
+
+    [self.requests removeObjectForNonRetainedKey:fetcher];
 }
 
 @end

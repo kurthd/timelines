@@ -15,6 +15,8 @@
     NSString * version;
     NSString * username;
     NSString * apiKey;
+
+    NSMutableDictionary * requests;
 }
 
 @property (nonatomic, assign) id<BitlyUrlShorteningServiceDelegate> delegate;

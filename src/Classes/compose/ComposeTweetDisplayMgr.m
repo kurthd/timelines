@@ -23,6 +23,7 @@
 #import "JSON.h"
 #import "NSString+HtmlEncodingAdditions.h"
 #import "UIImage+GeneralHelpers.h"
+#import "UIAlertView+InstantiationAdditions.h"
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -811,7 +812,8 @@
         [self.urlsToShorten removeObject:longUrl];
         if (self.urlsToShorten.count == 0)
             [self.composeTweetViewController hideUrlShorteningView];
-    }
+    } else
+        NSLog(@"Don't know long URL: '%@'; ignoring.", longUrl);
 }
 
 - (void)shorteningService:(BitlyUrlShorteningService *)service
@@ -819,10 +821,17 @@
                     error:(NSError *)error
 {
     if ([self.urlsToShorten containsObject:longUrl]) {
-          [self.urlsToShorten removeObject:longUrl];
-          if (self.urlsToShorten.count == 0)
-              [self.composeTweetViewController hideUrlShorteningView];
-    }
+        [self.urlsToShorten removeObject:longUrl];
+
+        NSString * title =
+            NSLocalizedString(@"composetweet.shorteningerror", @"");
+        NSString * message = error.localizedDescription;
+        [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
+
+        if (self.urlsToShorten.count == 0)
+            [self.composeTweetViewController hideUrlShorteningView];
+    } else
+        NSLog(@"Don't know long URL: '%@'; ignoring.", longUrl);
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
