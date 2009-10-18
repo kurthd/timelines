@@ -24,15 +24,21 @@
     IBOutlet UIBarButtonItem * shortenLinksButton;
     IBOutlet UILabel * characterCount;
 
+    BOOL hideRecipientView;
     IBOutlet UIView * recipientView;
     IBOutlet UITextField * recipientTextField;
 
-    BOOL displayingActivity;
-    IBOutlet UIView * activityView;
-    IBOutlet UIProgressView * activityProgressView;
-    UIButton * activityCancelButton;
+    /* Displaying activity while uploading media and shortening links. */
 
-    BOOL hideRecipientView;
+    BOOL displayingActivity;
+
+    IBOutlet UIView * photoUploadView;
+    IBOutlet UIProgressView * photoUploadProgressView;
+    BOOL photoUploadViewHasBeenInitialized;
+
+    IBOutlet UIView * urlShorteningView;
+    BOOL urlShorteningViewHasBeenInitialized;
+
     NSString * currentSender;
     NSString * textViewText;
     NSString * currentRecipient;
@@ -60,10 +66,15 @@
 - (void)setRecipient:(NSString *)recipient;
 
 - (void)addTextToMessage:(NSString *)text;
+- (void)replaceOccurrencesOfString:(NSString *)oldString
+                        withString:(NSString *)newString;
 
-- (void)displayActivityView;
-- (void)updateActivityProgress:(CGFloat)uploadProgress;
-- (void)hideActivityView;
+- (void)displayPhotoUploadView;
+- (void)updatePhotoUploadProgress:(CGFloat)uploadProgress;
+- (void)hidePhotoUploadView;
+
+- (void)displayUrlShorteningView;
+- (void)hideUrlShorteningView;
 
 - (void)userDidSend;
 - (void)userDidClose;
@@ -72,7 +83,6 @@
 - (IBAction)choosePhoto;
 - (IBAction)shortenLinks;
 - (IBAction)choosePerson;
-- (IBAction)userDidCancelActivity;
 
 @end
 
@@ -90,9 +100,11 @@
 - (void)userWantsToSelectDirectMessageRecipient;
 
 - (void)userWantsToSelectPhoto;
+- (void)userWantsToShortenUrls:(NSSet *)urls;
 - (void)userWantsToSelectPerson;
 
-- (void)userDidCancelActivity;
+- (void)userDidCancelPhotoUpload;
+- (void)userDidCancelUrlShortening;
 
 - (BOOL)clearCurrentDirectMessageDraftTo:(NSString *)recipient;
 - (BOOL)clearCurrentTweetDraft;

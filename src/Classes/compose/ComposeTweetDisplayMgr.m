@@ -56,6 +56,8 @@
 
 @property (nonatomic, retain) UIView * linkShorteningView;
 @property (nonatomic, copy) NSString * shorteningUrl;
+@property (nonatomic, retain) BitlyUrlShorteningService *
+    urlShorteningService;
 
 @property (nonatomic, retain) PersonSelector * personSelector;
 
@@ -88,7 +90,7 @@
 @synthesize addPhotoServiceDisplayMgr;
 @synthesize attachedPhotos, attachedVideos;
 @synthesize photoService;
-@synthesize linkShorteningView, shorteningUrl;
+@synthesize linkShorteningView, shorteningUrl, urlShorteningService;
 @synthesize personSelector;
 
 - (void)dealloc
@@ -109,6 +111,7 @@
     self.attachedVideos = nil;
     self.linkShorteningView = nil;
     self.shorteningUrl = nil;
+    self.urlShorteningService = nil;
     self.personSelector = nil;
 
     [super dealloc];
@@ -443,6 +446,13 @@
         [self.addPhotoServiceDisplayMgr addPhotoService:credentials];
 }
 
+- (void)userWantsToShortenUrls:(NSSet *)urls
+{
+    [self.urlShorteningService shortenUrls:urls];
+    self.composeTweetViewController.displayingActivity = YES;
+    [self.composeTweetViewController displayUrlShorteningView];
+}
+
 - (void)userWantsToSelectPerson
 {
     selectingRecipient = NO;
@@ -450,14 +460,19 @@
         promptToSelectUserModally:self.composeTweetViewController];
 }
 
-- (void)userDidCancelActivity
+- (void)userDidCancelPhotoUpload
 {
     if (self.photoService) {
         [self.photoService cancelUpload];
-        [self.composeTweetViewController hideActivityView];
+        [self.composeTweetViewController hidePhotoUploadView];
 
         self.photoService = nil;
     }
+}
+
+- (void)userDidCancelUrlShortening
+{
+    [self.composeTweetViewController hideUrlShorteningView];
 }
 
 - (BOOL)clearCurrentDirectMessageDraftTo:(NSString *)recipient;
@@ -581,7 +596,7 @@
 {
     NSLog(@"Successfully posted image to URL: '%@'.", url);
 
-    [self.composeTweetViewController hideActivityView];
+    [self.composeTweetViewController hidePhotoUploadView];
     [self.composeTweetViewController addTextToMessage:url];
 
     [self.attachedPhotos addObject:url];
@@ -594,7 +609,7 @@
 {
     NSLog(@"Successfully posted video to URL: '%@'.", url);
 
-    [self.composeTweetViewController hideActivityView];
+    [self.composeTweetViewController hidePhotoUploadView];
     [self.composeTweetViewController addTextToMessage:url];
 
     [self.attachedVideos addObject:url];
@@ -612,7 +627,7 @@
     [[UIAlertView simpleAlertViewWithTitle:title
                                    message:error.localizedDescription] show];
 
-    [self.composeTweetViewController hideActivityView];
+    [self.composeTweetViewController hidePhotoUploadView];
 
     [photoService autorelease];
     photoService = nil;
@@ -627,7 +642,7 @@
     [[UIAlertView simpleAlertViewWithTitle:title
                                    message:error.localizedDescription] show];
 
-    [self.composeTweetViewController hideActivityView];
+    [self.composeTweetViewController hidePhotoUploadView];
 
     [photoService autorelease];
     photoService = nil;
@@ -636,7 +651,7 @@
 - (void)service:(PhotoService *)service
     updateUploadProgress:(CGFloat)uploadProgress
 {
-    [self.composeTweetViewController updateActivityProgress:uploadProgress];
+    [self.composeTweetViewController updatePhotoUploadProgress:uploadProgress];
 }
 
 - (void)serviceDidUpdatePhotoTitle:(PhotoService *)aPhotoService
@@ -709,8 +724,8 @@
     }
 
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
-    [self.composeTweetViewController updateActivityProgress:0.0];
-    [self.composeTweetViewController displayActivityView];
+    [self.composeTweetViewController updatePhotoUploadProgress:0.0];
+    [self.composeTweetViewController displayPhotoUploadView];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -772,6 +787,23 @@
     }
 
     [actionSheet autorelease];
+}
+
+#pragma mark BitlyUrlShorteningServiceDelegate implementation
+
+- (void)shorteningService:(BitlyUrlShorteningService *)service
+        didShortenLongUrl:(NSString *)longUrl
+               toShortUrl:(NSString *)shortUrl
+{
+    [self.composeTweetViewController replaceOccurrencesOfString:longUrl
+                                                     withString:shortUrl];
+    [self.composeTweetViewController hideUrlShorteningView];
+}
+
+- (void)shorteningService:(BitlyUrlShorteningService *)service
+      didFailToShortenUrl:(NSString *)longUrl
+                    error:(NSError *)error
+{
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -1208,6 +1240,16 @@
     }
 
     return personSelector;
+}
+
+- (BitlyUrlShorteningService *)urlShorteningService
+{
+    if (!urlShorteningService) {
+        urlShorteningService = [[BitlyUrlShorteningService alloc] init];
+        urlShorteningService.delegate = self;
+    }
+
+    return urlShorteningService;
 }
 
 @end

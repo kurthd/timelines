@@ -47,6 +47,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)enableUrlShorteningButtonFromInterface;
 - (void)enableUrlShorteningButtonFromText:(NSString *)text;
 
+- (void)saveCurrentStateAsDraft;
+
 - (void)displayForOrientation:(UIInterfaceOrientation)orientation;
 - (void)displayForPortraitMode;
 - (void)correctCharacterCountFrameWhenDisplayed;
@@ -60,6 +62,14 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)setTitleView;
 
 - (void)clearTweet;
+
+- (NSArray *)extractShortenableUrls:(NSString *)text;
+
+- (void)displayActivityView:(UIView *)activityView;
+- (void)hideActivityView:(UIView *)activityView;
+
+- (void)initializePhotoUploadView;
+- (void)initializeLinkShorteningView;
 
 + (NSUInteger)minimumAllowedUrlLength;
 
@@ -89,9 +99,10 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [recipientView release];
     [recipientTextField release];
 
-    [activityView release];
-    [activityProgressView release];
-    [activityCancelButton release];
+    [photoUploadView release];
+    [photoUploadProgressView release];
+
+    [urlShorteningView release];
 
     [currentSender release];
     [textViewText release];
@@ -185,25 +196,36 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [self updateCharacterCountFromInterface];
     [self enableUrlShorteningButtonFromInterface];
 
-    if ([self composingDirectMessage])
-        [delegate userDidSaveDirectMessageDraft:textView.text
-                                    toRecipient:recipientTextField.text];
-    else
-        [delegate userDidSaveTweetDraft:textView.text];
+    [self saveCurrentStateAsDraft];
 }
 
-- (void)displayActivityView
+- (void)replaceOccurrencesOfString:(NSString *)oldString
+                        withString:(NSString *)newString
 {
-    activityView.alpha = 0.0;
+    NSString * s =
+        [textView.text stringByReplacingOccurrencesOfString:oldString
+                                                 withString:newString];
+    textView.text = s;
+
+    [self enableSendButtonFromInterface];
+    [self updateCharacterCountFromInterface];
+    [self enableUrlShorteningButtonFromInterface];
+
+    [self saveCurrentStateAsDraft];
+}
+
+- (void)displayPhotoUploadView
+{
+    photoUploadView.alpha = 0.0;
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationTransition:UIViewAnimationTransitionNone
-                           forView:activityView
+                           forView:photoUploadView
                              cache:YES];
 
-    activityView.alpha = 0.8;
+    photoUploadView.alpha = 0.8;
     UIView * keyboardView = [[UIApplication sharedApplication] keyboardView];
     UIView * keyView = keyboardView ? [keyboardView superview] : self.view;
-    [keyView addSubview:activityView];
+    [keyView addSubview:photoUploadView];
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
 
@@ -212,26 +234,42 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     displayingActivity = YES;
 }
 
-- (void)updateActivityProgress:(CGFloat)uploadProgress
+- (void)updatePhotoUploadProgress:(CGFloat)uploadProgress
 {
-    if (activityProgressView.progress != uploadProgress)
-        activityProgressView.progress = uploadProgress;
+    if (photoUploadProgressView.progress != uploadProgress)
+        photoUploadProgressView.progress = uploadProgress;
 }
 
-- (void)hideActivityView
+- (void)hidePhotoUploadView
 {
-    activityView.alpha = 0.8;
+    photoUploadView.alpha = 0.8;
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationTransition:UIViewAnimationTransitionNone
-                           forView:activityView
+                           forView:photoUploadView
                              cache:YES];
 
-    activityView.alpha = 0.0;
+    photoUploadView.alpha = 0.0;
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
 
     [UIView commitAnimations];
 
+    displayingActivity = NO;
+}
+
+- (void)displayUrlShorteningView
+{
+    if (!urlShorteningViewHasBeenInitialized) {
+        [self initializeLinkShorteningView];
+        urlShorteningViewHasBeenInitialized = YES;
+    }
+    [self displayActivityView:urlShorteningView];
+    displayingActivity = YES;
+}
+
+- (void)hideUrlShorteningView
+{
+    [self hideActivityView:urlShorteningView];
     displayingActivity = NO;
 }
 
@@ -249,31 +287,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     if (self.currentRecipient)
         recipientTextField.text = self.currentRecipient;
 
-    static const NSInteger BUTTON_WIDTH = 134;
-    CGRect buttonFrame =
-        CGRectMake((320 - BUTTON_WIDTH) / 2, 156, BUTTON_WIDTH, 46);
-    activityCancelButton =
-        [[[UIButton alloc] initWithFrame:buttonFrame] autorelease];
-    NSString * cancelButtonTitle =
-        NSLocalizedString(@"composetweet.cancelshortening", @"");
-    [activityCancelButton setTitle:cancelButtonTitle
-        forState:UIControlStateNormal];
-    UIImage * normalImage =
-        [[UIImage imageNamed:@"CancelButton.png"]
-        stretchableImageWithLeftCapWidth:13.0 topCapHeight:0.0];
-    [activityCancelButton setBackgroundImage:normalImage
-        forState:UIControlStateNormal];
-    activityCancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    [activityCancelButton setTitleColor:[UIColor whiteColor]
-        forState:UIControlStateNormal];
-    [activityCancelButton setTitleColor:[UIColor grayColor]
-        forState:UIControlStateHighlighted];
-    [activityCancelButton setTitleShadowColor:[UIColor twitchDarkGrayColor]
-        forState:UIControlStateNormal];
-    activityCancelButton.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
-    [activityCancelButton addTarget:self action:@selector(userDidCancelActivity)
-        forControlEvents:UIControlEventTouchUpInside];
-    [activityView addSubview:activityCancelButton];
+    photoUploadViewHasBeenInitialized = NO;
+    urlShorteningViewHasBeenInitialized = NO;
 
     [self setViewNeedsInitialization:YES];
 }
@@ -428,7 +443,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 #pragma mark Button actions
 
-- (IBAction)userDidSend
+- (void)userDidSend
 {
     if ([self composingDirectMessage])
         [delegate userWantsToSendDirectMessage:textView.text
@@ -474,9 +489,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (IBAction)shortenLinks
 {
-    NSArray * urls = [textView.text extractUrls];
-    NSLog(@"Extracted URLs: %@", urls);
+    NSArray * urls = [self extractShortenableUrls:textView.text];
+    NSLog(@"Shortening URLs: %@", urls);
     [self enableUrlShorteningButtonFromText:textView.text];
+
+    [delegate userWantsToShortenUrls:[NSSet setWithArray:urls]];
 }
 
 - (IBAction)choosePerson
@@ -484,9 +501,14 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [delegate userWantsToSelectPerson];
 }
 
-- (IBAction)userDidCancelActivity
+- (void)userDidCancelPhotoUpload
 {
-    [delegate userDidCancelActivity];
+    [delegate userDidCancelPhotoUpload];
+}
+
+- (void)userDidCancelUrlShortening
+{
+    [delegate userDidCancelUrlShortening];
 }
 
 #pragma mark UIActionSheetDelegate implementation
@@ -583,16 +605,16 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)enableUrlShorteningButtonFromText:(NSString *)text
 {
-    BOOL enable = NO;
+    shortenLinksButton.enabled = [self extractShortenableUrls:text].count > 0;
+}
 
-    NSArray * urls = [text extractUrls];
-    for (NSString * url in urls)
-        if (url.length > [[self class] minimumAllowedUrlLength]) {
-            enable = YES;
-            break;
-        }
-
-    shortenLinksButton.enabled = enable;
+- (void)saveCurrentStateAsDraft
+{
+    if ([self composingDirectMessage])
+        [delegate userDidSaveDirectMessageDraft:textView.text
+                                    toRecipient:recipientTextField.text];
+    else
+        [delegate userDidSaveTweetDraft:textView.text];
 }
 
 - (BOOL)composingDirectMessage
@@ -677,6 +699,113 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         self.currentRecipient = nil;
         [self resetView];
     }
+}
+
+- (NSArray *)extractShortenableUrls:(NSString *)text
+{
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:
+        @"SELF.length > %d", [[self class] minimumAllowedUrlLength]];
+    return [[text extractUrls] filteredArrayUsingPredicate:predicate];
+}
+
+- (void)displayActivityView:(UIView *)activityView
+{
+    activityView.alpha = 0.0;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone
+                           forView:activityView
+                             cache:YES];
+
+    activityView.alpha = 0.8;
+    UIView * keyboardView = [[UIApplication sharedApplication] keyboardView];
+    UIView * keyView = keyboardView ? [keyboardView superview] : self.view;
+    [keyView addSubview:activityView];
+    [[UIApplication sharedApplication]
+        setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
+
+    [UIView commitAnimations];
+}
+
+- (void)hideActivityView:(UIView *)activityView
+{
+    activityView.alpha = 0.8;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone
+                           forView:activityView
+                             cache:YES];
+
+    activityView.alpha = 0.0;
+    [[UIApplication sharedApplication]
+        setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+
+    [UIView commitAnimations];
+}
+
+- (void)initializePhotoUploadView
+{
+    static const NSInteger BUTTON_WIDTH = 134;
+    CGRect buttonFrame =
+        CGRectMake((320 - BUTTON_WIDTH) / 2, 156, BUTTON_WIDTH, 46);
+    UIButton * photoUploadCancelButton =
+        [[UIButton alloc] initWithFrame:buttonFrame];
+    NSString * cancelButtonTitle =
+        NSLocalizedString(@"composetweet.cancelshortening", @"");
+    [photoUploadCancelButton setTitle:cancelButtonTitle
+        forState:UIControlStateNormal];
+    UIImage * normalImage =
+        [[UIImage imageNamed:@"CancelButton.png"]
+        stretchableImageWithLeftCapWidth:13.0 topCapHeight:0.0];
+    [photoUploadCancelButton setBackgroundImage:normalImage
+        forState:UIControlStateNormal];
+    photoUploadCancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    [photoUploadCancelButton setTitleColor:[UIColor whiteColor]
+        forState:UIControlStateNormal];
+    [photoUploadCancelButton setTitleColor:[UIColor grayColor]
+        forState:UIControlStateHighlighted];
+    [photoUploadCancelButton setTitleShadowColor:[UIColor twitchDarkGrayColor]
+        forState:UIControlStateNormal];
+    photoUploadCancelButton.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
+    [photoUploadCancelButton
+        addTarget:self action:@selector(userDidCancelPhotoUpload)
+        forControlEvents:UIControlEventTouchUpInside];
+
+    [photoUploadView addSubview:photoUploadCancelButton];
+    [photoUploadCancelButton release];
+}
+
+- (void)initializeLinkShorteningView
+{
+    static const NSInteger BUTTON_WIDTH = 134;
+    CGRect buttonFrame =
+        CGRectMake((320 - BUTTON_WIDTH) / 2, 135, BUTTON_WIDTH, 46);
+    UIButton * linkShorteningCancelButton =
+        [[UIButton alloc] initWithFrame:buttonFrame];
+    NSString * cancelButtonTitle =
+        NSLocalizedString(@"composetweet.cancelshortening", @"");
+    [linkShorteningCancelButton setTitle:cancelButtonTitle
+        forState:UIControlStateNormal];
+    UIImage * normalImage =
+        [[UIImage imageNamed:@"CancelButton.png"]
+        stretchableImageWithLeftCapWidth:13.0 topCapHeight:0.0];
+    [linkShorteningCancelButton setBackgroundImage:normalImage
+        forState:UIControlStateNormal];
+    linkShorteningCancelButton.titleLabel.font =
+        [UIFont boldSystemFontOfSize:17];
+    [linkShorteningCancelButton setTitleColor:[UIColor whiteColor]
+        forState:UIControlStateNormal];
+    [linkShorteningCancelButton setTitleColor:[UIColor grayColor]
+        forState:UIControlStateHighlighted];
+    [linkShorteningCancelButton
+        setTitleShadowColor:[UIColor twitchDarkGrayColor]
+        forState:UIControlStateNormal];
+    linkShorteningCancelButton.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
+    [linkShorteningCancelButton
+        addTarget:self action:@selector(userDidCancelUrlShortening)
+        forControlEvents:UIControlEventTouchUpInside];
+
+    [urlShorteningView addSubview:linkShorteningCancelButton];
+    [linkShorteningCancelButton release];
 }
 
 + (NSUInteger)minimumAllowedUrlLength

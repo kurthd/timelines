@@ -12,10 +12,12 @@
 #import "AddPhotoServiceDisplayMgr.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
 #import "PersonSelector.h"
+#import "BitlyUrlShorteningService.h"
 
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
 @class TweetDraft, DirectMessageDraft;
 @class TweetDraftMgr;
+@class BitlyUrlShorteningService;
 
 @interface ComposeTweetDisplayMgr :
     NSObject
@@ -23,7 +25,8 @@
     PhotoServiceDelegate, LogInDisplayMgrDelegate,
     UIImagePickerControllerDelegate, UINavigationControllerDelegate,
     UIActionSheetDelegate, AddPhotoServiceDisplayMgrDelegate,
-    AsynchronousNetworkFetcherDelegate, PersonSelectorDelegate>
+    AsynchronousNetworkFetcherDelegate, PersonSelectorDelegate,
+    BitlyUrlShorteningServiceDelegate>
 {
     id<ComposeTweetDisplayMgrDelegate> delegate;
 
@@ -56,6 +59,7 @@
     UIView * linkShorteningView;
     BOOL canceledLinkShortening;
     NSString * shorteningUrl;
+    BitlyUrlShorteningService * urlShorteningService;
 
     PersonSelector * personSelector;
     BOOL selectingRecipient;
