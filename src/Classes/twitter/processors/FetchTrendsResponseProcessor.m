@@ -40,13 +40,22 @@
     return self;
 }
 
-- (BOOL)processResponse:(NSArray *)results
+- (BOOL)processResponse:(NSArray *)rawResults
 {
-    if (!results)
+    if (!rawResults)
         return NO;
 
-    NSMutableArray * trends = [NSMutableArray arrayWithCapacity:results.count];
-    for (NSDictionary * result in results) {
+    NSDictionary * results = [rawResults objectAtIndex:0];
+    NSDictionary * trendsWrapper = [results objectForKey:@"trends"];
+
+    // The 'trendsWrapper' dictionary contains one entry, with the date as the
+    //  key
+    NSArray * allTrends =
+        [trendsWrapper objectForKey:[[trendsWrapper allKeys] objectAtIndex:0]];
+
+    NSMutableArray * trends =
+        [NSMutableArray arrayWithCapacity:allTrends.count];
+    for (NSDictionary * result in allTrends) {
         Trend * trend = [[Trend alloc] init];
 
         trend.name = [result objectForKey:@"name"];

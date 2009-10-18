@@ -44,10 +44,18 @@
 
 - (id)JSONValue
 {
+    return [self JSONValueOrError:nil];
+}
+
+- (id)JSONValueOrError:(NSError **)error
+{
     SBJsonParser *jsonParser = [SBJsonParser new];
     id repr = [jsonParser objectWithString:self];
-    if (!repr)
+    if (!repr) {
         NSLog(@"-JSONValue failed. Error trace is: %@", [jsonParser errorTrace]);
+        if (error)
+            *error = [[jsonParser errorTrace] objectAtIndex:0];
+    }
     [jsonParser release];
     return repr;
 }

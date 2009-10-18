@@ -4,6 +4,7 @@
 
 #import "SelectPersonViewController.h"
 #import "User.h"
+#import "User+UIAdditions.h"
 #import "Avatar+UIAdditions.h"
 
 @interface SelectPersonViewController ()
@@ -59,14 +60,6 @@
     [self initializeNavigationItem];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 #pragma mark UITableViewDataSource implementation
 
 - (NSInteger)tableView:(UITableView *)tv
@@ -95,8 +88,11 @@
     cell.detailTextLabel.text = user.name;
 
     UIImage * avatar = [UIImage imageWithData:user.avatar.thumbnailImage];
-    if (!avatar)
+    if (!avatar) {
         avatar = [Avatar defaultAvatar];
+        NSURL * avatarUrl = [NSURL URLWithString:user.avatar.thumbnailImageUrl];
+        [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+    }
     cell.imageView.image = avatar;
 
     return cell;
@@ -124,6 +120,36 @@
 
     return YES;
 }
+
+#pragma mark AsynchronousNetworkFetcherDelegate implementation
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    didReceiveData:(NSData *)data fromUrl:(NSURL *)url
+{
+    NSLog(@"Received avatar for url: %@", url);
+    UIImage * avatarImage = [UIImage imageWithData:data];
+    NSString * urlAsString = [url absoluteString];
+    [User setAvatar:avatarImage forUrl:urlAsString];
+
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:@"SELF.avatar.thumbnailImageUrl == %@",
+        urlAsString];
+    NSArray * candidates = [self.people filteredArrayUsingPredicate:predicate];
+    for (User * user in candidates) {  // there should only be one
+        UITableView * visibleTableView =
+            self.searchDisplayController.active ?
+            self.searchDisplayController.searchResultsTableView :
+            self.tableView;
+
+        for (UITableViewCell * cell in visibleTableView.visibleCells)
+            if ([user.username isEqualToString:cell.textLabel.text])
+                cell.imageView.image = avatarImage;
+    }
+}
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
+{}
 
 #pragma mark Private implementation
 

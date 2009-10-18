@@ -3,12 +3,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AsynchronousNetworkFetcher.h"
 
 @class User;
 @protocol SelectPersonViewControllerDelegate;
 
 @interface SelectPersonViewController :
-    UITableViewController <UISearchBarDelegate>
+    UITableViewController
+    <UISearchBarDelegate, AsynchronousNetworkFetcherDelegate>
 {
     id<SelectPersonViewControllerDelegate> delegate;
 

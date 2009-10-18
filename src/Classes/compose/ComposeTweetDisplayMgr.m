@@ -20,9 +20,8 @@
 #import "InfoPlistConfigReader.h"
 #import "RegexKitLite.h"
 #import "ErrorState.h"
-#import "JSON.h"
-#import "NSString+HtmlEncodingAdditions.h"
 #import "UIImage+GeneralHelpers.h"
+#import "UIAlertView+InstantiationAdditions.h"
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -54,10 +53,11 @@
 @property (nonatomic, retain) NSMutableArray * attachedPhotos;
 @property (nonatomic, retain) NSMutableArray * attachedVideos;
 
-@property (nonatomic, retain) UIView * linkShorteningView;
-@property (nonatomic, copy) NSString * shorteningUrl;
+@property (nonatomic, retain) BitlyUrlShorteningService *
+    urlShorteningService;
+@property (nonatomic, retain) NSMutableSet * urlsToShorten;
 
-@property (nonatomic, retain) PersonSelector * personSelector;
+@property (nonatomic, retain) UIPersonSelector * personSelector;
 
 - (void)promptForPhotoSource:(UIViewController *)controller;
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source
@@ -68,11 +68,6 @@
 - (void)updateMediaTitleFromTweet:(Tweet *)tweet;
 - (void)updateMediaTitleFromDirectMessage:(DirectMessage *)dm;
 - (void)updateMediaTitleFromTweetText:(NSString *)text;
-
-- (void)startShorteningLink:(NSString *)link;
-- (void)abortShorteningLink;
-- (void)showShorteningLinkView;
-- (void)removeShorteningLinkView;
 
 @end
 
@@ -88,7 +83,7 @@
 @synthesize addPhotoServiceDisplayMgr;
 @synthesize attachedPhotos, attachedVideos;
 @synthesize photoService;
-@synthesize linkShorteningView, shorteningUrl;
+@synthesize urlShorteningService, urlsToShorten;
 @synthesize personSelector;
 
 - (void)dealloc
@@ -107,8 +102,8 @@
     self.photoService = nil;
     self.attachedPhotos = nil;
     self.attachedVideos = nil;
-    self.linkShorteningView = nil;
-    self.shorteningUrl = nil;
+    self.urlShorteningService = nil;
+    self.urlsToShorten = nil;
     self.personSelector = nil;
 
     [super dealloc];
@@ -136,6 +131,8 @@
 
         self.attachedPhotos = [NSMutableArray array];
         self.attachedVideos = [NSMutableArray array];
+
+        self.urlsToShorten = [NSMutableSet set];
     }
 
     return self;
@@ -164,20 +161,6 @@
                                              from:service.credentials.username];
     [self.rootViewController presentModalViewController:self.navController
                                                animated:YES];
-}
-
-- (void)composeTweetWithLink:(NSString *)link
-{
-    self.origTweetId = nil;
-    self.origUsername = nil;
-
-    [self.composeTweetViewController composeTweet:link
-        from:service.credentials.username];
-    [self.rootViewController presentModalViewController:self.navController
-                                               animated:YES];
-
-    if (![link isMatchedByRegex:@".*bit\\.ly/.*"])
-        [self startShorteningLink:link];
 }
 
 - (void)composeReplyToTweet:(NSString *)tweetId
@@ -371,57 +354,45 @@
 
 - (void)userDidSaveTweetDraft:(NSString *)text
 {
-    NSError * error = nil;
-    if (self.origTweetId && self.origUsername)
-        [self.draftMgr saveTweetDraft:text
-                          credentials:self.service.credentials
-                     inReplyToTweetId:self.origTweetId
-                    inReplyToUsername:self.origUsername
-                                error:&error];
-    else
-        [self.draftMgr saveTweetDraft:text
-                          credentials:self.service.credentials
-                                error:&error];
+    if (text) {
+        NSError * error = nil;
+        if (self.origTweetId && self.origUsername)
+            [self.draftMgr saveTweetDraft:text
+                              credentials:self.service.credentials
+                         inReplyToTweetId:self.origTweetId
+                        inReplyToUsername:self.origUsername
+                                    error:&error];
+        else
+            [self.draftMgr saveTweetDraft:text
+                              credentials:self.service.credentials
+                                    error:&error];
 
-    if (error) {
-        NSLog(@"Failed to save tweet drafts: '%@', '%@'.", error,
-            error.userInfo);
-        NSString * title =
-            NSLocalizedString(@"compose.draft.save.failed.title", @"");
-        NSString * message =
-            [error.userInfo valueForKeyPath:@"reason"] ?
-            [error.userInfo valueForKeyPath:@"reason"] :
-            error.localizedDescription;
-        [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
+        if (error)
+            NSLog(@"Failed to save tweet drafts: '%@', '%@'.", error,
+                error.userInfo);
     }
 }
 
 - (void)userDidSaveDirectMessageDraft:(NSString *)text
                           toRecipient:(NSString *)recipient
 {
-    TwitterCredentials * credentials = self.service.credentials;
-    NSError * error = nil;
-    if (fromHomeScreen)
-        [self.draftMgr saveDirectMessageDraftFromHomeScreen:text
-                                                  recipient:recipient
-                                                credentials:credentials
-                                                      error:&error];
-    else
-        [self.draftMgr saveDirectMessageDraft:text
-                                    recipient:recipient
-                                  credentials:self.service.credentials
-                                        error:&error];
+    if (text && recipient) {
+        TwitterCredentials * credentials = self.service.credentials;
+        NSError * error = nil;
+        if (fromHomeScreen)
+            [self.draftMgr saveDirectMessageDraftFromHomeScreen:text
+                                                      recipient:recipient
+                                                    credentials:credentials
+                                                          error:&error];
+        else
+            [self.draftMgr saveDirectMessageDraft:text
+                                        recipient:recipient
+                                      credentials:self.service.credentials
+                                            error:&error];
 
-    if (error) {
-        NSLog(@"Failed to save tweet drafts: '%@', '%@'.", error,
-            error.userInfo);
-        NSString * title =
-            NSLocalizedString(@"compose.draft.save.failed.title", @"");
-        NSString * message =
-            [error.userInfo valueForKeyPath:@"reason"] ?
-            [error.userInfo valueForKeyPath:@"reason"] :
-            error.localizedDescription;
-        [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
+        if (error)
+            NSLog(@"Failed to save direct message drafts: '%@', '%@'.", error,
+                error.userInfo);
     }
 }
 
@@ -443,6 +414,16 @@
         [self.addPhotoServiceDisplayMgr addPhotoService:credentials];
 }
 
+- (void)userWantsToShortenUrls:(NSSet *)urls
+{
+    NSLog(@"Shortening URLs: %@", urls);
+
+    [self.urlsToShorten setSet:urls];
+    [self.urlShorteningService shortenUrls:self.urlsToShorten];
+    self.composeTweetViewController.displayingActivity = YES;
+    [self.composeTweetViewController displayUrlShorteningView];
+}
+
 - (void)userWantsToSelectPerson
 {
     selectingRecipient = NO;
@@ -450,14 +431,20 @@
         promptToSelectUserModally:self.composeTweetViewController];
 }
 
-- (void)userDidCancelActivity
+- (void)userDidCancelPhotoUpload
 {
     if (self.photoService) {
         [self.photoService cancelUpload];
-        [self.composeTweetViewController hideActivityView];
+        [self.composeTweetViewController hidePhotoUploadView];
 
         self.photoService = nil;
     }
+}
+
+- (void)userDidCancelUrlShortening
+{
+    [self.urlsToShorten removeAllObjects];
+    [self.composeTweetViewController hideUrlShorteningView];
 }
 
 - (BOOL)clearCurrentDirectMessageDraftTo:(NSString *)recipient;
@@ -581,7 +568,7 @@
 {
     NSLog(@"Successfully posted image to URL: '%@'.", url);
 
-    [self.composeTweetViewController hideActivityView];
+    [self.composeTweetViewController hidePhotoUploadView];
     [self.composeTweetViewController addTextToMessage:url];
 
     [self.attachedPhotos addObject:url];
@@ -594,7 +581,7 @@
 {
     NSLog(@"Successfully posted video to URL: '%@'.", url);
 
-    [self.composeTweetViewController hideActivityView];
+    [self.composeTweetViewController hidePhotoUploadView];
     [self.composeTweetViewController addTextToMessage:url];
 
     [self.attachedVideos addObject:url];
@@ -612,7 +599,7 @@
     [[UIAlertView simpleAlertViewWithTitle:title
                                    message:error.localizedDescription] show];
 
-    [self.composeTweetViewController hideActivityView];
+    [self.composeTweetViewController hidePhotoUploadView];
 
     [photoService autorelease];
     photoService = nil;
@@ -627,7 +614,7 @@
     [[UIAlertView simpleAlertViewWithTitle:title
                                    message:error.localizedDescription] show];
 
-    [self.composeTweetViewController hideActivityView];
+    [self.composeTweetViewController hidePhotoUploadView];
 
     [photoService autorelease];
     photoService = nil;
@@ -636,7 +623,7 @@
 - (void)service:(PhotoService *)service
     updateUploadProgress:(CGFloat)uploadProgress
 {
-    [self.composeTweetViewController updateActivityProgress:uploadProgress];
+    [self.composeTweetViewController updatePhotoUploadProgress:uploadProgress];
 }
 
 - (void)serviceDidUpdatePhotoTitle:(PhotoService *)aPhotoService
@@ -709,8 +696,8 @@
     }
 
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
-    [self.composeTweetViewController updateActivityProgress:0.0];
-    [self.composeTweetViewController displayActivityView];
+    [self.composeTweetViewController updatePhotoUploadProgress:0.0];
+    [self.composeTweetViewController displayPhotoUploadView];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -774,37 +761,39 @@
     [actionSheet autorelease];
 }
 
-#pragma mark AsynchronousNetworkFetcherDelegate implementation
+#pragma mark BitlyUrlShorteningServiceDelegate implementation
 
-- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
-    didReceiveData:(NSData *)data fromUrl:(NSURL *)url
+- (void)shorteningService:(BitlyUrlShorteningService *)service
+        didShortenLongUrl:(NSString *)longUrl
+               toShortUrl:(NSString *)shortUrl
 {
-    if (!canceledLinkShortening) {
-        NSString * jsonString =
-            [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]
-            autorelease];
-        NSDictionary * json = [jsonString JSONValue];
-        NSDictionary * values =
-            [[json objectForKey:@"results"] objectForKey:self.shorteningUrl];
-        NSString * shortUrl = [values objectForKey:@"shortUrl"];
-        [self.composeTweetViewController composeTweet:shortUrl
-            from:service.credentials.username];
+    if ([self.urlsToShorten containsObject:longUrl]) {
+        [self.composeTweetViewController replaceOccurrencesOfString:longUrl
+                                                         withString:shortUrl];
 
-        [self removeShorteningLinkView];
-        self.shorteningUrl = nil;
-    }
+        [self.urlsToShorten removeObject:longUrl];
+        if (self.urlsToShorten.count == 0)
+            [self.composeTweetViewController hideUrlShorteningView];
+    } else
+        NSLog(@"Don't know long URL: '%@'; ignoring.", longUrl);
 }
 
-- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
-    failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
+- (void)shorteningService:(BitlyUrlShorteningService *)service
+      didFailToShortenUrl:(NSString *)longUrl
+                    error:(NSError *)error
 {
-    if (!canceledLinkShortening) {
+    if ([self.urlsToShorten containsObject:longUrl]) {
+        [self.urlsToShorten removeObject:longUrl];
+
         NSString * title =
             NSLocalizedString(@"composetweet.shorteningerror", @"");
-        [[ErrorState instance] displayErrorWithTitle:title error:error];
-        [self removeShorteningLinkView];
-        self.shorteningUrl = nil;
-    }
+        NSString * message = error.localizedDescription;
+        [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
+
+        if (self.urlsToShorten.count == 0)
+            [self.composeTweetViewController hideUrlShorteningView];
+    } else
+        NSLog(@"Don't know long URL: '%@'; ignoring.", longUrl);
 }
 
 #pragma mark PersonSelectorDelegate implementation
@@ -1052,71 +1041,7 @@
     return addPhotoServiceDisplayMgr;
 }
 
-- (void)startShorteningLink:(NSString *)link
-{
-    canceledLinkShortening = NO;
-
-    self.shorteningUrl = link;
-
-    NSString * version =
-        [[InfoPlistConfigReader reader] valueForKey:@"BitlyVersion"];
-    NSString * username =
-        [[InfoPlistConfigReader reader] valueForKey:@"BitlyUsername"];
-    NSString * apiKey =
-        [[InfoPlistConfigReader reader] valueForKey:@"BitlyApiKey"];
-
-    // the link needs to be encoded because it could contain query parameters
-    static NSString * allowed = @":@/?&";
-    NSString * encodedLink =
-        [link urlEncodedStringWithEscapedAllowedCharacters:allowed];
-    NSString * urlAsString =
-        [NSString stringWithFormat:
-        @"http://api.bit.ly/shorten?version=%@&longUrl=%@&login=%@&apiKey=%@",
-        version, encodedLink, username, apiKey];
-    NSLog(@"Link shortening request: %@", urlAsString);
-    NSURL * url = [NSURL URLWithString:urlAsString];
-    [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];
-
-    self.composeTweetViewController.displayingActivity = YES;
-    [self showShorteningLinkView];
-}
-
-- (void)abortShorteningLink
-{
-    canceledLinkShortening = YES;
-    [self removeShorteningLinkView];
-}
-
-- (void)removeShorteningLinkView
-{
-    [self.linkShorteningView performSelector:@selector(removeFromSuperview)
-        withObject:nil afterDelay:0.5];
-
-    self.linkShorteningView.alpha = 1.0;
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationTransition:UIViewAnimationTransitionNone
-        forView:self.linkShorteningView cache:YES];
-
-    self.linkShorteningView.alpha = 0.0;
-
-    [UIView commitAnimations];
-
-    self.composeTweetViewController.displayingActivity = NO;
-}
-
-- (void)showShorteningLinkView
-{
-    [self.navController.view.superview.superview
-        addSubview:self.linkShorteningView];
-    self.linkShorteningView.alpha = 0.0;
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationTransition:UIViewAnimationTransitionNone
-        forView:self.linkShorteningView cache:YES];
-
-    self.linkShorteningView.alpha = 1.0;
-
-    [UIView commitAnimations];
-}
+#pragma mark Accessors
 
 - (UIViewController *)navController
 {
@@ -1128,86 +1053,25 @@
     return navController;
 }
 
-- (UIView *)linkShorteningView
-{
-    if (!linkShorteningView) {
-        CGRect darkTransparentViewFrame = CGRectMake(0, 0, 320, 460);
-        UIView * darkTransparentView =
-            [[[UIView alloc] initWithFrame:darkTransparentViewFrame]
-            autorelease];
-        darkTransparentView.backgroundColor = [UIColor blackColor];
-        darkTransparentView.alpha = 0.8;
-
-        UIActivityIndicatorView * activityIndicator =
-            [[[UIActivityIndicatorView alloc]
-            initWithActivityIndicatorStyle:
-            UIActivityIndicatorViewStyleWhiteLarge]
-            autorelease];
-        activityIndicator.frame = CGRectMake(50, 87, 37, 37);
-        [activityIndicator startAnimating];
-        
-        CGRect shorteningLabelFrame =
-            CGRectMake(
-            activityIndicator.frame.origin.x +
-            activityIndicator.frame.size.width + 12,
-            87,
-            200,
-            37);
-        UILabel * shorteningLabel =
-            [[[UILabel alloc] initWithFrame:shorteningLabelFrame] autorelease];
-        shorteningLabel.text =
-            NSLocalizedString(@"composetweet.shorteninglink", @"");
-        shorteningLabel.backgroundColor = [UIColor clearColor];
-        shorteningLabel.textColor = [UIColor whiteColor];
-        shorteningLabel.font = [UIFont boldSystemFontOfSize:20];
-        shorteningLabel.shadowOffset = CGSizeMake(0.0, 1.0);
-        shorteningLabel.shadowColor = [UIColor blackColor];
-
-        static const NSInteger BUTTON_WIDTH = 134;
-        CGRect buttonFrame =
-            CGRectMake((320 - BUTTON_WIDTH) / 2, 146, BUTTON_WIDTH, 46);
-        UIButton * cancelButton =
-            [[[UIButton alloc] initWithFrame:buttonFrame] autorelease];
-        NSString * cancelButtonTitle =
-            NSLocalizedString(@"composetweet.cancelshortening", @"");
-        [cancelButton setTitle:cancelButtonTitle forState:UIControlStateNormal];
-        UIImage * normalImage =
-            [[UIImage imageNamed:@"CancelButton.png"]
-            stretchableImageWithLeftCapWidth:13.0 topCapHeight:0.0];
-        [cancelButton setBackgroundImage:normalImage
-            forState:UIControlStateNormal];
-        cancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-        [cancelButton setTitleColor:[UIColor whiteColor]
-            forState:UIControlStateNormal];
-        [cancelButton setTitleColor:[UIColor grayColor]
-            forState:UIControlStateHighlighted];
-        [cancelButton setTitleShadowColor:[UIColor twitchDarkGrayColor]
-            forState:UIControlStateNormal];
-        cancelButton.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
-        [cancelButton addTarget:self action:@selector(abortShorteningLink)
-            forControlEvents:UIControlEventTouchUpInside];
-
-        CGRect linkShorteningViewFrame = CGRectMake(0, 0, 320, 460);
-        linkShorteningView =
-            [[UIView alloc] initWithFrame:linkShorteningViewFrame];
-        [linkShorteningView addSubview:darkTransparentView];
-        [linkShorteningView addSubview:activityIndicator];
-        [linkShorteningView addSubview:shorteningLabel];
-        [linkShorteningView addSubview:cancelButton];
-    }
-
-    return linkShorteningView;
-}
-
-- (PersonSelector *)personSelector
+- (UIPersonSelector *)personSelector
 {
     if (!personSelector) {
         personSelector =
-            [[PersonSelector alloc] initWithContext:self.context];
+            [[UIPersonSelector alloc] initWithContext:self.context];
         personSelector.delegate = self;
     }
 
     return personSelector;
+}
+
+- (BitlyUrlShorteningService *)urlShorteningService
+{
+    if (!urlShorteningService) {
+        urlShorteningService = [[BitlyUrlShorteningService alloc] init];
+        urlShorteningService.delegate = self;
+    }
+
+    return urlShorteningService;
 }
 
 @end

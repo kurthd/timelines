@@ -3,19 +3,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ComposeTweetDisplayMgrDelegate.h"
 #import "ComposeTweetViewController.h"
 #import "TwitterService.h"
 #import "PhotoService.h"
 #import "TwitterCredentials.h"
 #import "LogInDisplayMgr.h"
 #import "AddPhotoServiceDisplayMgr.h"
-#import "AsynchronousNetworkFetcherDelegate.h"
-#import "PersonSelector.h"
+#import "UIPersonSelector.h"
+#import "BitlyUrlShorteningService.h"
 
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
 @class TweetDraft, DirectMessageDraft;
 @class TweetDraftMgr;
+@class BitlyUrlShorteningService;
+@protocol ComposeTweetDisplayMgrDelegate;
 
 @interface ComposeTweetDisplayMgr :
     NSObject
@@ -23,7 +24,7 @@
     PhotoServiceDelegate, LogInDisplayMgrDelegate,
     UIImagePickerControllerDelegate, UINavigationControllerDelegate,
     UIActionSheetDelegate, AddPhotoServiceDisplayMgrDelegate,
-    AsynchronousNetworkFetcherDelegate, PersonSelectorDelegate>
+    UIPersonSelectorDelegate, BitlyUrlShorteningServiceDelegate>
 {
     id<ComposeTweetDisplayMgrDelegate> delegate;
 
@@ -53,11 +54,10 @@
     NSMutableArray * attachedPhotos;
     NSMutableArray * attachedVideos;
 
-    UIView * linkShorteningView;
-    BOOL canceledLinkShortening;
-    NSString * shorteningUrl;
+    BitlyUrlShorteningService * urlShorteningService;
+    NSMutableSet * urlsToShorten;
 
-    PersonSelector * personSelector;
+    UIPersonSelector * personSelector;
     BOOL selectingRecipient;
 }
 
@@ -69,7 +69,6 @@
 
 - (void)composeTweet;
 - (void)composeTweetWithText:(NSString *)tweet;
-- (void)composeTweetWithLink:(NSString *)link;
 
 - (void)composeReplyToTweet:(NSString *)tweetId
                    fromUser:(NSString *)user;
@@ -82,5 +81,30 @@
 - (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)tweet;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
+
+@end
+
+
+@protocol ComposeTweetDisplayMgrDelegate
+
+- (void)userDidCancelComposingTweet;
+
+- (void)userIsSendingTweet:(NSString *)tweet;
+- (void)userDidSendTweet:(Tweet *)tweet;
+- (void)userFailedToSendTweet:(NSString *)tweet;
+
+- (void)userIsReplyingToTweet:(NSString *)origTweetId
+                     fromUser:(NSString *)origUsername
+                     withText:(NSString *)text;
+- (void)userDidReplyToTweet:(NSString *)origTweetId
+                   fromUser:(NSString *)origUsername
+                  withTweet:(Tweet *)reply;
+- (void)userFailedToReplyToTweet:(NSString *)origTweetId
+                        fromUser:(NSString *)origUsername
+                        withText:(NSString *)text;
+
+- (void)userIsSendingDirectMessage:(NSString *)dm to:(NSString *)username;
+- (void)userDidSendDirectMessage:(DirectMessage *)dm;
+- (void)userFailedToSendDirectMessage:(NSString *)dm to:(NSString *)username;
 
 @end
