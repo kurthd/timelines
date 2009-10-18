@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05047321108ACF2300330FC8 /* DirectMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91DCE9071073C58D00095FD0 /* DirectMessageView.xib */; };
 		050ACC2B1087D11A004B6C2D /* PersonDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 050ACC2A1087D11A004B6C2D /* PersonDirectory.m */; };
 		050ACC2C1087D11A004B6C2D /* PersonDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 050ACC2A1087D11A004B6C2D /* PersonDirectory.m */; };
 		0511067F102A25FC00915638 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0511067E102A25FC00915638 /* Settings.bundle */; };
@@ -3173,6 +3174,7 @@
 				051667E510841EFB000CA4AA /* HomeIcon.png in Resources */,
 				05F51C6C1087A6AF00C6AD97 /* SelectPersonView.xib in Resources */,
 				0552815F1087F7810055A37C /* ShortenLinks.png in Resources */,
+				05047321108ACF2300330FC8 /* DirectMessageView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
