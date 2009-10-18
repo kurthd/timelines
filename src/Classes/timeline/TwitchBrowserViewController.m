@@ -224,6 +224,9 @@
         initWithTitle:nil delegate:self cancelButtonTitle:cancel
         destructiveButtonTitle:nil
         otherButtonTitles:browser, post, email, readlater, nil];
+    sheet.actionSheetStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIActionSheetStyleBlackOpaque : UIActionSheetStyleDefault;
 
     [sheet showInView:self.view];
 }

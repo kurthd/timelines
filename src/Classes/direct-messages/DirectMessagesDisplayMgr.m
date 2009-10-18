@@ -1447,7 +1447,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
     grayLineView.backgroundColor =
         [SettingsReader displayTheme] == kDisplayThemeDark ?
-        [UIColor blackColor] : [UIColor twitchLightGrayColor];
+        [UIColor twitchDarkDarkGrayColor] : [UIColor twitchLightGrayColor];
     grayLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     NSString * backgroundImageName =

@@ -815,6 +815,10 @@ enum TweetActionSheets {
 
     UIView * rootView =
         navigationController.parentViewController.view;
+    sheet.actionSheetStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIActionSheetStyleBlackOpaque : UIActionSheetStyleDefault;
+
     [sheet showInView:rootView];
 }
 
