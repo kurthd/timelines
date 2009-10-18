@@ -58,6 +58,7 @@
 @property (nonatomic, copy) NSString * shorteningUrl;
 @property (nonatomic, retain) BitlyUrlShorteningService *
     urlShorteningService;
+@property (nonatomic, retain) NSMutableSet * urlsToShorten;
 
 @property (nonatomic, retain) PersonSelector * personSelector;
 
@@ -91,6 +92,7 @@
 @synthesize attachedPhotos, attachedVideos;
 @synthesize photoService;
 @synthesize linkShorteningView, shorteningUrl, urlShorteningService;
+@synthesize urlsToShorten;
 @synthesize personSelector;
 
 - (void)dealloc
@@ -112,6 +114,7 @@
     self.linkShorteningView = nil;
     self.shorteningUrl = nil;
     self.urlShorteningService = nil;
+    self.urlsToShorten = nil;
     self.personSelector = nil;
 
     [super dealloc];
@@ -139,6 +142,8 @@
 
         self.attachedPhotos = [NSMutableArray array];
         self.attachedVideos = [NSMutableArray array];
+
+        self.urlsToShorten = [NSMutableSet set];
     }
 
     return self;
@@ -448,7 +453,10 @@
 
 - (void)userWantsToShortenUrls:(NSSet *)urls
 {
-    [self.urlShorteningService shortenUrls:urls];
+    NSLog(@"Shortening URLs: %@", urls);
+
+    [self.urlsToShorten setSet:urls];
+    [self.urlShorteningService shortenUrls:self.urlsToShorten];
     self.composeTweetViewController.displayingActivity = YES;
     [self.composeTweetViewController displayUrlShorteningView];
 }
@@ -472,6 +480,7 @@
 
 - (void)userDidCancelUrlShortening
 {
+    [self.urlsToShorten removeAllObjects];
     [self.composeTweetViewController hideUrlShorteningView];
 }
 
@@ -795,15 +804,25 @@
         didShortenLongUrl:(NSString *)longUrl
                toShortUrl:(NSString *)shortUrl
 {
-    [self.composeTweetViewController replaceOccurrencesOfString:longUrl
-                                                     withString:shortUrl];
-    [self.composeTweetViewController hideUrlShorteningView];
+    if ([self.urlsToShorten containsObject:longUrl]) {
+        [self.composeTweetViewController replaceOccurrencesOfString:longUrl
+                                                         withString:shortUrl];
+
+        [self.urlsToShorten removeObject:longUrl];
+        if (self.urlsToShorten.count == 0)
+            [self.composeTweetViewController hideUrlShorteningView];
+    }
 }
 
 - (void)shorteningService:(BitlyUrlShorteningService *)service
       didFailToShortenUrl:(NSString *)longUrl
                     error:(NSError *)error
 {
+    if ([self.urlsToShorten containsObject:longUrl]) {
+          [self.urlsToShorten removeObject:longUrl];
+          if (self.urlsToShorten.count == 0)
+              [self.composeTweetViewController hideUrlShorteningView];
+    }
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation

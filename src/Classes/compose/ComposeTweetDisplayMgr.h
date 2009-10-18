@@ -60,6 +60,7 @@
     BOOL canceledLinkShortening;
     NSString * shorteningUrl;
     BitlyUrlShorteningService * urlShorteningService;
+    NSMutableSet * urlsToShorten;
 
     PersonSelector * personSelector;
     BOOL selectingRecipient;

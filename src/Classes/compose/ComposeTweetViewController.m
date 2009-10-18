@@ -490,9 +490,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (IBAction)shortenLinks
 {
     NSArray * urls = [self extractShortenableUrls:textView.text];
-    NSLog(@"Shortening URLs: %@", urls);
-    [self enableUrlShorteningButtonFromText:textView.text];
-
     [delegate userWantsToShortenUrls:[NSSet setWithArray:urls]];
 }
 
