@@ -57,7 +57,7 @@
     urlShorteningService;
 @property (nonatomic, retain) NSMutableSet * urlsToShorten;
 
-@property (nonatomic, retain) PersonSelector * personSelector;
+@property (nonatomic, retain) UIPersonSelector * personSelector;
 
 - (void)promptForPhotoSource:(UIViewController *)controller;
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source
@@ -1053,11 +1053,11 @@
     return navController;
 }
 
-- (PersonSelector *)personSelector
+- (UIPersonSelector *)personSelector
 {
     if (!personSelector) {
         personSelector =
-            [[PersonSelector alloc] initWithContext:self.context];
+            [[UIPersonSelector alloc] initWithContext:self.context];
         personSelector.delegate = self;
     }
 

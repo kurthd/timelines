@@ -5,13 +5,13 @@
 #import <Foundation/Foundation.h>
 #import "SelectPersonViewController.h"
 
-@protocol PersonSelectorDelegate;
+@protocol UIPersonSelectorDelegate;
 @class PersonDirectory;
 @class User;
 
-@interface PersonSelector : NSObject <SelectPersonViewControllerDelegate>
+@interface UIPersonSelector : NSObject <SelectPersonViewControllerDelegate>
 {
-    id<PersonSelectorDelegate> delegate;
+    id<UIPersonSelectorDelegate> delegate;
 
     UIViewController * rootViewController;
     UINavigationController * navigationController;
@@ -21,15 +21,16 @@
     PersonDirectory * directory;
 }
 
-@property (nonatomic, assign) id<PersonSelectorDelegate> delegate;
+@property (nonatomic, assign) id<UIPersonSelectorDelegate> delegate;
 
 - (id)initWithContext:(NSManagedObjectContext *)aContext;
+
 - (void)promptToSelectUserModally:(UIViewController *)aController;
 
 @end
 
 
-@protocol PersonSelectorDelegate
+@protocol UIPersonSelectorDelegate
 
 - (void)userDidSelectPerson:(User *)user;
 - (void)userDidCancelPersonSelection;

@@ -803,8 +803,8 @@
 		05EF41860FFADF95007B59F1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B23A310FEEB29D00A6A2E6 /* CoreData.framework */; };
 		05EF41870FFADF95007B59F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0524C4510FF2AEEE00A6099B /* Security.framework */; };
 		05EF41880FFADF95007B59F1 /* libYAJLIPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */; };
-		05F51C3910879E8200C6AD97 /* PersonSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F51C3810879E8200C6AD97 /* PersonSelector.m */; };
-		05F51C3A10879E8200C6AD97 /* PersonSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F51C3810879E8200C6AD97 /* PersonSelector.m */; };
+		05F51C3910879E8200C6AD97 /* UIPersonSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F51C3810879E8200C6AD97 /* UIPersonSelector.m */; };
+		05F51C3A10879E8200C6AD97 /* UIPersonSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F51C3810879E8200C6AD97 /* UIPersonSelector.m */; };
 		05F51C3D1087A1DD00C6AD97 /* SelectPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F51C3C1087A1DD00C6AD97 /* SelectPersonViewController.m */; };
 		05F51C3E1087A1DD00C6AD97 /* SelectPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F51C3C1087A1DD00C6AD97 /* SelectPersonViewController.m */; };
 		05F51C6C1087A6AF00C6AD97 /* SelectPersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05F51C6A1087A6AF00C6AD97 /* SelectPersonView.xib */; };
@@ -1379,8 +1379,8 @@
 		05F45C9A0FF053D400EBAFC7 /* AsynchronousNetworkFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsynchronousNetworkFetcher.m; path = shared/AsynchronousNetworkFetcher.m; sourceTree = "<group>"; };
 		05F45CF20FF056DF00EBAFC7 /* AsynchronousNetworkFetcherDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsynchronousNetworkFetcherDelegate.h; path = shared/AsynchronousNetworkFetcherDelegate.h; sourceTree = "<group>"; };
 		05F45D000FF059B400EBAFC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/ComposeTweetView.xib; sourceTree = "<group>"; };
-		05F51C3710879E8200C6AD97 /* PersonSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonSelector.h; path = compose/PersonSelector.h; sourceTree = "<group>"; };
-		05F51C3810879E8200C6AD97 /* PersonSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonSelector.m; path = compose/PersonSelector.m; sourceTree = "<group>"; };
+		05F51C3710879E8200C6AD97 /* UIPersonSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIPersonSelector.h; path = compose/UIPersonSelector.h; sourceTree = "<group>"; };
+		05F51C3810879E8200C6AD97 /* UIPersonSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIPersonSelector.m; path = compose/UIPersonSelector.m; sourceTree = "<group>"; };
 		05F51C3B1087A1DD00C6AD97 /* SelectPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectPersonViewController.h; path = compose/SelectPersonViewController.h; sourceTree = "<group>"; };
 		05F51C3C1087A1DD00C6AD97 /* SelectPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectPersonViewController.m; path = compose/SelectPersonViewController.m; sourceTree = "<group>"; };
 		05F51C6B1087A6AF00C6AD97 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/SelectPersonView.xib; sourceTree = "<group>"; };
@@ -1753,8 +1753,8 @@
 				05166949108646B6000CA4AA /* TweetDraft.m */,
 				0516694A108646B6000CA4AA /* TweetDraftMgr.h */,
 				0516694B108646B6000CA4AA /* TweetDraftMgr.m */,
-				05F51C3710879E8200C6AD97 /* PersonSelector.h */,
-				05F51C3810879E8200C6AD97 /* PersonSelector.m */,
+				05F51C3710879E8200C6AD97 /* UIPersonSelector.h */,
+				05F51C3810879E8200C6AD97 /* UIPersonSelector.m */,
 				05F51C3B1087A1DD00C6AD97 /* SelectPersonViewController.h */,
 				05F51C3C1087A1DD00C6AD97 /* SelectPersonViewController.m */,
 				050ACC291087D11A004B6C2D /* PersonDirectory.h */,
@@ -3654,7 +3654,7 @@
 				0516694E108646B6000CA4AA /* DirectMessageDraft.m in Sources */,
 				0516694F108646B6000CA4AA /* TweetDraft.m in Sources */,
 				05166950108646B6000CA4AA /* TweetDraftMgr.m in Sources */,
-				05F51C3910879E8200C6AD97 /* PersonSelector.m in Sources */,
+				05F51C3910879E8200C6AD97 /* UIPersonSelector.m in Sources */,
 				05F51C3D1087A1DD00C6AD97 /* SelectPersonViewController.m in Sources */,
 				050ACC2B1087D11A004B6C2D /* PersonDirectory.m in Sources */,
 				0552818A1088E8020055A37C /* NSString+UrlAdditions.m in Sources */,
@@ -3945,7 +3945,7 @@
 				05166953108646B6000CA4AA /* DirectMessageDraft.m in Sources */,
 				05166954108646B6000CA4AA /* TweetDraft.m in Sources */,
 				05166955108646B6000CA4AA /* TweetDraftMgr.m in Sources */,
-				05F51C3A10879E8200C6AD97 /* PersonSelector.m in Sources */,
+				05F51C3A10879E8200C6AD97 /* UIPersonSelector.m in Sources */,
 				05F51C3E1087A1DD00C6AD97 /* SelectPersonViewController.m in Sources */,
 				050ACC2C1087D11A004B6C2D /* PersonDirectory.m in Sources */,
 				0552818B1088E8020055A37C /* NSString+UrlAdditions.m in Sources */,

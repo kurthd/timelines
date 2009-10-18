@@ -2,10 +2,10 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import "PersonSelector.h"
+#import "UIPersonSelector.h"
 #import "PersonDirectory.h"
 
-@interface PersonSelector ()
+@interface UIPersonSelector ()
 
 @property (nonatomic, retain) UIViewController * rootViewController;
 @property (nonatomic, retain) UINavigationController * navigationController;
@@ -18,7 +18,7 @@
 @end
 
 
-@implementation PersonSelector
+@implementation UIPersonSelector
 
 @synthesize delegate;
 @synthesize rootViewController, navigationController;

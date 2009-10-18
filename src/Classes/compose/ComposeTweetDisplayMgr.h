@@ -10,7 +10,7 @@
 #import "TwitterCredentials.h"
 #import "LogInDisplayMgr.h"
 #import "AddPhotoServiceDisplayMgr.h"
-#import "PersonSelector.h"
+#import "UIPersonSelector.h"
 #import "BitlyUrlShorteningService.h"
 
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
@@ -24,7 +24,7 @@
     PhotoServiceDelegate, LogInDisplayMgrDelegate,
     UIImagePickerControllerDelegate, UINavigationControllerDelegate,
     UIActionSheetDelegate, AddPhotoServiceDisplayMgrDelegate,
-    PersonSelectorDelegate, BitlyUrlShorteningServiceDelegate>
+    UIPersonSelectorDelegate, BitlyUrlShorteningServiceDelegate>
 {
     id<ComposeTweetDisplayMgrDelegate> delegate;
 
@@ -57,7 +57,7 @@
     BitlyUrlShorteningService * urlShorteningService;
     NSMutableSet * urlsToShorten;
 
-    PersonSelector * personSelector;
+    UIPersonSelector * personSelector;
     BOOL selectingRecipient;
 }
 
