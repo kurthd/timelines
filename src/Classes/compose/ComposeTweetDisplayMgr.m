@@ -20,8 +20,6 @@
 #import "InfoPlistConfigReader.h"
 #import "RegexKitLite.h"
 #import "ErrorState.h"
-#import "JSON.h"
-#import "NSString+HtmlEncodingAdditions.h"
 #import "UIImage+GeneralHelpers.h"
 #import "UIAlertView+InstantiationAdditions.h"
 
@@ -55,8 +53,6 @@
 @property (nonatomic, retain) NSMutableArray * attachedPhotos;
 @property (nonatomic, retain) NSMutableArray * attachedVideos;
 
-@property (nonatomic, retain) UIView * linkShorteningView;
-@property (nonatomic, copy) NSString * shorteningUrl;
 @property (nonatomic, retain) BitlyUrlShorteningService *
     urlShorteningService;
 @property (nonatomic, retain) NSMutableSet * urlsToShorten;
@@ -73,11 +69,6 @@
 - (void)updateMediaTitleFromDirectMessage:(DirectMessage *)dm;
 - (void)updateMediaTitleFromTweetText:(NSString *)text;
 
-- (void)startShorteningLink:(NSString *)link;
-- (void)abortShorteningLink;
-- (void)showShorteningLinkView;
-- (void)removeShorteningLinkView;
-
 @end
 
 @implementation ComposeTweetDisplayMgr
@@ -92,8 +83,7 @@
 @synthesize addPhotoServiceDisplayMgr;
 @synthesize attachedPhotos, attachedVideos;
 @synthesize photoService;
-@synthesize linkShorteningView, shorteningUrl, urlShorteningService;
-@synthesize urlsToShorten;
+@synthesize urlShorteningService, urlsToShorten;
 @synthesize personSelector;
 
 - (void)dealloc
@@ -112,8 +102,6 @@
     self.photoService = nil;
     self.attachedPhotos = nil;
     self.attachedVideos = nil;
-    self.linkShorteningView = nil;
-    self.shorteningUrl = nil;
     self.urlShorteningService = nil;
     self.urlsToShorten = nil;
     self.personSelector = nil;
@@ -173,20 +161,6 @@
                                              from:service.credentials.username];
     [self.rootViewController presentModalViewController:self.navController
                                                animated:YES];
-}
-
-- (void)composeTweetWithLink:(NSString *)link
-{
-    self.origTweetId = nil;
-    self.origUsername = nil;
-
-    [self.composeTweetViewController composeTweet:link
-        from:service.credentials.username];
-    [self.rootViewController presentModalViewController:self.navController
-                                               animated:YES];
-
-    if (![link isMatchedByRegex:@".*bit\\.ly/.*"])
-        [self startShorteningLink:link];
 }
 
 - (void)composeReplyToTweet:(NSString *)tweetId
@@ -834,39 +808,6 @@
         NSLog(@"Don't know long URL: '%@'; ignoring.", longUrl);
 }
 
-#pragma mark AsynchronousNetworkFetcherDelegate implementation
-
-- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
-    didReceiveData:(NSData *)data fromUrl:(NSURL *)url
-{
-    if (!canceledLinkShortening) {
-        NSString * jsonString =
-            [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]
-            autorelease];
-        NSDictionary * json = [jsonString JSONValue];
-        NSDictionary * values =
-            [[json objectForKey:@"results"] objectForKey:self.shorteningUrl];
-        NSString * shortUrl = [values objectForKey:@"shortUrl"];
-        [self.composeTweetViewController composeTweet:shortUrl
-            from:service.credentials.username];
-
-        [self removeShorteningLinkView];
-        self.shorteningUrl = nil;
-    }
-}
-
-- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
-    failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
-{
-    if (!canceledLinkShortening) {
-        NSString * title =
-            NSLocalizedString(@"composetweet.shorteningerror", @"");
-        [[ErrorState instance] displayErrorWithTitle:title error:error];
-        [self removeShorteningLinkView];
-        self.shorteningUrl = nil;
-    }
-}
-
 #pragma mark PersonSelectorDelegate implementation
 
 - (void)userDidSelectPerson:(User *)user
@@ -1112,71 +1053,7 @@
     return addPhotoServiceDisplayMgr;
 }
 
-- (void)startShorteningLink:(NSString *)link
-{
-    canceledLinkShortening = NO;
-
-    self.shorteningUrl = link;
-
-    NSString * version =
-        [[InfoPlistConfigReader reader] valueForKey:@"BitlyVersion"];
-    NSString * username =
-        [[InfoPlistConfigReader reader] valueForKey:@"BitlyUsername"];
-    NSString * apiKey =
-        [[InfoPlistConfigReader reader] valueForKey:@"BitlyApiKey"];
-
-    // the link needs to be encoded because it could contain query parameters
-    static NSString * allowed = @":@/?&";
-    NSString * encodedLink =
-        [link urlEncodedStringWithEscapedAllowedCharacters:allowed];
-    NSString * urlAsString =
-        [NSString stringWithFormat:
-        @"http://api.bit.ly/shorten?version=%@&longUrl=%@&login=%@&apiKey=%@",
-        version, encodedLink, username, apiKey];
-    NSLog(@"Link shortening request: %@", urlAsString);
-    NSURL * url = [NSURL URLWithString:urlAsString];
-    [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];
-
-    self.composeTweetViewController.displayingActivity = YES;
-    [self showShorteningLinkView];
-}
-
-- (void)abortShorteningLink
-{
-    canceledLinkShortening = YES;
-    [self removeShorteningLinkView];
-}
-
-- (void)removeShorteningLinkView
-{
-    [self.linkShorteningView performSelector:@selector(removeFromSuperview)
-        withObject:nil afterDelay:0.5];
-
-    self.linkShorteningView.alpha = 1.0;
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationTransition:UIViewAnimationTransitionNone
-        forView:self.linkShorteningView cache:YES];
-
-    self.linkShorteningView.alpha = 0.0;
-
-    [UIView commitAnimations];
-
-    self.composeTweetViewController.displayingActivity = NO;
-}
-
-- (void)showShorteningLinkView
-{
-    [self.navController.view.superview.superview
-        addSubview:self.linkShorteningView];
-    self.linkShorteningView.alpha = 0.0;
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationTransition:UIViewAnimationTransitionNone
-        forView:self.linkShorteningView cache:YES];
-
-    self.linkShorteningView.alpha = 1.0;
-
-    [UIView commitAnimations];
-}
+#pragma mark Accessors
 
 - (UIViewController *)navController
 {
@@ -1186,77 +1063,6 @@
             initWithRootViewController:self.composeTweetViewController];
 
     return navController;
-}
-
-- (UIView *)linkShorteningView
-{
-    if (!linkShorteningView) {
-        CGRect darkTransparentViewFrame = CGRectMake(0, 0, 320, 460);
-        UIView * darkTransparentView =
-            [[[UIView alloc] initWithFrame:darkTransparentViewFrame]
-            autorelease];
-        darkTransparentView.backgroundColor = [UIColor blackColor];
-        darkTransparentView.alpha = 0.8;
-
-        UIActivityIndicatorView * activityIndicator =
-            [[[UIActivityIndicatorView alloc]
-            initWithActivityIndicatorStyle:
-            UIActivityIndicatorViewStyleWhiteLarge]
-            autorelease];
-        activityIndicator.frame = CGRectMake(50, 87, 37, 37);
-        [activityIndicator startAnimating];
-        
-        CGRect shorteningLabelFrame =
-            CGRectMake(
-            activityIndicator.frame.origin.x +
-            activityIndicator.frame.size.width + 12,
-            87,
-            200,
-            37);
-        UILabel * shorteningLabel =
-            [[[UILabel alloc] initWithFrame:shorteningLabelFrame] autorelease];
-        shorteningLabel.text =
-            NSLocalizedString(@"composetweet.shorteninglink", @"");
-        shorteningLabel.backgroundColor = [UIColor clearColor];
-        shorteningLabel.textColor = [UIColor whiteColor];
-        shorteningLabel.font = [UIFont boldSystemFontOfSize:20];
-        shorteningLabel.shadowOffset = CGSizeMake(0.0, 1.0);
-        shorteningLabel.shadowColor = [UIColor blackColor];
-
-        static const NSInteger BUTTON_WIDTH = 134;
-        CGRect buttonFrame =
-            CGRectMake((320 - BUTTON_WIDTH) / 2, 146, BUTTON_WIDTH, 46);
-        UIButton * cancelButton =
-            [[[UIButton alloc] initWithFrame:buttonFrame] autorelease];
-        NSString * cancelButtonTitle =
-            NSLocalizedString(@"composetweet.cancelshortening", @"");
-        [cancelButton setTitle:cancelButtonTitle forState:UIControlStateNormal];
-        UIImage * normalImage =
-            [[UIImage imageNamed:@"CancelButton.png"]
-            stretchableImageWithLeftCapWidth:13.0 topCapHeight:0.0];
-        [cancelButton setBackgroundImage:normalImage
-            forState:UIControlStateNormal];
-        cancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-        [cancelButton setTitleColor:[UIColor whiteColor]
-            forState:UIControlStateNormal];
-        [cancelButton setTitleColor:[UIColor grayColor]
-            forState:UIControlStateHighlighted];
-        [cancelButton setTitleShadowColor:[UIColor twitchDarkGrayColor]
-            forState:UIControlStateNormal];
-        cancelButton.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
-        [cancelButton addTarget:self action:@selector(abortShorteningLink)
-            forControlEvents:UIControlEventTouchUpInside];
-
-        CGRect linkShorteningViewFrame = CGRectMake(0, 0, 320, 460);
-        linkShorteningView =
-            [[UIView alloc] initWithFrame:linkShorteningViewFrame];
-        [linkShorteningView addSubview:darkTransparentView];
-        [linkShorteningView addSubview:activityIndicator];
-        [linkShorteningView addSubview:shorteningLabel];
-        [linkShorteningView addSubview:cancelButton];
-    }
-
-    return linkShorteningView;
 }
 
 - (PersonSelector *)personSelector

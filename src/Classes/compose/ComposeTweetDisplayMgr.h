@@ -10,7 +10,6 @@
 #import "TwitterCredentials.h"
 #import "LogInDisplayMgr.h"
 #import "AddPhotoServiceDisplayMgr.h"
-#import "AsynchronousNetworkFetcherDelegate.h"
 #import "PersonSelector.h"
 #import "BitlyUrlShorteningService.h"
 
@@ -25,8 +24,7 @@
     PhotoServiceDelegate, LogInDisplayMgrDelegate,
     UIImagePickerControllerDelegate, UINavigationControllerDelegate,
     UIActionSheetDelegate, AddPhotoServiceDisplayMgrDelegate,
-    AsynchronousNetworkFetcherDelegate, PersonSelectorDelegate,
-    BitlyUrlShorteningServiceDelegate>
+    PersonSelectorDelegate, BitlyUrlShorteningServiceDelegate>
 {
     id<ComposeTweetDisplayMgrDelegate> delegate;
 
@@ -56,9 +54,6 @@
     NSMutableArray * attachedPhotos;
     NSMutableArray * attachedVideos;
 
-    UIView * linkShorteningView;
-    BOOL canceledLinkShortening;
-    NSString * shorteningUrl;
     BitlyUrlShorteningService * urlShorteningService;
     NSMutableSet * urlsToShorten;
 
@@ -74,7 +69,6 @@
 
 - (void)composeTweet;
 - (void)composeTweetWithText:(NSString *)tweet;
-- (void)composeTweetWithLink:(NSString *)link;
 
 - (void)composeReplyToTweet:(NSString *)tweetId
                    fromUser:(NSString *)user;

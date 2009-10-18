@@ -124,6 +124,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [self hideRecipientView];
     [self setViewNeedsInitialization:YES];
+    if (text.length)
+        [self saveCurrentStateAsDraft];
 }
 
 - (void)composeTweet:(NSString *)text
@@ -139,6 +141,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [self hideRecipientView];
     [self setViewNeedsInitialization:YES];
+    if (text.length)
+        [self saveCurrentStateAsDraft];
 }
 
 - (void)composeDirectMessage:(NSString *)text from:(NSString *)sender
@@ -152,6 +156,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [self showRecipientView];
     [self setViewNeedsInitialization:YES];
+    if (text.length)
+        [self saveCurrentStateAsDraft];
 }
 
 - (void)composeDirectMessage:(NSString *)text
@@ -167,6 +173,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [self showRecipientView];
     [self setViewNeedsInitialization:YES];
+    if (text.length)
+        [self saveCurrentStateAsDraft];
 }
 
 - (void)setRecipient:(NSString *)recipient
