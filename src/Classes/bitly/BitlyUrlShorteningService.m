@@ -62,7 +62,7 @@
 
     NSString * urlAsString =
         [NSString stringWithFormat:
-        @"http://api.bit.ly/shorten?version=%@&longUrl=%@&login=%@&apiKey=%@",
+        @"http://api.j.mp/shorten?version=%@&longUrl=%@&login=%@&apiKey=%@",
         version, encodedUrl, username, apiKey];
     NSLog(@"Link shortening request: %@", urlAsString);
 
@@ -102,6 +102,7 @@
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
     failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
 {
+    NSLog(@"Fetcher failed: '%@'", error);
 }
 
 @end
