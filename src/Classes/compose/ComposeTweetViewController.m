@@ -6,6 +6,7 @@
 #import "UIColor+TwitchColors.h"
 #import "RotatableTabBarController.h"
 #import "NSString+UrlAdditions.h"
+#import "SettingsReader.h"
 
 static const NSInteger MAX_TWEET_LENGTH = 140;
 
@@ -368,8 +369,13 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         characterCountFrame.origin.y = 129;
         characterCount.frame = characterCountFrame;
 
-        characterCount.textColor = [UIColor twitchGrayColor];
-        characterCount.backgroundColor = [UIColor whiteColor];
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            characterCount.textColor = [UIColor twitchGrayColor];
+            characterCount.backgroundColor = [UIColor blackColor];
+        } else {
+            characterCount.textColor = [UIColor twitchGrayColor];
+            characterCount.backgroundColor = [UIColor whiteColor];
+        }
 
         toolbar.hidden = YES;
 
@@ -657,6 +663,14 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [self displayForOrientation:orientation];
 
     [self setTitleView];
+
+    // set the colors for the current theme
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+        toolbar.barStyle = UIBarStyleBlack;
+        textView.backgroundColor = [UIColor blackColor];
+        textView.textColor = [UIColor whiteColor];
+    }
 }
 
 - (BOOL)viewNeedsInitialization

@@ -6,6 +6,7 @@
 #import "User.h"
 #import "User+UIAdditions.h"
 #import "Avatar+UIAdditions.h"
+#import "SettingsReader.h"
 
 @interface SelectPersonViewController ()
 
@@ -56,6 +57,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    if ([SettingsReader displayTheme] == kDisplayThemeDark)
+        self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 
     [self initializeNavigationItem];
 }
