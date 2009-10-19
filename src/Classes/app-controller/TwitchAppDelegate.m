@@ -208,10 +208,7 @@
         @selector(finishInitializationWithTimeInsensitiveOperations)
         withObject:nil
         afterDelay:0.7];
-
-    [self initMessagesTab];
-    [directMessageDisplayMgr updateDirectMessagesSinceLastUpdateIds];
-
+        
     NSLog(@"Application did finish initializing");
 }
 
@@ -229,6 +226,10 @@
         [PhotoBrowserDisplayMgr instance];
     photoBrowserDispMgr.composeTweetDisplayMgr = self.composeTweetDisplayMgr;
     photoBrowserDispMgr.hostViewController = tabBarController;
+
+    if (!directMessageDisplayMgr)
+        [self initMessagesTab];
+    [directMessageDisplayMgr updateDirectMessagesSinceLastUpdateIds];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -712,6 +713,7 @@
             [directMessageAcctMgr
                 processAccountChangeToUsername:activeAccount.username
                 fromUsername:oldUsername];
+            [directMessageDisplayMgr updateDirectMessagesAfterCredentialChange];
         }
     }
 
@@ -727,6 +729,10 @@
     if (viewController == homeNetAwareViewController.navigationController &&
         !timelineDisplayMgr)
         [self initHomeTab];
+    else if (viewController ==
+        messagesNetAwareViewController.navigationController &&
+        !directMessageDisplayMgr)
+        [self initMessagesTab];
     else if (viewController ==
         findPeopleNetAwareViewController.navigationController &&
         !findPeopleSearchDisplayMgr)
@@ -1322,6 +1328,9 @@
     switch (uiState.selectedTab) {
         case 0:
             [self initHomeTab];
+            break;
+        case 1:
+            [self initMessagesTab];
             break;
         case 2:
             [self initSearchTab];

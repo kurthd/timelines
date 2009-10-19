@@ -403,15 +403,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
 }
 
-#pragma mark NetworkAwareViewControllerDelegate implementation
-
-- (void)networkAwareViewWillAppear
-{
-    NSLog(@"Message Display Manager: view will appear");
-    if (!alreadyBeenDisplayedAfterCredentialChange)
-        [self viewAppearedForFirstTimeAfterCredentialChange];
-}
-
 #pragma mark DirectMessageInboxViewControllerDelegate implementation
 
 - (void)selectedConversationPreview:(ConversationPreview *)preview
@@ -996,7 +987,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     receivedQueryResponse = NO;
 }
 
-- (void)viewAppearedForFirstTimeAfterCredentialChange
+- (void)updateDirectMessagesAfterCredentialChange
 {
     if (directMessageCache.receivedUpdateId && directMessageCache.sentUpdateId)
         [self updateDirectMessagesSinceLastUpdateIds];

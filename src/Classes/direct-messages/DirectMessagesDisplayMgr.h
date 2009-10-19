@@ -181,7 +181,7 @@
 - (void)updateWithABunchOfRecentMessages;
 - (void)loadAnotherPageOfMessages;
 
-- (void)viewAppearedForFirstTimeAfterCredentialChange;
+- (void)updateDirectMessagesAfterCredentialChange;
 
 - (void)updateDisplayForSendingDirectMessage;
 - (void)updateDisplayForFailedDirectMessage:(NSString *)recipient;
