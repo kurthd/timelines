@@ -52,7 +52,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)displayForOrientation:(UIInterfaceOrientation)orientation;
 - (void)displayForPortraitMode;
-- (void)correctCharacterCountFrameWhenDisplayed;
 
 - (BOOL)composingDirectMessage;
 
@@ -94,7 +93,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [cancelButton release];
 
     [shortenLinksButton release];
-    [characterCount release];
+    [characterCountPortrait release];
+    [characterCountLandscape release];
 
     [portraitHeaderView release];
     [portraitTitleLabel release];
@@ -303,6 +303,20 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     photoUploadViewHasBeenInitialized = NO;
     urlShorteningViewHasBeenInitialized = NO;
 
+    UIBarButtonItem * characterCountButton =
+        [[UIBarButtonItem alloc] initWithCustomView:characterCountPortrait];
+    NSArray * toolbarItems = toolbar.items;
+    toolbar.items = [toolbarItems arrayByAddingObject:characterCountButton];
+    [characterCountButton release];
+
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        characterCountLandscape.textColor = [UIColor twitchGrayColor];
+        characterCountLandscape.backgroundColor = [UIColor blackColor];
+    } else {
+        characterCountLandscape.textColor = [UIColor twitchGrayColor];
+        characterCountLandscape.backgroundColor = [UIColor whiteColor];
+    }
+
     [self setViewNeedsInitialization:YES];
 }
 
@@ -311,13 +325,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [super viewWillAppear:animated];
 
     [self enableSendButtonFromInterface];
-
     [self updateCharacterCountFromText:textView.text];
-
-    // HACK: character count label doesn't properly display when shown from
-    // landscape mode otherwise
-    [self performSelector:@selector(correctCharacterCountFrameWhenDisplayed)
-        withObject:nil afterDelay:0];
 
     if ([self viewNeedsInitialization])
         [self initializeView];
@@ -365,18 +373,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
             addRecipientButton.frame = addRecipientButtonFrame;
         }
 
-        CGRect characterCountFrame = characterCount.frame;
-        characterCountFrame.origin.y = 129;
-        characterCount.frame = characterCountFrame;
-
-        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            characterCount.textColor = [UIColor twitchGrayColor];
-            characterCount.backgroundColor = [UIColor blackColor];
-        } else {
-            characterCount.textColor = [UIColor twitchGrayColor];
-            characterCount.backgroundColor = [UIColor whiteColor];
-        }
-
+        characterCountLandscape.alpha = 1.0;
         toolbar.hidden = YES;
 
         self.navigationItem.titleView = nil;
@@ -399,13 +396,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         addRecipientButton.frame = addRecipientButtonFrame;
     }
 
-    CGRect characterCountFrame = characterCount.frame;
-    characterCountFrame.origin.y = 104;
-    characterCount.frame = characterCountFrame;
-
-    characterCount.textColor = [UIColor whiteColor];
-    characterCount.backgroundColor = [UIColor clearColor];
-
+    characterCountLandscape.alpha = 0.0;
     toolbar.hidden = NO;
 
     self.navigationItem.titleView = portraitHeaderView;
@@ -549,15 +540,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 #pragma mark Helpers
 
-- (void)correctCharacterCountFrameWhenDisplayed
-{
-    CGRect characterCountFrame = characterCount.frame;
-    // hack -- this needs to be 168 when displayed, but 104 after a rotation
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
-    characterCountFrame.origin.y = landscape ? 80 : 168;
-    characterCount.frame = characterCountFrame;
-}
-
 - (void)showRecipientView
 {
     hideRecipientView = NO;
@@ -618,9 +600,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)updateCharacterCountFromText:(NSString *)text
 {
-    characterCount.text =
+    NSString * characterCount =
         [NSString stringWithFormat:@"%d", MAX_TWEET_LENGTH - text.length];
 
+    characterCountPortrait.text = characterCount;
+    characterCountLandscape.text = characterCount;
 }
 
 - (void)enableUrlShorteningButtonFromInterface
