@@ -366,11 +366,16 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
             CGRect textViewFrame = textView.frame;
             textViewFrame.origin.y = 29;
+            textViewFrame.size.height = 125;
             textView.frame = textViewFrame;
 
             CGRect addRecipientButtonFrame = addRecipientButton.frame;
             addRecipientButtonFrame.origin.y = 0;
             addRecipientButton.frame = addRecipientButtonFrame;
+        } else {
+            CGRect textViewFrame = textView.frame;
+            textViewFrame.size.height = 165.0;
+            textView.frame= textViewFrame;
         }
 
         characterCountLandscape.alpha = 1.0;

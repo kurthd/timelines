@@ -112,7 +112,7 @@
 								<reference key="IBUIToolbar" ref="615118956"/>
 								<int key="IBUISystemItemIdentifier">15</int>
 							</object>
-							<object class="IBUIBarButtonItem" id="890489126">
+							<object class="IBUIBarButtonItem" id="781288039">
 								<reference key="IBUIToolbar" ref="615118956"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
@@ -216,10 +216,10 @@
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 					</object>
-					<object class="IBUILabel" id="630786232">
+					<object class="IBUILabel" id="48904001">
 						<reference key="NSNextResponder" ref="431717833"/>
 						<int key="NSvFlags">301</int>
-						<string key="NSFrame">{{283, 142}, {34, 24}}</string>
+						<string key="NSFrame">{{283, 148}, {34, 24}}</string>
 						<reference key="NSSuperview" ref="431717833"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -615,7 +615,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">characterCountLandscape</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="630786232"/>
+						<reference key="destination" ref="48904001"/>
 					</object>
 					<int key="connectionID">108</int>
 				</object>
@@ -648,7 +648,7 @@
 							<reference ref="575967567"/>
 							<reference ref="615118956"/>
 							<reference ref="546282671"/>
-							<reference ref="630786232"/>
+							<reference ref="48904001"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Composition View</string>
@@ -671,7 +671,7 @@
 							<reference ref="991424626"/>
 							<reference ref="244315353"/>
 							<reference ref="94766283"/>
-							<reference ref="890489126"/>
+							<reference ref="781288039"/>
 						</object>
 						<reference key="parent" ref="431717833"/>
 					</object>
@@ -819,12 +819,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">103</int>
-						<reference key="object" ref="890489126"/>
+						<reference key="object" ref="781288039"/>
 						<reference key="parent" ref="615118956"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">107</int>
-						<reference key="object" ref="630786232"/>
+						<reference key="object" ref="48904001"/>
 						<reference key="parent" ref="431717833"/>
 						<string key="objectName">Character Count Landscape</string>
 					</object>
