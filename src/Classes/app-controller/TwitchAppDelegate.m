@@ -209,6 +209,9 @@
         withObject:nil
         afterDelay:0.7];
 
+    [self initMessagesTab];
+    [directMessageDisplayMgr updateDirectMessagesSinceLastUpdateIds];
+
     NSLog(@"Application did finish initializing");
 }
 
@@ -724,10 +727,6 @@
     if (viewController == homeNetAwareViewController.navigationController &&
         !timelineDisplayMgr)
         [self initHomeTab];
-    else if (viewController ==
-        messagesNetAwareViewController.navigationController &&
-        !directMessageDisplayMgr)
-        [self initMessagesTab];
     else if (viewController ==
         findPeopleNetAwareViewController.navigationController &&
         !findPeopleSearchDisplayMgr)
@@ -1323,9 +1322,6 @@
     switch (uiState.selectedTab) {
         case 0:
             [self initHomeTab];
-            break;
-        case 1:
-            [self initMessagesTab];
             break;
         case 2:
             [self initSearchTab];
