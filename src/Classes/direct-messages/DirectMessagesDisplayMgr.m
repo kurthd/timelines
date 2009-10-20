@@ -8,18 +8,10 @@
 #import "ConversationPreview.h"
 #import "DirectMessage.h"
 #import "TweetInfo.h"
-#import "ArbUserTimelineDataSource.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "InfoPlistConfigReader.h"
-#import "SearchDataSource.h"
 #import "RegexKitLite.h"
-#import "FavoritesTimelineDataSource.h"
-#import "UserListDisplayMgrFactory.h"
 #import "ErrorState.h"
-#import "NearbySearchDataSource.h"
-#import "SettingsReader.h"
-#import "UIColor+TwitchColors.h"
-#import "RotatableTabBarController.h"
 #import "NSArray+IterationAdditions.h"
 
 @interface DirectMessagesDisplayMgr ()
