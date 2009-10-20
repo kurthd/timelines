@@ -17,6 +17,7 @@
 #import "CredentialsActivatedPublisher.h"
 #import "SavedSearchMgr.h"
 #import "LocationInfoViewController.h"
+#import "UserInfoRequestAdapter.h"
 
 @interface DisplayMgrHelper :
     NSObject
@@ -37,6 +38,9 @@
     LocationInfoViewController * locationInfoViewController;
     SavedSearchMgr * savedSearchMgr;
     UserInfoViewController * userInfoController;
+    NetworkAwareViewController * userInfoControllerWrapper;
+    UserInfoRequestAdapter * userInfoRequestAdapter;
+    TwitterService * userInfoTwitterService;
 
     NetworkAwareViewController * userListNetAwareViewController;
     UserListDisplayMgr * userListDisplayMgr;
@@ -55,6 +59,9 @@
     managedObjectContext:(NSManagedObjectContext *)managedObjectContext
     findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr;
 
+- (void)showUserInfoForUser:(User *)aUser;
+- (void)showUserInfoForUsername:(NSString *)aUsername;
+- (void)sendDirectMessageToCurrentUser;
 - (void)setCredentials:(TwitterCredentials *)credentials;
 
 @end

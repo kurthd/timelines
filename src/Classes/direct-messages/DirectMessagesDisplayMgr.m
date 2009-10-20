@@ -39,8 +39,6 @@
 
 + (BOOL)displayWithUsername;
 
-@property (readonly) UserInfoViewController * userInfoController;
-@property (nonatomic, copy) NSString * userInfoUsername;
 @property (nonatomic, retain) UIBarButtonItem * inboxViewComposeTweetButton;
 @property (nonatomic, readonly) NSMutableDictionary * tweetIdToIndexDict;
 
@@ -53,11 +51,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 @synthesize activeAcctUsername, otherUserInConversation, selectedMessage,
     tweetDetailsTimelineDisplayMgr, tweetDetailsNetAwareViewController,
-    tweetDetailsCredentialsPublisher,
-    directMessageCache, newDirectMessages,
-    newDirectMessagesState, currentConversationUserId,
-    userInfoController, userInfoUsername,
-    inboxViewComposeTweetButton, tweetIdToIndexDict;
+    tweetDetailsCredentialsPublisher, tweetIdToIndexDict,
+    directMessageCache, newDirectMessages, inboxViewComposeTweetButton,
+    newDirectMessagesState, currentConversationUserId;
 
 - (void)dealloc
 {
@@ -73,7 +69,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [displayMgrHelper release];
 
     [activeAcctUsername release];
-    [userInfoUsername release];
     [otherUserInConversation release];
     [selectedMessage release];
 
@@ -83,9 +78,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [newDirectMessagesState release];
     [sendingTweetProgressView release];
     [findPeopleBookmarkMgr release];
-    [userInfoControllerWrapper release];
-    [userInfoRequestAdapter release];
-    [userInfoTwitterService release];
     [inboxViewComposeTweetButton release];
 
     [tweetIdToIndexDict release];
@@ -363,45 +355,12 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)showUserInfoForUser:(User *)aUser
 {
-    NSLog(@"Direct message display manager: showing user info for %@", aUser);
-    self.userInfoUsername = aUser.username;
-
-    // HACK: forces to scroll to top
-    [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
-        animated:NO];
-
-    self.userInfoController.navigationItem.title = aUser.username;
-    [wrapperController.navigationController
-        pushViewController:self.userInfoController animated:YES];
-    self.userInfoController.followingEnabled =
-        ![credentials.username isEqual:aUser.username];
-    [self.userInfoController setUser:aUser];
-    if (self.userInfoController.followingEnabled)
-        [service isUser:credentials.username following:aUser.username];
-    [service isUserBlocked:aUser.username];
+    [displayMgrHelper showUserInfoForUser:aUser];
 }
 
 - (void)showUserInfoForUsername:(NSString *)aUsername
 {
-    self.userInfoUsername = aUsername;
-
-    // HACK: forces to scroll to top
-    [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
-        animated:NO];
-    [self.userInfoController showingNewUser];
-    self.userInfoControllerWrapper.navigationItem.title = aUsername;
-    [self.userInfoControllerWrapper setCachedDataAvailable:NO];
-    [self.userInfoControllerWrapper setUpdatingState:kConnectedAndUpdating];
-    [wrapperController.navigationController
-        pushViewController:self.userInfoControllerWrapper animated:YES];
-    self.userInfoController.followingEnabled =
-        ![credentials.username isEqual:aUsername];
-
-    if (self.userInfoController.followingEnabled)
-        [service isUser:credentials.username following:aUsername];
-    [service isUserBlocked:aUsername];
-
-    [self.userInfoTwitterService fetchUserInfoForUsername:aUsername];
+    [displayMgrHelper showUserInfoForUsername:aUsername];
 }
 
 - (void)showingTweetDetails:(DirectMessageViewController *)tweetController
@@ -981,55 +940,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         animated:YES];
 
     [picker release];
-}
-
-- (UserInfoViewController *)userInfoController
-{
-    if (!userInfoController) {
-        userInfoController =
-            [[UserInfoViewController alloc]
-            initWithNibName:@"UserInfoView" bundle:nil];
-
-        userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
-        userInfoController.delegate = displayMgrHelper;
-    }
-
-    return userInfoController;
-}
-
-- (NetworkAwareViewController *)userInfoControllerWrapper
-{
-    if (!userInfoControllerWrapper) {
-        userInfoControllerWrapper =
-            [[NetworkAwareViewController alloc]
-            initWithTargetViewController:self.userInfoController];
-    }
-
-    return userInfoControllerWrapper;
-}
-
-- (UserInfoRequestAdapter *)userInfoRequestAdapter
-{
-    if (!userInfoRequestAdapter) {
-        userInfoRequestAdapter =
-            [[UserInfoRequestAdapter alloc]
-            initWithTarget:self.userInfoController action:@selector(setUser:)
-            wrapperController:self.userInfoControllerWrapper errorHandler:self];
-    }
-
-    return userInfoRequestAdapter;
-}
-
-- (TwitterService *)userInfoTwitterService
-{
-    if (!userInfoTwitterService) {
-        userInfoTwitterService =
-            [[TwitterService alloc] initWithTwitterCredentials:credentials
-            context:managedObjectContext];
-        userInfoTwitterService.delegate = self.userInfoRequestAdapter;
-    }
-    
-    return userInfoTwitterService;
 }
 
 - (void)sendDirectMessageToCurrentUser

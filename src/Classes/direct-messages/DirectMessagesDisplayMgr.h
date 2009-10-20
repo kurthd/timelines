@@ -102,12 +102,6 @@
 
     NSNumber * currentConversationUserId;
 
-    UserInfoViewController * userInfoController;
-
-    NetworkAwareViewController * userInfoControllerWrapper;
-    UserInfoRequestAdapter * userInfoRequestAdapter;
-    TwitterService * userInfoTwitterService;
-
     NSMutableDictionary * tweetIdToIndexDict;
 }
 
@@ -137,10 +131,6 @@
 @property (nonatomic, readonly) UIBarButtonItem * newMessageButtonItem;
 
 @property (nonatomic, copy) NSNumber * currentConversationUserId;
-
-@property (readonly) NetworkAwareViewController * userInfoControllerWrapper;
-@property (readonly) UserInfoRequestAdapter * userInfoRequestAdapter;
-@property (readonly) TwitterService * userInfoTwitterService;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     inboxController:(DirectMessageInboxViewController *)anInboxController

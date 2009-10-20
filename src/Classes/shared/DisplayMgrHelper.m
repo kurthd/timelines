@@ -21,6 +21,10 @@
     LocationInfoViewController * locationInfoViewController;
 @property (nonatomic, readonly) SavedSearchMgr * savedSearchMgr;
 @property (nonatomic, readonly) UserInfoViewController * userInfoController;
+@property (nonatomic, readonly)
+    NetworkAwareViewController * userInfoControllerWrapper;
+@property (nonatomic, readonly) UserInfoRequestAdapter * userInfoRequestAdapter;
+@property (nonatomic, readonly) TwitterService * userInfoTwitterService;
 
 @property (nonatomic, retain)
     NetworkAwareViewController * userListNetAwareViewController;
@@ -62,6 +66,9 @@
     [locationInfoViewController release];
     [savedSearchMgr release];
     [userInfoController release];
+    [userInfoControllerWrapper release];
+    [userInfoRequestAdapter release];
+    [userInfoTwitterService release];
 
     [userListNetAwareViewController release];
     [userListDisplayMgr release];
@@ -491,19 +498,21 @@
 
 - (void)userIsBlocked:(NSString *)aUsername
 {
-    if ([userInfoUsername isEqual:aUsername])
+    NSLog(@"User '%@' is blocked", aUsername);
+    if ([self.userInfoUsername isEqual:aUsername])
         [self.userInfoController setBlocked:YES];
 }
 
 - (void)userIsNotBlocked:(NSString *)aUsername
 {
-    if ([userInfoUsername isEqual:aUsername])
+    NSLog(@"User '%@' is not blocked", aUsername);
+    if ([self.userInfoUsername isEqual:aUsername])
         [self.userInfoController setBlocked:NO];
 }
 
 - (void)blockedUser:(User *)user withUsername:(NSString *)aUsername
 {
-    if ([userInfoUsername isEqual:aUsername])
+    if ([self.userInfoUsername isEqual:aUsername])
         [self.userInfoController setBlocked:YES];
 }
 
@@ -535,11 +544,60 @@
 
 #pragma mark Public interface implementation
 
+- (void)showUserInfoForUser:(User *)aUser
+{
+    NSLog(@"Showing user info for user '%@'", aUser.username);
+    self.userInfoUsername = aUser.username;
+    [userInfoController release];
+    userInfoController = nil; // Forces to scroll to top
+    self.userInfoController.navigationItem.title = aUser.username;
+    [wrapperController.navigationController
+        pushViewController:self.userInfoController animated:YES];
+    self.userInfoController.followingEnabled =
+        ![credentials.username isEqual:aUser.username];
+    [self.userInfoController setUser:aUser];
+    if (self.userInfoController.followingEnabled)
+        [service isUser:credentials.username following:aUser.username];
+    NSLog(@"Querying blocked status for '%@'", aUser.username);
+    [service isUserBlocked:aUser.username];
+}
+
+- (void)showUserInfoForUsername:(NSString *)aUsername
+{
+    self.userInfoUsername = aUsername;
+
+    // HACK: forces to scroll to top
+    [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
+        animated:NO];
+    [self.userInfoController showingNewUser];
+    self.userInfoControllerWrapper.navigationItem.title = aUsername;
+    [self.userInfoControllerWrapper setCachedDataAvailable:NO];
+    [self.userInfoControllerWrapper setUpdatingState:kConnectedAndUpdating];
+    [wrapperController.navigationController
+        pushViewController:self.userInfoControllerWrapper animated:YES];
+    self.userInfoController.followingEnabled =
+        ![credentials.username isEqual:aUsername];
+
+    if (self.userInfoController.followingEnabled)
+        [service isUser:credentials.username following:aUsername];
+    [service isUserBlocked:aUsername];
+
+    [self.userInfoTwitterService fetchUserInfoForUsername:aUsername];
+}
+
+- (void)sendDirectMessageToCurrentUser
+{
+    NSLog(@"Sending direct message to %@", self.userInfoUsername);
+    [composeTweetDisplayMgr composeDirectMessageTo:self.userInfoUsername];
+}
+
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
     [someCredentials retain];
     [credentials release];
     credentials = someCredentials;
+
+    self.savedSearchMgr.accountName = credentials.username;
 }
 
 #pragma mark Private helpers
@@ -608,6 +666,41 @@
     }
 
     return userInfoController;
+}
+
+- (NetworkAwareViewController *)userInfoControllerWrapper
+{
+    if (!userInfoControllerWrapper) {
+        userInfoControllerWrapper =
+            [[NetworkAwareViewController alloc]
+            initWithTargetViewController:self.userInfoController];
+    }
+
+    return userInfoControllerWrapper;
+}
+
+- (UserInfoRequestAdapter *)userInfoRequestAdapter
+{
+    if (!userInfoRequestAdapter) {
+        userInfoRequestAdapter =
+            [[UserInfoRequestAdapter alloc]
+            initWithTarget:self.userInfoController action:@selector(setUser:)
+            wrapperController:self.userInfoControllerWrapper errorHandler:self];
+    }
+
+    return userInfoRequestAdapter;
+}
+
+- (TwitterService *)userInfoTwitterService
+{
+    if (!userInfoTwitterService) {
+        userInfoTwitterService =
+            [[TwitterService alloc] initWithTwitterCredentials:credentials
+            context:context];
+        userInfoTwitterService.delegate = self.userInfoRequestAdapter;
+    }
+    
+    return userInfoTwitterService;
 }
 
 - (void)removeSearch:(id)sender
