@@ -819,6 +819,8 @@
 		9130002310363177004E3030 /* MentionTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9130002110363177004E3030 /* MentionTopGradient.png */; };
 		913000B010377454004E3030 /* FollowButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 913000AF10377454004E3030 /* FollowButton.png */; };
 		9130FF221035E07B004E3030 /* MarkAsFavoriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9130FF201035E07B004E3030 /* MarkAsFavoriteCell.xib */; };
+		9142C87B108D139800BFE960 /* MentionTimelineDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142C87A108D139800BFE960 /* MentionTimelineDisplayMgr.m */; };
+		9142C880108D2D8E00BFE960 /* DisplayMgrHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142C87F108D2D8E00BFE960 /* DisplayMgrHelper.m */; };
 		9145EF5B1005073200C2E485 /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
 		9145EF5C1005073F00C2E485 /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
 		9145EF5D1005074A00C2E485 /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
@@ -1444,6 +1446,10 @@
 		9130FF251035E1F6004E3030 /* MarkAsFavoriteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkAsFavoriteCell.m; path = "user-info/MarkAsFavoriteCell.m"; sourceTree = "<group>"; };
 		9130FFD7103623DA004E3030 /* TimelineTableViewCellBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineTableViewCellBackground.h; path = timeline/TimelineTableViewCellBackground.h; sourceTree = "<group>"; };
 		9130FFD8103623DA004E3030 /* TimelineTableViewCellBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineTableViewCellBackground.m; path = timeline/TimelineTableViewCellBackground.m; sourceTree = "<group>"; };
+		9142C879108D139800BFE960 /* MentionTimelineDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionTimelineDisplayMgr.h; path = timeline/MentionTimelineDisplayMgr.h; sourceTree = "<group>"; };
+		9142C87A108D139800BFE960 /* MentionTimelineDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionTimelineDisplayMgr.m; path = timeline/MentionTimelineDisplayMgr.m; sourceTree = "<group>"; };
+		9142C87E108D2D8E00BFE960 /* DisplayMgrHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayMgrHelper.h; path = shared/DisplayMgrHelper.h; sourceTree = "<group>"; };
+		9142C87F108D2D8E00BFE960 /* DisplayMgrHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DisplayMgrHelper.m; path = shared/DisplayMgrHelper.m; sourceTree = "<group>"; };
 		9145EFC91005276100C2E485 /* Re-tweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweetDisabled.png"; path = "images/Re-tweetDisabled.png"; sourceTree = "<group>"; };
 		9145EFFA10054D9400C2E485 /* BlueEnvelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueEnvelope.png; path = images/BlueEnvelope.png; sourceTree = "<group>"; };
 		9145F022100573AF00C2E485 /* User+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "User+UIAdditions.h"; path = "users/User+UIAdditions.h"; sourceTree = "<group>"; };
@@ -2236,6 +2242,8 @@
 				91DCEB3E107511DB00095FD0 /* RotatableTabBarController.m */,
 				05A66759107E5B3E0077343D /* NSObject+TweetHelpers.h */,
 				05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */,
+				9142C87E108D2D8E00BFE960 /* DisplayMgrHelper.h */,
+				9142C87F108D2D8E00BFE960 /* DisplayMgrHelper.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -2876,6 +2884,8 @@
 				9130FFD8103623DA004E3030 /* TimelineTableViewCellBackground.m */,
 				919CCC5A1059CD6B0029C0A1 /* NearbySearchDataSource.h */,
 				919CCC5B1059CD6B0029C0A1 /* NearbySearchDataSource.m */,
+				9142C879108D139800BFE960 /* MentionTimelineDisplayMgr.h */,
+				9142C87A108D139800BFE960 /* MentionTimelineDisplayMgr.m */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -3948,6 +3958,8 @@
 				050ACC2C1087D11A004B6C2D /* PersonDirectory.m in Sources */,
 				0552818B1088E8020055A37C /* NSString+UrlAdditions.m in Sources */,
 				054BE35A108A7AC500734CAA /* BitlyUrlShorteningService.m in Sources */,
+				9142C87B108D139800BFE960 /* MentionTimelineDisplayMgr.m in Sources */,
+				9142C880108D2D8E00BFE960 /* DisplayMgrHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
