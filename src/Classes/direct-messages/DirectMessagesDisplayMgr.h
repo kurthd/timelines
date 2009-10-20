@@ -30,6 +30,7 @@
 #import "LocationMapViewControllerDelegate.h"
 #import "LocationInfoViewController.h"
 #import "LocationInfoViewControllerDelegate.h"
+#import "DisplayMgrHelper.h"
 
 /*  This class is responsible for managing the display of the direct messages
     tab.  It will function very similarly to the timeline display, re-using many
@@ -62,18 +63,18 @@
 */
 @interface DirectMessagesDisplayMgr :
     NSObject <TwitterServiceDelegate, NetworkAwareViewControllerDelegate,
-    DirectMessageInboxViewControllerDelegate,
+    DirectMessageInboxViewControllerDelegate, UIActionSheetDelegate,
     DirectMessageConversationViewControllerDelegate,
-    DirectMessageViewControllerDelegate, MFMailComposeViewControllerDelegate,
-    UIActionSheetDelegate, UserInfoViewControllerDelegate,
-    LocationMapViewControllerDelegate, LocationInfoViewControllerDelegate>
+    DirectMessageViewControllerDelegate, MFMailComposeViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     DirectMessageInboxViewController * inboxController;
     DirectMessageConversationViewController * conversationController;
     DirectMessageViewController * directMessageViewController;
     SavedSearchMgr * findPeopleBookmarkMgr;
-    UserListDisplayMgrFactory * userListDisplayMgrFactory;
+    ComposeTweetDisplayMgr * composeTweetDisplayMgr;
+
+    DisplayMgrHelper * displayMgrHelper;
 
     TwitterService * service;
 
@@ -91,16 +92,10 @@
     User * otherUserInConversation;
     DirectMessage * selectedMessage;
 
-    ComposeTweetDisplayMgr * composeTweetDisplayMgr;
-
-    TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     TimelineDisplayMgr * tweetDetailsTimelineDisplayMgr;
     NetworkAwareViewController * tweetDetailsNetAwareViewController;
     CredentialsActivatedPublisher * tweetDetailsCredentialsPublisher;
     NSManagedObjectContext * managedObjectContext;
-
-    UserListDisplayMgr * userListDisplayMgr;
-    NetworkAwareViewController * userListNetAwareViewController;
 
     TwitterCredentials * credentials;
 
@@ -117,17 +112,11 @@
 
     NSNumber * currentConversationUserId;
 
-    SavedSearchMgr * savedSearchMgr;
-    NSString * currentSearch;
-
     UserInfoViewController * userInfoController;
 
     NetworkAwareViewController * userInfoControllerWrapper;
     UserInfoRequestAdapter * userInfoRequestAdapter;
     TwitterService * userInfoTwitterService;
-
-    LocationMapViewController * locationMapViewController;
-    LocationInfoViewController * locationInfoViewController;
 
     NSMutableDictionary * tweetIdToIndexDict;
 }

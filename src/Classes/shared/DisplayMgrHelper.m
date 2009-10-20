@@ -11,6 +11,7 @@
 #import "SettingsReader.h"
 #import "UIColor+TwitchColors.h"
 #import "NearbySearchDataSource.h"
+#import "ErrorState.h"
 
 @interface DisplayMgrHelper ()
 
@@ -19,6 +20,7 @@
 @property (nonatomic, readonly)
     LocationInfoViewController * locationInfoViewController;
 @property (nonatomic, readonly) SavedSearchMgr * savedSearchMgr;
+@property (nonatomic, readonly) UserInfoViewController * userInfoController;
 
 @property (nonatomic, retain)
     NetworkAwareViewController * userListNetAwareViewController;
@@ -29,7 +31,10 @@
 @property (nonatomic, retain)
     CredentialsActivatedPublisher * credentialsPublisher;
 @property (nonatomic, copy) NSString * currentSearch;
+@property (nonatomic, copy) NSString * userInfoUsername;
 
+- (void)removeSearch:(NSString *)search;
+- (void)saveSearch:(NSString *)search;
 - (UIView *)saveSearchView;
 - (UIView *)removeSearchView;
 - (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title action:(SEL)action;
@@ -40,7 +45,7 @@
 
 @synthesize userListNetAwareViewController, userListDisplayMgr,
     nextWrapperController, timelineDisplayMgr, credentialsPublisher,
-    currentSearch;
+    currentSearch, userInfoUsername;
 
 - (void)dealloc
 {
@@ -49,12 +54,14 @@
     [composeTweetDisplayMgr release];
     [timelineDisplayMgrFactory release];
     [context release];
+    [findPeopleBookmarkMgr release];
 
     [credentials release];
 
     [locationMapViewController release];
     [locationInfoViewController release];
     [savedSearchMgr release];
+    [userInfoController release];
 
     [userListNetAwareViewController release];
     [userListDisplayMgr release];
@@ -62,6 +69,7 @@
     [timelineDisplayMgr release];
     [credentialsPublisher release];
     [currentSearch release];
+    [userInfoUsername release];
 
     [super dealloc];
 }
@@ -72,6 +80,7 @@
     twitterService:(TwitterService *)aService
     timelineFactory:(TimelineDisplayMgrFactory *)timelineFactory
     managedObjectContext:(NSManagedObjectContext *)managedObjectContext
+    findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr
 {
     if (self = [super init]) {
         wrapperController = [wrapperCtrlr retain];
@@ -80,6 +89,7 @@
         service = [aService retain];
         timelineDisplayMgrFactory = [timelineFactory retain];
         context = [managedObjectContext retain];
+        findPeopleBookmarkMgr = [aFindPeopleBookmarkMgr retain];
     }
 
     return self;
@@ -261,7 +271,7 @@
 
 - (void)showingUserInfoView
 {
-
+    self.timelineDisplayMgr = nil;
 }
 
 - (void)sendDirectMessageToUser:(NSString *)aUsername
@@ -396,6 +406,133 @@
         animated:YES];
 }
 
+#pragma mark TwitterServiceDelegate implementation
+
+- (void)startedFollowingUsername:(NSString *)aUsername
+{
+    NSLog(@"Started following %@", aUsername);
+    if ([userInfoUsername isEqual:aUsername])
+        [userInfoController setFollowing:YES];
+}
+
+- (void)failedToStartFollowingUsername:(NSString *)aUsername
+    error:(NSError *)error
+{
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.startfollowing", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, aUsername];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+}
+
+- (void)stoppedFollowingUsername:(NSString *)aUsername
+{
+    NSLog(@"Stopped following %@", aUsername);
+    if ([userInfoUsername isEqual:aUsername])
+        [userInfoController setFollowing:NO];
+}
+
+- (void)failedToStopFollowingUsername:(NSString *)aUsername
+    error:(NSError *)error
+{
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.stopfollowing", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, aUsername];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+}
+
+- (void)failedToFetchFriendsForUsername:(NSString *)aUsername
+    cursor:(NSString *)cursor error:(NSError *)error
+{
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchfriends", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+    [wrapperController setUpdatingState:kDisconnected];
+}
+
+- (void)failedToFetchFollowersForUsername:(NSString *)aUsername
+    cursor:(NSString *)cursor error:(NSError *)error
+{
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchfollowers", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+    [wrapperController setUpdatingState:kDisconnected];
+}
+
+- (void)user:(NSString *)aUsername isFollowing:(NSString *)followee
+{
+    NSLog(@"%@ is following %@", aUsername, followee);
+    if ([userInfoUsername isEqual:followee])
+        [self.userInfoController setFollowing:YES];
+}
+
+- (void)user:(NSString *)aUsername isNotFollowing:(NSString *)followee
+{
+    NSLog(@"%@ is not following %@", aUsername, followee);
+    if ([userInfoUsername isEqual:followee])
+        [self.userInfoController setFollowing:NO];
+}
+
+- (void)failedToQueryIfUser:(NSString *)aUsername
+    isFollowing:(NSString *)followee error:(NSError *)error
+{
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
+
+    if ([userInfoUsername isEqual:followee])
+        [self.userInfoController setFailedToQueryFollowing];
+
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+}
+
+- (void)userIsBlocked:(NSString *)aUsername
+{
+    if ([userInfoUsername isEqual:aUsername])
+        [self.userInfoController setBlocked:YES];
+}
+
+- (void)userIsNotBlocked:(NSString *)aUsername
+{
+    if ([userInfoUsername isEqual:aUsername])
+        [self.userInfoController setBlocked:NO];
+}
+
+- (void)blockedUser:(User *)user withUsername:(NSString *)aUsername
+{
+    if ([userInfoUsername isEqual:aUsername])
+        [self.userInfoController setBlocked:YES];
+}
+
+- (void)failedToBlockUserWithUsername:(NSString *)aUsername
+    error:(NSError *)error
+{
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.block", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, aUsername];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+}
+
+- (void)unblockedUser:(User *)user withUsername:(NSString *)aUsername
+{
+    if ([userInfoUsername isEqual:aUsername])
+        [self.userInfoController setBlocked:NO];
+}
+
+- (void)failedToUnblockUserWithUsername:(NSString *)aUsername
+    error:(NSError *)error
+{
+    NSString * errorMessageFormatString =
+        NSLocalizedString(@"timelinedisplaymgr.error.unblock", @"");
+    NSString * errorMessage =
+        [NSString stringWithFormat:errorMessageFormatString, aUsername];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+}
+
 #pragma mark Public interface implementation
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
@@ -457,6 +594,34 @@
             initWithAccountName:credentials.username context:context];
 
     return savedSearchMgr;
+}
+
+- (UserInfoViewController *)userInfoController
+{
+    if (!userInfoController) {
+        userInfoController =
+            [[UserInfoViewController alloc]
+            initWithNibName:@"UserInfoView" bundle:nil];
+
+        userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
+        userInfoController.delegate = self;
+    }
+
+    return userInfoController;
+}
+
+- (void)removeSearch:(id)sender
+{
+    [self.timelineDisplayMgr
+        setTimelineHeaderView:[self saveSearchView]];
+    [self.savedSearchMgr removeSavedSearchForQuery:self.currentSearch];
+}
+
+- (void)saveSearch:(id)sender
+{
+    [self.timelineDisplayMgr
+     setTimelineHeaderView:[self removeSearchView]];
+    [self.savedSearchMgr addSavedSearch:self.currentSearch];
 }
 
 - (UIView *)saveSearchView

@@ -21,7 +21,7 @@
 @interface DisplayMgrHelper :
     NSObject
     <UserInfoViewControllerDelegate, LocationMapViewControllerDelegate,
-    LocationInfoViewControllerDelegate>
+    LocationInfoViewControllerDelegate, TwitterServiceDelegate>
 {
     NetworkAwareViewController * wrapperController;
     UserListDisplayMgrFactory * userListDisplayMgrFactory;
@@ -29,12 +29,14 @@
     TwitterService * service;
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     NSManagedObjectContext * context;
+    SavedSearchMgr * findPeopleBookmarkMgr;
 
     TwitterCredentials * credentials;
 
     LocationMapViewController * locationMapViewController;
     LocationInfoViewController * locationInfoViewController;
     SavedSearchMgr * savedSearchMgr;
+    UserInfoViewController * userInfoController;
 
     NetworkAwareViewController * userListNetAwareViewController;
     UserListDisplayMgr * userListDisplayMgr;
@@ -42,6 +44,7 @@
     TimelineDisplayMgr * timelineDisplayMgr;
     CredentialsActivatedPublisher * credentialsPublisher;
     NSString * currentSearch;
+    NSString * userInfoUsername;
 }
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)wrapperCtrlr
@@ -49,7 +52,8 @@
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     twitterService:(TwitterService *)service
     timelineFactory:(TimelineDisplayMgrFactory *)timelineFactory
-    managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+    managedObjectContext:(NSManagedObjectContext *)managedObjectContext
+    findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
 
