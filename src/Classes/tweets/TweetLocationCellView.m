@@ -85,10 +85,8 @@
     UIColor * locationTextLabelColor = nil;
     UIFont * locationTextLabelFont = [UIFont boldSystemFontOfSize:17];
     
-    if (self.highlighted)
-        locationTextLabelColor = [UIColor whiteColor];
-    else
-        locationTextLabelColor = self.textColor;
+    locationTextLabelColor =
+        self.highlighted ? [UIColor whiteColor] : self.textColor;
 
     CGRect contentRect = self.bounds;
 

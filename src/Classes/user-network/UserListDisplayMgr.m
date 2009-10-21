@@ -69,9 +69,10 @@
         findPeopleBookmarkMgr = [aFindPeopleBookmarkMgr retain];
         showFollowing = showFollowingValue;
         username = [aUsername retain];
-        
+
         TwitterService * displayHelperService =
-            [[[TwitterService alloc] initWithTwitterCredentials:nil
+            [[[TwitterService alloc]
+            initWithTwitterCredentials:service.credentials
             context:managedObjectContext]
             autorelease];
 

@@ -104,7 +104,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         composeTweetDisplayMgr = [aComposeTweetDisplayMgr retain];
 
         TwitterService * displayHelperService =
-            [[[TwitterService alloc] initWithTwitterCredentials:nil
+            [[[TwitterService alloc]
+            initWithTwitterCredentials:service.credentials
             context:aManagedObjectContext]
             autorelease];
 
@@ -459,7 +460,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [service setCredentials:credentials];
 
     self.activeAcctUsername = credentials.username;
-    [displayMgrHelper setCredentials:credentials];
+    [displayMgrHelper setCredentials:someCredentials];
 
     self.conversationController.segregatedSenderUsername = credentials.username;
 

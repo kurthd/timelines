@@ -510,6 +510,12 @@
         [self.userInfoController setBlocked:NO];
 }
 
+- (void)failedToCheckIfUserIsBlocked:(NSString *)aUsername
+                               error:(NSError *)error
+{
+    NSLog(@"Failed to check if %@ is blocked; %@", aUsername, error);
+}
+
 - (void)blockedUser:(User *)user withUsername:(NSString *)aUsername
 {
     if ([self.userInfoUsername isEqual:aUsername])
@@ -559,6 +565,7 @@
     if (self.userInfoController.followingEnabled)
         [service isUser:credentials.username following:aUser.username];
     NSLog(@"Querying blocked status for '%@'", aUser.username);
+    NSLog(@"service.credentials: %@", service.credentials);
     [service isUserBlocked:aUser.username];
 }
 
@@ -596,6 +603,8 @@
     [someCredentials retain];
     [credentials release];
     credentials = someCredentials;
+
+    [service setCredentials:credentials];
 
     self.savedSearchMgr.accountName = credentials.username;
 }
