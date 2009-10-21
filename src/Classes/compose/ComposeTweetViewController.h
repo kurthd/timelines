@@ -22,7 +22,8 @@
     UIBarButtonItem * cancelButton;
 
     IBOutlet UIBarButtonItem * shortenLinksButton;
-    IBOutlet UILabel * characterCount;
+    IBOutlet UILabel * characterCountPortrait;
+    IBOutlet UILabel * characterCountLandscape;
 
     BOOL hideRecipientView;
     IBOutlet UIView * recipientView;
