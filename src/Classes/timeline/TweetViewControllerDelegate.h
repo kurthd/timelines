@@ -13,7 +13,6 @@
 
 - (void)showUserInfoForUser:(User *)aUser;
 - (void)showUserInfoForUsername:(NSString *)aUsername;
-- (void)showTweetsForUser:(NSString *)username;
 - (void)showResultsForSearch:(NSString *)query;
 - (void)setFavorite:(BOOL)favorite;
 - (void)showLocationOnMap:(NSString *)location;

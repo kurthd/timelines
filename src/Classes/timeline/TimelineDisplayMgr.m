@@ -4,35 +4,20 @@
 
 #import "TimelineDisplayMgr.h"
 #import "TimelineDisplayMgrFactory.h"
-#import "ArbUserTimelineDataSource.h"
-#import "FavoritesTimelineDataSource.h"
 #import "TweetViewController.h"
-#import "SearchDataSource.h"
 #import "UIWebView+FileLoadingAdditions.h"
 #import "UserListDisplayMgrFactory.h"
 #import "ErrorState.h"
-#import "UIColor+TwitchColors.h"
 #import "User+UIAdditions.h"
-#import "NearbySearchDataSource.h"
-#import "SettingsReader.h"
-#import "RotatableTabBarController.h"
 #import "NSArray+IterationAdditions.h"
+#import "DisplayMgrHelper.h"
 
 @interface TimelineDisplayMgr ()
 
 - (BOOL)cachedDataAvailable;
-- (void)deallocateTweetDetailsNode;
 - (void)replyToTweetWithMessage;
 - (NetworkAwareViewController *)newTweetDetailsWrapperController;
 - (TweetViewController *)newTweetDetailsController;
-
-- (void)removeSearch:(NSString *)search;
-- (void)saveSearch:(NSString *)search;
-
-- (UIView *)saveSearchView;
-- (UIView *)removeSearchView;
-- (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
-    action:(SEL)action;
 
 - (void)showNextTweet;
 - (void)showPreviousTweet;
@@ -41,14 +26,6 @@
 + (NSInteger)retweetFormat;
 + (BOOL)scrollToTop;
 
-@property (nonatomic, retain) SavedSearchMgr * savedSearchMgr;
-@property (nonatomic, retain) NSString * currentSearch;
-
-@property (nonatomic, readonly)
-    LocationMapViewController * locationMapViewController;
-@property (nonatomic, readonly)
-    LocationInfoViewController * locationInfoViewController;
-    
 @property (nonatomic, readonly) NSMutableDictionary * tweetIdToIndexDict;
 @property (nonatomic, readonly) NSMutableDictionary * tweetIndexToIdDict;
 
@@ -67,15 +44,12 @@ static NSInteger retweetFormatValueAlredyRead;
 static BOOL scrollToTop;
 static BOOL scrollToTopValueAlreadyRead;
 
-@synthesize wrapperController, timelineController, userInfoController,
+@synthesize wrapperController, timelineController, lastTweetDetailsController,
     selectedTweet, updateId, user, timeline, pagesShown, displayAsConversation,
-    setUserToFirstTweeter, tweetDetailsTimelineDisplayMgr,
-    tweetDetailsNetAwareViewController, tweetDetailsCredentialsPublisher,
-    lastTweetDetailsWrapperController, lastTweetDetailsController,
+    setUserToFirstTweeter, lastTweetDetailsWrapperController,
     currentUsername, allPagesLoaded,setUserToAuthenticatedUser,
     firstFetchReceived, tweetIdToShow, suppressTimelineFailures, credentials,
-    savedSearchMgr, currentSearch, userListDisplayMgr,
-    userListNetAwareViewController, showMentions, tweetIdToIndexDict;
+    showMentions, tweetIdToIndexDict;
 
 - (void)dealloc
 {
@@ -84,8 +58,8 @@ static BOOL scrollToTopValueAlreadyRead;
     [lastTweetDetailsWrapperController release];
     [lastTweetDetailsController release];
     [tweetDetailsController release];
-    [findPeopleBookmarkMgr release];
-    [userListDisplayMgrFactory release];
+
+    [displayMgrHelper release];
 
     [timelineSource release];
     [service release];
@@ -98,27 +72,11 @@ static BOOL scrollToTopValueAlreadyRead;
 
     [credentials release];
 
-    [timelineDisplayMgrFactory release];
-    [tweetDetailsTimelineDisplayMgr release];
-    [tweetDetailsNetAwareViewController release];
     [managedObjectContext release];
-
-    [userListDisplayMgr release];
-    [userListNetAwareViewController release];
 
     [composeTweetDisplayMgr release];
 
-    [savedSearchMgr release];
-    [currentSearch release];
-
-    [userInfoControllerWrapper release];
-    [userInfoRequestAdapter release];
-    [userInfoTwitterService release];
-
     [conversationDisplayMgrs release];
-
-    [locationMapViewController release];
-    [locationInfoViewController release];
 
     [tweetIdToIndexDict release];
 
@@ -140,12 +98,26 @@ static BOOL scrollToTopValueAlreadyRead;
         timelineController = [aTimelineController retain];
         timelineSource = [aTimelineSource retain];
         service = [aService retain];
-        timelineDisplayMgrFactory = [factory retain];
         managedObjectContext = [aManagedObjectContext retain];
         composeTweetDisplayMgr = [aComposeTweetDisplayMgr retain];
-        findPeopleBookmarkMgr = [aFindPeopleBookmarkMgr retain];
-        userListDisplayMgrFactory = [userListDispMgrFctry retain];
         timeline = [[NSMutableDictionary dictionary] retain];
+
+        TwitterService * displayHelperService =
+            [[[TwitterService alloc]
+            initWithTwitterCredentials:service.credentials
+            context:aManagedObjectContext]
+            autorelease];
+
+        displayMgrHelper =
+            [[DisplayMgrHelper alloc]
+            initWithWrapperController:aWrapperController
+            userListDisplayMgrFactor:userListDispMgrFctry
+            composeTweetDisplayMgr:composeTweetDisplayMgr
+            twitterService:displayHelperService
+            timelineFactory:factory
+            managedObjectContext:managedObjectContext
+            findPeopleBookmarkMgr:aFindPeopleBookmarkMgr];
+        displayHelperService.delegate = displayMgrHelper;
 
         pagesShown = 1;
 
@@ -262,145 +234,6 @@ static BOOL scrollToTopValueAlreadyRead;
 }
 
 #pragma mark TwitterServiceDelegate implementation
-
-- (void)userInfo:(User *)aUser fetchedForUsername:(NSString *)username
-{
-    NSLog(@"Timeline display manager received user info for %@", username);
-    [timelineController setUser:aUser];
-    self.user = aUser;
-    [[ErrorState instance] exitErrorState];
-}
-
-- (void)failedToFetchUserInfoForUsername:(NSString *)username
-    error:(NSError *)error
-{
-    NSLog(@"Timeline display manager: failed to fetch user info for %@",
-        username);
-    NSLog(@"Error: %@", error);
-    NSString * errorMessage =
-        NSLocalizedString(@"timelinedisplaymgr.error.fetchuserinfo", @"");
-    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
-    [self.wrapperController setUpdatingState:kDisconnected];
-}
-
-- (void)startedFollowingUsername:(NSString *)username
-{
-    NSLog(@"Timeline display manager: started following %@", username);
-    if ([self.currentUsername isEqual:username])
-        [self.userInfoController setFollowing:YES];
-}
-
-- (void)failedToStartFollowingUsername:(NSString *)username
-{
-    NSLog(@"Timeline display manager: failed to start following %@", username);
-    NSString * errorMessageFormatString =
-        NSLocalizedString(@"timelinedisplaymgr.error.startfollowing", @"");
-    NSString * errorMessage =
-        [NSString stringWithFormat:errorMessageFormatString, username];
-    [[ErrorState instance] displayErrorWithTitle:errorMessage];
-}
-
-- (void)stoppedFollowingUsername:(NSString *)username
-{
-    NSLog(@"Timeline display manager: stopped following %@", username);
-    if ([self.currentUsername isEqual:username])
-        [userInfoController setFollowing:NO];
-}
-
-- (void)failedToStopFollowingUsername:(NSString *)username
-{
-    NSLog(@"Timeline display manager: failed to stop following %@", username);
-    NSString * errorMessageFormatString =
-        NSLocalizedString(@"timelinedisplaymgr.error.stopfollowing", @"");
-    NSString * errorMessage =
-        [NSString stringWithFormat:errorMessageFormatString, username];
-    [[ErrorState instance] displayErrorWithTitle:errorMessage];
-}
-
-- (void)user:(NSString *)username isFollowing:(NSString *)followee
-{
-    NSLog(@"Timeline display manager: %@ is following %@", username, followee);
-    if ([self.currentUsername isEqual:followee])
-        [self.userInfoController setFollowing:YES];
-}
-
-- (void)user:(NSString *)username isNotFollowing:(NSString *)followee
-{
-    NSLog(@"Timeline display manager: %@ is not following %@", username,
-        followee);
-    if ([self.currentUsername isEqual:followee])
-        [self.userInfoController setFollowing:NO];
-}
-
-- (void)userIsBlocked:(NSString *)username
-{
-    NSLog(@"Timeline display manager: %@ is blocked", username);
-    if ([self.currentUsername isEqual:username])
-        [self.userInfoController setBlocked:YES];
-}
-
-- (void)userIsNotBlocked:(NSString *)username
-{
-    NSLog(@"Timeline display manager: %@ is not blocked", username);
-    if ([self.currentUsername isEqual:username])
-        [self.userInfoController setBlocked:NO];
-}
-
-- (void)failedToCheckIfUserIsBlocked:(NSString *)username
-                               error:(NSError *)error
-{
-    NSLog(@"Timeline display manager: failed to check if %@ is blocked; %@",
-        username, error);
-}
-
-- (void)blockedUser:(User *)user withUsername:(NSString *)username
-{
-    if ([self.currentUsername isEqual:username])
-        [self.userInfoController setBlocked:YES];
-}
-
-- (void)failedToBlockUserWithUsername:(NSString *)username
-    error:(NSError *)error
-{
-    NSString * errorMessageFormatString =
-        NSLocalizedString(@"timelinedisplaymgr.error.block", @"");
-    NSString * errorMessage =
-        [NSString stringWithFormat:errorMessageFormatString, username];
-    [[ErrorState instance] displayErrorWithTitle:errorMessage];
-}
-
-- (void)unblockedUser:(User *)user withUsername:(NSString *)username
-{
-    if ([self.currentUsername isEqual:username])
-        [self.userInfoController setBlocked:NO];
-}
-
-- (void)failedToUnblockUserWithUsername:(NSString *)username
-    error:(NSError *)error
-{
-    NSString * errorMessageFormatString =
-        NSLocalizedString(@"timelinedisplaymgr.error.unblock", @"");
-    NSString * errorMessage =
-        [NSString stringWithFormat:errorMessageFormatString, username];
-    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
-}
-
-- (void)failedToQueryIfUser:(NSString *)username
-    isFollowing:(NSString *)followee error:(NSError *)error
-{
-    NSLog(@"Timeline display manager: failed to query if %@ is following %@",
-        username, followee);
-    NSLog(@"Error: %@", error);
-
-    if ([self.currentUsername isEqual:followee])
-        [self.userInfoController setFailedToQueryFollowing];
-
-    NSString * errorMessageFormatString =
-        NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
-    NSString * errorMessage =
-        [NSString stringWithFormat:errorMessageFormatString, username];
-    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
-}
 
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
 {
@@ -578,56 +411,6 @@ static BOOL scrollToTopValueAlreadyRead;
     [self showUserInfoForUser:user];
 }
 
-- (void)showUserInfoForUser:(User *)aUser
-{
-    if ([aUser isComplete]) {
-        NSLog(@"Timeline display manager: showing user info for user: %@",
-            aUser.username);
-        self.currentUsername = aUser.username;
-
-        // HACK: forces to scroll to top
-        [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
-            animated:NO];
-
-        self.userInfoController.navigationItem.title = aUser.username;
-        [self.wrapperController.navigationController
-            pushViewController:self.userInfoController animated:YES];
-        self.userInfoController.followingEnabled =
-            ![credentials.username isEqual:aUser.username];
-        [self.userInfoController setUser:aUser];
-        if (self.userInfoController.followingEnabled)
-            [service isUser:credentials.username following:aUser.username];
-        [service isUserBlocked:aUser.username];
-    } else
-        [self showUserInfoForUsername:aUser.username];
-}
-
-- (void)showUserInfoForUsername:(NSString *)aUsername
-{
-    NSLog(@"Timeline display manager: showing user info for username '%@'",
-        aUsername);
-    self.currentUsername = aUsername;
-
-    // HACK: forces to scroll to top
-    [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
-        animated:NO];
-
-    [self.userInfoController showingNewUser];
-    self.userInfoControllerWrapper.navigationItem.title = aUsername;
-    [self.userInfoControllerWrapper setCachedDataAvailable:NO];
-    [self.userInfoControllerWrapper setUpdatingState:kConnectedAndUpdating];
-    [self.wrapperController.navigationController
-        pushViewController:self.userInfoControllerWrapper animated:YES];
-    self.userInfoController.followingEnabled =
-        ![credentials.username isEqual:aUsername];
-
-    if (self.userInfoController.followingEnabled)
-        [service isUser:credentials.username following:aUsername];
-    [service isUserBlocked:aUsername];
-
-    [self.userInfoTwitterService fetchUserInfoForUsername:aUsername];
-}
-
 - (void)deleteTweet:(NSString *)tweetId
 {
     NSLog(@"Removing tweet with id %@", tweetId);
@@ -647,175 +430,6 @@ static BOOL scrollToTopValueAlreadyRead;
 }
 
 #pragma mark TweetDetailsViewDelegate implementation
-
-- (void)showTweetsForUser:(NSString *)username
-{
-    NSLog(@"Timeline display manager: showing tweets for %@", username);
-
-    NSString * title =
-        NSLocalizedString(@"timelineview.usertweets.title", @"");
-    self.tweetDetailsNetAwareViewController =
-        [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:nil] autorelease];
-
-    self.tweetDetailsTimelineDisplayMgr =
-        [timelineDisplayMgrFactory
-        createTimelineDisplayMgrWithWrapperController:
-        tweetDetailsNetAwareViewController
-        title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
-    self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
-    self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = YES;
-    [self.tweetDetailsTimelineDisplayMgr
-        setTimelineHeaderView:nil];
-    self.tweetDetailsTimelineDisplayMgr.currentUsername = username;
-    [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
-    
-    UIBarButtonItem * sendDMButton =
-        [[UIBarButtonItem alloc]
-        initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-        target:self.tweetDetailsTimelineDisplayMgr
-        action:@selector(sendDirectMessageToCurrentUser)];
-
-    self.tweetDetailsNetAwareViewController.navigationItem.rightBarButtonItem =
-        sendDMButton;
-
-    self.tweetDetailsNetAwareViewController.delegate =
-        self.tweetDetailsTimelineDisplayMgr;
-
-    TwitterService * twitterService =
-        [[[TwitterService alloc] initWithTwitterCredentials:nil
-        context:managedObjectContext]
-        autorelease];
-
-    ArbUserTimelineDataSource * dataSource =
-        [[[ArbUserTimelineDataSource alloc]
-        initWithTwitterService:twitterService
-        username:username]
-        autorelease];
-
-    self.tweetDetailsCredentialsPublisher =
-        [[CredentialsActivatedPublisher alloc]
-        initWithListener:dataSource action:@selector(setCredentials:)];
-
-    twitterService.delegate = dataSource;
-    [self.tweetDetailsTimelineDisplayMgr setService:dataSource tweets:nil page:1
-        forceRefresh:NO allPagesLoaded:NO];
-    dataSource.delegate = self.tweetDetailsTimelineDisplayMgr;
-
-    [dataSource setCredentials:credentials];
-    [self.wrapperController.navigationController
-        pushViewController:self.tweetDetailsNetAwareViewController
-        animated:YES];
-}
-
-- (void)showResultsForSearch:(NSString *)query
-{
-    NSLog(@"Timeline display manager: showing search results for '%@'", query);
-    self.currentSearch = query;
-
-    self.tweetDetailsNetAwareViewController =
-        [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:nil] autorelease];
-
-    self.tweetDetailsTimelineDisplayMgr =
-        [timelineDisplayMgrFactory
-        createTimelineDisplayMgrWithWrapperController:
-        tweetDetailsNetAwareViewController
-        title:query composeTweetDisplayMgr:composeTweetDisplayMgr];
-    self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
-    self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = NO;
-    self.tweetDetailsTimelineDisplayMgr.currentUsername = nil;
-    UIView * headerView =
-        [self.savedSearchMgr isSearchSaved:query] ?
-        [self removeSearchView] : [self saveSearchView];
-    [self.tweetDetailsTimelineDisplayMgr setTimelineHeaderView:headerView];
-    [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
-    self.tweetDetailsNetAwareViewController.navigationItem.rightBarButtonItem =
-        nil;
-
-    self.tweetDetailsNetAwareViewController.delegate =
-        self.tweetDetailsTimelineDisplayMgr;
-
-    TwitterService * twitterService =
-        [[[TwitterService alloc] initWithTwitterCredentials:nil
-        context:managedObjectContext]
-        autorelease];
-
-    SearchDataSource * dataSource =
-        [[[SearchDataSource alloc]
-        initWithTwitterService:twitterService
-        query:query]
-        autorelease];
-
-    self.tweetDetailsCredentialsPublisher =
-        [[CredentialsActivatedPublisher alloc]
-        initWithListener:dataSource action:@selector(setCredentials:)];
-
-    twitterService.delegate = dataSource;
-    [self.tweetDetailsTimelineDisplayMgr setService:dataSource tweets:nil page:1
-        forceRefresh:NO allPagesLoaded:NO];
-    dataSource.delegate = self.tweetDetailsTimelineDisplayMgr;
-
-    [dataSource setCredentials:credentials];
-    [self.wrapperController.navigationController
-        pushViewController:self.tweetDetailsNetAwareViewController
-        animated:YES];
-}
-
-- (void)showResultsForNearbySearchWithLatitude:(NSNumber *)latitude
-    longitude:(NSNumber *)longitude
-{
-    NSLog(@"Timeline display manager: showing results for nearby search");
-    self.tweetDetailsNetAwareViewController =
-        [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:nil] autorelease];
-
-    NSString * title =
-        NSLocalizedString(@"timelinedisplaymgr.nearbysearch", @"");
-    self.tweetDetailsTimelineDisplayMgr =
-        [timelineDisplayMgrFactory
-        createTimelineDisplayMgrWithWrapperController:
-        tweetDetailsNetAwareViewController
-        title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
-    self.tweetDetailsTimelineDisplayMgr.displayAsConversation = NO;
-    self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = NO;
-    self.tweetDetailsTimelineDisplayMgr.currentUsername = nil;
-
-    [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
-    self.tweetDetailsNetAwareViewController.navigationItem.rightBarButtonItem =
-        nil;
-
-    self.tweetDetailsNetAwareViewController.delegate =
-        self.tweetDetailsTimelineDisplayMgr;
-
-    TwitterService * twitterService =
-        [[[TwitterService alloc] initWithTwitterCredentials:nil
-        context:managedObjectContext]
-        autorelease];
-
-    NSNumber * radius =
-        [NSNumber numberWithInt:[SettingsReader nearbySearchRadius]];
-
-    NearbySearchDataSource * dataSource =
-        [[[NearbySearchDataSource alloc]
-        initWithTwitterService:twitterService
-        latitude:latitude longitude:longitude radiusInKm:radius]
-        autorelease];
-
-    self.tweetDetailsCredentialsPublisher =
-        [[CredentialsActivatedPublisher alloc]
-        initWithListener:dataSource action:@selector(setCredentials:)];
-
-    twitterService.delegate = dataSource;
-    [self.tweetDetailsTimelineDisplayMgr setService:dataSource tweets:nil page:1
-        forceRefresh:NO allPagesLoaded:NO];
-    dataSource.delegate = self.tweetDetailsTimelineDisplayMgr;
-
-    [dataSource setCredentials:credentials];
-    [self.wrapperController.navigationController
-        pushViewController:self.tweetDetailsNetAwareViewController
-        animated:YES];
-}
 
 - (void)setFavorite:(BOOL)favorite
 {
@@ -840,7 +454,6 @@ static BOOL scrollToTopValueAlreadyRead;
     NSLog(@"Timeline display manager: showing tweet details...");
     self.selectedTweet = tweetController.tweet;
     self.lastTweetDetailsController = tweetController;
-    [self deallocateTweetDetailsNode];
 }
 
 - (void)sendDirectMessageToUser:(NSString *)username
@@ -893,6 +506,28 @@ static BOOL scrollToTopValueAlreadyRead;
     [mgr displayConversationFrom:tweetId navigationController:navController];
 }
 
+#pragma mark TweetViewControllerDelegate implementation
+
+- (void)showUserInfoForUser:(User *)aUser
+{
+    [displayMgrHelper showUserInfoForUser:aUser];
+}
+
+- (void)showUserInfoForUsername:(NSString *)aUsername
+{
+    [displayMgrHelper showUserInfoForUsername:aUsername];    
+}
+
+- (void)showResultsForSearch:(NSString *)query
+{
+    [displayMgrHelper showResultsForSearch:query];
+}
+
+- (void)showLocationOnMap:(NSString *)location
+{
+    [displayMgrHelper showLocationOnMap:location];
+}
+
 #pragma mark ConversationDisplayMgrDelegate implementation
 
 - (void)displayTweetFromConversation:(TweetInfo *)tweet
@@ -926,155 +561,6 @@ static BOOL scrollToTopValueAlreadyRead;
     needsRefresh = NO;
 
     [conversationDisplayMgrs removeAllObjects];
-}
-
-#pragma mark UserInfoViewControllerDelegate implementation
-
-- (void)showLocationOnMap:(NSString *)locationString
-{
-    NSLog(@"Timeline display manager: showing %@ on map", locationString);
-
-    self.locationMapViewController.navigationItem.title = @"Map";
-    
-    [wrapperController.navigationController
-        pushViewController:self.locationMapViewController animated:YES];
-
-    [self.locationMapViewController setLocation:locationString];
-}
-
-- (void)showLocationInfo:(NSString *)locationString
-    coordinate:(CLLocationCoordinate2D)coordinate
-{
-    NSLog(@"Timeline display manager: showing location info for %@",
-        locationString);
-
-    [wrapperController.navigationController
-        pushViewController:self.locationInfoViewController animated:YES];
-
-    [self.locationInfoViewController setLocationString:locationString
-        coordinate:coordinate];
-}
-
-- (void)displayFollowingForUser:(NSString *)username
-{
-    NSLog(@"Timeline display manager: displaying 'following' list for %@",
-        username);
-
-    self.userListNetAwareViewController =
-        [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:nil] autorelease];
-
-    self.userListDisplayMgr =
-        [userListDisplayMgrFactory
-        createUserListDisplayMgrWithWrapperController:
-        self.userListNetAwareViewController
-        composeTweetDisplayMgr:composeTweetDisplayMgr
-        showFollowing:YES
-        username:username];
-    [self.userListDisplayMgr setCredentials:credentials];
-
-    [wrapperController.navigationController
-        pushViewController:self.userListNetAwareViewController animated:YES];
-}
-
-- (void)displayFollowersForUser:(NSString *)username
-{
-    NSLog(@"Timeline display manager: displaying 'followers' list for %@",
-        username);
-
-    self.userListNetAwareViewController =
-        [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:nil] autorelease];
-
-    self.userListDisplayMgr =
-        [userListDisplayMgrFactory
-        createUserListDisplayMgrWithWrapperController:
-        self.userListNetAwareViewController
-        composeTweetDisplayMgr:composeTweetDisplayMgr
-        showFollowing:NO
-        username:username];
-    [self.userListDisplayMgr setCredentials:credentials];
-
-    [wrapperController.navigationController
-        pushViewController:self.userListNetAwareViewController animated:YES];
-}
-
-- (void)displayFavoritesForUser:(NSString *)username
-{
-    NSLog(@"Timeline display manager: displaying favorites for user %@",
-        username);
-    NSString * title =
-        NSLocalizedString(@"timelineview.favorites.title", @"");
-    self.tweetDetailsNetAwareViewController =
-        [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:nil] autorelease];
-
-    self.tweetDetailsTimelineDisplayMgr =
-        [timelineDisplayMgrFactory
-        createTimelineDisplayMgrWithWrapperController:
-        tweetDetailsNetAwareViewController
-        title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
-    self.tweetDetailsTimelineDisplayMgr.displayAsConversation = YES;
-    self.tweetDetailsTimelineDisplayMgr.setUserToFirstTweeter = NO;
-    [self.tweetDetailsTimelineDisplayMgr setCredentials:credentials];
-
-    self.tweetDetailsNetAwareViewController.delegate =
-        self.tweetDetailsTimelineDisplayMgr;
-
-    TwitterService * twitterService =
-        [[[TwitterService alloc] initWithTwitterCredentials:nil
-        context:managedObjectContext]
-        autorelease];
-
-    FavoritesTimelineDataSource * dataSource =
-        [[[FavoritesTimelineDataSource alloc]
-        initWithTwitterService:twitterService
-        username:username]
-        autorelease];
-
-    self.tweetDetailsCredentialsPublisher =
-        [[CredentialsActivatedPublisher alloc]
-        initWithListener:dataSource action:@selector(setCredentials:)];
-
-    twitterService.delegate = dataSource;
-    [self.tweetDetailsTimelineDisplayMgr setService:dataSource tweets:nil page:1
-        forceRefresh:NO allPagesLoaded:NO];
-    dataSource.delegate = self.tweetDetailsTimelineDisplayMgr;
-
-    [dataSource setCredentials:credentials];
-    [self.wrapperController.navigationController
-        pushViewController:self.tweetDetailsNetAwareViewController
-        animated:YES];
-}
-
-- (void)startFollowingUser:(NSString *)username
-{
-    NSLog(@"Timeline display manager: sending 'follow user' request for %@",
-        username);
-    [service followUser:username];
-}
-
-- (void)stopFollowingUser:(NSString *)username
-{
-    NSLog(@"Timeline display manager: sending 'stop following' request for %@",
-        username);
-    [service stopFollowingUser:username];
-}
-
-- (void)blockUser:(NSString *)username
-{
-    [service blockUserWithUsername:username];
-}
-
-- (void)unblockUser:(NSString *)username
-{
-    [service unblockUserWithUsername:username];
-}
-
-- (void)showingUserInfoView
-{
-    NSLog(@"Timeline display manager: showing user info view");
-    [self deallocateTweetDetailsNode];
 }
 
 #pragma mark TimelineDisplayMgr implementation
@@ -1119,16 +605,6 @@ static BOOL scrollToTopValueAlreadyRead;
 - (BOOL)cachedDataAvailable
 {
     return !!timeline && [timeline count] > 0;
-}
-
-- (void)deallocateTweetDetailsNode
-{
-    self.tweetDetailsCredentialsPublisher = nil;
-    self.tweetDetailsTimelineDisplayMgr = nil;
-    self.tweetDetailsNetAwareViewController = nil;
-    self.currentSearch = nil;
-    self.userListDisplayMgr = nil;
-    self.userListNetAwareViewController = nil;
 }
 
 - (void)replyToTweetWithMessage
@@ -1225,57 +701,6 @@ static BOOL scrollToTopValueAlreadyRead;
     return tweetDetailsController;
 }
 
-- (UserInfoViewController *)userInfoController
-{
-    if (!userInfoController) {
-        NSLog(@"Timeline display manager: creating new user info display mgr");
-        userInfoController =
-            [[UserInfoViewController alloc]
-            initWithNibName:@"UserInfoView" bundle:nil];
-
-        userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
-
-        userInfoController.delegate = self;
-    }
-
-    return userInfoController;
-}
-
-- (NetworkAwareViewController *)userInfoControllerWrapper
-{
-    if (!userInfoControllerWrapper) {
-        userInfoControllerWrapper =
-            [[NetworkAwareViewController alloc]
-            initWithTargetViewController:self.userInfoController];
-    }
-
-    return userInfoControllerWrapper;
-}
-
-- (UserInfoRequestAdapter *)userInfoRequestAdapter
-{
-    if (!userInfoRequestAdapter) {
-        userInfoRequestAdapter =
-            [[UserInfoRequestAdapter alloc]
-            initWithTarget:self.userInfoController action:@selector(setUser:)
-            wrapperController:self.userInfoControllerWrapper errorHandler:self];
-    }
-
-    return userInfoRequestAdapter;
-}
-
-- (TwitterService *)userInfoTwitterService
-{
-    if (!userInfoTwitterService) {
-        userInfoTwitterService =
-            [[TwitterService alloc] initWithTwitterCredentials:credentials
-            context:managedObjectContext];
-        userInfoTwitterService.delegate = self.userInfoRequestAdapter;
-    }
-    
-    return userInfoTwitterService;
-}
-
 - (void)setService:(NSObject<TimelineDataSource> *)aTimelineSource
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page
     forceRefresh:(BOOL)refresh allPagesLoaded:(BOOL)newAllPagesLoaded
@@ -1345,10 +770,8 @@ static BOOL scrollToTopValueAlreadyRead;
     if (showMentions)
         self.timelineController.mentionUsername = credentials.username;
 
-    self.savedSearchMgr.accountName = credentials.username;
-
     [service setCredentials:credentials];
-    [userInfoTwitterService setCredentials:credentials];
+    [displayMgrHelper setCredentials:credentials];
     [timelineSource setCredentials:credentials];
 
     // check for pointer equality rather than string equality against username
@@ -1423,156 +846,10 @@ static BOOL scrollToTopValueAlreadyRead;
     [timelineController setTimelineHeaderView:view];
 }
 
-- (void)removeSearch:(id)sender
-{
-    [self.tweetDetailsTimelineDisplayMgr
-        setTimelineHeaderView:[self saveSearchView]];
-    [self.savedSearchMgr removeSavedSearchForQuery:self.currentSearch];
-}
-
-- (void)saveSearch:(id)sender
-{
-    [self.tweetDetailsTimelineDisplayMgr
-        setTimelineHeaderView:[self removeSearchView]];
-    [self.savedSearchMgr addSavedSearch:self.currentSearch];
-}
-
-- (UIView *)saveSearchView
-{
-    NSString * title = NSLocalizedString(@"savedsearch.save.title", @"");
-    SEL action = @selector(saveSearch:);
-
-    return [self toggleSaveSearchViewWithTitle:title action:action];
-}
-
-- (UIView *)removeSearchView
-{
-    NSString * title = NSLocalizedString(@"savedsearch.remove.title", @"");
-    SEL action = @selector(removeSearch:);
-
-    return [self toggleSaveSearchViewWithTitle:title action:action];
-}
-
-- (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title
-    action:(SEL)action
-{
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
-
-    CGFloat viewWidth = landscape ? 480 : 320;
-    CGRect viewFrame = CGRectMake(0, 0, viewWidth, 51);
-    UIView * view = [[UIView alloc] initWithFrame:viewFrame];
-    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
-    CGFloat buttonWidth = landscape ? 440 : 280;
-    CGRect buttonFrame = CGRectMake(20, 7, buttonWidth, 37);
-    UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = buttonFrame;
-    button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
-    CGRect grayLineFrame = CGRectMake(0, 50, viewWidth, 1);
-    UIView * grayLineView =
-        [[[UIView alloc] initWithFrame:grayLineFrame] autorelease];
-    grayLineView.backgroundColor =
-        [SettingsReader displayTheme] == kDisplayThemeDark ?
-        [UIColor twitchDarkDarkGrayColor] : [UIColor twitchLightGrayColor];
-    grayLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
-    NSString * backgroundImageName =
-        [SettingsReader displayTheme] == kDisplayThemeDark ?
-        @"SaveSearchDarkThemeButtonBackground.png" :
-        @"SaveSearchButtonBackground.png";
-    UIImage * background =
-        [[UIImage imageNamed:backgroundImageName]
-        stretchableImageWithLeftCapWidth:10 topCapHeight:0];
-    NSString * highlightedBackgroundImageName =
-        [SettingsReader displayTheme] == kDisplayThemeDark ?
-        @"SaveSearchDarkThemeButtonBackgroundHighlighted.png" :
-        @"SaveSearchButtonBackgroundHighlighted.png";
-    UIImage * selectedBackground =
-        [[UIImage imageNamed:highlightedBackgroundImageName]
-        stretchableImageWithLeftCapWidth:10 topCapHeight:0];
-    [button setBackgroundImage:background forState:UIControlStateNormal];
-    [button setBackgroundImage:selectedBackground
-                      forState:UIControlStateHighlighted];
-
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
-    
-    UIColor * color =
-        [SettingsReader displayTheme] == kDisplayThemeDark ?
-        [UIColor twitchBlueOnDarkBackgroundColor] :
-        [UIColor colorWithRed:.353 green:.4 blue:.494 alpha:1.0];
-    [button setTitleColor:color forState:UIControlStateNormal];
-
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    button.titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
-
-    UIControlEvents events = UIControlEventTouchUpInside;
-    [button addTarget:self action:action forControlEvents:events];
-
-    [view addSubview:button];
-    [view addSubview:grayLineView];
-    
-    return [view autorelease];
-}
-
-- (SavedSearchMgr *)savedSearchMgr
-{
-    if (!savedSearchMgr)
-        savedSearchMgr =
-            [[SavedSearchMgr alloc]
-            initWithAccountName:self.credentials.username
-            context:managedObjectContext];
-
-    return savedSearchMgr;
-}
-
 - (void)setShowMentions:(BOOL)show
 {
     showMentions = show;
     self.timelineController.mentionUsername = show ? credentials.username : nil;
-}
-
-- (LocationMapViewController *)locationMapViewController
-{
-    if (!locationMapViewController) {
-        locationMapViewController =
-            [[LocationMapViewController alloc]
-            initWithNibName:@"LocationMapView" bundle:nil];
-        locationMapViewController.delegate = self;
-
-        UIBarButtonItem * currentLocationButton =
-            [[[UIBarButtonItem alloc]
-            initWithImage:[UIImage imageNamed:@"Location.png"]
-            style:UIBarButtonItemStyleBordered target:locationMapViewController
-            action:@selector(setCurrentLocation:)] autorelease];
-        self.locationMapViewController.navigationItem.rightBarButtonItem =
-            currentLocationButton;
-    }
-
-    return locationMapViewController;
-}
-
-- (LocationInfoViewController *)locationInfoViewController
-{
-    if (!locationInfoViewController) {
-        locationInfoViewController =
-            [[LocationInfoViewController alloc]
-            initWithNibName:@"LocationInfoView" bundle:nil];
-        locationInfoViewController.navigationItem.title =
-            NSLocalizedString(@"locationinfo.title", @"");
-        locationInfoViewController.delegate = self;
-
-        UIBarButtonItem * forwardButton =
-            [[[UIBarButtonItem alloc]
-            initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-            target:locationInfoViewController
-            action:@selector(showForwardOptions)] autorelease];
-        self.locationInfoViewController.navigationItem.rightBarButtonItem =
-            forwardButton;
-    }
-
-    return locationInfoViewController;
 }
 
 - (NSMutableDictionary *)tweetIdToIndexDict
