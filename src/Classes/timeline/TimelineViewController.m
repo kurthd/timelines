@@ -266,12 +266,6 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     loadMoreButton.enabled = NO;
 }
 
-- (IBAction)showUserInfo:(id)sender
-{
-    NSLog(@"'Show user info' selected");
-    [delegate showUserInfo];
-}
-
 - (void)addTweet:(TweetInfo *)tweet
 {
     NSMutableArray * newTweets = [tweets mutableCopy];

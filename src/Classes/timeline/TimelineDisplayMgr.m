@@ -11,6 +11,7 @@
 #import "User+UIAdditions.h"
 #import "NSArray+IterationAdditions.h"
 #import "DisplayMgrHelper.h"
+#import "SettingsReader.h"
 
 @interface TimelineDisplayMgr ()
 
@@ -23,26 +24,12 @@
 - (void)showPreviousTweet;
 - (void)updateTweetIndexCache;
 
-+ (NSInteger)retweetFormat;
-+ (BOOL)scrollToTop;
-
 @property (nonatomic, readonly) NSMutableDictionary * tweetIdToIndexDict;
 @property (nonatomic, readonly) NSMutableDictionary * tweetIndexToIdDict;
 
 @end
 
-enum {
-    kRetweetFormatVia,
-    kRetweetFormatRT
-} RetweetFormat;
-
 @implementation TimelineDisplayMgr
-
-static NSInteger retweetFormat;
-static NSInteger retweetFormatValueAlredyRead;
-
-static BOOL scrollToTop;
-static BOOL scrollToTopValueAlreadyRead;
 
 @synthesize wrapperController, timelineController, lastTweetDetailsController,
     selectedTweet, updateId, user, timeline, pagesShown, displayAsConversation,
@@ -186,7 +173,7 @@ static BOOL scrollToTopValueAlreadyRead;
             [service fetchUserInfoForUsername:self.currentUsername];
     }
 
-    BOOL scrollToTop = [[self class] scrollToTop];
+    BOOL scrollToTop = [SettingsReader scrollToTop];
     NSString * scrollId =
         scrollToTop ? [anUpdateId description] : self.tweetIdToShow;
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
@@ -406,11 +393,6 @@ static BOOL scrollToTopValueAlreadyRead;
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 
-- (void)showUserInfo
-{
-    [self showUserInfoForUser:user];
-}
-
 - (void)deleteTweet:(NSString *)tweetId
 {
     NSLog(@"Removing tweet with id %@", tweetId);
@@ -617,7 +599,7 @@ static BOOL scrollToTopValueAlreadyRead;
 {
     NSLog(@"Timeline display manager: composing retweet");
     NSString * reTweetMessage;
-    switch ([[self class] retweetFormat]) {
+    switch ([SettingsReader retweetFormat]) {
         case kRetweetFormatVia:
             reTweetMessage =
                 [NSString stringWithFormat:@"%@ (via @%@)", selectedTweet.text,
@@ -866,28 +848,6 @@ static BOOL scrollToTopValueAlreadyRead;
         tweetIndexToIdDict = [[NSMutableDictionary dictionary] retain];
 
     return tweetIndexToIdDict;
-}
-
-+ (NSInteger)retweetFormat
-{
-    if (!retweetFormatValueAlredyRead) {
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        retweetFormat = [defaults integerForKey:@"retweet_format"];
-        retweetFormatValueAlredyRead = YES;
-    }
-
-    return retweetFormat;
-}
-
-+ (BOOL)scrollToTop
-{
-    if (!scrollToTopValueAlreadyRead) {
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        scrollToTop = [defaults boolForKey:@"scroll_to_top"];
-        scrollToTopValueAlreadyRead = YES;
-    }
-
-    return scrollToTop;
 }
 
 @end

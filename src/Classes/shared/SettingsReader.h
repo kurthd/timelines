@@ -4,6 +4,11 @@
 
 #import <Foundation/Foundation.h>
 
+enum {
+    kRetweetFormatVia,
+    kRetweetFormatRT
+} RetweetFormat;
+
 typedef enum {
     kComposeTweetImageQualityLow,
     kComposeTweetImageQualityMedium,
@@ -24,6 +29,7 @@ typedef enum {
 + (NSInteger)nearbySearchRadius;
 + (DisplayTheme)displayTheme;
 + (NSInteger)defaultNearbySearchRadius;
-+ (NSInteger)defaultNearbySearchRadius;
++ (BOOL)scrollToTop;
++ (NSInteger)retweetFormat;
 
 @end

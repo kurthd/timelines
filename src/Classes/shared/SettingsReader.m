@@ -21,6 +21,12 @@ static NSInteger nearbySearchRadius;
 static BOOL alreadyReadThemeValue;
 static NSInteger theme;
 
+static BOOL scrollToTopValueAlreadyRead;
+static BOOL scrollToTop;
+
+static NSInteger retweetFormatValueAlredyRead;
+static NSInteger retweetFormat;
+
 + (NSInteger)fetchQuantity
 {
     if (!alreadyReadFetchQuantityValue) {
@@ -93,6 +99,28 @@ static NSInteger theme;
     alreadyReadThemeValue = YES;
 
     return theme;
+}
+
++ (BOOL)scrollToTop
+{
+    if (!scrollToTopValueAlreadyRead) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        scrollToTop = [defaults boolForKey:@"scroll_to_top"];
+        scrollToTopValueAlreadyRead = YES;
+    }
+
+    return scrollToTop;
+}
+
++ (NSInteger)retweetFormat
+{
+    if (!retweetFormatValueAlredyRead) {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        retweetFormat = [defaults integerForKey:@"retweet_format"];
+        retweetFormatValueAlredyRead = YES;
+    }
+
+    return retweetFormat;
 }
 
 @end

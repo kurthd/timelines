@@ -73,7 +73,7 @@
     // A new conversation display mgr instance is created for every
     // conversation that is viewed. Indeed, we must create a new one, as we
     // must push a unique view controller instance onto the nav stack for
-    // each one, adn the display mgr owns the view controller.
+    // each one, and the display mgr owns the view controller.
     //
     // Every conversation display mgr is added to this array. When the
     // timeline view is displayed, the array is emptied.

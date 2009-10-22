@@ -63,7 +63,6 @@
 - (void)selectTweetId:(NSString *)tweetId;
 
 - (IBAction)loadMoreTweets:(id)sender;
-- (IBAction)showUserInfo:(id)sender;
 - (IBAction)showFullProfileImage:(id)sender;
 
 - (void)addTweet:(TweetInfo *)tweet;
