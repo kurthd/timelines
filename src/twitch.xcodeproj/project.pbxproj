@@ -821,6 +821,7 @@
 		9130FF221035E07B004E3030 /* MarkAsFavoriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9130FF201035E07B004E3030 /* MarkAsFavoriteCell.xib */; };
 		9142C87B108D139800BFE960 /* MentionTimelineDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142C87A108D139800BFE960 /* MentionTimelineDisplayMgr.m */; };
 		9142C880108D2D8E00BFE960 /* DisplayMgrHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142C87F108D2D8E00BFE960 /* DisplayMgrHelper.m */; };
+		9142CB0D108FDD0300BFE960 /* ProfileSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 9142CB0C108FDD0300BFE960 /* ProfileSmall.png */; };
 		9145EF5B1005073200C2E485 /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
 		9145EF5C1005073F00C2E485 /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
 		9145EF5D1005074A00C2E485 /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
@@ -1450,6 +1451,7 @@
 		9142C87A108D139800BFE960 /* MentionTimelineDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionTimelineDisplayMgr.m; path = timeline/MentionTimelineDisplayMgr.m; sourceTree = "<group>"; };
 		9142C87E108D2D8E00BFE960 /* DisplayMgrHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayMgrHelper.h; path = shared/DisplayMgrHelper.h; sourceTree = "<group>"; };
 		9142C87F108D2D8E00BFE960 /* DisplayMgrHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DisplayMgrHelper.m; path = shared/DisplayMgrHelper.m; sourceTree = "<group>"; };
+		9142CB0C108FDD0300BFE960 /* ProfileSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ProfileSmall.png; path = images/ProfileSmall.png; sourceTree = "<group>"; };
 		9145EFC91005276100C2E485 /* Re-tweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweetDisabled.png"; path = "images/Re-tweetDisabled.png"; sourceTree = "<group>"; };
 		9145EFFA10054D9400C2E485 /* BlueEnvelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueEnvelope.png; path = images/BlueEnvelope.png; sourceTree = "<group>"; };
 		9145F022100573AF00C2E485 /* User+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "User+UIAdditions.h"; path = "users/User+UIAdditions.h"; sourceTree = "<group>"; };
@@ -2721,6 +2723,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9142CB0C108FDD0300BFE960 /* ProfileSmall.png */,
 				0552815E1087F7810055A37C /* ShortenLinks.png */,
 				916A2CD01088F5CE00C5895D /* AccountSelectedCheckmarkDarkTheme.png */,
 				916A2B241087C23A00C5895D /* SaveSearchDarkThemeButtonBackground.png */,
@@ -3344,6 +3347,7 @@
 				05F51C6D1087A6AF00C6AD97 /* SelectPersonView.xib in Resources */,
 				055281601087F7810055A37C /* ShortenLinks.png in Resources */,
 				916A2CD11088F5CE00C5895D /* AccountSelectedCheckmarkDarkTheme.png in Resources */,
+				9142CB0D108FDD0300BFE960 /* ProfileSmall.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
