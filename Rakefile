@@ -60,7 +60,10 @@ task :build_tags do |t|
   tags_file = "#{src_dir}/tags"
 
   print "Rebuilding tags in '#{tags_file}'..."
-  output = %x{ ctags --language-force=objc --objc-kinds=+PiIMCZ -f #{tags_file}  #{src_dir}/** }
+  output =
+    %x{
+        etags --language=objc --output=tags #{src_dir}/**/*.h #{src_dir}/**/*.m
+      }
   if (output.chomp.length > 0)
     puts ""      # print a newline
     puts output  # only produces output if there's an error
