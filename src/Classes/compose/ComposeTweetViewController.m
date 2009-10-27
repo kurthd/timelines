@@ -103,6 +103,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [recipientView release];
     [recipientTextField release];
+    [recipientBackgroundView release];
     [addRecipientButton release];
 
     [photoUploadView release];
@@ -315,6 +316,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         characterCountLandscape.backgroundColor =
             [TimelineTableViewCellView defaultDarkThemeCellColor];
         textView.keyboardAppearance = UIKeyboardAppearanceAlert;
+        // recipientBackgroundView.image =
+        //     [UIImage imageNamed:@"ComposeRecipientGradientDarkTheme.png"];
     } else {
         characterCountLandscape.textColor = [UIColor twitchGrayColor];
         characterCountLandscape.backgroundColor = [UIColor whiteColor];

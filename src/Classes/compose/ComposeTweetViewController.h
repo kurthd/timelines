@@ -27,6 +27,7 @@
 
     BOOL hideRecipientView;
     IBOutlet UIView * recipientView;
+    IBOutlet UIImageView * recipientBackgroundView;
     IBOutlet UITextField * recipientTextField;
     IBOutlet UIButton * addRecipientButton;
 

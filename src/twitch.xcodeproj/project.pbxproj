@@ -824,6 +824,7 @@
 		9142CB0D108FDD0300BFE960 /* ProfileSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 9142CB0C108FDD0300BFE960 /* ProfileSmall.png */; };
 		9142CCFD10920AF900BFE960 /* ToggleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142CCFC10920AF900BFE960 /* ToggleViewController.m */; };
 		9142D08F109749E400BFE960 /* MentionsAcctMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142D08E109749E400BFE960 /* MentionsAcctMgr.m */; };
+		9142D19110979B4300BFE960 /* ComposeRecipientGradientDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 9142D19010979B4300BFE960 /* ComposeRecipientGradientDarkTheme.png */; };
 		9145EF5B1005073200C2E485 /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
 		9145EF5C1005073F00C2E485 /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
 		9145EF5D1005074A00C2E485 /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
@@ -1458,6 +1459,7 @@
 		9142CCFC10920AF900BFE960 /* ToggleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToggleViewController.m; path = shared/ToggleViewController.m; sourceTree = "<group>"; };
 		9142D08D109749E400BFE960 /* MentionsAcctMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionsAcctMgr.h; path = timeline/MentionsAcctMgr.h; sourceTree = "<group>"; };
 		9142D08E109749E400BFE960 /* MentionsAcctMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionsAcctMgr.m; path = timeline/MentionsAcctMgr.m; sourceTree = "<group>"; };
+		9142D19010979B4300BFE960 /* ComposeRecipientGradientDarkTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ComposeRecipientGradientDarkTheme.png; path = images/ComposeRecipientGradientDarkTheme.png; sourceTree = "<group>"; };
 		9145EFC91005276100C2E485 /* Re-tweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweetDisabled.png"; path = "images/Re-tweetDisabled.png"; sourceTree = "<group>"; };
 		9145EFFA10054D9400C2E485 /* BlueEnvelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueEnvelope.png; path = images/BlueEnvelope.png; sourceTree = "<group>"; };
 		9145F022100573AF00C2E485 /* User+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "User+UIAdditions.h"; path = "users/User+UIAdditions.h"; sourceTree = "<group>"; };
@@ -2731,6 +2733,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9142D19010979B4300BFE960 /* ComposeRecipientGradientDarkTheme.png */,
 				9142CB0C108FDD0300BFE960 /* ProfileSmall.png */,
 				0552815E1087F7810055A37C /* ShortenLinks.png */,
 				916A2CD01088F5CE00C5895D /* AccountSelectedCheckmarkDarkTheme.png */,
@@ -3358,6 +3361,7 @@
 				055281601087F7810055A37C /* ShortenLinks.png in Resources */,
 				916A2CD11088F5CE00C5895D /* AccountSelectedCheckmarkDarkTheme.png in Resources */,
 				9142CB0D108FDD0300BFE960 /* ProfileSmall.png in Resources */,
+				9142D19110979B4300BFE960 /* ComposeRecipientGradientDarkTheme.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
