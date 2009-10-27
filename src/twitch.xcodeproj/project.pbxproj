@@ -822,6 +822,8 @@
 		9142C87B108D139800BFE960 /* MentionTimelineDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142C87A108D139800BFE960 /* MentionTimelineDisplayMgr.m */; };
 		9142C880108D2D8E00BFE960 /* DisplayMgrHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142C87F108D2D8E00BFE960 /* DisplayMgrHelper.m */; };
 		9142CB0D108FDD0300BFE960 /* ProfileSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 9142CB0C108FDD0300BFE960 /* ProfileSmall.png */; };
+		9142CCFD10920AF900BFE960 /* ToggleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142CCFC10920AF900BFE960 /* ToggleViewController.m */; };
+		9142D08F109749E400BFE960 /* MentionsAcctMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142D08E109749E400BFE960 /* MentionsAcctMgr.m */; };
 		9145EF5B1005073200C2E485 /* Re-tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A247780FFE838D00538F29 /* Re-tweet.png */; };
 		9145EF5C1005073F00C2E485 /* Re-tweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */; };
 		9145EF5D1005074A00C2E485 /* DeleteTweetSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */; };
@@ -1452,6 +1454,10 @@
 		9142C87E108D2D8E00BFE960 /* DisplayMgrHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayMgrHelper.h; path = shared/DisplayMgrHelper.h; sourceTree = "<group>"; };
 		9142C87F108D2D8E00BFE960 /* DisplayMgrHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DisplayMgrHelper.m; path = shared/DisplayMgrHelper.m; sourceTree = "<group>"; };
 		9142CB0C108FDD0300BFE960 /* ProfileSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ProfileSmall.png; path = images/ProfileSmall.png; sourceTree = "<group>"; };
+		9142CCFB10920AF900BFE960 /* ToggleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToggleViewController.h; path = shared/ToggleViewController.h; sourceTree = "<group>"; };
+		9142CCFC10920AF900BFE960 /* ToggleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToggleViewController.m; path = shared/ToggleViewController.m; sourceTree = "<group>"; };
+		9142D08D109749E400BFE960 /* MentionsAcctMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionsAcctMgr.h; path = timeline/MentionsAcctMgr.h; sourceTree = "<group>"; };
+		9142D08E109749E400BFE960 /* MentionsAcctMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionsAcctMgr.m; path = timeline/MentionsAcctMgr.m; sourceTree = "<group>"; };
 		9145EFC91005276100C2E485 /* Re-tweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweetDisabled.png"; path = "images/Re-tweetDisabled.png"; sourceTree = "<group>"; };
 		9145EFFA10054D9400C2E485 /* BlueEnvelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueEnvelope.png; path = images/BlueEnvelope.png; sourceTree = "<group>"; };
 		9145F022100573AF00C2E485 /* User+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "User+UIAdditions.h"; path = "users/User+UIAdditions.h"; sourceTree = "<group>"; };
@@ -2246,6 +2252,8 @@
 				05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */,
 				9142C87E108D2D8E00BFE960 /* DisplayMgrHelper.h */,
 				9142C87F108D2D8E00BFE960 /* DisplayMgrHelper.m */,
+				9142CCFB10920AF900BFE960 /* ToggleViewController.h */,
+				9142CCFC10920AF900BFE960 /* ToggleViewController.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -2889,6 +2897,8 @@
 				919CCC5B1059CD6B0029C0A1 /* NearbySearchDataSource.m */,
 				9142C879108D139800BFE960 /* MentionTimelineDisplayMgr.h */,
 				9142C87A108D139800BFE960 /* MentionTimelineDisplayMgr.m */,
+				9142D08D109749E400BFE960 /* MentionsAcctMgr.h */,
+				9142D08E109749E400BFE960 /* MentionsAcctMgr.m */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -3964,6 +3974,8 @@
 				054BE35A108A7AC500734CAA /* BitlyUrlShorteningService.m in Sources */,
 				9142C87B108D139800BFE960 /* MentionTimelineDisplayMgr.m in Sources */,
 				9142C880108D2D8E00BFE960 /* DisplayMgrHelper.m in Sources */,
+				9142CCFD10920AF900BFE960 /* ToggleViewController.m in Sources */,
+				9142D08F109749E400BFE960 /* MentionsAcctMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

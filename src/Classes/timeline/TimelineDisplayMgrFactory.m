@@ -30,7 +30,9 @@
 
 - (TimelineDisplayMgr *)
     createTimelineDisplayMgrWithWrapperController:
-    (NetworkAwareViewController *)wrapperController title:(NSString *)title
+    (NetworkAwareViewController *)wrapperController
+    navigationController:(UINavigationController *)navigationController
+    title:(NSString *)title
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
 {
     TimelineViewController * timelineController =
@@ -58,7 +60,9 @@
         autorelease];
 
     TimelineDisplayMgr * timelineDisplayMgr =
-        [[[TimelineDisplayMgr alloc] initWithWrapperController:wrapperController
+        [[[TimelineDisplayMgr alloc]
+        initWithWrapperController:wrapperController
+        navigationController:navigationController
         timelineController:timelineController timelineSource:dataSource
         service:timelineService title:title factory:self
         managedObjectContext:context

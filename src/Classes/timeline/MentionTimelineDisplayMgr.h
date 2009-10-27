@@ -12,19 +12,23 @@
 #import "DisplayMgrHelper.h"
 #import "TweetInfo.h"
 #import "TwitterCredentials.h"
+#import "NetworkAwareViewControllerDelegate.h"
 
 @interface MentionTimelineDisplayMgr :
     NSObject
     <TwitterServiceDelegate, TimelineViewControllerDelegate,
-    TweetViewControllerDelegate, ConversationDisplayMgrDelegate>
+    TweetViewControllerDelegate, ConversationDisplayMgrDelegate,
+    NetworkAwareViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
+    UINavigationController * navigationController;
     TimelineViewController * timelineController;
     TweetViewController * tweetDetailsController;
     NetworkAwareViewController * lastTweetDetailsWrapperController;
     TweetViewController * lastTweetDetailsController;
     TwitterService * service;
     UITabBarItem * tabBarItem;
+    UISegmentedControl * segmentedControl;
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
     NSManagedObjectContext * managedObjectContext;
 
@@ -40,8 +44,11 @@
 
     BOOL refreshingMessages;
     BOOL alreadyBeenDisplayedAfterCredentialChange;
+    BOOL receivedQueryResponse;
+    BOOL displayed;
     NSInteger outstandingRequests;
     NSInteger loadMoreNextPage;
+    BOOL showBadge;
 
     NSMutableDictionary * tweetIdToIndexDict;
     NSMutableDictionary * tweetIndexToIdDict;
@@ -56,7 +63,11 @@
     NSMutableArray * conversationDisplayMgrs;
 }
 
+@property (nonatomic, assign) NSInteger numNewMentions;
+@property (nonatomic, assign) BOOL showBadge;
+
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
+    navigationController:(UINavigationController *)aNavigationController
     timelineController:(TimelineViewController *)timelineController
     service:(TwitterService *)aService
     factory:(TimelineDisplayMgrFactory *)factory
@@ -64,12 +75,16 @@
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
     userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry
-    tabBarItem:(UITabBarItem *)tabBarItem;
+    tabBarItem:(UITabBarItem *)tabBarItem
+    segmentedControl:(UISegmentedControl *)segmentedControl;
 
 - (void)refreshWithLatest;
 - (void)updateMentionsSinceLastUpdateIds;
 - (void)updateWithABunchOfRecentMentions;
 - (void)loadAnotherPageOfMentions;
+- (void)updateMentionsAfterCredentialChange;
+
+- (void)setTimeline:(NSDictionary *)mentions updateId:(NSNumber *)updateId;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)clearState;

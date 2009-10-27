@@ -96,22 +96,22 @@
 - (void)addTweetsToConversation:(NSArray *)tweets
 {
     [conversation addObjectsFromArray:tweets];
-
+    
     NSMutableArray * indexPaths = [NSMutableArray array];
     NSInteger rowOffset = conversation.count - tweets.count;
-
+    
     for (NSInteger i = 0; i < tweets.count; ++i) {
         NSIndexPath * indexPath =
             [NSIndexPath indexPathForRow:rowOffset + i inSection:0];
         [indexPaths addObject:indexPath];
     }
-
+    
     [self.tableView insertRowsAtIndexPaths:indexPaths
                           withRowAnimation:UITableViewRowAnimationTop];
-
+    
     waitingFor -= tweets.count;
     NSString * nextId = [[conversation lastObject] inReplyToTwitterTweetId];
-
+    
     if (waitingFor > 0 && nextId)
         [delegate fetchTweetWithId:nextId];
     else {
@@ -354,13 +354,13 @@
         loadingAlpha != self.loadingView.alpha;
     if (footerChanged) {
         [UIView beginAnimations:nil context:NULL];
-
+    
         self.loadMoreView.alpha = loadMoreAlpha;
         self.loadingView.alpha = loadingAlpha;
-
+    
         [UIView commitAnimations];
     }
-
+    
     UIEdgeInsets edgeInsets;
     if (loadMoreAlpha != 0 || loadingAlpha != 0)
         footer = self.footerView;
@@ -369,8 +369,9 @@
         edgeInsets.bottom = -700;
     }
     edgeInsets.top = -392;
+    edgeInsets.left = 0;
     self.tableView.contentInset = edgeInsets;
-
+    
     if (footer != self.tableView.tableFooterView)
         if (!self.tableView.tableFooterView)  // no footer - display now
             self.tableView.tableFooterView = footer;

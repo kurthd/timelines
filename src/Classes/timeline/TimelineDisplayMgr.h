@@ -32,6 +32,7 @@
     TweetViewControllerDelegate, NetworkAwareViewControllerDelegate,
     TwitterServiceDelegate, UIWebViewDelegate, ConversationDisplayMgrDelegate>
 {
+    UINavigationController * navigationController;
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
     NetworkAwareViewController * lastTweetDetailsWrapperController;
@@ -113,6 +114,7 @@
 @property (nonatomic, assign) BOOL showMentions;
     
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
+    navigationController:(UINavigationController *)navigationController
     timelineController:(TimelineViewController *)aTimelineController
     timelineSource:(NSObject<TimelineDataSource> *)timelineSource
     service:(TwitterService *)service title:(NSString *)title
@@ -125,6 +127,7 @@
 - (void)setService:(NSObject<TimelineDataSource> *)aService
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page
     forceRefresh:(BOOL)refresh allPagesLoaded:(BOOL)allPagesLoaded;
+- (void)setTweets:(NSDictionary *)someTweets;
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)replyToTweet;
 - (void)refreshWithLatest;

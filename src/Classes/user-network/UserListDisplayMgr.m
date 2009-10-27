@@ -79,6 +79,7 @@
         displayMgrHelper =
             [[DisplayMgrHelper alloc]
             initWithWrapperController:aWrapperController
+            navigationController:aWrapperController.navigationController
             userListDisplayMgrFactor:userListFactory
             composeTweetDisplayMgr:composeTweetDisplayMgr
             twitterService:displayHelperService

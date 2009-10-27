@@ -18,7 +18,9 @@
 
 - (TimelineDisplayMgr *)
     createTimelineDisplayMgrWithWrapperController:
-    (NetworkAwareViewController *)wrapperController title:(NSString *)title
+    (NetworkAwareViewController *)wrapperController
+    navigationController:(UINavigationController *)navigationController
+    title:(NSString *)title
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr;
     
 @end

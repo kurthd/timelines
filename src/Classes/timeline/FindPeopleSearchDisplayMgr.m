@@ -328,6 +328,7 @@
     self.timelineDisplayMgr =
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:self.nextWrapperController
+        navigationController:netAwareController.navigationController
         title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.timelineDisplayMgr.displayAsConversation = NO;
     self.timelineDisplayMgr.setUserToFirstTweeter = YES;
@@ -451,6 +452,7 @@
     self.timelineDisplayMgr =
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:nextWrapperController
+        navigationController:netAwareController.navigationController
         title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.timelineDisplayMgr.displayAsConversation = YES;
     self.timelineDisplayMgr.setUserToFirstTweeter = NO;
@@ -538,6 +540,7 @@
     self.timelineDisplayMgr =
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:nextWrapperController
+        navigationController:netAwareController.navigationController
         title:query composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.timelineDisplayMgr.displayAsConversation = NO;
     self.timelineDisplayMgr.setUserToFirstTweeter = NO;
@@ -589,6 +592,7 @@
     self.timelineDisplayMgr =
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:nextWrapperController
+        navigationController:netAwareController.navigationController
         title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.timelineDisplayMgr.displayAsConversation = NO;
     self.timelineDisplayMgr.setUserToFirstTweeter = NO;

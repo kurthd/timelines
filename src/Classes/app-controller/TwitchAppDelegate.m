@@ -58,6 +58,7 @@
 - (void)initFindPeopleTab;
 - (void)initAccountsTab;
 - (void)initSearchTab;
+- (void)initMentionsView;
 
 - (UIBarButtonItem *)newTweetButtonItem;
 - (UIBarButtonItem *)homeSendingTweetProgressView;
@@ -70,11 +71,14 @@
 - (BOOL)saveContext;
 - (void)prunePersistenceStore;
 - (void)loadHomeViewWithCachedData:(TwitterCredentials *)account;
+- (void)loadMentionsViewWithCachedData:(TwitterCredentials *)account;
 - (void)loadMessagesViewWithCachedData:(TwitterCredentials *)account;
 - (void)setUIStateFromPersistence;
 - (void)persistUIState;
 
 - (void)finishInitializationWithTimeInsensitiveOperations;
+
+- (void)refreshHomeTabTimelines;
 
 @end
 
@@ -111,6 +115,8 @@
     [persistentStoreCoordinator release];
 
     [homeNetAwareViewController release];
+    [homeToggleViewController release];
+    [mentionsNetAwareViewController release];
     [messagesNetAwareViewController release];
     [searchNetAwareViewController release];
     [findPeopleNetAwareViewController release];
@@ -120,7 +126,9 @@
     [timelineDisplayMgr release];
     [directMessageDisplayMgr release];
     [directMessageAcctMgr release];
+    [mentionsAcctMgr release];
     [personalFeedSelectionMgr release];
+    [mentionDisplayMgr release];
 
     [composeTweetDisplayMgr release];
 
@@ -229,7 +237,10 @@
 
     if (!directMessageDisplayMgr)
         [self initMessagesTab];
+    if (!mentionDisplayMgr)
+        [self initMentionsView];
     [directMessageDisplayMgr updateDirectMessagesSinceLastUpdateIds];
+    [mentionDisplayMgr updateMentionsSinceLastUpdateIds];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -275,7 +286,7 @@
 
 - (void)userIsSendingTweet:(NSString *)tweet
 {
-    [homeNetAwareViewController.navigationItem
+    [homeToggleViewController.navigationItem
         setRightBarButtonItem:[self homeSendingTweetProgressView]
                      animated:YES];
 }
@@ -283,18 +294,18 @@
 - (void)userDidSendTweet:(Tweet *)tweet
 {
     UISegmentedControl * control = (UISegmentedControl *)
-        homeNetAwareViewController.navigationItem.titleView;
+        homeToggleViewController.navigationItem.titleView;
     if (control.selectedSegmentIndex == 0)
         [timelineDisplayMgr addTweet:tweet];
 
-    [homeNetAwareViewController.navigationItem
+    [homeToggleViewController.navigationItem
         setRightBarButtonItem:[self newTweetButtonItem]
                      animated:YES];
 }
 
 - (void)userFailedToSendTweet:(NSString *)tweet
 {
-    [homeNetAwareViewController.navigationItem
+    [homeToggleViewController.navigationItem
         setRightBarButtonItem:[self newTweetButtonItem]
                      animated:YES];
 
@@ -318,7 +329,7 @@
                   withTweet:(Tweet *)reply
 {
     UISegmentedControl * control = (UISegmentedControl *)
-        homeNetAwareViewController.navigationItem.titleView;
+        homeToggleViewController.navigationItem.titleView;
     if (control.selectedSegmentIndex == 0)
         [timelineDisplayMgr addTweet:reply];
 }
@@ -473,7 +484,10 @@
 {
     NSLog(@"Initializing home tab");
 
-    homeNetAwareViewController.navigationController.navigationBar.barStyle =
+    if (!mentionDisplayMgr)
+        [self initMentionsView];
+
+    homeToggleViewController.navigationController.navigationBar.barStyle =
         [SettingsReader displayTheme] == kDisplayThemeDark ?
         UIBarStyleBlackOpaque : UIBarStyleDefault;
 
@@ -482,61 +496,51 @@
     timelineDisplayMgr =
         [[timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
-        homeNetAwareViewController title:homeTabTitle
+        homeNetAwareViewController
+        navigationController:homeToggleViewController.navigationController
+        title:homeTabTitle
         composeTweetDisplayMgr:self.composeTweetDisplayMgr]
         retain];
     timelineDisplayMgr.displayAsConversation = YES;
     timelineDisplayMgr.showMentions = YES;
     UIBarButtonItem * refreshButton =
-        homeNetAwareViewController.navigationItem.leftBarButtonItem;
-    refreshButton.target = timelineDisplayMgr;
-    refreshButton.action = @selector(refreshWithLatest);
-
-    TwitterService * allService =
-        [[[TwitterService alloc] initWithTwitterCredentials:nil
-        context:[self managedObjectContext]]
-        autorelease];
-
-    TwitterService * mentionsService =
-        [[[TwitterService alloc] initWithTwitterCredentials:nil
-        context:[self managedObjectContext]]
-        autorelease];
+        homeToggleViewController.navigationItem.leftBarButtonItem;
+    refreshButton.target = self;
+    refreshButton.action = @selector(refreshHomeTabTimelines);
 
     personalFeedSelectionMgr =
         [[PersonalFeedSelectionMgr alloc]
-        initWithTimelineDisplayMgr:timelineDisplayMgr allService:allService
-        mentionsService:mentionsService];
+        initWithToggleController:homeToggleViewController
+        timelineController:homeNetAwareViewController
+        mentionsController:mentionsNetAwareViewController];
     UISegmentedControl * segmentedControl =
         (UISegmentedControl *)
-        homeNetAwareViewController.navigationItem.titleView;
+        homeToggleViewController.navigationItem.titleView;
     [segmentedControl addTarget:personalFeedSelectionMgr
         action:@selector(tabSelected:)
         forControlEvents:UIControlEventValueChanged];
 
-    [[CredentialsActivatedPublisher alloc]
-        initWithListener:personalFeedSelectionMgr
-        action:@selector(setCredentials:)];
-
     timelineDisplayMgr.tweetIdToShow = uiState.viewedTweetId;
 
-    UISegmentedControl * control = (UISegmentedControl *)
-        homeNetAwareViewController.navigationItem.titleView;
-
-    control.selectedSegmentIndex = uiState.selectedTimelineFeed;
+    segmentedControl.selectedSegmentIndex = uiState.selectedTimelineFeed;
 
     // HACK: Force tab selected to be called when selected index is zero, which
     // is the default
-    if (uiState.selectedTimelineFeed == 0) {
-        UISegmentedControl * control = (UISegmentedControl *)
-            homeNetAwareViewController.navigationItem.titleView;
-        [personalFeedSelectionMgr tabSelected:control];
-    }
+    if (uiState.selectedTimelineFeed == 0)
+        [personalFeedSelectionMgr performSelector:@selector(tabSelected:)
+            withObject:segmentedControl afterDelay:0];
 
     TwitterCredentials * c = self.activeCredentials.credentials;
     if (c) {
         [timelineDisplayMgr setCredentials:c];
         [self loadHomeViewWithCachedData:c];
     }
+}
+
+- (void)refreshHomeTabTimelines
+{
+    [timelineDisplayMgr refreshWithLatest];
+    [mentionDisplayMgr refreshWithLatest];
 }
 
 - (void)initMessagesTab
@@ -567,6 +571,67 @@
         [newDirectMessagesPersistenceStore load];
     [directMessageAcctMgr setWithDirectMessageCountsByAccount:
         [newDirectMessagesPersistenceStore loadNewMessageCountsForAllAccounts]];
+}
+
+- (void)initMentionsView
+{
+    TimelineViewController * timelineController =
+        [[[TimelineViewController alloc]
+        initWithNibName:@"TimelineView" bundle:nil] autorelease];
+     mentionsNetAwareViewController =
+        [[NetworkAwareViewController alloc]
+        initWithTargetViewController:timelineController];
+
+    TwitterService * service =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:[self managedObjectContext]]
+        autorelease];
+
+    UserListDisplayMgrFactory * userListDisplayMgrFactory =
+        [[[UserListDisplayMgrFactory alloc]
+        initWithContext:[self managedObjectContext]
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr]
+        autorelease];
+
+    UISegmentedControl * segmentedControl = (UISegmentedControl *)
+        homeToggleViewController.navigationItem.titleView;
+
+    mentionDisplayMgr =
+        [[MentionTimelineDisplayMgr alloc]
+        initWithWrapperController:mentionsNetAwareViewController
+        navigationController:homeToggleViewController.navigationController
+        timelineController:timelineController
+        service:service
+        factory:timelineDisplayMgrFactory
+        managedObjectContext:[self managedObjectContext]
+        composeTweetDisplayMgr:composeTweetDisplayMgr
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr
+        userListDisplayMgrFactory:userListDisplayMgrFactory
+        tabBarItem:homeToggleViewController.parentViewController.tabBarItem
+        segmentedControl:segmentedControl];
+    service.delegate = mentionDisplayMgr;
+    timelineController.delegate = mentionDisplayMgr;
+    mentionsNetAwareViewController.delegate = mentionDisplayMgr;
+
+    mentionsAcctMgr =
+        [[MentionsAcctMgr alloc]
+        initWithMentionTimelineDisplayMgr:mentionDisplayMgr];
+
+    TwitterCredentials * c = self.activeCredentials.credentials;
+
+    AccountSettings * settings =
+        [AccountSettings settingsForKey:c.username];
+    mentionDisplayMgr.showBadge = [settings pushMentions];
+    mentionDisplayMgr.numNewMentions = uiState.numNewMentions;
+
+    // Don't autorelease
+    [[CredentialsActivatedPublisher alloc]
+        initWithListener:mentionDisplayMgr action:@selector(setCredentials:)];
+
+    if (c) {
+        [mentionDisplayMgr setCredentials:c];
+        [self loadMentionsViewWithCachedData:c];
+    }
 }
 
 - (void)initFindPeopleTab
@@ -642,6 +707,7 @@
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         searchNetAwareViewController
+        navigationController:searchNetAwareViewController.navigationController
         title:@"Search"  // set programmatically later
         composeTweetDisplayMgr:self.composeTweetDisplayMgr];
     searchNetAwareViewController.delegate = displayMgr;
@@ -708,12 +774,23 @@
 
             [self broadcastActivatedCredentialsChanged:activeAccount];
             [self loadHomeViewWithCachedData:activeAccount];
+            [self loadMentionsViewWithCachedData:activeAccount];
             [self loadMessagesViewWithCachedData:activeAccount];
 
             [directMessageAcctMgr
                 processAccountChangeToUsername:activeAccount.username
                 fromUsername:oldUsername];
+            [mentionsAcctMgr
+                processAccountChangeToUsername:activeAccount.username
+                fromUsername:oldUsername];
+
             [directMessageDisplayMgr updateDirectMessagesAfterCredentialChange];
+            [mentionDisplayMgr updateMentionsAfterCredentialChange];
+
+            TwitterCredentials * c = self.activeCredentials.credentials;
+            AccountSettings * settings =
+                [AccountSettings settingsForKey:c.username];
+            mentionDisplayMgr.showBadge = [settings pushMentions];
         }
     }
 
@@ -726,7 +803,7 @@
 - (void)tabBarController:(UITabBarController *)tbc
     didSelectViewController:(UIViewController *)viewController
 {
-    if (viewController == homeNetAwareViewController.navigationController &&
+    if (viewController == homeToggleViewController.navigationController &&
         !timelineDisplayMgr)
         [self initHomeTab];
     else if (viewController ==
@@ -868,6 +945,7 @@
         "%@.", userInfo);
 
     [directMessageDisplayMgr updateDirectMessagesSinceLastUpdateIds];
+    [mentionDisplayMgr updateMentionsSinceLastUpdateIds];
 }
 
 - (NSDictionary *)deviceRegistrationArgsForCredentials:(NSArray *)allCredentials
@@ -951,6 +1029,8 @@
         [self.credentials removeObject:changedCredentials];
         [directMessageAcctMgr
             processAccountRemovedForUsername:changedCredentials.username];
+        [mentionsAcctMgr
+            processAccountRemovedForUsername:changedCredentials.username];
 
         // remove bookmarks and recent searches
         RecentSearchMgr * recentSearches =
@@ -978,7 +1058,12 @@
 - (void)accountSettingsChanged:(AccountSettings *)settings
                     forAccount:(NSString *)account
 {
+    NSLog(@"Handling account settings change");
     [self registerDeviceForPushNotifications];
+    if ([account isEqual:self.activeCredentials.credentials.username]) {
+        NSLog(@"Setting 'show badge' value for mentions");
+        mentionDisplayMgr.showBadge = [settings pushMentions];
+    }
 }
 
 - (void)broadcastActivatedCredentialsChanged:(TwitterCredentials *)tc
@@ -1170,13 +1255,10 @@
     NSArray * allTweets = [UserTweet findAll:predicate
                                      context:context
                           prefetchedKeyPaths:paths];
-    NSArray * allMentions = [Mention findAll:predicate
-                                     context:context
-                          prefetchedKeyPaths:paths];
 
     NSLog(@"***************** Persistence check *****************");
-    NSLog(@"** %@: Loaded %d persisted tweets and %d persisted mentions.",
-        account.username, allTweets.count, allMentions.count);
+    NSLog(@"** %@: Loaded %d persisted tweets.", account.username,
+        allTweets.count);
 
     // allTweets are now sorted in ascending order, e.g. from oldest to newest
     allTweets = [allTweets sortedArrayUsingSelector:@selector(compare:)];
@@ -1224,6 +1306,60 @@
             range = NSMakeRange(allTweets.count - MAX_SIZE, MAX_SIZE);
             allTweets = [allTweets subarrayWithRange:range];
         }
+    }
+    NSLog(@"***************** Persistence check *****************");
+
+    // convert them all to dictionaries with TweetInfo objects as values
+    NSMutableDictionary * tweets =
+        [NSMutableDictionary dictionaryWithCapacity:allTweets.count];
+    for (UserTweet * tweet in allTweets)
+        [tweets setObject:[TweetInfo createFromTweet:tweet]
+                   forKey:tweet.identifier];
+
+    [timelineDisplayMgr setTweets:tweets];
+}
+
+- (void)loadMentionsViewWithCachedData:(TwitterCredentials *)account
+{
+    // important to access the context via the accessor
+    NSManagedObjectContext * context = [self managedObjectContext];
+
+    NSPredicate * predicate = 
+        [NSPredicate predicateWithFormat:@"credentials.username == %@",
+        account.username];
+
+    NSArray * paths = [NSArray arrayWithObjects:@"user", @"user.avatar", nil];
+    NSArray * allMentions =
+        [Mention findAll:predicate context:context prefetchedKeyPaths:paths];
+
+    allMentions = [allMentions sortedArrayUsingSelector:@selector(compare:)];
+    Tweet * newestTweet = allMentions.count ? [allMentions lastObject] : nil;
+    NSNumber * newestTweetId =
+        newestTweet ?
+        [NSNumber numberWithLongLong:[newestTweet.identifier longLongValue]] :
+        [NSNumber numberWithInt:0];
+
+    /*
+     * The first time we load cached data for an account, make sure we only load
+     * the most recent n tweets, where n is the fetch quantity setting. If, for
+     * example, the application crashed, it's possible there will be more than
+     * n tweets loaded from persistence. This will cause the timeline code to
+     * think it should load a page other than the first page when it does its
+     * initial fetch from Twitter. For example, if n is 20, and 23 tweets are
+     * loaded from persistence, the timeline will fetch page 2.
+     *
+     * We only want to do this pruning the first time we load tweets for an
+     * account. Subsequent times are from account switching, and we want the
+     * full range of tweets to remain.
+     */
+    static NSMutableSet * alreadyLoaded = nil;
+    if (!alreadyLoaded)
+        alreadyLoaded = [[NSMutableSet alloc] init];
+
+    if (![alreadyLoaded containsObject:account.username]) {
+        [alreadyLoaded addObject:account.username];
+
+        const NSUInteger MAX_SIZE = [SettingsReader fetchQuantity];
         if (allMentions.count > MAX_SIZE) {
             NSLog(@"Trimming mentions down to %d.", MAX_SIZE);
 
@@ -1237,24 +1373,15 @@
             allMentions = [allMentions subarrayWithRange:range];
         }
     }
-    NSLog(@"***************** Persistence check *****************");
 
     // convert them all to dictionaries with TweetInfo objects as values
-    NSMutableDictionary * tweets =
-        [NSMutableDictionary dictionaryWithCapacity:allTweets.count];
     NSMutableDictionary * mentions =
         [NSMutableDictionary dictionaryWithCapacity:allMentions.count];
-    for (UserTweet * tweet in allTweets)
-        [tweets setObject:[TweetInfo createFromTweet:tweet]
-                   forKey:tweet.identifier];
     for (Mention * mention in allMentions)
         [mentions setObject:[TweetInfo createFromTweet:mention]
                      forKey:mention.identifier];
 
-    personalFeedSelectionMgr.allTimelineTweets = tweets;
-    personalFeedSelectionMgr.mentionsTimelineTweets = mentions;
-
-    [personalFeedSelectionMgr refreshCurrentTabData];
+    [mentionDisplayMgr setTimeline:mentions updateId:newestTweetId];
 }
 
 - (void)loadMessagesViewWithCachedData:(TwitterCredentials *)account
@@ -1347,7 +1474,7 @@
         [[[UIStatePersistenceStore alloc] init] autorelease];
     uiState.selectedTab = tabBarController.selectedIndex;
     UISegmentedControl * control = (UISegmentedControl *)
-        homeNetAwareViewController.navigationItem.titleView;
+        homeToggleViewController.navigationItem.titleView;
     uiState.selectedTimelineFeed = control.selectedSegmentIndex;
     uiState.viewedTweetId = [timelineDisplayMgr mostRecentTweetId];
 
@@ -1374,8 +1501,15 @@
             [searchBarDisplayMgr selectedBookmarkSegment];
     }
 
+    NSUInteger numUnreadMentions = 0;
+    if (mentionDisplayMgr) {
+        numUnreadMentions = mentionDisplayMgr.numNewMentions;
+        uiState.numNewMentions = numUnreadMentions;
+    }
+
     [uiStatePersistenceStore save:uiState];
 
+    NSUInteger numUnreadMessages = 0;
     if (directMessageDisplayMgr) {
         NewDirectMessagesPersistenceStore * newDirectMessagesPersistenceStore =
             [[[NewDirectMessagesPersistenceStore alloc] init] autorelease];
@@ -1386,11 +1520,13 @@
             saveNewMessageCountsForAllAccounts:
             [directMessageAcctMgr directMessageCountsByAccount]];
 
-        NSUInteger numUnreadMessages =
-            directMessageDisplayMgr.newDirectMessagesState.numNewMessages;
-        [[UIApplication sharedApplication]
-            setApplicationIconBadgeNumber:numUnreadMessages];
+        numUnreadMessages =
+            directMessageDisplayMgr.newDirectMessagesState.numNewMessages; 
     }
+
+    NSUInteger numTotalMessages = numUnreadMessages + numUnreadMentions;
+    [[UIApplication sharedApplication]
+        setApplicationIconBadgeNumber:numTotalMessages];
 }
 
 #pragma mark Accessors

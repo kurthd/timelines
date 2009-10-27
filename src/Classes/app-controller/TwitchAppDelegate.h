@@ -15,6 +15,9 @@
 #import "InstapaperService.h"
 #import "InstapaperLogInDisplayMgr.h"
 #import "UIState.h"
+#import "MentionTimelineDisplayMgr.h"
+#import "ToggleViewController.h"
+#import "MentionsAcctMgr.h"
 
 @class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class SearchBarDisplayMgr;
@@ -51,6 +54,8 @@
 
     // Root view controllers
     IBOutlet NetworkAwareViewController * homeNetAwareViewController;
+    IBOutlet ToggleViewController * homeToggleViewController;
+    NetworkAwareViewController * mentionsNetAwareViewController;
     IBOutlet NetworkAwareViewController * messagesNetAwareViewController;
     IBOutlet NetworkAwareViewController * searchNetAwareViewController;
     IBOutlet AccountsViewController * accountsViewController;
@@ -60,6 +65,7 @@
     DirectMessageDisplayMgrFactory * directMessageDisplayMgrFactory;
     DirectMessagesDisplayMgr * directMessageDisplayMgr;
     DirectMessageAcctMgr * directMessageAcctMgr;
+    MentionsAcctMgr * mentionsAcctMgr;
     TimelineDisplayMgr * timelineDisplayMgr;
     PersonalFeedSelectionMgr * personalFeedSelectionMgr;
 
@@ -68,6 +74,7 @@
     SearchBarDisplayMgr * searchBarDisplayMgr;
     FindPeopleSearchDisplayMgr * findPeopleSearchDisplayMgr;
     AccountsDisplayMgr * accountsDisplayMgr;
+    MentionTimelineDisplayMgr * mentionDisplayMgr;
 
     UIBarButtonItem * homeSendingTweetProgressView;
 

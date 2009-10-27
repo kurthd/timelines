@@ -24,6 +24,8 @@
 - (void)showPreviousTweet;
 - (void)updateTweetIndexCache;
 
+- (UINavigationController *)navigationController;
+
 @property (nonatomic, readonly) NSMutableDictionary * tweetIdToIndexDict;
 @property (nonatomic, readonly) NSMutableDictionary * tweetIndexToIdDict;
 
@@ -41,6 +43,7 @@
 - (void)dealloc
 {
     [wrapperController release];
+    [navigationController release];
     [timelineController release];
     [lastTweetDetailsWrapperController release];
     [lastTweetDetailsController release];
@@ -71,6 +74,7 @@
 }
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
+    navigationController:(UINavigationController *)aNavigationController
     timelineController:(TimelineViewController *)aTimelineController
     timelineSource:(NSObject<TimelineDataSource> *)aTimelineSource
     service:(TwitterService *)aService title:(NSString *)title
@@ -82,6 +86,7 @@
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
+        navigationController = [aNavigationController retain];
         timelineController = [aTimelineController retain];
         timelineSource = [aTimelineSource retain];
         service = [aService retain];
@@ -98,6 +103,7 @@
         displayMgrHelper =
             [[DisplayMgrHelper alloc]
             initWithWrapperController:aWrapperController
+            navigationController:navigationController
             userListDisplayMgrFactor:userListDispMgrFctry
             composeTweetDisplayMgr:composeTweetDisplayMgr
             twitterService:displayHelperService
@@ -316,7 +322,7 @@
     [self.tweetDetailsController hideFavoriteButton:NO];
     self.tweetDetailsController.showsExtendedActions = YES;
     [self.tweetDetailsController displayTweet:tweet
-        onNavigationController:self.wrapperController.navigationController];
+        onNavigationController:[self navigationController]];
     self.tweetDetailsController.allowDeletion =
         [tweet.user.username isEqual:credentials.username];
         
@@ -465,7 +471,7 @@
         tweetId);
 
     [service fetchTweet:tweetId];
-    [self.wrapperController.navigationController
+    [[self navigationController]
         pushViewController:self.newTweetDetailsWrapperController animated:YES];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:NO];
     [self.lastTweetDetailsWrapperController
@@ -474,8 +480,7 @@
 
 - (void)loadConversationFromTweetId:(NSString *)tweetId
 {
-    UINavigationController * navController =
-        self.wrapperController.navigationController;
+    UINavigationController * navController = [self navigationController];
 
     ConversationDisplayMgr * mgr =
         [[ConversationDisplayMgr alloc]
@@ -521,7 +526,7 @@
     [controller hideFavoriteButton:NO];
     controller.showsExtendedActions = YES;
     [controller displayTweet:tweet
-        onNavigationController:self.wrapperController.navigationController];
+        onNavigationController:[self navigationController]];
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation
@@ -730,6 +735,12 @@
     [self updateTweetIndexCache];
 }
 
+- (void)setTweets:(NSDictionary *)someTweets
+{
+    [self setService:timelineSource tweets:someTweets page:1 forceRefresh:NO
+        allPagesLoaded:NO];
+}
+
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
     NSLog(@"Timeline display manager: setting new credentials to: %@",
@@ -769,8 +780,7 @@
         [timeline removeAllObjects];
         if (user)
             [service fetchUserInfoForUsername:credentials.username];
-        [wrapperController.navigationController
-            popToRootViewControllerAnimated:NO];
+        [[self navigationController] popToRootViewControllerAnimated:NO];
 
         needsRefresh = YES;
         pagesShown = 1;
@@ -848,6 +858,11 @@
         tweetIndexToIdDict = [[NSMutableDictionary dictionary] retain];
 
     return tweetIndexToIdDict;
+}
+
+- (UINavigationController *)navigationController
+{
+    return navigationController;
 }
 
 @end

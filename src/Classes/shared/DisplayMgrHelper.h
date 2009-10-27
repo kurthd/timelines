@@ -25,6 +25,7 @@
     LocationInfoViewControllerDelegate, TwitterServiceDelegate>
 {
     NetworkAwareViewController * wrapperController;
+    UINavigationController * navigationController;
     UserListDisplayMgrFactory * userListDisplayMgrFactory;
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
     TwitterService * service;
@@ -52,6 +53,7 @@
 }
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)wrapperCtrlr
+    navigationController:(UINavigationController *)navigationController
     userListDisplayMgrFactor:(UserListDisplayMgrFactory *)userListDispMgrFctry
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     twitterService:(TwitterService *)service

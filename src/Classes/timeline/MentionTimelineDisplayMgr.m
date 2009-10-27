@@ -15,6 +15,11 @@
     numMessages:(NSNumber *)numMessages;
 - (void)updateBadge;
 - (void)updateTweetIndexCache;
+- (void)updateViewWithNewMentions;
+
+- (void)handleUpDownButton:(UISegmentedControl *)sender;
+- (void)showNextTweet;
+- (void)showPreviousTweet;
 
 - (NetworkAwareViewController *)newTweetDetailsWrapperController;
 - (TweetViewController *)newTweetDetailsController;
@@ -37,16 +42,18 @@
 @implementation MentionTimelineDisplayMgr
 
 @synthesize lastUpdateId, mentions, activeAcctUsername, mentionIdToShow,
-    selectedTweet, lastTweetDetailsWrapperController,
+    selectedTweet, lastTweetDetailsWrapperController, numNewMentions, showBadge,
     lastTweetDetailsController;
 
 - (void)dealloc
 {
     [wrapperController release];
+    [navigationController release];
     [timelineController release];
     [tweetDetailsController release];
     [service release];
     [tabBarItem release];
+    [segmentedControl release];
     [composeTweetDisplayMgr release];
     [managedObjectContext release];
 
@@ -70,6 +77,7 @@
 }
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
+    navigationController:(UINavigationController *)aNavigationController
     timelineController:(TimelineViewController *)aTimelineController
     service:(TwitterService *)aService
     factory:(TimelineDisplayMgrFactory *)timelineFactory
@@ -78,33 +86,40 @@
     findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
     userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry
     tabBarItem:(UITabBarItem *)aTabBarItem
+    segmentedControl:(UISegmentedControl *)aSegmentedControl
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
+        navigationController = [aNavigationController retain];
         timelineController = [aTimelineController retain];
         composeTweetDisplayMgr = [aComposeTweetDisplayMgr retain];
         managedObjectContext = [aManagedObjectContext retain];
         service = [aService retain];
         tabBarItem = [aTabBarItem retain];
+        segmentedControl = [aSegmentedControl retain];
+        showBadge = YES;
 
         TwitterService * displayHelperService =
             [[[TwitterService alloc]
             initWithTwitterCredentials:service.credentials
-            context:managedObjectContext]
+            context:aManagedObjectContext]
             autorelease];
 
         displayMgrHelper =
             [[DisplayMgrHelper alloc]
             initWithWrapperController:aWrapperController
+            navigationController:aNavigationController
             userListDisplayMgrFactor:userListDispMgrFctry
             composeTweetDisplayMgr:aComposeTweetDisplayMgr
-            twitterService:service
+            twitterService:displayHelperService
             timelineFactory:timelineFactory
             managedObjectContext:aManagedObjectContext
             findPeopleBookmarkMgr:findPeopleBookmarkMgr];
         displayHelperService.delegate = displayMgrHelper;
 
         conversationDisplayMgrs = [[NSMutableArray alloc] init];
+
+        mentions = [[NSMutableDictionary dictionary] retain];
     }
 
     return self;
@@ -132,15 +147,19 @@
 
     for (Tweet * tweet in newMentions) {
         TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
+        NSLog(@"Mention tweet info: %@", tweetInfo);
         [mentions setObject:tweetInfo forKey:tweet.identifier];
     }
 
     outstandingRequests--;
+    receivedQueryResponse = YES;
 
     if (refreshingMessages) {
         if ([newMentions count] > 0) {
-            numNewMentions += [newMentions count];
-            [self updateBadge];
+            if (!displayed && showBadge) {
+                numNewMentions += [newMentions count];
+                [self updateBadge];
+            }
 
             AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
         }
@@ -153,8 +172,10 @@
     [timelineController setTweets:[mentions allValues] page:[page intValue]
         visibleTweetId:scrollId];
 
-    [self setUpdatingState];
+    [self updateViewWithNewMentions];
+
     [[ErrorState instance] exitErrorState];
+    [self updateTweetIndexCache];
 }
 
 - (void)failedToFetchMentionsSinceUpdateId:(NSNumber *)updateId
@@ -169,6 +190,79 @@
     [wrapperController setUpdatingState:kDisconnected];
 
     outstandingRequests--;
+}
+
+- (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
+{
+    NSLog(@"Mention display mgr: fetched tweet: %@", tweet);
+    TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
+
+    [self.lastTweetDetailsController hideFavoriteButton:NO];
+    self.lastTweetDetailsController.showsExtendedActions = YES;
+    [self.lastTweetDetailsController displayTweet:tweetInfo
+         onNavigationController:nil];
+    [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
+    [self.lastTweetDetailsWrapperController
+        setUpdatingState:kConnectedAndNotUpdating];
+}
+
+- (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error
+{
+    NSLog(@"Mention display manager: failed to fetch tweet %@", tweetId);
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchtweet", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+    [self.lastTweetDetailsWrapperController setUpdatingState:kDisconnected];
+}
+
+- (void)tweet:(Tweet *)tweet markedAsFavorite:(BOOL)favorite
+{
+    NSLog(@"Mention display manager: set favorite value for tweet");
+    TweetInfo * tweetInfo = [mentions objectForKey:tweet.identifier];
+    tweetInfo.favorited = [NSNumber numberWithBool:favorite];
+    if ([self.lastTweetDetailsController.tweet.identifier
+        isEqual:tweet.identifier])
+        [self.lastTweetDetailsController setFavorited:favorite];
+}
+
+- (void)failedToMarkTweet:(NSString *)tweetId asFavorite:(BOOL)favorite
+    error:(NSError *)error
+{
+    NSLog(@"Mention display manager: failed to set favorite");
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.setfavorite", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+    if ([self.lastTweetDetailsController.tweet.identifier isEqual:tweetId])
+        [self.lastTweetDetailsController
+        setFavorited:
+        [self.lastTweetDetailsController.tweet.favorited boolValue]];
+}
+
+- (void)failedToDeleteTweetWithId:(NSString *)tweetId error:(NSError *)error
+{
+    NSLog(@"Mention display manager: failed to delete tweet");
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.deletetweet", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+}
+
+#pragma mark NetworkAwareViewControllerDelegate implementation
+
+- (void)networkAwareViewWillAppear
+{
+    NSLog(@"Mentions timeline will appear");
+    displayed = YES;
+    numNewMentions = 0;
+    [self updateBadge];
+}
+
+- (void)networkAwareViewWillDisappear
+{
+    NSLog(@"Mentions timeline will disappear");
+    displayed = NO;
 }
 
 #pragma mark TimelineViewControllerDelegate implementation
@@ -190,17 +284,17 @@
     NSArray * segmentedControlItems =
         [NSArray arrayWithObjects:[UIImage imageNamed:@"UpButton.png"],
         [UIImage imageNamed:@"DownButton.png"], nil];
-    UISegmentedControl * segmentedControl =
+    UISegmentedControl * upDownControl =
         [[[UISegmentedControl alloc] initWithItems:segmentedControlItems]
         autorelease];
-    segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
-    CGRect segmentedControlFrame = segmentedControl.frame;
+    upDownControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    CGRect segmentedControlFrame = upDownControl.frame;
     segmentedControlFrame.size.width = 88;
-    segmentedControl.frame = segmentedControlFrame;
-    [segmentedControl addTarget:self action:@selector(handleUpDownButton:)
+    upDownControl.frame = segmentedControlFrame;
+    [upDownControl addTarget:self action:@selector(handleUpDownButton:)
         forControlEvents:UIControlEventValueChanged];
     UIBarButtonItem * rightBarButtonItem =
-        [[[UIBarButtonItem alloc] initWithCustomView:segmentedControl]
+        [[[UIBarButtonItem alloc] initWithCustomView:upDownControl]
         autorelease];
     self.tweetDetailsController.navigationItem.rightBarButtonItem =
         rightBarButtonItem;
@@ -208,7 +302,7 @@
     [self.tweetDetailsController hideFavoriteButton:NO];
     self.tweetDetailsController.showsExtendedActions = YES;
     [self.tweetDetailsController displayTweet:tweet
-        onNavigationController:wrapperController.navigationController];
+        onNavigationController:navigationController];
     self.tweetDetailsController.allowDeletion =
         [tweet.user.username isEqual:credentials.username];
         
@@ -220,9 +314,55 @@
     self.tweetDetailsController.navigationItem.title =
         [NSString stringWithFormat:titleFormatString, tweetIndex + 1,
         [mentions count]];
-    [segmentedControl setEnabled:tweetIndex != 0 forSegmentAtIndex:0];
-    [segmentedControl setEnabled:tweetIndex != [mentions count] - 1
+    [upDownControl setEnabled:tweetIndex != 0 forSegmentAtIndex:0];
+    [upDownControl setEnabled:tweetIndex != [mentions count] - 1
         forSegmentAtIndex:1];
+}
+
+- (void)handleUpDownButton:(UISegmentedControl *)sender
+{
+    if (sender.selectedSegmentIndex == 0)
+        [self showPreviousTweet];
+    else if (sender.selectedSegmentIndex == 1)
+        [self showNextTweet];
+
+    sender.selectedSegmentIndex = -1;
+}
+
+- (void)showNextTweet
+{
+    NSLog(@"Mention display manager: showing next tweet");
+    NSNumber * tweetIndex =
+        [self.tweetIdToIndexDict objectForKey:selectedTweet.identifier];
+    NSLog(@"Selected tweet index: %@", tweetIndex);
+
+    NSNumber * nextIndex = [NSNumber numberWithInt:[tweetIndex intValue] + 1];
+    NSLog(@"Next tweet index: %@", nextIndex);
+
+    NSString * nextTweetId = [self.tweetIndexToIdDict objectForKey:nextIndex];
+    TweetInfo * nextTweet = [mentions objectForKey:nextTweetId];
+
+    [timelineController selectTweetId:nextTweetId];
+    [self selectedTweet:nextTweet];
+}
+
+- (void)showPreviousTweet
+{
+    NSLog(@"Mention display manager: showing previous tweet");
+    NSNumber * tweetIndex =
+        [self.tweetIdToIndexDict objectForKey:selectedTweet.identifier];
+    NSLog(@"Selected tweet index: %@", tweetIndex);
+
+    NSNumber * previousIndex =
+        [NSNumber numberWithInt:[tweetIndex intValue] - 1];
+    NSLog(@"Previous tweet index: %@", previousIndex);
+        
+    NSString * previousTweetId =
+        [self.tweetIndexToIdDict objectForKey:previousIndex];
+    TweetInfo * previousTweet = [mentions objectForKey:previousTweetId];
+
+    [timelineController selectTweetId:previousTweetId];
+    [self selectedTweet:previousTweet];
 }
 
 - (void)loadMoreTweets
@@ -276,7 +416,7 @@
         tweetId);
     
     [service fetchTweet:tweetId];
-    [wrapperController.navigationController
+    [navigationController
         pushViewController:self.newTweetDetailsWrapperController animated:YES];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:NO];
     [self.lastTweetDetailsWrapperController
@@ -313,8 +453,7 @@
 
 - (void)loadConversationFromTweetId:(NSString *)tweetId
 {
-    UINavigationController * navController =
-        wrapperController.navigationController;
+    UINavigationController * navController = navigationController;
     
     ConversationDisplayMgr * mgr =
         [[ConversationDisplayMgr alloc]
@@ -355,8 +494,7 @@
 
     [controller hideFavoriteButton:NO];
     controller.showsExtendedActions = YES;
-    [controller displayTweet:tweet
-        onNavigationController:wrapperController.navigationController];
+    [controller displayTweet:tweet onNavigationController:navigationController];
 }
 
 #pragma mark Public interface implementation
@@ -398,6 +536,30 @@
     [self setUpdatingState];
 }
 
+- (void)updateMentionsAfterCredentialChange
+{
+    if (self.lastUpdateId)
+        [self updateMentionsSinceLastUpdateIds];
+    else
+        [self updateWithABunchOfRecentMentions];
+    alreadyBeenDisplayedAfterCredentialChange = YES;
+}
+
+- (void)setTimeline:(NSDictionary *)someMentions updateId:(NSNumber *)anUpdateId
+{
+    [mentions removeAllObjects];
+    [mentions addEntriesFromDictionary:someMentions];
+
+    self.lastUpdateId = anUpdateId;
+
+    [timelineController setTweets:[someMentions allValues] page:1
+        visibleTweetId:nil];
+
+    [self updateViewWithNewMentions];
+
+    [self updateTweetIndexCache];
+}
+
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
     NSLog(@"Mention display manager: setting credentials to '%@'",
@@ -412,7 +574,7 @@
     self.activeAcctUsername = someCredentials.username;
     [displayMgrHelper setCredentials:someCredentials];
 
-    [wrapperController.navigationController popToRootViewControllerAnimated:NO];
+    [navigationController popToRootViewControllerAnimated:NO];
 }
 
 - (void)clearState
@@ -421,7 +583,20 @@
     alreadyBeenDisplayedAfterCredentialChange = NO;
     loadMoreNextPage = 1;
     refreshingMessages = NO;
+    numNewMentions = 0;
     [conversationDisplayMgrs removeAllObjects];
+}
+
+- (void)setNumNewMentions:(NSInteger)numMentions
+{
+    numNewMentions = showBadge ? numMentions : 0;
+    [self updateBadge];
+}
+
+- (void)setShowBadge:(BOOL)aShowBadgeValue
+{
+    showBadge = aShowBadgeValue;
+    [self updateBadge];
 }
 
 #pragma mark Private interface implementation
@@ -521,13 +696,28 @@
 {
     if (outstandingRequests == 0) { // only one at a time
         outstandingRequests++;
-        [service fetchDirectMessagesSinceId:updateId page:page
+        NSLog(@"Fetching mentions from service: %@; id: %@, page: %@, qty: %@",
+            service, updateId, page, numMessages);
+        [service fetchMentionsSinceUpdateId:updateId page:page
             count:numMessages];
     }
 }
 
 - (void)updateBadge
 {
+    NSLog(@"Updating mentions badge");
+    if (!showBadge)
+        numNewMentions = 0;
+
+    NSString * mentionsTitle =
+        NSLocalizedString(@"mentiondisplaymgr.title", @"");
+    NSString * mentionsTitleFormatString =
+        NSLocalizedString(@"mentiondisplaymgr.title.formatstring", @"");
+    NSString * title =
+        numNewMentions > 0 ?
+        [NSString stringWithFormat:mentionsTitleFormatString, numNewMentions] :
+        mentionsTitle;
+    [segmentedControl setTitle:title forSegmentAtIndex:1];
     tabBarItem.badgeValue =
         numNewMentions > 0 ?
         [NSString stringWithFormat:@"%d", numNewMentions] : nil;
@@ -547,6 +737,14 @@
         [self.tweetIndexToIdDict setObject:tweetInfo.identifier
             forKey:[NSNumber numberWithInt:i]];
     }
+}
+
+- (void)updateViewWithNewMentions
+{
+    [self setUpdatingState];
+
+    BOOL cachedData = receivedQueryResponse || [mentions count] > 0;
+    [wrapperController setCachedDataAvailable:cachedData];
 }
 
 @end

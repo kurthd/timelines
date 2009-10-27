@@ -54,6 +54,7 @@
 - (void)dealloc
 {
     [wrapperController release];
+    [navigationController release];
     [userListDisplayMgrFactory release];
     [composeTweetDisplayMgr release];
     [timelineDisplayMgrFactory release];
@@ -82,6 +83,7 @@
 }
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)wrapperCtrlr
+    navigationController:(UINavigationController *)aNavigationController
     userListDisplayMgrFactor:(UserListDisplayMgrFactory *)userListDispMgrFctry
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)aComposeTweetDisplayMgr
     twitterService:(TwitterService *)aService
@@ -91,6 +93,7 @@
 {
     if (self = [super init]) {
         wrapperController = [wrapperCtrlr retain];
+        navigationController = [aNavigationController retain];
         userListDisplayMgrFactory = [userListDispMgrFctry retain];
         composeTweetDisplayMgr = [aComposeTweetDisplayMgr retain];
         service = [aService retain];
@@ -110,8 +113,8 @@
 
     self.locationMapViewController.navigationItem.title = @"Map";
 
-    [wrapperController.navigationController
-        pushViewController:self.locationMapViewController animated:YES];
+    [navigationController pushViewController:self.locationMapViewController
+        animated:YES];
 
     [self.locationMapViewController setLocation:locationString];
 }
@@ -133,8 +136,8 @@
         username:aUsername];
     [self.userListDisplayMgr setCredentials:credentials];
 
-    [wrapperController.navigationController
-        pushViewController:self.userListNetAwareViewController animated:YES];
+    [navigationController pushViewController:self.userListNetAwareViewController
+        animated:YES];
 }
 
 - (void)displayFollowersForUser:(NSString *)aUsername
@@ -154,8 +157,8 @@
         username:aUsername];
     [self.userListDisplayMgr setCredentials:credentials];
 
-    [wrapperController.navigationController
-        pushViewController:self.userListNetAwareViewController animated:YES];
+    [navigationController pushViewController:self.userListNetAwareViewController
+        animated:YES];
 }
 
 - (void)displayFavoritesForUser:(NSString *)aUsername
@@ -170,17 +173,18 @@
     self.timelineDisplayMgr =
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:nextWrapperController
+        navigationController:navigationController
         title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.timelineDisplayMgr.displayAsConversation = YES;
     self.timelineDisplayMgr.setUserToFirstTweeter = NO;
     [self.timelineDisplayMgr setCredentials:credentials];
-    
+
     self.nextWrapperController.delegate = self.timelineDisplayMgr;
-    
+
     TwitterService * twitterService =
         [[[TwitterService alloc] initWithTwitterCredentials:nil context:context]
         autorelease];
-    
+
     FavoritesTimelineDataSource * dataSource =
         [[[FavoritesTimelineDataSource alloc]
         initWithTwitterService:twitterService username:aUsername]
@@ -189,15 +193,15 @@
     self.credentialsPublisher =
         [[CredentialsActivatedPublisher alloc]
         initWithListener:dataSource action:@selector(setCredentials:)];
-    
+
     twitterService.delegate = dataSource;
     [self.timelineDisplayMgr setService:dataSource tweets:nil page:1
         forceRefresh:NO allPagesLoaded:NO];
     dataSource.delegate = self.timelineDisplayMgr;
     
     [dataSource setCredentials:credentials];
-    [wrapperController.navigationController
-        pushViewController:self.nextWrapperController animated:YES];
+    [navigationController pushViewController:self.nextWrapperController
+        animated:YES];
 }
 
 - (void)showTweetsForUser:(NSString *)aUsername
@@ -213,6 +217,7 @@
     self.timelineDisplayMgr =
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:self.nextWrapperController
+        navigationController:navigationController
         title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.timelineDisplayMgr.displayAsConversation = NO;
     self.timelineDisplayMgr.setUserToFirstTweeter = YES;
@@ -250,8 +255,8 @@
     dataSource.delegate = self.timelineDisplayMgr;
 
     [dataSource setCredentials:credentials];
-    [wrapperController.navigationController
-        pushViewController:self.nextWrapperController animated:YES];
+    [navigationController pushViewController:self.nextWrapperController
+        animated:YES];
 }
 
 - (void)startFollowingUser:(NSString *)aUsername
@@ -307,6 +312,7 @@
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         self.nextWrapperController
+        navigationController:navigationController
         title:query composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.timelineDisplayMgr.displayAsConversation = NO;
     self.timelineDisplayMgr.setUserToFirstTweeter = NO;
@@ -341,8 +347,8 @@
     dataSource.delegate = self.timelineDisplayMgr;
     
     [dataSource setCredentials:credentials];
-    [wrapperController.navigationController
-        pushViewController:self.nextWrapperController animated:YES];
+    [navigationController pushViewController:self.nextWrapperController
+        animated:YES];
 }
 
 #pragma mark LocationMapViewControllerDelegate implementation
@@ -352,8 +358,8 @@
 {
     NSLog(@"Showing location info for %@", locationString);
 
-    [wrapperController.navigationController
-        pushViewController:self.locationInfoViewController animated:YES];
+    [navigationController pushViewController:self.locationInfoViewController
+        animated:YES];
 
     [self.locationInfoViewController setLocationString:locationString
         coordinate:coordinate];
@@ -375,6 +381,7 @@
     self.timelineDisplayMgr =
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:self.nextWrapperController
+        navigationController:navigationController
         title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
     self.timelineDisplayMgr.displayAsConversation = NO;
     self.timelineDisplayMgr.setUserToFirstTweeter = NO;
@@ -408,8 +415,7 @@
     dataSource.delegate = self.timelineDisplayMgr;
 
     [dataSource setCredentials:credentials];
-    [wrapperController.navigationController
-        pushViewController:self.nextWrapperController
+    [navigationController pushViewController:self.nextWrapperController
         animated:YES];
 }
 
@@ -557,8 +563,8 @@
     [userInfoController release];
     userInfoController = nil; // Forces to scroll to top
     self.userInfoController.navigationItem.title = aUser.username;
-    [wrapperController.navigationController
-        pushViewController:self.userInfoController animated:YES];
+    [navigationController pushViewController:self.userInfoController
+        animated:YES];
     self.userInfoController.followingEnabled =
         ![credentials.username isEqual:aUser.username];
     [self.userInfoController setUser:aUser];
@@ -580,8 +586,8 @@
     self.userInfoControllerWrapper.navigationItem.title = aUsername;
     [self.userInfoControllerWrapper setCachedDataAvailable:NO];
     [self.userInfoControllerWrapper setUpdatingState:kConnectedAndUpdating];
-    [wrapperController.navigationController
-        pushViewController:self.userInfoControllerWrapper animated:YES];
+    [navigationController pushViewController:self.userInfoControllerWrapper
+        animated:YES];
     self.userInfoController.followingEnabled =
         ![credentials.username isEqual:aUsername];
 

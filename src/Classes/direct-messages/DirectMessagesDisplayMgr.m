@@ -112,6 +112,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         displayMgrHelper =
             [[DisplayMgrHelper alloc]
             initWithWrapperController:aWrapperController
+            navigationController:aWrapperController.navigationController
             userListDisplayMgrFactor:userListDispMgrFctry
             composeTweetDisplayMgr:composeTweetDisplayMgr
             twitterService:displayHelperService
@@ -723,6 +724,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     if (outstandingReceivedRequests == 0) { // only one at a time
         outstandingReceivedRequests++;
+        NSLog(@"Fetching received messages with id: %@, page: %@, qty: %@",
+            updateId, page, numMessages);
         [service fetchDirectMessagesSinceId:updateId page:page
             count:numMessages];
     }
@@ -733,6 +736,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     if (outstandingSentRequests == 0) { // only one at a time
         outstandingSentRequests++;
+        NSLog(@"Fetching sent messages with id: %@, page: %@, qty: %@",
+            updateId, page, numMessages);
         [service fetchSentDirectMessagesSinceId:updateId page:page
             count:numMessages];
     }

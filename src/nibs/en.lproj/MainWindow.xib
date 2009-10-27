@@ -3,7 +3,7 @@
 	<data>
 		<int key="IBDocument.SystemTarget">768</int>
 		<string key="IBDocument.SystemVersion">10A432</string>
-		<string key="IBDocument.InterfaceBuilderVersion">732</string>
+		<string key="IBDocument.InterfaceBuilderVersion">740</string>
 		<string key="IBDocument.AppKitVersion">1038</string>
 		<string key="IBDocument.HIToolboxVersion">437.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
@@ -12,7 +12,8 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="127"/>
+			<integer value="125"/>
+			<integer value="212"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -78,6 +79,7 @@
 							<string key="IBUITitle">Home</string>
 							<object class="IBUINavigationItem" key="IBUINavigationItem" id="108760763">
 								<reference key="IBUINavigationBar"/>
+								<string key="IBUITitle">Home</string>
 								<object class="IBUIBarButtonItem" key="IBUILeftBarButtonItem" id="984696093">
 									<int key="IBUIStyle">1</int>
 									<int key="IBUISystemItemIdentifier">13</int>
@@ -271,6 +273,16 @@
 					<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 				</object>
 			</object>
+			<object class="IBUIViewController" id="551901653">
+				<object class="IBUINavigationItem" key="IBUINavigationItem" id="849459375">
+					<reference key="IBUINavigationBar"/>
+					<string key="IBUITitle">Home</string>
+				</object>
+				<object class="IBUISimulatedNavigationBarMetrics" key="IBUISimulatedTopBarMetrics">
+					<bool key="IBUIPrompted">NO</bool>
+				</object>
+				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
+			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
@@ -298,14 +310,6 @@
 						<reference key="destination" ref="1034742383"/>
 					</object>
 					<int key="connectionID">113</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">homeNetAwareViewController</string>
-						<reference key="source" ref="664661524"/>
-						<reference key="destination" ref="423699512"/>
-					</object>
-					<int key="connectionID">152</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -370,6 +374,22 @@
 						<reference key="destination" ref="765980778"/>
 					</object>
 					<int key="connectionID">211</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">homeNetAwareViewController</string>
+						<reference key="source" ref="664661524"/>
+						<reference key="destination" ref="551901653"/>
+					</object>
+					<int key="connectionID">214</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">homeToggleViewController</string>
+						<reference key="source" ref="664661524"/>
+						<reference key="destination" ref="423699512"/>
+					</object>
+					<int key="connectionID">215</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -644,6 +664,20 @@
 						<reference key="object" ref="98785706"/>
 						<reference key="parent" ref="623908236"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">212</int>
+						<reference key="object" ref="551901653"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="849459375"/>
+						</object>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">216</int>
+						<reference key="object" ref="849459375"/>
+						<reference key="parent" ref="551901653"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -688,6 +722,10 @@
 					<string>2.IBAttributePlaceholdersKey</string>
 					<string>2.IBEditorWindowLastContentRect</string>
 					<string>2.IBPluginDependency</string>
+					<string>212.CustomClassName</string>
+					<string>212.IBEditorWindowLastContentRect</string>
+					<string>212.IBPluginDependency</string>
+					<string>216.IBPluginDependency</string>
 					<string>3.CustomClassName</string>
 					<string>3.IBPluginDependency</string>
 				</object>
@@ -696,11 +734,11 @@
 					<string>UIApplication</string>
 					<string>UIResponder</string>
 					<string>RotatableTabBarController</string>
-					<string>{{402, 169}, {320, 480}}</string>
+					<string>{{411, 186}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>NetworkAwareViewController</string>
+					<string>ToggleViewController</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -737,6 +775,10 @@
 					</object>
 					<string>{{229, 373}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>NetworkAwareViewController</string>
+					<string>{{91, 338}, {320, 480}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>TwitchAppDelegate</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
@@ -757,7 +799,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">211</int>
+			<int key="maxID">216</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -783,6 +825,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/shared/NSObject+RuntimeAdditions.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/shared/NSObject+TweetHelpers.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -847,6 +896,18 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">ToggleViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">childController</string>
+						<string key="NS.object.0">UIViewController</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/shared/ToggleViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">TwitchAppDelegate</string>
 					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -860,6 +921,7 @@
 							<string>accountsViewController</string>
 							<string>findPeopleNetAwareViewController</string>
 							<string>homeNetAwareViewController</string>
+							<string>homeToggleViewController</string>
 							<string>messagesNetAwareViewController</string>
 							<string>searchNetAwareViewController</string>
 							<string>tabBarController</string>
@@ -870,6 +932,7 @@
 							<string>AccountsViewController</string>
 							<string>NetworkAwareViewController</string>
 							<string>NetworkAwareViewController</string>
+							<string>ToggleViewController</string>
 							<string>NetworkAwareViewController</string>
 							<string>NetworkAwareViewController</string>
 							<string>UITabBarController</string>

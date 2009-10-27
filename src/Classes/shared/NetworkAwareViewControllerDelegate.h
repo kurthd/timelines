@@ -9,6 +9,7 @@
 @optional
 
 - (void)networkAwareViewWillAppear;
+- (void)networkAwareViewWillDisappear;
 - (void)viewWillRotateToOrientation:(UIInterfaceOrientation)orientation;
 
 @end
