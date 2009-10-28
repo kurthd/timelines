@@ -4,6 +4,7 @@
 
 #import "NetworkAwareViewController.h"
 #import "UIColor+TwitchColors.h"
+#import "RotatableTabBarController.h"
 
 @interface NetworkAwareViewController (Private)
 
@@ -85,6 +86,10 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    self.view.frame =
+        [[RotatableTabBarController instance] landscape] ?
+        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
 
     if ([self targetViewIsDisplayed])
         [targetViewController viewWillAppear:animated];
@@ -104,7 +109,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 {
     [super viewDidAppear:animated];
     visible = YES;
-
+    
     [self addUpdatingViewAsSubview];
 
     if ([self targetViewIsDisplayed])
