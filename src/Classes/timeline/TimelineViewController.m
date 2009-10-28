@@ -311,6 +311,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
 - (void)setUser:(User *)aUser
 {
+    NSLog(@"Setting user on timeline view controller");
     [aUser retain];
     [user release];
     user = aUser;

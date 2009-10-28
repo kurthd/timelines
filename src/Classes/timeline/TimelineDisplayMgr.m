@@ -536,17 +536,17 @@
     NSLog(@"Timeline display manager: showing timeline view...");
     if (((!hasBeenDisplayed && [timelineSource credentials]) || needsRefresh) &&
         [timelineSource readyForQuery]) {
-
+    
         NSLog(@"Timeline display manager:\
             fetching new timeline when shown for first time...");
         [self.wrapperController setUpdatingState:kConnectedAndUpdating];
         [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
     }
-
+    
     hasBeenDisplayed = YES;
     needsRefresh = NO;
-
+    
     [conversationDisplayMgrs removeAllObjects];
 }
 

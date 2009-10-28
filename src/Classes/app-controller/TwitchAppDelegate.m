@@ -1631,7 +1631,7 @@
 
 - (UIBarButtonItem *)newTweetButtonItem
 {
-    UIBarButtonItem * button =
+    UIBarButtonItem * button = nil;
         [[UIBarButtonItem alloc]
         initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                              target:self
