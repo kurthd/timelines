@@ -63,7 +63,9 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 - (id)initWithTargetViewController:(UIViewController *)aTargetViewController
 {
     if (self = [super init]) {
-        CGRect frame = CGRectMake(0, 0, 320, 367);
+        CGRect frame =
+            [[RotatableTabBarController instance] landscape] ?
+            CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
         self.view = [[UIView alloc] initWithFrame:frame];
 
         [self noDataViewController].view.backgroundColor =
@@ -86,7 +88,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     self.view.frame =
         [[RotatableTabBarController instance] landscape] ?
         CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
