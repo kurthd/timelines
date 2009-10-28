@@ -103,6 +103,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [recipientView release];
     [recipientTextField release];
+    [recipientToLabel release];
     [recipientBackgroundView release];
     [addRecipientButton release];
 
@@ -264,8 +265,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                              cache:YES];
 
     photoUploadView.alpha = 0.0;
+    UIStatusBarStyle statusBarStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIStatusBarStyleBlackOpaque : UIStatusBarStyleDefault;
     [[UIApplication sharedApplication]
-        setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+        setStatusBarStyle:statusBarStyle animated:NO];
 
     [UIView commitAnimations];
 
@@ -316,8 +320,12 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         characterCountLandscape.backgroundColor =
             [TimelineTableViewCellView defaultDarkThemeCellColor];
         textView.keyboardAppearance = UIKeyboardAppearanceAlert;
-        // recipientBackgroundView.image =
-        //     [UIImage imageNamed:@"ComposeRecipientGradientDarkTheme.png"];
+        recipientBackgroundView.image =
+            [UIImage imageNamed:@"ComposeRecipientGradientDarkTheme.png"];
+        recipientToLabel.textColor = [UIColor twitchLightLightGrayColor];
+        recipientToLabel.shadowColor = [UIColor twitchDarkDarkGrayColor];
+        recipientTextField.textColor = [UIColor whiteColor];
+        recipientTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
     } else {
         characterCountLandscape.textColor = [UIColor twitchGrayColor];
         characterCountLandscape.backgroundColor = [UIColor whiteColor];
@@ -771,8 +779,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                              cache:YES];
 
     activityView.alpha = 0.0;
+    UIStatusBarStyle statusBarStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIStatusBarStyleBlackOpaque : UIStatusBarStyleDefault;
     [[UIApplication sharedApplication]
-        setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+        setStatusBarStyle:statusBarStyle animated:NO];
 
     [UIView commitAnimations];
 }

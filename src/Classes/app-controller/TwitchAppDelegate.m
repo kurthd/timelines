@@ -241,6 +241,8 @@
         [self initMentionsView];
     [directMessageDisplayMgr updateDirectMessagesSinceLastUpdateIds];
     [mentionDisplayMgr updateMentionsSinceLastUpdateIds];
+
+    window.backgroundColor = [UIColor blackColor];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

@@ -22,6 +22,7 @@
 #import "ErrorState.h"
 #import "UIImage+GeneralHelpers.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "SettingsReader.h"
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -859,6 +860,10 @@
                           destructiveButtonTitle:nil
                                otherButtonTitles:cameraButton,
                                                  photosButton, nil];
+
+        if ([SettingsReader displayTheme] == kDisplayThemeDark)
+            sheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+
         [sheet showInView:controller.view];
     } else {
         UIImagePickerControllerSourceType source;
