@@ -209,9 +209,6 @@
 
     [self setUIStateFromPersistence];
 
-    // reset the unread message count to 0
-    application.applicationIconBadgeNumber = 0;
-
     [self performSelector:
         @selector(finishInitializationWithTimeInsensitiveOperations)
         withObject:nil
@@ -247,9 +244,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // reset the unread message count to 0
-    application.applicationIconBadgeNumber = 0;
-
     // the accounts tab bar item is selected
     if (tabBarController.selectedViewController.tabBarItem.tag == 3) {
         // make sure account changes get saved
