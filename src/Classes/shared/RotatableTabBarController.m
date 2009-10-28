@@ -33,7 +33,7 @@ static RotatableTabBarController * gInstance = NULL;
     CGFloat homeTitleWidth;
     if (o == UIInterfaceOrientationPortrait ||
         o == UIInterfaceOrientationPortraitUpsideDown)
-        homeTitleWidth = 181;
+        homeTitleWidth = 188;
     else
         homeTitleWidth = 250;
 

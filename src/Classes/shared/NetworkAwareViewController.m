@@ -146,6 +146,12 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
                                 duration:(NSTimeInterval)duration
 {
+    self.view.frame =
+        orientation == UIInterfaceOrientationPortrait ||
+        orientation == UIInterfaceOrientationPortraitUpsideDown ?
+        CGRectMake(0, 0, 320, 367) :
+        CGRectMake(0, 0, 480, 220);
+
     [targetViewController willRotateToInterfaceOrientation:orientation
         duration:duration];
     [noDataViewController willRotateToInterfaceOrientation:orientation
