@@ -52,6 +52,10 @@ timelinedisplaymgr.error.unblock = "Failed to unblock user %@";
 timelinedisplaymgr.error.block = "Failed to block user %@";
 timelinedisplaymgr.nearbysearch = "Nearby Tweets";
 
+/* TimelineDisplayMgr */
+mentiondisplaymgr.title = "Mentions";
+mentiondisplaymgr.title.formatstring = "Mentions (%d)";
+
 /* DirectMessageDisplayMgr */
 directmessage.actions.cancel = "Cancel";
 directmessage.actions.email = "Email This Message";

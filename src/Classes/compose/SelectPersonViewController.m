@@ -79,12 +79,13 @@
 
     UITableViewCell * cell =
         [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell)
+    if (!cell) {
         cell =
             [[[UITableViewCell alloc]
             initWithStyle:UITableViewCellStyleSubtitle
             reuseIdentifier:CellIdentifier]
             autorelease];
+    }
 
     User * user = [self objectAtIndexPath:indexPath inTableView:tv];
 
@@ -97,7 +98,8 @@
         NSURL * avatarUrl = [NSURL URLWithString:user.avatar.thumbnailImageUrl];
         [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
     }
-    cell.imageView.image = avatar;
+    if (avatar.size.height <= 48)
+        cell.imageView.image = avatar;
 
     return cell;
 }
@@ -109,6 +111,12 @@
 {
     User * user = [self objectAtIndexPath:indexPath inTableView:tv];
     [self.delegate userDidSelectPerson:user];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView
+    heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 48;
 }
 
 #pragma mark UISearchDisplayControllerDelegate implementation
@@ -139,16 +147,18 @@
         [NSPredicate predicateWithFormat:@"SELF.avatar.thumbnailImageUrl == %@",
         urlAsString];
     NSArray * candidates = [self.people filteredArrayUsingPredicate:predicate];
-    for (User * user in candidates) {  // there should only be one
-        UITableView * visibleTableView =
-            self.searchDisplayController.active ?
-            self.searchDisplayController.searchResultsTableView :
-            self.tableView;
+    
+    if (avatarImage.size.height <= 48)
+        for (User * user in candidates) {  // there should only be one
+            UITableView * visibleTableView =
+                self.searchDisplayController.active ?
+                self.searchDisplayController.searchResultsTableView :
+                self.tableView;
 
-        for (UITableViewCell * cell in visibleTableView.visibleCells)
-            if ([user.username isEqualToString:cell.textLabel.text])
-                cell.imageView.image = avatarImage;
-    }
+            for (UITableViewCell * cell in visibleTableView.visibleCells)
+                if ([user.username isEqualToString:cell.textLabel.text])
+                    cell.imageView.image = avatarImage;
+        }
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher

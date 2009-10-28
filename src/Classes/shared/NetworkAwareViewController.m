@@ -13,6 +13,9 @@
 - (void)addUpdatingViewAsSubview;
 - (void)removeUpdatingViewFromSuperview;
 - (void)resetUpdatingView;
+- (BOOL)targetViewIsDisplayed;
+- (void)showTargetView;
+- (void)showNoDataView;
 
 - (CGRect)shownUpdatingViewFrame;
 - (CGRect)hiddenUpdatingViewFrame;
@@ -59,6 +62,9 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 - (id)initWithTargetViewController:(UIViewController *)aTargetViewController
 {
     if (self = [super init]) {
+        CGRect frame = CGRectMake(0, 0, 320, 367);
+        self.view = [[UIView alloc] initWithFrame:frame];
+
         [self noDataViewController].view.backgroundColor =
             [UIColor twitchBackgroundColor];
 
@@ -80,9 +86,10 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 {
     [super viewWillAppear:animated];
 
-    if (self.view == targetViewController.view)
+    if ([self targetViewIsDisplayed])
         [targetViewController viewWillAppear:animated];
-    [noDataViewController viewWillAppear:animated];
+    else
+        [noDataViewController viewWillAppear:animated];
 
     if ([delegate respondsToSelector:@selector(networkAwareViewWillAppear)])
         [delegate networkAwareViewWillAppear];
@@ -100,8 +107,10 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 
     [self addUpdatingViewAsSubview];
 
-    if (self.view == targetViewController.view)
+    if ([self targetViewIsDisplayed])
         [targetViewController viewDidAppear:animated];
+    else
+        [noDataViewController viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -110,8 +119,22 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
     visible = NO;
     [self removeUpdatingViewFromSuperview];
 
-    if (self.view == targetViewController.view)
+    if ([delegate respondsToSelector:@selector(networkAwareViewWillDisappear)])
+        [delegate networkAwareViewWillDisappear];
+
+    if ([self targetViewIsDisplayed])
         [targetViewController viewWillDisappear:animated];
+    else
+        [noDataViewController viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    if ([self targetViewIsDisplayed])
+        [targetViewController viewDidDisappear:animated];
+    else
+        [noDataViewController viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
@@ -123,6 +146,12 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
                                 duration:(NSTimeInterval)duration
 {
+    self.view.frame =
+        orientation == UIInterfaceOrientationPortrait ||
+        orientation == UIInterfaceOrientationPortraitUpsideDown ?
+        CGRectMake(0, 0, 320, 367) :
+        CGRectMake(0, 0, 480, 220);
+
     [targetViewController willRotateToInterfaceOrientation:orientation
         duration:duration];
     [noDataViewController willRotateToInterfaceOrientation:orientation
@@ -214,11 +243,11 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 - (void)updateView
 {
     // set view
-    if (cachedDataAvailable && self.view != targetViewController.view) {
-        self.view = targetViewController.view;
+    if (cachedDataAvailable && ![self targetViewIsDisplayed]) {
+        [self showTargetView];
         [targetViewController viewWillAppear:YES];
     } else if (!cachedDataAvailable) {
-        self.view = [[self noDataViewController] view];
+        [self showNoDataView];
 
         // this seems to get overwritten on the device occasionally, so force
         // it here
@@ -236,9 +265,10 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
         forView:self.updatingView cache:NO];
 
     // position updating view
-    if (cachedDataAvailable && updatingState == kConnectedAndUpdating)
+    if (cachedDataAvailable && updatingState == kConnectedAndUpdating) {
+        NSLog(@"Showing the updating view");
         self.updatingView.frame = [self shownUpdatingViewFrame];
-    else
+    } else
         self.updatingView.frame = [self hiddenUpdatingViewFrame];
 
     [UIView commitAnimations];
@@ -258,7 +288,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
             initWithFrame:[self hiddenUpdatingViewFrame]];
         updatingView.backgroundColor =
             [[UIColor blackColor] colorWithAlphaComponent:0.7];
-        
+
         CGRect labelFrame =
             CGRectMake([self viewHeight], 0,
             [self viewLength] - [self viewHeight], [self viewHeight]);
@@ -298,6 +328,25 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 {
     NSLog(@"Removing updating view from superview");
     [[self updatingView] removeFromSuperview];
+}
+
+- (BOOL)targetViewIsDisplayed
+{
+    return self.view == targetViewController.view.superview;
+}
+
+- (void)showTargetView
+{
+    [targetViewController.view removeFromSuperview];
+    [[[self noDataViewController] view] removeFromSuperview];
+    [self.view addSubview:targetViewController.view];
+}
+
+- (void)showNoDataView
+{
+    [targetViewController.view removeFromSuperview];
+    [[[self noDataViewController] view] removeFromSuperview];
+    [self.view addSubview:[[self noDataViewController] view]];
 }
 
 #pragma mark Static helper methods

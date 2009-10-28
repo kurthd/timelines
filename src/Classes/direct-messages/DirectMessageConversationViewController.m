@@ -56,6 +56,7 @@ static UIImage * defaultAvatar;
         headerView.backgroundColor = [UIColor twitchDarkGrayColor];
         headerLine.backgroundColor = [UIColor twitchDarkDarkGrayColor];
         footerView.backgroundColor = [UIColor twitchDarkGrayColor];
+        self.tableView.backgroundColor = [UIColor twitchDarkGrayColor];
     }
 }
 

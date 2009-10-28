@@ -145,6 +145,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
     duration:(NSTimeInterval)duration
 {
+    NSLog(@"Timeline view controller will rotate");
     [self.tableView reloadData];
 }
 
@@ -266,12 +267,6 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     loadMoreButton.enabled = NO;
 }
 
-- (IBAction)showUserInfo:(id)sender
-{
-    NSLog(@"'Show user info' selected");
-    [delegate showUserInfo];
-}
-
 - (void)addTweet:(TweetInfo *)tweet
 {
     NSMutableArray * newTweets = [tweets mutableCopy];
@@ -352,6 +347,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)setTweets:(NSArray *)someTweets page:(NSUInteger)page
     visibleTweetId:(NSString *)aVisibleTweetId
 {
+    NSLog(@"Setting %d tweets on timeline", [someTweets count]);
     if (aVisibleTweetId && !self.visibleTweetId)
         self.visibleTweetId = aVisibleTweetId;
     self.sortedTweetCache = nil;

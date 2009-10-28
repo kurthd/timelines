@@ -6,7 +6,6 @@
 #import "NetworkAwareViewController.h"
 #import "TimelineViewController.h"
 #import "TimelineDataSource.h"
-#import "TimelineViewControllerDelegate.h"
 #import "TimelineDataSourceDelegate.h"
 #import "TweetViewControllerDelegate.h"
 #import "TwitterCredentials.h"
@@ -14,47 +13,33 @@
 #import "UserInfoViewController.h"
 #import "UserInfoViewControllerDelegate.h"
 #import "CredentialsActivatedPublisher.h"
-#import "UserListTableViewControllerDelegate.h"
-#import "UserListTableViewController.h"
 #import "ComposeTweetDisplayMgr.h"
 #import "TwitchBrowserViewController.h"
-#import "PhotoBrowser.h"
 #import "TwitchBrowserViewControllerDelegate.h"
 #import "TwitterService.h"
 #import "TwitterServiceDelegate.h"
-#import "SavedSearchMgr.h"
 #import "ConversationDisplayMgr.h"
-#import "UserInfoRequestAdapter.h"
-#import "LocationMapViewController.h"
-#import "LocationMapViewControllerDelegate.h"
-#import "LocationInfoViewController.h"
-#import "LocationInfoViewControllerDelegate.h"
 
 @class TimelineDisplayMgrFactory;
 @class TweetViewController;
 @class TweetDetailsViewLoader;
 @class UserListDisplayMgrFactory;
-@class UserListDisplayMgr;
+@class DisplayMgrHelper;
 
 @interface TimelineDisplayMgr :
     NSObject
     <TimelineDataSourceDelegate, TimelineViewControllerDelegate,
     TweetViewControllerDelegate, NetworkAwareViewControllerDelegate,
-    UserInfoViewControllerDelegate, TwitterServiceDelegate, UIWebViewDelegate,
-    ConversationDisplayMgrDelegate, LocationMapViewControllerDelegate,
-    LocationInfoViewControllerDelegate>
+    TwitterServiceDelegate, UIWebViewDelegate, ConversationDisplayMgrDelegate>
 {
+    UINavigationController * navigationController;
     NetworkAwareViewController * wrapperController;
     TimelineViewController * timelineController;
     NetworkAwareViewController * lastTweetDetailsWrapperController;
     TweetViewController * lastTweetDetailsController;
     TweetViewController * tweetDetailsController;
-    NetworkAwareViewController * userInfoControllerWrapper;
-    UserInfoRequestAdapter * userInfoRequestAdapter;
-    TwitterService * userInfoTwitterService;
-    UserInfoViewController * userInfoController;
-    SavedSearchMgr * findPeopleBookmarkMgr;
-    UserListDisplayMgrFactory * userListDisplayMgrFactory;
+
+    DisplayMgrHelper * displayMgrHelper;
 
     NSObject<TimelineDataSource> * timelineSource;
     TwitterService * service;
@@ -78,14 +63,7 @@
     BOOL firstFetchReceived;
     BOOL showMentions;
 
-    TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
-    TimelineDisplayMgr * tweetDetailsTimelineDisplayMgr;
-    NetworkAwareViewController * tweetDetailsNetAwareViewController;
-    CredentialsActivatedPublisher * tweetDetailsCredentialsPublisher;
     NSManagedObjectContext * managedObjectContext;
-
-    UserListDisplayMgr * userListDisplayMgr;
-    NetworkAwareViewController * userListNetAwareViewController;
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 
@@ -93,20 +71,14 @@
 
     BOOL suppressTimelineFailures;
 
-    SavedSearchMgr * savedSearchMgr;
-    NSString * currentSearch;
-
     // A new conversation display mgr instance is created for every
     // conversation that is viewed. Indeed, we must create a new one, as we
     // must push a unique view controller instance onto the nav stack for
-    // each one, adn the display mgr owns the view controller.
+    // each one, and the display mgr owns the view controller.
     //
     // Every conversation display mgr is added to this array. When the
     // timeline view is displayed, the array is emptied.
     NSMutableArray * conversationDisplayMgrs;
-
-    LocationMapViewController * locationMapViewController;
-    LocationInfoViewController * locationInfoViewController;
 
     NSMutableDictionary * tweetIdToIndexDict;
     NSMutableDictionary * tweetIndexToIdDict;
@@ -118,10 +90,6 @@
     NetworkAwareViewController * lastTweetDetailsWrapperController;
 @property (nonatomic, retain) TweetViewController * lastTweetDetailsController;
 @property (readonly) TweetViewController * tweetDetailsController;
-@property (readonly) UserInfoViewController * userInfoController;
-@property (readonly) NetworkAwareViewController * userInfoControllerWrapper;
-@property (readonly) UserInfoRequestAdapter * userInfoRequestAdapter;
-@property (readonly) TwitterService * userInfoTwitterService;
 
 @property (nonatomic, retain) TweetInfo * selectedTweet;
 @property (nonatomic, retain) NSString * currentUsername;
@@ -131,23 +99,11 @@
 @property (nonatomic, readonly) NSMutableDictionary * timeline;
 @property (nonatomic, readonly) NSUInteger pagesShown;
 @property (nonatomic, readonly) BOOL allPagesLoaded;
-// @property (nonatomic, copy) NSString * lastFollowingUsername;
 
 @property (nonatomic, assign) BOOL displayAsConversation;
 @property (nonatomic, assign) BOOL setUserToFirstTweeter;
 @property (nonatomic, assign) BOOL setUserToAuthenticatedUser;
 @property (nonatomic, assign) BOOL firstFetchReceived;
-
-@property (nonatomic, retain)
-    TimelineDisplayMgr * tweetDetailsTimelineDisplayMgr;
-@property (nonatomic, retain)
-    NetworkAwareViewController * tweetDetailsNetAwareViewController;
-@property (nonatomic, retain)
-    CredentialsActivatedPublisher * tweetDetailsCredentialsPublisher;
-
-@property (nonatomic, retain) UserListDisplayMgr * userListDisplayMgr;
-@property (nonatomic, retain)
-    NetworkAwareViewController * userListNetAwareViewController;
 
 @property (nonatomic, copy) NSString * tweetIdToShow;
 
@@ -158,6 +114,7 @@
 @property (nonatomic, assign) BOOL showMentions;
     
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
+    navigationController:(UINavigationController *)navigationController
     timelineController:(TimelineViewController *)aTimelineController
     timelineSource:(NSObject<TimelineDataSource> *)timelineSource
     service:(TwitterService *)service title:(NSString *)title
@@ -170,6 +127,7 @@
 - (void)setService:(NSObject<TimelineDataSource> *)aService
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page
     forceRefresh:(BOOL)refresh allPagesLoaded:(BOOL)allPagesLoaded;
+- (void)setTweets:(NSDictionary *)someTweets;
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)replyToTweet;
 - (void)refreshWithLatest;

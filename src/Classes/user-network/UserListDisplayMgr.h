@@ -25,11 +25,12 @@
 #import "LocationInfoViewController.h"
 #import "LocationInfoViewControllerDelegate.h"
 
+@class DisplayMgrHelper;
+
 @interface UserListDisplayMgr :
     NSObject
     <UserListTableViewControllerDelegate, TwitterServiceDelegate,
-    UserInfoViewControllerDelegate, NetworkAwareViewControllerDelegate,
-    LocationMapViewControllerDelegate, LocationInfoViewControllerDelegate>
+    NetworkAwareViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     UserListTableViewController * userListController;
@@ -42,22 +43,16 @@
     BOOL showFollowing; // Screw polymorphism -- too much work
     NSString * username;
 
+    DisplayMgrHelper * displayMgrHelper;
+
     TimelineDisplayMgr * timelineDisplayMgr;
     UserListDisplayMgr * nextUserListDisplayMgr;
-    NetworkAwareViewController * nextWrapperController;
     CredentialsActivatedPublisher * credentialsPublisher;
     TwitterCredentials * credentials;
     NSString * cursor;
     BOOL failedState;
     NSMutableDictionary * cache;
-    UserInfoViewController * userInfoController;
     BOOL alreadyBeenDisplayed;
-    NSString * userInfoUsername;
-    NSString * currentSearch;
-    SavedSearchMgr * savedSearchMgr;
-
-    LocationMapViewController * locationMapViewController;
-    LocationInfoViewController * locationInfoViewController;
 }
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController

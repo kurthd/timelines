@@ -832,7 +832,8 @@ enum TweetActionSheets {
             locationCell.backgroundColor =
                 [TimelineTableViewCellView defaultDarkThemeCellColor];
             [locationCell setLabelTextColor:[UIColor whiteColor]];
-        }
+        } else
+            [locationCell setLabelTextColor:[UIColor blackColor]];
     }
 
     return locationCell;

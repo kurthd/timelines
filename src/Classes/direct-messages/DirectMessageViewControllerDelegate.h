@@ -12,9 +12,7 @@
 
 - (void)showUserInfoForUser:(User *)aUser;
 - (void)showUserInfoForUsername:(NSString *)aUsername;
-- (void)showTweetsForUser:(NSString *)username;
 - (void)showResultsForSearch:(NSString *)query;
-- (void)showLocationOnMap:(NSString *)location;
 - (void)showingTweetDetails:(DirectMessageViewController *)tweetController;
 - (void)deleteTweet:(NSString *)tweetId;
 - (void)sendDirectMessageToUser:(NSString *)aUsername;

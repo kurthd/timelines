@@ -7,6 +7,7 @@
 #import "RotatableTabBarController.h"
 #import "NSString+UrlAdditions.h"
 #import "SettingsReader.h"
+#import "TimelineTableViewCellView.h"
 
 static const NSInteger MAX_TWEET_LENGTH = 140;
 
@@ -102,6 +103,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [recipientView release];
     [recipientTextField release];
+    [recipientToLabel release];
+    [recipientBackgroundView release];
     [addRecipientButton release];
 
     [photoUploadView release];
@@ -262,8 +265,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                              cache:YES];
 
     photoUploadView.alpha = 0.0;
+    UIStatusBarStyle statusBarStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIStatusBarStyleBlackOpaque : UIStatusBarStyleDefault;
     [[UIApplication sharedApplication]
-        setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+        setStatusBarStyle:statusBarStyle animated:NO];
 
     [UIView commitAnimations];
 
@@ -310,8 +316,16 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [characterCountButton release];
 
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-        characterCountLandscape.textColor = [UIColor twitchGrayColor];
-        characterCountLandscape.backgroundColor = [UIColor blackColor];
+        characterCountLandscape.textColor = [UIColor whiteColor];
+        characterCountLandscape.backgroundColor =
+            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        textView.keyboardAppearance = UIKeyboardAppearanceAlert;
+        recipientBackgroundView.image =
+            [UIImage imageNamed:@"ComposeRecipientGradientDarkTheme.png"];
+        recipientToLabel.textColor = [UIColor twitchLightLightGrayColor];
+        recipientToLabel.shadowColor = [UIColor twitchDarkDarkGrayColor];
+        recipientTextField.textColor = [UIColor whiteColor];
+        recipientTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
     } else {
         characterCountLandscape.textColor = [UIColor twitchGrayColor];
         characterCountLandscape.backgroundColor = [UIColor whiteColor];
@@ -503,6 +517,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                       destructiveButtonTitle:clearTitle
                            otherButtonTitles:nil];
 
+    if ([SettingsReader displayTheme] == kDisplayThemeDark)
+        sheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+
     [sheet showInView:self.view];
 }
 
@@ -657,7 +674,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
         toolbar.barStyle = UIBarStyleBlack;
-        textView.backgroundColor = [UIColor blackColor];
+        textView.backgroundColor =
+            [TimelineTableViewCellView defaultDarkThemeCellColor];
         textView.textColor = [UIColor whiteColor];
     }
 }
@@ -761,8 +779,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
                              cache:YES];
 
     activityView.alpha = 0.0;
+    UIStatusBarStyle statusBarStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIStatusBarStyleBlackOpaque : UIStatusBarStyleDefault;
     [[UIApplication sharedApplication]
-        setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+        setStatusBarStyle:statusBarStyle animated:NO];
 
     [UIView commitAnimations];
 }

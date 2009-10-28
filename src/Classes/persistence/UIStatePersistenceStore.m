@@ -17,6 +17,7 @@
 + (NSString *)findPeopleTextKey;
 + (NSString *)searchTextKey;
 + (NSString *)nearbySearchKey;
++ (NSString *)numNewMentionsKey;
 
 @end
 
@@ -49,6 +50,8 @@
         [dict objectForKey:[[self class] searchTextKey]];
     BOOL nearbySearch =
         [[dict objectForKey:[[self class] nearbySearchKey]] boolValue];
+    NSUInteger numNewMentions =
+        [[dict objectForKey:[[self class] numNewMentionsKey]] unsignedIntValue];
     state.selectedTab = selectedTab;
     state.selectedTimelineFeed = selectedTimelineFeed;
     state.viewedTweetId = viewedTweetId;
@@ -58,6 +61,7 @@
     state.findPeopleText = findPeopleText;
     state.searchText = searchText;
     state.nearbySearch = nearbySearch;
+    state.numNewMentions = numNewMentions;
 
     return state;
 }
@@ -97,6 +101,10 @@
 
     NSNumber * nearbySearch = [NSNumber numberWithBool:state.nearbySearch];
     [dict setObject:nearbySearch forKey:[[self class] nearbySearchKey]];
+    
+    NSNumber * numNewMentions =
+        [NSNumber numberWithUnsignedInt:state.numNewMentions];
+    [dict setObject:numNewMentions forKey:[[self class] numNewMentionsKey]];
 
     [PlistUtils saveDictionary:dict toPlist:[[self class] plistName]];
 }
@@ -149,6 +157,11 @@
 + (NSString *)nearbySearchKey
 {
     return @"nearbySearch";
+}
+
++ (NSString *)numNewMentionsKey
+{
+    return @"numNewMentions";
 }
 
 @end
