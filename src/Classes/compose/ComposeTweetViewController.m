@@ -232,6 +232,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)displayPhotoUploadView
 {
+    if (!photoUploadViewHasBeenInitialized) {
+        [self initializePhotoUploadView];
+        photoUploadViewHasBeenInitialized = YES;
+    }
+
     photoUploadView.alpha = 0.0;
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationTransition:UIViewAnimationTransitionNone
