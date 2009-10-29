@@ -213,7 +213,7 @@
         @selector(finishInitializationWithTimeInsensitiveOperations)
         withObject:nil
         afterDelay:0.7];
-        
+
     NSLog(@"Application did finish initializing");
 }
 
@@ -804,9 +804,10 @@
     didSelectViewController:(UIViewController *)viewController
 {
     if (viewController == homeToggleViewController.navigationController &&
-        !timelineDisplayMgr)
+        !timelineDisplayMgr) {
+        NSLog(@"Selected home tab");
         [self initHomeTab];
-    else if (viewController ==
+    } else if (viewController ==
         messagesNetAwareViewController.navigationController &&
         !directMessageDisplayMgr)
         [self initMessagesTab];
@@ -1020,8 +1021,20 @@
                         added:(NSNumber *)added
 {
     if ([added integerValue]) {
-        if (self.credentials.count == 0)  // first credentials -- active them
+        if (self.credentials.count == 0) { // first credentials -- active them
+            NSLog(@"Setting first credentials");
             [self broadcastActivatedCredentialsChanged:changedCredentials];
+
+            [directMessageAcctMgr
+                processAccountChangeToUsername:changedCredentials.username
+                fromUsername:nil];
+            [mentionsAcctMgr
+                processAccountChangeToUsername:changedCredentials.username
+                fromUsername:nil];
+
+            [directMessageDisplayMgr updateDirectMessagesAfterCredentialChange];
+            [mentionDisplayMgr updateMentionsAfterCredentialChange];
+        }
         [self.credentials addObject:changedCredentials];
     } else {
         [TwitterCredentials
