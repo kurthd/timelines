@@ -236,8 +236,12 @@
         [self initMessagesTab];
     if (!mentionDisplayMgr)
         [self initMentionsView];
-    [directMessageDisplayMgr updateDirectMessagesSinceLastUpdateIds];
-    [mentionDisplayMgr updateMentionsSinceLastUpdateIds];
+    
+    TwitterCredentials * c = self.activeCredentials.credentials;
+    if (c) {
+        [directMessageDisplayMgr updateDirectMessagesSinceLastUpdateIds];
+        [mentionDisplayMgr updateMentionsSinceLastUpdateIds];
+    }
 
     window.backgroundColor = [UIColor blackColor];
 }
@@ -613,18 +617,18 @@
         [[MentionsAcctMgr alloc]
         initWithMentionTimelineDisplayMgr:mentionDisplayMgr];
 
-    TwitterCredentials * c = self.activeCredentials.credentials;
-
-    AccountSettings * settings =
-        [AccountSettings settingsForKey:c.username];
-    mentionDisplayMgr.showBadge = [settings pushMentions];
     mentionDisplayMgr.numNewMentions = uiState.numNewMentions;
 
     // Don't autorelease
     [[CredentialsActivatedPublisher alloc]
         initWithListener:mentionDisplayMgr action:@selector(setCredentials:)];
 
+    TwitterCredentials * c = self.activeCredentials.credentials;
     if (c) {
+        AccountSettings * settings =
+            [AccountSettings settingsForKey:c.username];
+        mentionDisplayMgr.showBadge = [settings pushMentions];
+
         [mentionDisplayMgr setCredentials:c];
         [self loadMentionsViewWithCachedData:c];
     }
