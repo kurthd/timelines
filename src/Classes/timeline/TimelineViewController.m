@@ -122,15 +122,18 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
     // this ensures that any header set before the view is showed scales
     // correctly when changing orientation
-    CGRect timelineFrame = self.view.frame;
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
-    timelineFrame.size.width = landscape ? 480 : 320;
-    self.view.frame = timelineFrame;
+    self.view.frame =
+        [[RotatableTabBarController instance] landscape] ?
+        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    self.view.frame =
+        [[RotatableTabBarController instance] landscape] ?
+        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
 
     [self.tableView reloadData];
     [self.tableView flashScrollIndicators];

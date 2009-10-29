@@ -36,13 +36,13 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [childController viewWillAppear:animated];
+    [childController viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [childController viewDidAppear:animated];
+    [childController viewDidDisappear:animated];
 }
 
 - (void)setChildController:(UIViewController *)aChildController
@@ -50,15 +50,17 @@
     CGRect frame = CGRectMake(0, 0, 320, 367);
     aChildController.view.frame = frame;
 
-    [childController.view removeFromSuperview];
+    if (aChildController != childController) {
+        [childController.view removeFromSuperview];
 
-    [aChildController retain];
-    [childController release];
-    childController = aChildController;
+        [aChildController retain];
+        [childController release];
+        childController = aChildController;
 
-    [childController viewWillAppear:NO];
-    [self.view addSubview:childController.view];
-    [childController viewDidAppear:NO];
+        [childController viewWillAppear:NO];
+        [self.view addSubview:childController.view];
+        [childController viewDidAppear:NO];
+    }
 }
 
 @end

@@ -192,6 +192,11 @@ static UIImage * defaultAvatar;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    self.view.frame =
+        [[RotatableTabBarController instance] landscape] ?
+        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+
     [delegate showingUserInfoView];
     UIInterfaceOrientation orientation =
         [[RotatableTabBarController instance] effectiveOrientation];

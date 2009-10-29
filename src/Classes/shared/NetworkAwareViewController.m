@@ -1,4 +1,4 @@
-//
+
 //  Copyright 2009 High Order Bit, Inc. All rights reserved.
 //
 
@@ -377,23 +377,17 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 
 - (CGFloat)y
 {
-    return self.interfaceOrientation == UIInterfaceOrientationPortrait || 
-        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ? 
-        338 : 190;
+    return ![[RotatableTabBarController instance] landscape] ? 338 : 190;
 }
 
 - (CGFloat)screenWidth
 {
-    return self.interfaceOrientation == UIInterfaceOrientationPortrait || 
-        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ?
-        320 : 480;
+    return ![[RotatableTabBarController instance] landscape] ? 320 : 480;
 }
 
 - (CGFloat)viewLength
 {
-    return self.interfaceOrientation == UIInterfaceOrientationPortrait || 
-        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ?
-        320 : 480;
+    return ![[RotatableTabBarController instance] landscape] ? 320 : 480;
 }
 
 - (CGFloat)viewHeight
