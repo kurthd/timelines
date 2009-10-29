@@ -51,24 +51,32 @@
 
 - (void)updateViewForOrientation:(UIInterfaceOrientation)o
 {
+    CGFloat labelX;
+    CGFloat activityIndicatorX;
     CGFloat labelY;
     CGFloat activityIndicatorY;
     if (o == UIInterfaceOrientationPortrait ||
         o == UIInterfaceOrientationPortraitUpsideDown) {
 
+        labelX = 21;
         labelY = 112;
+        activityIndicatorX = 142;
         activityIndicatorY = 67;
     } else {
+        labelX = 105;
         labelY = 92;
+        activityIndicatorX = 222;
         activityIndicatorY = 47;
     }
 
     CGRect labelFrame = label.frame;
     labelFrame.origin.y = labelY;
+    labelFrame.origin.x = labelX;
     label.frame = labelFrame;
 
     CGRect activityIndicatorFrame = activityIndicator.frame;
     activityIndicatorFrame.origin.y = activityIndicatorY;
+    activityIndicatorFrame.origin.x = activityIndicatorX;
     activityIndicator.frame = activityIndicatorFrame;
 }
 
