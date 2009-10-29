@@ -1031,9 +1031,17 @@
             [mentionsAcctMgr
                 processAccountChangeToUsername:changedCredentials.username
                 fromUsername:nil];
-
-            [directMessageDisplayMgr updateDirectMessagesAfterCredentialChange];
-            [mentionDisplayMgr updateMentionsAfterCredentialChange];
+            
+            [directMessageDisplayMgr
+                performSelector:
+                @selector(updateDirectMessagesAfterCredentialChange)
+                withObject:nil
+                afterDelay:2.0];
+            [mentionDisplayMgr
+                performSelector:
+                @selector(updateMentionsAfterCredentialChange)
+                withObject:nil
+                afterDelay:2.0];
         }
         [self.credentials addObject:changedCredentials];
     } else {
