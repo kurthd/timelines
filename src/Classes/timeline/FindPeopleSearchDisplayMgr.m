@@ -34,6 +34,7 @@
 - (void)showAutocompleteResults;
 - (void)hideAutocompleteResults;
 - (void)updateAutocompleteViewFrame;
+- (void)setSearchBarFrameWithLandscape:(BOOL)landscape;
 - (void)setSearchBarFrame;
 
 @property (nonatomic, readonly)
@@ -142,13 +143,18 @@
     return self;
 }
 
-- (void)setSearchBarFrame
+- (void)setSearchBarFrameWithLandscape:(BOOL)landscape
 {
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
     CGFloat viewWidth = landscape ? 470 : 310;
     CGFloat barHeight = landscape ? 32 : 44;
     CGRect searchBarRect = CGRectMake(0.0, 0.0, viewWidth, barHeight);
     searchBar.bounds = searchBarRect;
+}
+
+- (void)setSearchBarFrame
+{
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    [self setSearchBarFrameWithLandscape:landscape];
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation
@@ -167,6 +173,7 @@
 
 - (void)viewWillRotateToOrientation:(UIInterfaceOrientation)orientation
 {
+    NSLog(@"Find people tab changing orientation");
     [self updateAutocompleteViewFrame];
     [self performSelector:@selector(setSearchBarFrame) withObject:nil
         afterDelay:0];

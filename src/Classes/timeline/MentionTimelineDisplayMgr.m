@@ -520,7 +520,8 @@
 {
     NSLog(@"Updating with a bunch of mentions...");
     refreshingMessages = NO;
-    NSNumber * count = [NSNumber numberWithInteger:200];
+    NSNumber * count =
+        [NSNumber numberWithInteger:[SettingsReader fetchQuantity]];
     [self fetchMentionsSinceId:nil page:[NSNumber numberWithInt:1]
         numMessages:count];
     [self setUpdatingState];
@@ -530,7 +531,8 @@
 {
     NSLog(@"Loading more messages (page %d)...", loadMoreNextPage);
     refreshingMessages = NO;
-    NSNumber * count = [NSNumber numberWithInteger:200];
+    NSNumber * count =
+        [NSNumber numberWithInteger:[SettingsReader fetchQuantity]];
     [self fetchMentionsSinceId:nil 
         page:[NSNumber numberWithInt:loadMoreNextPage] numMessages:count];
     [self setUpdatingState];

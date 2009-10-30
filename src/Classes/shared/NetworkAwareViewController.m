@@ -1,9 +1,10 @@
-//
+
 //  Copyright 2009 High Order Bit, Inc. All rights reserved.
 //
 
 #import "NetworkAwareViewController.h"
 #import "UIColor+TwitchColors.h"
+#import "RotatableTabBarController.h"
 
 @interface NetworkAwareViewController (Private)
 
@@ -62,7 +63,9 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 - (id)initWithTargetViewController:(UIViewController *)aTargetViewController
 {
     if (self = [super init]) {
-        CGRect frame = CGRectMake(0, 0, 320, 367);
+        CGRect frame =
+            [[RotatableTabBarController instance] landscape] ?
+            CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
         self.view = [[UIView alloc] initWithFrame:frame];
 
         [self noDataViewController].view.backgroundColor =
@@ -86,6 +89,10 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 {
     [super viewWillAppear:animated];
 
+    self.view.frame =
+        [[RotatableTabBarController instance] landscape] ?
+        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+
     if ([self targetViewIsDisplayed])
         [targetViewController viewWillAppear:animated];
     else
@@ -104,7 +111,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 {
     [super viewDidAppear:animated];
     visible = YES;
-
+    
     [self addUpdatingViewAsSubview];
 
     if ([self targetViewIsDisplayed])
@@ -370,23 +377,17 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 
 - (CGFloat)y
 {
-    return self.interfaceOrientation == UIInterfaceOrientationPortrait || 
-        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ? 
-        338 : 190;
+    return ![[RotatableTabBarController instance] landscape] ? 338 : 190;
 }
 
 - (CGFloat)screenWidth
 {
-    return self.interfaceOrientation == UIInterfaceOrientationPortrait || 
-        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ?
-        320 : 480;
+    return ![[RotatableTabBarController instance] landscape] ? 320 : 480;
 }
 
 - (CGFloat)viewLength
 {
-    return self.interfaceOrientation == UIInterfaceOrientationPortrait || 
-        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ?
-        320 : 480;
+    return ![[RotatableTabBarController instance] landscape] ? 320 : 480;
 }
 
 - (CGFloat)viewHeight

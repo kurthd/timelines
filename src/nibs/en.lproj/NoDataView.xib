@@ -3,7 +3,7 @@
 	<data>
 		<int key="IBDocument.SystemTarget">528</int>
 		<string key="IBDocument.SystemVersion">10A432</string>
-		<string key="IBDocument.InterfaceBuilderVersion">732</string>
+		<string key="IBDocument.InterfaceBuilderVersion">740</string>
 		<string key="IBDocument.AppKitVersion">1038</string>
 		<string key="IBDocument.HIToolboxVersion">437.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
@@ -37,13 +37,13 @@
 			</object>
 			<object class="IBUIView" id="375632576">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">294</int>
+				<int key="NSvFlags">292</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBUILabel" id="449730798">
 						<reference key="NSNextResponder" ref="375632576"/>
-						<int key="NSvFlags">294</int>
-						<string key="NSFrame">{{21, 112}, {280, 65}}</string>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{105, 112}, {280, 65}}</string>
 						<reference key="NSSuperview" ref="375632576"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -73,8 +73,8 @@
 					</object>
 					<object class="IBUIActivityIndicatorView" id="612331324">
 						<reference key="NSNextResponder" ref="375632576"/>
-						<int key="NSvFlags">293</int>
-						<string key="NSFrame">{{142, 67}, {37, 37}}</string>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{222, 67}, {37, 37}}</string>
 						<reference key="NSSuperview" ref="375632576"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -83,7 +83,7 @@
 						<int key="IBUIStyle">0</int>
 					</object>
 				</object>
-				<string key="NSFrameSize">{320, 460}</string>
+				<string key="NSFrameSize">{480, 480}</string>
 				<reference key="NSSuperview"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -93,6 +93,7 @@
 					</object>
 				</object>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+				<int key="IBUIContentMode">9</int>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -180,7 +181,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>NoDataViewController</string>
 					<string>UIResponder</string>
-					<string>{{350, 123}, {320, 460}}</string>
+					<string>{{130, 134}, {480, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -202,7 +203,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">7</int>
+			<int key="maxID">8</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -212,6 +213,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/shared/NSObject+RuntimeAdditions.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/shared/NSObject+TweetHelpers.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

@@ -502,8 +502,11 @@
     [self.networkAwareViewController.navigationItem
         setLeftBarButtonItem:self.locationButton animated:YES];
     locationButton.style = UIBarButtonItemStyleBordered;
-    NSString * title = NSLocalizedString(@"search.location.failed", @"");
-    [[ErrorState instance] displayErrorWithTitle:title error:error];
+
+    if (error.code != 1) { // suppress error codes of 1, because already alerted
+        NSString * title = NSLocalizedString(@"search.location.failed", @"");
+        [[ErrorState instance] displayErrorWithTitle:title error:error];
+    }
 }
 
 #pragma mark Accessors

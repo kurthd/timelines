@@ -209,14 +209,11 @@
 
     [self setUIStateFromPersistence];
 
-    // reset the unread message count to 0
-    application.applicationIconBadgeNumber = 0;
-
     [self performSelector:
         @selector(finishInitializationWithTimeInsensitiveOperations)
         withObject:nil
         afterDelay:0.7];
-        
+
     NSLog(@"Application did finish initializing");
 }
 
@@ -239,17 +236,18 @@
         [self initMessagesTab];
     if (!mentionDisplayMgr)
         [self initMentionsView];
-    [directMessageDisplayMgr updateDirectMessagesSinceLastUpdateIds];
-    [mentionDisplayMgr updateMentionsSinceLastUpdateIds];
+    
+    TwitterCredentials * c = self.activeCredentials.credentials;
+    if (c) {
+        [directMessageDisplayMgr updateDirectMessagesSinceLastUpdateIds];
+        [mentionDisplayMgr updateMentionsSinceLastUpdateIds];
+    }
 
     window.backgroundColor = [UIColor blackColor];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // reset the unread message count to 0
-    application.applicationIconBadgeNumber = 0;
-
     // the accounts tab bar item is selected
     if (tabBarController.selectedViewController.tabBarItem.tag == 3) {
         // make sure account changes get saved
@@ -619,18 +617,18 @@
         [[MentionsAcctMgr alloc]
         initWithMentionTimelineDisplayMgr:mentionDisplayMgr];
 
-    TwitterCredentials * c = self.activeCredentials.credentials;
-
-    AccountSettings * settings =
-        [AccountSettings settingsForKey:c.username];
-    mentionDisplayMgr.showBadge = [settings pushMentions];
     mentionDisplayMgr.numNewMentions = uiState.numNewMentions;
 
     // Don't autorelease
     [[CredentialsActivatedPublisher alloc]
         initWithListener:mentionDisplayMgr action:@selector(setCredentials:)];
 
+    TwitterCredentials * c = self.activeCredentials.credentials;
     if (c) {
+        AccountSettings * settings =
+            [AccountSettings settingsForKey:c.username];
+        mentionDisplayMgr.showBadge = [settings pushMentions];
+
         [mentionDisplayMgr setCredentials:c];
         [self loadMentionsViewWithCachedData:c];
     }
@@ -806,9 +804,10 @@
     didSelectViewController:(UIViewController *)viewController
 {
     if (viewController == homeToggleViewController.navigationController &&
-        !timelineDisplayMgr)
+        !timelineDisplayMgr) {
+        NSLog(@"Selected home tab");
         [self initHomeTab];
-    else if (viewController ==
+    } else if (viewController ==
         messagesNetAwareViewController.navigationController &&
         !directMessageDisplayMgr)
         [self initMessagesTab];
@@ -1022,8 +1021,29 @@
                         added:(NSNumber *)added
 {
     if ([added integerValue]) {
-        if (self.credentials.count == 0)  // first credentials -- active them
+        if (self.credentials.count == 0) { // first credentials -- active them
+            NSLog(@"Setting first credentials");
             [self broadcastActivatedCredentialsChanged:changedCredentials];
+
+            [directMessageAcctMgr
+                processAccountChangeToUsername:changedCredentials.username
+                fromUsername:nil];
+            [mentionsAcctMgr
+                processAccountChangeToUsername:changedCredentials.username
+                fromUsername:nil];
+
+            // spread these calls out a bit to avoid
+            [mentionDisplayMgr
+                performSelector:
+                @selector(updateMentionsAfterCredentialChange)
+                withObject:nil
+                afterDelay:2.0];
+            [directMessageDisplayMgr
+                performSelector:
+                @selector(updateDirectMessagesAfterCredentialChange)
+                withObject:nil
+                afterDelay:4.0];
+        }
         [self.credentials addObject:changedCredentials];
     } else {
         [TwitterCredentials
@@ -1637,7 +1657,7 @@
 
 - (UIBarButtonItem *)newTweetButtonItem
 {
-    UIBarButtonItem * button =
+    UIBarButtonItem * button = nil;
         [[UIBarButtonItem alloc]
         initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                              target:self

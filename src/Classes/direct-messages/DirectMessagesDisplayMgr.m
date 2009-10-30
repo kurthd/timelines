@@ -520,7 +520,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     NSLog(@"Messages Display Manager: Updating with a bunch of messages...");
     refreshingMessages = NO;
-    NSNumber * count = [NSNumber numberWithInteger:200];
+    NSNumber * count = [NSNumber numberWithInteger:100];
     [self fetchDirectMessagesSinceId:nil page:[NSNumber numberWithInt:1]
         numMessages:count];
     [self fetchSentDirectMessagesSinceId:nil
@@ -534,7 +534,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSLog(@"Messages Display Manager: Loading more messages (page %d)...",
         loadMoreReceivedNextPage);
     refreshingMessages = NO;
-    NSNumber * count = [NSNumber numberWithInteger:200];
+    NSNumber * count = [NSNumber numberWithInteger:100];
     [self fetchDirectMessagesSinceId:nil
         page:[NSNumber numberWithInt:loadMoreReceivedNextPage]
         numMessages:count];
