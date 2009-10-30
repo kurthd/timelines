@@ -241,7 +241,7 @@ enum CredentialRows
 - (void)disableForm
 {
     self.logInButton.enabled = NO;
-    self.cancelButton.enabled = NO;
+    //self.cancelButton.enabled = NO;
 
     self.usernameTextField.enabled = NO;
     self.passwordTextField.enabled = NO;

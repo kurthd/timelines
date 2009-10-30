@@ -18,6 +18,9 @@
 - (void)displayErrorWithMessage:(NSString *)message;
 - (void)broadcastSuccessfulLogInNotification:(TwitterCredentials *)credentials;
 
+- (BOOL)isLoggingIn;
+- (void)cancelLogIn;
+
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, retain) UIViewController * rootViewController;
 @property (nonatomic, retain) LogInViewController * logInViewController;
@@ -111,6 +114,10 @@
 - (void)userDidCancel
 {
     NSAssert(self.allowsCancel, @"User cancelled even though it's forbidden.");
+
+    if ([self isLoggingIn])
+        [self cancelLogIn];
+
     [self.rootViewController dismissModalViewControllerAnimated:YES];
     [self.delegate logInCancelled];
 }
@@ -137,37 +144,44 @@
 {
     NSLog(@"Request '%@' succeeded.", requestIdentifier);
 
-    NSPredicate * predicate =
-        [NSPredicate predicateWithFormat:@"username == %@",
-        self.twitter.username];
-    TwitterCredentials * twitterCredentials =
-        [TwitterCredentials findFirst:predicate context:context];
+    if ([self isLoggingIn]) {
+        NSPredicate * predicate =
+            [NSPredicate predicateWithFormat:@"username == %@",
+            self.twitter.username];
+        TwitterCredentials * twitterCredentials =
+            [TwitterCredentials findFirst:predicate context:context];
 
-    if (twitterCredentials == nil) {
-        NSString * message = @"The Twitter login that matches these TwitPic "
-            "login was not found.";
-        [self displayErrorWithMessage:message];
-        // HACK: Hardcoding the call to the username here
-        [self.logInViewController promptForLoginWithUsername:self.username
-                                                    editable:NO];
-    } else {
-        [self.rootViewController dismissModalViewControllerAnimated:YES];
-        [self.delegate logInCompleted:self.username password:self.password];
+        if (twitterCredentials == nil) {
+            NSString * message =
+                @"The Twitter login that matches this TwitPic login was not "
+                "found.";
+            [self displayErrorWithMessage:message];
+            // HACK: Hardcoding the call to the username here
+            [self.logInViewController promptForLoginWithUsername:self.username
+                                                        editable:NO];
+        } else {
+            [self.rootViewController dismissModalViewControllerAnimated:YES];
+            [self.delegate logInCompleted:self.username password:self.password];
+        }
+
+        [[UIApplication sharedApplication] networkActivityDidFinish];
+        self.logInRequestId = nil;
     }
-
-    [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 - (void)requestFailed:(NSString *)requestIdentifier withError:(NSError *)error
 {
     NSLog(@"Request '%@' failed; error: '%@'.", requestIdentifier, error);
 
-    [self displayErrorWithMessage:error.localizedDescription];
-    // HACK: Hardcoding the call to the username here
-    [self.logInViewController promptForLoginWithUsername:self.username
-                                                editable:NO];
+    if ([self isLoggingIn]) {
+        [self displayErrorWithMessage:error.localizedDescription];
+        // HACK: Hardcoding the call to the username here
+        [self.logInViewController promptForLoginWithUsername:self.username
+                                                    editable:NO];
 
-    [[UIApplication sharedApplication] networkActivityDidFinish];
+        [[UIApplication sharedApplication] networkActivityDidFinish];
+        self.logInRequestId = nil;
+    }
 }
 
 - (void)connectionFinished
@@ -234,6 +248,20 @@
     UIAlertView * alert = [UIAlertView simpleAlertViewWithTitle:title
                                                         message:message];
     [alert show];
+}
+
+#pragma mark Private implementation
+
+- (BOOL)isLoggingIn
+{
+    return !!self.logInRequestId;
+}
+
+- (void)cancelLogIn
+{
+    [self.twitter closeConnection:self.logInRequestId];
+    [[UIApplication sharedApplication] networkActivityDidFinish];
+    self.logInRequestId = nil;
 }
 
 #pragma mark Accessors
