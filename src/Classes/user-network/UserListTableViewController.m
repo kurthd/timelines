@@ -77,7 +77,7 @@ static UIImage * defaultAvatar;
             [TimelineTableViewCellView defaultDarkThemeCellColor];
         footerView.backgroundColor =
             [TimelineTableViewCellView defaultDarkThemeCellColor];
-        noMorePagesLabel.textColor = [UIColor blackColor];
+        noMorePagesLabel.textColor = [UIColor twitchLightGrayColor];
         currentPagesLabel.textColor = [UIColor twitchLightLightGrayColor];
     }
 }
