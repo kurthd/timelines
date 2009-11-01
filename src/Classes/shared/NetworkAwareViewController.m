@@ -309,6 +309,12 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
         updatingLabel.shadowColor = [UIColor blackColor];
         [updatingView addSubview:updatingLabel];
 
+        CGRect darkLineFrame = CGRectMake(0, 0, 320, 1);
+        UIView * darkLine =
+            [[[UIView alloc] initWithFrame:darkLineFrame] autorelease];
+        darkLine.backgroundColor = [UIColor blackColor];
+        [updatingView addSubview:darkLine];
+
         const CGFloat ACTIVITY_INDICATOR_MARGIN =
             ([self viewHeight] - ACTIVITY_INDICATOR_LENGTH) / 2;
         CGRect activityIndicatorFrame =
