@@ -136,7 +136,6 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
 
     [self.tableView reloadData];
-    [self.tableView flashScrollIndicators];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
