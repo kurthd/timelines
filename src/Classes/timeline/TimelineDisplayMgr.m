@@ -737,7 +737,9 @@
 
 - (void)setTweets:(NSDictionary *)someTweets
 {
-    [self setService:timelineSource tweets:someTweets page:1 forceRefresh:NO
+    NSInteger page = [someTweets count]/ [SettingsReader fetchQuantity];
+    page = page > 0 ? page : 1;
+    [self setService:timelineSource tweets:someTweets page:page forceRefresh:NO
         allPagesLoaded:NO];
 }
 

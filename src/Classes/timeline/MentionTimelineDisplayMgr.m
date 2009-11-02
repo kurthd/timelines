@@ -169,6 +169,7 @@
             AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
 
             pagesShown = [mentions count] / [SettingsReader fetchQuantity];
+            pagesShown = pagesShown > 0 ? pagesShown : 1;
         }
     } else {
         NSInteger pageAsInt = [page intValue];
@@ -574,14 +575,21 @@
     [mentions removeAllObjects];
     [mentions addEntriesFromDictionary:someMentions];
 
+    pagesShown = [mentions count] / [SettingsReader fetchQuantity];
+    pagesShown = pagesShown > 0 ? pagesShown : 1;
+
     self.lastUpdateId = anUpdateId;
 
-    [timelineController setTweets:[someMentions allValues] page:1
+    [timelineController setTweets:[someMentions allValues] page:pagesShown
         visibleTweetId:nil];
 
     [self updateViewWithNewMentions];
 
     [self updateTweetIndexCache];
+
+    // HACK: forces timeline to scroll to top
+    [timelineController.tableView setContentOffset:CGPointMake(0, 392)
+        animated:NO];
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
