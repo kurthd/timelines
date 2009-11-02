@@ -295,10 +295,7 @@
 - (void)userDidSendTweet:(Tweet *)tweet
 {
     NSLog(@"User did send tweet...");
-    UISegmentedControl * control = (UISegmentedControl *)
-        homeToggleViewController.navigationItem.titleView;
-    if (control.selectedSegmentIndex == 0)
-        [timelineDisplayMgr addTweet:tweet];
+    [timelineDisplayMgr addTweet:tweet];
 
     [homeToggleViewController.navigationItem
         setRightBarButtonItem:[self newTweetButtonItem]
@@ -330,10 +327,7 @@
                    fromUser:(NSString *)origUsername
                   withTweet:(Tweet *)reply
 {
-    UISegmentedControl * control = (UISegmentedControl *)
-        homeToggleViewController.navigationItem.titleView;
-    if (control.selectedSegmentIndex == 0)
-        [timelineDisplayMgr addTweet:reply];
+    [timelineDisplayMgr addTweet:reply];
 }
 
 - (void)userFailedToReplyToTweet:(NSString *)origTweetId

@@ -205,7 +205,7 @@
     NSLog(@"Failed to fetch mentions since %@", updateId);
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
-        NSLocalizedString(@"timelinedisplaymgr.error.fetchmessages", @"");
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchmentions", @"");
     [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
         retryTarget:self retryAction:@selector(refreshWithLatest)];
     [wrapperController setUpdatingState:kDisconnected];
