@@ -98,6 +98,7 @@
         tabBarItem = [aTabBarItem retain];
         segmentedControl = [aSegmentedControl retain];
         showBadge = YES;
+        pagesShown = 1;
 
         TwitterService * displayHelperService =
             [[[TwitterService alloc]
@@ -145,11 +146,15 @@
         self.lastUpdateId = [NSNumber numberWithLongLong:updateIdAsLongLong];
     }
 
+    NSInteger oldTimelineCount = [[mentions allKeys] count];
+
     for (Tweet * tweet in newMentions) {
         TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
         NSLog(@"Mention tweet info: %@", tweetInfo);
         [mentions setObject:tweetInfo forKey:tweet.identifier];
     }
+
+    NSInteger newTimelineCount = [[mentions allKeys] count];
 
     outstandingRequests--;
     receivedQueryResponse = YES;
@@ -163,13 +168,27 @@
 
             AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
         }
-    } else
-        loadMoreNextPage = [page intValue] + 1;
+    } else {
+        NSInteger pageAsInt = [page intValue];
+        BOOL allPagesLoaded =
+            (oldTimelineCount == newTimelineCount && receivedQueryResponse &&
+            pageAsInt > pagesShown) ||
+            newTimelineCount == 0;
+        if (allPagesLoaded) {
+            NSLog(@"Mention display manager: setting all pages loaded");
+            NSLog(@"Refreshing mentions?: %d", refreshingMessages);
+            NSLog(@"Old mentions count: %d", oldTimelineCount);
+            NSLog(@"New mentions count: %d", newTimelineCount);
+        } else if (pageAsInt != 0)
+            pagesShown = pageAsInt;
+
+        [timelineController setAllPagesLoaded:allPagesLoaded];
+    }
 
     BOOL scrollToTop = [SettingsReader scrollToTop];
     NSString * scrollId =
         scrollToTop ? [updateId description] : self.mentionIdToShow;
-    [timelineController setTweets:[mentions allValues] page:[page intValue]
+    [timelineController setTweets:[mentions allValues] page:pagesShown
         visibleTweetId:scrollId];
 
     [self updateViewWithNewMentions];
@@ -529,12 +548,13 @@
 
 - (void)loadAnotherPageOfMentions
 {
-    NSLog(@"Loading more messages (page %d)...", loadMoreNextPage);
+    NSInteger nextPage = pagesShown + 1;
+    NSLog(@"Loading more mentions (page %d)...", nextPage);
     refreshingMessages = NO;
     NSNumber * count =
         [NSNumber numberWithInteger:[SettingsReader fetchQuantity]];
-    [self fetchMentionsSinceId:nil 
-        page:[NSNumber numberWithInt:loadMoreNextPage] numMessages:count];
+    [self fetchMentionsSinceId:nil
+        page:[NSNumber numberWithInt:nextPage] numMessages:count];
     [self setUpdatingState];
 }
 
@@ -583,7 +603,7 @@
 {
     [self.mentions removeAllObjects];
     alreadyBeenDisplayedAfterCredentialChange = NO;
-    loadMoreNextPage = 1;
+    pagesShown = 1;
     refreshingMessages = NO;
     numNewMentions = 0;
     [conversationDisplayMgrs removeAllObjects];

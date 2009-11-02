@@ -47,7 +47,7 @@
     BOOL receivedQueryResponse;
     BOOL displayed;
     NSInteger outstandingRequests;
-    NSInteger loadMoreNextPage;
+    NSInteger pagesShown;
     BOOL showBadge;
 
     NSMutableDictionary * tweetIdToIndexDict;
