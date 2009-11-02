@@ -10,7 +10,6 @@
 + (NSString *)plistName;
 + (NSString *)selectedTabKey;
 + (NSString *)selectedTimelineFeedKey;
-+ (NSString *)viewedTweetIdKey;
 + (NSString *)tabOrderKey;
 + (NSString *)selectedPeopleBookmarkIndexKey;
 + (NSString *)selectedSearchBookmarkIndexKey;
@@ -35,8 +34,6 @@
     NSUInteger selectedTimelineFeed =
         [[dict objectForKey:[[self class] selectedTimelineFeedKey]]
         unsignedIntValue];
-    NSString * viewedTweetId =
-        [dict objectForKey:[[self class] viewedTweetIdKey]];
     NSArray * tabOrder = [dict objectForKey:[[self class] tabOrderKey]];
     NSUInteger selectedSearchBookmarkIndex =
         [[dict objectForKey:[[self class] selectedSearchBookmarkIndexKey]]
@@ -54,7 +51,6 @@
         [[dict objectForKey:[[self class] numNewMentionsKey]] unsignedIntValue];
     state.selectedTab = selectedTab;
     state.selectedTimelineFeed = selectedTimelineFeed;
-    state.viewedTweetId = viewedTweetId;
     state.tabOrder = tabOrder;
     state.selectedSearchBookmarkIndex = selectedSearchBookmarkIndex;
     state.selectedPeopleBookmarkIndex = selectedPeopleBookmarkIndex;
@@ -76,10 +72,6 @@
         [NSNumber numberWithInt:state.selectedTimelineFeed];
     [dict setObject:selectedTimelineFeed
         forKey:[[self class] selectedTimelineFeedKey]];
-
-    if (state.viewedTweetId)
-        [dict setObject:state.viewedTweetId
-                 forKey:[[self class] viewedTweetIdKey]];
 
     [dict setObject:state.tabOrder forKey:[[self class] tabOrderKey]];
 
@@ -122,11 +114,6 @@
 + (NSString *)selectedTimelineFeedKey
 {
     return @"selectedTimelineFeedKey";
-}
-
-+ (NSString *)viewedTweetIdKey
-{
-    return @"viewedTweetId";
 }
 
 + (NSString *)tabOrderKey

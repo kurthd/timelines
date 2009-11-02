@@ -516,8 +516,6 @@
         action:@selector(tabSelected:)
         forControlEvents:UIControlEventValueChanged];
 
-    timelineDisplayMgr.tweetIdToShow = uiState.viewedTweetId;
-
     segmentedControl.selectedSegmentIndex = uiState.selectedTimelineFeed;
 
     // HACK: Force tab selected to be called when selected index is zero, which
@@ -1280,8 +1278,12 @@
 
     // allTweets are now sorted in ascending order, e.g. from oldest to newest
     allTweets = [allTweets sortedArrayUsingSelector:@selector(compare:)];
+    Tweet * newestTweet = allTweets.count ? [allTweets lastObject] : nil;
+    NSNumber * newestTweetId =
+        newestTweet ?
+        [NSNumber numberWithLongLong:[newestTweet.identifier longLongValue]] :
+        [NSNumber numberWithInt:0];
     if (allTweets.count) {
-        Tweet * newestTweet = [allTweets lastObject];
         Tweet * oldestTweet = [allTweets objectAtIndex:0];
         NSLog(@"** Newest tweet loaded from persistence: '%@': '%@': '%@'",
             newestTweet.identifier, newestTweet.user.username,
@@ -1334,6 +1336,7 @@
         [tweets setObject:[TweetInfo createFromTweet:tweet]
                    forKey:tweet.identifier];
 
+    timelineDisplayMgr.tweetIdToShow = [newestTweetId description];
     [timelineDisplayMgr setTweets:tweets];
 }
 
@@ -1399,6 +1402,7 @@
         [mentions setObject:[TweetInfo createFromTweet:mention]
                      forKey:mention.identifier];
 
+    mentionDisplayMgr.mentionIdToShow = [newestTweetId description];
     [mentionDisplayMgr setTimeline:mentions updateId:newestTweetId];
 }
 
@@ -1494,7 +1498,6 @@
     UISegmentedControl * control = (UISegmentedControl *)
         homeToggleViewController.navigationItem.titleView;
     uiState.selectedTimelineFeed = control.selectedSegmentIndex;
-    uiState.viewedTweetId = [timelineDisplayMgr mostRecentTweetId];
 
     NSMutableArray * tabOrder = [NSMutableArray array];
     for (UIViewController * viewController in tabBarController.viewControllers)

@@ -31,7 +31,6 @@
 @property (nonatomic, copy) NSNumber * lastUpdateId;
 @property (nonatomic, copy) NSMutableDictionary * mentions;
 @property (nonatomic, copy) NSString * activeAcctUsername;
-@property (nonatomic, copy) NSString * mentionIdToShow;
 @property (nonatomic, retain) TweetInfo * selectedTweet;
 @property (nonatomic, retain)
     NetworkAwareViewController * lastTweetDetailsWrapperController;
