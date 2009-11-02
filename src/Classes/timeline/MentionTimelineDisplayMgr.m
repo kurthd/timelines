@@ -541,8 +541,8 @@
     refreshingMessages = NO;
     NSNumber * count =
         [NSNumber numberWithInteger:[SettingsReader fetchQuantity]];
-    [self fetchMentionsSinceId:nil page:[NSNumber numberWithInt:1]
-        numMessages:count];
+    [self fetchMentionsSinceId:[NSNumber numberWithInt:0]
+        page:[NSNumber numberWithInt:1] numMessages:count];
     [self setUpdatingState];
 }
 
@@ -553,7 +553,7 @@
     refreshingMessages = NO;
     NSNumber * count =
         [NSNumber numberWithInteger:[SettingsReader fetchQuantity]];
-    [self fetchMentionsSinceId:nil
+    [self fetchMentionsSinceId:[NSNumber numberWithInt:0]
         page:[NSNumber numberWithInt:nextPage] numMessages:count];
     [self setUpdatingState];
 }
