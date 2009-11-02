@@ -313,14 +313,14 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
         UIView * darkLine =
             [[[UIView alloc] initWithFrame:darkLineFrame] autorelease];
         darkLine.backgroundColor =
-            [[UIColor blackColor] colorWithAlphaComponent:0.5];
+            [[UIColor blackColor] colorWithAlphaComponent:0.4];
         [updatingView addSubview:darkLine];
-        
+
         CGRect lightLineFrame = CGRectMake(0, 1, 320, 1);
         UIView * lightLine =
             [[[UIView alloc] initWithFrame:lightLineFrame] autorelease];
         lightLine.backgroundColor =
-            [[UIColor whiteColor] colorWithAlphaComponent:0.25];
+            [[UIColor whiteColor] colorWithAlphaComponent:0.2];
         [updatingView addSubview:lightLine];
 
         const CGFloat ACTIVITY_INDICATOR_MARGIN =

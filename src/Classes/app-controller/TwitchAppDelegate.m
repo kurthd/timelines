@@ -286,6 +286,7 @@
 
 - (void)userIsSendingTweet:(NSString *)tweet
 {
+    NSLog(@"User is sending tweet...");
     [homeToggleViewController.navigationItem
         setRightBarButtonItem:[self homeSendingTweetProgressView]
                      animated:YES];
@@ -293,6 +294,7 @@
 
 - (void)userDidSendTweet:(Tweet *)tweet
 {
+    NSLog(@"User did send tweet...");
     UISegmentedControl * control = (UISegmentedControl *)
         homeToggleViewController.navigationItem.titleView;
     if (control.selectedSegmentIndex == 0)
@@ -1657,7 +1659,7 @@
 
 - (UIBarButtonItem *)newTweetButtonItem
 {
-    UIBarButtonItem * button = nil;
+    UIBarButtonItem * button =
         [[UIBarButtonItem alloc]
         initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                              target:self
