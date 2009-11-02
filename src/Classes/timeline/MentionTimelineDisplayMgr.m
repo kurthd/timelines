@@ -132,7 +132,9 @@
     fetchedSinceUpdateId:(NSNumber *)updateId page:(NSNumber *)page
     count:(NSNumber *)count
 {
-    NSLog(@"Received mentions (%d)...", [newMentions count]);
+    NSInteger oldTimelineCount = [[mentions allKeys] count];
+
+    NSLog(@"Received mentions (%d)...", oldTimelineCount);
     NSLog(@"Mentions update id: %@", updateId);
     NSLog(@"Mentions page: %@", page);
 
@@ -145,8 +147,6 @@
             [mostRecentTweet.identifier longLongValue];
         self.lastUpdateId = [NSNumber numberWithLongLong:updateIdAsLongLong];
     }
-
-    NSInteger oldTimelineCount = [[mentions allKeys] count];
 
     for (Tweet * tweet in newMentions) {
         TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
