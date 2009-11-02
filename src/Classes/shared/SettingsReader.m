@@ -36,7 +36,7 @@ static NSInteger retweetFormat;
         if (fetchQuantity == 0)
             fetchQuantity = [[self class] defaultFetchQuantity];
     }
-
+    
     return fetchQuantity;
 }
 

@@ -167,6 +167,8 @@
             }
 
             AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+
+            pagesShown = [mentions count] / [SettingsReader fetchQuantity];
         }
     } else {
         NSInteger pageAsInt = [page intValue];

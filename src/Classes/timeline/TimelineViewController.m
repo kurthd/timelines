@@ -351,7 +351,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)setTweets:(NSArray *)someTweets page:(NSUInteger)page
     visibleTweetId:(NSString *)aVisibleTweetId
 {
-    NSLog(@"Setting %d tweets on timeline", [someTweets count]);
+    NSLog(@"Setting %d tweets on timeline; page: %d", [someTweets count], page);
     if (aVisibleTweetId && !self.visibleTweetId)
         self.visibleTweetId = aVisibleTweetId;
     self.sortedTweetCache = nil;
