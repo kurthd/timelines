@@ -389,6 +389,13 @@ enum TweetActionSheets {
     [self displayTweet];
 }
 
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    if ([error code] != NSURLErrorCancelled)
+        NSLog(@"Tweet web view '%@' failed to load request: '%@' error: '%@'",
+            webView, webView.request, error);
+}
+
 - (BOOL)webView:(UIWebView *)webView
     shouldStartLoadWithRequest:(NSURLRequest *)request
     navigationType:(UIWebViewNavigationType)navigationType
