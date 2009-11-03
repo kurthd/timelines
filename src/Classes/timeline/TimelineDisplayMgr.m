@@ -745,8 +745,19 @@
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
-    NSLog(@"Timeline display manager: setting new credentials to: %@",
-        someCredentials.username);
+    NSLog(@"Timeline display manager: credentials changing from: '%@' to: '%@'",
+        credentials.username, someCredentials.username);
+
+    // HACK: When accounts are switched, this function is called twice via the
+    // search tab. The first time, the credentials are different and the code
+    // executes correctly. The second time, the old credentials are the same as
+    // the new credentials. This triggers the
+    // [timelineSource fetchTimelineSince:page:] to be called at the end of the
+    // function. In the case of the search bar, this causes an empty query to be
+    // submitted (the query was cleared as part of the account switching), which
+    // in turn generates an error from Twitter which is displayed to the user.
+    if ([credentials.username isEqualToString:someCredentials.username])
+        return;
 
     TwitterCredentials * oldCredentials = credentials;
 
