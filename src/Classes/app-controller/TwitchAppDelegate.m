@@ -913,6 +913,13 @@
 {
     NSLog(@"Application did register for remote notifications.");
 
+    NSInteger count = credentials.count;
+    NSLog(@"Have %d credentials", count);
+    for (int i = 0; i < count; ++i) {
+        id c = [credentials objectAtIndex:i];
+        NSLog(@"%d: Credentials: %@", i, c);
+    }
+
     NSDictionary * args =
         [self deviceRegistrationArgsForCredentials:credentials];
     [self.registrar sendProviderDeviceToken:deviceToken args:args];
