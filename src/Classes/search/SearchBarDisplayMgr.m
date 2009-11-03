@@ -233,10 +233,14 @@
     tvc.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     tvc.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
 
-    networkAwareViewController.navigationItem.title = self.searchQuery;
+    NSString * viewTitle =
+        self.searchQuery.length ?
+        self.searchQuery :
+        NSLocalizedString(@"search.view.title", @"");
+    networkAwareViewController.navigationItem.title = viewTitle;
     networkAwareViewController.navigationItem.backBarButtonItem =
         [[[UIBarButtonItem alloc]
-        initWithTitle:self.searchQuery style:UIBarButtonItemStyleBordered
+        initWithTitle:viewTitle style:UIBarButtonItemStyleBordered
         target:nil action:nil]
         autorelease];
 }
