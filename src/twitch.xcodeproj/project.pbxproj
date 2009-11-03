@@ -1043,6 +1043,7 @@
 		054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HtmlEncodingAdditions.m"; path = "shared/NSString+HtmlEncodingAdditions.m"; sourceTree = "<group>"; };
 		054BE358108A7AC500734CAA /* BitlyUrlShorteningService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitlyUrlShorteningService.h; path = bitly/BitlyUrlShorteningService.h; sourceTree = "<group>"; };
 		054BE359108A7AC500734CAA /* BitlyUrlShorteningService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BitlyUrlShorteningService.m; path = bitly/BitlyUrlShorteningService.m; sourceTree = "<group>"; };
+		054E3CC710A0C028003493E8 /* TwitbitShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitbitShared.h; path = shared/TwitbitShared.h; sourceTree = "<group>"; };
 		0552815E1087F7810055A37C /* ShortenLinks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ShortenLinks.png; path = images/ShortenLinks.png; sourceTree = "<group>"; };
 		055281881088E8020055A37C /* NSString+UrlAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+UrlAdditions.h"; path = "compose/NSString+UrlAdditions.h"; sourceTree = "<group>"; };
 		055281891088E8020055A37C /* NSString+UrlAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+UrlAdditions.m"; path = "compose/NSString+UrlAdditions.m"; sourceTree = "<group>"; };
@@ -2179,6 +2180,7 @@
 		05B2393C0FEDD05E00A6A2E6 /* shared */ = {
 			isa = PBXGroup;
 			children = (
+				054E3CC710A0C028003493E8 /* TwitbitShared.h */,
 				059A708C103DAE2E00B7500C /* SelectionViewController.h */,
 				059A708D103DAE2E00B7500C /* SelectionViewController.m */,
 				916BD9D10FEF3D05007143A9 /* UILabel+DrawingAdditions.h */,

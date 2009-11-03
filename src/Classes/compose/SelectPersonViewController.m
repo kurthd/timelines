@@ -3,6 +3,7 @@
 //
 
 #import "SelectPersonViewController.h"
+#import "TwitbitShared.h"
 #import "User.h"
 #import "User+UIAdditions.h"
 #import "Avatar+UIAdditions.h"
@@ -17,6 +18,9 @@
 
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath
             inTableView:(UITableView *)tv;
+
++ (UIImage *)avatarByResizingIfNecessary:(UIImage *)avatar;
++ (CGSize)desiredAvatarSize;
 
 @end
 
@@ -98,8 +102,7 @@
         NSURL * avatarUrl = [NSURL URLWithString:user.avatar.thumbnailImageUrl];
         [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
     }
-    if (avatar.size.height <= 48)
-        cell.imageView.image = avatar;
+    cell.imageView.image = [[self class] avatarByResizingIfNecessary:avatar];
 
     return cell;
 }
@@ -116,7 +119,7 @@
 - (CGFloat)tableView:(UITableView *)tableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 48;
+    return [[self class] desiredAvatarSize].height;
 }
 
 #pragma mark UISearchDisplayControllerDelegate implementation
@@ -143,22 +146,24 @@
     NSString * urlAsString = [url absoluteString];
     [User setAvatar:avatarImage forUrl:urlAsString];
 
+    // resize if necessary before displaying
+    avatarImage = [[self class] avatarByResizingIfNecessary:avatarImage];
+
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:@"SELF.avatar.thumbnailImageUrl == %@",
         urlAsString];
     NSArray * candidates = [self.people filteredArrayUsingPredicate:predicate];
     
-    if (avatarImage.size.height <= 48)
-        for (User * user in candidates) {  // there should only be one
-            UITableView * visibleTableView =
-                self.searchDisplayController.active ?
-                self.searchDisplayController.searchResultsTableView :
-                self.tableView;
+    for (User * user in candidates) {  // there should only be one
+        UITableView * visibleTableView =
+            self.searchDisplayController.active ?
+            self.searchDisplayController.searchResultsTableView :
+            self.tableView;
 
-            for (UITableViewCell * cell in visibleTableView.visibleCells)
-                if ([user.username isEqualToString:cell.textLabel.text])
-                    cell.imageView.image = avatarImage;
-        }
+        for (UITableViewCell * cell in visibleTableView.visibleCells)
+            if ([user.username isEqualToString:cell.textLabel.text])
+                cell.imageView.image = avatarImage;
+    }
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
@@ -193,6 +198,18 @@
 {
     NSArray * array = tv == self.tableView ? self.people : self.filteredPeople;
     return [array objectAtIndex:indexPath.row];
+}
+
++ (UIImage *)avatarByResizingIfNecessary:(UIImage *)avatar
+{
+    CGSize desiredSize = [[self class] desiredAvatarSize];
+    return avatar.size.height > desiredSize.height ?
+        [avatar imageByScalingProportionallyToSize:desiredSize] : avatar;
+}
+
++ (CGSize)desiredAvatarSize
+{
+    return CGSizeMake(48, 48);
 }
 
 @end
