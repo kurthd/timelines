@@ -31,7 +31,6 @@
 @property (nonatomic, copy) NSNumber * lastUpdateId;
 @property (nonatomic, copy) NSMutableDictionary * mentions;
 @property (nonatomic, copy) NSString * activeAcctUsername;
-@property (nonatomic, copy) NSString * mentionIdToShow;
 @property (nonatomic, retain) TweetInfo * selectedTweet;
 @property (nonatomic, retain)
     NetworkAwareViewController * lastTweetDetailsWrapperController;
@@ -98,6 +97,7 @@
         tabBarItem = [aTabBarItem retain];
         segmentedControl = [aSegmentedControl retain];
         showBadge = YES;
+        pagesShown = 1;
 
         TwitterService * displayHelperService =
             [[[TwitterService alloc]
@@ -131,7 +131,9 @@
     fetchedSinceUpdateId:(NSNumber *)updateId page:(NSNumber *)page
     count:(NSNumber *)count
 {
-    NSLog(@"Received mentions (%d)...", [newMentions count]);
+    NSInteger oldTimelineCount = [[mentions allKeys] count];
+
+    NSLog(@"Received mentions (%d)...", oldTimelineCount);
     NSLog(@"Mentions update id: %@", updateId);
     NSLog(@"Mentions page: %@", page);
 
@@ -151,6 +153,8 @@
         [mentions setObject:tweetInfo forKey:tweet.identifier];
     }
 
+    NSInteger newTimelineCount = [[mentions allKeys] count];
+
     outstandingRequests--;
     receivedQueryResponse = YES;
 
@@ -162,14 +166,31 @@
             }
 
             AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+
+            pagesShown = [mentions count] / [SettingsReader fetchQuantity];
+            pagesShown = pagesShown > 0 ? pagesShown : 1;
         }
-    } else
-        loadMoreNextPage = [page intValue] + 1;
+    } else {
+        NSInteger pageAsInt = [page intValue];
+        BOOL allPagesLoaded =
+            (oldTimelineCount == newTimelineCount && receivedQueryResponse &&
+            pageAsInt > pagesShown) ||
+            newTimelineCount == 0;
+        if (allPagesLoaded) {
+            NSLog(@"Mention display manager: setting all pages loaded");
+            NSLog(@"Refreshing mentions?: %d", refreshingMessages);
+            NSLog(@"Old mentions count: %d", oldTimelineCount);
+            NSLog(@"New mentions count: %d", newTimelineCount);
+        } else if (pageAsInt != 0)
+            pagesShown = pageAsInt;
+
+        [timelineController setAllPagesLoaded:allPagesLoaded];
+    }
 
     BOOL scrollToTop = [SettingsReader scrollToTop];
     NSString * scrollId =
         scrollToTop ? [updateId description] : self.mentionIdToShow;
-    [timelineController setTweets:[mentions allValues] page:[page intValue]
+    [timelineController setTweets:[mentions allValues] page:pagesShown
         visibleTweetId:scrollId];
 
     [self updateViewWithNewMentions];
@@ -184,7 +205,7 @@
     NSLog(@"Failed to fetch mentions since %@", updateId);
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
-        NSLocalizedString(@"timelinedisplaymgr.error.fetchmessages", @"");
+        NSLocalizedString(@"timelinedisplaymgr.error.fetchmentions", @"");
     [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
         retryTarget:self retryAction:@selector(refreshWithLatest)];
     [wrapperController setUpdatingState:kDisconnected];
@@ -522,19 +543,20 @@
     refreshingMessages = NO;
     NSNumber * count =
         [NSNumber numberWithInteger:[SettingsReader fetchQuantity]];
-    [self fetchMentionsSinceId:nil page:[NSNumber numberWithInt:1]
-        numMessages:count];
+    [self fetchMentionsSinceId:[NSNumber numberWithInt:0]
+        page:[NSNumber numberWithInt:1] numMessages:count];
     [self setUpdatingState];
 }
 
 - (void)loadAnotherPageOfMentions
 {
-    NSLog(@"Loading more messages (page %d)...", loadMoreNextPage);
+    NSInteger nextPage = pagesShown + 1;
+    NSLog(@"Loading more mentions (page %d)...", nextPage);
     refreshingMessages = NO;
     NSNumber * count =
         [NSNumber numberWithInteger:[SettingsReader fetchQuantity]];
-    [self fetchMentionsSinceId:nil 
-        page:[NSNumber numberWithInt:loadMoreNextPage] numMessages:count];
+    [self fetchMentionsSinceId:[NSNumber numberWithInt:0]
+        page:[NSNumber numberWithInt:nextPage] numMessages:count];
     [self setUpdatingState];
 }
 
@@ -552,14 +574,21 @@
     [mentions removeAllObjects];
     [mentions addEntriesFromDictionary:someMentions];
 
+    pagesShown = [mentions count] / [SettingsReader fetchQuantity];
+    pagesShown = pagesShown > 0 ? pagesShown : 1;
+
     self.lastUpdateId = anUpdateId;
 
-    [timelineController setTweets:[someMentions allValues] page:1
+    [timelineController setTweets:[someMentions allValues] page:pagesShown
         visibleTweetId:nil];
 
     [self updateViewWithNewMentions];
 
     [self updateTweetIndexCache];
+
+    // HACK: forces timeline to scroll to top
+    [timelineController.tableView setContentOffset:CGPointMake(0, 392)
+        animated:NO];
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
@@ -583,7 +612,7 @@
 {
     [self.mentions removeAllObjects];
     alreadyBeenDisplayedAfterCredentialChange = NO;
-    loadMoreNextPage = 1;
+    pagesShown = 1;
     refreshingMessages = NO;
     numNewMentions = 0;
     [conversationDisplayMgrs removeAllObjects];

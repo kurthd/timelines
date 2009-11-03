@@ -24,7 +24,8 @@
     PhotoServiceDelegate, LogInDisplayMgrDelegate,
     UIImagePickerControllerDelegate, UINavigationControllerDelegate,
     UIActionSheetDelegate, AddPhotoServiceDisplayMgrDelegate,
-    UIPersonSelectorDelegate, BitlyUrlShorteningServiceDelegate>
+    UIPersonSelectorDelegate, BitlyUrlShorteningServiceDelegate,
+    UIAlertViewDelegate>
 {
     id<ComposeTweetDisplayMgrDelegate> delegate;
 

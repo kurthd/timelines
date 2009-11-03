@@ -94,8 +94,8 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         footerView.backgroundColor = [UIColor twitchDarkGrayColor];
         self.tableView.backgroundColor = [UIColor twitchDarkGrayColor];
         currentPagesLabel.textColor = [UIColor twitchLightLightGrayColor];
-        noMorePagesLabel.textColor = [UIColor blackColor];
-        
+        noMorePagesLabel.textColor = [UIColor twitchLightGrayColor];
+
         headerBackgroundView.image =
             [UIImage imageNamed:@"UserHeaderDarkThemeGradient.png"];
 
@@ -136,7 +136,6 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
 
     [self.tableView reloadData];
-    [self.tableView flashScrollIndicators];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
@@ -351,7 +350,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)setTweets:(NSArray *)someTweets page:(NSUInteger)page
     visibleTweetId:(NSString *)aVisibleTweetId
 {
-    NSLog(@"Setting %d tweets on timeline", [someTweets count]);
+    NSLog(@"Setting %d tweets on timeline; page: %d", [someTweets count], page);
     if (aVisibleTweetId && !self.visibleTweetId)
         self.visibleTweetId = aVisibleTweetId;
     self.sortedTweetCache = nil;

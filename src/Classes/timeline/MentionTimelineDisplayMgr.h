@@ -47,7 +47,7 @@
     BOOL receivedQueryResponse;
     BOOL displayed;
     NSInteger outstandingRequests;
-    NSInteger loadMoreNextPage;
+    NSInteger pagesShown;
     BOOL showBadge;
 
     NSMutableDictionary * tweetIdToIndexDict;
@@ -65,6 +65,7 @@
 
 @property (nonatomic, assign) NSInteger numNewMentions;
 @property (nonatomic, assign) BOOL showBadge;
+@property (nonatomic, copy) NSString * mentionIdToShow;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     navigationController:(UINavigationController *)aNavigationController

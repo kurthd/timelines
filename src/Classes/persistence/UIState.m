@@ -6,8 +6,8 @@
 
 @implementation UIState
 
-@synthesize selectedTab, selectedTimelineFeed, viewedTweetId, tabOrder,
+@synthesize selectedTab, selectedTimelineFeed, tabOrder, numNewMentions,
     selectedSearchBookmarkIndex, selectedPeopleBookmarkIndex, findPeopleText,
-    searchText, nearbySearch, numNewMentions;
+    searchText, nearbySearch;
 
 @end

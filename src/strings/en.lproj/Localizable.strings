@@ -37,6 +37,7 @@ timelineview.directmessage.name = "To: %@";
 /* TimelineDisplayMgr */
 timelinedisplaymgr.error.fetchtimeline = "Failed to update timeline";
 timelinedisplaymgr.error.fetchmessages = "Failed to update direct messages";
+timelinedisplaymgr.error.fetchmentions = "Failed to update mentions";
 timelinedisplaymgr.error.setfavorite = "Failed to update favorite state";
 timelinedisplaymgr.error.fetchuserinfo = "Failed to fetch user info";
 timelinedisplaymgr.error.fetchfriends = "Failed to fetch friends list";
@@ -104,7 +105,9 @@ imagepicker.choose.camerawithvideo = "Take Photo or Video";
 imagepicker.choose.photos = "Choose Existing Photo";
 imagepicker.choose.photoswithvideo = "Choose Existing";
 imageupload.failed.title = "Failed to Upload Photo";
+imageupload.failed.save = "Save Photo";
 videoupload.failed.title = "Failed to Upload Video";
+videoupload.failed.save = "Save Video";
 
 /* UserInfoViewController */
 userinfoview.followers = "followers";

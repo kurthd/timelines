@@ -596,14 +596,21 @@
     NSLog(@"Failed to post image to URL: '%@'.", error);
 
     NSString * title = NSLocalizedString(@"imageupload.failed.title", @"");
+    NSString * savePhotoString =
+        NSLocalizedString(@"imageupload.failed.save", @"");
+    NSString * cancelTitle = NSLocalizedString(@"alert.dismiss", @"");
 
-    [[UIAlertView simpleAlertViewWithTitle:title
-                                   message:error.localizedDescription] show];
+    UIAlertView * alertView =
+        [[UIAlertView alloc]
+          initWithTitle:title
+                message:error.localizedDescription
+               delegate:self
+      cancelButtonTitle:cancelTitle
+         otherButtonTitles:savePhotoString, nil];
+
+    [alertView show];
 
     [self.composeTweetViewController hidePhotoUploadView];
-
-    [photoService autorelease];
-    photoService = nil;
 }
 
 - (void)service:(PhotoService *)aPhotoService failedToPostVideo:(NSError *)error
@@ -651,6 +658,25 @@
 {
     NSLog(@"Failed to update video title: %@", error);
     [aPhotoService autorelease];
+}
+
+#pragma mark UIAlertViewDelegate implementation
+
+- (void)alertView:(UIAlertView *)alertView
+    didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    // Handles failed photo and video uploads
+    if (buttonIndex == 1) {
+        NSLog(@"Saving photo to album");
+        UIImage * image = photoService.image;
+        if (image)
+            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+    }
+
+    [alertView autorelease];
+
+    [photoService autorelease];
+    photoService = nil;
 }
 
 #pragma mark UIImagePickerControllerDelegate implementation
