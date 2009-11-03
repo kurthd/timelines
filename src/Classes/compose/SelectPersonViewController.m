@@ -98,8 +98,12 @@
         NSURL * avatarUrl = [NSURL URLWithString:user.avatar.thumbnailImageUrl];
         [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
     }
-    if (avatar.size.height <= 48)
+    if (avatar.size.height <= 48) {
         cell.imageView.image = avatar;
+    } else {
+        avatar = [Avatar defaultAvatar];
+        cell.imageView.image = avatar;
+    }
 
     return cell;
 }
