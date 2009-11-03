@@ -45,7 +45,7 @@ static UIImage * topGradientImage;
 
         [self.contentView addSubview:timelineView];
 
-        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        self.accessoryType = UITableViewCellAccessoryNone;
 
         self.backgroundView =
             [[[TimelineTableViewCellBackground alloc] init] autorelease];

@@ -7,13 +7,13 @@
 #import "UIImage+DrawingAdditions.h"
 #import "SettingsReader.h"
 
-static const CGFloat TEXT_WIDTH_WITHOUT_AVATAR = 290.0;
-static const CGFloat TEXT_WIDTH_WITHOUT_AVATAR_LANDSCAPE = 450.0;
-static const CGFloat TEXT_WIDTH_WITH_AVATAR = 235.0;
-static const CGFloat TEXT_WIDTH_WITH_AVATAR_LANDSCAPE = 395.0;
+static const CGFloat TEXT_WIDTH_WITHOUT_AVATAR = 307.0;
+static const CGFloat TEXT_WIDTH_WITHOUT_AVATAR_LANDSCAPE = 467.0;
+static const CGFloat TEXT_WIDTH_WITH_AVATAR = 252.0;
+static const CGFloat TEXT_WIDTH_WITH_AVATAR_LANDSCAPE = 412.0;
 
-static const CGFloat AVATAR_WIDTH = 50.0;
-static const CGFloat AVATAR_HEIGHT = 50.0;
+static const CGFloat AVATAR_WIDTH = 48.0;
+static const CGFloat AVATAR_HEIGHT = 48.0;
 static const CGFloat AVATAR_ROUNDED_CORNER_RADIUS = 6.0;
 
 static UIImage * backgroundImage;
@@ -159,13 +159,13 @@ static NSString * starText;
 
 - (void)drawRectNormal:(CGRect)rect
 {
-    static const CGFloat TIMESTAMP_RIGHT_MARGIN = 0.0;
+    static const CGFloat TIMESTAMP_RIGHT_MARGIN = 7.0;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat AUTHOR_TOP_MARGIN = 5.0;
-    static const CGFloat AUTHOR_LEFT_MARGIN = 64.0;
+    static const CGFloat AUTHOR_LEFT_MARGIN = 62.0;
 
-    static const CGFloat TEXT_LEFT_MARGIN = 64.0;
+    static const CGFloat TEXT_LEFT_MARGIN = 62.0;
     static const CGFloat TEXT_TOP_MARGIN = 27.0;
 
     static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
@@ -311,8 +311,8 @@ static NSString * starText;
     static const CGFloat TEXT_LEFT_MARGIN = 7.0;
     static const CGFloat TEXT_TOP_MARGIN = 27.0;
 
-    static const CGFloat AVATAR_LEFT_MARGIN = 246.0;
-    static const CGFloat AVATAR_LEFT_MARGIN_LANDSCAPE = 406.0;
+    static const CGFloat AVATAR_LEFT_MARGIN = 263.0;
+    static const CGFloat AVATAR_LEFT_MARGIN_LANDSCAPE = 423.0;
     static const CGFloat AVATAR_TOP_MARGIN = 7.0;
 
     UIColor * timestampColor = nil;
@@ -524,10 +524,10 @@ static NSString * starText;
 
 - (void)drawRectNoAuthor:(CGRect)rect
 {
-    static const CGFloat TIMESTAMP_LEFT_MARGIN = 64.0;
+    static const CGFloat TIMESTAMP_LEFT_MARGIN = 62.0;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
-    static const CGFloat TEXT_LEFT_MARGIN = 64.0;
+    static const CGFloat TEXT_LEFT_MARGIN = 62.0;
     static const CGFloat TEXT_TOP_MARGIN = 27.0;
 
     static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
