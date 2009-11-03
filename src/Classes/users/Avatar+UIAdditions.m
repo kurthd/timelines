@@ -42,7 +42,7 @@ static NSMutableDictionary * actualThumbnailImages;
 {
     static UIImage * defaultAvatar = nil;
     if (!defaultAvatar)
-        defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar50x50.png"] retain];
+        defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar48x48.png"] retain];
 
     return defaultAvatar;
 }

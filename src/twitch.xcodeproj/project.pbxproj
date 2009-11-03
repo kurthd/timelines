@@ -89,7 +89,6 @@
 		051667D810841EFB000CA4AA /* UserHeaderGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8A20FEEDFBD007143A9 /* UserHeaderGradient.png */; };
 		051667D910841EFB000CA4AA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8940FEEDAD9007143A9 /* Default.png */; };
 		051667DA10841EFB000CA4AA /* DefaultAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD8950FEEDAD9007143A9 /* DefaultAvatar.png */; };
-		051667DB10841EFB000CA4AA /* DefaultAvatar50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */; };
 		051667DC10841EFB000CA4AA /* TableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD88D0FEED9DE007143A9 /* TableViewCellGradient.png */; };
 		051667DD10841EFB000CA4AA /* Gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7DA0FEEB839007143A9 /* Gear.png */; };
 		051667DE10841EFB000CA4AA /* House.png in Resources */ = {isa = PBXBuildFile; fileRef = 916BD7DB0FEEB839007143A9 /* House.png */; };
@@ -191,7 +190,6 @@
 		053A2D8D103F57B2005BB245 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D8C103F57B2005BB245 /* SystemConfiguration.framework */; };
 		054BE35A108A7AC500734CAA /* BitlyUrlShorteningService.m in Sources */ = {isa = PBXBuildFile; fileRef = 054BE359108A7AC500734CAA /* BitlyUrlShorteningService.m */; };
 		054BE35B108A7AC500734CAA /* BitlyUrlShorteningService.m in Sources */ = {isa = PBXBuildFile; fileRef = 054BE359108A7AC500734CAA /* BitlyUrlShorteningService.m */; };
-		054F3EF910243FAA005B6805 /* DefaultAvatar50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */; };
 		0552815F1087F7810055A37C /* ShortenLinks.png in Resources */ = {isa = PBXBuildFile; fileRef = 0552815E1087F7810055A37C /* ShortenLinks.png */; };
 		055281601087F7810055A37C /* ShortenLinks.png in Resources */ = {isa = PBXBuildFile; fileRef = 0552815E1087F7810055A37C /* ShortenLinks.png */; };
 		0552818A1088E8020055A37C /* NSString+UrlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 055281891088E8020055A37C /* NSString+UrlAdditions.m */; };
@@ -901,6 +899,7 @@
 		91DCE7851072755400095FD0 /* DownButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DCE7841072755400095FD0 /* DownButton.png */; };
 		91DCE7871072756000095FD0 /* UpButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DCE7861072756000095FD0 /* UpButton.png */; };
 		91DCE9091073C58D00095FD0 /* DirectMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91DCE9071073C58D00095FD0 /* DirectMessageView.xib */; };
+		91E7C540109FC24500FEDA5D /* DefaultAvatar48x48.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E7C53F109FC24500FEDA5D /* DefaultAvatar48x48.png */; };
 		91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6C44101A51F800354D67 /* PersonSearch.png */; };
 		91FDD5A510616854000F7527 /* BitlyLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91FDD5A310616854000F7527 /* BitlyLogInView.xib */; };
 /* End PBXBuildFile section */
@@ -1044,7 +1043,6 @@
 		054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HtmlEncodingAdditions.m"; path = "shared/NSString+HtmlEncodingAdditions.m"; sourceTree = "<group>"; };
 		054BE358108A7AC500734CAA /* BitlyUrlShorteningService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitlyUrlShorteningService.h; path = bitly/BitlyUrlShorteningService.h; sourceTree = "<group>"; };
 		054BE359108A7AC500734CAA /* BitlyUrlShorteningService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BitlyUrlShorteningService.m; path = bitly/BitlyUrlShorteningService.m; sourceTree = "<group>"; };
-		054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DefaultAvatar50x50.png; path = images/DefaultAvatar50x50.png; sourceTree = "<group>"; };
 		0552815E1087F7810055A37C /* ShortenLinks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ShortenLinks.png; path = images/ShortenLinks.png; sourceTree = "<group>"; };
 		055281881088E8020055A37C /* NSString+UrlAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+UrlAdditions.h"; path = "compose/NSString+UrlAdditions.h"; sourceTree = "<group>"; };
 		055281891088E8020055A37C /* NSString+UrlAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+UrlAdditions.m"; path = "compose/NSString+UrlAdditions.m"; sourceTree = "<group>"; };
@@ -1692,6 +1690,7 @@
 		91E0004B0FEF786300BCE9BC /* NotFavorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NotFavorite.png; path = images/NotFavorite.png; sourceTree = "<group>"; };
 		91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsHeaderGradient.png; path = images/TweetDetailsHeaderGradient.png; sourceTree = "<group>"; };
 		91E000940FEFFCC700BCE9BC /* DropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadow.png; path = images/DropShadow.png; sourceTree = "<group>"; };
+		91E7C53F109FC24500FEDA5D /* DefaultAvatar48x48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DefaultAvatar48x48.png; path = images/DefaultAvatar48x48.png; sourceTree = "<group>"; };
 		91FC6C44101A51F800354D67 /* PersonSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PersonSearch.png; path = images/PersonSearch.png; sourceTree = "<group>"; };
 		91FDD58B1061581C000F7527 /* BitlyLogInDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitlyLogInDisplayMgr.h; path = bitly/BitlyLogInDisplayMgr.h; sourceTree = "<group>"; };
 		91FDD58C1061581C000F7527 /* BitlyLogInDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BitlyLogInDisplayMgr.m; path = bitly/BitlyLogInDisplayMgr.m; sourceTree = "<group>"; };
@@ -2733,6 +2732,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91E7C53F109FC24500FEDA5D /* DefaultAvatar48x48.png */,
 				9142D19010979B4300BFE960 /* ComposeRecipientGradientDarkTheme.png */,
 				9142CB0C108FDD0300BFE960 /* ProfileSmall.png */,
 				0552815E1087F7810055A37C /* ShortenLinks.png */,
@@ -2831,7 +2831,6 @@
 				916BD8A20FEEDFBD007143A9 /* UserHeaderGradient.png */,
 				916BD8940FEEDAD9007143A9 /* Default.png */,
 				916BD8950FEEDAD9007143A9 /* DefaultAvatar.png */,
-				054F3EF810243FAA005B6805 /* DefaultAvatar50x50.png */,
 				916BD88D0FEED9DE007143A9 /* TableViewCellGradient.png */,
 				916BD7DA0FEEB839007143A9 /* Gear.png */,
 				916BD7DB0FEEB839007143A9 /* House.png */,
@@ -3185,7 +3184,6 @@
 				051667D810841EFB000CA4AA /* UserHeaderGradient.png in Resources */,
 				051667D910841EFB000CA4AA /* Default.png in Resources */,
 				051667DA10841EFB000CA4AA /* DefaultAvatar.png in Resources */,
-				051667DB10841EFB000CA4AA /* DefaultAvatar50x50.png in Resources */,
 				051667DC10841EFB000CA4AA /* TableViewCellGradient.png in Resources */,
 				051667DD10841EFB000CA4AA /* Gear.png in Resources */,
 				051667DE10841EFB000CA4AA /* House.png in Resources */,
@@ -3268,7 +3266,6 @@
 				052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */,
 				91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */,
 				917245521025046A007E0DF6 /* FavoriteMark.png in Resources */,
-				054F3EF910243FAA005B6805 /* DefaultAvatar50x50.png in Resources */,
 				917245E61028B715007E0DF6 /* FindPeopleBookmarkView.xib in Resources */,
 				05EDAF0C1029FAAB00D0B62B /* TweetView.xib in Resources */,
 				0511067F102A25FC00915638 /* Settings.bundle in Resources */,
@@ -3362,6 +3359,7 @@
 				916A2CD11088F5CE00C5895D /* AccountSelectedCheckmarkDarkTheme.png in Resources */,
 				9142CB0D108FDD0300BFE960 /* ProfileSmall.png in Resources */,
 				9142D19110979B4300BFE960 /* ComposeRecipientGradientDarkTheme.png in Resources */,
+				91E7C540109FC24500FEDA5D /* DefaultAvatar48x48.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
