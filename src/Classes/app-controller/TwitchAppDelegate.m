@@ -759,7 +759,7 @@
 
         if (activeAccount &&
             activeAccount != self.activeCredentials.credentials) {
-            NSLog(@"Switching account to: '%@'.", activeAccount);
+            NSLog(@"Switching account to: '%@'.", activeAccount.username);
 
             // oldUsername will be nil when the previously active account is
             // deleted
