@@ -236,14 +236,15 @@
         [self initMessagesTab];
     if (!mentionDisplayMgr)
         [self initMentionsView];
-    
+
     TwitterCredentials * c = self.activeCredentials.credentials;
     if (c) {
         [directMessageDisplayMgr updateDirectMessagesSinceLastUpdateIds];
         [mentionDisplayMgr updateMentionsSinceLastUpdateIds];
     }
 
-    window.backgroundColor = [UIColor blackColor];
+    if ([SettingsReader displayTheme] == kDisplayThemeDark)
+        window.backgroundColor = [UIColor blackColor];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
