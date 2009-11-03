@@ -303,7 +303,7 @@ static UIImage * defaultAvatar;
 + (UIImage *)defaultAvatar
 {
     if (!defaultAvatar)
-        defaultAvatar = [UIImage imageNamed:@"DefaultAvatar50x50.png"];
+        defaultAvatar = [UIImage imageNamed:@"DefaultAvatar48x48.png"];
 
     return defaultAvatar;
 }
