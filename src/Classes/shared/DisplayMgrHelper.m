@@ -307,7 +307,7 @@
     self.nextWrapperController =
         [[[NetworkAwareViewController alloc]
         initWithTargetViewController:nil] autorelease];
-    
+
     self.timelineDisplayMgr =
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
@@ -323,9 +323,9 @@
     [self.timelineDisplayMgr setTimelineHeaderView:headerView];
     [self.timelineDisplayMgr setCredentials:credentials];
     self.nextWrapperController.navigationItem.rightBarButtonItem = nil;
-    
+
     self.nextWrapperController.delegate = self.timelineDisplayMgr;
-    
+
     TwitterService * twitterService =
         [[[TwitterService alloc] initWithTwitterCredentials:nil
         context:context]
@@ -340,12 +340,12 @@
     self.credentialsPublisher =
         [[CredentialsActivatedPublisher alloc]
         initWithListener:dataSource action:@selector(setCredentials:)];
-    
+
     twitterService.delegate = dataSource;
     [self.timelineDisplayMgr setService:dataSource tweets:nil page:1
         forceRefresh:NO allPagesLoaded:NO];
     dataSource.delegate = self.timelineDisplayMgr;
-    
+
     [dataSource setCredentials:credentials];
     [navigationController pushViewController:self.nextWrapperController
         animated:YES];
@@ -424,7 +424,7 @@
 - (void)startedFollowingUsername:(NSString *)aUsername
 {
     NSLog(@"Started following %@", aUsername);
-    if ([userInfoUsername isEqual:aUsername])
+    if ([userInfoUsername isEqual:[aUsername lowercaseString]])
         [userInfoController setFollowing:YES];
 }
 
@@ -441,7 +441,7 @@
 - (void)stoppedFollowingUsername:(NSString *)aUsername
 {
     NSLog(@"Stopped following %@", aUsername);
-    if ([userInfoUsername isEqual:aUsername])
+    if ([userInfoUsername isEqual:[aUsername lowercaseString]])
         [userInfoController setFollowing:NO];
 }
 
@@ -478,14 +478,14 @@
 - (void)user:(NSString *)aUsername isFollowing:(NSString *)followee
 {
     NSLog(@"%@ is following %@", aUsername, followee);
-    if ([userInfoUsername isEqual:followee])
+    if ([userInfoUsername isEqual:[followee lowercaseString]])
         [self.userInfoController setFollowing:YES];
 }
 
 - (void)user:(NSString *)aUsername isNotFollowing:(NSString *)followee
 {
     NSLog(@"%@ is not following %@", aUsername, followee);
-    if ([userInfoUsername isEqual:followee])
+    if ([userInfoUsername isEqual:[followee lowercaseString]])
         [self.userInfoController setFollowing:NO];
 }
 
@@ -496,7 +496,7 @@
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
 
-    if ([userInfoUsername isEqual:followee])
+    if ([userInfoUsername isEqual:[followee lowercaseString]])
         [self.userInfoController setFailedToQueryFollowing];
 
     [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
@@ -505,14 +505,14 @@
 - (void)userIsBlocked:(NSString *)aUsername
 {
     NSLog(@"User '%@' is blocked", aUsername);
-    if ([self.userInfoUsername isEqual:aUsername])
+    if ([self.userInfoUsername isEqual:[aUsername lowercaseString]])
         [self.userInfoController setBlocked:YES];
 }
 
 - (void)userIsNotBlocked:(NSString *)aUsername
 {
     NSLog(@"User '%@' is not blocked", aUsername);
-    if ([self.userInfoUsername isEqual:aUsername])
+    if ([self.userInfoUsername isEqual:[aUsername lowercaseString]])
         [self.userInfoController setBlocked:NO];
 }
 
@@ -524,7 +524,7 @@
 
 - (void)blockedUser:(User *)user withUsername:(NSString *)aUsername
 {
-    if ([self.userInfoUsername isEqual:aUsername])
+    if ([self.userInfoUsername isEqual:[aUsername lowercaseString]])
         [self.userInfoController setBlocked:YES];
 }
 
@@ -540,7 +540,7 @@
 
 - (void)unblockedUser:(User *)user withUsername:(NSString *)aUsername
 {
-    if ([userInfoUsername isEqual:aUsername])
+    if ([userInfoUsername isEqual:[aUsername lowercaseString]])
         [self.userInfoController setBlocked:NO];
 }
 
@@ -559,7 +559,7 @@
 - (void)showUserInfoForUser:(User *)aUser
 {
     NSLog(@"Showing user info for user '%@'", aUser.username);
-    self.userInfoUsername = aUser.username;
+    self.userInfoUsername = [aUser.username lowercaseString];
     [userInfoController release];
     userInfoController = nil; // Forces to scroll to top
     self.userInfoController.navigationItem.title = aUser.username;
@@ -577,7 +577,7 @@
 
 - (void)showUserInfoForUsername:(NSString *)aUsername
 {
-    self.userInfoUsername = aUsername;
+    self.userInfoUsername = [aUsername lowercaseString];
 
     // HACK: forces to scroll to top
     [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
