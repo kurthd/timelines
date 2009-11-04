@@ -80,6 +80,10 @@ static UIImage * defaultAvatar;
         noMorePagesLabel.textColor = [UIColor twitchLightGrayColor];
         currentPagesLabel.textColor = [UIColor twitchLightLightGrayColor];
     }
+
+    self.view.frame =
+        [[RotatableTabBarController instance] landscape] ?
+        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
 }
 
 - (void)viewWillAppear:(BOOL)animated
