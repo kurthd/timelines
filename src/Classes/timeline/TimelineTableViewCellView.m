@@ -101,7 +101,7 @@ static NSString * starText;
 
     NSInteger minHeight =
         cellType == kTimelineTableViewCellTypeNoAvatar ?
-        0 : 65;
+        0 : 63;
     NSUInteger height = 35.0 + size.height;
     height = height > minHeight ? height : minHeight;
 

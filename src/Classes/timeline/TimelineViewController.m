@@ -388,11 +388,12 @@ static BOOL alreadyReadHighlightNewTweetsValue;
                 break;
             visibleRow++;
         }
+
         if (visibleRow < [self.sortedTweets count]) {
             NSLog(@"Scrolling to row %d", visibleRow);
             NSIndexPath * scrollIndexPath =
                 [NSIndexPath indexPathForRow:visibleRow inSection:0];
-            if ([someTweets count] > 6) {
+            if ([someTweets count] > 8) {
                 // 'if' statement is a hack
                 // for some reason, if the cells don't fill the whole table view
                 // the following call results in a large blank header
