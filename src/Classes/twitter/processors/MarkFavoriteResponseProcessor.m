@@ -15,7 +15,7 @@
 @property (nonatomic, copy) NSString * tweetId;
 @property (nonatomic, assign) BOOL favorite;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -26,7 +26,7 @@
 + (id)processorWithTweetId:(NSString *)aTweetId
                   favorite:(BOOL)isFavorite
                    context:(NSManagedObjectContext *)aContext
-                  delegate:(id)aDelegate
+                  delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithTweetId:aTweetId
                                           favorite:isFavorite
@@ -46,7 +46,7 @@
 - (id)initWithTweetId:(NSString *)aTweetId
              favorite:(BOOL)isFavorite
               context:(NSManagedObjectContext *)aContext
-             delegate:(id)aDelegate
+             delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.tweetId = aTweetId;
@@ -104,8 +104,8 @@
 - (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToMarkTweet:asFavorite:error:);
-    [self invokeSelector:sel withTarget:delegate args:tweetId, favorite, error,
-        nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate failedToMarkTweet:tweetId asFavorite:favorite error:error];
 
     return YES;
 }
