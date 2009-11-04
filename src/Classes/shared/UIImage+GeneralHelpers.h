@@ -8,4 +8,6 @@
 
 - (UIImage *)imageByRotatingByOrientation:(UIImageOrientation)orientation;
 
+- (UIImage *)imageByScalingProportionallyToSize:(CGSize)targetSize;
+
 @end
