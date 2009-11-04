@@ -156,7 +156,6 @@
     NSInteger newTimelineCount = [[mentions allKeys] count];
 
     outstandingRequests--;
-    receivedQueryResponse = YES;
 
     if (refreshingMessages) {
         if ([newMentions count] > 0) {
@@ -173,8 +172,7 @@
     } else {
         NSInteger pageAsInt = [page intValue];
         BOOL allPagesLoaded =
-            (oldTimelineCount == newTimelineCount && receivedQueryResponse &&
-            pageAsInt > pagesShown) ||
+            (oldTimelineCount == newTimelineCount && receivedQueryResponse) ||
             newTimelineCount == 0;
         if (allPagesLoaded) {
             NSLog(@"Mention display manager: setting all pages loaded");
@@ -187,6 +185,8 @@
         [timelineController setAllPagesLoaded:allPagesLoaded];
     }
 
+    receivedQueryResponse = YES;
+
     BOOL scrollToTop = [SettingsReader scrollToTop];
     NSString * scrollId =
         scrollToTop ? [updateId description] : self.mentionIdToShow;
@@ -197,6 +197,8 @@
 
     [[ErrorState instance] exitErrorState];
     [self updateTweetIndexCache];
+
+    self.mentionIdToShow = nil;
 }
 
 - (void)failedToFetchMentionsSinceUpdateId:(NSNumber *)updateId
@@ -551,7 +553,9 @@
 
 - (void)loadAnotherPageOfMentions
 {
-    NSInteger nextPage = pagesShown + 1;
+    NSInteger effectivePagesShown =
+        [mentions count] / [SettingsReader fetchQuantity];
+    NSInteger nextPage = effectivePagesShown + 1;
     NSLog(@"Loading more mentions (page %d)...", nextPage);
     refreshingMessages = NO;
     NSNumber * count =

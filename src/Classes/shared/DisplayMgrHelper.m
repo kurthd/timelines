@@ -131,6 +131,7 @@
         [userListDisplayMgrFactory
         createUserListDisplayMgrWithWrapperController:
         self.userListNetAwareViewController
+        navigationController:navigationController
         composeTweetDisplayMgr:composeTweetDisplayMgr
         showFollowing:YES
         username:aUsername];
@@ -152,6 +153,7 @@
         [userListDisplayMgrFactory
         createUserListDisplayMgrWithWrapperController:
         self.userListNetAwareViewController
+        navigationController:navigationController
         composeTweetDisplayMgr:composeTweetDisplayMgr
         showFollowing:NO
         username:aUsername];

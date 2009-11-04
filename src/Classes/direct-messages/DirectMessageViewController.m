@@ -166,7 +166,6 @@ enum TweetActionSheets {
     [super viewWillAppear:animated];
 
     [delegate showingTweetDetails:self];
-    [self.tableView flashScrollIndicators];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:

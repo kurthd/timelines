@@ -20,6 +20,7 @@
 - (UserListDisplayMgr *)
     createUserListDisplayMgrWithWrapperController:
     (NetworkAwareViewController *)wrapperController
+    navigationController:(UINavigationController *)navigationController
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     showFollowing:(BOOL)showFollowing username:(NSString *)username;
 

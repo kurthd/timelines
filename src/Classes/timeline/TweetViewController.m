@@ -186,7 +186,6 @@ enum TweetActionSheets {
     [super viewWillAppear:animated];
 
     [delegate showingTweetDetails:self];
-    [self.tableView flashScrollIndicators];
     
     UIInterfaceOrientation orientation =
         [[RotatableTabBarController instance] interfaceOrientation];
@@ -489,8 +488,10 @@ enum TweetActionSheets {
 - (void)actionSheet:(UIActionSheet *)sheet
     clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self.navigationController popViewControllerAnimated:YES];
-    [delegate deleteTweet:tweet.identifier];
+    if (buttonIndex == 0) {
+        [self.navigationController popViewControllerAnimated:YES];
+        [delegate deleteTweet:tweet.identifier];
+    }
 
     [sheet autorelease];
 }
