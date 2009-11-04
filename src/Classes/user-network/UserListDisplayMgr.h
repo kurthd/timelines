@@ -56,6 +56,7 @@
 }
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
+    navigationController:(UINavigationController *)navigationController
     userListController:(UserListTableViewController *)aUserListController
     service:(TwitterService *)service
     factory:(UserListDisplayMgrFactory *)userListFactory

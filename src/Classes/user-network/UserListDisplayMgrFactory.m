@@ -29,6 +29,7 @@
 - (UserListDisplayMgr *)
     createUserListDisplayMgrWithWrapperController:
     (NetworkAwareViewController *)wrapperController
+    navigationController:(UINavigationController *)navigationController
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     showFollowing:(BOOL)showFollowing username:(NSString *)username
 {
@@ -49,6 +50,7 @@
 
     UserListDisplayMgr * userListDisplayMgr =
         [[[UserListDisplayMgr alloc] initWithWrapperController:wrapperController
+        navigationController:navigationController
         userListController:userListController service:service
         factory:self timelineFactory:timelineFactory
         managedObjectContext:context

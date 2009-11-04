@@ -48,6 +48,7 @@
 }
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
+    navigationController:(UINavigationController *)navigationController
     userListController:(UserListTableViewController *)aUserListController
     service:(TwitterService *)aService
     factory:(UserListDisplayMgrFactory *)userListFactory
@@ -79,7 +80,7 @@
         displayMgrHelper =
             [[DisplayMgrHelper alloc]
             initWithWrapperController:aWrapperController
-            navigationController:aWrapperController.navigationController
+            navigationController:navigationController
             userListDisplayMgrFactor:userListFactory
             composeTweetDisplayMgr:composeTweetDisplayMgr
             twitterService:displayHelperService
