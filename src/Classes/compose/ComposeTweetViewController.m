@@ -245,7 +245,10 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     photoUploadView.alpha = 0.8;
     UIView * keyboardView = [[UIApplication sharedApplication] keyboardView];
-    UIView * keyView = keyboardView ? [keyboardView superview] : self.view;
+    UIView * keyView =
+        keyboardView ?
+        [keyboardView superview] :
+        self.navigationController.view;
     [keyView addSubview:photoUploadView];
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
