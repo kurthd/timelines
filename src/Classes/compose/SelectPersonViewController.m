@@ -68,6 +68,18 @@
     [self initializeNavigationItem];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
+    duration:(NSTimeInterval)duration
+{
+    [self.tableView reloadData];
+}
+
 #pragma mark UITableViewDataSource implementation
 
 - (NSInteger)tableView:(UITableView *)tv
