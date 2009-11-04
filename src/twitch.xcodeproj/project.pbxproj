@@ -902,6 +902,32 @@
 		91DCE7871072756000095FD0 /* UpButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DCE7861072756000095FD0 /* UpButton.png */; };
 		91DCE9091073C58D00095FD0 /* DirectMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91DCE9071073C58D00095FD0 /* DirectMessageView.xib */; };
 		91E7C540109FC24500FEDA5D /* DefaultAvatar48x48.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E7C53F109FC24500FEDA5D /* DefaultAvatar48x48.png */; };
+		91E7C6B710A1F0CA00FEDA5D /* DefaultAvatar48x48.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E7C53F109FC24500FEDA5D /* DefaultAvatar48x48.png */; };
+		91E7C6BF10A1F0F600FEDA5D /* ComposeRecipientGradientDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 9142D19010979B4300BFE960 /* ComposeRecipientGradientDarkTheme.png */; };
+		91E7C6C010A1F0FC00FEDA5D /* ProfileSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 9142CB0C108FDD0300BFE960 /* ProfileSmall.png */; };
+		91E7C6C110A1F10700FEDA5D /* AccountSelectedCheckmarkDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A2CD01088F5CE00C5895D /* AccountSelectedCheckmarkDarkTheme.png */; };
+		91E7C6C810A1F12900FEDA5D /* SaveSearchDarkThemeButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A2B241087C23A00C5895D /* SaveSearchDarkThemeButtonBackground.png */; };
+		91E7C6CC10A1F1A200FEDA5D /* ToggleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142CCFC10920AF900BFE960 /* ToggleViewController.m */; };
+		91E7C6CD10A1F1B200FEDA5D /* MentionTimelineDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142C87A108D139800BFE960 /* MentionTimelineDisplayMgr.m */; };
+		91E7C6CE10A1F1B300FEDA5D /* MentionsAcctMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142D08E109749E400BFE960 /* MentionsAcctMgr.m */; };
+		91E7C6CF10A1F1BE00FEDA5D /* DisplayMgrHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9142C87F108D2D8E00BFE960 /* DisplayMgrHelper.m */; };
+		91E7C6D010A1F1EE00FEDA5D /* SaveSearchDarkThemeButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A2B251087C23A00C5895D /* SaveSearchDarkThemeButtonBackgroundHighlighted.png */; };
+		91E7C6D110A1F1F500FEDA5D /* DarkenedDarkThemeBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A2A8C1087912E00C5895D /* DarkenedDarkThemeBottomGradient.png */; };
+		91E7C6D210A1F1F900FEDA5D /* DarkenedDarkThemeTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A2A8D1087912E00C5895D /* DarkenedDarkThemeTopGradient.png */; };
+		91E7C6D310A1F1FD00FEDA5D /* MentionBottomGradientDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A2A4B1086A69600C5895D /* MentionBottomGradientDarkTheme.png */; };
+		91E7C6D410A1F20100FEDA5D /* MentionTopGradientDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A2A4C1086A69600C5895D /* MentionTopGradientDarkTheme.png */; };
+		91E7C6D510A1F20600FEDA5D /* StopFollowingButtonDarkThemeHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A293B1086629200C5895D /* StopFollowingButtonDarkThemeHighlighted.png */; };
+		91E7C6D610A1F20A00FEDA5D /* FollowButtonDarkThemeHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A29391086628600C5895D /* FollowButtonDarkThemeHighlighted.png */; };
+		91E7C6D710A1F20E00FEDA5D /* FollowButtonDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A29281086607000C5895D /* FollowButtonDarkTheme.png */; };
+		91E7C6D810A1F21100FEDA5D /* StopFollowingButtonDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A286C10856B2400C5895D /* StopFollowingButtonDarkTheme.png */; };
+		91E7C6D910A1F21500FEDA5D /* DarkThemeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A27881085218D00C5895D /* DarkThemeBackground.png */; };
+		91E7C6DA10A1F21800FEDA5D /* AvatarDarkThemeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A27331085085A00C5895D /* AvatarDarkThemeBackground.png */; };
+		91E7C6DB10A1F21C00FEDA5D /* UserHeaderDarkThemeGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A26B01084F95100C5895D /* UserHeaderDarkThemeGradient.png */; };
+		91E7C6DC10A1F22000FEDA5D /* DarkThemeChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A265410845CBA00C5895D /* DarkThemeChatArrow.png */; };
+		91E7C6DD10A1F22300FEDA5D /* DarkThemeButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A25421084283D00C5895D /* DarkThemeButtonBackground.png */; };
+		91E7C6DE10A1F22800FEDA5D /* DarkThemeTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A244F1083E72300C5895D /* DarkThemeTopGradient.png */; };
+		91E7C6DF10A1F22B00FEDA5D /* DarkThemeBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A24421083E59800C5895D /* DarkThemeBottomGradient.png */; };
+		91E7C6E210A1F37900FEDA5D /* dark-theme-tweet-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 916A257F1084303000C5895D /* dark-theme-tweet-style.css */; };
 		91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6C44101A51F800354D67 /* PersonSearch.png */; };
 		91FDD5A510616854000F7527 /* BitlyLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91FDD5A310616854000F7527 /* BitlyLogInView.xib */; };
 /* End PBXBuildFile section */
@@ -3205,6 +3231,28 @@
 				05F51C6C1087A6AF00C6AD97 /* SelectPersonView.xib in Resources */,
 				0552815F1087F7810055A37C /* ShortenLinks.png in Resources */,
 				05047321108ACF2300330FC8 /* DirectMessageView.xib in Resources */,
+				91E7C6B710A1F0CA00FEDA5D /* DefaultAvatar48x48.png in Resources */,
+				91E7C6BF10A1F0F600FEDA5D /* ComposeRecipientGradientDarkTheme.png in Resources */,
+				91E7C6C010A1F0FC00FEDA5D /* ProfileSmall.png in Resources */,
+				91E7C6C110A1F10700FEDA5D /* AccountSelectedCheckmarkDarkTheme.png in Resources */,
+				91E7C6C810A1F12900FEDA5D /* SaveSearchDarkThemeButtonBackground.png in Resources */,
+				91E7C6D010A1F1EE00FEDA5D /* SaveSearchDarkThemeButtonBackgroundHighlighted.png in Resources */,
+				91E7C6D110A1F1F500FEDA5D /* DarkenedDarkThemeBottomGradient.png in Resources */,
+				91E7C6D210A1F1F900FEDA5D /* DarkenedDarkThemeTopGradient.png in Resources */,
+				91E7C6D310A1F1FD00FEDA5D /* MentionBottomGradientDarkTheme.png in Resources */,
+				91E7C6D410A1F20100FEDA5D /* MentionTopGradientDarkTheme.png in Resources */,
+				91E7C6D510A1F20600FEDA5D /* StopFollowingButtonDarkThemeHighlighted.png in Resources */,
+				91E7C6D610A1F20A00FEDA5D /* FollowButtonDarkThemeHighlighted.png in Resources */,
+				91E7C6D710A1F20E00FEDA5D /* FollowButtonDarkTheme.png in Resources */,
+				91E7C6D810A1F21100FEDA5D /* StopFollowingButtonDarkTheme.png in Resources */,
+				91E7C6D910A1F21500FEDA5D /* DarkThemeBackground.png in Resources */,
+				91E7C6DA10A1F21800FEDA5D /* AvatarDarkThemeBackground.png in Resources */,
+				91E7C6DB10A1F21C00FEDA5D /* UserHeaderDarkThemeGradient.png in Resources */,
+				91E7C6DC10A1F22000FEDA5D /* DarkThemeChatArrow.png in Resources */,
+				91E7C6DD10A1F22300FEDA5D /* DarkThemeButtonBackground.png in Resources */,
+				91E7C6DE10A1F22800FEDA5D /* DarkThemeTopGradient.png in Resources */,
+				91E7C6DF10A1F22B00FEDA5D /* DarkThemeBottomGradient.png in Resources */,
+				91E7C6E210A1F37900FEDA5D /* dark-theme-tweet-style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3692,6 +3740,10 @@
 				0552818A1088E8020055A37C /* NSString+UrlAdditions.m in Sources */,
 				054BE35B108A7AC500734CAA /* BitlyUrlShorteningService.m in Sources */,
 				05377FC910A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */,
+				91E7C6CC10A1F1A200FEDA5D /* ToggleViewController.m in Sources */,
+				91E7C6CD10A1F1B200FEDA5D /* MentionTimelineDisplayMgr.m in Sources */,
+				91E7C6CE10A1F1B300FEDA5D /* MentionsAcctMgr.m in Sources */,
+				91E7C6CF10A1F1BE00FEDA5D /* DisplayMgrHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
