@@ -254,7 +254,8 @@
 
 - (void)tweet:(Tweet *)tweet markedAsFavorite:(BOOL)favorite
 {
-    NSLog(@"Timeline display manager: set favorite value for tweet");
+    NSLog(@"Timeline display manager: set favorite value for tweet: %@",
+        tweet.identifier);
     TweetInfo * tweetInfo = [timeline objectForKey:tweet.identifier];
     tweetInfo.favorited = [NSNumber numberWithBool:favorite];
     if ([self.lastTweetDetailsController.tweet.identifier
@@ -265,11 +266,12 @@
 - (void)failedToMarkTweet:(NSString *)tweetId asFavorite:(BOOL)favorite
     error:(NSError *)error
 {
-    NSLog(@"Timeline display manager: failed to set favorite");
+    NSLog(@"Timeline display manager: failed to set favorite status for tweet: "
+        "%@", tweetId);
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.setfavorite", @"");
-    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
     if ([self.lastTweetDetailsController.tweet.identifier isEqual:tweetId])
         [self.lastTweetDetailsController
         setFavorited:
@@ -421,10 +423,8 @@
 
 - (void)setFavorite:(BOOL)favorite
 {
-    if (favorite)
-        NSLog(@"Timeline display manager: setting tweet to 'favorite'");
-    else
-        NSLog(@"Timeline display manager: setting tweet to 'not favorite'");
+    NSLog(@"Timeline display manager: setting tweet %@ to '%@'",
+        selectedTweet.identifier, favorite ? @"favorite" : @"not favorite");
     [[ErrorState instance] exitErrorState];
     [service markTweet:selectedTweet.identifier asFavorite:favorite];
 }

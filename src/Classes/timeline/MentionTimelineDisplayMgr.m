@@ -241,7 +241,8 @@
 
 - (void)tweet:(Tweet *)tweet markedAsFavorite:(BOOL)favorite
 {
-    NSLog(@"Mention display manager: set favorite value for tweet");
+    NSLog(@"Mention display manager: set favorite value for tweet: %@",
+        tweet.identifier);
     TweetInfo * tweetInfo = [mentions objectForKey:tweet.identifier];
     tweetInfo.favorited = [NSNumber numberWithBool:favorite];
     if ([self.lastTweetDetailsController.tweet.identifier
