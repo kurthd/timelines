@@ -178,7 +178,6 @@
 		052E059C10700858005CEC5F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D8C103F57B2005BB245 /* SystemConfiguration.framework */; };
 		052E059D10700858005CEC5F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0519C6FA1043461600C2C7BD /* CFNetwork.framework */; };
 		052E059E10700858005CEC5F /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 055777131063018D006596DB /* libz.1.2.3.dylib */; };
-		052E05BC10700B7E005CEC5F /* twitbit-lite-info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 052E05BB10700B7E005CEC5F /* twitbit-lite-info.plist */; };
 		052E05DD10700F1D005CEC5F /* libYAJLIPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */; };
 		052E05E510700F45005CEC5F /* libTwitVid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D88103F575D005BB245 /* libTwitVid.a */; };
 		0531DA46107FEDEC003DC0D6 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0531DA45107FEDEC003DC0D6 /* Tweet.m */; };
@@ -3388,7 +3387,6 @@
 				919CCCBC105EB0600029C0A1 /* DeleteTweetButtonIcon.png in Resources */,
 				919CCCBE105EB0760029C0A1 /* NearbyTweetsButtonIcon.png in Resources */,
 				91FDD5A510616854000F7527 /* BitlyLogInView.xib in Resources */,
-				052E05BC10700B7E005CEC5F /* twitbit-lite-info.plist in Resources */,
 				91DCE7851072755400095FD0 /* DownButton.png in Resources */,
 				91DCE7871072756000095FD0 /* UpButton.png in Resources */,
 				91DCE9091073C58D00095FD0 /* DirectMessageView.xib in Resources */,
