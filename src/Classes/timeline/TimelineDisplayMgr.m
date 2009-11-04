@@ -745,8 +745,8 @@
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
-    NSLog(@"Timeline display manager: credentials changing from: '%@' to: '%@'",
-        credentials.username, someCredentials.username);
+    NSLog(@"Timeline display manager: credentials changing to: '%@'",
+        someCredentials.username);
 
     // HACK: When accounts are switched, this function is called twice via the
     // search tab. The first time, the credentials are different and the code
@@ -756,7 +756,14 @@
     // function. In the case of the search bar, this causes an empty query to be
     // submitted (the query was cleared as part of the account switching), which
     // in turn generates an error from Twitter which is displayed to the user.
-    if ([credentials.username isEqualToString:someCredentials.username])
+    //
+    // Note that we are performing pointer equality here intentionally because
+    // it's possible 'credentials' has been physically deleted and is invalid.
+    // This class should subscribe to the 'credentials set changed'
+    // notification, which is sent when accounts are added or removed, so it can
+    // release 'credentials' and set it to nil when the account is deleted and
+    // avoid this problem.
+    if (credentials == someCredentials)
         return;
 
     TwitterCredentials * oldCredentials = credentials;
