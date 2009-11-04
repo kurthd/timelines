@@ -184,6 +184,8 @@
 		0531DA46107FEDEC003DC0D6 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0531DA45107FEDEC003DC0D6 /* Tweet.m */; };
 		0531DA47107FEDEC003DC0D6 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0531DA45107FEDEC003DC0D6 /* Tweet.m */; };
 		05340ABA101A3DAD0077E7C0 /* SearchBookmarksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05340AB8101A3DAD0077E7C0 /* SearchBookmarksView.xib */; };
+		05377FC910A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */; };
+		05377FCA10A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */; };
 		0538FE97104C7897009E50CE /* InstapaperLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0538FE95104C7897009E50CE /* InstapaperLogInView.xib */; };
 		053A2C90103F1FAC005BB245 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2C8F103F1FAC005BB245 /* MobileCoreServices.framework */; };
 		053A2D89103F575D005BB245 /* libTwitVid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D88103F575D005BB245 /* libTwitVid.a */; };
@@ -1018,6 +1020,8 @@
 		05340B32101A5B0D0077E7C0 /* twitch-v1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v1.1.xcdatamodel"; sourceTree = "<group>"; };
 		05340B35101A5BFB0077E7C0 /* RecentSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecentSearch.h; path = search/RecentSearch.h; sourceTree = "<group>"; };
 		05340B36101A5BFB0077E7C0 /* RecentSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearch.m; path = search/RecentSearch.m; sourceTree = "<group>"; };
+		05377FC710A10C3000DE3FDA /* NSError+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+GeneralHelpers.h"; path = "shared/NSError+GeneralHelpers.h"; sourceTree = "<group>"; };
+		05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+GeneralHelpers.m"; path = "shared/NSError+GeneralHelpers.m"; sourceTree = "<group>"; };
 		0538FE1C104C4584009E50CE /* DeleteDirectMessageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeleteDirectMessageResponseProcessor.h; path = twitter/processors/DeleteDirectMessageResponseProcessor.h; sourceTree = "<group>"; };
 		0538FE1D104C4584009E50CE /* DeleteDirectMessageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeleteDirectMessageResponseProcessor.m; path = twitter/processors/DeleteDirectMessageResponseProcessor.m; sourceTree = "<group>"; };
 		0538FE5A104C4F16009E50CE /* InstapaperService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstapaperService.h; path = instapaper/InstapaperService.h; sourceTree = "<group>"; };
@@ -2202,6 +2206,8 @@
 				916BD7A30FEEADD7007143A9 /* NSDate+StringHelpers.m */,
 				916BD7A40FEEADD7007143A9 /* NSError+InstantiationAdditions.h */,
 				916BD7A50FEEADD7007143A9 /* NSError+InstantiationAdditions.m */,
+				05377FC710A10C3000DE3FDA /* NSError+GeneralHelpers.h */,
+				05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */,
 				0519CC2C1045CED600C2C7BD /* NSDictionary+NonRetainedKeyAdditions.h */,
 				0519CC2D1045CED600C2C7BD /* NSDictionary+NonRetainedKeyAdditions.m */,
 				916BD7A60FEEADD7007143A9 /* UIColor+TwitchColors.h */,
@@ -3685,6 +3691,7 @@
 				050ACC2B1087D11A004B6C2D /* PersonDirectory.m in Sources */,
 				0552818A1088E8020055A37C /* NSString+UrlAdditions.m in Sources */,
 				054BE35B108A7AC500734CAA /* BitlyUrlShorteningService.m in Sources */,
+				05377FC910A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3980,6 +3987,7 @@
 				9142C880108D2D8E00BFE960 /* DisplayMgrHelper.m in Sources */,
 				9142CCFD10920AF900BFE960 /* ToggleViewController.m in Sources */,
 				9142D08F109749E400BFE960 /* MentionsAcctMgr.m in Sources */,
+				05377FCA10A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

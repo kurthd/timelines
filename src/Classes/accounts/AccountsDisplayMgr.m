@@ -3,6 +3,7 @@
 //
 
 #import "AccountsDisplayMgr.h"
+#import "TwitbitShared.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "CredentialsSetChangedPublisher.h"
 #import "AccountSettingsChangedPublisher.h"
@@ -94,8 +95,6 @@
 
 - (BOOL)userDeletedAccount:(TwitterCredentials *)credentials
 {
-    [AccountSettings deleteSettingsForKey:credentials.username];
-
     [self.userAccounts removeObject:credentials];
     if (self.userAccounts.count == 0) {
         self.logInDisplayMgr.allowsCancel = NO;
@@ -115,19 +114,21 @@
     // Delete the credentials after the notification has been sent to allow
     // receivers to query the credentials object before it becomes invalid.
 
+    NSString * username = [[credentials.username copy] autorelease];
     [context deleteObject:credentials];
 
-    NSError * error;
-    if (![context save:&error]) {
+    NSError * error = nil;
+    if ([context save:&error])
+        [AccountSettings deleteSettingsForKey:username];
+    else {
         NSString * title = [NSString stringWithFormat:
             NSLocalizedString(@"account.deletion.failed.alert.title", @""),
-            credentials.username];
+            username];
         NSString * message = error.localizedDescription;
+        [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
 
-        UIAlertView * alert = [UIAlertView simpleAlertViewWithTitle:title
-                                                            message:message];
-
-        [alert show];
+        NSLog(@"WARNING: Failed to delete account '%@'. Detailed error:\n%@",
+            username, [error detailedDescription]);
 
         return NO;
     }

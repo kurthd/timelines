@@ -1075,7 +1075,7 @@
     [self registerDeviceForPushNotifications];
 
     NSLog(@"Active credentials after account switch: '%@'.",
-        self.activeCredentials.credentials);
+        self.activeCredentials.credentials.username);
     [self saveContext];
 }
 
