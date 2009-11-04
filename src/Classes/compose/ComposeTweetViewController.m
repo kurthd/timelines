@@ -747,8 +747,16 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         [delegate clearCurrentTweetDraft];
 
     if (cleared) {
-        self.currentRecipient = nil;
-        [self resetView];
+        if ([self composingDirectMessage]) {
+            NSString * recipient = [recipientTextField.text retain];
+            self.currentRecipient = nil;
+            [self resetView];
+            recipientTextField.text = recipient;
+            [recipient release];
+        } else {
+            self.currentRecipient = nil;
+            [self resetView];
+        }
     }
 }
 
