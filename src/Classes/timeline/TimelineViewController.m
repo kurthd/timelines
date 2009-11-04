@@ -88,6 +88,12 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 {
     [super viewDidLoad];
 
+    // this ensures that any header set before the view is showed scales
+    // correctly when changing orientation
+    self.view.frame =
+        [[RotatableTabBarController instance] landscape] ?
+        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         plainHeaderView.backgroundColor = [UIColor twitchDarkGrayColor];
         plainHeaderViewLine.backgroundColor = [UIColor twitchDarkDarkGrayColor];
@@ -119,12 +125,6 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     showInbox = YES;
     self.tableView.tableHeaderView = plainHeaderView;
     self.tableView.contentInset = UIEdgeInsetsMake(-392, 0, 0, 0);
-
-    // this ensures that any header set before the view is showed scales
-    // correctly when changing orientation
-    self.view.frame =
-        [[RotatableTabBarController instance] landscape] ?
-        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -529,6 +529,12 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 // HACK: Exposed to allow for "Save Search" button
 - (void)setTimelineHeaderView:(UIView *)aView
 {
+    // this ensures that any header set before the view is showed scales
+    // correctly when changing orientation
+    self.view.frame =
+        [[RotatableTabBarController instance] landscape] ?
+        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+
     self.tableView.tableHeaderView = aView;
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
 }
