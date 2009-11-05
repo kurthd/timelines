@@ -21,6 +21,7 @@
     NSString *_clientURL;
     NSString *_clientSourceToken;
 	NSString *_APIDomain;
+    NSString *_APIVersion;
 #if JSON_AVAILABLE || YAJL_AVAILABLE
 	NSString *_searchDomain;
 #endif

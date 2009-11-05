@@ -43,7 +43,8 @@
 	#endif
 #endif
 
-#define TWITTER_DOMAIN          @"twitter.com"
+#define TWITTER_DOMAIN          @"api.twitter.com"
+#define TWITTER_API_VERSION     @"1"
 #if JSON_AVAILABLE || YAJL_AVAILABLE
 	#define TWITTER_SEARCH_DOMAIN	@"search.twitter.com"
 #endif
@@ -107,6 +108,7 @@
         _clientURL = [DEFAULT_CLIENT_URL retain];
 		_clientSourceToken = [DEFAULT_CLIENT_TOKEN retain];
 		_APIDomain = [TWITTER_DOMAIN retain];
+        _APIVersion = [TWITTER_API_VERSION retain];
 #if JSON_AVAILABLE || YAJL_AVAILABLE
 		_searchDomain = [TWITTER_SEARCH_DOMAIN retain];
 #endif
@@ -136,6 +138,7 @@
     [_clientURL release];
     [_clientSourceToken release];
 	[_APIDomain release];
+    [_APIVersion release];
 #if JSON_AVAILABLE || YAJL_AVAILABLE
 	[_searchDomain release];
 #endif
@@ -184,9 +187,9 @@
     
 	if ([self clearsCookies]) {
 		// Remove all cookies for twitter, to ensure next connection uses new credentials.
-		NSString *urlString = [NSString stringWithFormat:@"%@://%@", 
+		NSString *urlString = [NSString stringWithFormat:@"%@://%@/%@", 
 							   (_secureConnection) ? @"https" : @"http", 
-							   _APIDomain];
+							   _APIDomain, _APIVersion];
 		NSURL *url = [NSURL URLWithString:urlString];
 		
 		NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
@@ -466,15 +469,18 @@
 
 #if JSON_AVAILABLE || YAJL_AVAILABLE
 	NSString *domain = nil;
+    NSString *version = nil;
 	NSString *connectionType = nil;
 	if (requestType == MGTwitterSearchRequest)
 	{
 		domain = _searchDomain;
+        version = @"";
 		connectionType = @"http";
 	}
 	else
 	{
 		domain = _APIDomain;
+        version = [NSString stringWithFormat:@"/%@", _APIVersion];
 		if (_secureConnection)
 		{
 			connectionType = @"https";
@@ -486,6 +492,7 @@
 	}
 #else
 	NSString *domain = _APIDomain;
+    NSString *version = _APIVersion;
 	NSString *connectionType = nil;
 	if (_secureConnection)
 	{
@@ -498,14 +505,14 @@
 #endif
 	
 #if SET_AUTHORIZATION_IN_HEADER
-    NSString *urlString = [NSString stringWithFormat:@"%@://%@/%@", 
+    NSString *urlString = [NSString stringWithFormat:@"%@://%@%@/%@", 
                            connectionType,
-                           domain, fullPath];
+                           domain, version, fullPath];
 #else    
-    NSString *urlString = [NSString stringWithFormat:@"%@://%@:%@@%@/%@", 
+    NSString *urlString = [NSString stringWithFormat:@"%@://%@:%@@%@%@/%@", 
                            connectionType, 
                            [self _encodeString:_username], [self _encodeString:_password], 
-                           domain, fullPath];
+                           domain, version, fullPath];
 #endif
     
     NSURL *finalURL = [NSURL URLWithString:urlString];
