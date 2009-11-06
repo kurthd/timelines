@@ -172,7 +172,7 @@
 
 - (User *)userFromData:(NSDictionary *)data
 {
-    NSString * userId = [[data objectForKey:@"id"] description];
+    NSNumber * userId = [data objectForKey:@"id"];
     User * user = [User findOrCreateWithId:userId context:context];
     [self populateUser:user fromData:data];
 

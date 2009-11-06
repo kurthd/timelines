@@ -97,7 +97,7 @@ static NSMutableDictionary * oaTokens;
     [self request:requestId isHandledBy:processor];
 }
 
-- (void)sendTweet:(NSString *)tweet inReplyTo:(NSString *)referenceId
+- (void)sendTweet:(NSString *)tweet inReplyTo:(NSNumber *)referenceId
 {
     ResponseProcessor * processor =
         [SendTweetResponseProcessor processorWithTweet:tweet
@@ -106,35 +106,36 @@ static NSMutableDictionary * oaTokens;
                                                context:context
                                               delegate:delegate];
 
-    NSString * requestId = [twitter sendUpdate:tweet inReplyTo:referenceId];
+    NSString * requestId = [twitter sendUpdate:tweet
+                                     inReplyTo:[referenceId description]];
 
     [self request:requestId isHandledBy:processor];
 }
 
 #pragma mark Fetching individual tweets
 
-- (void)fetchTweet:(NSString *)tweetId
+- (void)fetchTweet:(NSNumber *)tweetId
 {
     ResponseProcessor * processor =
         [FetchTweetResponseProcessor processorWithTweetId:tweetId
                                                   context:context
                                                  delegate:delegate];
 
-    NSString * requestId = [twitter getUpdate:tweetId];
+    NSString * requestId = [twitter getUpdate:[tweetId description]];
 
     [self request:requestId isHandledBy:processor];
 }
 
 #pragma mark Deleting individual tweets
 
-- (void)deleteTweet:(NSString *)tweetId
+- (void)deleteTweet:(NSNumber *)tweetId
 {
     ResponseProcessor * processor =
         [DeleteTweetResponseProcessor processorWithTweetId:tweetId
                                                    context:context
                                                   delegate:delegate];
 
-    NSString * requestId = [twitter deleteUpdate:tweetId];
+    NSString * requestId = [twitter deleteUpdate:[tweetId description]];
 
     [self request:requestId isHandledBy:processor];
 }
@@ -294,7 +295,7 @@ static NSMutableDictionary * oaTokens;
     [self request:requestId isHandledBy:processor];
 }
 
-- (void)markTweet:(NSString *)tweetId asFavorite:(BOOL)favorite
+- (void)markTweet:(NSNumber *)tweetId asFavorite:(BOOL)favorite
 {
     ResponseProcessor * processor =
         [MarkFavoriteResponseProcessor processorWithTweetId:tweetId
@@ -302,7 +303,8 @@ static NSMutableDictionary * oaTokens;
                                                     context:context
                                                    delegate:delegate];
 
-    NSString * requestId = [twitter markUpdate:tweetId asFavorite:favorite];
+    NSString * requestId = [twitter markUpdate:[tweetId description]
+                                    asFavorite:favorite];
 
     [self request:requestId isHandledBy:processor];
 }

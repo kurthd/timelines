@@ -18,8 +18,8 @@
 - (UIImage *)convertUrlToImage:(NSString *)url;
 - (NSArray *)sortedTweets;
 
-- (NSInteger)indexForTweetId:(NSString *)tweetId;
-- (NSInteger)sortedIndexForTweetId:(NSString *)tweetId;
+- (NSInteger)indexForTweetId:(NSNumber *)tweetId;
+- (NSInteger)sortedIndexForTweetId:(NSNumber *)tweetId;
 
 - (void)configureCell:(FastTimelineTableViewCell *)cell
     forDirectMessage:(DirectMessage *)dm;
@@ -185,7 +185,7 @@ static UIImage * defaultAvatar;
     [self.tableView reloadData];
 }
 
-- (void)deleteTweet:(NSString *)tweetId
+- (void)deleteTweet:(NSNumber *)tweetId
 {
     NSInteger index = [self indexForTweetId:tweetId];
     NSInteger sortedIndex = [self sortedIndexForTweetId:tweetId];
@@ -215,7 +215,7 @@ static UIImage * defaultAvatar;
     [self.tableView reloadData];
 }
 
-- (void)selectTweetId:(NSString *)tweetId
+- (void)selectTweetId:(NSNumber *)tweetId
 {
     NSInteger index = [self sortedIndexForTweetId:tweetId];
 
@@ -264,7 +264,7 @@ static UIImage * defaultAvatar;
     return self.sortedTweetCache;
 }
 
-- (NSInteger)indexForTweetId:(NSString *)tweetId
+- (NSInteger)indexForTweetId:(NSNumber *)tweetId
 {
     NSInteger index = -1;
     for (int i = 0; i < [tweets count]; i++) {
@@ -278,7 +278,7 @@ static UIImage * defaultAvatar;
     return index;
 }   
 
-- (NSInteger)sortedIndexForTweetId:(NSString *)tweetId
+- (NSInteger)sortedIndexForTweetId:(NSNumber *)tweetId
 {
     NSInteger index = -1;
     for (int i = 0; i < [self.sortedTweets count]; i++) {

@@ -8,7 +8,7 @@
 
 @interface UserTweet (CoreDataAdditions)
 
-+ (id)tweetWithId:(NSString *)anIdentifier
++ (id)tweetWithId:(NSNumber *)anIdentifier
       credentials:(TwitterCredentials *)credentials
           context:(NSManagedObjectContext *)context;
 

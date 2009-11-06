@@ -17,7 +17,7 @@
 @interface TimelineViewController ()
 
 @property (nonatomic, retain) NSString * mentionRegex;
-@property (nonatomic, retain) NSString * visibleTweetId;
+@property (nonatomic, retain) NSNumber * visibleTweetId;
 
 - (UIImage *)getLargeAvatarForUser:(User *)aUser;
 - (UIImage *)getThumbnailAvatarForUser:(User *)aUser;
@@ -324,7 +324,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 }
 
 - (void)setTweets:(NSArray *)someTweets page:(NSUInteger)page
-    visibleTweetId:(NSString *)aVisibleTweetId
+    visibleTweetId:(NSNumber *)aVisibleTweetId
 {
     NSLog(@"Setting %d tweets on timeline; page: %d", [someTweets count], page);
     if (aVisibleTweetId && !self.visibleTweetId)
@@ -485,9 +485,9 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     [[PhotoBrowserDisplayMgr instance] showPhotoInBrowser:remotePhoto];
 }
 
-- (NSString *)mostRecentTweetId
+- (NSNumber *)mostRecentTweetId
 {
-    NSString * mostRecentId;
+    NSNumber * mostRecentId;
     if ([[self sortedTweetCache] count] > 0) {
         Tweet * mostRecentTweet = [[self sortedTweetCache] objectAtIndex:0];
         mostRecentId = mostRecentTweet.identifier;
@@ -572,8 +572,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
     BOOL newerThanVisibleTweetId =
         self.visibleTweetId &&
-        [Tweet
-        compareTweetId:tweet.identifier toId:self.visibleTweetId] !=
+        [tweet.identifier compare:self.visibleTweetId] !=
         NSOrderedDescending;
     BOOL darkenForOld =
         [[self class] highlightNewTweets] && newerThanVisibleTweetId;

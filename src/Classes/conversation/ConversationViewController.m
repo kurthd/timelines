@@ -26,7 +26,7 @@
 - (BOOL)canLoadMoreTweets;
 - (BOOL)waitingForTweets;
 
-- (void)loadConversationFromTweetId:(NSString *)tweetId;
+- (void)loadConversationFromTweetId:(NSNumber *)tweetId;
 
 @end
 
@@ -83,7 +83,7 @@
 
     if (tweets.count < self.batchSize.integerValue + 1) {
         Tweet * oldestTweet = [conversation lastObject];
-        NSString * tweetId = oldestTweet.inReplyToTwitterTweetId;
+        NSNumber * tweetId = oldestTweet.inReplyToTwitterTweetId;
         if (tweetId) {  // there's still more to load
             [self loadConversationFromTweetId:tweetId];
             [self configureFooterForCurrentState];
@@ -110,7 +110,7 @@
                           withRowAnimation:UITableViewRowAnimationTop];
     
     waitingFor -= tweets.count;
-    NSString * nextId = [[conversation lastObject] inReplyToTwitterTweetId];
+    NSNumber * nextId = [[conversation lastObject] inReplyToTwitterTweetId];
     
     if (waitingFor > 0 && nextId)
         [delegate fetchTweetWithId:nextId];
@@ -122,7 +122,7 @@
     // TODO: stop any animations
 }
 
-- (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error
+- (void)failedToFetchTweetWithId:(NSNumber *)tweetId error:(NSError *)error
 {
     NSString * title =
         NSLocalizedString(@"conversationview.load.failed.title", @"");
@@ -404,7 +404,7 @@
     return waitingFor > 0;
 }
 
-- (void)loadConversationFromTweetId:(NSString *)tweetId
+- (void)loadConversationFromTweetId:(NSNumber *)tweetId
 {
     [delegate fetchTweetWithId:tweetId];
     waitingFor = [batchSize integerValue];

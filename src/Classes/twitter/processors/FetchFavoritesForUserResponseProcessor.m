@@ -73,7 +73,7 @@
         if (!userData)
             continue;
 
-        NSString * userId = [[userData objectForKey:@"id"] description];
+        NSNumber * userId = [userData objectForKey:@"id"];
         User * tweetAuthor = [User findOrCreateWithId:userId context:context];
 
         // only set user data the first time we see it, so we are saving
@@ -85,7 +85,7 @@
 
         NSDictionary * tweetData = status;
 
-        NSString * tweetId = [[tweetData objectForKey:@"id"] description];
+        NSNumber * tweetId = [tweetData objectForKey:@"id"];
         Tweet * tweet = [Tweet tweetWithId:tweetId context:context];
 
         if (!tweet)

@@ -39,7 +39,7 @@
     BOOL fromHomeScreen;  // HACK: restore the correct draft from the "root"
                           // direct messages view
 
-    NSString * origTweetId;  // non-nil if composing a reply
+    NSNumber * origTweetId;  // non-nil if composing a reply
     NSString * origUsername;
 
     TweetDraftMgr * draftMgr;
@@ -71,9 +71,9 @@
 - (void)composeTweet;
 - (void)composeTweetWithText:(NSString *)tweet;
 
-- (void)composeReplyToTweet:(NSString *)tweetId
+- (void)composeReplyToTweet:(NSNumber *)tweetId
                    fromUser:(NSString *)user;
-- (void)composeReplyToTweet:(NSString *)tweetId
+- (void)composeReplyToTweet:(NSNumber *)tweetId
                    fromUser:(NSString *)user
                    withText:(NSString *)text;
 
@@ -94,13 +94,13 @@
 - (void)userDidSendTweet:(Tweet *)tweet;
 - (void)userFailedToSendTweet:(NSString *)tweet;
 
-- (void)userIsReplyingToTweet:(NSString *)origTweetId
+- (void)userIsReplyingToTweet:(NSNumber *)origTweetId
                      fromUser:(NSString *)origUsername
                      withText:(NSString *)text;
-- (void)userDidReplyToTweet:(NSString *)origTweetId
+- (void)userDidReplyToTweet:(NSNumber *)origTweetId
                    fromUser:(NSString *)origUsername
                   withTweet:(Tweet *)reply;
-- (void)userFailedToReplyToTweet:(NSString *)origTweetId
+- (void)userFailedToReplyToTweet:(NSNumber *)origTweetId
                         fromUser:(NSString *)origUsername
                         withText:(NSString *)text;
 

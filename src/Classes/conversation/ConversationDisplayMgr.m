@@ -49,7 +49,7 @@
      return self;
 }
 
-- (void)displayConversationFrom:(NSString *)firstTweetId
+- (void)displayConversationFrom:(NSNumber *)firstTweetId
            navigationController:(UINavigationController *)navController
 {
     self.navigationController = navController;
@@ -60,7 +60,7 @@
 
     NSMutableArray * cachedConversation = [NSMutableArray array];
 
-    NSString * nextId = firstTweetId;
+    NSNumber * nextId = firstTweetId;
     Tweet * tweet = nil;
     while (nextId || tweet) {
         NSPredicate * predicate =
@@ -81,14 +81,14 @@
 
 #pragma mark ConversationViewControllerDelegate implementation
 
-- (void)fetchTweetWithId:(NSString *)tweetId
+- (void)fetchTweetWithId:(NSNumber *)tweetId
 {
     [self.service performSelector:@selector(fetchTweet:)
                        withObject:tweetId
                        afterDelay:1.0];
 }
 
-- (void)displayTweetWithId:(NSString *)tweetId
+- (void)displayTweetWithId:(NSNumber *)tweetId
 {
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:@"identifier == %@", tweetId];
@@ -104,13 +104,13 @@
 
 #pragma mark TwitterServiceDelegate implementation
 
-- (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
+- (void)fetchedTweet:(Tweet *)tweet withId:(NSNumber *)tweetId
 {
     NSArray * tweets = [NSArray arrayWithObject:tweet];
     [self.conversationViewController addTweetsToConversation:tweets];
 }
 
-- (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error
+- (void)failedToFetchTweetWithId:(NSNumber *)tweetId error:(NSError *)error
 {
     [self.conversationViewController
         failedToFetchTweetWithId:tweetId error:error];

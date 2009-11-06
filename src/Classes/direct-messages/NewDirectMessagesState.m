@@ -27,7 +27,7 @@
     numNewMessages += count;
 }
 
-- (void)setCount:(NSUInteger)count forUserId:(NSString *)identifier
+- (void)setCount:(NSUInteger)count forUserId:(NSNumber *)identifier
 {
     NSNumber * countAsNum = [NSNumber numberWithInt:count];
     [newMessageCountByUser setObject:countAsNum forKey:identifier];
@@ -38,7 +38,7 @@
         numNewMessages += [userCount intValue];
 }
 
-- (NSUInteger)countForUserId:(NSString *)identifier
+- (NSUInteger)countForUserId:(NSNumber *)identifier
 {
     NSNumber * countAsNumber = [newMessageCountByUser objectForKey:identifier];
     
@@ -56,7 +56,7 @@
     return [[newMessageCountByUser copy] autorelease];
 }
 
-- (void)incrementCountForUserId:(NSString *)identifier
+- (void)incrementCountForUserId:(NSNumber *)identifier
 {
     NSNumber * numMessagesAsNumber =
         [newMessageCountByUser objectForKey:identifier];

@@ -205,6 +205,8 @@
 		059A7091103DAE4A00B7500C /* SelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A708F103DAE4A00B7500C /* SelectionView.xib */; };
 		059A72AA103E1C7800B7500C /* YfrogSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72A8103E1C7800B7500C /* YfrogSettingsView.xib */; };
 		059A7301103E221E00B7500C /* TwitVidSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72FF103E221E00B7500C /* TwitVidSettingsView.xib */; };
+		05A7460110A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05A7460010A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel */; };
+		05A7460210A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05A7460010A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel */; };
 		05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05AC573C1029F0EF00F727A2 /* QuartzCore.framework */; };
 		05B8D54C10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D54B10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m */; };
 		05B8D54D10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D54B10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m */; };
@@ -212,6 +214,8 @@
 		05B8D5FC10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D5FA10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m */; };
 		05B8D5FD10A3B4910030F0BF /* Tweet+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D5F810A3B4910030F0BF /* Tweet+GeneralHelpers.m */; };
 		05B8D5FE10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D5FA10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m */; };
+		05B8D6C910A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D6C810A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m */; };
+		05B8D6CA10A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D6C810A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m */; };
 		05C7B8BA103B5FAF0017874C /* PhotoServicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B8B8103B5FAF0017874C /* PhotoServicesView.xib */; };
 		05C7B962103B791A0017874C /* PhotoServiceSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B960103B791A0017874C /* PhotoServiceSelectorView.xib */; };
 		05C7B99D103B7E1D0017874C /* FlickrLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B99B103B7E1D0017874C /* FlickrLogo.png */; };
@@ -1210,6 +1214,7 @@
 		05A669F6107EAAEE0077343D /* MGTwitterJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTwitterJSONParser.m; path = "vendor/mg-twitter-engine/MGTwitterJSONParser.m"; sourceTree = "<group>"; };
 		05A66AD0107EBAD60077343D /* TweetLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetLocation.h; path = tweets/TweetLocation.h; sourceTree = "<group>"; };
 		05A66AD1107EBAD60077343D /* TweetLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetLocation.m; path = tweets/TweetLocation.m; sourceTree = "<group>"; };
+		05A7460010A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2.1-v2.3-1.xcmappingmodel"; path = "data-model/v2.1-v2.3-1.xcmappingmodel"; sourceTree = "<group>"; };
 		05AC573C1029F0EF00F727A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		05AE708C0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFavoritesForUserResponseProcessor.h; path = twitter/processors/FetchFavoritesForUserResponseProcessor.h; sourceTree = "<group>"; };
 		05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFavoritesForUserResponseProcessor.m; path = twitter/processors/FetchFavoritesForUserResponseProcessor.m; sourceTree = "<group>"; };
@@ -1300,6 +1305,9 @@
 		05B8D5F810A3B4910030F0BF /* Tweet+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Tweet+GeneralHelpers.m"; path = "tweets/Tweet+GeneralHelpers.m"; sourceTree = "<group>"; };
 		05B8D5F910A3B4910030F0BF /* TweetLocation+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TweetLocation+GeneralHelpers.h"; path = "tweets/TweetLocation+GeneralHelpers.h"; sourceTree = "<group>"; };
 		05B8D5FA10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TweetLocation+GeneralHelpers.m"; path = "tweets/TweetLocation+GeneralHelpers.m"; sourceTree = "<group>"; };
+		05B8D69210A3BA430030F0BF /* twitch-v2.3-1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.3-1.xcdatamodel"; sourceTree = "<group>"; };
+		05B8D6C710A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringToNumericIdentifierEntityMigrationPolicy.h; path = "persistence/core-data/migrations/StringToNumericIdentifierEntityMigrationPolicy.h"; sourceTree = "<group>"; };
+		05B8D6C810A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringToNumericIdentifierEntityMigrationPolicy.m; path = "persistence/core-data/migrations/StringToNumericIdentifierEntityMigrationPolicy.m"; sourceTree = "<group>"; };
 		05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarDisplayMgr.h; path = search/SearchBarDisplayMgr.h; sourceTree = "<group>"; };
 		05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBarDisplayMgr.m; path = search/SearchBarDisplayMgr.m; sourceTree = "<group>"; };
 		05C5E7B00FF455B00073E7F2 /* FetchTrendsResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTrendsResponseProcessor.h; path = twitter/processors/FetchTrendsResponseProcessor.h; sourceTree = "<group>"; };
@@ -2365,6 +2373,7 @@
 				059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */,
 				05D8807B101F87AB0045E8E8 /* v2-v1.1.xcmappingmodel */,
 				050BA143106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel */,
+				05A7460010A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel */,
 			);
 			name = "data-model";
 			sourceTree = "<group>";
@@ -2484,6 +2493,23 @@
 				05B7C8CB105899E00043298A /* SBJsonWriter.m */,
 			);
 			name = json;
+			sourceTree = "<group>";
+		};
+		05B8D6C310A3C7A00030F0BF /* core-data */ = {
+			isa = PBXGroup;
+			children = (
+				05B8D6C510A3C7AA0030F0BF /* migrations */,
+			);
+			name = "core-data";
+			sourceTree = "<group>";
+		};
+		05B8D6C510A3C7AA0030F0BF /* migrations */ = {
+			isa = PBXGroup;
+			children = (
+				05B8D6C710A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.h */,
+				05B8D6C810A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m */,
+			);
+			name = migrations;
 			sourceTree = "<group>";
 		};
 		05C5E7B70FF45EE10073E7F2 /* yajl */ = {
@@ -2721,6 +2747,7 @@
 		910BE3670FF32040005342EE /* persistence */ = {
 			isa = PBXGroup;
 			children = (
+				05B8D6C310A3C7A00030F0BF /* core-data */,
 				910BE3680FF32059005342EE /* UIState.h */,
 				910BE3690FF32059005342EE /* UIState.m */,
 				910BE36B0FF32137005342EE /* UIStatePersistenceStore.h */,
@@ -3737,6 +3764,8 @@
 				05B8D54C10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m in Sources */,
 				05B8D5FB10A3B4910030F0BF /* Tweet+GeneralHelpers.m in Sources */,
 				05B8D5FC10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m in Sources */,
+				05B8D6C910A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m in Sources */,
+				05A7460110A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4032,6 +4061,8 @@
 				05B8D54D10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m in Sources */,
 				05B8D5FD10A3B4910030F0BF /* Tweet+GeneralHelpers.m in Sources */,
 				05B8D5FE10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m in Sources */,
+				05B8D6CA10A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m in Sources */,
+				05A7460210A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4695,8 +4726,9 @@
 				05340B32101A5B0D0077E7C0 /* twitch-v1.1.xcdatamodel */,
 				050F7DE810323394007C6F04 /* twitch-v2.0.xcdatamodel */,
 				05A667F4107E6B090077343D /* twitch-v2.1.xcdatamodel */,
+				05B8D69210A3BA430030F0BF /* twitch-v2.3-1.xcdatamodel */,
 			);
-			currentVersion = 05A667F4107E6B090077343D /* twitch-v2.1.xcdatamodel */;
+			currentVersion = 05B8D69210A3BA430030F0BF /* twitch-v2.3-1.xcdatamodel */;
 			name = twitch.xcdatamodeld;
 			path = "data-model/twitch.xcdatamodeld";
 			sourceTree = "<group>";

@@ -16,7 +16,7 @@
 }
 
 @property (nonatomic, retain) NSDate * created;
-@property (nonatomic, retain) NSString * identifier;
+@property (nonatomic, retain) NSNumber * identifier;
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) NSString * sourceApiRequestType;
 @property (nonatomic, retain) User * sender;

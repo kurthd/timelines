@@ -89,11 +89,11 @@
         return nil;
     }
 
-    NSString * userId = [[userData objectForKey:@"id"] description];
+    NSNumber * userId = [userData objectForKey:@"id"];
     User * tweetAuthor = [User findOrCreateWithId:userId context:context];
     [self populateUser:tweetAuthor fromData:userData];
 
-    NSString * tweetId = [[tweetData objectForKey:@"id"] description];
+    NSNumber * tweetId = [tweetData objectForKey:@"id"];
     Tweet * tweet = nil;
     if (isUserTweet)
         tweet = [UserTweet tweetWithId:tweetId
@@ -142,11 +142,11 @@
         return nil;
     }
 
-    NSString * userId = [[userData objectForKey:@"id"] description];
+    NSNumber * userId = [userData objectForKey:@"id"];
     User * tweetAuthor = [User findOrCreateWithId:userId context:context];
     [self populateUser:tweetAuthor fromData:userData];
 
-    NSString * tweetId = [[tweetData objectForKey:@"id"] description];
+    NSNumber * tweetId = [tweetData objectForKey:@"id"];
     Mention * tweet = [Mention tweetWithId:tweetId context:context];
     if (!tweet)
         tweet = [Mention createInstance:context];
@@ -159,7 +159,7 @@
 
 - (void)populateUser:(User *)user fromData:(NSDictionary *)data
 {
-    user.identifier = [[data safeObjectForKey:@"id"] description];
+    user.identifier = [data safeObjectForKey:@"id"];
     user.username = [data safeObjectForKey:@"screen_name"];
 
     user.name = [data safeObjectForKey:@"name"];
@@ -195,7 +195,7 @@
              fromData:(NSDictionary *)data
               context:(NSManagedObjectContext *)context
 {
-    tweet.identifier = [[data safeObjectForKey:@"id"] description];
+    tweet.identifier = [data safeObjectForKey:@"id"];
     tweet.text = [data safeObjectForKey:@"text"];
     tweet.source = [data safeObjectForKey:@"source"];
 
@@ -215,7 +215,7 @@
     tweet.inReplyToTwitterUsername =
        [data safeObjectForKey:@"in_reply_to_screen_name"];
     tweet.inReplyToTwitterTweetId =
-        [[data safeObjectForKey:@"in_reply_to_status_id"] description];
+        [data safeObjectForKey:@"in_reply_to_status_id"];
     tweet.inReplyToTwitterUserId =
         [[data safeObjectForKey:@"in_reply_to_user_id"] description];
 
@@ -241,7 +241,7 @@
 
 - (void)populateDirectMessage:(DirectMessage *)dm fromData:(NSDictionary *)data
 {
-    dm.identifier = [[data objectForKey:@"id"] description];
+    dm.identifier = [data objectForKey:@"id"];
     dm.text = [data objectForKey:@"text"];
     dm.sourceApiRequestType =
         [[data objectForKey:@"source_api_request_type"] description];

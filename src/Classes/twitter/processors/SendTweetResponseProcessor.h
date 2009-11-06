@@ -9,7 +9,7 @@
 @interface SendTweetResponseProcessor : ResponseProcessor
 {
     NSString * text;
-    NSString * referenceId;
+    NSNumber * referenceId;
     TwitterCredentials * credentials;
     id delegate;
 
@@ -17,12 +17,12 @@
 }
 
 + (id)processorWithTweet:(NSString *)someText
-             referenceId:(NSString *)aReferenceId
+             referenceId:(NSNumber *)aReferenceId
              credentials:(TwitterCredentials *)someCredentials
                  context:(NSManagedObjectContext *)aContext
                 delegate:(id)aDelegate;
 - (id)initWithTweet:(NSString *)someText
-        referenceId:(NSString *)aReferenceId
+        referenceId:(NSNumber *)aReferenceId
         credentials:(TwitterCredentials *)someCredentials
             context:(NSManagedObjectContext *)aContext
            delegate:(id)aDelegate;

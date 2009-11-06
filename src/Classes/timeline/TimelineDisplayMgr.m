@@ -180,8 +180,7 @@
     }
 
     BOOL scrollToTop = [SettingsReader scrollToTop];
-    NSString * scrollId =
-        scrollToTop ? [anUpdateId description] : self.tweetIdToShow;
+    NSNumber * scrollId = scrollToTop ? anUpdateId : self.tweetIdToShow;
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
     [wrapperController setCachedDataAvailable:YES];
     [timelineController setTweets:[timeline allValues] page:pagesShown
@@ -228,7 +227,7 @@
 
 #pragma mark TwitterServiceDelegate implementation
 
-- (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
+- (void)fetchedTweet:(Tweet *)tweet withId:(NSNumber *)tweetId
 {
     NSLog(@"Timeline display mgr: fetched tweet: %@", tweet);
 
@@ -241,7 +240,7 @@
         setUpdatingState:kConnectedAndNotUpdating];
 }
 
-- (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error
+- (void)failedToFetchTweetWithId:(NSNumber *)tweetId error:(NSError *)error
 {
     NSLog(@"Timeline display manager: failed to fetch tweet %@", tweetId);
     NSLog(@"Error: %@", error);
@@ -261,7 +260,7 @@
         [self.lastTweetDetailsController setFavorited:favorite];
 }
 
-- (void)failedToMarkTweet:(NSString *)tweetId asFavorite:(BOOL)favorite
+- (void)failedToMarkTweet:(NSNumber *)tweetId asFavorite:(BOOL)favorite
     error:(NSError *)error
 {
     NSLog(@"Timeline display manager: failed to set favorite status for tweet: "
@@ -276,7 +275,7 @@
         [self.lastTweetDetailsController.tweet.favorited boolValue]];
 }
 
-- (void)failedToDeleteTweetWithId:(NSString *)tweetId error:(NSError *)error
+- (void)failedToDeleteTweetWithId:(NSNumber *)tweetId error:(NSError *)error
 {
     NSLog(@"Timeline display manager: failed to delete tweet");
     NSLog(@"Error: %@", error);
@@ -293,7 +292,8 @@
     [self.tweetDetailsController.tableView setContentOffset:CGPointMake(0, 300)
         animated:NO];
 
-    NSLog(@"Timeline display manager: selected tweet: %@", tweet);
+    NSLog(@"Timeline display manager: selected tweet: %@: %@",
+        tweet.user.username, tweet.text);
     self.selectedTweet = tweet;
 
     BOOL tweetByUser = [tweet.user.username isEqual:credentials.username];
@@ -399,7 +399,7 @@
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 
-- (void)deleteTweet:(NSString *)tweetId
+- (void)deleteTweet:(NSNumber *)tweetId
 {
     NSLog(@"Removing tweet with id %@", tweetId);
     [timeline removeObjectForKey:tweetId];
@@ -462,7 +462,7 @@
     [composeTweetDisplayMgr composeDirectMessageTo:self.currentUsername];
 }
 
-- (void)loadNewTweetWithId:(NSString *)tweetId
+- (void)loadNewTweetWithId:(NSNumber *)tweetId
     username:(NSString *)replyToUsername
 {
     NSLog(@"Timeline display manager: showing tweet details for tweet %@",
@@ -476,7 +476,7 @@
         setUpdatingState:kConnectedAndNotUpdating];
 }
 
-- (void)loadConversationFromTweetId:(NSString *)tweetId
+- (void)loadConversationFromTweetId:(NSNumber *)tweetId
 {
     UINavigationController * navController = [self navigationController];
 
@@ -844,7 +844,7 @@
     self.timelineController.invertedCellUsernames = invertedCellUsernames;
 }
 
-- (NSString *)mostRecentTweetId
+- (NSNumber *)mostRecentTweetId
 {
     return [self.timelineController mostRecentTweetId];
 }

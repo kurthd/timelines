@@ -7,7 +7,7 @@
 
 @interface Tweet (CoreDataAdditions)
 
-+ (id)tweetWithId:(NSString *)anIdentifier
++ (id)tweetWithId:(NSNumber *)anIdentifier
           context:(NSManagedObjectContext *)context;
 
 @end

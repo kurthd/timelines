@@ -37,6 +37,7 @@
 #import "SettingsReader.h"
 #import "UIApplication+ConfigurationAdditions.h"
 #import "NSArray+IterationAdditions.h"
+#import "TwitbitShared.h"
 
 @interface TwitchAppDelegate ()
 
@@ -317,20 +318,20 @@
              afterDelay:0.8];
 }
 
-- (void)userIsReplyingToTweet:(NSString *)origTweetId
+- (void)userIsReplyingToTweet:(NSNumber *)origTweetId
                      fromUser:(NSString *)origUsername
                      withText:(NSString *)text
 {
 }
 
-- (void)userDidReplyToTweet:(NSString *)origTweetId
+- (void)userDidReplyToTweet:(NSNumber *)origTweetId
                    fromUser:(NSString *)origUsername
                   withTweet:(Tweet *)reply
 {
     [timelineDisplayMgr addTweet:reply];
 }
 
-- (void)userFailedToReplyToTweet:(NSString *)origTweetId
+- (void)userFailedToReplyToTweet:(NSNumber *)origTweetId
                         fromUser:(NSString *)origUsername
                         withText:(NSString *)text
 {
@@ -354,7 +355,7 @@
 - (void)presentFailedReplyOnTimer:(NSTimer *)timer
 {
     NSDictionary * userInfo = timer.userInfo;
-    NSString * origTweetId = [userInfo objectForKey:@"origTweetId"];
+    NSNumber * origTweetId = [userInfo objectForKey:@"origTweetId"];
     NSString * origUsername = [userInfo objectForKey:@"origUsername"];
     NSString * text = [userInfo objectForKey:@"text"];
 
@@ -871,7 +872,7 @@
         [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
         [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
     if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:pscOptions error:&error]) {
-        NSLog(@"Failed to created persistent store coordinator: '%@'.", error);
+        NSLog(@"Failed to created persistent store coordinator: '%@'.", [error detailedDescription]);
 
         NSString * message;
         if (error.userInfo) {
@@ -1336,13 +1337,13 @@
     }
     NSLog(@"***************** Persistence check *****************");
 
-    // convert them all to dictionaries with TweetInfo objects as values
+    // convert them all to dictionaries
     NSMutableDictionary * tweets =
         [NSMutableDictionary dictionaryWithCapacity:allTweets.count];
     for (UserTweet * tweet in allTweets)
         [tweets setObject:tweet forKey:tweet.identifier];
 
-    timelineDisplayMgr.tweetIdToShow = [newestTweetId description];
+    timelineDisplayMgr.tweetIdToShow = newestTweetId;
     [timelineDisplayMgr setTweets:tweets];
 }
 
@@ -1407,7 +1408,7 @@
     for (Mention * mention in allMentions)
         [mentions setObject:mention forKey:mention.identifier];
 
-    mentionDisplayMgr.mentionIdToShow = [newestTweetId description];
+    mentionDisplayMgr.mentionIdToShow = newestTweetId;
     [mentionDisplayMgr setTimeline:mentions updateId:newestTweetId];
 }
 

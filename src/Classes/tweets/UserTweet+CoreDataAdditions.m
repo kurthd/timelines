@@ -8,7 +8,7 @@
 
 @implementation UserTweet (CoreDataAdditions)
 
-+ (id)tweetWithId:(NSString *)targetId
++ (id)tweetWithId:(NSNumber *)targetId
       credentials:(TwitterCredentials *)credentials
           context:(NSManagedObjectContext *)context
 {

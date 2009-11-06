@@ -12,7 +12,7 @@
 
 @interface FetchTweetResponseProcessor ()
 
-@property (nonatomic, copy) NSString * tweetId;
+@property (nonatomic, copy) NSNumber * tweetId;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, assign) id delegate;
 
@@ -22,7 +22,7 @@
 
 @synthesize tweetId, context, delegate;
 
-+ (id)processorWithTweetId:(NSString *)aTweetId
++ (id)processorWithTweetId:(NSNumber *)aTweetId
                    context:(NSManagedObjectContext *)aContext
                   delegate:(id)aDelegate
 {
@@ -40,7 +40,7 @@
     [super dealloc];
 }
 
-- (id)initWithTweetId:(NSString *)aTweetId
+- (id)initWithTweetId:(NSNumber *)aTweetId
               context:(NSManagedObjectContext *)aContext
              delegate:(id)aDelegate
 {

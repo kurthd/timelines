@@ -16,11 +16,11 @@
 - (void)setFavorite:(BOOL)favorite;
 - (void)showLocationOnMap:(NSString *)location;
 - (void)showingTweetDetails:(TweetViewController *)tweetController;
-- (void)loadNewTweetWithId:(NSString *)tweetId username:(NSString *)username;
+- (void)loadNewTweetWithId:(NSNumber *)tweetId username:(NSString *)username;
 - (void)reTweetSelected;
 - (void)replyToTweet;
-- (void)loadConversationFromTweetId:(NSString *)tweetId;
-- (void)deleteTweet:(NSString *)tweetId;
+- (void)loadConversationFromTweetId:(NSNumber *)tweetId;
+- (void)deleteTweet:(NSNumber *)tweetId;
 - (void)showLocationOnMap:(NSString *)location;
 
 @end

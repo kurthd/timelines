@@ -7,8 +7,8 @@
 
 @protocol ConversationViewControllerDelegate
 
-- (void)fetchTweetWithId:(NSString *)tweetId;
-- (void)displayTweetWithId:(NSString *)tweetId;
+- (void)fetchTweetWithId:(NSNumber *)tweetId;
+- (void)displayTweetWithId:(NSNumber *)tweetId;
 
 - (BOOL)isCurrentUser:(NSString *)username;
 
@@ -42,7 +42,7 @@
 
 - (void)loadConversationStartingWithTweets:(NSArray *)tweets;
 - (void)addTweetsToConversation:(NSArray *)tweets;
-- (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error;
+- (void)failedToFetchTweetWithId:(NSNumber *)tweetId error:(NSError *)error;
 
 - (IBAction)loadNextBatch:(id)sender;
 
