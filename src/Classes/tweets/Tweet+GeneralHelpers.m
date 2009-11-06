@@ -1,115 +1,30 @@
 //
-//  Copyright 2009 High Order Bit, Inc. All rights reserved.
+//  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import "TweetInfo.h"
-#import "RegexKitLite.h"
-#import "NSString+HtmlEncodingAdditions.h"
-#import "NSObject+TweetHelpers.h"
-#import "TweetLocation.h"
-#import "SettingsReader.h"
+#import "Tweet+GeneralHelpers.h"
+#import "TwitbitShared.h"
+#import "User.h"
 
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 static NSString * hashRegex = @"\\B(#[\\w_]+)";
 
-static BOOL displayWithUsername;
-static BOOL alreadyReadDisplayWithUsernameValue;
-
-@interface TweetInfo ()
-
+@interface Tweet (GeneralHelpersPrivate)
 + (NSString *)bodyWithLinks:(NSString *)body;
 + (NSString *)bodyWithUserLinks:(NSString *)body;
 + (NSString *)bodyWithHashLinks:(NSString *)body;
-+ (BOOL)displayWithUsername;
 
++ (BOOL)displayWithUsername;
 @end
 
-@implementation TweetInfo
 
-@synthesize timestamp, truncated, identifier, text, source, user, recipient,
-    favorited, inReplyToTwitterUsername, inReplyToTwitterTweetId,
-    inReplyToTwitterUserId, location;
+@implementation Tweet (GeneralHelpers)
 
-- (void)dealloc
++ (NSString *)tweetTextAsHtml:(NSString *)text
+                    timestamp:(NSDate *)timestamp
+                       source:(NSString *)source
 {
-    [timestamp release];
-    [truncated release];
-    [identifier release];
-    [text release];
-    [source release];
-    [user release];
-    [recipient release];
-    [favorited release];
-    [inReplyToTwitterUsername release];
-    [inReplyToTwitterTweetId release];
-    [inReplyToTwitterUserId release];
-    [super dealloc];
-}
-
-- (NSComparisonResult)compare:(TweetInfo *)tweetInfo
-{
-    return [[self class] compareTweetId:self.identifier
-                                   toId:tweetInfo.identifier];
-}
-
-- (NSString *)description
-{
-    return [NSString stringWithFormat:@"{%@, %@, %@}", self.user.username,
-        self.text, self.timestamp];
-}
-
-+ (TweetInfo *)createFromTweet:(Tweet *)tweet
-{
-    TweetInfo * tweetInfo =
-        [[[TweetInfo alloc] init] autorelease];
-
-    tweetInfo.timestamp = tweet.timestamp;
-    tweetInfo.truncated = tweet.truncated;
-    tweetInfo.identifier = tweet.identifier;
-    tweetInfo.text = tweet.text;
-    tweetInfo.source = tweet.source;
-    tweetInfo.user = tweet.user;
-    tweetInfo.recipient = nil;
-    tweetInfo.favorited = tweet.favorited;
-    tweetInfo.inReplyToTwitterUsername = tweet.inReplyToTwitterUsername;
-    tweetInfo.inReplyToTwitterTweetId = tweet.inReplyToTwitterTweetId;
-    tweetInfo.inReplyToTwitterUserId = tweet.inReplyToTwitterUserId;
-
-    if (tweet.location) {
-        double latitude = [tweet.location.latitude doubleValue];
-        double longitude = [tweet.location.longitude doubleValue];
-        CLLocation * location =
-            [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-        tweetInfo.location = location;
-        [location release];
-    }
-
-    return tweetInfo;
-}
-
-+ (TweetInfo *)createFromDirectMessage:(DirectMessage *)message
-{
-    TweetInfo * tweetInfo =
-        [[[TweetInfo alloc] init] autorelease];
-
-    tweetInfo.timestamp = message.created;
-    tweetInfo.truncated = NO;
-    tweetInfo.identifier = message.identifier;
-    tweetInfo.text = message.text;
-    tweetInfo.source = nil;
-    tweetInfo.user = message.sender;
-    tweetInfo.recipient = message.recipient;
-    tweetInfo.favorited = nil;
-    tweetInfo.inReplyToTwitterUsername = nil;
-    tweetInfo.inReplyToTwitterTweetId = nil;
-    tweetInfo.inReplyToTwitterUserId = nil;
-
-    return tweetInfo;
-}
-
-- (NSString *)textAsHtml
-{
-    NSString * body = [[self class] bodyWithLinks:self.text];
+        NSString * body = [[self class] bodyWithLinks:text];
     // some tweets have newlines -- convert them to HTML line breaks for
     // display in the HTML tweet view
     body = [body stringByReplacingOccurrencesOfString:@"\n"
@@ -118,22 +33,26 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterShortStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
-    NSString * timestampAsString = [formatter stringFromDate:self.timestamp];
+    NSString * timestampAsString = [formatter stringFromDate:timestamp];
     [formatter release];
 
     NSString * sourceString =
-        self.source ?
+        source ?
         [NSString stringWithFormat:@"from %@",
-        [self.source stringByDecodingHtmlEntities]] :
+        [source stringByDecodingHtmlEntities]] :
         @"&nbsp;";
 
-    NSString * html =
+    NSString * cssFile =
         [SettingsReader displayTheme] == kDisplayThemeDark ?
+        @"dark-theme-tweet-style.css" :
+        @"tweet-style.css";
+
+    NSString * html =
         [NSString stringWithFormat:
         @"<html>"
         "  <head>"
         "   <style media=\"screen\" type=\"text/css\" rel=\"stylesheet\">"
-        "     @import url(dark-theme-tweet-style.css);"
+        "     @import url(%@);"
         "   </style>"
         "  </head>"
         "  <body>"
@@ -147,28 +66,16 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         "    </table>"
         "  </body>"
         "</html>",
-        body, sourceString, timestampAsString] :
-        [NSString stringWithFormat:
-        @"<html>"
-        "  <head>"
-        "   <style media=\"screen\" type=\"text/css\" rel=\"stylesheet\">"
-        "     @import url(tweet-style.css);"
-        "   </style>"
-        "  </head>"
-        "  <body>"
-        "    <p class=\"text\">%@</p>"
-        "    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
-        "      width=\"100%%\" class=\"footer\">"
-        "      <tr>"
-        "        <td align=\"left\" valign=\"top\">%@</td>"
-        "        <td align=\"right\" valign=\"top\">%@</td>"
-        "      </tr>"
-        "    </table>"
-        "  </body>"
-        "</html>",
-        body, sourceString, timestampAsString];
+        cssFile, body, sourceString, timestampAsString];
 
     return html;
+}
+
+- (NSString *)textAsHtml
+{
+    return [[self class] tweetTextAsHtml:self.text
+                               timestamp:self.timestamp
+                                  source:self.source];
 }
 
 - (NSString *)displayName
@@ -181,11 +88,11 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (NSString *)tweetUrl
 {
-    return
-        self.recipient ? nil :
-        [NSString stringWithFormat:@"http://twitter.com/%@/status/%@",
+    return [NSString stringWithFormat:@"http://twitter.com/%@/status/%@",
         self.user.username, self.identifier];
 }
+
+#pragma mark Private implementation
 
 + (NSString *)bodyWithLinks:(NSString *)body
 {
@@ -281,16 +188,15 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 + (BOOL)displayWithUsername
 {
-    if (!alreadyReadDisplayWithUsernameValue) {
+    static NSInteger displayWithUsername = -1;
+
+    if (displayWithUsername == -1) {
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        NSInteger displayNameValAsNumber =
+        displayWithUsername =
             [defaults integerForKey:@"display_name"];
-        displayWithUsername = displayNameValAsNumber;
     }
 
-    alreadyReadDisplayWithUsernameValue = YES;
-
-    return displayWithUsername;
+    return displayWithUsername == 1;
 }
 
 @end

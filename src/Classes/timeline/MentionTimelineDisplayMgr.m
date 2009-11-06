@@ -31,7 +31,7 @@
 @property (nonatomic, copy) NSNumber * lastUpdateId;
 @property (nonatomic, copy) NSMutableDictionary * mentions;
 @property (nonatomic, copy) NSString * activeAcctUsername;
-@property (nonatomic, retain) TweetInfo * selectedTweet;
+@property (nonatomic, retain) Tweet * selectedTweet;
 @property (nonatomic, retain)
     NetworkAwareViewController * lastTweetDetailsWrapperController;
 @property (nonatomic, retain) TweetViewController * lastTweetDetailsController;
@@ -147,11 +147,8 @@
         self.lastUpdateId = [NSNumber numberWithLongLong:updateIdAsLongLong];
     }
 
-    for (Tweet * tweet in newMentions) {
-        TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
-        NSLog(@"Mention tweet info: %@", tweetInfo);
-        [mentions setObject:tweetInfo forKey:tweet.identifier];
-    }
+    for (Tweet * mention in newMentions)
+        [mentions setObject:mention forKey:mention.identifier];
 
     NSInteger newTimelineCount = [[mentions allKeys] count];
 
@@ -218,11 +215,10 @@
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
 {
     NSLog(@"Mention display mgr: fetched tweet: %@", tweet);
-    TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
 
     [self.lastTweetDetailsController hideFavoriteButton:NO];
     self.lastTweetDetailsController.showsExtendedActions = YES;
-    [self.lastTweetDetailsController displayTweet:tweetInfo
+    [self.lastTweetDetailsController displayTweet:tweet
          onNavigationController:nil];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
     [self.lastTweetDetailsWrapperController
@@ -243,8 +239,7 @@
 {
     NSLog(@"Mention display manager: set favorite value for tweet: %@",
         tweet.identifier);
-    TweetInfo * tweetInfo = [mentions objectForKey:tweet.identifier];
-    tweetInfo.favorited = [NSNumber numberWithBool:favorite];
+    tweet.favorited = [NSNumber numberWithBool:favorite];
     if ([self.lastTweetDetailsController.tweet.identifier
         isEqual:tweet.identifier])
         [self.lastTweetDetailsController setFavorited:favorite];
@@ -291,7 +286,7 @@
 
 #pragma mark TimelineViewControllerDelegate implementation
 
-- (void)selectedTweet:(TweetInfo *)tweet
+- (void)selectedTweet:(Tweet *)tweet
 {
     // HACK: forces to scroll to top
     [self.tweetDetailsController.tableView setContentOffset:CGPointMake(0, 300)
@@ -364,7 +359,7 @@
     NSLog(@"Next tweet index: %@", nextIndex);
 
     NSString * nextTweetId = [self.tweetIndexToIdDict objectForKey:nextIndex];
-    TweetInfo * nextTweet = [mentions objectForKey:nextTweetId];
+    Tweet * nextTweet = [mentions objectForKey:nextTweetId];
 
     [timelineController selectTweetId:nextTweetId];
     [self selectedTweet:nextTweet];
@@ -383,7 +378,7 @@
         
     NSString * previousTweetId =
         [self.tweetIndexToIdDict objectForKey:previousIndex];
-    TweetInfo * previousTweet = [mentions objectForKey:previousTweetId];
+    Tweet * previousTweet = [mentions objectForKey:previousTweetId];
 
     [timelineController selectTweetId:previousTweetId];
     [self selectedTweet:previousTweet];
@@ -510,7 +505,7 @@
 
 #pragma mark ConversationDisplayMgrDelegate implementation
 
-- (void)displayTweetFromConversation:(TweetInfo *)tweet
+- (void)displayTweetFromConversation:(Tweet *)tweet
 {
     TweetViewController * controller = [self newTweetDetailsController];
 
@@ -767,10 +762,10 @@
         [[[mentions allValues] sortedArrayUsingSelector:@selector(compare:)]
         arrayByReversingContents];
     for (NSInteger i = 0; i < [sortedTweets count]; i++) {
-        TweetInfo * tweetInfo = [sortedTweets objectAtIndex:i];
+        Tweet * tweet = [sortedTweets objectAtIndex:i];
         [self.tweetIdToIndexDict setObject:[NSNumber numberWithInt:i]
-            forKey:tweetInfo.identifier];
-        [self.tweetIndexToIdDict setObject:tweetInfo.identifier
+            forKey:tweet.identifier];
+        [self.tweetIndexToIdDict setObject:tweet.identifier
             forKey:[NSNumber numberWithInt:i]];
     }
 }

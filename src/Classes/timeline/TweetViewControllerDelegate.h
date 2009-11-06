@@ -5,7 +5,6 @@
 #import <Foundation/Foundation.h>
 #import "User.h"
 #import "RemotePhoto.h"
-#import "TweetInfo.h"
 
 @class TweetViewController;
 

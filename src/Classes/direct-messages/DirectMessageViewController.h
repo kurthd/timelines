@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import "DirectMessageViewControllerDelegate.h"
-#import "TweetInfo.h"
+#import "DirectMessage.h"
 #import "RoundedImage.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
 #import "MarkAsFavoriteCell.h"
@@ -34,24 +34,24 @@
     UITableViewCell * tweetTextTableViewCell;
     UIWebView * tweetContentView;
 
-    TweetInfo * tweet;
+    DirectMessage * directMessage;
 
     UIViewController * realParentViewController;
 
     UITableViewCell * replyCell;
     UITableViewCell * deleteTweetCell;
 
-    BOOL usersTweet;
+    BOOL usersDirectMessage;
 }
 
 @property (nonatomic, assign)
     NSObject<DirectMessageViewControllerDelegate> * delegate;
-@property (nonatomic, retain, readonly) TweetInfo * tweet;
+@property (nonatomic, retain, readonly) DirectMessage * directMessage;
 @property (nonatomic, retain) UIViewController * realParentViewController;
 
-- (void)displayTweet:(TweetInfo *)tweet
+- (void)displayDirectMessage:(DirectMessage *)dm
     onNavigationController:(UINavigationController *)navController;
-- (void)setUsersTweet:(BOOL)usersTweet;
+- (void)setUsersDirectMessage:(BOOL)usersDirectMessage;
 
 #pragma mark Button actions
 

@@ -67,8 +67,7 @@
             [NSPredicate predicateWithFormat:@"identifier == %@", nextId];
         Tweet * tweet = [Tweet findFirst:predicate context:context];
         if (tweet) {
-            TweetInfo * info = [TweetInfo createFromTweet:tweet];
-            [cachedConversation addObject:info];
+            [cachedConversation addObject:tweet];
             nextId = tweet.inReplyToTwitterTweetId;
         } else
             nextId = nil;
@@ -94,9 +93,8 @@
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:@"identifier == %@", tweetId];
     Tweet * tweet = [Tweet findFirst:predicate context:context];
-    TweetInfo * info = [TweetInfo createFromTweet:tweet];
 
-    [self.delegate displayTweetFromConversation:info];
+    [self.delegate displayTweetFromConversation:tweet];
 }
 
 - (BOOL)isCurrentUser:(NSString *)username
@@ -108,9 +106,7 @@
 
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
 {
-    TweetInfo * info = [TweetInfo createFromTweet:tweet];
-    NSArray * tweets = [NSArray arrayWithObject:info];
-
+    NSArray * tweets = [NSArray arrayWithObject:tweet];
     [self.conversationViewController addTweetsToConversation:tweets];
 }
 

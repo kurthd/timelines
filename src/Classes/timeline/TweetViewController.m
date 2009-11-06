@@ -12,6 +12,8 @@
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "PhotoBrowserDisplayMgr.h"
 #import "RotatableTabBarController.h"
+#import "Tweet+GeneralHelpers.h"
+#import "TweetLocation+GeneralHelpers.h"
 #import "SettingsReader.h"
 #import "TwitbitShared.h"
 
@@ -51,7 +53,7 @@ enum TweetActionSheets {
 
 @property (nonatomic, retain) UINavigationController * navigationController;
 
-@property (nonatomic, retain) TweetInfo * tweet;
+@property (nonatomic, retain) Tweet * tweet;
 @property (nonatomic, retain) UIWebView * tweetContentView;
 
 @property (readonly) UITableViewCell * conversationCell;
@@ -339,7 +341,8 @@ enum TweetActionSheets {
         if (transformedPath.row == kConversationRow)
             [delegate loadConversationFromTweetId:tweet.identifier];
         else if (transformedPath.row == kLocationRow) {
-            CLLocationCoordinate2D coord = tweet.location.coordinate;
+            CLLocation * location = [tweet.location asCllocation];
+            CLLocationCoordinate2D coord = location.coordinate;
             NSString * locationAsString =
                 [NSString stringWithFormat:@"%f, %f", coord.latitude,
                 coord.longitude];
@@ -446,7 +449,7 @@ enum TweetActionSheets {
 
 #pragma mark Public interface implementation
 
-- (void)displayTweet:(TweetInfo *)aTweet
+- (void)displayTweet:(Tweet *)aTweet
     onNavigationController:(UINavigationController *)navController
 {
     // sucks but the map span doesn't seem to set properly if we don't recreate
@@ -461,7 +464,7 @@ enum TweetActionSheets {
     [self loadTweetWebView];
 
     if (self.tweet.location)
-        [self.locationCell setLocation:self.tweet.location];
+        [self.locationCell setLocation:[self.tweet.location asCllocation]];
 }
 
 - (void)setFavorited:(BOOL)favorited

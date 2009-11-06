@@ -65,7 +65,7 @@
 - (IBAction)loadMoreTweets:(id)sender;
 - (IBAction)showFullProfileImage:(id)sender;
 
-- (void)addTweet:(TweetInfo *)tweet;
+- (void)addTweet:(Tweet *)tweet;
 - (void)deleteTweet:(NSString *)tweetId;
 - (NSString *)mostRecentTweetId;
 

@@ -138,16 +138,16 @@
         NSArray * sortedTimeline =
             [[aTimeline sortedArrayUsingSelector:@selector(compare:)]
             arrayByReversingContents];
-        TweetInfo * mostRecentTweetInfo = [sortedTimeline objectAtIndex:0];
+        Tweet * mostRecentTweet = [sortedTimeline objectAtIndex:0];
         long long updateIdAsLongLong =
-            [mostRecentTweetInfo.identifier longLongValue];
+            [mostRecentTweet.identifier longLongValue];
         self.updateId = [NSNumber numberWithLongLong:updateIdAsLongLong];
     }
 
     NSInteger oldTimelineCount = [[timeline allKeys] count];
     if (!firstFetchReceived)
         [timeline removeAllObjects];
-    for (TweetInfo * tweet in aTimeline)
+    for (Tweet * tweet in aTimeline)
         [timeline setObject:tweet forKey:tweet.identifier];
 
     NSInteger newTimelineCount = [[timeline allKeys] count];
@@ -172,7 +172,7 @@
     if (setUserToFirstTweeter) {
         timelineController.showWithoutAvatars = YES;
         if ([aTimeline count] > 0) {
-            TweetInfo * firstTweet = [aTimeline objectAtIndex:0];
+            Tweet * firstTweet = [aTimeline objectAtIndex:0];
             [timelineController setUser:firstTweet.user];
             self.user = firstTweet.user;
         } else if (credentials)
@@ -202,10 +202,10 @@
         [[[timeline allValues] sortedArrayUsingSelector:@selector(compare:)]
         arrayByReversingContents];
     for (NSInteger i = 0; i < [sortedTweets count]; i++) {
-        TweetInfo * tweetInfo = [sortedTweets objectAtIndex:i];
+        Tweet * tweet = [sortedTweets objectAtIndex:i];
         [self.tweetIdToIndexDict setObject:[NSNumber numberWithInt:i]
-            forKey:tweetInfo.identifier];
-        [self.tweetIndexToIdDict setObject:tweetInfo.identifier
+            forKey:tweet.identifier];
+        [self.tweetIndexToIdDict setObject:tweet.identifier
             forKey:[NSNumber numberWithInt:i]];
     }
 }
@@ -231,11 +231,10 @@
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
 {
     NSLog(@"Timeline display mgr: fetched tweet: %@", tweet);
-    TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
 
     [self.lastTweetDetailsController hideFavoriteButton:NO];
     self.lastTweetDetailsController.showsExtendedActions = YES;
-    [self.lastTweetDetailsController displayTweet:tweetInfo
+    [self.lastTweetDetailsController displayTweet:tweet
          onNavigationController:nil];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
     [self.lastTweetDetailsWrapperController
@@ -256,8 +255,7 @@
 {
     NSLog(@"Timeline display manager: set favorite value for tweet: %@",
         tweet.identifier);
-    TweetInfo * tweetInfo = [timeline objectForKey:tweet.identifier];
-    tweetInfo.favorited = [NSNumber numberWithBool:favorite];
+    tweet.favorited = [NSNumber numberWithBool:favorite];
     if ([self.lastTweetDetailsController.tweet.identifier
         isEqual:tweet.identifier])
         [self.lastTweetDetailsController setFavorited:favorite];
@@ -289,7 +287,7 @@
 
 #pragma mark TimelineViewControllerDelegate implementation
 
-- (void)selectedTweet:(TweetInfo *)tweet
+- (void)selectedTweet:(Tweet *)tweet
 {
     // HACK: forces to scroll to top
     [self.tweetDetailsController.tableView setContentOffset:CGPointMake(0, 300)
@@ -362,7 +360,7 @@
     NSLog(@"Next tweet index: %@", nextIndex);
 
     NSString * nextTweetId = [self.tweetIndexToIdDict objectForKey:nextIndex];
-    TweetInfo * nextTweet = [timeline objectForKey:nextTweetId];
+    Tweet * nextTweet = [timeline objectForKey:nextTweetId];
 
     [timelineController selectTweetId:nextTweetId];
     [self selectedTweet:nextTweet];
@@ -381,7 +379,7 @@
         
     NSString * previousTweetId =
         [self.tweetIndexToIdDict objectForKey:previousIndex];
-    TweetInfo * previousTweet = [timeline objectForKey:previousTweetId];
+    Tweet * previousTweet = [timeline objectForKey:previousTweetId];
 
     [timelineController selectTweetId:previousTweetId];
     [self selectedTweet:previousTweet];
@@ -517,7 +515,7 @@
 
 #pragma mark ConversationDisplayMgrDelegate implementation
 
-- (void)displayTweetFromConversation:(TweetInfo *)tweet
+- (void)displayTweetFromConversation:(Tweet *)tweet
 {
     TweetViewController * controller = [self newTweetDetailsController];
 
@@ -583,10 +581,9 @@
 - (void)addTweet:(Tweet *)tweet
 {
     NSLog(@"Timeline display manager: adding tweet");
-    TweetInfo * info = [TweetInfo createFromTweet:tweet];
-    [timeline setObject:info forKey:info.identifier];
+    [timeline setObject:tweet forKey:tweet.identifier];
 
-    [timelineController addTweet:info];
+    [timelineController addTweet:tweet];
 }
 
 - (BOOL)cachedDataAvailable

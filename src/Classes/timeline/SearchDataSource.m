@@ -4,7 +4,6 @@
 
 #import "SearchDataSource.h"
 #import "Tweet.h"
-#import "TweetInfo.h"
 
 @implementation SearchDataSource
 
@@ -49,12 +48,7 @@
 - (void)searchResultsReceived:(NSArray *)newSearchResults
     forQuery:(NSString *)query page:(NSNumber *)page
 {
-    NSMutableArray * tweetInfoTimeline = [NSMutableArray array];
-    for (Tweet * tweet in newSearchResults) {
-        TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
-        [tweetInfoTimeline addObject:tweetInfo];
-    }
-    [delegate timeline:tweetInfoTimeline
+    [delegate timeline:newSearchResults
         fetchedSinceUpdateId:[NSNumber numberWithInt:0] page:page];
 }
 

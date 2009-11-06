@@ -7,6 +7,7 @@
 // Foundation class categories and helpers
 //
 
+#import "NSString+HtmlEncodingAdditions.h"
 #import "NSDate+IsToday.h"
 #import "NSDate+StringHelpers.h"
 #import "NSError+GeneralHelpers.h"
@@ -32,3 +33,9 @@
 // Twitbit-specific
 //
 #import "NSObject+TweetHelpers.h"
+
+
+//
+// Vendor libraries
+//
+#import "RegexKitLite.h"

@@ -4,7 +4,7 @@
 
 #import "ConversationViewController.h"
 #import "UIAlertView+InstantiationAdditions.h"
-#import "TweetInfo.h"
+#import "Tweet+GeneralHelpers.h"
 #import "User+UIAdditions.h"
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
@@ -82,7 +82,7 @@
     [conversation addObjectsFromArray:tweets];
 
     if (tweets.count < self.batchSize.integerValue + 1) {
-        TweetInfo * oldestTweet = [conversation lastObject];
+        Tweet * oldestTweet = [conversation lastObject];
         NSString * tweetId = oldestTweet.inReplyToTwitterTweetId;
         if (tweetId) {  // there's still more to load
             [self loadConversationFromTweetId:tweetId];
@@ -227,7 +227,7 @@
             initWithStyle:UITableViewStylePlain reuseIdentifier:CellIdentifier]
             autorelease];
 
-    TweetInfo * tweet = [conversation objectAtIndex:indexPath.row];
+    Tweet * tweet = [conversation objectAtIndex:indexPath.row];
 
     [cell setAuthor:[tweet displayName]];
     [cell setTimestamp:[tweet.timestamp tableViewCellDescription]];
@@ -252,7 +252,7 @@
 - (CGFloat)tableView:(UITableView *)tv
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TweetInfo * tweet = [conversation objectAtIndex:indexPath.row];
+    Tweet * tweet = [conversation objectAtIndex:indexPath.row];
     FastTimelineTableViewCellDisplayType type =
         FastTimelineTableViewCellDisplayTypeNormal;
 
@@ -265,7 +265,7 @@
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TweetInfo * info = [conversation objectAtIndex:indexPath.row];
+    Tweet * info = [conversation objectAtIndex:indexPath.row];
     [self.delegate displayTweetWithId:info.identifier];
 }
 
@@ -273,7 +273,7 @@
 
 - (IBAction)loadNextBatch:(id)sender
 {
-    TweetInfo * tweet = [conversation lastObject];
+    Tweet * tweet = [conversation lastObject];
     if (tweet.inReplyToTwitterTweetId) {
         [self loadConversationFromTweetId:tweet.inReplyToTwitterTweetId];
         [self configureFooterForCurrentState];

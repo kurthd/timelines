@@ -9,7 +9,7 @@
 #import "TimelineDataSourceDelegate.h"
 #import "TweetViewControllerDelegate.h"
 #import "TwitterCredentials.h"
-#import "TweetInfo.h"
+#import "Tweet.h"
 #import "UserInfoViewController.h"
 #import "UserInfoViewControllerDelegate.h"
 #import "CredentialsActivatedPublisher.h"
@@ -44,7 +44,7 @@
     NSObject<TimelineDataSource> * timelineSource;
     TwitterService * service;
 
-    TweetInfo * selectedTweet;
+    Tweet * selectedTweet;
     NSString * currentUsername;
     User * user;
     NSMutableDictionary * timeline;
@@ -91,7 +91,7 @@
 @property (nonatomic, retain) TweetViewController * lastTweetDetailsController;
 @property (readonly) TweetViewController * tweetDetailsController;
 
-@property (nonatomic, retain) TweetInfo * selectedTweet;
+@property (nonatomic, retain) Tweet * selectedTweet;
 @property (nonatomic, retain) NSString * currentUsername;
 @property (nonatomic, retain) User * user;
 @property (nonatomic, copy) NSNumber * updateId;

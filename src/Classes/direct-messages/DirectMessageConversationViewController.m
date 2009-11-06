@@ -3,7 +3,6 @@
 //
 
 #import "DirectMessageConversationViewController.h"
-#import "TweetInfo.h"
 #import "DirectMessage.h"
 #import "AsynchronousNetworkFetcher.h"
 #import "User+UIAdditions.h"

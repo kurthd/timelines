@@ -10,7 +10,7 @@
 #import "TimelineViewControllerDelegate.h"
 #import "TweetViewController.h"
 #import "DisplayMgrHelper.h"
-#import "TweetInfo.h"
+#import "Tweet.h"
 #import "TwitterCredentials.h"
 #import "NetworkAwareViewControllerDelegate.h"
 
@@ -39,7 +39,7 @@
     NSString * activeAcctUsername;
     NSString * mentionIdToShow;
     NSInteger numNewMentions;
-    TweetInfo * selectedTweet;
+    Tweet * selectedTweet;
     TwitterCredentials * credentials;
 
     BOOL refreshingMessages;

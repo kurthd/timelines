@@ -3,10 +3,8 @@
 //
 
 #import "TimelineViewController.h"
-#import "TweetInfo.h"
 #import "DirectMessage.h"
 #import "AsynchronousNetworkFetcher.h"
-#import "TweetInfo+UIAdditions.h"
 #import "User+UIAdditions.h"
 #import "PhotoBrowserDisplayMgr.h"
 #import "RegexKitLite.h"
@@ -32,7 +30,7 @@
 - (NSInteger)sortedIndexForTweetId:(NSString *)tweetId;
 
 - (void)configureCell:(FastTimelineTableViewCell *)cell
-    forTweet:(TweetInfo *)tweet;
+    forTweet:(Tweet *)tweet;
 
 + (UIImage *)defaultAvatar;
 + (BOOL)displayWithUsername;
@@ -177,7 +175,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
             initWithStyle:UITableViewCellStyleDefault
             reuseIdentifier:reuseIdentifier] autorelease];
 
-    TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
+    Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
     [self configureCell:cell forTweet:tweet];
 
     return cell;
@@ -186,7 +184,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
+    Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
     [delegate selectedTweet:tweet];
 }
 
@@ -195,7 +193,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (CGFloat)tableView:(UITableView *)aTableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
+    Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
     NSString * tweetText = tweet.text;
     FastTimelineTableViewCellDisplayType displayType =
         showWithoutAvatars ?
@@ -247,7 +245,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     loadMoreButton.enabled = NO;
 }
 
-- (void)addTweet:(TweetInfo *)tweet
+- (void)addTweet:(Tweet *)tweet
 {
     NSMutableArray * newTweets = [tweets mutableCopy];
     self.sortedTweetCache = nil;
@@ -357,8 +355,8 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     if (aVisibleTweetId) {
         NSLog(@"Scrolling to visible tweet id %@", aVisibleTweetId);
         NSUInteger visibleRow = 0;
-        for (TweetInfo * tweetInfo in self.sortedTweets) {
-            if ([aVisibleTweetId isEqual:tweetInfo.identifier])
+        for (Tweet * tweet in self.sortedTweets) {
+            if ([aVisibleTweetId isEqual:tweet.identifier])
                 break;
             visibleRow++;
         }
@@ -491,8 +489,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 {
     NSString * mostRecentId;
     if ([[self sortedTweetCache] count] > 0) {
-        TweetInfo * mostRecentTweet =
-            (TweetInfo *)[[self sortedTweetCache] objectAtIndex:0];
+        Tweet * mostRecentTweet = [[self sortedTweetCache] objectAtIndex:0];
         mostRecentId = mostRecentTweet.identifier;
     } else
         mostRecentId = nil;
@@ -527,7 +524,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 {
     NSInteger index = -1;
     for (int i = 0; i < [tweets count]; i++) {
-        TweetInfo * tweet = [tweets objectAtIndex:i];
+        Tweet * tweet = [tweets objectAtIndex:i];
         if ([tweet.identifier isEqual:tweetId]) {
             index = i;
             break;
@@ -541,7 +538,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 {
     NSInteger index = -1;
     for (int i = 0; i < [self.sortedTweets count]; i++) {
-        TweetInfo * tweet = [self.sortedTweets objectAtIndex:i];
+        Tweet * tweet = [self.sortedTweets objectAtIndex:i];
         if ([tweet.identifier isEqual:tweetId]) {
             index = i;
             break;
@@ -552,7 +549,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 }
 
 - (void)configureCell:(FastTimelineTableViewCell *)cell
-    forTweet:(TweetInfo *)tweet
+    forTweet:(Tweet *)tweet
 {
     [cell setLandscape:[[RotatableTabBarController instance] landscape]];
 
@@ -575,7 +572,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
     BOOL newerThanVisibleTweetId =
         self.visibleTweetId &&
-        [TweetInfo
+        [Tweet
         compareTweetId:tweet.identifier toId:self.visibleTweetId] !=
         NSOrderedDescending;
     BOOL darkenForOld =

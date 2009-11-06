@@ -14,6 +14,7 @@
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
 #import "UIColor+TwitchColors.h"
+#import "DirectMessage+GeneralHelpers.h"
 
 static NSString * usernameRegex = @"x-twitbit://user\\?screen_name=@([\\w_]+)";
 static NSString * hashRegex = @"x-twitbit://search\\?query=(.+)";
@@ -47,13 +48,13 @@ enum TweetActionSheets {
 
 @property (nonatomic, retain) UINavigationController * navigationController;
 
-@property (nonatomic, retain) TweetInfo * tweet;
+@property (nonatomic, retain) DirectMessage * directMessage;
 @property (nonatomic, retain) UIWebView * tweetContentView;
 
 @property (readonly) UITableViewCell * replyCell;
 @property (readonly) UITableViewCell * deleteTweetCell;
 
-- (void)displayTweet;
+- (void)displayDirectMessage;
 - (void)loadTweetWebView;
 
 - (void)sendReply;
@@ -71,7 +72,7 @@ enum TweetActionSheets {
 
 @implementation DirectMessageViewController
 
-@synthesize delegate, navigationController, tweetContentView, tweet;
+@synthesize delegate, navigationController, tweetContentView, directMessage;
 @synthesize realParentViewController;
 
 - (void)dealloc
@@ -98,7 +99,7 @@ enum TweetActionSheets {
     [tweetTextTableViewCell release];
     self.tweetContentView = nil;
 
-    self.tweet = nil;
+    self.directMessage = nil;
 
     [super dealloc];
 }
@@ -197,7 +198,7 @@ enum TweetActionSheets {
             break;
         case kTweetActionsSection:
             nrows = NUM_TWEET_ACTION_ROWS;
-            if (usersTweet)
+            if (usersDirectMessage)
                 nrows--;
             break;
     }
@@ -279,7 +280,7 @@ enum TweetActionSheets {
         self.parentViewController != navigationController)
         [navigationController pushViewController:self animated:YES];
 
-    [self displayTweet];
+    [self displayDirectMessage];
 }
 
 - (BOOL)webView:(UIWebView *)webView
@@ -330,18 +331,18 @@ enum TweetActionSheets {
 
 #pragma mark Public interface implementation
 
-- (void)displayTweet:(TweetInfo *)aTweet
+- (void)displayDirectMessage:(DirectMessage *)dm
     onNavigationController:(UINavigationController *)navController
 {
-    self.tweet = aTweet;
+    self.directMessage = dm;
     self.navigationController = navController;
 
     [self loadTweetWebView];
 }
 
-- (void)setUsersTweet:(BOOL)usersTweetVal
+- (void)setUsersDirectMessage:(BOOL)usersDirectMessageVal
 {
-    usersTweet = usersTweetVal;
+    usersDirectMessage = usersDirectMessageVal;
 }
 
 #pragma mark UIActionSheetDelegate implementation
@@ -351,7 +352,7 @@ enum TweetActionSheets {
 {
     if (buttonIndex == 0) {
         [self.navigationController popViewControllerAnimated:YES];
-        [delegate deleteTweet:tweet.identifier];
+        [delegate deleteTweet:directMessage.identifier];
     }
 
     [sheet autorelease];
@@ -387,8 +388,8 @@ enum TweetActionSheets {
     NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
     if (NSEqualRanges([urlAsString rangeOfString:@"_normal."], notFoundRange) &&
         avatar &&
-        ([tweet.user.avatar.thumbnailImageUrl isEqual:urlAsString] ||
-        [tweet.user.avatar.fullImageUrl isEqual:urlAsString]))
+        ([directMessage.sender.avatar.thumbnailImageUrl isEqual:urlAsString] ||
+        [directMessage.sender.avatar.fullImageUrl isEqual:urlAsString]))
         [avatarImage setImage:avatar];
 }
 
@@ -400,12 +401,12 @@ enum TweetActionSheets {
 
 - (IBAction)showUserTweets:(id)sender
 {
-    [delegate showUserInfoForUser:tweet.user];
+    [delegate showUserInfoForUser:directMessage.sender];
 }
 
 - (IBAction)showFullProfileImage:(id)sender
 {
-    User * selectedUser = tweet.user;
+    User * selectedUser = directMessage.sender;
 
     NSString * url = selectedUser.avatar.fullImageUrl;
     UIImage * remoteAvatar =
@@ -427,16 +428,16 @@ enum TweetActionSheets {
 
         static NSString * subjectRegex = @"\\S+\\s\\S+\\s\\S+\\s\\S+\\s\\S+";
         NSString * subject =
-            [self.tweet.text stringByMatching:subjectRegex];
+            [self.directMessage.text stringByMatching:subjectRegex];
         if (subject && ![subject isEqual:@""])
             subject = [NSString stringWithFormat:@"%@...", subject];
         else
-            subject = self.tweet.text;
+            subject = self.directMessage.text;
         [picker setSubject:subject];
 
         NSString * body =
-            [NSString stringWithFormat:@"\"%@\"\n- %@", self.tweet.text,
-            self.tweet.user.username];
+            [NSString stringWithFormat:@"\"%@\"\n- %@", self.directMessage.text,
+            self.directMessage.sender.username];
         [picker setMessageBody:body isHTML:NO];
 
         [self.realParentViewController presentModalViewController:picker
@@ -457,7 +458,7 @@ enum TweetActionSheets {
 
 - (void)sendReply
 {
-    [delegate sendDirectMessageToUser:tweet.user.username];
+    [delegate sendDirectMessageToUser:directMessage.sender.username];
 }
 
 #pragma mark Private implementation
@@ -508,31 +509,31 @@ enum TweetActionSheets {
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
     [window addSubview:tweetContentView];
 
-    NSString * html = [self.tweet textAsHtml];
+    NSString * html = [self.directMessage textAsHtml];
     [tweetContentView loadHTMLStringRelativeToMainBundle:html];
 }
 
-- (void)displayTweet
+- (void)displayDirectMessage
 {
-    if (tweet.user.name.length > 0) {
+    if (directMessage.sender.name.length > 0) {
         usernameLabel.text =
-            [NSString stringWithFormat:@"@%@", tweet.user.username];
-        fullNameLabel.text = tweet.user.name;
+            [NSString stringWithFormat:@"@%@", directMessage.sender.username];
+        fullNameLabel.text = directMessage.sender.name;
     } else {
         usernameLabel.text = @"";
-        fullNameLabel.text = tweet.user.username;
+        fullNameLabel.text = directMessage.sender.username;
     }
 
-    UIImage * avatar = [tweet.user fullAvatar];
+    UIImage * avatar = [directMessage.sender fullAvatar];
     if (!avatar)
-        avatar = [tweet.user thumbnailAvatar];
+        avatar = [directMessage.sender thumbnailAvatar];
     if (!avatar)
         avatar = [[self class] defaultAvatar];
 
     [avatarImage setImage:avatar];
 
-    [self fetchRemoteImage:tweet.user.avatar.fullImageUrl];
-    [self fetchRemoteImage:tweet.user.avatar.thumbnailImageUrl];
+    [self fetchRemoteImage:directMessage.sender.avatar.fullImageUrl];
+    [self fetchRemoteImage:directMessage.sender.avatar.thumbnailImageUrl];
 
     [self.tableView reloadData];
     self.tableView.contentInset = UIEdgeInsetsMake(-300, 0, 0, 0);
@@ -575,7 +576,7 @@ enum TweetActionSheets {
 {
     NSInteger row = indexPath.row;
     if (indexPath.section == kTweetActionsSection &&
-        indexPath.row == kReplyRow && usersTweet)
+        indexPath.row == kReplyRow && usersDirectMessage)
         row = kDeleteRow;
 
     return [NSIndexPath indexPathForRow:row inSection:indexPath.section];

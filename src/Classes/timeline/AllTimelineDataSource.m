@@ -4,7 +4,6 @@
 
 #import "AllTimelineDataSource.h"
 #import "Tweet.h"
-#import "TweetInfo.h"
 #import "SettingsReader.h"
 
 @implementation AllTimelineDataSource
@@ -46,13 +45,7 @@
     page:(NSNumber *)page count:(NSNumber *)count
 {
     NSLog(@"'All' data source: received timeline of size %d", [timeline count]);
-    NSMutableArray * tweetInfoTimeline = [NSMutableArray array];
-    for (Tweet * tweet in timeline) {
-        TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
-        [tweetInfoTimeline addObject:tweetInfo];
-    }
-    [delegate timeline:tweetInfoTimeline fetchedSinceUpdateId:updateId
-        page:page];
+    [delegate timeline:timeline fetchedSinceUpdateId:updateId page:page];
 }
 
 - (void)failedToFetchTimelineSinceUpdateId:(NSNumber *)updateId
