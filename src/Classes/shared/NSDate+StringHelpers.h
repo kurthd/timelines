@@ -13,3 +13,9 @@
 + (NSDate *)dateFromString:(NSString *)string format:(NSString *)formatString;
 
 @end
+
+@interface NSDate (TableViewCellHelpers)
+
+- (NSString *)tableViewCellDescription;
+
+@end

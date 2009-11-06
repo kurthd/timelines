@@ -7,6 +7,7 @@
 #import "User+UIAdditions.h"
 #import "NSString+HtmlEncodingAdditions.h"
 
+/*
 @interface TweetInfo (Private)
 
 - (TimelineTableViewCell *)createCell;
@@ -73,3 +74,4 @@ static NSMutableDictionary * cells;
 }
 
 @end
+ */

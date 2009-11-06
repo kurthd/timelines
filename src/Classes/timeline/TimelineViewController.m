@@ -7,7 +7,6 @@
 #import "TweetInfo.h"
 #import "DirectMessage.h"
 #import "AsynchronousNetworkFetcher.h"
-#import "UIColor+TwitchColors.h"
 #import "TweetInfo+UIAdditions.h"
 #import "User+UIAdditions.h"
 #import "PhotoBrowserDisplayMgr.h"
@@ -16,6 +15,8 @@
 #import "NSArray+IterationAdditions.h"
 #import "SettingsReader.h"
 #import "TimelineTableViewCellView.h"
+#import "FastTimelineTableViewCell.h"
+#import "TwitbitShared.h"
 
 @interface TimelineViewController ()
 
@@ -31,6 +32,9 @@
 
 - (NSInteger)indexForTweetId:(NSString *)tweetId;
 - (NSInteger)sortedIndexForTweetId:(NSString *)tweetId;
+
+- (void)configureCell:(FastTimelineTableViewCell *)cell
+    forTweet:(TweetInfo *)tweet;
 
 + (UIImage *)defaultAvatar;
 + (BOOL)displayWithUsername;
@@ -110,8 +114,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
         headerTopLine.backgroundColor = [UIColor blackColor];
         headerBottomLine.backgroundColor = [UIColor blackColor];
-        headerViewPadding.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        headerViewPadding.backgroundColor = [UIColor defaultDarkThemeCellColor];
 
         fullNameLabel.textColor = [UIColor whiteColor];
         fullNameLabel.shadowColor = [UIColor blackColor];
@@ -164,42 +167,20 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     return [[self sortedTweets] count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
+- (UITableViewCell *)tableView:(UITableView *)tv
     cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    static NSString * reuseIdentifier = @"FastTimelineTableViewCell";
+    FastTimelineTableViewCell * cell = (FastTimelineTableViewCell *)
+        [tv dequeueReusableCellWithIdentifier:reuseIdentifier];
+    if (!cell)
+        cell =
+            [[[FastTimelineTableViewCell alloc]
+            initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:reuseIdentifier] autorelease];
+
     TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
-
-    TimelineTableViewCell * cell = [tweet cell];
-
-    UIImage * defaultAvatar = [[self class] defaultAvatar];
-    if (![cell avatarImage] || [cell avatarImage] == defaultAvatar)
-        [cell setAvatarImage:[self getThumbnailAvatarForUser:tweet.user]];
-
-    TimelineTableViewCellType displayType;
-    if (showWithoutAvatars)
-        displayType = kTimelineTableViewCellTypeNoAvatar;
-    else if ([invertedCellUsernames containsObject:tweet.user.username])
-        displayType = kTimelineTableViewCellTypeInverted;
-    else
-        displayType = kTimelineTableViewCellTypeNormal;
-
-    [cell setDisplayType:displayType];
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
-    [cell setLandscape:landscape];
-    
-    BOOL newerThanVisibleTweetId =
-        self.visibleTweetId &&
-        [tweet.identifier compare:self.visibleTweetId] != NSOrderedDescending;
-    BOOL darkenForOld =
-        [[self class] highlightNewTweets] && newerThanVisibleTweetId;
-    [cell setDarkenForOld:darkenForOld];
-    
-    BOOL highlightForMention =
-        self.mentionRegex ?
-        [tweet.text isMatchedByRegex:self.mentionRegex] : NO;
-    [cell setHighlightForMention:highlightForMention];
-    
-    [cell setFavorite:[tweet.favorited boolValue]];
+    [self configureCell:cell forTweet:tweet];
 
     return cell;
 }
@@ -218,15 +199,14 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 {
     TweetInfo * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
     NSString * tweetText = tweet.text;
-    TimelineTableViewCellType displayType =
+    FastTimelineTableViewCellDisplayType displayType =
         showWithoutAvatars ?
-        kTimelineTableViewCellTypeNoAvatar :
-        kTimelineTableViewCellTypeNormal;
-
+        FastTimelineTableViewCellDisplayTypeNoAvatar :
+        FastTimelineTableViewCellDisplayTypeNormal;
     BOOL landscape = [[RotatableTabBarController instance] landscape];
 
-    return [TimelineTableViewCell heightForContent:tweetText
-        displayType:displayType landscape:landscape];
+    return [FastTimelineTableViewCell
+        heightForContent:tweetText displayType:displayType landscape:landscape];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -241,9 +221,9 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         
         // avoid calling reloadData by setting the avatars of the visible cells
         NSArray * visibleCells = self.tableView.visibleCells;
-        for (TimelineTableViewCell * cell in visibleCells)
-            if ([cell.avatarImageUrl isEqualToString:urlAsString])
-                [cell setAvatarImage:avatarImage];
+        for (FastTimelineTableViewCell * cell in visibleCells)
+            if ([cell.userData isEqual:urlAsString])
+                [cell setAvatar:avatarImage];
         
         NSString * largeProfileUrl = user.avatar.fullImageUrl;
         if ([urlAsString isEqual:largeProfileUrl] && avatarImage)
@@ -366,10 +346,6 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         page > 1 ?
         [NSString stringWithFormat:showingMultPagesFormatString, page] :
         showingSinglePageFormatString;
-
-    // ensure cells created for all tweets
-    for (TweetInfo * tweet in someTweets)
-        [tweet cell];
 
     [self.tableView reloadData];
 
@@ -575,6 +551,43 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     }
 
     return index;
+}
+
+- (void)configureCell:(FastTimelineTableViewCell *)cell
+    forTweet:(TweetInfo *)tweet
+{
+    [cell setLandscape:[[RotatableTabBarController instance] landscape]];
+
+    FastTimelineTableViewCellDisplayType displayType;
+    if (showWithoutAvatars)
+        displayType = FastTimelineTableViewCellDisplayTypeNoAvatar;
+    else if ([invertedCellUsernames containsObject:tweet.user.username])
+        displayType = FastTimelineTableViewCellDisplayTypeInverted;
+    else
+        displayType = FastTimelineTableViewCellDisplayTypeNormal;
+    [cell setDisplayType:displayType];
+
+    [cell setTweetText:tweet.text];
+    [cell setAuthor:tweet.user.username];
+    [cell setTimestamp:[tweet.timestamp tableViewCellDescription]];
+    [cell setFavorite:[tweet.favorited boolValue]];
+
+    [cell setAvatar:[self getThumbnailAvatarForUser:tweet.user]];
+    [cell setUserData:tweet.user.avatar.thumbnailImageUrl];
+
+    BOOL newerThanVisibleTweetId =
+        self.visibleTweetId &&
+        [TweetInfo
+        compareTweetId:tweet.identifier toId:self.visibleTweetId] !=
+        NSOrderedDescending;
+    BOOL darkenForOld =
+        [[self class] highlightNewTweets] && newerThanVisibleTweetId;
+    [cell displayAsOld:darkenForOld];
+
+    BOOL highlightForMention =
+    self.mentionRegex ?
+        [tweet.text isMatchedByRegex:self.mentionRegex] : NO;
+    [cell displayAsMention:highlightForMention];
 }
 
 + (BOOL)displayWithUsername

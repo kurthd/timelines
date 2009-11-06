@@ -6,8 +6,10 @@
 #import "TweetInfo.h"
 #import "TimelineTableViewCell.h"
 
+/*
 @interface TweetInfo (UIAdditions)
 
 - (TimelineTableViewCell *)cell;
 
 @end
+*/

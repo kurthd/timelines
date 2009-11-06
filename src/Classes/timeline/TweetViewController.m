@@ -13,8 +13,8 @@
 #import "PhotoBrowserDisplayMgr.h"
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
-#import "UIColor+TwitchColors.h"
 #import "TimelineTableViewCellView.h"
+#import "TwitbitShared.h"
 
 static NSString * usernameRegex = @"x-twitbit://user\\?screen_name=@([\\w_]+)";
 static NSString * hashRegex = @"x-twitbit://search\\?query=(.+)";
@@ -140,8 +140,7 @@ enum TweetActionSheets {
 
         headerTopLine.backgroundColor = [UIColor blackColor];
         headerBottomLine.backgroundColor = [UIColor twitchGrayColor];
-        headerViewPadding.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        headerViewPadding.backgroundColor = [UIColor defaultDarkThemeCellColor];
 
         chatArrowView.image = [UIImage imageNamed:@"DarkThemeChatArrow.png"];
 
@@ -169,7 +168,7 @@ enum TweetActionSheets {
         usernameLabel.shadowColor = [UIColor blackColor];
         
         tweetTextTableViewCell.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+            [UIColor defaultDarkThemeCellColor];
     }
 
     self.tableView.tableHeaderView = headerView;
@@ -634,7 +633,7 @@ enum TweetActionSheets {
 
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
             conversationCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+                [UIColor defaultDarkThemeCellColor];
             conversationCell.textLabel.textColor = [UIColor whiteColor];
         }
     }
@@ -656,7 +655,7 @@ enum TweetActionSheets {
             [UIImage imageNamed:@"PublicReplyButtonIconHighlighted.png"];
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
             publicReplyCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+                [UIColor defaultDarkThemeCellColor];
             publicReplyCell.textLabel.textColor = [UIColor whiteColor];
         }
     }
@@ -677,8 +676,7 @@ enum TweetActionSheets {
         retweetCell.imageView.highlightedImage =
             [UIImage imageNamed:@"RetweetButtonIconHighlighted.png"];
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            retweetCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            retweetCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
             retweetCell.textLabel.textColor = [UIColor whiteColor];
         }
     }
@@ -761,8 +759,7 @@ enum TweetActionSheets {
 
          favoriteCell = [nib objectAtIndex:0];
          if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-             favoriteCell.backgroundColor =
-                 [TimelineTableViewCellView defaultDarkThemeCellColor];
+             favoriteCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
              favoriteCell.textLabel.textColor = [UIColor whiteColor];
          }
     }
@@ -782,7 +779,7 @@ enum TweetActionSheets {
             [UIImage imageNamed:@"DeleteTweetButtonIcon.png"];
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
             deleteTweetCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+                [UIColor defaultDarkThemeCellColor];
             deleteTweetCell.textLabel.textColor = [UIColor whiteColor];
         }
     }
@@ -837,8 +834,7 @@ enum TweetActionSheets {
             [[TweetLocationCell alloc] initWithStyle:UITableViewCellStyleDefault
             reuseIdentifier:@"TweetLocationCell"];
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            locationCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            locationCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
             [locationCell setLabelTextColor:[UIColor whiteColor]];
         } else
             [locationCell setLabelTextColor:[UIColor blackColor]];

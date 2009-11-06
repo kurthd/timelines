@@ -3,9 +3,9 @@
 //
 
 #import "DirectMessageInboxCellView.h"
-#import "UIColor+TwitchColors.h"
 #import "SettingsReader.h"
 #import "TimelineTableViewCellView.h"
+#import "TwitbitShared.h"
 
 @interface DirectMessageInboxCellView ()
 
@@ -31,7 +31,7 @@ static UIImage * dotImage;
 		self.opaque = YES;
 		self.backgroundColor =
 		    [SettingsReader displayTheme] == kDisplayThemeDark ?
-		    [TimelineTableViewCellView defaultDarkThemeCellColor] :
+		    [UIColor defaultDarkThemeCellColor] :
 		    [UIColor whiteColor];
 	}
 
@@ -104,7 +104,7 @@ static UIImage * dotImage;
 		    [UIColor twitchGrayColor];
 		self.backgroundColor =
 		    [SettingsReader displayTheme] == kDisplayThemeDark ?
-		    [TimelineTableViewCellView defaultDarkThemeCellColor] :
+		    [UIColor defaultDarkThemeCellColor] :
 		    [UIColor whiteColor];
 	}
 

@@ -44,8 +44,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         self.tableView.separatorColor = [UIColor twitchGrayColor];
-        self.view.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        self.view.backgroundColor = [UIColor defaultDarkThemeCellColor];
     }
 }
 

@@ -132,8 +132,7 @@ enum TweetActionSheets {
 
         headerTopLine.backgroundColor = [UIColor blackColor];
         headerBottomLine.backgroundColor = [UIColor twitchGrayColor];
-        headerViewPadding.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        headerViewPadding.backgroundColor = [UIColor defaultDarkThemeCellColor];
 
         chatArrowView.image = [UIImage imageNamed:@"DarkThemeChatArrow.png"];
         
@@ -157,7 +156,7 @@ enum TweetActionSheets {
         usernameLabel.shadowColor = [UIColor blackColor];
 
         tweetTextTableViewCell.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+            [UIColor defaultDarkThemeCellColor];
     }
 }
 
@@ -478,8 +477,7 @@ enum TweetActionSheets {
             [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
             
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            replyCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            replyCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
             replyCell.textLabel.textColor = [UIColor whiteColor];
         }
     }
@@ -566,7 +564,7 @@ enum TweetActionSheets {
 
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
             deleteTweetCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+                [UIColor defaultDarkThemeCellColor];
             deleteTweetCell.textLabel.textColor = [UIColor whiteColor];
         }
     }

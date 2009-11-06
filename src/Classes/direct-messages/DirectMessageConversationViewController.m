@@ -3,16 +3,15 @@
 //
 
 #import "DirectMessageConversationViewController.h"
-#import "TimelineTableViewCell.h"
 #import "TweetInfo.h"
 #import "DirectMessage.h"
 #import "AsynchronousNetworkFetcher.h"
-#import "UIColor+TwitchColors.h"
-#import "DirectMessage+UIAdditions.h"
 #import "User+UIAdditions.h"
 #import "RotatableTabBarController.h"
 #import "NSArray+IterationAdditions.h"
 #import "SettingsReader.h"
+#import "FastTimelineTableViewCell.h"
+#import "TwitbitShared.h"
 
 @interface DirectMessageConversationViewController ()
 
@@ -22,6 +21,9 @@
 
 - (NSInteger)indexForTweetId:(NSString *)tweetId;
 - (NSInteger)sortedIndexForTweetId:(NSString *)tweetId;
+
+- (void)configureCell:(FastTimelineTableViewCell *)cell
+    forDirectMessage:(DirectMessage *)dm;
 
 + (UIImage *)defaultAvatar;
 
@@ -91,27 +93,22 @@ static UIImage * defaultAvatar;
     return [[self sortedTweets] count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
+- (UITableViewCell *)tableView:(UITableView *)tv
     cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    static NSString * CellIdentifier =
+        @"DirectMessageConversationTableViewCell";
+
+    FastTimelineTableViewCell * cell = (FastTimelineTableViewCell *)
+        [tv dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell)
+        cell =
+            [[[FastTimelineTableViewCell alloc]
+            initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:CellIdentifier] autorelease];
+
     DirectMessage * message = [[self sortedTweets] objectAtIndex:indexPath.row];
-
-    TimelineTableViewCell * cell = [message cell];
-
-    UIImage * defaultAvatar = [[self class] defaultAvatar];
-    if (![cell avatarImage] || [cell avatarImage] == defaultAvatar)
-        [cell setAvatarImage:[self getThumbnailAvatarForUser:message.sender]];
-
-    [cell setName:@""];
-    TimelineTableViewCellType displayType;
-    if ([segregatedSenderUsername isEqual:message.sender.username])
-        displayType = kTimelineTableViewCellTypeNormalNoName;
-    else
-        displayType = kTimelineTableViewCellTypeInverted;
-
-    [cell setDisplayType:displayType];
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
-    [cell setLandscape:landscape];
+    [self configureCell:cell forDirectMessage:message];
 
     return cell;
 }
@@ -134,8 +131,10 @@ static UIImage * defaultAvatar;
 
     BOOL landscape = [[RotatableTabBarController instance] landscape];
 
-    return [TimelineTableViewCell heightForContent:tweetText
-        displayType:kTimelineTableViewCellTypeNormal landscape:landscape];
+    return [FastTimelineTableViewCell
+        heightForContent:tweetText
+        displayType:FastTimelineTableViewCellDisplayTypeNormal
+        landscape:landscape];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -149,11 +148,9 @@ static UIImage * defaultAvatar;
         [User setAvatar:avatarImage forUrl:urlAsString];
 
         NSArray * visibleCells = self.tableView.visibleCells;
-        for (TimelineTableViewCell * cell in visibleCells) {
-            NSLog(@"cell.avatarImageUrl: %@", cell.avatarImageUrl);
-            NSLog(@"urlAsString: %@", urlAsString);
-            if ([cell.avatarImageUrl isEqualToString:urlAsString])
-                [cell setAvatarImage:avatarImage];
+        for (FastTimelineTableViewCell * cell in visibleCells) {
+            if ([cell.userData isEqual:urlAsString])
+                [cell setAvatar:avatarImage];
         }
     }
 }
@@ -215,10 +212,6 @@ static UIImage * defaultAvatar;
     NSArray * tempTweets = [messages copy];
     [tweets release];
     tweets = tempTweets;
-
-    // ensure cells created for all tweets
-    for (DirectMessage * message in messages)
-        [message cell];
 
     [self.tableView reloadData];
 }
@@ -298,6 +291,24 @@ static UIImage * defaultAvatar;
     }
 
     return index;
+}
+
+- (void)configureCell:(FastTimelineTableViewCell *)cell
+    forDirectMessage:(DirectMessage *)dm
+{
+    [cell setLandscape:[[RotatableTabBarController instance] landscape]];
+
+    FastTimelineTableViewCellDisplayType displayType;
+    if ([segregatedSenderUsername isEqual:dm.sender.username])
+        displayType = FastTimelineTableViewCellDisplayTypeNormalNoName;
+    else
+        displayType = FastTimelineTableViewCellDisplayTypeInverted;
+
+    [cell setDisplayType:displayType];
+    [cell setAuthor:@""];
+    [cell setTimestamp:[dm.created tableViewCellDescription]];
+    [cell setTweetText:dm.text];
+    [cell setAvatar:[self getThumbnailAvatarForUser:dm.sender]];
 }
 
 + (UIImage *)defaultAvatar

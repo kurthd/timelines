@@ -9,6 +9,7 @@
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
 #import "TimelineTableViewCellView.h"
+#import "TwitbitShared.h"
 
 @implementation DirectMessageInboxViewController
 
@@ -33,9 +34,9 @@
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         self.tableView.separatorColor = [UIColor twitchGrayColor];
         self.view.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+            [UIColor defaultDarkThemeCellColor];
         footerView.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+            [UIColor defaultDarkThemeCellColor];
         numMessagesLabel.textColor = [UIColor twitchLightLightGrayColor];
     }
 }

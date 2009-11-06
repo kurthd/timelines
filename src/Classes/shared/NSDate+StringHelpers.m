@@ -60,3 +60,19 @@
 }
 
 @end
+
+@implementation NSDate (TableViewCellHelpers)
+
+- (NSString *)tableViewCellDescription
+{
+    static NSDateFormatter * formatter = nil;
+    if (!formatter) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setTimeStyle:NSDateFormatterShortStyle];
+        [formatter setDateStyle:NSDateFormatterNoStyle];
+    }
+
+    return [formatter stringFromDate:self];
+}
+
+@end
