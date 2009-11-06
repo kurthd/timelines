@@ -14,7 +14,6 @@
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
 #import "UIColor+TwitchColors.h"
-#import "TimelineTableViewCellView.h"
 
 static NSString * usernameRegex = @"x-twitbit://user\\?screen_name=@([\\w_]+)";
 static NSString * hashRegex = @"x-twitbit://search\\?query=(.+)";

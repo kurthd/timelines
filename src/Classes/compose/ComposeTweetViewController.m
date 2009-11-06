@@ -7,7 +7,6 @@
 #import "RotatableTabBarController.h"
 #import "NSString+UrlAdditions.h"
 #import "SettingsReader.h"
-#import "TimelineTableViewCellView.h"
 
 static const NSInteger MAX_TWEET_LENGTH = 140;
 

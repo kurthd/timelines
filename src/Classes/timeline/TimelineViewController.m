@@ -3,7 +3,6 @@
 //
 
 #import "TimelineViewController.h"
-#import "TimelineTableViewCell.h"
 #import "TweetInfo.h"
 #import "DirectMessage.h"
 #import "AsynchronousNetworkFetcher.h"
@@ -14,7 +13,6 @@
 #import "RotatableTabBarController.h"
 #import "NSArray+IterationAdditions.h"
 #import "SettingsReader.h"
-#import "TimelineTableViewCellView.h"
 #import "FastTimelineTableViewCell.h"
 #import "TwitbitShared.h"
 

@@ -6,7 +6,6 @@
 #import "TwitterCredentials.h"
 #import "UIColor+TwitchColors.h"
 #import "SettingsReader.h"
-#import "TimelineTableViewCellView.h"
 
 NSInteger usernameSort(TwitterCredentials * user1,
                        TwitterCredentials * user2,

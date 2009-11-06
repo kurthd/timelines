@@ -9,7 +9,6 @@
 #import "User+UIAdditions.h"
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
-#import "TimelineTableViewCellView.h"
 #import "TwitbitShared.h"
 
 @interface User (Sorting)

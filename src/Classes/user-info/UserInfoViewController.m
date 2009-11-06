@@ -12,7 +12,6 @@
 #import "PhotoBrowserDisplayMgr.h"
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
-#import "TimelineTableViewCellView.h"
 #import "TwitbitShared.h"
 
 enum {

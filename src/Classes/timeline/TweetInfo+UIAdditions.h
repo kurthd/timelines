@@ -4,7 +4,6 @@
 
 #import <Foundation/Foundation.h>
 #import "TweetInfo.h"
-#import "TimelineTableViewCell.h"
 
 /*
 @interface TweetInfo (UIAdditions)

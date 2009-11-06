@@ -4,7 +4,6 @@
 
 #import "DirectMessageInboxCell.h"
 #import "SettingsReader.h"
-#import "TimelineTableViewCellView.h"
 #import "TwitbitShared.h"
 
 @implementation DirectMessageInboxCell
