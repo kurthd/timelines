@@ -11,8 +11,6 @@
 #import "TweetLocation.h"
 #import "User.h"
 
-#import "NSObject+TweetHelpers.h"
-
 @implementation Tweet 
 
 @dynamic inReplyToTwitterUsername;

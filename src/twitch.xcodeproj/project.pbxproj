@@ -428,7 +428,6 @@
 		05DBF2E61082E76B004AB521 /* NSDictionary+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 050B9F27106C256100EC2E88 /* NSDictionary+GeneralHelpers.m */; };
 		05DBF2E71082E76B004AB521 /* UIApplication+ConfigurationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 052E05AF1070093F005CEC5F /* UIApplication+ConfigurationAdditions.m */; };
 		05DBF2E81082E76B004AB521 /* RotatableTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DCEB3E107511DB00095FD0 /* RotatableTabBarController.m */; };
-		05DBF2E91082E76B004AB521 /* NSObject+TweetHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */; };
 		05DBF2EA1082E76B004AB521 /* MGTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237EE0FEDB20900A6A2E6 /* MGTwitterEngine.m */; };
 		05DBF2EB1082E76B004AB521 /* MGTwitterHTTPURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237F20FEDB20900A6A2E6 /* MGTwitterHTTPURLConnection.m */; };
 		05DBF2EC1082E76B004AB521 /* MGTwitterLibXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237F40FEDB20900A6A2E6 /* MGTwitterLibXMLParser.m */; };
@@ -694,7 +693,6 @@
 		05DBF3FB1082E76D004AB521 /* NSDictionary+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 050B9F27106C256100EC2E88 /* NSDictionary+GeneralHelpers.m */; };
 		05DBF3FC1082E76D004AB521 /* UIApplication+ConfigurationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 052E05AF1070093F005CEC5F /* UIApplication+ConfigurationAdditions.m */; };
 		05DBF3FD1082E76D004AB521 /* RotatableTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DCEB3E107511DB00095FD0 /* RotatableTabBarController.m */; };
-		05DBF3FE1082E76D004AB521 /* NSObject+TweetHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */; };
 		05DBF3FF1082E76D004AB521 /* MGTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237EE0FEDB20900A6A2E6 /* MGTwitterEngine.m */; };
 		05DBF4001082E76D004AB521 /* MGTwitterHTTPURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237F20FEDB20900A6A2E6 /* MGTwitterHTTPURLConnection.m */; };
 		05DBF4011082E76D004AB521 /* MGTwitterLibXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B237F40FEDB20900A6A2E6 /* MGTwitterLibXMLParser.m */; };
@@ -1203,8 +1201,6 @@
 		059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v1-to-v2.xcmappingmodel"; path = "data-model/v1-to-v2.xcmappingmodel"; sourceTree = "<group>"; };
 		05A1F5C81028C06A009F5B3E /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		05A1F5C91028C06A009F5B3E /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
-		05A66759107E5B3E0077343D /* NSObject+TweetHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+TweetHelpers.h"; path = "shared/NSObject+TweetHelpers.h"; sourceTree = "<group>"; };
-		05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+TweetHelpers.m"; path = "shared/NSObject+TweetHelpers.m"; sourceTree = "<group>"; };
 		05A667C5107E64E80077343D /* UserTweet+CoreDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UserTweet+CoreDataAdditions.h"; path = "tweets/UserTweet+CoreDataAdditions.h"; sourceTree = "<group>"; };
 		05A667C6107E64E80077343D /* UserTweet+CoreDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UserTweet+CoreDataAdditions.m"; path = "tweets/UserTweet+CoreDataAdditions.m"; sourceTree = "<group>"; };
 		05A667F4107E6B090077343D /* twitch-v2.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.1.xcdatamodel"; sourceTree = "<group>"; };
@@ -2287,8 +2283,6 @@
 				052E05AF1070093F005CEC5F /* UIApplication+ConfigurationAdditions.m */,
 				91DCEB3D107511DB00095FD0 /* RotatableTabBarController.h */,
 				91DCEB3E107511DB00095FD0 /* RotatableTabBarController.m */,
-				05A66759107E5B3E0077343D /* NSObject+TweetHelpers.h */,
-				05A6675A107E5B3E0077343D /* NSObject+TweetHelpers.m */,
 				9142C87E108D2D8E00BFE960 /* DisplayMgrHelper.h */,
 				9142C87F108D2D8E00BFE960 /* DisplayMgrHelper.m */,
 				9142CCFB10920AF900BFE960 /* ToggleViewController.h */,
@@ -3681,7 +3675,6 @@
 				05DBF2E61082E76B004AB521 /* NSDictionary+GeneralHelpers.m in Sources */,
 				05DBF2E71082E76B004AB521 /* UIApplication+ConfigurationAdditions.m in Sources */,
 				05DBF2E81082E76B004AB521 /* RotatableTabBarController.m in Sources */,
-				05DBF2E91082E76B004AB521 /* NSObject+TweetHelpers.m in Sources */,
 				05DBF2EA1082E76B004AB521 /* MGTwitterEngine.m in Sources */,
 				05DBF2EB1082E76B004AB521 /* MGTwitterHTTPURLConnection.m in Sources */,
 				05DBF2EC1082E76B004AB521 /* MGTwitterLibXMLParser.m in Sources */,
@@ -3978,7 +3971,6 @@
 				05DBF3FB1082E76D004AB521 /* NSDictionary+GeneralHelpers.m in Sources */,
 				05DBF3FC1082E76D004AB521 /* UIApplication+ConfigurationAdditions.m in Sources */,
 				05DBF3FD1082E76D004AB521 /* RotatableTabBarController.m in Sources */,
-				05DBF3FE1082E76D004AB521 /* NSObject+TweetHelpers.m in Sources */,
 				05DBF3FF1082E76D004AB521 /* MGTwitterEngine.m in Sources */,
 				05DBF4001082E76D004AB521 /* MGTwitterHTTPURLConnection.m in Sources */,
 				05DBF4011082E76D004AB521 /* MGTwitterLibXMLParser.m in Sources */,

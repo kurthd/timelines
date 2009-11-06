@@ -30,12 +30,6 @@
 
 
 //
-// Twitbit-specific
-//
-#import "NSObject+TweetHelpers.h"
-
-
-//
 // Vendor libraries
 //
 #import "RegexKitLite.h"

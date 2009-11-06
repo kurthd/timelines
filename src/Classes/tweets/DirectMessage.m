@@ -9,7 +9,6 @@
 #import "DirectMessage.h"
 #import "TwitterCredentials.h"
 #import "User.h"
-#import "NSObject+TweetHelpers.h"
 
 @implementation DirectMessage 
 
