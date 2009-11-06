@@ -3,9 +3,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DirectMessage.h"
 
-@interface NSObject (TweetHelpers)
+@interface DirectMessage (GeneralHelpers)
 
-+ (NSComparisonResult)compareTweetId:(NSString *)id1 toId:(NSString *)id2;
+- (NSString *)textAsHtml;
 
 @end

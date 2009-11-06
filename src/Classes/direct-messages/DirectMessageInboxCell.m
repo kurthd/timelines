@@ -4,7 +4,7 @@
 
 #import "DirectMessageInboxCell.h"
 #import "SettingsReader.h"
-#import "TimelineTableViewCellView.h"
+#import "TwitbitShared.h"
 
 @implementation DirectMessageInboxCell
 
@@ -36,7 +36,7 @@
         self.backgroundView = [[[UIView alloc] init] autorelease];
         self.backgroundView.backgroundColor =
             [SettingsReader displayTheme] == kDisplayThemeDark ?
-            [TimelineTableViewCellView defaultDarkThemeCellColor] :
+            [UIColor defaultDarkThemeCellColor] :
             [UIColor whiteColor];
         self.backgroundColor = [UIColor clearColor];
 	}

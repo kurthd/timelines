@@ -206,6 +206,12 @@
 		059A72AA103E1C7800B7500C /* YfrogSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72A8103E1C7800B7500C /* YfrogSettingsView.xib */; };
 		059A7301103E221E00B7500C /* TwitVidSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72FF103E221E00B7500C /* TwitVidSettingsView.xib */; };
 		05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05AC573C1029F0EF00F727A2 /* QuartzCore.framework */; };
+		05B8D54C10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D54B10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m */; };
+		05B8D54D10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D54B10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m */; };
+		05B8D5FB10A3B4910030F0BF /* Tweet+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D5F810A3B4910030F0BF /* Tweet+GeneralHelpers.m */; };
+		05B8D5FC10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D5FA10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m */; };
+		05B8D5FD10A3B4910030F0BF /* Tweet+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D5F810A3B4910030F0BF /* Tweet+GeneralHelpers.m */; };
+		05B8D5FE10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D5FA10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m */; };
 		05C7B8BA103B5FAF0017874C /* PhotoServicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B8B8103B5FAF0017874C /* PhotoServicesView.xib */; };
 		05C7B962103B791A0017874C /* PhotoServiceSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B960103B791A0017874C /* PhotoServiceSelectorView.xib */; };
 		05C7B99D103B7E1D0017874C /* FlickrLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B99B103B7E1D0017874C /* FlickrLogo.png */; };
@@ -232,7 +238,6 @@
 		05DBF2211082E76B004AB521 /* DirectMessageInboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E19110150FBA0033B63B /* DirectMessageInboxCell.m */; };
 		05DBF2221082E76B004AB521 /* DirectMessageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E195101513F30033B63B /* DirectMessageCache.m */; };
 		05DBF2231082E76B004AB521 /* ConversationPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E1D2101532C90033B63B /* ConversationPreview.m */; };
-		05DBF2241082E76B004AB521 /* DirectMessage+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E2751015729D0033B63B /* DirectMessage+UIAdditions.m */; };
 		05DBF2251082E76B004AB521 /* NewDirectMessagesState.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE5E1017E78A002083D6 /* NewDirectMessagesState.m */; };
 		05DBF2261082E76B004AB521 /* NewDirectMessagesPersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE821017F078002083D6 /* NewDirectMessagesPersistenceStore.m */; };
 		05DBF2271082E76B004AB521 /* DirectMessageAcctMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C4F25610192FDA00896046 /* DirectMessageAcctMgr.m */; };
@@ -257,23 +262,18 @@
 		05DBF23A1082E76B004AB521 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD8150FEEBE26007143A9 /* TimelineViewController.m */; };
 		05DBF23B1082E76B004AB521 /* TimelineDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD8180FEEBE35007143A9 /* TimelineDisplayMgr.m */; };
 		05DBF23C1082E76B004AB521 /* TimelineDisplayMgrFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD81E0FEEC12B007143A9 /* TimelineDisplayMgrFactory.m */; };
-		05DBF23D1082E76B004AB521 /* TimelineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD9140FEEFB24007143A9 /* TimelineTableViewCell.m */; };
-		05DBF23E1082E76B004AB521 /* TimelineTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7C7C101E9C2E006663FD /* TimelineTableViewCellView.m */; };
 		05DBF23F1082E76B004AB521 /* TweetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EDAEFB1029F6F500D0B62B /* TweetViewController.m */; };
 		05DBF2401082E76B004AB521 /* TweetTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EDAEFE1029F75600D0B62B /* TweetTextTableViewCell.m */; };
 		05DBF2411082E76B004AB521 /* AllTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */; };
-		05DBF2431082E76B004AB521 /* TweetInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A92D0FF06AA100D6A769 /* TweetInfo.m */; };
 		05DBF2441082E76B004AB521 /* MentionsTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */; };
 		05DBF2451082E76B004AB521 /* UserTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 918E891B0FF16EE30042BBEE /* UserTimelineDataSource.m */; };
 		05DBF2461082E76B004AB521 /* ArbUserTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE1860FF2A755005342EE /* ArbUserTimelineDataSource.m */; };
 		05DBF2471082E76B004AB521 /* FavoritesTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE31A0FF30296005342EE /* FavoritesTimelineDataSource.m */; };
 		05DBF2481082E76B004AB521 /* TwitchBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */; };
-		05DBF2491082E76B004AB521 /* TweetInfo+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */; };
 		05DBF24A1082E76B004AB521 /* FindPeopleSearchDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DEF17F101B7118001354D5 /* FindPeopleSearchDisplayMgr.m */; };
 		05DBF24B1082E76B004AB521 /* FindPeopleBookmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 917245E81028B781007E0DF6 /* FindPeopleBookmarkViewController.m */; };
 		05DBF24C1082E76B004AB521 /* SearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172475A102A4914007E0DF6 /* SearchDataSource.m */; };
 		05DBF24D1082E76B004AB521 /* UserInfoRequestAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FCA310337EA1004E3030 /* UserInfoRequestAdapter.m */; };
-		05DBF24E1082E76B004AB521 /* TimelineTableViewCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FFD8103623DA004E3030 /* TimelineTableViewCellBackground.m */; };
 		05DBF24F1082E76B004AB521 /* NearbySearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 919CCC5B1059CD6B0029C0A1 /* NearbySearchDataSource.m */; };
 		05DBF2501082E76B004AB521 /* ConversationDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F9CF1F103335200010409B /* ConversationDisplayMgr.m */; };
 		05DBF2511082E76B004AB521 /* ConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F9CF22103335310010409B /* ConversationViewController.m */; };
@@ -503,7 +503,6 @@
 		05DBF3361082E76D004AB521 /* DirectMessageInboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E19110150FBA0033B63B /* DirectMessageInboxCell.m */; };
 		05DBF3371082E76D004AB521 /* DirectMessageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E195101513F30033B63B /* DirectMessageCache.m */; };
 		05DBF3381082E76D004AB521 /* ConversationPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E1D2101532C90033B63B /* ConversationPreview.m */; };
-		05DBF3391082E76D004AB521 /* DirectMessage+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9152E2751015729D0033B63B /* DirectMessage+UIAdditions.m */; };
 		05DBF33A1082E76D004AB521 /* NewDirectMessagesState.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE5E1017E78A002083D6 /* NewDirectMessagesState.m */; };
 		05DBF33B1082E76D004AB521 /* NewDirectMessagesPersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 910EFE821017F078002083D6 /* NewDirectMessagesPersistenceStore.m */; };
 		05DBF33C1082E76D004AB521 /* DirectMessageAcctMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C4F25610192FDA00896046 /* DirectMessageAcctMgr.m */; };
@@ -528,23 +527,18 @@
 		05DBF34F1082E76D004AB521 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD8150FEEBE26007143A9 /* TimelineViewController.m */; };
 		05DBF3501082E76D004AB521 /* TimelineDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD8180FEEBE35007143A9 /* TimelineDisplayMgr.m */; };
 		05DBF3511082E76D004AB521 /* TimelineDisplayMgrFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD81E0FEEC12B007143A9 /* TimelineDisplayMgrFactory.m */; };
-		05DBF3521082E76D004AB521 /* TimelineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 916BD9140FEEFB24007143A9 /* TimelineTableViewCell.m */; };
-		05DBF3531082E76D004AB521 /* TimelineTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7C7C101E9C2E006663FD /* TimelineTableViewCellView.m */; };
 		05DBF3541082E76D004AB521 /* TweetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EDAEFB1029F6F500D0B62B /* TweetViewController.m */; };
 		05DBF3551082E76D004AB521 /* TweetTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EDAEFE1029F75600D0B62B /* TweetTextTableViewCell.m */; };
 		05DBF3561082E76D004AB521 /* AllTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */; };
-		05DBF3581082E76D004AB521 /* TweetInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A92D0FF06AA100D6A769 /* TweetInfo.m */; };
 		05DBF3591082E76D004AB521 /* MentionsTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */; };
 		05DBF35A1082E76D004AB521 /* UserTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 918E891B0FF16EE30042BBEE /* UserTimelineDataSource.m */; };
 		05DBF35B1082E76D004AB521 /* ArbUserTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE1860FF2A755005342EE /* ArbUserTimelineDataSource.m */; };
 		05DBF35C1082E76D004AB521 /* FavoritesTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 910BE31A0FF30296005342EE /* FavoritesTimelineDataSource.m */; };
 		05DBF35D1082E76D004AB521 /* TwitchBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */; };
-		05DBF35E1082E76D004AB521 /* TweetInfo+UIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */; };
 		05DBF35F1082E76D004AB521 /* FindPeopleSearchDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DEF17F101B7118001354D5 /* FindPeopleSearchDisplayMgr.m */; };
 		05DBF3601082E76D004AB521 /* FindPeopleBookmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 917245E81028B781007E0DF6 /* FindPeopleBookmarkViewController.m */; };
 		05DBF3611082E76D004AB521 /* SearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172475A102A4914007E0DF6 /* SearchDataSource.m */; };
 		05DBF3621082E76D004AB521 /* UserInfoRequestAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FCA310337EA1004E3030 /* UserInfoRequestAdapter.m */; };
-		05DBF3631082E76D004AB521 /* TimelineTableViewCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 9130FFD8103623DA004E3030 /* TimelineTableViewCellBackground.m */; };
 		05DBF3641082E76D004AB521 /* NearbySearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 919CCC5B1059CD6B0029C0A1 /* NearbySearchDataSource.m */; };
 		05DBF3651082E76D004AB521 /* ConversationDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F9CF1F103335200010409B /* ConversationDisplayMgr.m */; };
 		05DBF3661082E76D004AB521 /* ConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F9CF22103335310010409B /* ConversationViewController.m */; };
@@ -807,6 +801,10 @@
 		05F51C6C1087A6AF00C6AD97 /* SelectPersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05F51C6A1087A6AF00C6AD97 /* SelectPersonView.xib */; };
 		05F51C6D1087A6AF00C6AD97 /* SelectPersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05F51C6A1087A6AF00C6AD97 /* SelectPersonView.xib */; };
 		05F9CF26103335490010409B /* ConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05F9CF24103335490010409B /* ConversationView.xib */; };
+		05FA5684109F5E10004931EA /* FastTimelineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FA5680109F5E10004931EA /* FastTimelineTableViewCell.m */; };
+		05FA5685109F5E10004931EA /* FastTimelineTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FA5683109F5E10004931EA /* FastTimelineTableViewCellView.m */; };
+		05FA5686109F5E10004931EA /* FastTimelineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FA5680109F5E10004931EA /* FastTimelineTableViewCell.m */; };
+		05FA5687109F5E10004931EA /* FastTimelineTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FA5683109F5E10004931EA /* FastTimelineTableViewCellView.m */; };
 		910EFE1D1017E391002083D6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 910EFE1C1017E391002083D6 /* AudioToolbox.framework */; };
 		9112EAB5102E236E002715DC /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
 		9125779A104C7A53006F5DBD /* DarkenedTableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */; };
@@ -1310,6 +1308,12 @@
 		05B7C8CB105899E00043298A /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonWriter.m; path = vendor/json/SBJsonWriter.m; sourceTree = "<group>"; };
 		05B7C9CC10599D1F0043298A /* NearbySearchResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NearbySearchResponseProcessor.h; path = twitter/processors/NearbySearchResponseProcessor.h; sourceTree = "<group>"; };
 		05B7C9CD10599D1F0043298A /* NearbySearchResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NearbySearchResponseProcessor.m; path = twitter/processors/NearbySearchResponseProcessor.m; sourceTree = "<group>"; };
+		05B8D54A10A3AC840030F0BF /* DirectMessage+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DirectMessage+GeneralHelpers.h"; path = "direct-messages/DirectMessage+GeneralHelpers.h"; sourceTree = "<group>"; };
+		05B8D54B10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DirectMessage+GeneralHelpers.m"; path = "direct-messages/DirectMessage+GeneralHelpers.m"; sourceTree = "<group>"; };
+		05B8D5F710A3B4910030F0BF /* Tweet+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Tweet+GeneralHelpers.h"; path = "tweets/Tweet+GeneralHelpers.h"; sourceTree = "<group>"; };
+		05B8D5F810A3B4910030F0BF /* Tweet+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Tweet+GeneralHelpers.m"; path = "tweets/Tweet+GeneralHelpers.m"; sourceTree = "<group>"; };
+		05B8D5F910A3B4910030F0BF /* TweetLocation+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TweetLocation+GeneralHelpers.h"; path = "tweets/TweetLocation+GeneralHelpers.h"; sourceTree = "<group>"; };
+		05B8D5FA10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TweetLocation+GeneralHelpers.m"; path = "tweets/TweetLocation+GeneralHelpers.m"; sourceTree = "<group>"; };
 		05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarDisplayMgr.h; path = search/SearchBarDisplayMgr.h; sourceTree = "<group>"; };
 		05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBarDisplayMgr.m; path = search/SearchBarDisplayMgr.m; sourceTree = "<group>"; };
 		05C5E7B00FF455B00073E7F2 /* FetchTrendsResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTrendsResponseProcessor.h; path = twitter/processors/FetchTrendsResponseProcessor.h; sourceTree = "<group>"; };
@@ -1402,8 +1406,6 @@
 		05EDAEFD1029F75600D0B62B /* TweetTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetTextTableViewCell.h; path = timeline/TweetTextTableViewCell.h; sourceTree = "<group>"; };
 		05EDAEFE1029F75600D0B62B /* TweetTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetTextTableViewCell.m; path = timeline/TweetTextTableViewCell.m; sourceTree = "<group>"; };
 		05EDAF0B1029FAAB00D0B62B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TweetView.xib; sourceTree = "<group>"; };
-		05EE7C7B101E9C2E006663FD /* TimelineTableViewCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineTableViewCellView.h; path = timeline/TimelineTableViewCellView.h; sourceTree = "<group>"; };
-		05EE7C7C101E9C2E006663FD /* TimelineTableViewCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineTableViewCellView.m; path = timeline/TimelineTableViewCellView.m; sourceTree = "<group>"; };
 		05EF418F0FFADF95007B59F1 /* Twitbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05EF41970FFAE449007B59F1 /* twitbit-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "twitbit-info.plist"; sourceTree = "<group>"; };
 		05F459ED0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchDirectMessagesResponseProcessor.h; path = twitter/processors/FetchDirectMessagesResponseProcessor.h; sourceTree = "<group>"; };
@@ -1436,6 +1438,11 @@
 		05F9CF21103335310010409B /* ConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConversationViewController.h; path = conversation/ConversationViewController.h; sourceTree = "<group>"; };
 		05F9CF22103335310010409B /* ConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationViewController.m; path = conversation/ConversationViewController.m; sourceTree = "<group>"; };
 		05F9CF25103335490010409B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/ConversationView.xib; sourceTree = "<group>"; };
+		05FA567F109F5E10004931EA /* FastTimelineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FastTimelineTableViewCell.h; path = timeline/FastTimelineTableViewCell.h; sourceTree = "<group>"; };
+		05FA5680109F5E10004931EA /* FastTimelineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FastTimelineTableViewCell.m; path = timeline/FastTimelineTableViewCell.m; sourceTree = "<group>"; };
+		05FA5681109F5E10004931EA /* FastTimelineTableViewCellDisplayType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FastTimelineTableViewCellDisplayType.h; path = timeline/FastTimelineTableViewCellDisplayType.h; sourceTree = "<group>"; };
+		05FA5682109F5E10004931EA /* FastTimelineTableViewCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FastTimelineTableViewCellView.h; path = timeline/FastTimelineTableViewCellView.h; sourceTree = "<group>"; };
+		05FA5683109F5E10004931EA /* FastTimelineTableViewCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FastTimelineTableViewCellView.m; path = timeline/FastTimelineTableViewCellView.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1465,8 +1472,6 @@
 		9115A83B0FF03BA900D6A769 /* TimelineDataSourceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDataSourceDelegate.h; path = timeline/TimelineDataSourceDelegate.h; sourceTree = "<group>"; };
 		9115A83E0FF03C8300D6A769 /* AllTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllTimelineDataSource.h; path = timeline/AllTimelineDataSource.h; sourceTree = "<group>"; };
 		9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AllTimelineDataSource.m; path = timeline/AllTimelineDataSource.m; sourceTree = "<group>"; };
-		9115A92C0FF06AA100D6A769 /* TweetInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetInfo.h; path = timeline/TweetInfo.h; sourceTree = "<group>"; };
-		9115A92D0FF06AA100D6A769 /* TweetInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetInfo.m; path = timeline/TweetInfo.m; sourceTree = "<group>"; };
 		9115A97F0FF0874700D6A769 /* MentionsTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionsTimelineDataSource.h; path = timeline/MentionsTimelineDataSource.h; sourceTree = "<group>"; };
 		9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionsTimelineDataSource.m; path = timeline/MentionsTimelineDataSource.m; sourceTree = "<group>"; };
 		91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkenedTableViewCellGradient.png; path = images/DarkenedTableViewCellGradient.png; sourceTree = "<group>"; };
@@ -1488,8 +1493,6 @@
 		9130FF211035E07B004E3030 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/MarkAsFavoriteCell.xib; sourceTree = "<group>"; };
 		9130FF241035E1F6004E3030 /* MarkAsFavoriteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkAsFavoriteCell.h; path = "user-info/MarkAsFavoriteCell.h"; sourceTree = "<group>"; };
 		9130FF251035E1F6004E3030 /* MarkAsFavoriteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkAsFavoriteCell.m; path = "user-info/MarkAsFavoriteCell.m"; sourceTree = "<group>"; };
-		9130FFD7103623DA004E3030 /* TimelineTableViewCellBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineTableViewCellBackground.h; path = timeline/TimelineTableViewCellBackground.h; sourceTree = "<group>"; };
-		9130FFD8103623DA004E3030 /* TimelineTableViewCellBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineTableViewCellBackground.m; path = timeline/TimelineTableViewCellBackground.m; sourceTree = "<group>"; };
 		9142C879108D139800BFE960 /* MentionTimelineDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionTimelineDisplayMgr.h; path = timeline/MentionTimelineDisplayMgr.h; sourceTree = "<group>"; };
 		9142C87A108D139800BFE960 /* MentionTimelineDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionTimelineDisplayMgr.m; path = timeline/MentionTimelineDisplayMgr.m; sourceTree = "<group>"; };
 		9142C87E108D2D8E00BFE960 /* DisplayMgrHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayMgrHelper.h; path = shared/DisplayMgrHelper.h; sourceTree = "<group>"; };
@@ -1536,8 +1539,6 @@
 		9152E1D2101532C90033B63B /* ConversationPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationPreview.m; path = "direct-messages/ConversationPreview.m"; sourceTree = "<group>"; };
 		9152E238101557AC0033B63B /* NewMessagesDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NewMessagesDot.png; path = images/NewMessagesDot.png; sourceTree = "<group>"; };
 		9152E27110156CAB0033B63B /* DirectMessageConversationViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageConversationViewControllerDelegate.h; path = "direct-messages/DirectMessageConversationViewControllerDelegate.h"; sourceTree = "<group>"; };
-		9152E2741015729D0033B63B /* DirectMessage+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DirectMessage+UIAdditions.h"; path = "direct-messages/DirectMessage+UIAdditions.h"; sourceTree = "<group>"; };
-		9152E2751015729D0033B63B /* DirectMessage+UIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DirectMessage+UIAdditions.m"; path = "direct-messages/DirectMessage+UIAdditions.m"; sourceTree = "<group>"; };
 		915B4C5210A4A6F70028B0B4 /* AccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountTableViewCell.h; path = accounts/AccountTableViewCell.h; sourceTree = "<group>"; };
 		915B4C5310A4A6F70028B0B4 /* AccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountTableViewCell.m; path = accounts/AccountTableViewCell.m; sourceTree = "<group>"; };
 		915B4C6210A4AA420028B0B4 /* AccountCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountCellView.h; path = accounts/AccountCellView.h; sourceTree = "<group>"; };
@@ -1607,8 +1608,6 @@
 		916BD8A20FEEDFBD007143A9 /* UserHeaderGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UserHeaderGradient.png; path = images/UserHeaderGradient.png; sourceTree = "<group>"; };
 		916BD8BD0FEEEE4A007143A9 /* RoundedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundedImage.h; path = shared/RoundedImage.h; sourceTree = "<group>"; };
 		916BD8BE0FEEEE4A007143A9 /* RoundedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoundedImage.m; path = shared/RoundedImage.m; sourceTree = "<group>"; };
-		916BD9130FEEFB24007143A9 /* TimelineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineTableViewCell.h; path = timeline/TimelineTableViewCell.h; sourceTree = "<group>"; };
-		916BD9140FEEFB24007143A9 /* TimelineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineTableViewCell.m; path = timeline/TimelineTableViewCell.m; sourceTree = "<group>"; };
 		916BD9D10FEF3D05007143A9 /* UILabel+DrawingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+DrawingAdditions.h"; path = "shared/UILabel+DrawingAdditions.h"; sourceTree = "<group>"; };
 		916BD9D20FEF3D05007143A9 /* UILabel+DrawingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+DrawingAdditions.m"; path = "shared/UILabel+DrawingAdditions.m"; sourceTree = "<group>"; };
 		916BD9FB0FEF4986007143A9 /* TimelineViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineViewControllerDelegate.h; path = timeline/TimelineViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -1703,8 +1702,6 @@
 		91AD5A3C100FED36009C2179 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		91AD5A6F101017AC009C2179 /* PhotoBackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoBackButton.png; path = images/PhotoBackButton.png; sourceTree = "<group>"; };
 		91AD5A711010187D009C2179 /* PhotoForwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoForwardButton.png; path = images/PhotoForwardButton.png; sourceTree = "<group>"; };
-		91B28D110FFC60A10080023B /* TweetInfo+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TweetInfo+UIAdditions.h"; path = "timeline/TweetInfo+UIAdditions.h"; sourceTree = "<group>"; };
-		91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TweetInfo+UIAdditions.m"; path = "timeline/TweetInfo+UIAdditions.m"; sourceTree = "<group>"; };
 		91BD113A1006736F0082D209 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/PhotoBrowserView.xib; sourceTree = "<group>"; };
 		91C4F25510192FDA00896046 /* DirectMessageAcctMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageAcctMgr.h; path = "direct-messages/DirectMessageAcctMgr.h"; sourceTree = "<group>"; };
 		91C4F25610192FDA00896046 /* DirectMessageAcctMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageAcctMgr.m; path = "direct-messages/DirectMessageAcctMgr.m"; sourceTree = "<group>"; };
@@ -2471,6 +2468,8 @@
 				0531DA45107FEDEC003DC0D6 /* Tweet.m */,
 				05DBF1EB1082E61E004AB521 /* UserTweet.h */,
 				05DBF1EC1082E61E004AB521 /* UserTweet.m */,
+				05B8D5F710A3B4910030F0BF /* Tweet+GeneralHelpers.h */,
+				05B8D5F810A3B4910030F0BF /* Tweet+GeneralHelpers.m */,
 				05F45A520FF01DE000EBAFC7 /* Tweet+CoreDataAdditions.h */,
 				05F45A530FF01DE000EBAFC7 /* Tweet+CoreDataAdditions.m */,
 				05A667C5107E64E80077343D /* UserTweet+CoreDataAdditions.h */,
@@ -2479,10 +2478,14 @@
 				05D174060FF69FC500DCB22D /* Mention.m */,
 				05F45A2E0FF0181600EBAFC7 /* DirectMessage.h */,
 				05F45A2F0FF0181600EBAFC7 /* DirectMessage.m */,
+				05B8D54A10A3AC840030F0BF /* DirectMessage+GeneralHelpers.h */,
+				05B8D54B10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m */,
 				05F45B3F0FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.h */,
 				05F45B400FF025EB00EBAFC7 /* DirectMessage+CoreDataAdditions.m */,
 				05A66AD0107EBAD60077343D /* TweetLocation.h */,
 				05A66AD1107EBAD60077343D /* TweetLocation.m */,
+				05B8D5F910A3B4910030F0BF /* TweetLocation+GeneralHelpers.h */,
+				05B8D5FA10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m */,
 				91DCF350107E4ECB00095FD0 /* TweetLocationCell.h */,
 				91DCF351107E4ECB00095FD0 /* TweetLocationCell.m */,
 				91DCF352107E4ECB00095FD0 /* TweetLocationCellView.h */,
@@ -2776,8 +2779,6 @@
 				9152E1D1101532C90033B63B /* ConversationPreview.h */,
 				9152E1D2101532C90033B63B /* ConversationPreview.m */,
 				9152E27110156CAB0033B63B /* DirectMessageConversationViewControllerDelegate.h */,
-				9152E2741015729D0033B63B /* DirectMessage+UIAdditions.h */,
-				9152E2751015729D0033B63B /* DirectMessage+UIAdditions.m */,
 				910EFE5D1017E78A002083D6 /* NewDirectMessagesState.h */,
 				910EFE5E1017E78A002083D6 /* NewDirectMessagesState.m */,
 				910EFE811017F078002083D6 /* NewDirectMessagesPersistenceStore.h */,
@@ -2919,10 +2920,11 @@
 				916BD8180FEEBE35007143A9 /* TimelineDisplayMgr.m */,
 				916BD81D0FEEC12B007143A9 /* TimelineDisplayMgrFactory.h */,
 				916BD81E0FEEC12B007143A9 /* TimelineDisplayMgrFactory.m */,
-				916BD9130FEEFB24007143A9 /* TimelineTableViewCell.h */,
-				916BD9140FEEFB24007143A9 /* TimelineTableViewCell.m */,
-				05EE7C7B101E9C2E006663FD /* TimelineTableViewCellView.h */,
-				05EE7C7C101E9C2E006663FD /* TimelineTableViewCellView.m */,
+				05FA567F109F5E10004931EA /* FastTimelineTableViewCell.h */,
+				05FA5680109F5E10004931EA /* FastTimelineTableViewCell.m */,
+				05FA5681109F5E10004931EA /* FastTimelineTableViewCellDisplayType.h */,
+				05FA5682109F5E10004931EA /* FastTimelineTableViewCellView.h */,
+				05FA5683109F5E10004931EA /* FastTimelineTableViewCellView.m */,
 				05EDAEFA1029F6F500D0B62B /* TweetViewController.h */,
 				05EDAEFB1029F6F500D0B62B /* TweetViewController.m */,
 				916BDA140FEF4E96007143A9 /* TweetViewControllerDelegate.h */,
@@ -2933,8 +2935,6 @@
 				9115A83B0FF03BA900D6A769 /* TimelineDataSourceDelegate.h */,
 				9115A83E0FF03C8300D6A769 /* AllTimelineDataSource.h */,
 				9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */,
-				9115A92C0FF06AA100D6A769 /* TweetInfo.h */,
-				9115A92D0FF06AA100D6A769 /* TweetInfo.m */,
 				9115A97F0FF0874700D6A769 /* MentionsTimelineDataSource.h */,
 				9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */,
 				918E891A0FF16EE30042BBEE /* UserTimelineDataSource.h */,
@@ -2945,8 +2945,6 @@
 				910BE31A0FF30296005342EE /* FavoritesTimelineDataSource.m */,
 				91CD821C0FF54066004D04D5 /* TwitchBrowserViewController.h */,
 				91CD821D0FF54066004D04D5 /* TwitchBrowserViewController.m */,
-				91B28D110FFC60A10080023B /* TweetInfo+UIAdditions.h */,
-				91B28D120FFC60A10080023B /* TweetInfo+UIAdditions.m */,
 				9180B7AD1012AA170096DFA1 /* TwitchBrowserViewControllerDelegate.h */,
 				91DEF17E101B7118001354D5 /* FindPeopleSearchDisplayMgr.h */,
 				91DEF17F101B7118001354D5 /* FindPeopleSearchDisplayMgr.m */,
@@ -2956,8 +2954,6 @@
 				9172475A102A4914007E0DF6 /* SearchDataSource.m */,
 				9130FCA210337EA1004E3030 /* UserInfoRequestAdapter.h */,
 				9130FCA310337EA1004E3030 /* UserInfoRequestAdapter.m */,
-				9130FFD7103623DA004E3030 /* TimelineTableViewCellBackground.h */,
-				9130FFD8103623DA004E3030 /* TimelineTableViewCellBackground.m */,
 				919CCC5A1059CD6B0029C0A1 /* NearbySearchDataSource.h */,
 				919CCC5B1059CD6B0029C0A1 /* NearbySearchDataSource.m */,
 				9142C879108D139800BFE960 /* MentionTimelineDisplayMgr.h */,
@@ -3514,7 +3510,6 @@
 				05DBF2211082E76B004AB521 /* DirectMessageInboxCell.m in Sources */,
 				05DBF2221082E76B004AB521 /* DirectMessageCache.m in Sources */,
 				05DBF2231082E76B004AB521 /* ConversationPreview.m in Sources */,
-				05DBF2241082E76B004AB521 /* DirectMessage+UIAdditions.m in Sources */,
 				05DBF2251082E76B004AB521 /* NewDirectMessagesState.m in Sources */,
 				05DBF2261082E76B004AB521 /* NewDirectMessagesPersistenceStore.m in Sources */,
 				05DBF2271082E76B004AB521 /* DirectMessageAcctMgr.m in Sources */,
@@ -3539,23 +3534,18 @@
 				05DBF23A1082E76B004AB521 /* TimelineViewController.m in Sources */,
 				05DBF23B1082E76B004AB521 /* TimelineDisplayMgr.m in Sources */,
 				05DBF23C1082E76B004AB521 /* TimelineDisplayMgrFactory.m in Sources */,
-				05DBF23D1082E76B004AB521 /* TimelineTableViewCell.m in Sources */,
-				05DBF23E1082E76B004AB521 /* TimelineTableViewCellView.m in Sources */,
 				05DBF23F1082E76B004AB521 /* TweetViewController.m in Sources */,
 				05DBF2401082E76B004AB521 /* TweetTextTableViewCell.m in Sources */,
 				05DBF2411082E76B004AB521 /* AllTimelineDataSource.m in Sources */,
-				05DBF2431082E76B004AB521 /* TweetInfo.m in Sources */,
 				05DBF2441082E76B004AB521 /* MentionsTimelineDataSource.m in Sources */,
 				05DBF2451082E76B004AB521 /* UserTimelineDataSource.m in Sources */,
 				05DBF2461082E76B004AB521 /* ArbUserTimelineDataSource.m in Sources */,
 				05DBF2471082E76B004AB521 /* FavoritesTimelineDataSource.m in Sources */,
 				05DBF2481082E76B004AB521 /* TwitchBrowserViewController.m in Sources */,
-				05DBF2491082E76B004AB521 /* TweetInfo+UIAdditions.m in Sources */,
 				05DBF24A1082E76B004AB521 /* FindPeopleSearchDisplayMgr.m in Sources */,
 				05DBF24B1082E76B004AB521 /* FindPeopleBookmarkViewController.m in Sources */,
 				05DBF24C1082E76B004AB521 /* SearchDataSource.m in Sources */,
 				05DBF24D1082E76B004AB521 /* UserInfoRequestAdapter.m in Sources */,
-				05DBF24E1082E76B004AB521 /* TimelineTableViewCellBackground.m in Sources */,
 				05DBF24F1082E76B004AB521 /* NearbySearchDataSource.m in Sources */,
 				05DBF2501082E76B004AB521 /* ConversationDisplayMgr.m in Sources */,
 				05DBF2511082E76B004AB521 /* ConversationViewController.m in Sources */,
@@ -3787,6 +3777,11 @@
 				91E7CB5B10A37E8900FEDA5D /* AccountsButtonSetter.m in Sources */,
 				915B4C5510A4A6F70028B0B4 /* AccountTableViewCell.m in Sources */,
 				915B4C6510A4AA420028B0B4 /* AccountCellView.m in Sources */,
+				05FA5686109F5E10004931EA /* FastTimelineTableViewCell.m in Sources */,
+				05FA5687109F5E10004931EA /* FastTimelineTableViewCellView.m in Sources */,
+				05B8D54C10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m in Sources */,
+				05B8D5FB10A3B4910030F0BF /* Tweet+GeneralHelpers.m in Sources */,
+				05B8D5FC10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3813,7 +3808,6 @@
 				05DBF3361082E76D004AB521 /* DirectMessageInboxCell.m in Sources */,
 				05DBF3371082E76D004AB521 /* DirectMessageCache.m in Sources */,
 				05DBF3381082E76D004AB521 /* ConversationPreview.m in Sources */,
-				05DBF3391082E76D004AB521 /* DirectMessage+UIAdditions.m in Sources */,
 				05DBF33A1082E76D004AB521 /* NewDirectMessagesState.m in Sources */,
 				05DBF33B1082E76D004AB521 /* NewDirectMessagesPersistenceStore.m in Sources */,
 				05DBF33C1082E76D004AB521 /* DirectMessageAcctMgr.m in Sources */,
@@ -3838,23 +3832,18 @@
 				05DBF34F1082E76D004AB521 /* TimelineViewController.m in Sources */,
 				05DBF3501082E76D004AB521 /* TimelineDisplayMgr.m in Sources */,
 				05DBF3511082E76D004AB521 /* TimelineDisplayMgrFactory.m in Sources */,
-				05DBF3521082E76D004AB521 /* TimelineTableViewCell.m in Sources */,
-				05DBF3531082E76D004AB521 /* TimelineTableViewCellView.m in Sources */,
 				05DBF3541082E76D004AB521 /* TweetViewController.m in Sources */,
 				05DBF3551082E76D004AB521 /* TweetTextTableViewCell.m in Sources */,
 				05DBF3561082E76D004AB521 /* AllTimelineDataSource.m in Sources */,
-				05DBF3581082E76D004AB521 /* TweetInfo.m in Sources */,
 				05DBF3591082E76D004AB521 /* MentionsTimelineDataSource.m in Sources */,
 				05DBF35A1082E76D004AB521 /* UserTimelineDataSource.m in Sources */,
 				05DBF35B1082E76D004AB521 /* ArbUserTimelineDataSource.m in Sources */,
 				05DBF35C1082E76D004AB521 /* FavoritesTimelineDataSource.m in Sources */,
 				05DBF35D1082E76D004AB521 /* TwitchBrowserViewController.m in Sources */,
-				05DBF35E1082E76D004AB521 /* TweetInfo+UIAdditions.m in Sources */,
 				05DBF35F1082E76D004AB521 /* FindPeopleSearchDisplayMgr.m in Sources */,
 				05DBF3601082E76D004AB521 /* FindPeopleBookmarkViewController.m in Sources */,
 				05DBF3611082E76D004AB521 /* SearchDataSource.m in Sources */,
 				05DBF3621082E76D004AB521 /* UserInfoRequestAdapter.m in Sources */,
-				05DBF3631082E76D004AB521 /* TimelineTableViewCellBackground.m in Sources */,
 				05DBF3641082E76D004AB521 /* NearbySearchDataSource.m in Sources */,
 				05DBF3651082E76D004AB521 /* ConversationDisplayMgr.m in Sources */,
 				05DBF3661082E76D004AB521 /* ConversationViewController.m in Sources */,
@@ -4086,6 +4075,11 @@
 				91E7CB5A10A37E8900FEDA5D /* AccountsButtonSetter.m in Sources */,
 				915B4C5410A4A6F70028B0B4 /* AccountTableViewCell.m in Sources */,
 				915B4C6410A4AA420028B0B4 /* AccountCellView.m in Sources */,
+				05FA5684109F5E10004931EA /* FastTimelineTableViewCell.m in Sources */,
+				05FA5685109F5E10004931EA /* FastTimelineTableViewCellView.m in Sources */,
+				05B8D54D10A3AC840030F0BF /* DirectMessage+GeneralHelpers.m in Sources */,
+				05B8D5FD10A3B4910030F0BF /* Tweet+GeneralHelpers.m in Sources */,
+				05B8D5FE10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

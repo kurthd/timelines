@@ -19,7 +19,7 @@
 @property (nonatomic, copy) NSNumber * count;
 @property (nonatomic, retain) TwitterCredentials * credentials;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -32,7 +32,7 @@
                       count:(NSNumber *)aCount
                 credentials:(TwitterCredentials *)someCredentials
                     context:(NSManagedObjectContext *)aContext
-                   delegate:(id)aDelegate
+                   delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithUpdateId:anUpdateId
                                                page:aPage
@@ -49,7 +49,7 @@
                       count:(NSNumber *)aCount
                 credentials:(TwitterCredentials *)someCredentials
                     context:(NSManagedObjectContext *)aContext
-                   delegate:(id)aDelegate
+                   delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithUpdateId:anUpdateId
                                            username:aUsername
@@ -78,7 +78,7 @@
                  count:(NSNumber *)aCount
            credentials:(TwitterCredentials *)someCredentials
                context:(NSManagedObjectContext *)aContext
-              delegate:(id)aDelegate
+              delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     return [self initWithUpdateId:anUpdateId
                          username:nil
@@ -95,7 +95,7 @@
                  count:(NSNumber *)aCount
            credentials:(TwitterCredentials *)someCredentials
                context:(NSManagedObjectContext *)aContext
-              delegate:(id)aDelegate
+              delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.username = aUsername;
@@ -131,12 +131,14 @@
 
     if (self.username) {
         SEL sel = @selector(timeline:fetchedForUser:sinceUpdateId:page:count:);
-        [self invokeSelector:sel withTarget:delegate args:tweets, username,
-            updateId, page, count, nil];
+        if ([delegate respondsToSelector:sel])
+            [delegate timeline:tweets fetchedForUser:username
+                sinceUpdateId:updateId page:page count:count];
     } else {
         SEL sel = @selector(timeline:fetchedSinceUpdateId:page:count:);
-        [self invokeSelector:sel withTarget:delegate args:tweets, updateId,
-            page, count, nil];
+        if ([delegate respondsToSelector:sel])
+            [delegate timeline:tweets fetchedSinceUpdateId:updateId page:page
+                count:count];
     }
 
     return YES;
@@ -147,13 +149,20 @@
     if (self.username) {
         SEL sel = @selector(failedToFetchTimelineForUser:sinceUpdateId:page:\
             count:error:);
-        [self invokeSelector:sel withTarget:delegate args:username, updateId,
-            page, count, error, nil];
+        if ([delegate respondsToSelector:sel])
+            [delegate failedToFetchTimelineForUser:username
+                                     sinceUpdateId:updateId
+                                              page:page
+                                             count:count
+                                             error:error];
     } else {
         SEL sel =
             @selector(failedToFetchTimelineSinceUpdateId:page:count:error:);
-        [self invokeSelector:sel withTarget:delegate args:updateId, page, count,
-            error, nil];
+        if ([delegate respondsToSelector:sel])
+            [delegate failedToFetchTimelineSinceUpdateId:updateId
+                                                    page:page
+                                                   count:count
+                                                   error:error];
     }
 
     return YES;

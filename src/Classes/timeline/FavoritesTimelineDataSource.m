@@ -4,7 +4,6 @@
 
 #import "FavoritesTimelineDataSource.h"
 #import "Tweet.h"
-#import "TweetInfo.h"
 
 @implementation FavoritesTimelineDataSource
 
@@ -45,12 +44,7 @@
 - (void)favorites:(NSArray *)timeline fetchedForUser:(NSString *)aUsername
     page:(NSNumber *)page
 {
-    NSMutableArray * tweetInfoTimeline = [NSMutableArray array];
-    for (Tweet * tweet in timeline) {
-        TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
-        [tweetInfoTimeline addObject:tweetInfo];
-    }
-    [delegate timeline:tweetInfoTimeline fetchedSinceUpdateId:nil page:page];
+    [delegate timeline:timeline fetchedSinceUpdateId:nil page:page];
 }
 
 - (void)failedToFetchFavoritesForUser:(NSString *)user page:(NSNumber *)page

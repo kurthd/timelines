@@ -7,7 +7,6 @@
 #import "RotatableTabBarController.h"
 #import "NSString+UrlAdditions.h"
 #import "SettingsReader.h"
-#import "TimelineTableViewCellView.h"
 
 static const NSInteger MAX_TWEET_LENGTH = 140;
 
@@ -326,7 +325,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         characterCountLandscape.textColor = [UIColor whiteColor];
         characterCountLandscape.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+            [UIColor defaultDarkThemeCellColor];
         textView.keyboardAppearance = UIKeyboardAppearanceAlert;
         recipientBackgroundView.image =
             [UIImage imageNamed:@"ComposeRecipientGradientDarkTheme.png"];
@@ -682,8 +681,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
         toolbar.barStyle = UIBarStyleBlack;
-        textView.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        textView.backgroundColor = [UIColor defaultDarkThemeCellColor];
         textView.textColor = [UIColor whiteColor];
     }
 }

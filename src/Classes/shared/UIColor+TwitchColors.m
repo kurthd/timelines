@@ -26,6 +26,8 @@ static UIColor * twitchSelectedCellColor;
 static UIColor * twitchCheckedColor;
 static UIColor * selectedTableViewCellBackgroundColor;
 static UIColor * darkCellBackgroundColor;
+static UIColor * mentionCellColor;
+static UIColor * defaultDarkThemeCellColor;
 
 + (UIColor *)twitchBlueColor
 {
@@ -204,6 +206,40 @@ static UIColor * darkCellBackgroundColor;
             [[UIColor colorWithRed:.95 green:.95 blue:.95 alpha:1] retain];
     
     return darkCellBackgroundColor;
+}
+
++ (UIColor *)mentionCellColor
+{
+    if (!mentionCellColor)
+        mentionCellColor =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [[UIColor twitchDarkGrayColor] retain] :
+        [[UIColor colorWithRed:0.89 green:0.99 blue:0.89 alpha:1.0] retain];
+    
+    return mentionCellColor;
+}
+
++ (UIColor *)defaultTimelineCellColor
+{
+    return [SettingsReader displayTheme] == kDisplayThemeDark ?
+    [[self class] defaultDarkThemeCellColor] : [UIColor whiteColor];
+}
+
++ (UIColor *)defaultDarkThemeCellColor
+{
+    if (!defaultDarkThemeCellColor)
+        defaultDarkThemeCellColor =
+        [[UIColor colorWithRed:0.22 green:0.23 blue:0.24 alpha:1.0]
+         retain];
+    
+    return defaultDarkThemeCellColor;
+}
+
++ (UIColor *)darkenedCellColor
+{
+    return [SettingsReader displayTheme] == kDisplayThemeDark ?
+    [UIColor colorWithRed:0.17 green:0.17 blue:0.17 alpha:1.0] :
+    [UIColor darkCellBackgroundColor];
 }
 
 @end

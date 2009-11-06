@@ -6,7 +6,6 @@
 #import "TwitterCredentials.h"
 #import "UIColor+TwitchColors.h"
 #import "SettingsReader.h"
-#import "TimelineTableViewCellView.h"
 #import "AccountTableViewCell.h"
 
 NSInteger usernameSort(TwitterCredentials * user1,
@@ -46,12 +45,6 @@ NSInteger usernameSort(TwitterCredentials * user1,
             autorelease];
         self.tableView.allowsSelectionDuringEditing = NO;
         self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            self.tableView.separatorColor = [UIColor twitchGrayColor];
-            self.view.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
-        }
     }
 
     return self;

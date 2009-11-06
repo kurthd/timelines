@@ -12,9 +12,10 @@
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "PhotoBrowserDisplayMgr.h"
 #import "RotatableTabBarController.h"
+#import "Tweet+GeneralHelpers.h"
+#import "TweetLocation+GeneralHelpers.h"
 #import "SettingsReader.h"
-#import "UIColor+TwitchColors.h"
-#import "TimelineTableViewCellView.h"
+#import "TwitbitShared.h"
 
 static NSString * usernameRegex = @"x-twitbit://user\\?screen_name=@([\\w_]+)";
 static NSString * hashRegex = @"x-twitbit://search\\?query=(.+)";
@@ -52,7 +53,7 @@ enum TweetActionSheets {
 
 @property (nonatomic, retain) UINavigationController * navigationController;
 
-@property (nonatomic, retain) TweetInfo * tweet;
+@property (nonatomic, retain) Tweet * tweet;
 @property (nonatomic, retain) UIWebView * tweetContentView;
 
 @property (readonly) UITableViewCell * conversationCell;
@@ -140,8 +141,7 @@ enum TweetActionSheets {
 
         headerTopLine.backgroundColor = [UIColor blackColor];
         headerBottomLine.backgroundColor = [UIColor twitchGrayColor];
-        headerViewPadding.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        headerViewPadding.backgroundColor = [UIColor defaultDarkThemeCellColor];
 
         chatArrowView.image = [UIImage imageNamed:@"DarkThemeChatArrow.png"];
 
@@ -169,7 +169,7 @@ enum TweetActionSheets {
         usernameLabel.shadowColor = [UIColor blackColor];
         
         tweetTextTableViewCell.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+            [UIColor defaultDarkThemeCellColor];
     }
 
     self.tableView.tableHeaderView = headerView;
@@ -341,7 +341,8 @@ enum TweetActionSheets {
         if (transformedPath.row == kConversationRow)
             [delegate loadConversationFromTweetId:tweet.identifier];
         else if (transformedPath.row == kLocationRow) {
-            CLLocationCoordinate2D coord = tweet.location.coordinate;
+            CLLocation * location = [tweet.location asCllocation];
+            CLLocationCoordinate2D coord = location.coordinate;
             NSString * locationAsString =
                 [NSString stringWithFormat:@"%f, %f", coord.latitude,
                 coord.longitude];
@@ -439,6 +440,7 @@ enum TweetActionSheets {
                 [[RemotePhoto alloc]
                 initWithImage:nil url:webpage name:webpage];
             [[PhotoBrowserDisplayMgr instance] showPhotoInBrowser:remotePhoto];
+            [remotePhoto release];
         } else
             [[TwitchWebBrowserDisplayMgr instance] visitWebpage:webpage];
     }
@@ -448,7 +450,7 @@ enum TweetActionSheets {
 
 #pragma mark Public interface implementation
 
-- (void)displayTweet:(TweetInfo *)aTweet
+- (void)displayTweet:(Tweet *)aTweet
     onNavigationController:(UINavigationController *)navController
 {
     // sucks but the map span doesn't seem to set properly if we don't recreate
@@ -463,7 +465,7 @@ enum TweetActionSheets {
     [self loadTweetWebView];
 
     if (self.tweet.location)
-        [self.locationCell setLocation:self.tweet.location];
+        [self.locationCell setLocation:[self.tweet.location asCllocation]];
 }
 
 - (void)setFavorited:(BOOL)favorited
@@ -634,7 +636,7 @@ enum TweetActionSheets {
 
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
             conversationCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+                [UIColor defaultDarkThemeCellColor];
             conversationCell.textLabel.textColor = [UIColor whiteColor];
         }
     }
@@ -656,7 +658,7 @@ enum TweetActionSheets {
             [UIImage imageNamed:@"PublicReplyButtonIconHighlighted.png"];
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
             publicReplyCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+                [UIColor defaultDarkThemeCellColor];
             publicReplyCell.textLabel.textColor = [UIColor whiteColor];
         }
     }
@@ -677,8 +679,7 @@ enum TweetActionSheets {
         retweetCell.imageView.highlightedImage =
             [UIImage imageNamed:@"RetweetButtonIconHighlighted.png"];
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            retweetCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            retweetCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
             retweetCell.textLabel.textColor = [UIColor whiteColor];
         }
     }
@@ -761,8 +762,7 @@ enum TweetActionSheets {
 
          favoriteCell = [nib objectAtIndex:0];
          if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-             favoriteCell.backgroundColor =
-                 [TimelineTableViewCellView defaultDarkThemeCellColor];
+             favoriteCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
              favoriteCell.textLabel.textColor = [UIColor whiteColor];
          }
     }
@@ -782,7 +782,7 @@ enum TweetActionSheets {
             [UIImage imageNamed:@"DeleteTweetButtonIcon.png"];
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
             deleteTweetCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+                [UIColor defaultDarkThemeCellColor];
             deleteTweetCell.textLabel.textColor = [UIColor whiteColor];
         }
     }
@@ -837,8 +837,7 @@ enum TweetActionSheets {
             [[TweetLocationCell alloc] initWithStyle:UITableViewCellStyleDefault
             reuseIdentifier:@"TweetLocationCell"];
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            locationCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            locationCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
             [locationCell setLabelTextColor:[UIColor whiteColor]];
         } else
             [locationCell setLabelTextColor:[UIColor blackColor]];

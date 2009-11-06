@@ -4,7 +4,6 @@
 
 #import "NearbySearchDataSource.h"
 #import "Tweet.h"
-#import "TweetInfo.h"
 
 @implementation NearbySearchDataSource
 
@@ -57,12 +56,7 @@
                              radius:(NSNumber *)radius
                     radiusIsInMiles:(BOOL)radiusIsInMiles
 {
-    NSMutableArray * tweetInfoTimeline = [NSMutableArray array];
-    for (Tweet * tweet in searchResults) {
-        TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
-        [tweetInfoTimeline addObject:tweetInfo];
-    }
-    [delegate timeline:tweetInfoTimeline
+    [delegate timeline:searchResults
         fetchedSinceUpdateId:[NSNumber numberWithInt:0] page:page];
 }
 

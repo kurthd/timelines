@@ -7,7 +7,6 @@
 #import "DirectMessagesDisplayMgr.h"
 #import "ConversationPreview.h"
 #import "DirectMessage.h"
-#import "TweetInfo.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "InfoPlistConfigReader.h"
 #import "RegexKitLite.h"
@@ -322,11 +321,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSLog(@"Message display manager: selected message: %@", message);
     self.selectedMessage = message;
 
-    BOOL tweetByUser = [message.sender.username isEqual:activeAcctUsername];
-    [self.directMessageViewController setUsersTweet:tweetByUser];
+    BOOL dmByUser = [message.sender.username isEqual:activeAcctUsername];
+    [self.directMessageViewController setUsersDirectMessage:dmByUser];
 
-    TweetInfo * tweetInfo = [TweetInfo createFromDirectMessage:message];
-    [self.directMessageViewController displayTweet:tweetInfo
+    [self.directMessageViewController displayDirectMessage:message
         onNavigationController:wrapperController.navigationController];
 
     UISegmentedControl * segmentedControl =

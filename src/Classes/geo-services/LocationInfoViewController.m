@@ -7,8 +7,7 @@
 #import "RegexKitLite.h"
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
-#import "TimelineTableViewCellView.h"
-#import "UIColor+TwitchColors.h"
+#import "TwitbitShared.h"
 
 enum {
     kLocationInfoSectionAddress,
@@ -105,8 +104,7 @@ enum {
             [UIImage imageNamed:@"AvatarDarkThemeBackground.png"];
         headerTopLine.backgroundColor = [UIColor blackColor];
         headerBottomLine.backgroundColor = [UIColor twitchGrayColor];
-        headerViewPadding.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        headerViewPadding.backgroundColor = [UIColor defaultDarkThemeCellColor];
 
         titleLabel.textColor = [UIColor whiteColor];
         titleLabel.shadowColor = [UIColor blackColor];
@@ -351,8 +349,7 @@ enum {
         addressCell = [[nib objectAtIndex:0] retain];
 
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            addressCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            addressCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
             [addressCell setKeyColor:[UIColor twitchBlueOnDarkBackgroundColor]];
             [addressCell setValueColor:[UIColor whiteColor]];
         }
@@ -375,7 +372,7 @@ enum {
 
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
             directionsToCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+                [UIColor defaultDarkThemeCellColor];
             [directionsToCell
                 setButtonTextColor:[UIColor twitchBlueOnDarkBackgroundColor]];
         }
@@ -397,7 +394,7 @@ enum {
             setText:NSLocalizedString(@"locationinfo.directionsfrom", @"")];
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
             directionsFromCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+                [UIColor defaultDarkThemeCellColor];
             [directionsFromCell
                 setButtonTextColor:[UIColor twitchBlueOnDarkBackgroundColor]];
         }
@@ -423,7 +420,7 @@ enum {
 
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
             searchLocationCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+                [UIColor defaultDarkThemeCellColor];
             searchLocationCell.textLabel.textColor = [UIColor whiteColor];
         }
     }
@@ -446,7 +443,7 @@ enum {
 
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
             nearbyTweetsCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+                [UIColor defaultDarkThemeCellColor];
             nearbyTweetsCell.textLabel.textColor = [UIColor whiteColor];
         }
     }

@@ -5,7 +5,6 @@
 #import "SearchDisplayMgr.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "Tweet.h"
-#import "TweetInfo.h"
 #import "SettingsReader.h"
 
 @interface SearchDisplayMgr ()
@@ -129,12 +128,7 @@
     if ([query isEqualToString:self.queryString] &&
         !self.nearbySearchLocation) {
         self.searchResults = newSearchResults;
-        NSMutableArray * tweetInfoTimeline = [NSMutableArray array];
-        for (Tweet * tweet in searchResults) {
-            TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
-            [tweetInfoTimeline addObject:tweetInfo];
-        }
-        [self.dataSourceDelegate timeline:tweetInfoTimeline
+        [self.dataSourceDelegate timeline:self.searchResults
                      fetchedSinceUpdateId:self.updateId
                                      page:page];
     }
@@ -160,12 +154,7 @@
 {
     if ([query isEqualToString:self.queryString] && self.nearbySearchLocation) {
         self.searchResults = newSearchResults;
-        NSMutableArray * tweetInfoTimeline = [NSMutableArray array];
-        for (Tweet * tweet in searchResults) {
-            TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
-            [tweetInfoTimeline addObject:tweetInfo];
-        }
-        [self.dataSourceDelegate timeline:tweetInfoTimeline
+        [self.dataSourceDelegate timeline:self.searchResults
                      fetchedSinceUpdateId:self.updateId
                                      page:page];
     }

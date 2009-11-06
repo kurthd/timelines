@@ -25,7 +25,6 @@
 #import "DirectMessage.h"
 #import "NSObject+RuntimeAdditions.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
-#import "TweetInfo.h"  // so persisted objects can be displayed
 #import "DirectMessageCache.h"  // so persisted objects can be displayed
 #import "NewDirectMessagesPersistenceStore.h"
 #import "NewDirectMessagesState.h"
@@ -1330,8 +1329,7 @@
     NSMutableDictionary * tweets =
         [NSMutableDictionary dictionaryWithCapacity:allTweets.count];
     for (UserTweet * tweet in allTweets)
-        [tweets setObject:[TweetInfo createFromTweet:tweet]
-                   forKey:tweet.identifier];
+        [tweets setObject:tweet forKey:tweet.identifier];
 
     timelineDisplayMgr.tweetIdToShow = [newestTweetId description];
     [timelineDisplayMgr setTweets:tweets];
@@ -1396,8 +1394,7 @@
     NSMutableDictionary * mentions =
         [NSMutableDictionary dictionaryWithCapacity:allMentions.count];
     for (Mention * mention in allMentions)
-        [mentions setObject:[TweetInfo createFromTweet:mention]
-                     forKey:mention.identifier];
+        [mentions setObject:mention forKey:mention.identifier];
 
     mentionDisplayMgr.mentionIdToShow = [newestTweetId description];
     [mentionDisplayMgr setTimeline:mentions updateId:newestTweetId];

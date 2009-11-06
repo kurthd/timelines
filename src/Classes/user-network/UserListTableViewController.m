@@ -6,11 +6,10 @@
 #import "UserSummaryTableViewCell.h"
 #import "User.h"
 #import "AsynchronousNetworkFetcher.h"
-#import "UIColor+TwitchColors.h"
 #import "User+UIAdditions.h"
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
-#import "TimelineTableViewCellView.h"
+#import "TwitbitShared.h"
 
 @interface User (Sorting)
 - (NSComparisonResult)compare:(User *)user;
@@ -73,10 +72,8 @@ static UIImage * defaultAvatar;
     
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         self.tableView.separatorColor = [UIColor twitchGrayColor];
-        self.view.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
-        footerView.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        self.view.backgroundColor = [UIColor defaultDarkThemeCellColor];
+        footerView.backgroundColor = [UIColor defaultDarkThemeCellColor];
         noMorePagesLabel.textColor = [UIColor twitchLightGrayColor];
         currentPagesLabel.textColor = [UIColor twitchLightLightGrayColor];
     }
@@ -272,7 +269,7 @@ static UIImage * defaultAvatar;
 + (UIColor *)darkCellColor
 {
     return [SettingsReader displayTheme] == kDisplayThemeDark ?
-        [TimelineTableViewCellView defaultDarkThemeCellColor] :
+        [UIColor defaultDarkThemeCellColor] :
         [UIColor darkCellBackgroundColor];
 }
 

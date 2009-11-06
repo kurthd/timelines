@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import "TweetViewControllerDelegate.h"
-#import "TweetInfo.h"
+#import "Tweet.h"
 #import "RoundedImage.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
 #import "MarkAsFavoriteCell.h"
@@ -37,7 +37,7 @@
     UITableViewCell * conversationCell;
     UIWebView * tweetContentView;
 
-    TweetInfo * tweet;
+    Tweet * tweet;
 
     // configure the display
     BOOL showsFavoriteButton;
@@ -58,13 +58,13 @@
 }
 
 @property (nonatomic, assign) NSObject<TweetViewControllerDelegate> * delegate;
-@property (nonatomic, retain, readonly) TweetInfo * tweet;
+@property (nonatomic, retain, readonly) Tweet * tweet;
 @property (nonatomic, assign) BOOL showsExtendedActions;
 @property (nonatomic, assign) BOOL allowDeletion;
 @property (nonatomic, retain) UIViewController * realParentViewController;
 @property (nonatomic, readonly) TweetLocationCell * locationCell;
 
-- (void)displayTweet:(TweetInfo *)tweet
+- (void)displayTweet:(Tweet *)tweet
     onNavigationController:(UINavigationController *)navController;
 - (void)setFavorited:(BOOL)favorited;
 - (void)setUsersTweet:(BOOL)usersTweet;

@@ -4,7 +4,6 @@
 
 #import "UserInfoViewController.h"
 #import "UILabel+DrawingAdditions.h"
-#import "UIColor+TwitchColors.h"
 #import "UserInfoLabelCell.h"
 #import "AsynchronousNetworkFetcher.h"
 #import "NSString+HtmlEncodingAdditions.h"
@@ -13,7 +12,7 @@
 #import "PhotoBrowserDisplayMgr.h"
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
-#import "TimelineTableViewCellView.h"
+#import "TwitbitShared.h"
 
 enum {
     kUserInfoSectionDetails,
@@ -110,7 +109,7 @@ static UIImage * defaultAvatar;
         headerTopLine.backgroundColor = [UIColor blackColor];
         headerBottomLine.backgroundColor = [UIColor twitchGrayColor];
         headerViewPadding.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+            [UIColor defaultDarkThemeCellColor];
 
         nameLabel.textColor = [UIColor whiteColor];
         nameLabel.shadowColor = [UIColor blackColor];
@@ -720,8 +719,7 @@ static UIImage * defaultAvatar;
             autorelease];
 
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            cell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            cell.backgroundColor = [UIColor defaultDarkThemeCellColor];
             cell.textLabel.textColor = [UIColor whiteColor];
         }
     }
@@ -744,8 +742,7 @@ static UIImage * defaultAvatar;
 
         cell = [nib objectAtIndex:0];
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            cell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            cell.backgroundColor = [UIColor defaultDarkThemeCellColor];
             [cell setKeyColor:[UIColor twitchBlueOnDarkBackgroundColor]];
             [cell setValueColor:[UIColor whiteColor]];
         }
@@ -761,8 +758,7 @@ static UIImage * defaultAvatar;
             [[LocationCell alloc] initWithStyle:UITableViewCellStyleDefault
             reuseIdentifier:@"LocationCell"];
         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            locationCell.backgroundColor =
-                [TimelineTableViewCellView defaultDarkThemeCellColor];
+            locationCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
             [locationCell setLabelTextColor:[UIColor whiteColor]];
         }
     }

@@ -4,12 +4,12 @@
 
 #import "ConversationViewController.h"
 #import "UIAlertView+InstantiationAdditions.h"
-#import "TweetInfo.h"
-#import "TimelineTableViewCell.h"
+#import "Tweet+GeneralHelpers.h"
 #import "User+UIAdditions.h"
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
-#import "UIColor+TwitchColors.h"
+#import "FastTimelineTableViewCell.h"
+#import "TwitbitShared.h"
 
 @interface ConversationViewController ()
 
@@ -82,7 +82,7 @@
     [conversation addObjectsFromArray:tweets];
 
     if (tweets.count < self.batchSize.integerValue + 1) {
-        TweetInfo * oldestTweet = [conversation lastObject];
+        Tweet * oldestTweet = [conversation lastObject];
         NSString * tweetId = oldestTweet.inReplyToTwitterTweetId;
         if (tweetId) {  // there's still more to load
             [self loadConversationFromTweetId:tweetId];
@@ -218,31 +218,31 @@
 {
     static NSString * CellIdentifier = @"ConversationTableViewCell";
 
-    TimelineTableViewCell * cell = (TimelineTableViewCell *)
+    FastTimelineTableViewCell * cell = (FastTimelineTableViewCell *)
         [tv dequeueReusableCellWithIdentifier:CellIdentifier];
 
     if (cell == nil)
         cell =
-            [[[TimelineTableViewCell alloc]
+            [[[FastTimelineTableViewCell alloc]
             initWithStyle:UITableViewStylePlain reuseIdentifier:CellIdentifier]
             autorelease];
 
-    TweetInfo * tweet = [conversation objectAtIndex:indexPath.row];
+    Tweet * tweet = [conversation objectAtIndex:indexPath.row];
 
-    [cell setName:[tweet displayName]];
-    [cell setDate:tweet.timestamp];
+    [cell setAuthor:[tweet displayName]];
+    [cell setTimestamp:[tweet.timestamp tableViewCellDescription]];
     [cell setTweetText:tweet.text];
 
     BOOL landscape = [[RotatableTabBarController instance] landscape];
     [cell setLandscape:landscape];
 
     if ([delegate isCurrentUser:tweet.user.username])
-        [cell setDisplayType:kTimelineTableViewCellTypeInverted];
+        [cell setDisplayType:FastTimelineTableViewCellDisplayTypeInverted];
     else
-        [cell setDisplayType:kTimelineTableViewCellTypeNormal];
+        [cell setDisplayType:FastTimelineTableViewCellDisplayTypeNormal];
 
-    [cell setAvatarImage:[self getThumbnailAvatarForUser:tweet.user]];
-    cell.avatarImageUrl = tweet.user.avatar.thumbnailImageUrl;
+    [cell setAvatar:[self getThumbnailAvatarForUser:tweet.user]];
+    cell.userData = tweet.user.avatar.thumbnailImageUrl;
 
     return cell;
 }
@@ -252,19 +252,20 @@
 - (CGFloat)tableView:(UITableView *)tv
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TweetInfo * tweet = [conversation objectAtIndex:indexPath.row];
-    TimelineTableViewCellType type = kTimelineTableViewCellTypeNormal;
+    Tweet * tweet = [conversation objectAtIndex:indexPath.row];
+    FastTimelineTableViewCellDisplayType type =
+        FastTimelineTableViewCellDisplayTypeNormal;
 
     BOOL landscape = [[RotatableTabBarController instance] landscape];
 
-    return [TimelineTableViewCell heightForContent:tweet.text displayType:type
-        landscape:landscape];
+    return [FastTimelineTableViewCell
+        heightForContent:tweet.text displayType:type landscape:landscape];
 }
 
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TweetInfo * info = [conversation objectAtIndex:indexPath.row];
+    Tweet * info = [conversation objectAtIndex:indexPath.row];
     [self.delegate displayTweetWithId:info.identifier];
 }
 
@@ -272,7 +273,7 @@
 
 - (IBAction)loadNextBatch:(id)sender
 {
-    TweetInfo * tweet = [conversation lastObject];
+    Tweet * tweet = [conversation lastObject];
     if (tweet.inReplyToTwitterTweetId) {
         [self loadConversationFromTweetId:tweet.inReplyToTwitterTweetId];
         [self configureFooterForCurrentState];
@@ -291,9 +292,9 @@
 
         // avoid calling reloadData by setting the avatars of the visible cells
         NSArray * visibleCells = self.tableView.visibleCells;
-        for (TimelineTableViewCell * cell in visibleCells)
-            if ([cell.avatarImageUrl isEqualToString:urlAsString])
-                [cell setAvatarImage:avatarImage];
+        for (FastTimelineTableViewCell * cell in visibleCells)
+            if ([cell.userData isEqual:urlAsString])
+                [cell setAvatar:avatarImage];
     }
 }
 

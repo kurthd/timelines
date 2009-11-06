@@ -4,7 +4,6 @@
 
 #import "MentionsTimelineDataSource.h"
 #import "Tweet.h"
-#import "TweetInfo.h"
 #import "SettingsReader.h"
 
 @implementation MentionsTimelineDataSource
@@ -52,13 +51,7 @@
 {
     NSLog(@"'Mentions' data source: received timeline of size %d",
         [mentions count]);
-    NSMutableArray * tweetInfoTimeline = [NSMutableArray array];
-    for (Tweet * tweet in mentions) {
-        TweetInfo * tweetInfo = [TweetInfo createFromTweet:tweet];
-        [tweetInfoTimeline addObject:tweetInfo];
-    }
-    [delegate timeline:tweetInfoTimeline fetchedSinceUpdateId:updateId
-        page:page];
+    [delegate timeline:mentions fetchedSinceUpdateId:updateId page:page];
 }
 
 - (void)failedToFetchMentionsSinceUpdateId:(NSNumber *)updateId

@@ -5,11 +5,11 @@
 #import <Foundation/Foundation.h>
 #import "ConversationViewController.h"
 #import "TwitterService.h"
-#import "TweetInfo.h"
+#import "Tweet.h"
 
 @protocol ConversationDisplayMgrDelegate
 
-- (void)displayTweetFromConversation:(TweetInfo *)tweet;
+- (void)displayTweetFromConversation:(Tweet *)tweet;
 
 @end
 

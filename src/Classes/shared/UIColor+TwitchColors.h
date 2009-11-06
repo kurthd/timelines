@@ -26,4 +26,10 @@
 + (UIColor *)selectedTableViewCellBackgroundColor;
 + (UIColor *)darkCellBackgroundColor;
 
+// for table view cells
++ (UIColor *)defaultTimelineCellColor;
++ (UIColor *)defaultDarkThemeCellColor;
++ (UIColor *)mentionCellColor;
++ (UIColor *)darkenedCellColor;
+
 @end
