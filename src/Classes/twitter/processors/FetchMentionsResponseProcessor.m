@@ -17,7 +17,7 @@
 @property (nonatomic, copy) NSNumber * count;
 @property (nonatomic, retain) TwitterCredentials * credentials;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -30,7 +30,7 @@
                       count:(NSNumber *)aCount
                 credentials:(TwitterCredentials *)someCredentials
                     context:(NSManagedObjectContext *)aContext
-                   delegate:(id)aDelegate
+                   delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithUpdateId:anUpdateId
                                                page:aPage
@@ -57,7 +57,7 @@
                  count:(NSNumber *)aCount
            credentials:(TwitterCredentials *)someCredentials
                context:(NSManagedObjectContext *)aContext
-              delegate:(id)aDelegate
+              delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.updateId = anUpdateId;
@@ -90,8 +90,9 @@
         NSLog(@"Failed to save mentions and users: '%@'", error);
 
     SEL sel = @selector(mentions:fetchedSinceUpdateId:page:count:);
-    [self invokeSelector:sel withTarget:delegate args:tweets, updateId, page,
-        count, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate mentions:tweets fetchedSinceUpdateId:updateId page:page
+            count:count];
 
     return YES;
 }
@@ -99,8 +100,9 @@
 - (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToFetchMentionsSinceUpdateId:page:count:error:);
-    [self invokeSelector:sel withTarget:delegate args:updateId, page, count,
-        error, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate failedToFetchMentionsSinceUpdateId:updateId page:page
+            count:count error:error];
 
     return YES;
 }
