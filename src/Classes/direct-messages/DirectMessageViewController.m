@@ -322,6 +322,7 @@ enum TweetActionSheets {
                 [[RemotePhoto alloc]
                 initWithImage:nil url:webpage name:webpage];
             [[PhotoBrowserDisplayMgr instance] showPhotoInBrowser:remotePhoto];
+            [remotePhoto release];
         } else
             [[TwitchWebBrowserDisplayMgr instance] visitWebpage:webpage];
     }
