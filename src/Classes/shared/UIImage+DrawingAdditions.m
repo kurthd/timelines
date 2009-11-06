@@ -52,6 +52,24 @@
     [self drawInRect:rect];
 }
 
+- (void)drawInRect:(CGRect)rect withRoundedCornersWithRadius:(CGFloat)radius
+    alpha:(CGFloat)alpha
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [self drawInRect:rect
+        withRoundedCornersWithRadius:radius usingContext:context
+        alpha:alpha];
+}
+
+- (void)drawInRect:(CGRect)rect withRoundedCornersWithRadius:(CGFloat)radius
+    usingContext:(CGContextRef)context alpha:(CGFloat)alpha
+{
+    [self roundCornersInRect:rect withRadius:radius usingContext:context];
+
+    // draw the actual image
+    [self drawInRect:rect blendMode:kCGBlendModeNormal alpha:alpha];
+}
+
 - (void)roundCornersInRect:(CGRect)imageRect
                 withRadius:(CGFloat)radius
               usingContext:(CGContextRef)context

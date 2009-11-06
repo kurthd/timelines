@@ -7,6 +7,7 @@
 #import "UIColor+TwitchColors.h"
 #import "SettingsReader.h"
 #import "TimelineTableViewCellView.h"
+#import "AccountTableViewCell.h"
 
 NSInteger usernameSort(TwitterCredentials * user1,
                        TwitterCredentials * user2,
@@ -19,14 +20,15 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
 @property (nonatomic, copy) NSArray * accounts;
 
-+ (void)configureSelectedAccountCell:(UITableViewCell *)cell;
-+ (void)configureNormalAccountCell:(UITableViewCell *)cell;
++ (void)configureSelectedAccountCell:(AccountTableViewCell *)cell;
++ (void)configureNormalAccountCell:(AccountTableViewCell *)cell;
 
 @end
 
 @implementation AccountsViewController
 
-@synthesize delegate, selectedAccount, accounts;
+@synthesize delegate, selectedAccount, accounts, selectedAccountTarget,
+    selectedAccountAction;
 
 - (void)dealloc
 {
@@ -35,18 +37,24 @@ NSInteger usernameSort(TwitterCredentials * user1,
     [super dealloc];
 }
 
-- (void)viewDidLoad
+- (id)init
 {
-    [super viewDidLoad];
+    if (self = [super init]) {
+        self.tableView =
+            [[[UITableView alloc]
+            initWithFrame:self.tableView.frame style:UITableViewStyleGrouped]
+            autorelease];
+        self.tableView.allowsSelectionDuringEditing = NO;
+        self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    [self.navigationItem setLeftBarButtonItem:self.editButtonItem animated:NO];
-    self.tableView.allowsSelectionDuringEditing = NO;
-
-    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-        self.tableView.separatorColor = [UIColor twitchGrayColor];
-        self.view.backgroundColor =
-            [TimelineTableViewCellView defaultDarkThemeCellColor];
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            self.tableView.separatorColor = [UIColor twitchGrayColor];
+            self.view.backgroundColor =
+                [TimelineTableViewCellView defaultDarkThemeCellColor];
+        }
     }
+
+    return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -106,7 +114,8 @@ NSInteger usernameSort(TwitterCredentials * user1,
               withRowAnimation:UITableViewRowAnimationFade];
 
     if (self.accounts.count == 1) {
-        UITableViewCell * cell =
+        AccountTableViewCell * cell =
+            (AccountTableViewCell *)
             [self.tableView cellForRowAtIndexPath:indexPath];
         [[self class] configureSelectedAccountCell:cell];
     }
@@ -123,35 +132,55 @@ NSInteger usernameSort(TwitterCredentials * user1,
 - (NSInteger)tableView:(UITableView *)tv
  numberOfRowsInSection:(NSInteger)section
 {
-    return self.accounts.count;
+    return self.accounts.count + 1;
 }
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * CellIdentifier = @"AccountsTableViewCell";
-
-    UITableViewCell * cell =
-        [tv dequeueReusableCellWithIdentifier:CellIdentifier];
-
-    if (cell == nil) {
+    UITableViewCell * cell;
+    if (indexPath.row == self.accounts.count) {
+        NSString * cellIdentifier = @"AddAccountTableViewCell";
         cell =
-            [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-            reuseIdentifier:CellIdentifier] autorelease];
+            [tv dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell)
+            cell =
+                [[[UITableViewCell alloc]
+                initWithStyle:UITableViewCellStyleDefault
+                reuseIdentifier:cellIdentifier]
+                autorelease];
+
+        cell.textLabel.text = NSLocalizedString(@"account.addaccount", @"");
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    } else {
+        NSString * cellIdentifier = @"AccountTableViewCell";
+        AccountTableViewCell * accountCell =
+            (AccountTableViewCell *)
+            [tv dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!accountCell)
+            accountCell =
+                [[[AccountTableViewCell alloc]
+                initWithStyle:UITableViewCellStyleDefault
+                reuseIdentifier:cellIdentifier]
+                autorelease];
+
+        TwitterCredentials * account =
+            [self.accounts objectAtIndex:indexPath.row];
+        [accountCell setUsername:account.username];
+
+        if ([account.username isEqualToString:self.selectedAccount.username])
+            [[self class] configureSelectedAccountCell:accountCell];
+        else
+            [[self class] configureNormalAccountCell:accountCell];
+
+        accountCell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        accountCell.accessoryType =
+            UITableViewCellAccessoryDetailDisclosureButton;
+        accountCell.editingAccessoryType = UITableViewCellAccessoryNone;
+
+        cell = accountCell;
     }
-
-    TwitterCredentials * account = [self.accounts objectAtIndex:indexPath.row];
-    cell.textLabel.text = account.username;
-
-    if ([account.username isEqualToString:self.selectedAccount.username])
-        [[self class] configureSelectedAccountCell:cell];
-    else
-        [[self class] configureNormalAccountCell:cell];
-
-    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-    cell.editingAccessoryType = UITableViewCellAccessoryNone;
 
     return cell;
 }
@@ -164,6 +193,10 @@ NSInteger usernameSort(TwitterCredentials * user1,
     // toggle the active account
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
+    if (selectedAccountTarget)
+        [selectedAccountTarget performSelector:selectedAccountAction
+            withObject:nil];
+
     NSInteger accountIndex =
         [self.accounts indexOfObject:self.selectedAccount];
     if (accountIndex == indexPath.row)
@@ -172,12 +205,14 @@ NSInteger usernameSort(TwitterCredentials * user1,
     NSIndexPath * oldIndexPath =
         [NSIndexPath indexPathForRow:accountIndex inSection:0];
  
-    UITableViewCell * newCell =
+    AccountTableViewCell * newCell =
+        (AccountTableViewCell *)
         [self.tableView cellForRowAtIndexPath:indexPath];
     [[self class] configureSelectedAccountCell:newCell];
     self.selectedAccount = [self.accounts objectAtIndex:indexPath.row];
 
-    UITableViewCell * oldCell =
+    AccountTableViewCell * oldCell =
+        (AccountTableViewCell *)
         [self.tableView cellForRowAtIndexPath:oldIndexPath];
     [[self class] configureNormalAccountCell:oldCell];
 }
@@ -218,7 +253,8 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
             NSIndexPath * newIndexPath =
                 [NSIndexPath indexPathForRow:index inSection:0];
-            UITableViewCell * cell =
+            AccountTableViewCell * cell =
+                (AccountTableViewCell *)
                 [self.tableView cellForRowAtIndexPath:newIndexPath];
 
             [[self class] configureSelectedAccountCell:cell];
@@ -226,28 +262,57 @@ NSInteger usernameSort(TwitterCredentials * user1,
     }
 }
 
-#pragma mark Private implementation
-
-+ (void)configureSelectedAccountCell:(UITableViewCell *)cell
+- (NSString *)tableView:(UITableView *)tableView
+    titleForHeaderInSection:(NSInteger)section
 {
-    cell.textLabel.textColor = [UIColor twitchCheckedColor];
-    cell.imageView.image =
-        [SettingsReader displayTheme] == kDisplayThemeDark ?
-        [UIImage imageNamed:@"AccountSelectedCheckmarkDarkTheme.png"] :
-        [UIImage imageNamed:@"AccountSelectedCheckmark.png"];
-    cell.imageView.highlightedImage =
-        [UIImage imageNamed:@"AccountSelectedCheckmarkHighlighted.png"];
+    return NSLocalizedString(@"account.prompt", @"");
 }
 
-+ (void)configureNormalAccountCell:(UITableViewCell *)cell
+- (NSString *)tableView:(UITableView *)tableView
+    titleForFooterInSection:(NSInteger)section
 {
-    cell.textLabel.textColor =
-        [SettingsReader displayTheme] == kDisplayThemeDark ?
-        [UIColor whiteColor] : [UIColor blackColor];
-    cell.imageView.image =
-        [UIImage imageNamed:@"AccountNotSelectedFiller.png"];
-    cell.imageView.highlightedImage =
-        [UIImage imageNamed:@"AccountNotSelectedFiller.png"];
+    return NSLocalizedString(@"account.footer", @"");
+}
+
+- (CGFloat)tableView:(UITableView *)tableView
+    heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 48;
+}
+
+#pragma mark Private implementation
+
++ (void)configureSelectedAccountCell:(AccountTableViewCell *)cell
+{
+    [cell setSelectedAccount:YES];
+    [cell setAvatarImage:[UIImage imageNamed:@"DefaultAvatar48x48.png"]];
+    // cell.textLabel.textColor = [UIColor blackColor];
+    // 
+    // cell.imageView.image = [UIImage imageNamed:@"DefaultAvatar48x48.png"];
+
+    // cell.imageView.image =
+    //     [SettingsReader displayTheme] == kDisplayThemeDark ?
+    //     [UIImage imageNamed:@"AccountSelectedCheckmarkDarkTheme.png"] :
+    //     [UIImage imageNamed:@"AccountSelectedCheckmark.png"];
+    // cell.imageView.highlightedImage =
+    //     [UIImage imageNamed:@"AccountSelectedCheckmarkHighlighted.png"];
+}
+
++ (void)configureNormalAccountCell:(AccountTableViewCell *)cell
+{
+    [cell setSelectedAccount:NO];
+    [cell setAvatarImage:[UIImage imageNamed:@"DefaultAvatar48x48.png"]];
+    // cell.textLabel.textColor =
+    //     [SettingsReader displayTheme] == kDisplayThemeDark ?
+    //     [UIColor whiteColor] : [UIColor lightGrayColor];
+
+    // cell.imageView.image =
+    //     [UIImage imageNamed:@"AccountNotSelectedFiller.png"];
+    // cell.imageView.highlightedImage =
+    //     [UIImage imageNamed:@"AccountNotSelectedFiller.png"];
+
+    // cell.imageView.image = [UIImage imageNamed:@"DefaultAvatar48x48.png"];
+    // cell.imageView.alpha = 0.4;
 }
 
 @end

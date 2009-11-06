@@ -28,7 +28,6 @@
     TweetViewController * lastTweetDetailsController;
     TwitterService * service;
     UITabBarItem * tabBarItem;
-    UISegmentedControl * segmentedControl;
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
     NSManagedObjectContext * managedObjectContext;
 
@@ -76,8 +75,7 @@
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
     userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry
-    tabBarItem:(UITabBarItem *)tabBarItem
-    segmentedControl:(UISegmentedControl *)segmentedControl;
+    tabBarItem:(UITabBarItem *)tabBarItem;
 
 - (void)refreshWithLatest;
 - (void)updateMentionsSinceLastUpdateIds;

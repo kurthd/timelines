@@ -54,11 +54,11 @@
     instapaperLogInDisplayMgr;
 
 - (void)initHomeTab;
+- (void)initMentionsTab;
 - (void)initMessagesTab;
 - (void)initFindPeopleTab;
-- (void)initAccountsTab;
+- (void)initAccountsView;
 - (void)initSearchTab;
-- (void)initMentionsView;
 
 - (UIBarButtonItem *)newTweetButtonItem;
 - (UIBarButtonItem *)homeSendingTweetProgressView;
@@ -78,7 +78,9 @@
 
 - (void)finishInitializationWithTimeInsensitiveOperations;
 
-- (void)refreshHomeTabTimelines;
+- (void)showAccountsView;
+- (void)setTimelineTitleView;
+- (void)processUserAccountSelection;
 
 @end
 
@@ -115,11 +117,15 @@
     [persistentStoreCoordinator release];
 
     [homeNetAwareViewController release];
-    [homeToggleViewController release];
     [mentionsNetAwareViewController release];
     [messagesNetAwareViewController release];
     [searchNetAwareViewController release];
     [findPeopleNetAwareViewController release];
+
+    [accountsButton release];
+    [accountsButtonSetter release];
+    [accountsNavController release];
+    [accountsViewController release];
 
     [timelineDisplayMgrFactory release];
     [directMessageDisplayMgrFactory release];
@@ -127,7 +133,6 @@
     [directMessageDisplayMgr release];
     [directMessageAcctMgr release];
     [mentionsAcctMgr release];
-    [personalFeedSelectionMgr release];
     [mentionDisplayMgr release];
 
     [composeTweetDisplayMgr release];
@@ -185,7 +190,7 @@
         initWithContext:[self managedObjectContext]
         findPeopleBookmarkMgr:findPeopleBookmarkMgr];
 
-    [self initAccountsTab];
+    [self initAccountsView];
 
     if (self.credentials.count == 0) {
         NSAssert1(!self.activeCredentials.credentials, @"No credentials exist, "
@@ -214,6 +219,8 @@
         withObject:nil
         afterDelay:0.7];
 
+    accountsButton.action = @selector(showAccountsView);
+
     NSLog(@"Application did finish initializing");
 }
 
@@ -235,7 +242,7 @@
     if (!directMessageDisplayMgr)
         [self initMessagesTab];
     if (!mentionDisplayMgr)
-        [self initMentionsView];
+        [self initMentionsTab];
 
     TwitterCredentials * c = self.activeCredentials.credentials;
     if (c) {
@@ -288,7 +295,7 @@
 - (void)userIsSendingTweet:(NSString *)tweet
 {
     NSLog(@"User is sending tweet...");
-    [homeToggleViewController.navigationItem
+    [homeNetAwareViewController.navigationItem
         setRightBarButtonItem:[self homeSendingTweetProgressView]
                      animated:YES];
 }
@@ -298,14 +305,14 @@
     NSLog(@"User did send tweet...");
     [timelineDisplayMgr addTweet:tweet];
 
-    [homeToggleViewController.navigationItem
+    [homeNetAwareViewController.navigationItem
         setRightBarButtonItem:[self newTweetButtonItem]
                      animated:YES];
 }
 
 - (void)userFailedToSendTweet:(NSString *)tweet
 {
-    [homeToggleViewController.navigationItem
+    [homeNetAwareViewController.navigationItem
         setRightBarButtonItem:[self newTweetButtonItem]
                      animated:YES];
 
@@ -481,10 +488,7 @@
 {
     NSLog(@"Initializing home tab");
 
-    if (!mentionDisplayMgr)
-        [self initMentionsView];
-
-    homeToggleViewController.navigationController.navigationBar.barStyle =
+    homeNetAwareViewController.navigationController.navigationBar.barStyle =
         [SettingsReader displayTheme] == kDisplayThemeDark ?
         UIBarStyleBlackOpaque : UIBarStyleDefault;
 
@@ -494,48 +498,46 @@
         [[timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         homeNetAwareViewController
-        navigationController:homeToggleViewController.navigationController
+        navigationController:homeNetAwareViewController.navigationController
         title:homeTabTitle
         composeTweetDisplayMgr:self.composeTweetDisplayMgr]
         retain];
     timelineDisplayMgr.displayAsConversation = YES;
     timelineDisplayMgr.showMentions = YES;
     UIBarButtonItem * refreshButton =
-        homeToggleViewController.navigationItem.leftBarButtonItem;
-    refreshButton.target = self;
-    refreshButton.action = @selector(refreshHomeTabTimelines);
-
-    personalFeedSelectionMgr =
-        [[PersonalFeedSelectionMgr alloc]
-        initWithToggleController:homeToggleViewController
-        timelineController:homeNetAwareViewController
-        mentionsController:mentionsNetAwareViewController];
-    UISegmentedControl * segmentedControl =
-        (UISegmentedControl *)
-        homeToggleViewController.navigationItem.titleView;
-    [segmentedControl addTarget:personalFeedSelectionMgr
-        action:@selector(tabSelected:)
-        forControlEvents:UIControlEventValueChanged];
-
-    segmentedControl.selectedSegmentIndex = uiState.selectedTimelineFeed;
-
-    // HACK: Force tab selected to be called when selected index is zero, which
-    // is the default
-    if (uiState.selectedTimelineFeed == 0)
-        [personalFeedSelectionMgr performSelector:@selector(tabSelected:)
-            withObject:segmentedControl afterDelay:0];
+        homeNetAwareViewController.navigationItem.leftBarButtonItem;
+    refreshButton.target = timelineDisplayMgr;
+    refreshButton.action = @selector(refreshWithLatest);
 
     TwitterCredentials * c = self.activeCredentials.credentials;
     if (c) {
         [timelineDisplayMgr setCredentials:c];
         [self loadHomeViewWithCachedData:c];
+
+        [self setTimelineTitleView];
     }
 }
 
-- (void)refreshHomeTabTimelines
+- (void)setTimelineTitleView
 {
-    [timelineDisplayMgr refreshWithLatest];
-    [mentionDisplayMgr refreshWithLatest];
+    if (!accountsButtonSetter) {
+        TwitterService * service =
+            [[[TwitterService alloc] initWithTwitterCredentials:nil
+            context:[self managedObjectContext]]
+            autorelease];
+
+        // Don't autorelease
+        [[CredentialsActivatedPublisher alloc]
+            initWithListener:service action:@selector(setCredentials:)];
+
+        accountsButtonSetter =
+            [[AccountsButtonSetter alloc]
+            initWithAccountsButton:accountsButton twitterService:service];
+        service.delegate = accountsButtonSetter;
+    }
+
+    TwitterCredentials * c = self.activeCredentials.credentials;
+    [accountsButtonSetter setButtonWithUsername:c.username];
 }
 
 - (void)initMessagesTab
@@ -568,15 +570,17 @@
         [newDirectMessagesPersistenceStore loadNewMessageCountsForAllAccounts]];
 }
 
-- (void)initMentionsView
+- (void)initMentionsTab
 {
+    mentionsNetAwareViewController.navigationController.navigationBar.barStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIBarStyleBlackOpaque : UIBarStyleDefault;
+
     TimelineViewController * timelineController =
         [[[TimelineViewController alloc]
         initWithNibName:@"TimelineView" bundle:nil] autorelease];
-     mentionsNetAwareViewController =
-        [[NetworkAwareViewController alloc]
-        initWithTargetViewController:timelineController];
-
+    mentionsNetAwareViewController.targetViewController = timelineController;
+    
     TwitterService * service =
         [[[TwitterService alloc] initWithTwitterCredentials:nil
         context:[self managedObjectContext]]
@@ -588,13 +592,10 @@
         findPeopleBookmarkMgr:findPeopleBookmarkMgr]
         autorelease];
 
-    UISegmentedControl * segmentedControl = (UISegmentedControl *)
-        homeToggleViewController.navigationItem.titleView;
-
     mentionDisplayMgr =
         [[MentionTimelineDisplayMgr alloc]
         initWithWrapperController:mentionsNetAwareViewController
-        navigationController:homeToggleViewController.navigationController
+        navigationController:mentionsNetAwareViewController.navigationController
         timelineController:timelineController
         service:service
         factory:timelineDisplayMgrFactory
@@ -602,8 +603,7 @@
         composeTweetDisplayMgr:composeTweetDisplayMgr
         findPeopleBookmarkMgr:findPeopleBookmarkMgr
         userListDisplayMgrFactory:userListDisplayMgrFactory
-        tabBarItem:homeToggleViewController.parentViewController.tabBarItem
-        segmentedControl:segmentedControl];
+        tabBarItem:mentionsNetAwareViewController.tabBarItem];
     service.delegate = mentionDisplayMgr;
     timelineController.delegate = mentionDisplayMgr;
     mentionsNetAwareViewController.delegate = mentionDisplayMgr;
@@ -613,6 +613,11 @@
         initWithMentionTimelineDisplayMgr:mentionDisplayMgr];
 
     mentionDisplayMgr.numNewMentions = uiState.numNewMentions;
+
+    UIBarButtonItem * refreshButton =
+        mentionsNetAwareViewController.navigationItem.leftBarButtonItem;
+    refreshButton.target = mentionDisplayMgr;
+    refreshButton.action = @selector(refreshWithLatest);
 
     // Don't autorelease
     [[CredentialsActivatedPublisher alloc]
@@ -725,11 +730,19 @@
     [searchBarDisplayMgr searchBarViewWillAppear:NO];
 }
 
-- (void)initAccountsTab
+- (void)initAccountsView
 {
+    accountsViewController = [[AccountsViewController alloc] init];
+    
+    accountsNavController =
+        [[UINavigationController alloc]
+        initWithRootViewController:accountsViewController];
     accountsViewController.navigationController.navigationBar.barStyle =
         [SettingsReader displayTheme] == kDisplayThemeDark ?
         UIBarStyleBlackOpaque : UIBarStyleDefault;
+    accountsViewController.selectedAccountTarget = self;
+    accountsViewController.selectedAccountAction =
+        @selector(processUserAccountSelection);
 
     OauthLogInDisplayMgr * displayMgr =
         [[OauthLogInDisplayMgr alloc]
@@ -740,6 +753,14 @@
         initWithAccountsViewController:accountsViewController
                        logInDisplayMgr:displayMgr
                                context:[self managedObjectContext]];
+
+    UIBarButtonItem * doneButton =
+        [[[UIBarButtonItem alloc]
+        initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self
+        action:@selector(processUserAccountSelection)]
+        autorelease];
+    accountsViewController.navigationItem.rightBarButtonItem = doneButton;
+    accountsViewController.navigationItem.title = @"Accounts";
 
     [displayMgr release];
 }
@@ -752,43 +773,6 @@
     if (viewController == tbc.selectedViewController)  // not switching tabs
         return YES;
 
-    if (viewController != accountsViewController.navigationController) {
-        // switching away from the accounts tab
-
-        TwitterCredentials * activeAccount =
-            [accountsDisplayMgr selectedAccount];
-
-        if (activeAccount &&
-            activeAccount != self.activeCredentials.credentials) {
-            NSLog(@"Switching account to: '%@'.", activeAccount.username);
-
-            // oldUsername will be nil when the previously active account is
-            // deleted
-            NSString * oldUsername =
-                self.activeCredentials.credentials.username;
-
-            [self broadcastActivatedCredentialsChanged:activeAccount];
-            [self loadHomeViewWithCachedData:activeAccount];
-            [self loadMentionsViewWithCachedData:activeAccount];
-            [self loadMessagesViewWithCachedData:activeAccount];
-
-            [directMessageAcctMgr
-                processAccountChangeToUsername:activeAccount.username
-                fromUsername:oldUsername];
-            [mentionsAcctMgr
-                processAccountChangeToUsername:activeAccount.username
-                fromUsername:oldUsername];
-
-            [directMessageDisplayMgr updateDirectMessagesAfterCredentialChange];
-            [mentionDisplayMgr updateMentionsAfterCredentialChange];
-
-            TwitterCredentials * c = self.activeCredentials.credentials;
-            AccountSettings * settings =
-                [AccountSettings settingsForKey:c.username];
-            mentionDisplayMgr.showBadge = [settings pushMentions];
-        }
-    }
-
     if (viewController == searchNetAwareViewController.navigationController)
         [searchBarDisplayMgr searchBarViewWillAppear:NO];
 
@@ -798,10 +782,15 @@
 - (void)tabBarController:(UITabBarController *)tbc
     didSelectViewController:(UIViewController *)viewController
 {
-    if (viewController == homeToggleViewController.navigationController &&
+    if (viewController == homeNetAwareViewController.navigationController &&
         !timelineDisplayMgr) {
         NSLog(@"Selected home tab");
         [self initHomeTab];
+    } else if (viewController ==
+        mentionsNetAwareViewController.navigationController &&
+        !mentionDisplayMgr) {
+        NSLog(@"Selected mentions tab");
+        [self initMentionsTab];
     } else if (viewController ==
         messagesNetAwareViewController.navigationController &&
         !directMessageDisplayMgr)
@@ -1503,9 +1492,6 @@
     UIStatePersistenceStore * uiStatePersistenceStore =
         [[[UIStatePersistenceStore alloc] init] autorelease];
     uiState.selectedTab = tabBarController.selectedIndex;
-    UISegmentedControl * control = (UISegmentedControl *)
-        homeToggleViewController.navigationItem.titleView;
-    uiState.selectedTimelineFeed = control.selectedSegmentIndex;
 
     NSMutableArray * tabOrder = [NSMutableArray array];
     for (UIViewController * viewController in tabBarController.viewControllers)
@@ -1556,6 +1542,61 @@
     NSUInteger numTotalMessages = numUnreadMessages + numUnreadMentions;
     [[UIApplication sharedApplication]
         setApplicationIconBadgeNumber:numTotalMessages];
+}
+
+#pragma mark Account management
+
+- (void)showAccountsView
+{
+    NSLog(@"Showing accounts view");
+    [tabBarController presentModalViewController:accountsNavController
+        animated:YES];
+}
+
+- (void)showAddAccountModalView
+{
+    [accountsNavController dismissModalViewControllerAnimated:YES];
+    [accountsDisplayMgr performSelector:@selector(userWantsToAddAccount)
+        withObject:nil afterDelay:0.7];
+}
+
+- (void)processUserAccountSelection
+{
+    [accountsNavController dismissModalViewControllerAnimated:YES];
+    
+    TwitterCredentials * activeAccount = [accountsDisplayMgr selectedAccount];
+
+    if (activeAccount &&
+        activeAccount != self.activeCredentials.credentials) {
+        NSLog(@"Switching account to: '%@'.", activeAccount.username);
+
+        // oldUsername will be nil when the previously active account is
+        // deleted
+        NSString * oldUsername =
+            self.activeCredentials.credentials.username;
+
+        [self broadcastActivatedCredentialsChanged:activeAccount];
+        [self loadHomeViewWithCachedData:activeAccount];
+        [self loadMentionsViewWithCachedData:activeAccount];
+        [self loadMessagesViewWithCachedData:activeAccount];
+
+        [directMessageAcctMgr
+            processAccountChangeToUsername:activeAccount.username
+            fromUsername:oldUsername];
+        [mentionsAcctMgr
+            processAccountChangeToUsername:activeAccount.username
+            fromUsername:oldUsername];
+
+        [directMessageDisplayMgr updateDirectMessagesAfterCredentialChange];
+        [mentionDisplayMgr updateMentionsAfterCredentialChange];
+
+        TwitterCredentials * c = self.activeCredentials.credentials;
+        AccountSettings * settings =
+            [AccountSettings settingsForKey:c.username];
+        mentionDisplayMgr.showBadge = [settings pushMentions];
+
+        [accountsButtonSetter setButtonWithUsername:activeAccount.username];
+    }
 }
 
 #pragma mark Accessors

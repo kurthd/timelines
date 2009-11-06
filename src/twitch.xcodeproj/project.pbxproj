@@ -262,7 +262,6 @@
 		05DBF23F1082E76B004AB521 /* TweetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EDAEFB1029F6F500D0B62B /* TweetViewController.m */; };
 		05DBF2401082E76B004AB521 /* TweetTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EDAEFE1029F75600D0B62B /* TweetTextTableViewCell.m */; };
 		05DBF2411082E76B004AB521 /* AllTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */; };
-		05DBF2421082E76B004AB521 /* PersonalFeedSelectionMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */; };
 		05DBF2431082E76B004AB521 /* TweetInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A92D0FF06AA100D6A769 /* TweetInfo.m */; };
 		05DBF2441082E76B004AB521 /* MentionsTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */; };
 		05DBF2451082E76B004AB521 /* UserTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 918E891B0FF16EE30042BBEE /* UserTimelineDataSource.m */; };
@@ -534,7 +533,6 @@
 		05DBF3541082E76D004AB521 /* TweetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EDAEFB1029F6F500D0B62B /* TweetViewController.m */; };
 		05DBF3551082E76D004AB521 /* TweetTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EDAEFE1029F75600D0B62B /* TweetTextTableViewCell.m */; };
 		05DBF3561082E76D004AB521 /* AllTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */; };
-		05DBF3571082E76D004AB521 /* PersonalFeedSelectionMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */; };
 		05DBF3581082E76D004AB521 /* TweetInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A92D0FF06AA100D6A769 /* TweetInfo.m */; };
 		05DBF3591082E76D004AB521 /* MentionsTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9115A9800FF0874700D6A769 /* MentionsTimelineDataSource.m */; };
 		05DBF35A1082E76D004AB521 /* UserTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 918E891B0FF16EE30042BBEE /* UserTimelineDataSource.m */; };
@@ -845,6 +843,10 @@
 		9152E1571014F86C0033B63B /* DirectMessageInboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1551014F86C0033B63B /* DirectMessageInboxView.xib */; };
 		9152E15A1014F8850033B63B /* DirectMessageConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1581014F8850033B63B /* DirectMessageConversationView.xib */; };
 		9152E239101557AC0033B63B /* NewMessagesDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9152E238101557AC0033B63B /* NewMessagesDot.png */; };
+		915B4C5410A4A6F70028B0B4 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B4C5310A4A6F70028B0B4 /* AccountTableViewCell.m */; };
+		915B4C5510A4A6F70028B0B4 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B4C5310A4A6F70028B0B4 /* AccountTableViewCell.m */; };
+		915B4C6410A4AA420028B0B4 /* AccountCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B4C6310A4AA420028B0B4 /* AccountCellView.m */; };
+		915B4C6510A4AA420028B0B4 /* AccountCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B4C6310A4AA420028B0B4 /* AccountCellView.m */; };
 		916A24431083E59800C5895D /* DarkThemeBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A24421083E59800C5895D /* DarkThemeBottomGradient.png */; };
 		916A24501083E72300C5895D /* DarkThemeTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A244F1083E72300C5895D /* DarkThemeTopGradient.png */; };
 		916A25431084283D00C5895D /* DarkThemeButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A25421084283D00C5895D /* DarkThemeButtonBackground.png */; };
@@ -927,6 +929,18 @@
 		91E7C6DE10A1F22800FEDA5D /* DarkThemeTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A244F1083E72300C5895D /* DarkThemeTopGradient.png */; };
 		91E7C6DF10A1F22B00FEDA5D /* DarkThemeBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A24421083E59800C5895D /* DarkThemeBottomGradient.png */; };
 		91E7C6E210A1F37900FEDA5D /* dark-theme-tweet-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 916A257F1084303000C5895D /* dark-theme-tweet-style.css */; };
+		91E7CA1010A34C9600FEDA5D /* AccountsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E7CA0F10A34C9600FEDA5D /* AccountsButton.m */; };
+		91E7CA1110A34C9600FEDA5D /* AccountsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E7CA0F10A34C9600FEDA5D /* AccountsButton.m */; };
+		91E7CA7E10A35E9E00FEDA5D /* DropDownArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E7CA7D10A35E9E00FEDA5D /* DropDownArrow.png */; };
+		91E7CA7F10A35E9E00FEDA5D /* DropDownArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E7CA7D10A35E9E00FEDA5D /* DropDownArrow.png */; };
+		91E7CAFA10A36EB700FEDA5D /* AccountsAvatarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E7CAF910A36EB700FEDA5D /* AccountsAvatarBackground.png */; };
+		91E7CAFB10A36EB700FEDA5D /* AccountsAvatarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E7CAF910A36EB700FEDA5D /* AccountsAvatarBackground.png */; };
+		91E7CB5A10A37E8900FEDA5D /* AccountsButtonSetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E7CB5910A37E8900FEDA5D /* AccountsButtonSetter.m */; };
+		91E7CB5B10A37E8900FEDA5D /* AccountsButtonSetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E7CB5910A37E8900FEDA5D /* AccountsButtonSetter.m */; };
+		91E7CB8D10A38FFB00FEDA5D /* DropDownArrowHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E7CB8C10A38FFB00FEDA5D /* DropDownArrowHighlighted.png */; };
+		91E7CB8E10A38FFB00FEDA5D /* DropDownArrowHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E7CB8C10A38FFB00FEDA5D /* DropDownArrowHighlighted.png */; };
+		91E7CB9D10A392B800FEDA5D /* AccountsAvatarMask.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E7CB9C10A392B800FEDA5D /* AccountsAvatarMask.png */; };
+		91E7CB9E10A392B800FEDA5D /* AccountsAvatarMask.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E7CB9C10A392B800FEDA5D /* AccountsAvatarMask.png */; };
 		91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6C44101A51F800354D67 /* PersonSearch.png */; };
 		91FDD5A510616854000F7527 /* BitlyLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91FDD5A310616854000F7527 /* BitlyLogInView.xib */; };
 /* End PBXBuildFile section */
@@ -1451,8 +1465,6 @@
 		9115A83B0FF03BA900D6A769 /* TimelineDataSourceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDataSourceDelegate.h; path = timeline/TimelineDataSourceDelegate.h; sourceTree = "<group>"; };
 		9115A83E0FF03C8300D6A769 /* AllTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllTimelineDataSource.h; path = timeline/AllTimelineDataSource.h; sourceTree = "<group>"; };
 		9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AllTimelineDataSource.m; path = timeline/AllTimelineDataSource.m; sourceTree = "<group>"; };
-		9115A8C50FF0503300D6A769 /* PersonalFeedSelectionMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalFeedSelectionMgr.h; path = timeline/PersonalFeedSelectionMgr.h; sourceTree = "<group>"; };
-		9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalFeedSelectionMgr.m; path = timeline/PersonalFeedSelectionMgr.m; sourceTree = "<group>"; };
 		9115A92C0FF06AA100D6A769 /* TweetInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetInfo.h; path = timeline/TweetInfo.h; sourceTree = "<group>"; };
 		9115A92D0FF06AA100D6A769 /* TweetInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetInfo.m; path = timeline/TweetInfo.m; sourceTree = "<group>"; };
 		9115A97F0FF0874700D6A769 /* MentionsTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionsTimelineDataSource.h; path = timeline/MentionsTimelineDataSource.h; sourceTree = "<group>"; };
@@ -1526,6 +1538,10 @@
 		9152E27110156CAB0033B63B /* DirectMessageConversationViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageConversationViewControllerDelegate.h; path = "direct-messages/DirectMessageConversationViewControllerDelegate.h"; sourceTree = "<group>"; };
 		9152E2741015729D0033B63B /* DirectMessage+UIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DirectMessage+UIAdditions.h"; path = "direct-messages/DirectMessage+UIAdditions.h"; sourceTree = "<group>"; };
 		9152E2751015729D0033B63B /* DirectMessage+UIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DirectMessage+UIAdditions.m"; path = "direct-messages/DirectMessage+UIAdditions.m"; sourceTree = "<group>"; };
+		915B4C5210A4A6F70028B0B4 /* AccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountTableViewCell.h; path = accounts/AccountTableViewCell.h; sourceTree = "<group>"; };
+		915B4C5310A4A6F70028B0B4 /* AccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountTableViewCell.m; path = accounts/AccountTableViewCell.m; sourceTree = "<group>"; };
+		915B4C6210A4AA420028B0B4 /* AccountCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountCellView.h; path = accounts/AccountCellView.h; sourceTree = "<group>"; };
+		915B4C6310A4AA420028B0B4 /* AccountCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountCellView.m; path = accounts/AccountCellView.m; sourceTree = "<group>"; };
 		916A24421083E59800C5895D /* DarkThemeBottomGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeBottomGradient.png; path = images/DarkThemeBottomGradient.png; sourceTree = "<group>"; };
 		916A244F1083E72300C5895D /* DarkThemeTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeTopGradient.png; path = images/DarkThemeTopGradient.png; sourceTree = "<group>"; };
 		916A25421084283D00C5895D /* DarkThemeButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeButtonBackground.png; path = images/DarkThemeButtonBackground.png; sourceTree = "<group>"; };
@@ -1721,6 +1737,14 @@
 		91E000870FEFFABB00BCE9BC /* TweetDetailsHeaderGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TweetDetailsHeaderGradient.png; path = images/TweetDetailsHeaderGradient.png; sourceTree = "<group>"; };
 		91E000940FEFFCC700BCE9BC /* DropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropShadow.png; path = images/DropShadow.png; sourceTree = "<group>"; };
 		91E7C53F109FC24500FEDA5D /* DefaultAvatar48x48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DefaultAvatar48x48.png; path = images/DefaultAvatar48x48.png; sourceTree = "<group>"; };
+		91E7CA0E10A34C9600FEDA5D /* AccountsButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsButton.h; path = timeline/AccountsButton.h; sourceTree = "<group>"; };
+		91E7CA0F10A34C9600FEDA5D /* AccountsButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsButton.m; path = timeline/AccountsButton.m; sourceTree = "<group>"; };
+		91E7CA7D10A35E9E00FEDA5D /* DropDownArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropDownArrow.png; path = images/DropDownArrow.png; sourceTree = "<group>"; };
+		91E7CAF910A36EB700FEDA5D /* AccountsAvatarBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountsAvatarBackground.png; path = images/AccountsAvatarBackground.png; sourceTree = "<group>"; };
+		91E7CB5810A37E8900FEDA5D /* AccountsButtonSetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountsButtonSetter.h; path = timeline/AccountsButtonSetter.h; sourceTree = "<group>"; };
+		91E7CB5910A37E8900FEDA5D /* AccountsButtonSetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountsButtonSetter.m; path = timeline/AccountsButtonSetter.m; sourceTree = "<group>"; };
+		91E7CB8C10A38FFB00FEDA5D /* DropDownArrowHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DropDownArrowHighlighted.png; path = images/DropDownArrowHighlighted.png; sourceTree = "<group>"; };
+		91E7CB9C10A392B800FEDA5D /* AccountsAvatarMask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountsAvatarMask.png; path = images/AccountsAvatarMask.png; sourceTree = "<group>"; };
 		91FC6C44101A51F800354D67 /* PersonSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PersonSearch.png; path = images/PersonSearch.png; sourceTree = "<group>"; };
 		91FDD58B1061581C000F7527 /* BitlyLogInDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitlyLogInDisplayMgr.h; path = bitly/BitlyLogInDisplayMgr.h; sourceTree = "<group>"; };
 		91FDD58C1061581C000F7527 /* BitlyLogInDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BitlyLogInDisplayMgr.m; path = bitly/BitlyLogInDisplayMgr.m; sourceTree = "<group>"; };
@@ -1887,6 +1911,10 @@
 				05C7B8A8103B5A5D0017874C /* PhotoServicesDisplayMgr.m */,
 				05C7B8AA103B5CE40017874C /* PhotoServicesViewController.h */,
 				05C7B8AB103B5CE40017874C /* PhotoServicesViewController.m */,
+				915B4C5210A4A6F70028B0B4 /* AccountTableViewCell.h */,
+				915B4C5310A4A6F70028B0B4 /* AccountTableViewCell.m */,
+				915B4C6210A4AA420028B0B4 /* AccountCellView.h */,
+				915B4C6310A4AA420028B0B4 /* AccountCellView.m */,
 			);
 			name = accounts;
 			sourceTree = "<group>";
@@ -2765,6 +2793,10 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91E7CB9C10A392B800FEDA5D /* AccountsAvatarMask.png */,
+				91E7CB8C10A38FFB00FEDA5D /* DropDownArrowHighlighted.png */,
+				91E7CAF910A36EB700FEDA5D /* AccountsAvatarBackground.png */,
+				91E7CA7D10A35E9E00FEDA5D /* DropDownArrow.png */,
 				91E7C53F109FC24500FEDA5D /* DefaultAvatar48x48.png */,
 				9142D19010979B4300BFE960 /* ComposeRecipientGradientDarkTheme.png */,
 				9142CB0C108FDD0300BFE960 /* ProfileSmall.png */,
@@ -2901,8 +2933,6 @@
 				9115A83B0FF03BA900D6A769 /* TimelineDataSourceDelegate.h */,
 				9115A83E0FF03C8300D6A769 /* AllTimelineDataSource.h */,
 				9115A83F0FF03C8300D6A769 /* AllTimelineDataSource.m */,
-				9115A8C50FF0503300D6A769 /* PersonalFeedSelectionMgr.h */,
-				9115A8C60FF0503300D6A769 /* PersonalFeedSelectionMgr.m */,
 				9115A92C0FF06AA100D6A769 /* TweetInfo.h */,
 				9115A92D0FF06AA100D6A769 /* TweetInfo.m */,
 				9115A97F0FF0874700D6A769 /* MentionsTimelineDataSource.h */,
@@ -2934,6 +2964,10 @@
 				9142C87A108D139800BFE960 /* MentionTimelineDisplayMgr.m */,
 				9142D08D109749E400BFE960 /* MentionsAcctMgr.h */,
 				9142D08E109749E400BFE960 /* MentionsAcctMgr.m */,
+				91E7CA0E10A34C9600FEDA5D /* AccountsButton.h */,
+				91E7CA0F10A34C9600FEDA5D /* AccountsButton.m */,
+				91E7CB5810A37E8900FEDA5D /* AccountsButtonSetter.h */,
+				91E7CB5910A37E8900FEDA5D /* AccountsButtonSetter.m */,
 			);
 			name = timeline;
 			sourceTree = "<group>";
@@ -3252,6 +3286,10 @@
 				91E7C6DE10A1F22800FEDA5D /* DarkThemeTopGradient.png in Resources */,
 				91E7C6DF10A1F22B00FEDA5D /* DarkThemeBottomGradient.png in Resources */,
 				91E7C6E210A1F37900FEDA5D /* dark-theme-tweet-style.css in Resources */,
+				91E7CA7F10A35E9E00FEDA5D /* DropDownArrow.png in Resources */,
+				91E7CAFB10A36EB700FEDA5D /* AccountsAvatarBackground.png in Resources */,
+				91E7CB8E10A38FFB00FEDA5D /* DropDownArrowHighlighted.png in Resources */,
+				91E7CB9E10A392B800FEDA5D /* AccountsAvatarMask.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3414,6 +3452,10 @@
 				9142CB0D108FDD0300BFE960 /* ProfileSmall.png in Resources */,
 				9142D19110979B4300BFE960 /* ComposeRecipientGradientDarkTheme.png in Resources */,
 				91E7C540109FC24500FEDA5D /* DefaultAvatar48x48.png in Resources */,
+				91E7CA7E10A35E9E00FEDA5D /* DropDownArrow.png in Resources */,
+				91E7CAFA10A36EB700FEDA5D /* AccountsAvatarBackground.png in Resources */,
+				91E7CB8D10A38FFB00FEDA5D /* DropDownArrowHighlighted.png in Resources */,
+				91E7CB9D10A392B800FEDA5D /* AccountsAvatarMask.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3502,7 +3544,6 @@
 				05DBF23F1082E76B004AB521 /* TweetViewController.m in Sources */,
 				05DBF2401082E76B004AB521 /* TweetTextTableViewCell.m in Sources */,
 				05DBF2411082E76B004AB521 /* AllTimelineDataSource.m in Sources */,
-				05DBF2421082E76B004AB521 /* PersonalFeedSelectionMgr.m in Sources */,
 				05DBF2431082E76B004AB521 /* TweetInfo.m in Sources */,
 				05DBF2441082E76B004AB521 /* MentionsTimelineDataSource.m in Sources */,
 				05DBF2451082E76B004AB521 /* UserTimelineDataSource.m in Sources */,
@@ -3742,6 +3783,10 @@
 				91E7C6CD10A1F1B200FEDA5D /* MentionTimelineDisplayMgr.m in Sources */,
 				91E7C6CE10A1F1B300FEDA5D /* MentionsAcctMgr.m in Sources */,
 				91E7C6CF10A1F1BE00FEDA5D /* DisplayMgrHelper.m in Sources */,
+				91E7CA1110A34C9600FEDA5D /* AccountsButton.m in Sources */,
+				91E7CB5B10A37E8900FEDA5D /* AccountsButtonSetter.m in Sources */,
+				915B4C5510A4A6F70028B0B4 /* AccountTableViewCell.m in Sources */,
+				915B4C6510A4AA420028B0B4 /* AccountCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3798,7 +3843,6 @@
 				05DBF3541082E76D004AB521 /* TweetViewController.m in Sources */,
 				05DBF3551082E76D004AB521 /* TweetTextTableViewCell.m in Sources */,
 				05DBF3561082E76D004AB521 /* AllTimelineDataSource.m in Sources */,
-				05DBF3571082E76D004AB521 /* PersonalFeedSelectionMgr.m in Sources */,
 				05DBF3581082E76D004AB521 /* TweetInfo.m in Sources */,
 				05DBF3591082E76D004AB521 /* MentionsTimelineDataSource.m in Sources */,
 				05DBF35A1082E76D004AB521 /* UserTimelineDataSource.m in Sources */,
@@ -4038,6 +4082,10 @@
 				9142CCFD10920AF900BFE960 /* ToggleViewController.m in Sources */,
 				9142D08F109749E400BFE960 /* MentionsAcctMgr.m in Sources */,
 				05377FCA10A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */,
+				91E7CA1010A34C9600FEDA5D /* AccountsButton.m in Sources */,
+				91E7CB5A10A37E8900FEDA5D /* AccountsButtonSetter.m in Sources */,
+				915B4C5410A4A6F70028B0B4 /* AccountTableViewCell.m in Sources */,
+				915B4C6410A4AA420028B0B4 /* AccountCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

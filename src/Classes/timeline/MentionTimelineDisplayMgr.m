@@ -52,7 +52,6 @@
     [tweetDetailsController release];
     [service release];
     [tabBarItem release];
-    [segmentedControl release];
     [composeTweetDisplayMgr release];
     [managedObjectContext release];
 
@@ -85,7 +84,6 @@
     findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
     userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry
     tabBarItem:(UITabBarItem *)aTabBarItem
-    segmentedControl:(UISegmentedControl *)aSegmentedControl
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
@@ -95,7 +93,6 @@
         managedObjectContext = [aManagedObjectContext retain];
         service = [aService retain];
         tabBarItem = [aTabBarItem retain];
-        segmentedControl = [aSegmentedControl retain];
         showBadge = YES;
         pagesShown = 1;
 
@@ -745,15 +742,6 @@
     if (!showBadge)
         numNewMentions = 0;
 
-    NSString * mentionsTitle =
-        NSLocalizedString(@"mentiondisplaymgr.title", @"");
-    NSString * mentionsTitleFormatString =
-        NSLocalizedString(@"mentiondisplaymgr.title.formatstring", @"");
-    NSString * title =
-        numNewMentions > 0 ?
-        [NSString stringWithFormat:mentionsTitleFormatString, numNewMentions] :
-        mentionsTitle;
-    [segmentedControl setTitle:title forSegmentAtIndex:1];
     tabBarItem.badgeValue =
         numNewMentions > 0 ?
         [NSString stringWithFormat:@"%d", numNewMentions] : nil;

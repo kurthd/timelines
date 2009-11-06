@@ -22,11 +22,18 @@
 {
     id<AccountsViewControllerDelegate> delegate;
 
+    id selectedAccountTarget;
+    SEL selectedAccountAction;
+
     NSArray * accounts;
     TwitterCredentials * selectedAccount;
 }
 
 @property (nonatomic, assign) id<AccountsViewControllerDelegate> delegate;
+
+@property (nonatomic, assign) id selectedAccountTarget;
+@property (nonatomic, assign) SEL selectedAccountAction;
+
 @property (nonatomic, retain) TwitterCredentials * selectedAccount;
 
 - (IBAction)userWantsToAddAccount:(id)sender;

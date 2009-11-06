@@ -13,7 +13,7 @@ oauth.requesttokenfetch.failed.message = "Failed to connect to Twitter.";
 loginhelpview.title = "Help";
 
 /* TwitchAppDelegate */
-appdelegate.hometabtitle = "Home";
+appdelegate.hometabtitle = "Timeline";
 appdelegate.profiletabtitle = "Profile";
 appdelegate.findpeopletabtitle = "People";
 
@@ -129,6 +129,9 @@ userinfo.unblock = "Unblock";
 
 /* AccountsViewController */
 account.deletion.failed.alert.title = "Failed to Remove %@";
+account.prompt = "Choose an Account...";
+account.footer = "If you use multiple Twitter accounts, add\nthem all here to avoid re-entering your username and password.";
+account.addaccount = "Add Account";
 
 /* AccountSettingsViewController */
 accountsettings.push.header = "Push Notifications";

@@ -8,7 +8,6 @@
 #import "TimelineDisplayMgrFactory.h"
 #import "DirectMessageDisplayMgrFactory.h"
 #import "TwitterServiceDelegate.h"
-#import "PersonalFeedSelectionMgr.h"
 #import "DirectMessageAcctMgr.h"
 #import "FindPeopleSearchDisplayMgr.h"
 #import "TwitchWebBrowserDisplayMgr.h"
@@ -18,6 +17,8 @@
 #import "MentionTimelineDisplayMgr.h"
 #import "ToggleViewController.h"
 #import "MentionsAcctMgr.h"
+#import "AccountsButton.h"
+#import "AccountsButtonSetter.h"
 
 @class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class SearchBarDisplayMgr;
@@ -54,12 +55,15 @@
 
     // Root view controllers
     IBOutlet NetworkAwareViewController * homeNetAwareViewController;
-    IBOutlet ToggleViewController * homeToggleViewController;
-    NetworkAwareViewController * mentionsNetAwareViewController;
+    IBOutlet NetworkAwareViewController * mentionsNetAwareViewController;
     IBOutlet NetworkAwareViewController * messagesNetAwareViewController;
     IBOutlet NetworkAwareViewController * searchNetAwareViewController;
-    IBOutlet AccountsViewController * accountsViewController;
     IBOutlet NetworkAwareViewController * findPeopleNetAwareViewController;
+
+    IBOutlet AccountsButton * accountsButton;
+    AccountsButtonSetter * accountsButtonSetter;
+    UINavigationController * accountsNavController;
+    AccountsViewController * accountsViewController;
 
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     DirectMessageDisplayMgrFactory * directMessageDisplayMgrFactory;
@@ -67,7 +71,6 @@
     DirectMessageAcctMgr * directMessageAcctMgr;
     MentionsAcctMgr * mentionsAcctMgr;
     TimelineDisplayMgr * timelineDisplayMgr;
-    PersonalFeedSelectionMgr * personalFeedSelectionMgr;
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 

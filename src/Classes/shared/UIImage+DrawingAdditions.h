@@ -25,4 +25,9 @@
 - (void)drawInRect:(CGRect)rect withRoundedCornersWithRadius:(CGFloat)radius
     usingContext:(CGContextRef)context;
 
+- (void)drawInRect:(CGRect)rect withRoundedCornersWithRadius:(CGFloat)radius
+    alpha:(CGFloat)alpha;
+- (void)drawInRect:(CGRect)rect withRoundedCornersWithRadius:(CGFloat)radius
+    usingContext:(CGContextRef)context alpha:(CGFloat)alpha;
+
 @end

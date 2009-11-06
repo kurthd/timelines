@@ -90,6 +90,7 @@
 
 - (void)userWantsToAddAccount
 {
+    NSLog(@"User wants to add account");
     [self.logInDisplayMgr logIn:YES];
 }
 
