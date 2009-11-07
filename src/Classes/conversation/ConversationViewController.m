@@ -118,8 +118,6 @@
         waitingFor = 0;
         [self configureFooterForCurrentState];
     }
-
-    // TODO: stop any animations
 }
 
 - (void)failedToFetchTweetWithId:(NSNumber *)tweetId error:(NSError *)error
@@ -231,7 +229,7 @@
 
     [cell setAuthor:[tweet displayName]];
     [cell setTimestamp:[tweet.timestamp tableViewCellDescription]];
-    [cell setTweetText:tweet.text];
+    [cell setTweetText:[tweet.text stringByDecodingHtmlEntities]];
 
     BOOL landscape = [[RotatableTabBarController instance] landscape];
     [cell setLandscape:landscape];
