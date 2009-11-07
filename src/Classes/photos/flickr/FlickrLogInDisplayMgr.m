@@ -172,7 +172,7 @@
 
         [self performSelector:@selector(dismissModalViewController:)
                    withObject:[NSNumber numberWithBool:YES]
-                   afterDelay:0.2];
+                   afterDelay:0.5];
 
         [self.delegate logInCompleted:ctls];
     }
