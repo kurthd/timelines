@@ -30,6 +30,12 @@
 
 
 //
+// Twitbit
+//
+#import "Tweet+GeneralHelpers.h"
+
+
+//
 // Vendor libraries
 //
 #import "RegexKitLite.h"

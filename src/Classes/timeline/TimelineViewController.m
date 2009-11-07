@@ -563,7 +563,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     [cell setDisplayType:displayType];
 
     [cell setTweetText:[tweet.text stringByDecodingHtmlEntities]];
-    [cell setAuthor:tweet.user.username];
+    [cell setAuthor:[tweet displayName]];
     [cell setTimestamp:[tweet.timestamp tableViewCellDescription]];
     [cell setFavorite:[tweet.favorited boolValue]];
 
