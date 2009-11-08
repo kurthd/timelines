@@ -6,6 +6,13 @@
 #import "UIImage+DrawingAdditions.h"
 #import "UIColor+TwitchColors.h"
 
+@interface AccountCellView ()
+
+@property (nonatomic, readonly) UIImage * checkMark;
+@property (nonatomic, readonly) UIImage * highlightedCheckMark;
+
+@end
+
 @implementation AccountCellView
 
 @synthesize avatar, highlighted, landscape, selectedAccount;
@@ -14,6 +21,8 @@
 {
     [username release];
     [avatar release];
+    [checkMark release];
+    [highlightedCheckMark release];
     [super dealloc];
 }
 
@@ -68,6 +77,25 @@
     [self setNeedsDisplay];
 }
 
+- (UIImage *)checkMark
+{
+    if (!checkMark)
+        checkMark =
+            [[UIImage imageNamed:@"AccountSelectedCheckmark.png"] retain];
+
+    return checkMark;
+}
+
+- (UIImage *)highlightedCheckMark
+{
+    if (!highlightedCheckMark)
+        highlightedCheckMark =
+            [[UIImage imageNamed:@"AccountSelectedCheckmarkHighlighted.png"]
+            retain];
+
+    return highlightedCheckMark;
+}
+
 - (void)drawRect:(CGRect)rect
 {
 #define TOP_MARGIN 5
@@ -87,8 +115,18 @@
     usernameColor = !self.highlighted ? darkLabelColor : [UIColor whiteColor];
 
     [usernameColor set];
-    CGPoint point = CGPointMake(48, 8);
+    CGPoint point = CGPointMake(48, 9);
     [username drawAtPoint:point withFont:usernameFont];
+
+    CGRect contentRect = self.bounds;
+    // Draw check mark
+    if (selectedAccount) {
+        UIImage * currentCheckMark =
+            self.highlighted ? self.highlightedCheckMark : self.checkMark;
+        CGRect checkMarkRect =
+            CGRectMake(contentRect.size.width - 20, 13, 14, 13);
+        [currentCheckMark drawInRect:checkMarkRect];
+    }
 
     //
     // Draw avatar
@@ -102,14 +140,14 @@
         self.highlighted ? [UIColor whiteColor] : darkColor;
 
     CGContextSetFillColorWithColor(context, [rectColor CGColor]);
-
+    
     CGFloat roundedCornerWidth = ROUNDED_CORNER_RADIUS * 2 + 1;
     CGFloat roundedCornerHeight = ROUNDED_CORNER_RADIUS * 2 + 1;
-
+    
     CGContextFillRect(context,
         CGRectMake(ROUNDED_CORNER_RADIUS + LEFT_MARGIN, TOP_MARGIN,
         AVATAR_WIDTH + 2 - roundedCornerWidth, AVATAR_WIDTH + 2));
-
+    
     // Draw rounded corners
     CGContextFillEllipseInRect(context,
         CGRectMake(LEFT_MARGIN, TOP_MARGIN, roundedCornerWidth,
@@ -121,7 +159,7 @@
     CGContextFillRect(context,
         CGRectMake(LEFT_MARGIN, TOP_MARGIN + 1 + roundedCornerHeight / 2,
         roundedCornerWidth, AVATAR_WIDTH + 1 - roundedCornerHeight));
-
+    
     CGContextFillEllipseInRect(context,
         CGRectMake(LEFT_MARGIN + 2 + AVATAR_WIDTH - roundedCornerWidth,
         TOP_MARGIN, roundedCornerWidth, roundedCornerHeight));
@@ -133,9 +171,9 @@
         CGRectMake(LEFT_MARGIN + 2 + AVATAR_WIDTH - roundedCornerWidth,
         TOP_MARGIN + 1 + roundedCornerHeight / 2, roundedCornerWidth,
         AVATAR_WIDTH - roundedCornerHeight));
-
+    
     CGFloat alpha = selectedAccount ? 1 : 0.5;
-
+    
     CGRect avatarRect =
         CGRectMake(TOP_MARGIN + 1, LEFT_MARGIN + 1, AVATAR_WIDTH, AVATAR_WIDTH);
     [avatar drawInRect:avatarRect

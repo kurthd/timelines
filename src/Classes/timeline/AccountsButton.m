@@ -5,6 +5,7 @@
 #import "AccountsButton.h"
 #import "UIColor+TwitchColors.h"
 #import "UIImage+DrawingAdditions.h"
+#import "SettingsReader.h"
 
 @interface AccountsButton ()
 
@@ -36,7 +37,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-#define OFFSET 18
+#define OFFSET 20
 #define AVATAR_WIDTH 27
 
     CGContextClearRect(UIGraphicsGetCurrentContext(), rect);
@@ -46,16 +47,14 @@
     CGPoint point;
     CGSize size;
 
-    UIColor * usernameColor = nil;
     UIFont * usernameFont = [UIFont boldSystemFontOfSize:21.0];
 
-    UIColor * usernameShadowColor = [UIColor twitchGrayColor];
-
-    if (self.highlighted) {
-        usernameColor = [UIColor twitchLightLightGrayColor];
-    } else {
-        usernameColor = [UIColor whiteColor];
-    }
+    UIColor * usernameShadowColor =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [UIColor blackColor] : [UIColor twitchGrayColor];
+    UIColor * usernameColor =
+        self.highlighted ?
+        [UIColor twitchLightLightGrayColor] : [UIColor whiteColor];
 
     size = [username sizeWithFont:usernameFont];
     CGFloat baseX = (contentRect.size.width - size.width + OFFSET ) / 2;
@@ -71,7 +70,7 @@
     [username drawAtPoint:point withFont:usernameFont];
 
     CGRect dropDownArrowRect =
-        CGRectMake((contentRect.size.width + size.width + OFFSET) / 2 + 2, 9,
+        CGRectMake((contentRect.size.width + size.width + OFFSET) / 2 + 3, 9,
         14, 14);
     if (self.highlighted)
         [self.highlightedDropDownArrow drawInRect:dropDownArrowRect];
@@ -152,6 +151,8 @@
 {
     if (!avatarBackground)
         avatarBackground =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [[UIImage imageNamed:@"AccountsAvatarBackgroundDark.png"] retain] :
             [[UIImage imageNamed:@"AccountsAvatarBackground.png"] retain];
 
     return avatarBackground;

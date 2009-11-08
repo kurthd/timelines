@@ -146,7 +146,6 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
     duration:(NSTimeInterval)duration
 {
-    NSLog(@"Timeline view controller will rotate");
     [self.tableView reloadData];
 }
 

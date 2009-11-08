@@ -56,10 +56,17 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    NSLog(@"Showing oauth login view");
     [super viewWillAppear:animated];
 
     self.doneButton.enabled = NO;
     self.pinTextField.text = @"";
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.pinTextField resignFirstResponder];    
 }
 
 - (IBAction)userDidCancel

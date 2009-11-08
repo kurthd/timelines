@@ -23,13 +23,14 @@
     IBOutlet UITableViewCell * authorizingCell;
 
     IBOutlet UINavigationBar * navigationBar;
-    IBOutlet UIBarButtonItem * cancelButton;
+    UIBarButtonItem * cancelButton;
 
     BOOL allowsCancel;
 }
 
 @property (nonatomic, assign) id<ExplainOauthViewControllerDelegate> delegate;
 @property (nonatomic, assign) BOOL allowsCancel;
+@property (nonatomic, retain) UIBarButtonItem * cancelButton;
 
 - (IBAction)userDidCancel;
 

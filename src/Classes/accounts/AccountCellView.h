@@ -12,6 +12,9 @@
 	BOOL highlighted;
     BOOL landscape;
     BOOL selectedAccount;
+
+    UIImage * checkMark;
+    UIImage * highlightedCheckMark;
 }
 
 @property (nonatomic, retain) UIImage * avatar;

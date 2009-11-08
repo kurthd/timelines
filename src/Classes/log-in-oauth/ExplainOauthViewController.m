@@ -16,7 +16,6 @@
 @property (nonatomic, retain) UITableViewCell * authorizingCell;
 
 @property (nonatomic, retain) UINavigationBar * navigationBar;
-@property (nonatomic, retain) UIBarButtonItem * cancelButton;
 
 @end
 
@@ -135,8 +134,9 @@
 {
     allowsCancel = doesAllowCancel;
 
-    self.navigationBar.topItem.leftBarButtonItem =
+    self.navigationItem.leftBarButtonItem =
         allowsCancel ? self.cancelButton : nil;
+    self.navigationItem.hidesBackButton = !allowsCancel;
 }
 
 @end

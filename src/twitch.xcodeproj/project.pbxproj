@@ -845,6 +845,8 @@
 		915B4C5510A4A6F70028B0B4 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B4C5310A4A6F70028B0B4 /* AccountTableViewCell.m */; };
 		915B4C6410A4AA420028B0B4 /* AccountCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B4C6310A4AA420028B0B4 /* AccountCellView.m */; };
 		915B4C6510A4AA420028B0B4 /* AccountCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B4C6310A4AA420028B0B4 /* AccountCellView.m */; };
+		915B4ECA10A6457B0028B0B4 /* AccountsAvatarBackgroundDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 915B4EC910A6457B0028B0B4 /* AccountsAvatarBackgroundDark.png */; };
+		915B4ECB10A6457B0028B0B4 /* AccountsAvatarBackgroundDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 915B4EC910A6457B0028B0B4 /* AccountsAvatarBackgroundDark.png */; };
 		916A24431083E59800C5895D /* DarkThemeBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A24421083E59800C5895D /* DarkThemeBottomGradient.png */; };
 		916A24501083E72300C5895D /* DarkThemeTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A244F1083E72300C5895D /* DarkThemeTopGradient.png */; };
 		916A25431084283D00C5895D /* DarkThemeButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A25421084283D00C5895D /* DarkThemeButtonBackground.png */; };
@@ -1543,6 +1545,7 @@
 		915B4C5310A4A6F70028B0B4 /* AccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountTableViewCell.m; path = accounts/AccountTableViewCell.m; sourceTree = "<group>"; };
 		915B4C6210A4AA420028B0B4 /* AccountCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountCellView.h; path = accounts/AccountCellView.h; sourceTree = "<group>"; };
 		915B4C6310A4AA420028B0B4 /* AccountCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountCellView.m; path = accounts/AccountCellView.m; sourceTree = "<group>"; };
+		915B4EC910A6457B0028B0B4 /* AccountsAvatarBackgroundDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountsAvatarBackgroundDark.png; path = images/AccountsAvatarBackgroundDark.png; sourceTree = "<group>"; };
 		916A24421083E59800C5895D /* DarkThemeBottomGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeBottomGradient.png; path = images/DarkThemeBottomGradient.png; sourceTree = "<group>"; };
 		916A244F1083E72300C5895D /* DarkThemeTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeTopGradient.png; path = images/DarkThemeTopGradient.png; sourceTree = "<group>"; };
 		916A25421084283D00C5895D /* DarkThemeButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeButtonBackground.png; path = images/DarkThemeButtonBackground.png; sourceTree = "<group>"; };
@@ -2794,6 +2797,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				915B4EC910A6457B0028B0B4 /* AccountsAvatarBackgroundDark.png */,
 				91E7CB9C10A392B800FEDA5D /* AccountsAvatarMask.png */,
 				91E7CB8C10A38FFB00FEDA5D /* DropDownArrowHighlighted.png */,
 				91E7CAF910A36EB700FEDA5D /* AccountsAvatarBackground.png */,
@@ -3286,6 +3290,7 @@
 				91E7CAFB10A36EB700FEDA5D /* AccountsAvatarBackground.png in Resources */,
 				91E7CB8E10A38FFB00FEDA5D /* DropDownArrowHighlighted.png in Resources */,
 				91E7CB9E10A392B800FEDA5D /* AccountsAvatarMask.png in Resources */,
+				915B4ECB10A6457B0028B0B4 /* AccountsAvatarBackgroundDark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3452,6 +3457,7 @@
 				91E7CAFA10A36EB700FEDA5D /* AccountsAvatarBackground.png in Resources */,
 				91E7CB8D10A38FFB00FEDA5D /* DropDownArrowHighlighted.png in Resources */,
 				91E7CB9D10A392B800FEDA5D /* AccountsAvatarMask.png in Resources */,
+				915B4ECA10A6457B0028B0B4 /* AccountsAvatarBackgroundDark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

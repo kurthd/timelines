@@ -20,11 +20,14 @@
 
 - (void)displayErrorWithMessage:(NSString *)message;
 - (void)broadcastSuccessfulLogInNotification:(TwitterCredentials *)credentials;
+- (void)dismissView;
 
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, retain) UIViewController * rootViewController;
 @property (nonatomic, retain) ExplainOauthViewController *
     explainOauthViewController;
+@property (nonatomic, readonly)
+    UINavigationController * explainOauthNavController;
 @property (nonatomic, retain) OauthLogInViewController *
     oauthLogInViewController;
 @property (nonatomic, retain) YHOAuthTwitterEngine * twitter;
@@ -41,6 +44,7 @@
 @synthesize twitter;
 @synthesize requestToken;
 @synthesize allowsCancel;
+@synthesize navigationController;
 
 - (void)dealloc
 {
@@ -54,6 +58,8 @@
 
     self.twitter = nil;
     self.requestToken = nil;
+
+    [navigationController release];
 
     [super dealloc];
 }
@@ -71,9 +77,13 @@
 
 - (void)logIn:(BOOL)animated;
 {
-    [self.rootViewController
-        presentModalViewController:self.explainOauthViewController
-                          animated:animated];
+    if (self.navigationController)
+        [self.navigationController
+            pushViewController:self.explainOauthViewController animated:YES];
+    else
+        [self.rootViewController
+            presentModalViewController:self.explainOauthNavController
+            animated:animated];
     self.explainOauthViewController.allowsCancel = self.allowsCancel;
 }
 
@@ -88,14 +98,14 @@
 
 - (void)dismissOauth:(NSTimer *)timer
 {
-    [self.explainOauthViewController dismissModalViewControllerAnimated:YES];
+    [self dismissView];
 }
 
 - (void)dismissExplain:(NSTimer *)sender
 {
     NSLog(@"Dismissing the oauth explanation modal view.");
     [self.explainOauthViewController showButtonView];
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
+    [self dismissView];
 }
 
 #pragma mark YHOAuthTwitterEngineDelegate implementation
@@ -111,11 +121,17 @@
         "authorize?oauth_token=%@&oauth_callback=oob", self.requestToken.key]];
     NSURLRequest * req = [NSURLRequest requestWithURL:url];
 
-    UINavigationController * navController =
-        [[[UINavigationController alloc]
-        initWithRootViewController:self.oauthLogInViewController] autorelease];
-    [self.explainOauthViewController presentModalViewController:navController
-        animated:YES];
+    if (self.navigationController)
+        [self.navigationController
+            pushViewController:self.oauthLogInViewController animated:YES];
+    else {
+        UINavigationController * navController =
+            [[[UINavigationController alloc]
+            initWithRootViewController:self.oauthLogInViewController]
+            autorelease];
+        [self.explainOauthViewController presentModalViewController:navController
+            animated:YES];
+    }
 
     [self.oauthLogInViewController performSelector:@selector(loadAuthRequest:)
         withObject:req afterDelay:0.2];
@@ -135,6 +151,8 @@
 {
     NSLog(@"Received access token: '%@'.", self.twitter.accessToken);
     NSLog(@"Logged in user: '%@'.", self.twitter.username);
+
+    self.explainOauthViewController.cancelButton.enabled = YES;
 
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:@"username == %@",
@@ -183,6 +201,8 @@
 
 - (void)failedToReceiveAccessToken:(id)sender error:(NSError *)error
 {
+    self.explainOauthViewController.cancelButton.enabled = YES;
+
     [self displayErrorWithMessage:error.localizedDescription];
     [self.explainOauthViewController showButtonView];
 
@@ -201,14 +221,15 @@
 
 - (void)userDidCancelExplanation
 {
-    [self.rootViewController dismissModalViewControllerAnimated:YES];
+    [self dismissView];
 }
 
 #pragma mark OauthLogInViewControllerDelegate implementation
 
 - (void)userIsDone:(NSString *)pin
 {
-    [self.explainOauthViewController dismissModalViewControllerAnimated:YES];
+    self.explainOauthViewController.cancelButton.enabled = NO;
+    [self dismissView];
     [self.explainOauthViewController showAuthorizingView];
 
     [self.twitter requestAccessToken:pin];
@@ -219,7 +240,16 @@
 - (void)userDidCancel
 {
     [self.explainOauthViewController showButtonView];
-    [self.explainOauthViewController dismissModalViewControllerAnimated:YES];
+    [self dismissView];
+}
+
+- (void)dismissView
+{
+    if (!self.navigationController)
+        [self.explainOauthViewController
+            dismissModalViewControllerAnimated:YES];
+    else
+        [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark Notify the system of new accounts
@@ -287,9 +317,30 @@
             [[ExplainOauthViewController alloc]
             initWithNibName:@"ExplainOauthView" bundle:nil];
         explainOauthViewController.delegate = self;
+        explainOauthViewController.navigationItem.title =
+            NSLocalizedString(@"account.addaccount", @"");
+        UIBarButtonItem * cancelButton =
+            [[[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+            target:self action:@selector(userDidCancel)]
+            autorelease];
+        if (allowsCancel)
+            explainOauthViewController.navigationItem.leftBarButtonItem =
+                cancelButton;
+        explainOauthViewController.cancelButton = cancelButton;
     }
 
     return explainOauthViewController;
+}
+
+- (UINavigationController *)explainOauthNavController
+{
+    if (!explainOauthNavController)
+        explainOauthNavController =
+            [[UINavigationController alloc]
+            initWithRootViewController:self.explainOauthViewController];
+
+    return explainOauthNavController;
 }
 
 - (YHOAuthTwitterEngine *)twitter

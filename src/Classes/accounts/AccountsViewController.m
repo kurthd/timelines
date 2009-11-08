@@ -18,6 +18,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
 @interface AccountsViewController ()
 
 @property (nonatomic, copy) NSArray * accounts;
+@property (nonatomic, retain) UIBarButtonItem * rightButton;
 
 + (void)configureSelectedAccountCell:(AccountTableViewCell *)cell;
 + (void)configureNormalAccountCell:(AccountTableViewCell *)cell;
@@ -27,12 +28,13 @@ NSInteger usernameSort(TwitterCredentials * user1,
 @implementation AccountsViewController
 
 @synthesize delegate, selectedAccount, accounts, selectedAccountTarget,
-    selectedAccountAction;
+    selectedAccountAction, rightButton;
 
 - (void)dealloc
 {
     self.delegate = nil;
     self.accounts = nil;
+    self.rightButton = nil;
     [super dealloc];
 }
 
@@ -60,12 +62,19 @@ NSInteger usernameSort(TwitterCredentials * user1,
         self.selectedAccount = [self.delegate currentActiveAccount];
 
     [self setEditing:NO animated:animated];
+    [self.tableView reloadData];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
     (UIInterfaceOrientation)orientation
 {
     return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
+    duration:(NSTimeInterval)duration
+{
+    [self.tableView reloadData];
 }
 
 #pragma mark Button actions
@@ -183,31 +192,34 @@ NSInteger usernameSort(TwitterCredentials * user1,
 {
     NSAssert(!self.tableView.editing, @"Should never be called while editing.");
 
-    // toggle the active account
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == [accounts count])
+        [delegate userWantsToAddAccount];
+    else {
+        // toggle the active account
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    if (selectedAccountTarget)
-        [selectedAccountTarget performSelector:selectedAccountAction
-            withObject:nil];
-
-    NSInteger accountIndex =
-        [self.accounts indexOfObject:self.selectedAccount];
-    if (accountIndex == indexPath.row)
-        return;  // nothing changed
-
-    NSIndexPath * oldIndexPath =
-        [NSIndexPath indexPathForRow:accountIndex inSection:0];
+        NSInteger accountIndex =
+            [self.accounts indexOfObject:self.selectedAccount];
+        if (accountIndex != indexPath.row) {
+            NSIndexPath * oldIndexPath =
+                [NSIndexPath indexPathForRow:accountIndex inSection:0];
  
-    AccountTableViewCell * newCell =
-        (AccountTableViewCell *)
-        [self.tableView cellForRowAtIndexPath:indexPath];
-    [[self class] configureSelectedAccountCell:newCell];
-    self.selectedAccount = [self.accounts objectAtIndex:indexPath.row];
+            AccountTableViewCell * newCell =
+                (AccountTableViewCell *)
+                [self.tableView cellForRowAtIndexPath:indexPath];
+            [[self class] configureSelectedAccountCell:newCell];
+            self.selectedAccount = [self.accounts objectAtIndex:indexPath.row];
 
-    AccountTableViewCell * oldCell =
-        (AccountTableViewCell *)
-        [self.tableView cellForRowAtIndexPath:oldIndexPath];
-    [[self class] configureNormalAccountCell:oldCell];
+            AccountTableViewCell * oldCell =
+                (AccountTableViewCell *)
+                [self.tableView cellForRowAtIndexPath:oldIndexPath];
+            [[self class] configureNormalAccountCell:oldCell];
+        }
+
+        if (selectedAccountTarget)
+            [selectedAccountTarget performSelector:selectedAccountAction
+                withObject:nil];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView
@@ -273,39 +285,36 @@ NSInteger usernameSort(TwitterCredentials * user1,
     return 48;
 }
 
+- (BOOL)tableView:(UITableView *)tableView
+    canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath.row != [accounts count];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+
+    if (editing) {
+        self.rightButton = self.navigationItem.rightBarButtonItem;
+        [self.navigationItem setRightBarButtonItem:nil animated:animated];
+    } else if (self.rightButton)
+        [self.navigationItem setRightBarButtonItem:self.rightButton
+            animated:animated];
+}
+
 #pragma mark Private implementation
 
 + (void)configureSelectedAccountCell:(AccountTableViewCell *)cell
 {
     [cell setSelectedAccount:YES];
     [cell setAvatarImage:[UIImage imageNamed:@"DefaultAvatar48x48.png"]];
-    // cell.textLabel.textColor = [UIColor blackColor];
-    // 
-    // cell.imageView.image = [UIImage imageNamed:@"DefaultAvatar48x48.png"];
-
-    // cell.imageView.image =
-    //     [SettingsReader displayTheme] == kDisplayThemeDark ?
-    //     [UIImage imageNamed:@"AccountSelectedCheckmarkDarkTheme.png"] :
-    //     [UIImage imageNamed:@"AccountSelectedCheckmark.png"];
-    // cell.imageView.highlightedImage =
-    //     [UIImage imageNamed:@"AccountSelectedCheckmarkHighlighted.png"];
 }
 
 + (void)configureNormalAccountCell:(AccountTableViewCell *)cell
 {
     [cell setSelectedAccount:NO];
     [cell setAvatarImage:[UIImage imageNamed:@"DefaultAvatar48x48.png"]];
-    // cell.textLabel.textColor =
-    //     [SettingsReader displayTheme] == kDisplayThemeDark ?
-    //     [UIColor whiteColor] : [UIColor lightGrayColor];
-
-    // cell.imageView.image =
-    //     [UIImage imageNamed:@"AccountNotSelectedFiller.png"];
-    // cell.imageView.highlightedImage =
-    //     [UIImage imageNamed:@"AccountNotSelectedFiller.png"];
-
-    // cell.imageView.image = [UIImage imageNamed:@"DefaultAvatar48x48.png"];
-    // cell.imageView.alpha = 0.4;
 }
 
 @end

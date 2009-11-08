@@ -27,17 +27,21 @@
     NSManagedObjectContext * context;
 
     UIViewController * rootViewController;
+    UINavigationController * explainOauthNavController;
     ExplainOauthViewController * explainOauthViewController;
     OauthLogInViewController * oauthLogInViewController;
 
     YHOAuthTwitterEngine * twitter;
     OAToken * requestToken;
 
+    UINavigationController * navigationController;
+
     BOOL allowsCancel;
 }
 
 @property (nonatomic, assign) id<OathLogInDisplayMgrDelegate> delegate;
 @property (nonatomic, assign) BOOL allowsCancel;
+@property (nonatomic, retain) UINavigationController * navigationController;
 
 - (id)initWithRootViewController:(UIViewController *)aRootViewController
             managedObjectContext:(NSManagedObjectContext *)aContext;

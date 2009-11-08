@@ -591,6 +591,8 @@
         findPeopleBookmarkMgr:findPeopleBookmarkMgr]
         autorelease];
 
+    UITabBarItem * tabBarItem =
+        mentionsNetAwareViewController.parentViewController.tabBarItem;
     mentionDisplayMgr =
         [[MentionTimelineDisplayMgr alloc]
         initWithWrapperController:mentionsNetAwareViewController
@@ -599,10 +601,10 @@
         service:service
         factory:timelineDisplayMgrFactory
         managedObjectContext:[self managedObjectContext]
-        composeTweetDisplayMgr:composeTweetDisplayMgr
+        composeTweetDisplayMgr:self.composeTweetDisplayMgr
         findPeopleBookmarkMgr:findPeopleBookmarkMgr
         userListDisplayMgrFactory:userListDisplayMgrFactory
-        tabBarItem:mentionsNetAwareViewController.tabBarItem];
+        tabBarItem:tabBarItem];
     service.delegate = mentionDisplayMgr;
     timelineController.delegate = mentionDisplayMgr;
     mentionsNetAwareViewController.delegate = mentionDisplayMgr;
@@ -732,7 +734,7 @@
 - (void)initAccountsView
 {
     accountsViewController = [[AccountsViewController alloc] init];
-    
+
     accountsNavController =
         [[UINavigationController alloc]
         initWithRootViewController:accountsViewController];
@@ -745,13 +747,15 @@
 
     OauthLogInDisplayMgr * displayMgr =
         [[OauthLogInDisplayMgr alloc]
-         initWithRootViewController:tabBarController
-                managedObjectContext:[self managedObjectContext]];
+        initWithRootViewController:tabBarController
+        managedObjectContext:[self managedObjectContext]];
+    displayMgr.navigationController = accountsNavController;
 
-    accountsDisplayMgr = [[AccountsDisplayMgr alloc]
+    accountsDisplayMgr =
+        [[AccountsDisplayMgr alloc]
         initWithAccountsViewController:accountsViewController
-                       logInDisplayMgr:displayMgr
-                               context:[self managedObjectContext]];
+        logInDisplayMgr:displayMgr
+        context:[self managedObjectContext]];
 
     UIBarButtonItem * doneButton =
         [[[UIBarButtonItem alloc]
@@ -1022,7 +1026,7 @@
                 processAccountChangeToUsername:changedCredentials.username
                 fromUsername:nil];
 
-            // spread these calls out a bit to avoid
+            // spread these calls out a bit
             [mentionDisplayMgr
                 performSelector:
                 @selector(updateMentionsAfterCredentialChange)
@@ -1033,6 +1037,8 @@
                 @selector(updateDirectMessagesAfterCredentialChange)
                 withObject:nil
                 afterDelay:4.0];
+
+            [self setTimelineTitleView];
         }
         [self.credentials addObject:changedCredentials];
     } else {
@@ -1473,12 +1479,15 @@
             [self initHomeTab];
             break;
         case 1:
-            [self initMessagesTab];
+            [self initMentionsTab];
             break;
         case 2:
-            [self initSearchTab];
+            [self initMessagesTab];
             break;
         case 3:
+            [self initSearchTab];
+            break;
+        case 4:
             [self initFindPeopleTab];
             break;
     }
@@ -1550,18 +1559,13 @@
         animated:YES];
 }
 
-- (void)showAddAccountModalView
-{
-    [accountsNavController dismissModalViewControllerAnimated:YES];
-    [accountsDisplayMgr performSelector:@selector(userWantsToAddAccount)
-        withObject:nil afterDelay:0.7];
-}
-
 - (void)processUserAccountSelection
 {
     [accountsNavController dismissModalViewControllerAnimated:YES];
     
     TwitterCredentials * activeAccount = [accountsDisplayMgr selectedAccount];
+
+    NSLog(@"Processing user account selection ('%@')", activeAccount.username);
 
     if (activeAccount &&
         activeAccount != self.activeCredentials.credentials) {
@@ -1593,6 +1597,9 @@
         mentionDisplayMgr.showBadge = [settings pushMentions];
 
         [accountsButtonSetter setButtonWithUsername:activeAccount.username];
+        
+        // This isn't called automatically, so force call here
+        [homeNetAwareViewController viewWillAppear:YES];
     }
 }
 

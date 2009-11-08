@@ -27,6 +27,8 @@
 
     NSArray * accounts;
     TwitterCredentials * selectedAccount;
+
+    UIBarButtonItem * rightButton;
 }
 
 @property (nonatomic, assign) id<AccountsViewControllerDelegate> delegate;
