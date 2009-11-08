@@ -43,7 +43,7 @@
     addPhotoServiceDisplayMgr;
 
 @property (nonatomic, copy) NSString * origUsername;
-@property (nonatomic, copy) NSString * origTweetId;
+@property (nonatomic, copy) NSNumber * origTweetId;
 
 @property (nonatomic, retain) TweetDraftMgr * draftMgr;
 
@@ -146,7 +146,7 @@
 
     NSString * text = draft ? draft.text : @"";
     if (draft.inReplyToTweetId && draft.inReplyToUsername)
-        [self composeReplyToTweet:draft.inReplyToTweetId
+        [self composeReplyToTweet:[NSNumber numberWithLongLong:[draft.inReplyToTweetId longLongValue]]
                          fromUser:draft.inReplyToUsername
                          withText:text];
     else
@@ -164,7 +164,7 @@
                                                animated:YES];
 }
 
-- (void)composeReplyToTweet:(NSString *)tweetId
+- (void)composeReplyToTweet:(NSNumber *)tweetId
                    fromUser:(NSString *)user
 {
     self.origTweetId = tweetId;
@@ -175,7 +175,7 @@
     // See if we're resuming a saved reply
     TweetDraft * draft =
         [self.draftMgr tweetDraftForCredentials:self.service.credentials];
-    if ([draft.inReplyToTweetId isEqualToString:tweetId])
+    if ([draft.inReplyToTweetId isEqual:tweetId])
         tweetText = draft.text;
     else
         tweetText = [NSString stringWithFormat:@"@%@ ", user];
@@ -188,7 +188,7 @@
                                                animated:YES];
 }
 
-- (void)composeReplyToTweet:(NSString *)tweetId
+- (void)composeReplyToTweet:(NSNumber *)tweetId
                    fromUser:(NSString *)user
                    withText:(NSString *)text
 {
@@ -506,7 +506,7 @@
     [self.delegate userFailedToSendTweet:tweet];
 }
 
-- (void)tweet:(Tweet *)tweet sentInReplyTo:(NSString *)tweetId
+- (void)tweet:(Tweet *)tweet sentInReplyTo:(NSNumber *)tweetId
 {
     if (self.attachedPhotos.count > 0 || self.attachedVideos.count > 0) {
         [self updateMediaTitleFromTweet:tweet];
@@ -520,7 +520,7 @@
                              withTweet:tweet];
 }
 
-- (void)failedToReplyToTweet:(NSString *)tweetId
+- (void)failedToReplyToTweet:(NSNumber *)tweetId
                     withText:(NSString *)text
                        error:(NSError *)error
 {

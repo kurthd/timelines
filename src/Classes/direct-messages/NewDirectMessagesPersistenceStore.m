@@ -29,7 +29,7 @@
         unsignedIntValue];
     NSDictionary * newMessageCountByUser =
         [dict objectForKey:[[self class] newMessageCountByUserKey]];
-    for (NSString * userId in newMessageCountByUser) {
+    for (NSNumber * userId in newMessageCountByUser) {
         NSNumber * count = [newMessageCountByUser objectForKey:userId];
         [state setCount:[count intValue] forUserId:userId];
     }

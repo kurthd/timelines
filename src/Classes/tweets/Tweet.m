@@ -11,8 +11,6 @@
 #import "TweetLocation.h"
 #import "User.h"
 
-#import "NSObject+TweetHelpers.h"
-
 @implementation Tweet 
 
 @dynamic inReplyToTwitterUsername;
@@ -29,7 +27,7 @@
 
 - (NSComparisonResult)compare:(Tweet *)tweet
 {
-    return [[self class] compareTweetId:self.identifier toId:tweet.identifier];
+    return [self.identifier compare:tweet.identifier];
 }
 
 @end

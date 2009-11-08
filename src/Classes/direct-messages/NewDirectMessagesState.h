@@ -14,10 +14,10 @@
 
 - (void)incrementCountBy:(NSInteger)count;
 
-- (void)setCount:(NSUInteger)count forUserId:(NSString *)identifier;
-- (NSUInteger)countForUserId:(NSString *)identifier;
+- (void)setCount:(NSUInteger)count forUserId:(NSNumber *)identifier;
+- (NSUInteger)countForUserId:(NSNumber *)identifier;
 - (NSDictionary *)allNewMessagesByUser;
 - (void)clear;
-- (void)incrementCountForUserId:(NSString *)identifier;
+- (void)incrementCountForUserId:(NSNumber *)identifier;
 
 @end

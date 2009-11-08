@@ -61,7 +61,7 @@
         infos.count);
     NSDictionary * info = [infos objectAtIndex:0];
 
-    NSString * userId = [[info objectForKey:@"id"] description];
+    NSNumber * userId = [info objectForKey:@"id"];
     User * user = [User findOrCreateWithId:userId context:context];
     [self populateUser:user fromData:info];
 

@@ -39,15 +39,15 @@
 
 // is 'tweet' a verb or a noun?
 - (void)sendTweet:(NSString *)tweet;
-- (void)sendTweet:(NSString *)tweet inReplyTo:(NSString *)referenceId;
+- (void)sendTweet:(NSString *)tweet inReplyTo:(NSNumber *)referenceId;
 
 #pragma mark Fetching individual tweets
 
-- (void)fetchTweet:(NSString *)tweetId;
+- (void)fetchTweet:(NSNumber *)tweetId;
 
 #pragma mark Deleting individual tweets
 
-- (void)deleteTweet:(NSString *)tweetId;
+- (void)deleteTweet:(NSNumber *)tweetId;
 
 #pragma mark Timeline
 
@@ -84,7 +84,7 @@
 #pragma mark Favorites
 
 - (void)fetchFavoritesForUser:(NSString *)user page:(NSNumber *)page;
-- (void)markTweet:(NSString *)tweetId asFavorite:(BOOL)favorite;
+- (void)markTweet:(NSNumber *)tweetId asFavorite:(BOOL)favorite;
 
 #pragma mark User info
 

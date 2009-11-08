@@ -43,7 +43,7 @@
     NSString * mentionUsername;
     NSString * mentionRegex;
 
-    NSString * visibleTweetId;
+    NSNumber * visibleTweetId;
 }
 
 @property (nonatomic, assign)
@@ -58,7 +58,7 @@
 
 - (void)setUser:(User *)user;
 - (void)setTweets:(NSArray *)tweets page:(NSUInteger)page
-    visibleTweetId:(NSString *)visibleTweetId;
+    visibleTweetId:(NSNumber *)visibleTweetId;
 - (void)setAllPagesLoaded:(BOOL)allLoaded;
 - (void)selectTweetId:(NSString *)tweetId;
 
@@ -67,7 +67,7 @@
 
 - (void)addTweet:(Tweet *)tweet;
 - (void)deleteTweet:(NSString *)tweetId;
-- (NSString *)mostRecentTweetId;
+- (NSNumber *)mostRecentTweetId;
 
 // HACK: Exposed to allow for "Save Search" button
 - (void)setTimelineHeaderView:(UIView *)aView;

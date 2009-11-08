@@ -73,7 +73,7 @@
         NewDirectMessagesState * dmState =
             [[[NewDirectMessagesState alloc] init] autorelease];
         NSDictionary * newMessagesForAcct = [dict objectForKey:acctUsername];
-        for (NSString * userId in [newMessagesForAcct allKeys]) {
+        for (NSNumber * userId in [newMessagesForAcct allKeys]) {
             NSUInteger count =
                 [[newMessagesForAcct objectForKey:userId] intValue];
             [dmState setCount:count forUserId:userId];

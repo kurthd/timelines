@@ -32,7 +32,7 @@
 - (id)initWithTwitterService:(TwitterService *)aService
                      context:(NSManagedObjectContext *)aContext;
 
-- (void)displayConversationFrom:(NSString *)aFirstTweetId
+- (void)displayConversationFrom:(NSNumber *)aFirstTweetId
            navigationController:(UINavigationController *)navController;
 
 @end

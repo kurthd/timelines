@@ -25,20 +25,20 @@
 - (void)tweetSentSuccessfully:(Tweet *)tweet;
 - (void)failedToSendTweet:(NSString *)tweet error:(NSError *)error;
 
-- (void)tweet:(Tweet *)tweet sentInReplyTo:(NSString *)tweetId;
-- (void)failedToReplyToTweet:(NSString *)tweetId
+- (void)tweet:(Tweet *)tweet sentInReplyTo:(NSNumber *)tweetId;
+- (void)failedToReplyToTweet:(NSNumber *)tweetId
                     withText:(NSString *)text
                        error:(NSError *)error;
 
 #pragma mark Fetching individual tweets
 
-- (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId;
-- (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error;
+- (void)fetchedTweet:(Tweet *)tweet withId:(NSNumber *)tweetId;
+- (void)failedToFetchTweetWithId:(NSNumber *)tweetId error:(NSError *)error;
 
 #pragma mark Deleting individual tweets
 
-- (void)deletedTweetWithId:(NSString *)tweetId;
-- (void)failedToDeleteTweetWithId:(NSString *)tweetId error:(NSError *)error;
+- (void)deletedTweetWithId:(NSNumber *)tweetId;
+- (void)failedToDeleteTweetWithId:(NSNumber *)tweetId error:(NSError *)error;
 
 #pragma mark Timelines
 
@@ -118,7 +118,7 @@
                                 error:(NSError *)error;
 
 - (void)tweet:(Tweet *)tweet markedAsFavorite:(BOOL)favorite;
-- (void)failedToMarkTweet:(NSString *)tweetId
+- (void)failedToMarkTweet:(NSNumber *)tweetId
                asFavorite:(BOOL)favorite
                     error:(NSError *)error;
 

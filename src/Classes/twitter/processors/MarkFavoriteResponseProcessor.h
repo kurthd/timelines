@@ -8,19 +8,19 @@
 
 @interface MarkFavoriteResponseProcessor : ResponseProcessor
 {
-    NSString * tweetId;
+    NSNumber * tweetId;
     BOOL favorite;
     id<TwitterServiceDelegate> delegate;
 
     NSManagedObjectContext * context;
 }
 
-+ (id)processorWithTweetId:(NSString *)aTweetId
++ (id)processorWithTweetId:(NSNumber *)aTweetId
                   favorite:(BOOL)isFavorite
                    context:(NSManagedObjectContext *)aContext
                   delegate:(id<TwitterServiceDelegate>)aDelegate;
 
-- (id)initWithTweetId:(NSString *)aTweetId
+- (id)initWithTweetId:(NSNumber *)aTweetId
              favorite:(BOOL)isFavorite
               context:(NSManagedObjectContext *)aContext
              delegate:(id<TwitterServiceDelegate>)aDelegate;

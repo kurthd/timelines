@@ -426,7 +426,9 @@ enum TweetActionSheets {
             NSLog(@"Showing search results for '%@'", query);
             [delegate showResultsForSearch:query];
         } else if (inReplyToString = [webpage stringByMatching:@"#\\d*"]) {
-            NSString * tweetId = [inReplyToString substringFromIndex:1];
+            NSString * tweetIdString = [inReplyToString substringFromIndex:1];
+            NSNumber * tweetId =
+                [NSNumber numberWithLongLong:[tweetIdString longLongValue]];
             NSString * replyToUsername = self.tweet.inReplyToTwitterUsername;
             [delegate loadNewTweetWithId:tweetId username:replyToUsername];
         } else if ([webpage isMatchedByRegex:@"^mailto:"]) {

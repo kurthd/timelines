@@ -134,13 +134,15 @@ static UIImage * dotImage;
 	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
 	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
 
+    NSString * previewText =
+        [preview.mostRecentMessage stringByDecodingHtmlEntities];
     [previewLabelTextColor set];
     CGFloat previewLabelWidth = 
         !landscape ? PREVIEW_LABEL_WIDTH : PREVIEW_LABEL_WIDTH_LANDSCAPE;
     CGSize maxPreviewSize =
         CGSizeMake(previewLabelWidth, PREVIEW_LABEL_HEIGHT);
     size =
-        [preview.mostRecentMessage sizeWithFont:previewLabelFont
+        [previewText sizeWithFont:previewLabelFont
         constrainedToSize:maxPreviewSize
         lineBreakMode:UILineBreakModeTailTruncation];
     point = CGPointMake(LEFT_MARGIN, PREVIEW_LABEL_TOP_MARGIN);
@@ -148,7 +150,7 @@ static UIImage * dotImage;
     CGRect drawingRect = CGRectMake(LEFT_MARGIN, PREVIEW_LABEL_TOP_MARGIN,
         size.width, size.height);
 
-    [preview.mostRecentMessage drawInRect:drawingRect withFont:previewLabelFont
+    [previewText drawInRect:drawingRect withFont:previewLabelFont
         lineBreakMode:UILineBreakModeTailTruncation];
 
     if (preview.numNewMessages > 0) {

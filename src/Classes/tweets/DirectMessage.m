@@ -9,7 +9,6 @@
 #import "DirectMessage.h"
 #import "TwitterCredentials.h"
 #import "User.h"
-#import "NSObject+TweetHelpers.h"
 
 @implementation DirectMessage 
 
@@ -30,7 +29,7 @@
 
 - (NSComparisonResult)compare:(DirectMessage *)dm
 {
-    return [[self class] compareTweetId:self.identifier toId:dm.identifier];
+    return [self.identifier compare:dm.identifier];
 }
 
 @end

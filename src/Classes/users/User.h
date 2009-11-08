@@ -21,7 +21,7 @@
 @property (nonatomic, retain) NSString * webpage;
 @property (nonatomic, retain) NSNumber * friendsCount;
 @property (nonatomic, retain) NSString * bio;
-@property (nonatomic, retain) NSString * identifier;
+@property (nonatomic, retain) NSNumber * identifier;
 @property (nonatomic, retain) NSString * location;
 @property (nonatomic, retain) NSDate * created;
 @property (nonatomic, retain) NSString * username;

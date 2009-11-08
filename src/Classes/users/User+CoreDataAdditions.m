@@ -8,7 +8,7 @@
 
 @implementation User (CoreDataAdditions)
 
-+ (id)findOrCreateWithId:(NSString *)anIdentifier
++ (id)findOrCreateWithId:(NSNumber *)anIdentifier
                  context:(NSManagedObjectContext *)context
 {
     User * user = [[self class] userWithId:anIdentifier context:context];
@@ -21,7 +21,7 @@
     return user;
 }
 
-+ (id)userWithId:(NSString *)targetId
++ (id)userWithId:(NSNumber *)targetId
          context:(NSManagedObjectContext *)context
 {
     NSPredicate * predicate = 

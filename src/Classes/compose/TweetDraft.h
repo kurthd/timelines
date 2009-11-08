@@ -14,7 +14,7 @@
 {
 }
 
-@property (nonatomic, retain) NSString * inReplyToTweetId;
+@property (nonatomic, retain) NSNumber * inReplyToTweetId;
 @property (nonatomic, retain) NSString * inReplyToUsername;
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) TwitterCredentials * credentials;

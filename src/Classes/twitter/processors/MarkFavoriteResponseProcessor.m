@@ -12,7 +12,7 @@
 
 @interface MarkFavoriteResponseProcessor ()
 
-@property (nonatomic, copy) NSString * tweetId;
+@property (nonatomic, copy) NSNumber * tweetId;
 @property (nonatomic, assign) BOOL favorite;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
@@ -23,7 +23,7 @@
 
 @synthesize tweetId, favorite, delegate, context;
 
-+ (id)processorWithTweetId:(NSString *)aTweetId
++ (id)processorWithTweetId:(NSNumber *)aTweetId
                   favorite:(BOOL)isFavorite
                    context:(NSManagedObjectContext *)aContext
                   delegate:(id<TwitterServiceDelegate>)aDelegate
@@ -43,7 +43,7 @@
     [super dealloc];
 }
 
-- (id)initWithTweetId:(NSString *)aTweetId
+- (id)initWithTweetId:(NSNumber *)aTweetId
              favorite:(BOOL)isFavorite
               context:(NSManagedObjectContext *)aContext
              delegate:(id<TwitterServiceDelegate>)aDelegate
@@ -69,14 +69,15 @@
     NSDictionary * status = [statuses lastObject];
 
     NSDictionary * userData = [status objectForKey:@"user"];
-    NSString * userId = [[userData objectForKey:@"id"] description];
+    NSNumber * userId = [userData objectForKey:@"id"];
     User * user = [User findOrCreateWithId:userId context:context];
     [self populateUser:user fromData:userData];
 
     NSDictionary * tweetData = status;
 
     NSAssert2(
-        [[[tweetData objectForKey:@"id"] description] isEqualToString:tweetId],
+        [[[tweetData objectForKey:@"id"] description]
+        isEqualToString:[tweetId description]],
         @"Expected to receive status for tweet '%@', but got '%@' instead.",
         tweetId, [[tweetData objectForKey:@"id"] description]);
 
@@ -96,7 +97,8 @@
         NSLog(@"Failed to save tweets and users: '%@'", error);    
 
     SEL sel = @selector(tweet:markedAsFavorite:);
-    [self invokeSelector:sel withTarget:delegate args:tweet, favorite, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate tweet:tweet markedAsFavorite:favorite];
 
     return YES;
 }

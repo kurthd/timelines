@@ -7,15 +7,15 @@
 
 @interface DeleteTweetResponseProcessor : ResponseProcessor
 {
-    NSString * tweetId;
+    NSNumber * tweetId;
     id delegate;
     NSManagedObjectContext * context;
 }
 
-+ (id)processorWithTweetId:(NSString *)aTweetId
++ (id)processorWithTweetId:(NSNumber *)aTweetId
                    context:(NSManagedObjectContext *)aContext
                   delegate:(id)aDelegate;
-- (id)initWithTweetId:(NSString *)aTweetId
+- (id)initWithTweetId:(NSNumber *)aTweetId
               context:(NSManagedObjectContext *)aContext
              delegate:(id)aDelegate;
 

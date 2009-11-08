@@ -379,7 +379,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     // not supported for direct messages
 }
 
-- (void)deleteTweet:(NSString *)tweetId
+- (void)deleteTweet:(NSNumber *)tweetId
 {
     NSLog(@"Direct message display manager: deleting tweet");
     [self clearState];
@@ -790,7 +790,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         directMessageCache.receivedDirectMessages;
     NSDictionary * sentDirectMessages = directMessageCache.sentDirectMessages;
     for (DirectMessage * directMessage in [receivedDirectMessages allValues]) {
-        NSString * identifier = directMessage.sender.identifier;
+        NSNumber * identifier = directMessage.sender.identifier;
         NSMutableDictionary * conversation =
             [conversations objectForKey:identifier];
         if (!conversation) {
@@ -800,7 +800,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         [conversation setObject:directMessage forKey:directMessage.identifier];
     }
     for (DirectMessage * directMessage in [sentDirectMessages allValues]) {
-        NSString * identifier = directMessage.recipient.identifier;
+        NSNumber * identifier = directMessage.recipient.identifier;
         NSMutableDictionary * conversation =
             [conversations objectForKey:identifier];
         if (!conversation) {

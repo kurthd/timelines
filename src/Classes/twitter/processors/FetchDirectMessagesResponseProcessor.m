@@ -147,15 +147,23 @@
 - (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel;
-    if (sent)
+    if (sent) {
         sel = @selector(failedToFetchSentDirectMessagesSinceUpdateId:page:\
             count:error:);
-    else
+        if ([delegate respondsToSelector:sel])
+            [delegate failedToFetchSentDirectMessagesSinceUpdateId:updateId
+                                                              page:page
+                                                             count:count
+                                                             error:error];
+    } else {
         sel = @selector(failedToFetchDirectMessagesSinceUpdateId:page:count:\
             error:);
-        
-    [self invokeSelector:sel withTarget:delegate args:updateId, page, count,
-        error, nil];
+        if ([delegate respondsToSelector:sel])
+            [delegate failedToFetchDirectMessagesSinceUpdateId:updateId
+                                                          page:page
+                                                         count:count
+                                                         error:error];
+    }
 
     return YES;
 }
@@ -164,7 +172,7 @@
 
 - (User *)userFromData:(NSDictionary *)data
 {
-    NSString * userId = [[data objectForKey:@"id"] description];
+    NSNumber * userId = [data objectForKey:@"id"];
     User * user = [User findOrCreateWithId:userId context:context];
     [self populateUser:user fromData:data];
 

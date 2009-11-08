@@ -8,7 +8,7 @@
 
 @implementation Tweet (CoreDataAdditions)
 
-+ (id)tweetWithId:(NSString *)targetId
++ (id)tweetWithId:(NSNumber *)targetId
           context:(NSManagedObjectContext *)context
 {
     NSPredicate * predicate = 

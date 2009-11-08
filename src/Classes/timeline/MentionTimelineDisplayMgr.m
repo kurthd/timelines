@@ -182,8 +182,7 @@
     receivedQueryResponse = YES;
 
     BOOL scrollToTop = [SettingsReader scrollToTop];
-    NSString * scrollId =
-        scrollToTop ? [updateId description] : self.mentionIdToShow;
+    NSNumber * scrollId = scrollToTop ? updateId : self.mentionIdToShow;
     [timelineController setTweets:[mentions allValues] page:pagesShown
         visibleTweetId:scrollId];
 
@@ -209,7 +208,7 @@
     outstandingRequests--;
 }
 
-- (void)fetchedTweet:(Tweet *)tweet withId:(NSString *)tweetId
+- (void)fetchedTweet:(Tweet *)tweet withId:(NSNumber *)tweetId
 {
     NSLog(@"Mention display mgr: fetched tweet: %@", tweet);
 
@@ -222,7 +221,7 @@
         setUpdatingState:kConnectedAndNotUpdating];
 }
 
-- (void)failedToFetchTweetWithId:(NSString *)tweetId error:(NSError *)error
+- (void)failedToFetchTweetWithId:(NSNumber *)tweetId error:(NSError *)error
 {
     NSLog(@"Mention display manager: failed to fetch tweet %@", tweetId);
     NSLog(@"Error: %@", error);
@@ -242,7 +241,7 @@
         [self.lastTweetDetailsController setFavorited:favorite];
 }
 
-- (void)failedToMarkTweet:(NSString *)tweetId asFavorite:(BOOL)favorite
+- (void)failedToMarkTweet:(NSNumber *)tweetId asFavorite:(BOOL)favorite
     error:(NSError *)error
 {
     NSLog(@"Mention display manager: failed to set favorite");
@@ -256,7 +255,7 @@
         [self.lastTweetDetailsController.tweet.favorited boolValue]];
 }
 
-- (void)failedToDeleteTweetWithId:(NSString *)tweetId error:(NSError *)error
+- (void)failedToDeleteTweetWithId:(NSNumber *)tweetId error:(NSError *)error
 {
     NSLog(@"Mention display manager: failed to delete tweet");
     NSLog(@"Error: %@", error);
@@ -426,7 +425,7 @@
     self.lastTweetDetailsController = tweetController;
 }
 
-- (void)loadNewTweetWithId:(NSString *)tweetId username:(NSString *)username
+- (void)loadNewTweetWithId:(NSNumber *)tweetId username:(NSString *)username
 {
     NSLog(@"Mention display manager: showing tweet details for tweet %@",
         tweetId);
@@ -467,7 +466,7 @@
         fromUser:selectedTweet.user.username];
 }
 
-- (void)loadConversationFromTweetId:(NSString *)tweetId
+- (void)loadConversationFromTweetId:(NSNumber *)tweetId
 {
     UINavigationController * navController = navigationController;
     
@@ -482,7 +481,7 @@
     [mgr displayConversationFrom:tweetId navigationController:navController];
 }
 
-- (void)deleteTweet:(NSString *)tweetId
+- (void)deleteTweet:(NSNumber *)tweetId
 {
     NSLog(@"Removing mention with id %@", tweetId);
     [mentions removeObjectForKey:tweetId];

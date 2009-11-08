@@ -30,9 +30,9 @@
 
 
 //
-// Twitbit-specific
+// Twitbit
 //
-#import "NSObject+TweetHelpers.h"
+#import "Tweet+GeneralHelpers.h"
 
 
 //

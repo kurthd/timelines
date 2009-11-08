@@ -92,8 +92,7 @@
 
         // the user ids in the search result are wrong per twitter:
         //   http://code.google.com/p/twitter-api/issues/detail?id=214
-        NSString * userId =
-            [[userData objectForKey:@"from_user_id"] description];
+        NSNumber * userId = [userData objectForKey:@"from_user_id"];
         if (!userId)
             continue;  // something is malformed - be defensive and just move on
 
@@ -114,7 +113,7 @@
 
         NSDictionary * tweetData = result;
 
-        NSString * tweetId = [[tweetData objectForKey:@"id"] description];
+        NSNumber * tweetId = [tweetData objectForKey:@"id"];
         Tweet * tweet = [Tweet tweetWithId:tweetId context:context];
         if (!tweet)
             tweet = [Tweet createInstance:context];

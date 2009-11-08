@@ -67,7 +67,7 @@
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 
-    NSString * tweetIdToShow;
+    NSNumber * tweetIdToShow;
 
     BOOL suppressTimelineFailures;
 
@@ -105,7 +105,7 @@
 @property (nonatomic, assign) BOOL setUserToAuthenticatedUser;
 @property (nonatomic, assign) BOOL firstFetchReceived;
 
-@property (nonatomic, copy) NSString * tweetIdToShow;
+@property (nonatomic, copy) NSNumber * tweetIdToShow;
 
 @property (nonatomic, assign) BOOL suppressTimelineFailures;
 
@@ -135,7 +135,7 @@
 
 - (void)addTweet:(Tweet *)tweet;
 
-- (NSString *)mostRecentTweetId;
+- (NSNumber *)mostRecentTweetId;
 
 // HACK: Added to get "Save Search" button in header view.
 - (void)setTimelineHeaderView:(UIView *)view;

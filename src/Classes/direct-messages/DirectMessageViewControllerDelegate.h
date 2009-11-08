@@ -14,7 +14,7 @@
 - (void)showUserInfoForUsername:(NSString *)aUsername;
 - (void)showResultsForSearch:(NSString *)query;
 - (void)showingTweetDetails:(DirectMessageViewController *)tweetController;
-- (void)deleteTweet:(NSString *)tweetId;
+- (void)deleteTweet:(NSNumber *)tweetId;
 - (void)sendDirectMessageToUser:(NSString *)aUsername;
 
 @end

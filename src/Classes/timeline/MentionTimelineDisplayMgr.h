@@ -36,7 +36,7 @@
     NSNumber * lastUpdateId;
     NSMutableDictionary * mentions;
     NSString * activeAcctUsername;
-    NSString * mentionIdToShow;
+    NSNumber * mentionIdToShow;
     NSInteger numNewMentions;
     Tweet * selectedTweet;
     TwitterCredentials * credentials;
@@ -64,7 +64,7 @@
 
 @property (nonatomic, assign) NSInteger numNewMentions;
 @property (nonatomic, assign) BOOL showBadge;
-@property (nonatomic, copy) NSString * mentionIdToShow;
+@property (nonatomic, copy) NSNumber * mentionIdToShow;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     navigationController:(UINavigationController *)aNavigationController
