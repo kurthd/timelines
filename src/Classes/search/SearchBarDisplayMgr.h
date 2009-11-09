@@ -8,7 +8,13 @@
 #import "SearchDisplayMgr.h"
 #import "TimelineDisplayMgr.h"
 #import "CredentialsActivatedPublisher.h"
-#import "SearchBookmarksDisplayMgr.h";
+#import "SearchBookmarksDisplayMgr.h"
+
+enum {
+    kLocationButtonStateOff,
+    kLocationButtonStateOn,
+    kLocationButtonStateUpdating
+} LocationButtonState;
 
 @interface SearchBarDisplayMgr : NSObject
     <TwitterServiceDelegate, UISearchBarDelegate,
@@ -47,6 +53,8 @@
     UIBarButtonItem * nearbySearchProgressView;
     CLLocationManager * locationMgr;
     UIBarButtonItem * locationButton;
+
+    NSUInteger locationButtonState;
 }
 
 @property (nonatomic, copy) NSString * searchQuery;
