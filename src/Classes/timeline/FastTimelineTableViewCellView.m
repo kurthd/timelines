@@ -146,14 +146,14 @@ static UIFont * favoriteFont;
 
 - (void)drawRectNormal:(CGRect)rect
 {
-    static const CGFloat TIMESTAMP_RIGHT_MARGIN = 9.0;
-    static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
+    static const CGFloat TIMESTAMP_RIGHT_MARGIN = 8.0;
+    static const CGFloat TIMESTAMP_TOP_MARGIN = 6.0;
 
-    static const CGFloat AUTHOR_TOP_MARGIN = 5.0;
+    static const CGFloat AUTHOR_TOP_MARGIN = 4.0;
     static const CGFloat AUTHOR_LEFT_MARGIN = 62.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 62.0;
-    static const CGFloat TEXT_TOP_MARGIN = 27.0;
+    static const CGFloat TEXT_TOP_MARGIN = 25.0;
 
     const CGFloat AVATAR_LEFT_MARGIN = 7.0;
     const CGFloat AVATAR_TOP_MARGIN = 7.0;
@@ -246,10 +246,10 @@ static UIFont * favoriteFont;
 - (void)drawRectInverted:(CGRect)rect
 {
     static const CGFloat TIMESTAMP_LEFT_MARGIN = 7.0;
-    static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
+    static const CGFloat TIMESTAMP_TOP_MARGIN = 6.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 7.0;
-    static const CGFloat TEXT_TOP_MARGIN = 27.0;
+    static const CGFloat TEXT_TOP_MARGIN = 25.0;
 
     static const CGFloat AVATAR_RIGHT_MARGIN = 9.0;
     static const CGFloat AVATAR_TOP_MARGIN = 7.0;
@@ -325,11 +325,11 @@ static UIFont * favoriteFont;
 
 - (void)drawRectNoAvatar:(CGRect)rect
 {
-    const CGFloat TIMESTAMP_LEFT_MARGIN = 9.0;
-    const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
+    const CGFloat TIMESTAMP_LEFT_MARGIN = 7.0;
+    const CGFloat TIMESTAMP_TOP_MARGIN = 6.0;
 
     const CGFloat TEXT_LEFT_MARGIN = 7.0;
-    static const CGFloat TEXT_TOP_MARGIN = 27.0;
+    static const CGFloat TEXT_TOP_MARGIN = 25.0;
 
     CGPoint point;
     CGSize size;
@@ -386,10 +386,10 @@ static UIFont * favoriteFont;
 - (void)drawRectNormalNoName:(CGRect)rect
 {
     static const CGFloat TIMESTAMP_LEFT_MARGIN = 62.0;
-    static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
+    static const CGFloat TIMESTAMP_TOP_MARGIN = 6.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 62.0;
-    static const CGFloat TEXT_TOP_MARGIN = 27.0;
+    static const CGFloat TEXT_TOP_MARGIN = 25.0;
 
     static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
     static const CGFloat AVATAR_TOP_MARGIN = 7.0;
@@ -572,7 +572,7 @@ static UIFont * favoriteFont;
         displayType == FastTimelineTableViewCellDisplayTypeNoAvatar ?
         0 : MIN_CELL_HEIGHT;
 
-    return MAX(35.0 + size.height, minHeight);
+    return MAX(32.0 + size.height, minHeight);
 }
 
 #pragma mark Private implementation
