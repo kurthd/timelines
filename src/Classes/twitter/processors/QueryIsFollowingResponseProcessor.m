@@ -9,7 +9,7 @@
 @property (nonatomic, copy) NSString * username;
 @property (nonatomic, copy) NSString * followee;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -20,7 +20,7 @@
 + (id)processorWithUsername:(NSString *)aUsername
                    followee:(NSString *)aFollowee
                     context:(NSManagedObjectContext *)aContext
-                   delegate:(id)aDelegate
+                   delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithUsername:aUsername
                                            followee:aFollowee
@@ -41,7 +41,7 @@
 - (id)initWithUsername:(NSString *)aUsername
               followee:(NSString *)aFollowee
                context:(NSManagedObjectContext *)aContext
-              delegate:(id)aDelegate
+              delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.username = aUsername;
@@ -66,7 +66,8 @@
 
     SEL sel = following ? @selector(user:isFollowing:) :
                           @selector(user:isNotFollowing:);
-    [self invokeSelector:sel withTarget:delegate args:username, followee, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate performSelector:sel withObject:username withObject:followee];
 
     return YES;
 }
@@ -74,8 +75,11 @@
 - (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToQueryIfUser:isFollowing:error:);
-    [self invokeSelector:sel withTarget:delegate args:username, followee, error,
-        nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate failedToQueryIfUser:username
+                          isFollowing:followee
+                                error:error];
+
     return YES;
 }
 

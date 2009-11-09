@@ -22,9 +22,4 @@
 - (BOOL)processResponse:(id)response;
 - (BOOL)processErrorResponse:(NSError *)error;
 
-#pragma mark Helper methods provided to subclasses
-
-- (BOOL)invokeSelector:(SEL)selector withTarget:(id)target
-    args:(id)firstArg, ... NS_REQUIRES_NIL_TERMINATION;
-
 @end

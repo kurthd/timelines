@@ -16,7 +16,7 @@
 @property (nonatomic, copy) NSString * username;
 @property (nonatomic, retain) TwitterCredentials * credentials;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 - (User *)userFromData:(NSDictionary *)data;
 
@@ -30,7 +30,7 @@
                 username:(NSString *)aUsername
              credentials:(TwitterCredentials *)someCredentials
                  context:(NSManagedObjectContext *)aContext
-                delegate:(id)aDelegate
+                delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithTweet:someText
                                         username:aUsername
@@ -54,7 +54,7 @@
            username:(NSString *)aUsername
         credentials:(TwitterCredentials *)someCredentials
             context:(NSManagedObjectContext *)aContext
-           delegate:(id)aDelegate
+           delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.text = someText;
@@ -98,7 +98,8 @@
     }
 
     SEL sel = @selector(directMessage:sentToUser:);
-    [self invokeSelector:sel withTarget:delegate args:dm, username, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate directMessage:dm sentToUser:username];
 
     return YES;
 }
@@ -106,8 +107,8 @@
 - (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToSendDirectMessage:toUser:error:);
-    [self invokeSelector:sel withTarget:delegate args:text, username, error,
-        nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate failedToSendDirectMessage:text toUser:username error:error];
 
     return YES;
 }

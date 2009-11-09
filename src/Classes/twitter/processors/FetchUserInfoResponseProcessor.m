@@ -12,7 +12,7 @@
 
 @property (nonatomic, copy) NSString * username;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -22,7 +22,7 @@
  
 + (id)processorWithUsername:(NSString *)aUsername
                     context:(NSManagedObjectContext *)aContext
-                   delegate:(id)aDelegate
+                   delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithUsername:aUsername
                                             context:aContext
@@ -41,7 +41,7 @@
 
 - (id)initWithUsername:(NSString *)aUsername
                context:(NSManagedObjectContext *)aContext
-              delegate:(id)aDelegate
+              delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.username = aUsername;
@@ -66,7 +66,8 @@
     [self populateUser:user fromData:info];
 
     SEL sel = @selector(userInfo:fetchedForUsername:);
-    [self invokeSelector:sel withTarget:delegate args:user, username, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate userInfo:user fetchedForUsername:username];
 
     return YES;
 }
@@ -74,7 +75,8 @@
 - (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToFetchUserInfoForUsername:error:);
-    [self invokeSelector:sel withTarget:delegate args:username, error, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate failedToFetchUserInfoForUsername:username error:error];
 
     return YES;
 }

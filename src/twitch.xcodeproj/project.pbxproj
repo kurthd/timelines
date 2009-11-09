@@ -189,6 +189,8 @@
 		053A2C90103F1FAC005BB245 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2C8F103F1FAC005BB245 /* MobileCoreServices.framework */; };
 		053A2D89103F575D005BB245 /* libTwitVid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D88103F575D005BB245 /* libTwitVid.a */; };
 		053A2D8D103F57B2005BB245 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D8C103F57B2005BB245 /* SystemConfiguration.framework */; };
+		053F815410A87F1B00F7912C /* NSObject+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 053F815310A87F1B00F7912C /* NSObject+GeneralHelpers.m */; };
+		053F815510A87F1B00F7912C /* NSObject+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 053F815310A87F1B00F7912C /* NSObject+GeneralHelpers.m */; };
 		054BE35A108A7AC500734CAA /* BitlyUrlShorteningService.m in Sources */ = {isa = PBXBuildFile; fileRef = 054BE359108A7AC500734CAA /* BitlyUrlShorteningService.m */; };
 		054BE35B108A7AC500734CAA /* BitlyUrlShorteningService.m in Sources */ = {isa = PBXBuildFile; fileRef = 054BE359108A7AC500734CAA /* BitlyUrlShorteningService.m */; };
 		0552815F1087F7810055A37C /* ShortenLinks.png in Resources */ = {isa = PBXBuildFile; fileRef = 0552815E1087F7810055A37C /* ShortenLinks.png */; };
@@ -1084,6 +1086,8 @@
 		053A2D8C103F57B2005BB245 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		053A2DA1103F58A8005BB245 /* TwitVidPhotoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitVidPhotoService.h; path = photos/twitvid/TwitVidPhotoService.h; sourceTree = "<group>"; };
 		053A2DA2103F58A8005BB245 /* TwitVidPhotoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitVidPhotoService.m; path = photos/twitvid/TwitVidPhotoService.m; sourceTree = "<group>"; };
+		053F815210A87F1B00F7912C /* NSObject+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+GeneralHelpers.h"; path = "shared/NSObject+GeneralHelpers.h"; sourceTree = "<group>"; };
+		053F815310A87F1B00F7912C /* NSObject+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+GeneralHelpers.m"; path = "shared/NSObject+GeneralHelpers.m"; sourceTree = "<group>"; };
 		054B6A1E101E153600882C19 /* NSString+HtmlEncodingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HtmlEncodingAdditions.h"; path = "shared/NSString+HtmlEncodingAdditions.h"; sourceTree = "<group>"; };
 		054B6A1F101E153600882C19 /* NSString+HtmlEncodingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HtmlEncodingAdditions.m"; path = "shared/NSString+HtmlEncodingAdditions.m"; sourceTree = "<group>"; };
 		054BE358108A7AC500734CAA /* BitlyUrlShorteningService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitlyUrlShorteningService.h; path = bitly/BitlyUrlShorteningService.h; sourceTree = "<group>"; };
@@ -2318,6 +2322,8 @@
 				9142C87F108D2D8E00BFE960 /* DisplayMgrHelper.m */,
 				9142CCFB10920AF900BFE960 /* ToggleViewController.h */,
 				9142CCFC10920AF900BFE960 /* ToggleViewController.m */,
+				053F815210A87F1B00F7912C /* NSObject+GeneralHelpers.h */,
+				053F815310A87F1B00F7912C /* NSObject+GeneralHelpers.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -3810,6 +3816,7 @@
 				05B8D5FC10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m in Sources */,
 				05B8D6C910A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m in Sources */,
 				05A7460110A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel in Sources */,
+				053F815410A87F1B00F7912C /* NSObject+GeneralHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4109,6 +4116,7 @@
 				05B8D5FE10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m in Sources */,
 				05B8D6CA10A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m in Sources */,
 				05A7460210A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel in Sources */,
+				053F815510A87F1B00F7912C /* NSObject+GeneralHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

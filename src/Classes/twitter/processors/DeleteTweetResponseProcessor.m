@@ -10,7 +10,7 @@
 
 @property (nonatomic, copy) NSNumber * tweetId;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -20,7 +20,7 @@
 
 + (id)processorWithTweetId:(NSNumber *)aTweetId
                    context:(NSManagedObjectContext *)aContext
-                  delegate:(id)aDelegate
+                  delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithTweetId:aTweetId
                                            context:aContext
@@ -38,7 +38,7 @@
 
 - (id)initWithTweetId:(NSNumber *)aTweetId
               context:(NSManagedObjectContext *)aContext
-             delegate:(id)aDelegate
+             delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.tweetId = aTweetId;
@@ -59,7 +59,8 @@
     // Notify the delegate first so it can do whatever it needs to do with the
     // tweet.
     SEL sel = @selector(deletedTweetWithId:);
-    [self invokeSelector:sel withTarget:delegate args:tweetId, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate deletedTweetWithId:tweetId];
 
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:@"identifier == %@", tweetId];
@@ -76,7 +77,8 @@
     NSLog(@"Failed to delete tweet: %@.", error);
 
     SEL sel = @selector(failedToDeleteTweetWithId:error:);
-    [self invokeSelector:sel withTarget:delegate args:tweetId, error, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate failedToDeleteTweetWithId:tweetId error:error];
 
     return YES;
 }

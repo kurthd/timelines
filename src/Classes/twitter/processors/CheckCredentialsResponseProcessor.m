@@ -3,11 +3,12 @@
 //
 
 #import "CheckCredentialsResponseProcessor.h"
+#import "TwitterServiceDelegate.h"
 
 @interface CheckCredentialsResponseProcessor ()
 
 @property (nonatomic, retain) TwitterCredentials * credentials;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -16,7 +17,7 @@
 @synthesize credentials, delegate;
 
 + (id)processorWithCredentials:(TwitterCredentials *)someCredentials
-                      delegate:(id)aDelegate
+                      delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithCredentials:someCredentials
                                               delegate:aDelegate];
@@ -31,7 +32,7 @@
 }
 
 - (id)initWithCredentials:(TwitterCredentials *)someCredentials
-                 delegate:(id)aDelegate
+                 delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.credentials = someCredentials;
@@ -44,7 +45,8 @@
 - (BOOL)processResponse:(id)response
 {
     SEL sel = @selector(credentialsValidated:);
-    [self invokeSelector:sel withTarget:delegate args:credentials, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate credentialsValidated:credentials];
 
     return YES;
 }
@@ -52,7 +54,8 @@
 - (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToValidateCredentials:error:);
-    [self invokeSelector:sel withTarget:delegate args:credentials, error, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate failedToValidateCredentials:credentials error:error];
 
     return YES;
 }

@@ -16,7 +16,7 @@
 @property (nonatomic, copy) NSNumber * referenceId;
 @property (nonatomic, retain) TwitterCredentials * credentials;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -28,7 +28,7 @@
              referenceId:(NSNumber *)aReferenceId
              credentials:(TwitterCredentials *)someCredentials
                  context:(NSManagedObjectContext *)aContext
-                delegate:(id)aDelegate
+                delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithTweet:someText
                                      referenceId:aReferenceId
@@ -52,7 +52,7 @@
         referenceId:(NSNumber *)aReferenceId
         credentials:(TwitterCredentials *)someCredentials
             context:(NSManagedObjectContext *)aContext
-           delegate:(id)aDelegate
+           delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.text = someText;
@@ -97,11 +97,12 @@
 
     if (referenceId) {
         SEL sel = @selector(tweet:sentInReplyTo:);
-        [self invokeSelector:sel withTarget:delegate args:tweet, referenceId,
-            nil];
+        if ([delegate respondsToSelector:sel])
+            [delegate tweet:tweet sentInReplyTo:referenceId];
     } else {
         SEL sel = @selector(tweetSentSuccessfully:);
-        [self invokeSelector:sel withTarget:delegate args:tweet, nil];
+        if ([delegate respondsToSelector:sel])
+            [delegate tweetSentSuccessfully:tweet];
     }
 
     return YES;
@@ -111,11 +112,13 @@
 {
     if (referenceId) {
         SEL sel = @selector(failedToReplyToTweet:withText:error:);
-        [self invokeSelector:sel withTarget:delegate args:referenceId, text,
-            error, nil];
+        if ([delegate respondsToSelector:sel])
+            [delegate
+                failedToReplyToTweet:referenceId withText:text error:error];
     } else {
         SEL sel = @selector(failedToSendTweet:error:);
-        [self invokeSelector:sel withTarget:delegate args:text, error, nil];
+        if ([delegate respondsToSelector:sel])
+            [delegate failedToSendTweet:text error:error];
     }
 
     return YES;

@@ -13,7 +13,7 @@
 @property (nonatomic, copy) NSString * username;
 @property (nonatomic, copy) NSString * cursor;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -24,7 +24,7 @@
 + (id)processorWithUsername:(NSString *)aUsername
                      cursor:(NSString *)aCursor
                     context:(NSManagedObjectContext *)aContext
-                   delegate:(id)aDelegate
+                   delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithUsername:aUsername
                                              cursor:aCursor
@@ -45,7 +45,7 @@
 - (id)initWithUsername:(NSString *)aUsername
                 cursor:(NSString *)aCursor
                context:(NSManagedObjectContext *)aContext
-              delegate:(id)aDelegate
+              delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.username = aUsername;
@@ -81,8 +81,9 @@
     }
 
     SEL sel = @selector(friends:fetchedForUsername:cursor:nextCursor:);
-    [self invokeSelector:sel withTarget:delegate args:users, username, cursor,
-        nextCursor, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate friends:users fetchedForUsername:username
+                  cursor:cursor nextCursor:nextCursor];
 
     return YES;
 }
@@ -90,8 +91,10 @@
 - (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToFetchFriendsForUsername:cursor:error:);
-    [self invokeSelector:sel withTarget:delegate args:username, cursor, error,
-        nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate failedToFetchFriendsForUsername:username
+                                           cursor:cursor
+                                            error:error];
 
     return YES;
 }

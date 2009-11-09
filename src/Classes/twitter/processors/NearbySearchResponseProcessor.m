@@ -33,7 +33,7 @@
 @property (nonatomic, copy) NSNumber * longitude;
 @property (nonatomic, copy) NSNumber * radius;
 @property (nonatomic, copy) NSNumber * radiusIsInMiles;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
 @end
@@ -51,7 +51,7 @@
                   radius:(NSNumber *)aRadius
          radiusIsInMiles:(NSNumber *)isRadiusInMiles
                  context:(NSManagedObjectContext *)aContext
-                delegate:(id)aDelegate
+                delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithQuery:aQuery
                                             page:aPage
@@ -84,7 +84,7 @@
              radius:(NSNumber *)aRadius
     radiusIsInMiles:(NSNumber *)isRadiusInMiles
             context:(NSManagedObjectContext *)aContext
-           delegate:(id)aDelegate
+           delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.query = aQuery;
@@ -164,18 +164,14 @@
     SEL sel =
         @selector(nearbySearchResultsReceived:forQuery:page:latitude:\
         longitude:radius:radiusIsInMiles:);
-
-    // HACK: cast to the correct type to suppress compiler warnings
-    id<TwitterServiceDelegate> theDelegate =
-        (id<TwitterServiceDelegate>) delegate;
-    if ([theDelegate respondsToSelector:sel])
-        [theDelegate nearbySearchResultsReceived:tweets
-                                        forQuery:query
-                                            page:page
-                                        latitude:latitude
-                                       longitude:longitude
-                                          radius:radius
-                                 radiusIsInMiles:radiusIsInMiles.boolValue];
+    if ([delegate respondsToSelector:sel])
+        [delegate nearbySearchResultsReceived:tweets
+                                     forQuery:query
+                                         page:page
+                                     latitude:latitude
+                                    longitude:longitude
+                                       radius:radius
+                              radiusIsInMiles:radiusIsInMiles.boolValue];
 
     return YES;
 }
@@ -187,18 +183,14 @@
     SEL sel =
         @selector(failedToFetchNearbySearchResultsForQuery:page:latitude:\
         longitude:radius:radiusIsInMiles:error:);
-
-    // HACK: cast to the correct type to suppress compiler warnings
-    id<TwitterServiceDelegate> theDelegate =
-        (id<TwitterServiceDelegate>) delegate;
-    if ([theDelegate respondsToSelector:sel])
-        [theDelegate failedToFetchNearbySearchResultsForQuery:query
-                                                         page:page
-                                                     latitude:latitude
-                                                    longitude:longitude
-                                                       radius:radius
-                                              radiusIsInMiles:inMiles
-                                                        error:error];
+    if ([delegate respondsToSelector:sel])
+        [delegate failedToFetchNearbySearchResultsForQuery:query
+                                                      page:page
+                                                  latitude:latitude
+                                                 longitude:longitude
+                                                    radius:radius
+                                           radiusIsInMiles:inMiles
+                                                     error:error];
 
     return YES;
 }

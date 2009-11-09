@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ResponseProcessor.h"
+#import "TwitterServiceDelegate.h"
 
 typedef enum
 {
@@ -15,12 +16,12 @@ typedef enum
 @interface FetchTrendsResponseProcessor : ResponseProcessor
 {
     TrendFetchType trendType;
-    id delegate;
+    id<TwitterServiceDelegate> delegate;
 }
 
 + (id)processorWithTrendFetchType:(TrendFetchType)aTrendFetchType
-                         delegate:(id)aDelegate;
+                         delegate:(id<TwitterServiceDelegate>)aDelegate;
 
 - (id)initWithTrendFetchType:(TrendFetchType)aTrendFetchType
-                    delegate:(id)aDelegate;
+                    delegate:(id<TwitterServiceDelegate>)aDelegate;
 @end
