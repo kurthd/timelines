@@ -19,6 +19,8 @@
 + (NSString *)numNewMentionsKey;
 + (NSString *)composingTweetKey;
 + (NSString *)directMessageRecipientKey;
++ (NSString *)viewingUrlKey;
++ (NSString *)viewingHtmlKey;
 
 @end
 
@@ -55,6 +57,8 @@
         [[dict objectForKey:[[self class] composingTweetKey]] boolValue];
     NSString * directMessageRecipient =
         [dict objectForKey:[[self class] directMessageRecipientKey]];
+    NSString * viewingUrl = [dict objectForKey:[[self class] viewingUrlKey]];
+    NSString * viewingHtml = [dict objectForKey:[[self class] viewingHtmlKey]];
     state.selectedTab = selectedTab;
     state.selectedTimelineFeed = selectedTimelineFeed;
     state.tabOrder = tabOrder;
@@ -66,6 +70,8 @@
     state.numNewMentions = numNewMentions;
     state.composingTweet = composingTweet;
     state.directMessageRecipient = directMessageRecipient;
+    state.viewingUrl = viewingUrl;
+    state.viewingHtml = viewingHtml;
 
     return state;
 }
@@ -101,7 +107,7 @@
 
     NSNumber * nearbySearch = [NSNumber numberWithBool:state.nearbySearch];
     [dict setObject:nearbySearch forKey:[[self class] nearbySearchKey]];
-    
+
     NSNumber * numNewMentions =
         [NSNumber numberWithUnsignedInt:state.numNewMentions];
     [dict setObject:numNewMentions forKey:[[self class] numNewMentionsKey]];
@@ -112,6 +118,12 @@
     if (state.directMessageRecipient)
         [dict setObject:state.directMessageRecipient
             forKey:[[self class] directMessageRecipientKey]];
+
+    if (state.viewingUrl)
+        [dict setObject:state.viewingUrl forKey:[[self class] viewingUrlKey]];
+
+    if (state.viewingHtml)
+        [dict setObject:state.viewingHtml forKey:[[self class] viewingHtmlKey]];
 
     [PlistUtils saveDictionary:dict toPlist:[[self class] plistName]];
 }
@@ -174,6 +186,16 @@
 + (NSString *)directMessageRecipientKey
 {
     return @"directMessageRecipient";
+}
+
++ (NSString *)viewingUrlKey
+{
+    return @"viewingUrl";
+}
+
++ (NSString *)viewingHtmlKey
+{
+    return @"viewingHtml";
 }
 
 @end

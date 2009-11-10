@@ -32,10 +32,29 @@ static TwitchWebBrowserDisplayMgr * gInstance = NULL;
 
 - (void)visitWebpage:(NSString *)webpageUrl
 {
+    [self visitWebpage:webpageUrl withHtml:nil animated:YES];
+}
+
+- (void)visitWebpage:(NSString *)webpageUrl withHtml:(NSString *)html
+    animated:(BOOL)animated
+{
     NSLog(@"Visiting webpage: %@", webpageUrl);
     [self.hostViewController presentModalViewController:self.browserController
-        animated:YES];
-    [self.browserController setUrl:webpageUrl];
+        animated:animated];
+    if (!html)
+        [self.browserController setUrl:webpageUrl];
+    else
+        [self.browserController setUrl:webpageUrl html:html];
+}
+
+- (NSString *)currentUrl
+{
+    return [browserController viewingUrl];
+}
+
+- (NSString *)currentHtml
+{
+    return [browserController viewingHtml];
 }
 
 - (TwitchBrowserViewController *)browserController

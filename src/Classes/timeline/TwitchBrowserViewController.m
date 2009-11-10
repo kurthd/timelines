@@ -172,6 +172,9 @@
 
 - (void)setUrl:(NSString *)urlString
 {
+    NSLog(@"Setting url on browser: %@", urlString);
+    displayed = YES;
+
     self.currentUrl = urlString;
     titleLabel.text = urlString;
 
@@ -183,8 +186,39 @@
     forwardButton.enabled = NO;
 }
 
+- (void)setUrl:(NSString *)urlString html:(NSString *)htmlString
+{
+    NSLog(@"Setting url with html on browser: %@", urlString);
+    displayed = YES;
+
+    self.currentUrl = urlString;
+
+    NSURL * url = [NSURL URLWithString:urlString];
+    [webView loadHTMLString:htmlString baseURL:url];
+
+    backButton.enabled = NO;
+    forwardButton.enabled = NO;
+
+    [self updatePageTitle];
+}
+
+- (NSString *)viewingUrl
+{
+    return displayed ? self.currentUrl : nil;
+}
+
+- (NSString *)viewingHtml
+{
+    return !webView.loading && displayed ?
+        [webView
+        stringByEvaluatingJavaScriptFromString:
+        @"document.documentElement.outerHTML"] :
+        nil;
+}
+
 - (IBAction)dismissView
 {
+    displayed = NO;
     [webView stopLoading];
     [self dismissModalViewControllerAnimated:YES];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;

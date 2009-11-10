@@ -31,5 +31,10 @@
 
 + (TwitchWebBrowserDisplayMgr *)instance;
 - (void)visitWebpage:(NSString *)webpageUrl;
+- (void)visitWebpage:(NSString *)webpageUrl withHtml:(NSString *)html
+    animated:(BOOL)animated;
+
+- (NSString *)currentUrl;
+- (NSString *)currentHtml;
 
 @end

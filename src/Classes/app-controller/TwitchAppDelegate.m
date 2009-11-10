@@ -245,9 +245,11 @@ enum {
 
     TwitchWebBrowserDisplayMgr * webDispMgr =
         [TwitchWebBrowserDisplayMgr instance];
-    webDispMgr.composeTweetDisplayMgr = self.composeTweetDisplayMgr;
-    webDispMgr.hostViewController = tabBarController;
-    webDispMgr.delegate = self;
+    if (!webDispMgr.delegate) {
+        webDispMgr.composeTweetDisplayMgr = self.composeTweetDisplayMgr;
+        webDispMgr.hostViewController = tabBarController;
+        webDispMgr.delegate = self;
+    }
 
     PhotoBrowserDisplayMgr * photoBrowserDispMgr =
         [PhotoBrowserDisplayMgr instance];
@@ -1553,6 +1555,16 @@ enum {
         [self.composeTweetDisplayMgr
             composeDirectMessageTo:uiState.directMessageRecipient animated:NO];
 
+    if (uiState.viewingUrl) {
+        TwitchWebBrowserDisplayMgr * webDispMgr =
+            [TwitchWebBrowserDisplayMgr instance];
+        webDispMgr.composeTweetDisplayMgr = self.composeTweetDisplayMgr;
+        webDispMgr.hostViewController = tabBarController;
+        webDispMgr.delegate = self;
+
+        [webDispMgr visitWebpage:uiState.viewingUrl withHtml:nil animated:NO];
+    }
+
     NSUInteger originalTabIndex =
         [self originalTabIndexForIndex:uiState.selectedTab];
 
@@ -1631,10 +1643,14 @@ enum {
         numUnreadMentions = mentionDisplayMgr.numNewMentions;
         uiState.numNewMentions = numUnreadMentions;
     }
-    
+
     uiState.composingTweet = self.composeTweetDisplayMgr.composingTweet;
     uiState.directMessageRecipient =
         self.composeTweetDisplayMgr.directMessageRecipient;
+
+    TwitchWebBrowserDisplayMgr * webDispMgr =
+        [TwitchWebBrowserDisplayMgr instance];    
+    uiState.viewingUrl = webDispMgr.currentUrl;
 
     [uiStatePersistenceStore save:uiState];
 

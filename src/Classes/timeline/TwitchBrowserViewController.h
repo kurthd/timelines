@@ -23,6 +23,8 @@
     NSString * currentUrl;
     
     NSObject<TwitchBrowserViewControllerDelegate> * delegate;
+
+    BOOL displayed;
 }
 
 @property (nonatomic, copy) NSString * currentUrl;
@@ -31,6 +33,10 @@
     delegate;
 
 - (void)setUrl:(NSString *)url;
+- (void)setUrl:(NSString *)url html:(NSString *)html;
+
+- (NSString *)viewingUrl;
+- (NSString *)viewingHtml;
 
 - (IBAction)dismissView;
 - (IBAction)moveBackAPage;
