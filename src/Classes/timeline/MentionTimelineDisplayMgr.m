@@ -455,7 +455,7 @@
         break;
     }
     
-    [composeTweetDisplayMgr composeTweetWithText:reTweetMessage];
+    [composeTweetDisplayMgr composeTweetWithText:reTweetMessage animated:YES];
 }
 
 - (void)replyToTweet

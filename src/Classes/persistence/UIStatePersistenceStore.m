@@ -17,6 +17,8 @@
 + (NSString *)searchTextKey;
 + (NSString *)nearbySearchKey;
 + (NSString *)numNewMentionsKey;
++ (NSString *)composingTweetKey;
++ (NSString *)directMessageRecipientKey;
 
 @end
 
@@ -49,6 +51,10 @@
         [[dict objectForKey:[[self class] nearbySearchKey]] boolValue];
     NSUInteger numNewMentions =
         [[dict objectForKey:[[self class] numNewMentionsKey]] unsignedIntValue];
+    BOOL composingTweet =
+        [[dict objectForKey:[[self class] composingTweetKey]] boolValue];
+    NSString * directMessageRecipient =
+        [dict objectForKey:[[self class] directMessageRecipientKey]];
     state.selectedTab = selectedTab;
     state.selectedTimelineFeed = selectedTimelineFeed;
     state.tabOrder = tabOrder;
@@ -58,6 +64,8 @@
     state.searchText = searchText;
     state.nearbySearch = nearbySearch;
     state.numNewMentions = numNewMentions;
+    state.composingTweet = composingTweet;
+    state.directMessageRecipient = directMessageRecipient;
 
     return state;
 }
@@ -97,6 +105,13 @@
     NSNumber * numNewMentions =
         [NSNumber numberWithUnsignedInt:state.numNewMentions];
     [dict setObject:numNewMentions forKey:[[self class] numNewMentionsKey]];
+
+    NSNumber * composingTweet = [NSNumber numberWithBool:state.composingTweet];
+    [dict setObject:composingTweet forKey:[[self class] composingTweetKey]];
+
+    if (state.directMessageRecipient)
+        [dict setObject:state.directMessageRecipient
+            forKey:[[self class] directMessageRecipientKey]];
 
     [PlistUtils saveDictionary:dict toPlist:[[self class] plistName]];
 }
@@ -149,6 +164,16 @@
 + (NSString *)numNewMentionsKey
 {
     return @"numNewMentions";
+}
+
++ (NSString *)composingTweetKey
+{
+    return @"composingTweet";
+}
+
++ (NSString *)directMessageRecipientKey
+{
+    return @"directMessageRecipient";
 }
 
 @end

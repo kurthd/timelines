@@ -291,14 +291,15 @@
 - (void)sendDirectMessageToUser:(NSString *)aUsername
 {
     NSLog(@"Sending direct message to %@", aUsername);
-    [composeTweetDisplayMgr composeDirectMessageTo:aUsername];
+    [composeTweetDisplayMgr composeDirectMessageTo:aUsername animated:YES];
 }
 
 - (void)sendPublicMessageToUser:(NSString *)aUsername
 {
     NSLog(@"Sending public message to %@", aUsername);
     [composeTweetDisplayMgr
-        composeTweetWithText:[NSString stringWithFormat:@"@%@ ", aUsername]];
+        composeTweetWithText:[NSString stringWithFormat:@"@%@ ", aUsername]
+        animated:YES];
 }
 
 - (void)showResultsForSearch:(NSString *)query
@@ -603,7 +604,8 @@
 - (void)sendDirectMessageToCurrentUser
 {
     NSLog(@"Sending direct message to %@", self.userInfoUsername);
-    [composeTweetDisplayMgr composeDirectMessageTo:self.userInfoUsername];
+    [composeTweetDisplayMgr composeDirectMessageTo:self.userInfoUsername
+        animated:YES];
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials

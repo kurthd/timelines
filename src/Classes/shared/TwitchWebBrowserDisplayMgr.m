@@ -55,7 +55,7 @@ static TwitchWebBrowserDisplayMgr * gInstance = NULL;
 - (void)composeTweetWithLink:(NSString *)link
 {
     NSLog(@"Composing tweet with link'%@'", link);
-    [composeTweetDisplayMgr composeTweetWithText:link];
+    [composeTweetDisplayMgr composeTweetWithText:link animated:YES];
 }
 
 - (void)readLater:(NSString *)url

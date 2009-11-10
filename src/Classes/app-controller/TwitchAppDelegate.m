@@ -298,7 +298,7 @@ enum {
 
 - (IBAction)composeTweet:(id)sender
 {
-    [self.composeTweetDisplayMgr composeTweet];
+    [self.composeTweetDisplayMgr composeTweetAnimated:YES];
 }
 
 #pragma mark ComposeTweetDisplayMgrDelegate implementation
@@ -425,7 +425,8 @@ enum {
     NSString * dm = [userInfo objectForKey:@"dm"];
     NSString * username = [userInfo objectForKey:@"username"];
 
-    [self.composeTweetDisplayMgr composeDirectMessageTo:username withText:dm];
+    [self.composeTweetDisplayMgr composeDirectMessageTo:username withText:dm
+        animated:YES];
 }
 
 #pragma mark TwitchWebBrowserDisplayMgrDelegate implementation
@@ -1546,6 +1547,12 @@ enum {
 
     tabBarController.selectedIndex = uiState.selectedTab;
 
+    if (uiState.composingTweet)
+        [self.composeTweetDisplayMgr composeTweetAnimated:NO];
+    else if (uiState.directMessageRecipient)
+        [self.composeTweetDisplayMgr
+            composeDirectMessageTo:uiState.directMessageRecipient animated:NO];
+
     NSUInteger originalTabIndex =
         [self originalTabIndexForIndex:uiState.selectedTab];
 
@@ -1624,6 +1631,10 @@ enum {
         numUnreadMentions = mentionDisplayMgr.numNewMentions;
         uiState.numNewMentions = numUnreadMentions;
     }
+    
+    uiState.composingTweet = self.composeTweetDisplayMgr.composingTweet;
+    uiState.directMessageRecipient =
+        self.composeTweetDisplayMgr.directMessageRecipient;
 
     [uiStatePersistenceStore save:uiState];
 

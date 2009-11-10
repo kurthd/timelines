@@ -86,6 +86,7 @@
 @synthesize photoService;
 @synthesize urlShorteningService, urlsToShorten;
 @synthesize personSelector;
+@synthesize composingTweet, directMessageRecipient;
 
 - (void)dealloc
 {
@@ -139,7 +140,7 @@
     return self;
 }
 
-- (void)composeTweet
+- (void)composeTweetAnimated:(BOOL)animated
 {
     TweetDraft * draft =
         [self.draftMgr tweetDraftForCredentials:self.service.credentials];
@@ -150,18 +151,19 @@
                          fromUser:draft.inReplyToUsername
                          withText:text];
     else
-        [self composeTweetWithText:text];
+        [self composeTweetWithText:text animated:animated];
 }
 
-- (void)composeTweetWithText:(NSString *)tweet
+- (void)composeTweetWithText:(NSString *)tweet animated:(BOOL)animated
 {
+    composingTweet = YES;
     self.origTweetId = nil;
     self.origUsername = nil;
 
     [self.composeTweetViewController composeTweet:tweet
                                              from:service.credentials.username];
     [self.rootViewController presentModalViewController:self.navController
-                                               animated:YES];
+                                               animated:animated];
 }
 
 - (void)composeReplyToTweet:(NSNumber *)tweetId
@@ -232,7 +234,7 @@
                                                animated:YES];
 }
 
-- (void)composeDirectMessageTo:(NSString *)username
+- (void)composeDirectMessageTo:(NSString *)username animated:(BOOL)animated
 {
     DirectMessageDraft * draft =
         [self.draftMgr directMessageDraftForCredentials:self.service.credentials
@@ -241,11 +243,13 @@
     fromHomeScreen = NO;
 
     NSString * text = draft ? draft.text : @"";
-    [self composeDirectMessageTo:username withText:text];
+    [self composeDirectMessageTo:username withText:text animated:animated];
 }
 
 - (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)text
+    animated:(BOOL)animated
 {
+    self.directMessageRecipient = username;
     self.origUsername = nil;
     self.origTweetId = nil;
 
@@ -259,7 +263,7 @@
     // Present the view before calling 'composeDirectMessage:...' because
     // otherwise the view elements aren't wired up (they're nil).
     [self.rootViewController presentModalViewController:self.navController
-                                               animated:YES];
+                                               animated:animated];
 }
 
 #pragma mark Credentials notifications
@@ -476,6 +480,8 @@
 
 - (void)closeView
 {
+    composingTweet = NO;
+    self.directMessageRecipient = nil;
     [self.rootViewController dismissModalViewControllerAnimated:YES];
     [self.delegate userDidCancelComposingTweet];
 }

@@ -877,7 +877,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSLog(@"Messages display manager: sending direct message to %@",
         self.otherUserInConversation.username);
     [composeTweetDisplayMgr
-        composeDirectMessageTo:self.otherUserInConversation.username];
+        composeDirectMessageTo:self.otherUserInConversation.username
+        animated:YES];
 }
 
 - (void)deallocateTweetDetailsNode
@@ -951,7 +952,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     NSLog(@"Direct message display manager: sending direct message to %@",
         otherUserInConversation.username);
     [composeTweetDisplayMgr
-        composeDirectMessageTo:otherUserInConversation.username];
+        composeDirectMessageTo:otherUserInConversation.username animated:YES];
 }
 
 - (void)updateDisplayForSendingDirectMessage
