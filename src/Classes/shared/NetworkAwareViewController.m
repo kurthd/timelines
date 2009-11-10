@@ -105,6 +105,14 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
     // yep
     [self performSelector:@selector(resetUpdatingView) withObject:nil
         afterDelay:0];
+
+    // This enables putting view controllers on the 'more' tab, makes room for
+    // a back button
+    if (self.navigationController &&
+        [self.navigationController.viewControllers count] > 1) {
+        self.navigationItem.leftBarButtonItem = nil;
+        self.navigationItem.hidesBackButton = NO;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
