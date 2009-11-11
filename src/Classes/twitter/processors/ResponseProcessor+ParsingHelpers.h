@@ -8,6 +8,7 @@
 #import "Tweet.h"
 #import "Mention.h"
 #import "DirectMessage.h"
+#import "TwitterList.h"
 
 @interface ResponseProcessor (ParsingHelpers)
 
@@ -24,6 +25,8 @@
              fromData:(NSDictionary *)data
               context:(NSManagedObjectContext *)context;
 - (void)populateDirectMessage:(DirectMessage *)dm fromData:(NSDictionary *)data;
+
+- (void)populateList:(TwitterList *)list fromData:(NSDictionary *)data;
 
 @end
 

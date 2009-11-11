@@ -14,7 +14,7 @@
 
 @property (nonatomic, copy) NSNumber * tweetId;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -24,7 +24,7 @@
 
 + (id)processorWithTweetId:(NSNumber *)aTweetId
                    context:(NSManagedObjectContext *)aContext
-                  delegate:(id)aDelegate
+                  delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithTweetId:aTweetId
                                            context:aContext
@@ -42,7 +42,7 @@
 
 - (id)initWithTweetId:(NSNumber *)aTweetId
               context:(NSManagedObjectContext *)aContext
-             delegate:(id)aDelegate
+             delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.tweetId = aTweetId;
@@ -68,7 +68,8 @@
                                         context:self.context];
 
     SEL sel = @selector(fetchedTweet:withId:);
-    [self invokeSelector:sel withTarget:delegate args:tweet, tweetId, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate fetchedTweet:tweet withId:tweetId];
 
     return YES;
 }
@@ -76,7 +77,8 @@
 - (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToFetchTweetWithId:error:);
-    [self invokeSelector:sel withTarget:delegate args:tweetId, error, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate failedToFetchTweetWithId:tweetId error:error];
 
     return YES;
 }

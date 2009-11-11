@@ -15,7 +15,7 @@
 @property (nonatomic, copy) NSString * username;
 @property (nonatomic, copy) NSNumber * page;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -26,7 +26,7 @@
 + (id)processorWithUsername:(NSString *)aUsername
                        page:(NSNumber *)aPage
                     context:(NSManagedObjectContext *)aContext
-                   delegate:(id)aDelegate
+                   delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithUsername:aUsername
                                                page:aPage
@@ -47,7 +47,7 @@
 - (id)initWithUsername:(NSString *)aUsername
                   page:(NSNumber *)aPage
                context:(NSManagedObjectContext *)aContext
-              delegate:(id)aDelegate
+              delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.username = aUsername;
@@ -98,8 +98,8 @@
     }
 
     SEL sel = @selector(favorites:fetchedForUser:page:);
-    [self invokeSelector:sel withTarget:delegate args:tweets, username, page,
-        nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate favorites:tweets fetchedForUser:username page:page];
 
     return YES;
 }
@@ -107,8 +107,8 @@
 - (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToFetchFavoritesForUser:page:error:);
-    [self invokeSelector:sel withTarget:delegate args:username, page, error,
-        nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate failedToFetchFavoritesForUser:username page:page error:error];
 
     return YES;
 }

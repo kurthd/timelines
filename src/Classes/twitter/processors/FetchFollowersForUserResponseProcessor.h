@@ -4,22 +4,23 @@
 
 #import <Foundation/Foundation.h>
 #import "ResponseProcessor.h"
+#import "TwitterServiceDelegate.h"
 
 @interface FetchFollowersForUserResponseProcessor : ResponseProcessor
 {
     NSString * username;
     NSString * cursor;
     NSManagedObjectContext * context;
-    id delegate;
+    id<TwitterServiceDelegate> delegate;
 }
 
 + (id)processorWithUsername:(NSString *)aUsername
                      cursor:(NSString *)aCursor
                     context:(NSManagedObjectContext *)aContext
-                   delegate:(id)aDelegate;
+                   delegate:(id<TwitterServiceDelegate>)aDelegate;
 - (id)initWithUsername:(NSString *)aUsername
                 cursor:(NSString *)aCursor
                context:(NSManagedObjectContext *)aContext
-              delegate:(id)aDelegate;
+              delegate:(id<TwitterServiceDelegate>)aDelegate;
 
 @end

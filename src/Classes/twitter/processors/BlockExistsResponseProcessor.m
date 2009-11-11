@@ -12,7 +12,7 @@
 
 @property (nonatomic, copy) NSString * username;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -22,7 +22,7 @@
 
 + (id)processorWithUsername:(NSString *)aUsername
                     context:(NSManagedObjectContext *)aContext
-                   delegate:(id)aDelegate
+                   delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithUsername:aUsername
                                             context:aContext
@@ -40,7 +40,7 @@
 
 - (id)initWithUsername:(NSString *)aUsername
                context:(NSManagedObjectContext *)aContext
-              delegate:(id)aDelegate
+              delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.username = aUsername;
@@ -62,7 +62,8 @@
     [self populateUser:user fromData:info];
 
     SEL sel = @selector(userIsBlocked:);
-    [self invokeSelector:sel withTarget:delegate args:username, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate userIsBlocked:username];
 
     return YES;
 }
@@ -73,11 +74,13 @@
     if ([error.domain isEqual:twitterApiErrorDomain] && error.code == 404) {
         // Twitter sends a 404 when a block does not exist
         SEL sel = @selector(userIsNotBlocked:);
-        [self invokeSelector:sel withTarget:delegate args:username, nil];
+        if ([delegate respondsToSelector:sel])
+            [delegate userIsNotBlocked:username];
     } else {
         // an actual error occurred
         SEL sel = @selector(failedToCheckIfUserIsBlocked:error:);
-        [self invokeSelector:sel withTarget:delegate args:username, error, nil];
+        if ([delegate respondsToSelector:sel])
+            [delegate failedToCheckIfUserIsBlocked:username error:error];
     }
 
     return YES;

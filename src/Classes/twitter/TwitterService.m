@@ -309,6 +309,43 @@ static NSMutableDictionary * oaTokens;
     [self request:requestId isHandledBy:processor];
 }
 
+#pragma mark Lists
+
+- (void)fetchListsFromCursor:(NSString *)cursor
+{
+    ResponseProcessor * processor =
+        [FetchListsResponseProcessor processorWithCredentials:credentials
+                                                       cursor:cursor
+                                                      context:context
+                                                     delegate:delegate];
+
+    if (!cursor)
+        cursor = @"-1";  // start from the first page
+
+    NSString * requestId =
+        [twitter getListsFor:credentials.username cursor:cursor];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+- (void)fetchListSubscriptionsFromCursor:(NSString *)cursor
+{
+    ResponseProcessor * processor =
+        [FetchListSubscriptionsResponseProcessor
+        processorWithCredentials:credentials
+                          cursor:cursor
+                         context:context
+                        delegate:delegate];
+
+    if (!cursor)
+        cursor = @"-1";  // start from the first page
+
+    NSString * requestId =
+        [twitter getListSubscriptionsFor:credentials.username cursor:cursor];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark User info
 
 - (void)fetchUserInfoForUsername:(NSString *)username
@@ -632,9 +669,10 @@ static NSMutableDictionary * oaTokens;
     if (credentials != someCredentials) {
         [credentials release];
         credentials = [someCredentials retain];
-        
-        twitter.accessToken =
-            [[self class] tokenFromCredentials:someCredentials];
+
+        if (credentials)
+            twitter.accessToken =
+                [[self class] tokenFromCredentials:someCredentials];
 
         // when the credentials are changed, we don't want to send back any
         // responses received for the previous credentials

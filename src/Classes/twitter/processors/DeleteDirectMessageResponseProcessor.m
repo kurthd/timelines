@@ -10,7 +10,7 @@
 
 @property (nonatomic, copy) NSString * directMessageId;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -20,7 +20,7 @@
 
 + (id)processorWithDirectMessageId:(NSString *)aDirectMessageId
                            context:(NSManagedObjectContext *)aContext
-                          delegate:(id)aDelegate
+                          delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithDirectMessageId:aDirectMessageId
                                                    context:aContext
@@ -38,7 +38,7 @@
 
 - (id)initWithDirectMessageId:(NSString *)aDirectMessageId
                       context:(NSManagedObjectContext *)aContext
-                     delegate:(id)aDelegate
+                     delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.directMessageId = aDirectMessageId;
@@ -59,7 +59,8 @@
     // Notify the delegate first so it can do whatever it needs to do with the
     // Direct Message object.
     SEL sel = @selector(deletedDirectMessageWithId:);
-    [self invokeSelector:sel withTarget:delegate args:directMessageId, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate deletedDirectMessageWithId:directMessageId];
 
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:@"identifier == %@", directMessageId];
@@ -77,8 +78,9 @@
     NSLog(@"Failed to delete direct message: %@.", error);
 
     SEL sel = @selector(failedToDeleteDirectMessageWithId:error:);
-    [self invokeSelector:sel withTarget:delegate args:directMessageId, error,
-        nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate failedToDeleteDirectMessageWithId:directMessageId
+                                              error:error];
 
     return YES;
 }

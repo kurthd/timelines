@@ -13,7 +13,7 @@
 @property (nonatomic, copy) NSString * username;
 @property (nonatomic, assign) BOOL following;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -24,7 +24,7 @@
 + (id)processorWithUsername:(NSString *)aUsername
                   following:(BOOL)isFollowing
                     context:(NSManagedObjectContext *)aContext
-                   delegate:(id)aDelegate
+                   delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithUsername:aUsername
                                           following:isFollowing
@@ -45,7 +45,7 @@
 - (id)initWithUsername:(NSString *)aUsername
              following:(BOOL)isFollowing
                context:(NSManagedObjectContext *)aContext
-              delegate:(id)aDelegate
+              delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.username = aUsername;
@@ -76,7 +76,7 @@
     else
         sel = @selector(stoppedFollowingUsername:);
 
-    [self invokeSelector:sel withTarget:delegate args:username, nil];
+    [delegate performSelector:sel withObject:username];
 
     return YES;
 }
@@ -89,7 +89,7 @@
     else
         sel = @selector(failedToStopFollowingUsername:error:);
 
-    [self invokeSelector:sel withTarget:delegate args:username, error, nil];
+    [delegate performSelector:sel withObject:username withObject:error];
 
     return YES;
 }

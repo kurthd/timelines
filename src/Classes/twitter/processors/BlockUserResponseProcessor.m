@@ -12,7 +12,7 @@
 @property (nonatomic, copy) NSString * username;
 @property (nonatomic, assign) BOOL blocking;
 @property (nonatomic, retain) NSManagedObjectContext * context;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -23,7 +23,7 @@
 + (id)processorWithUsername:(NSString *)aUsername
                    blocking:(BOOL)isBlocking
                     context:(NSManagedObjectContext *)aContext
-                   delegate:(id)aDelegate
+                   delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithUsername:aUsername
                                            blocking:isBlocking
@@ -43,7 +43,7 @@
 - (id)initWithUsername:(NSString *)aUsername
               blocking:(BOOL)isBlocking
                context:(NSManagedObjectContext *)aContext
-              delegate:(id)aDelegate
+              delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.username = aUsername;
@@ -67,12 +67,15 @@
     User * user = [User findOrCreateWithId:userId context:context];
     [self populateUser:user fromData:info];
 
-    SEL sel =
-        blocking ?
-        @selector(blockedUser:withUsername:) :
-        @selector(unblockedUser:withUsername:);
-
-    [self invokeSelector:sel withTarget:delegate args:user, username, nil];
+    if (blocking) {
+        SEL sel = @selector(blockedUser:withUsername:);
+        if ([delegate respondsToSelector:sel])
+            [delegate blockedUser:user withUsername:username];
+    } else {
+        SEL sel = @selector(unblockedUser:withUsername:);
+        if ([delegate respondsToSelector:sel])
+            [delegate unblockedUser:user withUsername:username];
+    }
 
     return YES;
 }
@@ -81,12 +84,15 @@
 {
     NSLog(@"Failed to block user '%@': %@.", username, error);
 
-    SEL sel =
-        blocking ?
-        @selector(failedToBlockUserWithUsername:error:) :
-        @selector(failedToUnblockUserWithUsername:error:);
-
-    [self invokeSelector:sel withTarget:delegate args:username, error, nil];
+    if (blocking) {
+        SEL sel = @selector(failedToBlockUserWithUsername:error:);
+        if ([delegate respondsToSelector:sel])
+            [delegate failedToBlockUserWithUsername:username error:error];
+    } else {
+        SEL sel = @selector(failedToUnblockUserWithUsername:error:);
+        if ([delegate respondsToSelector:sel])
+            [delegate failedToUnblockUserWithUsername:username error:error];
+    }
 
     return YES;
 }

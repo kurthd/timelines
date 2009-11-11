@@ -5,16 +5,17 @@
 #import <Foundation/Foundation.h>
 #import "ResponseProcessor.h"
 #import "TwitterCredentials.h"
+#import "TwitterServiceDelegate.h"
 
 @interface CheckCredentialsResponseProcessor : ResponseProcessor
 {
     TwitterCredentials * credentials;
-    id delegate;
+    id<TwitterServiceDelegate> delegate;
 }
 
 + (id)processorWithCredentials:(TwitterCredentials *)someCredentials
-                      delegate:(id)aDelegate;
+                      delegate:(id<TwitterServiceDelegate>)aDelegate;
 - (id)initWithCredentials:(TwitterCredentials *)someCredentials
-                 delegate:(id)aDelegate;
+                 delegate:(id<TwitterServiceDelegate>)aDelegate;
 
 @end

@@ -28,7 +28,7 @@
 
 @property (nonatomic, copy) NSString * query;
 @property (nonatomic, copy) NSNumber * page;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
 @end
@@ -40,7 +40,7 @@
 + (id)processorWithQuery:(NSString *)aQuery
                     page:(NSNumber *)aPage
                  context:(NSManagedObjectContext *)aContext
-                delegate:(id)aDelegate
+                delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithQuery:aQuery
                                             page:aPage
@@ -61,7 +61,7 @@
 - (id)initWithQuery:(NSString *)aQuery
                page:(NSNumber *)aPage
             context:(NSManagedObjectContext *)aContext
-           delegate:(id)aDelegate
+           delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.query = aQuery;
@@ -135,8 +135,8 @@
     }
 
     SEL sel = @selector(searchResultsReceived:forQuery:page:);
-    [self invokeSelector:sel withTarget:delegate args:tweets, query, page,
-        nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate searchResultsReceived:tweets forQuery:query page:page];
 
     return YES;
 }
@@ -144,7 +144,10 @@
 - (BOOL)processErrorResponse:(NSError *)error
 {
     SEL sel = @selector(failedToFetchSearchResultsForQuery:page:error:);
-    [self invokeSelector:sel withTarget:delegate args:query, page, error, nil];
+    if ([delegate respondsToSelector:sel])
+        [delegate failedToFetchSearchResultsForQuery:query
+                                                page:page
+                                               error:error];
 
     return YES;
 }

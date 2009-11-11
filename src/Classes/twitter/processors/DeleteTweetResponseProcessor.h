@@ -4,19 +4,20 @@
 
 #import <Foundation/Foundation.h>
 #import "ResponseProcessor.h"
+#import "TwitterServiceDelegate.h"
 
 @interface DeleteTweetResponseProcessor : ResponseProcessor
 {
     NSNumber * tweetId;
-    id delegate;
+    id<TwitterServiceDelegate> delegate;
     NSManagedObjectContext * context;
 }
 
 + (id)processorWithTweetId:(NSNumber *)aTweetId
                    context:(NSManagedObjectContext *)aContext
-                  delegate:(id)aDelegate;
+                  delegate:(id<TwitterServiceDelegate>)aDelegate;
 - (id)initWithTweetId:(NSNumber *)aTweetId
               context:(NSManagedObjectContext *)aContext
-             delegate:(id)aDelegate;
+             delegate:(id<TwitterServiceDelegate>)aDelegate;
 
 @end

@@ -5,13 +5,14 @@
 #import <Foundation/Foundation.h>
 #import "ResponseProcessor.h"
 #import "TwitterCredentials.h"
+#import "TwitterServiceDelegate.h"
 
 @interface SendTweetResponseProcessor : ResponseProcessor
 {
     NSString * text;
     NSNumber * referenceId;
     TwitterCredentials * credentials;
-    id delegate;
+    id<TwitterServiceDelegate> delegate;
 
     NSManagedObjectContext * context;
 }
@@ -20,11 +21,11 @@
              referenceId:(NSNumber *)aReferenceId
              credentials:(TwitterCredentials *)someCredentials
                  context:(NSManagedObjectContext *)aContext
-                delegate:(id)aDelegate;
+                delegate:(id<TwitterServiceDelegate>)aDelegate;
 - (id)initWithTweet:(NSString *)someText
         referenceId:(NSNumber *)aReferenceId
         credentials:(TwitterCredentials *)someCredentials
             context:(NSManagedObjectContext *)aContext
-           delegate:(id)aDelegate;
+           delegate:(id<TwitterServiceDelegate>)aDelegate;
 
 @end

@@ -8,7 +8,7 @@
 @interface FetchTrendsResponseProcessor ()
 
 @property (nonatomic, assign) TrendFetchType trendType;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
 @end
 
@@ -17,7 +17,7 @@
 @synthesize trendType, delegate;
 
 + (id)processorWithTrendFetchType:(TrendFetchType)aTrendFetchType
-                         delegate:(id)aDelegate
+                         delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     return [[[[self class] alloc] initWithTrendFetchType:aTrendFetchType
                                            delegate:aDelegate] autorelease];
@@ -30,7 +30,7 @@
 }
 
 - (id)initWithTrendFetchType:(TrendFetchType)aTrendFetchType
-                    delegate:(id)aDelegate
+                    delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.trendType = aTrendFetchType;
@@ -79,7 +79,7 @@
             sel = @selector(fetchedWeeklyTrends:);
             break;
     }
-    [self invokeSelector:sel withTarget:delegate args:trends, nil];
+    [delegate performSelector:sel withObject:trends];
 
     return YES;
 }
@@ -98,7 +98,7 @@
             sel = @selector(failedToFetchWeeklyTrends:);
             break;
     }
-    [self invokeSelector:sel withTarget:delegate args:error, nil];
+    [delegate performSelector:sel withObject:error];
 
     return YES;
 }

@@ -16,6 +16,8 @@
 #import "FetchFollowersForUserResponseProcessor.h"
 #import "FetchFavoritesForUserResponseProcessor.h"
 #import "MarkFavoriteResponseProcessor.h"
+#import "FetchListsResponseProcessor.h"
+#import "FetchListSubscriptionsResponseProcessor.h"
 #import "QueryIsFollowingResponseProcessor.h"
 #import "FetchTweetResponseProcessor.h"
 #import "DeleteTweetResponseProcessor.h"
