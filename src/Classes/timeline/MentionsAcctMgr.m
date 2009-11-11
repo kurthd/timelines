@@ -47,6 +47,7 @@
     [newMentionCounts removeObjectForKey:username];
     if ([[newMentionCounts allKeys] count] == 0)
         displayMgr.numNewMentions = 0;
+    [displayMgr clearState];
 }
 
 @end

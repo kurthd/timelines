@@ -5,6 +5,7 @@
 #import "TimelineDisplayMgrFactory.h"
 #import "TwitterService.h"
 #import "CredentialsActivatedPublisher.h"
+#import "CredentialsSetChangedPublisher.h"
 #import "AllTimelineDataSource.h"
 #import "UserListDisplayMgrFactory.h"
 
@@ -78,6 +79,10 @@
     // Don't autorelease
     [[CredentialsActivatedPublisher alloc]
         initWithListener:timelineDisplayMgr action:@selector(setCredentials:)];
+
+    [[CredentialsSetChangedPublisher alloc]
+        initWithListener:timelineDisplayMgr
+        action:@selector(credentialsSetChanged:added:)];
 
     return timelineDisplayMgr;
 }

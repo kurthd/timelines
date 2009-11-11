@@ -1067,7 +1067,7 @@ enum {
 - (void)credentialsSetChanged:(TwitterCredentials *)changedCredentials
                         added:(NSNumber *)added
 {
-    if ([added integerValue]) {
+    if ([added boolValue]) {
         if (self.credentials.count == 0) { // first credentials -- active them
             NSLog(@"Setting first credentials");
             [self broadcastActivatedCredentialsChanged:changedCredentials];

@@ -743,6 +743,23 @@
         allPagesLoaded:NO];
 }
 
+- (void)credentialsSetChanged:(TwitterCredentials *)changedCredentials
+                        added:(NSNumber *)added
+{
+    NSLog(@"Timeline display manager: credentials set changed: %@: %@",
+        changedCredentials.username, [added boolValue] ? @"added" : @"removed");
+
+    if (![added boolValue] && [changedCredentials isEqual:credentials]) {
+        [service setCredentials:nil];
+
+        [timeline removeAllObjects];
+        [timelineController setTweets:[NSArray array] page:0 visibleTweetId:nil];
+
+        [credentials release];
+        credentials = nil;
+    }
+}
+
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
     NSLog(@"Timeline display manager: credentials changing to: '%@'",
@@ -756,13 +773,6 @@
     // function. In the case of the search bar, this causes an empty query to be
     // submitted (the query was cleared as part of the account switching), which
     // in turn generates an error from Twitter which is displayed to the user.
-    //
-    // Note that we are performing pointer equality here intentionally because
-    // it's possible 'credentials' has been physically deleted and is invalid.
-    // This class should subscribe to the 'credentials set changed'
-    // notification, which is sent when accounts are added or removed, so it can
-    // release 'credentials' and set it to nil when the account is deleted and
-    // avoid this problem.
     if (credentials == someCredentials)
         return;
 
@@ -787,10 +797,6 @@
     [displayMgrHelper setCredentials:credentials];
     [timelineSource setCredentials:credentials];
 
-    // check for pointer equality rather than string equality against username
-    // in case 'oldCredentials' has already been physically deleted (e.g. we're
-    // changing accounts b/c the old active acount was deleted and another
-    // account selected)
     if (oldCredentials && oldCredentials != credentials) {
         // Changed accounts (as opposed to setting it for the first time)
 

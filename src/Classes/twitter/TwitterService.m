@@ -669,9 +669,10 @@ static NSMutableDictionary * oaTokens;
     if (credentials != someCredentials) {
         [credentials release];
         credentials = [someCredentials retain];
-        
-        twitter.accessToken =
-            [[self class] tokenFromCredentials:someCredentials];
+
+        if (credentials)
+            twitter.accessToken =
+                [[self class] tokenFromCredentials:someCredentials];
 
         // when the credentials are changed, we don't want to send back any
         // responses received for the previous credentials

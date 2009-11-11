@@ -469,6 +469,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)clearState
 {
+    [directMessageCache clear];
     [conversations removeAllObjects];
     [sortedConversations removeAllObjects];
     alreadyBeenDisplayedAfterCredentialChange = NO;

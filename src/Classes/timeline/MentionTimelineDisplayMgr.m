@@ -611,7 +611,11 @@
     pagesShown = 1;
     refreshingMessages = NO;
     numNewMentions = 0;
+    self.lastUpdateId = nil;
     [conversationDisplayMgrs removeAllObjects];
+    [self.tweetIdToIndexDict removeAllObjects];
+    [self.tweetIndexToIdDict removeAllObjects];
+    [timelineController setTweets:[NSArray array] page:0 visibleTweetId:nil];
 }
 
 - (void)setNumNewMentions:(NSInteger)numMentions
