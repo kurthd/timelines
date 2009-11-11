@@ -91,11 +91,11 @@ static UIImage * defaultAvatar;
 
     self.tableView.tableHeaderView = headerView;
     self.tableView.tableFooterView = footerView;
-    
+
     self.view.frame =
         [[RotatableTabBarController instance] landscape] ?
         CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
-    
+
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         self.tableView.separatorColor = [UIColor twitchGrayColor];
 
@@ -175,8 +175,12 @@ static UIImage * defaultAvatar;
             forState:UIControlStateDisabled];
         [bookmarkButton setBackgroundImage:buttonImage
             forState:UIControlStateDisabled];
-            
+
         activeAcctLabel.shadowColor = [UIColor blackColor];
+        
+        followsYouLabel.backgroundColor = self.view.backgroundColor;
+        followsYouLabel.textColor = [UIColor lightGrayColor];
+        followsYouLabel.shadowColor = [UIColor blackColor];
     }
 
     [self layoutViews];

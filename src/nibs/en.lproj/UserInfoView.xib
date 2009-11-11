@@ -171,18 +171,22 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 388}, {280, 41}}</string>
 						<reference key="NSSuperview" ref="521307497"/>
+						<object class="NSColor" key="IBUIBackgroundColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MSAxIDEgMAA</bytes>
+						</object>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="IBUIText">Bio bio bio bio bio bio bio bio</string>
-						<object class="NSFont" key="IBUIFont" id="552914104">
+						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Helvetica</string>
 							<double key="NSSize">14</double>
 							<int key="NSfFlags">16</int>
 						</object>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">2</int>
-							<bytes key="NSRGB">MC4xMjE1Njg2NDI2IDAuMTU2ODYyNzUwNiAwLjIyMzUyOTQyODIAA</bytes>
+							<bytes key="NSRGB">MC4xMjE1Njg2NCAwLjE1Njg2Mjc1IDAuMjIzNTI5NDMAA</bytes>
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<reference key="IBUIShadowColor" ref="842790299"/>
@@ -424,7 +428,7 @@
 					<string key="NSResourceName">DefaultAvatar.png</string>
 				</object>
 			</object>
-			<object class="IBUILabel" id="453628110">
+			<object class="IBUILabel" id="694942289">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<string key="NSFrameSize">{320, 30}</string>
@@ -465,10 +469,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<bool key="IBUIClipsSubviews">YES</bool>
 				<bool key="IBUIUserInteractionEnabled">NO</bool>
 				<string key="IBUIText">kurthd is following you</string>
-				<reference key="IBUIFont" ref="552914104"/>
+				<object class="NSFont" key="IBUIFont">
+					<string key="NSName">Helvetica</string>
+					<double key="NSSize">15</double>
+					<int key="NSfFlags">16</int>
+				</object>
 				<object class="NSColor" key="IBUITextColor">
 					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC4yOTgwMzkyMTU3IDAuMzM3MjU0OTAyIDAuNDIzNTI5NDExOAA</bytes>
+					<bytes key="NSRGB">MC4yODIzNTI5NDEyIDAuMzIxNTY4NjI3NSAwLjQxMTc2NDcwNTkAA</bytes>
 				</object>
 				<nil key="IBUIHighlightedColor"/>
 				<object class="NSColor" key="IBUIShadowColor">
@@ -694,7 +702,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">followsYouLabel</string>
 						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="453628110"/>
+						<reference key="destination" ref="694942289"/>
 					</object>
 					<int key="connectionID">81</int>
 				</object>
@@ -855,7 +863,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">80</int>
-						<reference key="object" ref="453628110"/>
+						<reference key="object" ref="694942289"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</object>
