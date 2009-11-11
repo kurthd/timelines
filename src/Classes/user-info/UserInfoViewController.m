@@ -17,20 +17,19 @@
 enum {
     kUserInfoSectionDetails,
     kUserInfoSectionNetwork,
-    kUserInfoSectionFavorites,
     kUserInfoSectionActions
 };
 
 enum {
     kUserInfoFollowingRow,
     kUserInfoFollowersRow,
-    kUserInfoNumUpdatesRow,
-    kUserInfoFavoritesRow
+    kUserInfoNumUpdatesRow
 };
 
 enum {
     kUserInfoPublicMessage,
     kUserInfoDirectMessage,
+    kUserInfoFavoritesRow,
     kUserInfoSearchForUser
 };
 
@@ -250,7 +249,7 @@ static UIImage * defaultAvatar;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView 
@@ -262,9 +261,7 @@ static UIImage * defaultAvatar;
         if (user.location && ![user.location isEqual:@""])
             numRows++;
     } else if (section == kUserInfoSectionActions)
-        numRows = 3;
-    else if (section == kUserInfoSectionFavorites)
-        numRows = 1;
+        numRows = 4;
     else
         numRows = 3;
 
@@ -352,18 +349,6 @@ static UIImage * defaultAvatar;
                     [formatter stringFromNumber:user.statusesCount]];
             }
             break;
-        case kUserInfoSectionFavorites:
-            cell = [self getBasicCell];
-            cell.accessoryType =
-                UITableViewCellAccessoryDisclosureIndicator;
-            cell.textLabel.text =
-                NSLocalizedString(@"userinfoview.favorites", @"");
-            cell.imageView.image =
-                [UIImage imageNamed:@"FavoriteIconForUserView.png"];
-            cell.imageView.highlightedImage =
-                [UIImage
-                imageNamed:@"FavoriteIconForUserViewHighlighted.png"];
-            break;
         case kUserInfoSectionActions:
             cell = cell = [self getBasicCell];
 
@@ -378,6 +363,16 @@ static UIImage * defaultAvatar;
                 cell.imageView.highlightedImage =
                     [UIImage
                     imageNamed:@"MagnifyingGlassHighlighted.png"];
+            } else if (indexPath.row == kUserInfoFavoritesRow) {
+                cell.accessoryType =
+                    UITableViewCellAccessoryDisclosureIndicator;
+                cell.textLabel.text =
+                    NSLocalizedString(@"userinfoview.favorites", @"");
+                cell.imageView.image =
+                    [UIImage imageNamed:@"FavoriteIconForUserView.png"];
+                cell.imageView.highlightedImage =
+                    [UIImage
+                    imageNamed:@"FavoriteIconForUserViewHighlighted.png"];
             } else {
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.textLabel.text =
@@ -415,14 +410,13 @@ static UIImage * defaultAvatar;
             else
                 [delegate displayFollowersForUser:user.username];
             break;
-        case kUserInfoSectionFavorites:
-            [delegate displayFavoritesForUser:user.username];
-            break;
         case kUserInfoSectionActions:
             if (indexPath.row == kUserInfoPublicMessage)
                 [delegate sendPublicMessageToUser:user.username];
             else if (indexPath.row == kUserInfoDirectMessage)
                 [delegate sendDirectMessageToUser:user.username];
+            else if (indexPath.row == kUserInfoFavoritesRow)
+                [delegate displayFavoritesForUser:user.username];
             else
                 [delegate
                     showResultsForSearch:
