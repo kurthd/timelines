@@ -130,6 +130,12 @@
     nextCursor:(NSString *)nextCursor;
 - (void)failedToFetchListsFromCursor:(NSString *)cursor error:(NSError *)error;
 
+- (void)listSubscriptions:(NSArray *)listSubscriptions
+        fetchedFromCursor:(NSString *)cursor
+               nextCursor:(NSString *)nextCursor;
+- (void)failedToFetchListSubscriptionsFromCursor:(NSString *)cursor
+                                           error:(NSError *)error;
+
 #pragma mark User info
 
 @optional

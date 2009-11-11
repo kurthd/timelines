@@ -7,7 +7,7 @@
 #import "TwitterCredentials.h"
 #import "TwitterServiceDelegate.h"
 
-@interface FetchListsResponseProcessor : ResponseProcessor
+@interface FetchListSubscriptionsResponseProcessor : ResponseProcessor
 {
     TwitterCredentials * credentials;
     NSString * cursor;

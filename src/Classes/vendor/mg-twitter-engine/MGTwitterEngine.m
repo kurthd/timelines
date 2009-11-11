@@ -1734,7 +1734,24 @@
     if (cursor) {
         [params setObject:cursor forKey:@"cursor"];
     }
-    
+
+    return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil 
+                            requestType:MGTwitterStatusesRequest 
+                           responseType:MGTwitterStatuses];
+}
+
+- (NSString *)getListSubscriptionsFor:(NSString *)username cursor:(NSString *)cursor
+{
+    if (!username)
+        return nil;
+
+    NSString *path = [NSString stringWithFormat:@"%@/lists/subscriptions.%@", username, API_FORMAT];
+
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
+    if (cursor) {
+        [params setObject:cursor forKey:@"cursor"];
+    }
+
     return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil 
                             requestType:MGTwitterStatusesRequest 
                            responseType:MGTwitterStatuses];

@@ -97,6 +97,15 @@
  */
 - (void)fetchListsFromCursor:(NSString *)cursor;
 
+/**
+ * Fetch list subscriptions owned by the logged-in user. The 'cursor' parameter
+ * allows for paging through results, which will be returned 20 at a time and
+ * cannot be customized. To begin paging, provide nil. When a page is
+ * received, the cursor to retrieve the next page will be provided to the
+ * delegate, or nil if no more pages are available.
+ */
+- (void)fetchListSubscriptionsFromCursor:(NSString *)cursor;
+
 #pragma mark User info
 
 - (void)fetchUserInfoForUsername:(NSString *)username;

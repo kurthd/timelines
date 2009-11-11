@@ -133,6 +133,8 @@
 		051AD40A10AA314000CFF86C /* UserTwitterList+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD40810AA314000CFF86C /* UserTwitterList+CoreDataAdditions.m */; };
 		051AD44210AA356200CFF86C /* v2.3-1-v2.3-2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 051AD44110AA356200CFF86C /* v2.3-1-v2.3-2.xcmappingmodel */; };
 		051AD44310AA356200CFF86C /* v2.3-1-v2.3-2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 051AD44110AA356200CFF86C /* v2.3-1-v2.3-2.xcmappingmodel */; };
+		051AD4EF10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD4EE10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m */; };
+		051AD4F010AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD4EE10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m */; };
 		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
 		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
 		052E03FA10700858005CEC5F /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
@@ -1052,6 +1054,8 @@
 		051AD40710AA314000CFF86C /* UserTwitterList+CoreDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UserTwitterList+CoreDataAdditions.h"; path = "lists/UserTwitterList+CoreDataAdditions.h"; sourceTree = "<group>"; };
 		051AD40810AA314000CFF86C /* UserTwitterList+CoreDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UserTwitterList+CoreDataAdditions.m"; path = "lists/UserTwitterList+CoreDataAdditions.m"; sourceTree = "<group>"; };
 		051AD44110AA356200CFF86C /* v2.3-1-v2.3-2.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2.3-1-v2.3-2.xcmappingmodel"; path = "data-model/v2.3-1-v2.3-2.xcmappingmodel"; sourceTree = "<group>"; };
+		051AD4ED10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchListSubscriptionsResponseProcessor.h; path = twitter/processors/FetchListSubscriptionsResponseProcessor.h; sourceTree = "<group>"; };
+		051AD4EE10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchListSubscriptionsResponseProcessor.m; path = twitter/processors/FetchListSubscriptionsResponseProcessor.m; sourceTree = "<group>"; };
 		051D7C67101D105A00B867C1 /* SavedSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearchMgr.h; path = search/SavedSearchMgr.h; sourceTree = "<group>"; };
 		051D7C68101D105A00B867C1 /* SavedSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearchMgr.m; path = search/SavedSearchMgr.m; sourceTree = "<group>"; };
 		052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackground.png; path = images/SaveSearchButtonBackground.png; sourceTree = "<group>"; };
@@ -2494,6 +2498,8 @@
 				05AE708D0FF2D15F0037D1D6 /* FetchFavoritesForUserResponseProcessor.m */,
 				051AD2FD10AA01F900CFF86C /* FetchListsResponseProcessor.h */,
 				051AD2FE10AA01F900CFF86C /* FetchListsResponseProcessor.m */,
+				051AD4ED10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.h */,
+				051AD4EE10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m */,
 				05AE71190FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.h */,
 				05AE711A0FF2DBB80037D1D6 /* MarkFavoriteResponseProcessor.m */,
 				057E82DD0FF3EF7E0074A91B /* QueryIsFollowingResponseProcessor.h */,
@@ -3872,6 +3878,7 @@
 				051AD3FC10AA300C00CFF86C /* UserTwitterList.m in Sources */,
 				051AD40910AA314000CFF86C /* UserTwitterList+CoreDataAdditions.m in Sources */,
 				051AD44210AA356200CFF86C /* v2.3-1-v2.3-2.xcmappingmodel in Sources */,
+				051AD4EF10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4178,6 +4185,7 @@
 				051AD3FD10AA300C00CFF86C /* UserTwitterList.m in Sources */,
 				051AD40A10AA314000CFF86C /* UserTwitterList+CoreDataAdditions.m in Sources */,
 				051AD44310AA356200CFF86C /* v2.3-1-v2.3-2.xcmappingmodel in Sources */,
+				051AD4F010AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -328,6 +328,24 @@ static NSMutableDictionary * oaTokens;
     [self request:requestId isHandledBy:processor];
 }
 
+- (void)fetchListSubscriptionsFromCursor:(NSString *)cursor
+{
+    ResponseProcessor * processor =
+        [FetchListSubscriptionsResponseProcessor
+        processorWithCredentials:credentials
+                          cursor:cursor
+                         context:context
+                        delegate:delegate];
+
+    if (!cursor)
+        cursor = @"-1";  // start from the first page
+
+    NSString * requestId =
+        [twitter getListSubscriptionsFor:credentials.username cursor:cursor];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark User info
 
 - (void)fetchUserInfoForUsername:(NSString *)username

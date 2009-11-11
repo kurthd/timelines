@@ -140,7 +140,7 @@
 
 // List methods - http://apiwiki.twitter.com/Twitter-REST-API-Method%3A-GET-lists
 - (NSString *)getListsFor:(NSString *)username cursor:(NSString *)cursor;
-
+- (NSString *)getListSubscriptionsFor:(NSString *)username cursor:(NSString *)cursor;
 
 
 // Friendship methods - http://apiwiki.twitter.com/REST+API+Documentation#FriendshipMethods
