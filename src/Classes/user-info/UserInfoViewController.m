@@ -641,19 +641,10 @@ static UIImage * defaultAvatar;
     webAddressFrame.size.width = labelWidth;
     webAddressButton.frame = webAddressFrame;
 
-    CGFloat baseFollowsYouPosition = webAddressFrame.origin.y;
-    CGRect followsYouLabelFrame = followsYouLabel.frame;
-    followsYouLabelFrame.origin.y =
-        user.webpage ?
-        webAddressFrame.size.height + baseFollowsYouPosition :
-        baseFollowsYouPosition;
-    followsYouLabelFrame.size.width = labelWidth;
-    followsYouLabel.frame = followsYouLabelFrame;
-
     CGRect headerViewFrame = headerView.frame;
     headerViewFrame.size.height =
         user.webpage ?
-        followsYouLabelFrame.origin.y + 24 : followsYouLabelFrame.origin.y;
+        webAddressFrame.origin.y + 24 : webAddressFrame.origin.y;
     headerView.frame = headerViewFrame;
 
     // force the header view to redraw
