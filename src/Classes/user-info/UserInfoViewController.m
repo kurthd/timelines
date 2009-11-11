@@ -444,6 +444,18 @@ static UIImage * defaultAvatar;
     return indexPath;
 }
 
+- (UIView *)tableView:(UITableView *)tableView
+    viewForFooterInSection:(NSInteger)section
+{
+    return section == kUserInfoSectionNetwork ? followsYouLabel : nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView
+    heightForFooterInSection:(NSInteger)section
+{
+    return section == kUserInfoSectionNetwork ? 34 : 0;
+}
+
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher

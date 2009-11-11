@@ -44,7 +44,7 @@
 
     SavedSearchMgr * findPeopleBookmarkMgr;
     LocationCell * locationCell;
-    
+
     BOOL lastDisplayedInLandscape;
 }
 
