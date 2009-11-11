@@ -291,14 +291,15 @@
 - (void)sendDirectMessageToUser:(NSString *)aUsername
 {
     NSLog(@"Sending direct message to %@", aUsername);
-    [composeTweetDisplayMgr composeDirectMessageTo:aUsername];
+    [composeTweetDisplayMgr composeDirectMessageTo:aUsername animated:YES];
 }
 
 - (void)sendPublicMessageToUser:(NSString *)aUsername
 {
     NSLog(@"Sending public message to %@", aUsername);
     [composeTweetDisplayMgr
-        composeTweetWithText:[NSString stringWithFormat:@"@%@ ", aUsername]];
+        composeTweetWithText:[NSString stringWithFormat:@"@%@ ", aUsername]
+        animated:YES];
 }
 
 - (void)showResultsForSearch:(NSString *)query
@@ -482,6 +483,8 @@
     NSLog(@"%@ is following %@", aUsername, followee);
     if ([userInfoUsername isEqual:[followee lowercaseString]])
         [self.userInfoController setFollowing:YES];
+    else if ([userInfoUsername isEqual:[aUsername lowercaseString]])
+        [self.userInfoController setFollowedBy:YES];
 }
 
 - (void)user:(NSString *)aUsername isNotFollowing:(NSString *)followee
@@ -489,6 +492,8 @@
     NSLog(@"%@ is not following %@", aUsername, followee);
     if ([userInfoUsername isEqual:[followee lowercaseString]])
         [self.userInfoController setFollowing:NO];
+    else if ([userInfoUsername isEqual:[aUsername lowercaseString]])
+        [self.userInfoController setFollowedBy:NO];
 }
 
 - (void)failedToQueryIfUser:(NSString *)aUsername
@@ -500,6 +505,8 @@
 
     if ([userInfoUsername isEqual:[followee lowercaseString]])
         [self.userInfoController setFailedToQueryFollowing];
+    else if ([userInfoUsername isEqual:[aUsername lowercaseString]])
+        [self.userInfoController setFailedToQueryFollowedBy];
 
     [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
 }
@@ -570,8 +577,12 @@
     self.userInfoController.followingEnabled =
         ![credentials.username isEqual:aUser.username];
     [self.userInfoController setUser:aUser];
-    if (self.userInfoController.followingEnabled)
+    if (self.userInfoController.followingEnabled) // check if you're following
         [service isUser:credentials.username following:aUser.username];
+    // check if they're following you
+    [service isUser:aUser.username following:credentials.username];
+    [self.userInfoController setQueryingFollowedBy];
+
     NSLog(@"Querying blocked status for '%@'", aUser.username);
     NSLog(@"service.credentials: %@", service.credentials);
     [service isUserBlocked:aUser.username];
@@ -593,8 +604,12 @@
     self.userInfoController.followingEnabled =
         ![credentials.username isEqual:aUsername];
 
-    if (self.userInfoController.followingEnabled)
+    if (self.userInfoController.followingEnabled) // check if you're following
         [service isUser:credentials.username following:aUsername];
+    // check if they're following you
+    [service isUser:aUsername following:credentials.username];
+    [self.userInfoController setQueryingFollowedBy];
+
     [service isUserBlocked:aUsername];
 
     [self.userInfoTwitterService fetchUserInfoForUsername:aUsername];
@@ -603,7 +618,8 @@
 - (void)sendDirectMessageToCurrentUser
 {
     NSLog(@"Sending direct message to %@", self.userInfoUsername);
-    [composeTweetDisplayMgr composeDirectMessageTo:self.userInfoUsername];
+    [composeTweetDisplayMgr composeDirectMessageTo:self.userInfoUsername
+        animated:YES];
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials

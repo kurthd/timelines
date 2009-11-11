@@ -59,6 +59,7 @@
 - (void)initFindPeopleTab;
 - (void)initAccountsView;
 - (void)initSearchTab;
+- (void)initListsTab;
 
 - (UIBarButtonItem *)newTweetButtonItem;
 - (UIBarButtonItem *)homeSendingTweetProgressView;
@@ -75,6 +76,8 @@
 - (void)loadMessagesViewWithCachedData:(TwitterCredentials *)account;
 - (void)setUIStateFromPersistence;
 - (void)persistUIState;
+- (void)setSelectedTabFromPersistence;
+- (NSUInteger)originalTabIndexForIndex:(NSUInteger)index;
 
 - (void)finishInitializationWithTimeInsensitiveOperations;
 
@@ -82,7 +85,18 @@
 - (void)setTimelineTitleView;
 - (void)processUserAccountSelection;
 
+- (void)initTabForViewController:(UIViewController *)viewController;
+
 @end
+
+enum {
+    kOriginalTabOrderTimeline,
+    kOriginalTabOrderMentions,
+    kOriginalTabOrderMessages,
+    kOriginalTabOrderPeople,
+    kOriginalTabOrderSearch,
+    kOriginalTabOrderLists
+} OriginalTabOrder;
 
 @implementation TwitchAppDelegate
 
@@ -121,6 +135,7 @@
     [messagesNetAwareViewController release];
     [searchNetAwareViewController release];
     [findPeopleNetAwareViewController release];
+    [listsNetAwareViewController release];
 
     [accountsButton release];
     [accountsButtonSetter release];
@@ -230,9 +245,11 @@
 
     TwitchWebBrowserDisplayMgr * webDispMgr =
         [TwitchWebBrowserDisplayMgr instance];
-    webDispMgr.composeTweetDisplayMgr = self.composeTweetDisplayMgr;
-    webDispMgr.hostViewController = tabBarController;
-    webDispMgr.delegate = self;
+    if (!webDispMgr.delegate) {
+        webDispMgr.composeTweetDisplayMgr = self.composeTweetDisplayMgr;
+        webDispMgr.hostViewController = tabBarController;
+        webDispMgr.delegate = self;
+    }
 
     PhotoBrowserDisplayMgr * photoBrowserDispMgr =
         [PhotoBrowserDisplayMgr instance];
@@ -283,7 +300,7 @@
 
 - (IBAction)composeTweet:(id)sender
 {
-    [self.composeTweetDisplayMgr composeTweet];
+    [self.composeTweetDisplayMgr composeTweetAnimated:YES];
 }
 
 #pragma mark ComposeTweetDisplayMgrDelegate implementation
@@ -410,7 +427,8 @@
     NSString * dm = [userInfo objectForKey:@"dm"];
     NSString * username = [userInfo objectForKey:@"username"];
 
-    [self.composeTweetDisplayMgr composeDirectMessageTo:username withText:dm];
+    [self.composeTweetDisplayMgr composeDirectMessageTo:username withText:dm
+        animated:YES];
 }
 
 #pragma mark TwitchWebBrowserDisplayMgrDelegate implementation
@@ -732,6 +750,11 @@
     [searchBarDisplayMgr searchBarViewWillAppear:NO];
 }
 
+- (void)initListsTab
+{
+    
+}
+
 - (void)initAccountsView
 {
     accountsViewController = [[AccountsViewController alloc] init];
@@ -786,6 +809,19 @@
 - (void)tabBarController:(UITabBarController *)tbc
     didSelectViewController:(UIViewController *)viewController
 {
+    [self initTabForViewController:viewController];
+}
+
+- (void)tabBarController:(UITabBarController *)tbc
+    didEndCustomizingViewControllers:(NSArray *)viewControllers
+    changed:(BOOL)changed
+{
+    NSLog(@"Tab bar controller finished customizing view controllers");
+    [self initTabForViewController:tabBarController.moreNavigationController];
+}
+
+- (void)initTabForViewController:(UIViewController *)viewController
+{
     if (viewController == homeNetAwareViewController.navigationController &&
         !timelineDisplayMgr) {
         NSLog(@"Selected home tab");
@@ -797,16 +833,32 @@
         [self initMentionsTab];
     } else if (viewController ==
         messagesNetAwareViewController.navigationController &&
-        !directMessageDisplayMgr)
+        !directMessageDisplayMgr) {
+        NSLog(@"Selected direct messages tab");
         [self initMessagesTab];
-    else if (viewController ==
+    } else if (viewController ==
         findPeopleNetAwareViewController.navigationController &&
-        !findPeopleSearchDisplayMgr)
+        !findPeopleSearchDisplayMgr) {
+        NSLog(@"Selected people tab");
         [self initFindPeopleTab];
-    else if (viewController ==
+    } else if (viewController ==
         searchNetAwareViewController.navigationController &&
-        !searchBarDisplayMgr)
+        !searchBarDisplayMgr) {
+        NSLog(@"Selected search tab");
         [self initSearchTab];
+    } else if (viewController ==
+        listsNetAwareViewController.navigationController &&
+        !searchBarDisplayMgr) {
+        NSLog(@"Selected lists tab");
+        [self initListsTab];
+    } else if (viewController == tabBarController.moreNavigationController) {
+        NSLog(@"Selected more tab; initializing everything under 'More'");
+        NSArray * viewControllers = tabBarController.viewControllers;
+        for (NSInteger i = 4; i < [viewControllers count]; i++) {
+            UIViewController * vc = [viewControllers objectAtIndex:i];
+            [self initTabForViewController:vc];
+        }
+    }
 }
     
 #pragma mark -
@@ -1473,32 +1525,95 @@
         [[[UIStatePersistenceStore alloc] init] autorelease];
     uiState = [[uiStatePersistenceStore load] retain];
 
+    NSMutableArray * viewControllers = [NSMutableArray array];
+    [viewControllers addObjectsFromArray:tabBarController.viewControllers];
+    NSArray * tabOrder = uiState.tabOrder;
+    if (tabOrder) {
+        for (int i = [tabOrder count] - 1; i >= 0; i--) {
+            NSNumber * tabNumber = [tabOrder objectAtIndex:i];
+            for (UIViewController * viewController in
+                tabBarController.viewControllers)
+                    if (viewController.tabBarItem.tag == [tabNumber intValue]) {
+                        [viewControllers removeObject:viewController];
+                        [viewControllers insertObject:viewController
+                            atIndex:0];
+                        break;
+                    }
+        }
+        tabBarController.viewControllers = viewControllers;
+    }
+
+    // HACK: see method for details
+    [self performSelector:@selector(setSelectedTabFromPersistence)
+        withObject:nil afterDelay:0.0];
+
     tabBarController.selectedIndex = uiState.selectedTab;
 
-    switch (uiState.selectedTab) {
-        case 0:
+    if (uiState.composingTweet)
+        [self.composeTweetDisplayMgr composeTweetAnimated:NO];
+    else if (uiState.directMessageRecipient)
+        [self.composeTweetDisplayMgr
+            composeDirectMessageTo:uiState.directMessageRecipient animated:NO];
+
+    if (uiState.viewingUrl) {
+        TwitchWebBrowserDisplayMgr * webDispMgr =
+            [TwitchWebBrowserDisplayMgr instance];
+        webDispMgr.composeTweetDisplayMgr = self.composeTweetDisplayMgr;
+        webDispMgr.hostViewController = tabBarController;
+        webDispMgr.delegate = self;
+
+        [webDispMgr visitWebpage:uiState.viewingUrl withHtml:nil animated:NO];
+    }
+
+    NSUInteger originalTabIndex =
+        [self originalTabIndexForIndex:uiState.selectedTab];
+
+    switch (originalTabIndex) {
+        case kOriginalTabOrderTimeline:
             [self initHomeTab];
             break;
-        case 1:
+        case kOriginalTabOrderMentions:
             [self initMentionsTab];
             break;
-        case 2:
+        case kOriginalTabOrderMessages:
             [self initMessagesTab];
             break;
-        case 3:
-            [self initSearchTab];
-            break;
-        case 4:
+        case kOriginalTabOrderPeople:
             [self initFindPeopleTab];
             break;
+        case kOriginalTabOrderSearch:
+            [self initSearchTab];
+            break;
+        case kOriginalTabOrderLists:
+            [self initListsTab];
+            break;
     }
+}
+
+- (NSUInteger)originalTabIndexForIndex:(NSUInteger)index
+{
+    UIViewController * viewController =
+        [tabBarController.viewControllers objectAtIndex:index];
+
+    return viewController.tabBarItem.tag;
+}
+
+// HACK: this forces tabs greater than 4 to be set properly (with a 'more' back
+// button and without any noticable animation quirks)
+- (void)setSelectedTabFromPersistence
+{
+    tabBarController.selectedIndex = 0;
+    tabBarController.selectedIndex = uiState.selectedTab;
 }
 
 - (void)persistUIState
 {
     UIStatePersistenceStore * uiStatePersistenceStore =
         [[[UIStatePersistenceStore alloc] init] autorelease];
-    uiState.selectedTab = tabBarController.selectedIndex;
+    if (tabBarController.selectedIndex <= kOriginalTabOrderLists)
+        uiState.selectedTab = tabBarController.selectedIndex;
+    else
+        uiState.selectedTab = 0;
 
     NSMutableArray * tabOrder = [NSMutableArray array];
     for (UIViewController * viewController in tabBarController.viewControllers)
@@ -1528,6 +1643,14 @@
         numUnreadMentions = mentionDisplayMgr.numNewMentions;
         uiState.numNewMentions = numUnreadMentions;
     }
+
+    uiState.composingTweet = self.composeTweetDisplayMgr.composingTweet;
+    uiState.directMessageRecipient =
+        self.composeTweetDisplayMgr.directMessageRecipient;
+
+    TwitchWebBrowserDisplayMgr * webDispMgr =
+        [TwitchWebBrowserDisplayMgr instance];    
+    uiState.viewingUrl = webDispMgr.currentUrl;
 
     [uiStatePersistenceStore save:uiState];
 

@@ -63,6 +63,9 @@
 
 - (void)setSearchBarFrame;
 
+- (void)hideNearbySearchButtonWhileEditing;
+- (void)showNearbySearchButtonWhenDoneEditing;
+
 @end
 
 @implementation SearchBarDisplayMgr
@@ -129,7 +132,7 @@
         navItem.titleView = searchBar;
         [self setSearchBarFrame];
 
-        navItem.leftBarButtonItem = self.locationButton;
+        navItem.rightBarButtonItem = self.locationButton;
 
         self.timelineDisplayMgr = aTimelineDisplayMgr;
         searchDisplayMgr =
@@ -261,6 +264,8 @@
     [self performSelector:@selector(updateAutocompleteView) withObject:nil
         afterDelay:0.3];
 
+    [self hideNearbySearchButtonWhileEditing];
+
     return YES;
 }
 
@@ -268,6 +273,9 @@
 {
     editingQuery = NO;
     [self.searchBar setShowsCancelButton:NO animated:YES];
+
+    [self showNearbySearchButtonWhenDoneEditing];
+
     return YES;
 }
 
@@ -279,6 +287,30 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     [self updateAutocompleteView];
+}
+
+- (void)hideNearbySearchButtonWhileEditing
+{
+    UINavigationItem * navItem =
+        self.networkAwareViewController.navigationItem;
+    navItem.rightBarButtonItem = nil;
+    [self setSearchBarFrame];
+}
+
+- (void)showNearbySearchButtonWhenDoneEditing
+{
+    UINavigationItem * navItem =
+        self.networkAwareViewController.navigationItem;
+    switch (locationButtonState) {
+        case kLocationButtonStateOff:
+        case kLocationButtonStateOn:
+            [navItem setRightBarButtonItem:self.locationButton animated:YES];
+            break;
+        case kLocationButtonStateUpdating:
+            [navItem setRightBarButtonItem:[self nearbySearchProgressView]
+                animated:YES];
+            break;
+    }
 }
 
 #pragma mark Bookmarks
@@ -346,10 +378,13 @@
 
 - (void)updateSearchButtonWithDoneState
 {
-    if (!self.locationMgr.location)
-        [self.networkAwareViewController.navigationItem
-            setLeftBarButtonItem:[self nearbySearchProgressView]
-            animated:YES];
+    if (!self.locationMgr.location) {
+        locationButtonState = kLocationButtonStateUpdating;
+        if (!editingQuery)
+            [self.networkAwareViewController.navigationItem
+                setRightBarButtonItem:[self nearbySearchProgressView]
+                animated:YES];
+    }
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -494,8 +529,10 @@
     NSLog(@"Search display manager: obtained location");
     [manager stopUpdatingLocation];
     self.searchDisplayMgr.nearbySearchLocation = newLocation;
-    [self.networkAwareViewController.navigationItem
-        setLeftBarButtonItem:self.locationButton animated:YES];
+    if (!editingQuery)
+        [self.networkAwareViewController.navigationItem
+            setRightBarButtonItem:self.locationButton animated:YES];
+    locationButtonState = kLocationButtonStateOn;
     [self searchBarSearchButtonClicked:searchBar];
 }
 
@@ -503,8 +540,10 @@
     didFailWithError:(NSError *)error
 {
     [manager stopUpdatingLocation];
-    [self.networkAwareViewController.navigationItem
-        setLeftBarButtonItem:self.locationButton animated:YES];
+    if (!editingQuery)
+        [self.networkAwareViewController.navigationItem
+            setRightBarButtonItem:self.locationButton animated:YES];
+    locationButtonState = kLocationButtonStateOff;
     locationButton.style = UIBarButtonItemStyleBordered;
 
     if (error.code != 1) { // suppress error codes of 1, because already alerted
@@ -679,12 +718,19 @@
     } else if (nearbySearch) {
         if (!self.locationMgr.location) {
             [self.locationMgr startUpdatingLocation];
-            [self.networkAwareViewController.navigationItem
-                setLeftBarButtonItem:[self nearbySearchProgressView]
-                animated:YES];
+            if (!editingQuery)
+                [self.networkAwareViewController.navigationItem
+                    setRightBarButtonItem:[self nearbySearchProgressView]
+                    animated:YES];
+            locationButtonState = kLocationButtonStateUpdating;
         } else {
-            [self.networkAwareViewController.navigationItem
-                setLeftBarButtonItem:self.locationButton animated:YES];
+            if (!editingQuery)
+                [self.networkAwareViewController.navigationItem
+                    setRightBarButtonItem:self.locationButton animated:YES];
+                self.locationButton.style =
+            locationButtonState =
+                nearbySearch ? kLocationButtonStateOn : kLocationButtonStateOff;
+
             self.searchDisplayMgr.nearbySearchLocation =
                 self.locationMgr.location;
            [self searchBarSearchButtonClicked:searchBar];
@@ -722,12 +768,13 @@
 
 - (UIBarButtonItem *)locationButton
 {
-    if (!locationButton)
+    if (!locationButton) {
         locationButton =
             [[UIBarButtonItem alloc]
             initWithImage:[UIImage imageNamed:@"Location.png"]
             style:UIBarButtonItemStyleBordered target:self
             action:@selector(toggleNearbySearchValue)];
+    }
 
     return locationButton;
 }

@@ -68,6 +68,7 @@ static UIImage * defaultAvatar;
     [bioLabel release];
     [processingFollowingIndicator release];
     [webAddressButton release];
+    [followsYouLabel release];
 
     [followingActivityIndicator release];
     [followingLoadingLabel release];
@@ -593,6 +594,32 @@ static UIImage * defaultAvatar;
     blockButton.enabled = NO;
 }
 
+- (void)setQueryingFollowedBy
+{
+    followsYouLabel.text =
+        [NSString stringWithFormat:
+        NSLocalizedString(@"userinfo.followsyou.checking", @""),
+        user.username];
+}
+
+- (void)setFailedToQueryFollowedBy
+{
+    followsYouLabel.text =
+        [NSString stringWithFormat:
+        NSLocalizedString(@"userinfo.followsyou.failed", @""),
+        user.username];
+}
+
+- (void)setFollowedBy:(BOOL)followedBy
+{
+    NSString * formatString =
+        followedBy ?
+        NSLocalizedString(@"userinfo.followsyou.yes", @"") :
+        NSLocalizedString(@"userinfo.followsyou.no", @"");
+    followsYouLabel.text =
+        [NSString stringWithFormat:formatString, user.username];
+}
+
 - (void)layoutViews
 {
     BOOL landscape = [[RotatableTabBarController instance] landscape];
@@ -614,9 +641,19 @@ static UIImage * defaultAvatar;
     webAddressFrame.size.width = labelWidth;
     webAddressButton.frame = webAddressFrame;
 
+    CGFloat baseFollowsYouPosition = webAddressFrame.origin.y;
+    CGRect followsYouLabelFrame = followsYouLabel.frame;
+    followsYouLabelFrame.origin.y =
+        user.webpage ?
+        webAddressFrame.size.height + baseFollowsYouPosition :
+        baseFollowsYouPosition;
+    followsYouLabelFrame.size.width = labelWidth;
+    followsYouLabel.frame = followsYouLabelFrame;
+
     CGRect headerViewFrame = headerView.frame;
     headerViewFrame.size.height =
-        user.webpage ? webAddressFrame.origin.y + 24 : webAddressFrame.origin.y;
+        user.webpage ?
+        followsYouLabelFrame.origin.y + 24 : followsYouLabelFrame.origin.y;
     headerView.frame = headerViewFrame;
 
     // force the header view to redraw

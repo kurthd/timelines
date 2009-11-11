@@ -126,6 +126,10 @@ userinfo.publicmessage = "Public Message";
 userinfo.directmessage = "Direct Message";
 userinfo.block = "Block";
 userinfo.unblock = "Unblock";
+userinfo.followsyou.yes = "%@ follows you";
+userinfo.followsyou.no = "%@ doesn't follow you";
+userinfo.followsyou.checking = "Checking if %@ follows you...";
+userinfo.followsyou.failed = "Failed to check if %@ follows you";
 
 /* AccountsViewController */
 account.deletion.failed.alert.title = "Failed to Remove %@";

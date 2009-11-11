@@ -445,21 +445,23 @@
 - (void)sendDirectMessageToUser:(NSString *)username
 {
     NSLog(@"Timeline display manager: sending direct message to %@", username);
-    [composeTweetDisplayMgr composeDirectMessageTo:username];
+    [composeTweetDisplayMgr composeDirectMessageTo:username animated:YES];
 }
 
 - (void)sendPublicMessageToUser:(NSString *)username
 {
     NSLog(@"Timeline display manager: sending public message to %@", username);
     [composeTweetDisplayMgr
-        composeTweetWithText:[NSString stringWithFormat:@"@%@ ", username]];
+        composeTweetWithText:[NSString stringWithFormat:@"@%@ ", username]
+        animated:YES];
 }
 
 - (void)sendDirectMessageToCurrentUser
 {
     NSLog(@"Timeline display manager: sending direct message to %@",
         user.username);
-    [composeTweetDisplayMgr composeDirectMessageTo:self.currentUsername];
+    [composeTweetDisplayMgr composeDirectMessageTo:self.currentUsername
+        animated:YES];
 }
 
 - (void)loadNewTweetWithId:(NSNumber *)tweetId
@@ -594,7 +596,8 @@
 - (void)replyToTweetWithMessage
 {
     NSLog(@"Timeline display manager: replying to tweet with direct message");
-    [composeTweetDisplayMgr composeDirectMessageTo:selectedTweet.user.username];
+    [composeTweetDisplayMgr composeDirectMessageTo:selectedTweet.user.username
+        animated:YES];
 }
 
 - (void)reTweetSelected
@@ -614,7 +617,7 @@
         break;
     }
 
-    [composeTweetDisplayMgr composeTweetWithText:reTweetMessage];
+    [composeTweetDisplayMgr composeTweetWithText:reTweetMessage animated:YES];
 }
 
 #pragma mark Accessors

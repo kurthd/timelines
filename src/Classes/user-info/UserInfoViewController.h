@@ -34,6 +34,7 @@
     IBOutlet UIButton * bookmarkButton;
     IBOutlet UIActivityIndicatorView * processingFollowingIndicator;
     IBOutlet UIButton * webAddressButton;
+    IBOutlet UILabel * followsYouLabel;
 
     BOOL currentlyFollowing;
     BOOL followingEnabled;
@@ -66,6 +67,10 @@
 - (IBAction)showFullProfileImage:(id)sender;
 - (IBAction)visitWebpage:(id)sender;
 - (IBAction)changeBlockedState:(id)sender;
+
+- (void)setQueryingFollowedBy;
+- (void)setFailedToQueryFollowedBy;
+- (void)setFollowedBy:(BOOL)followedBy;
 
 - (void)setBlocked:(BOOL)blocked;
 - (void)setFailedToQueryBlocked;

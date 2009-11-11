@@ -522,18 +522,20 @@
 
 - (void)sendDirectMessageToCurrentUser
 {
-    [composeTweetDisplayMgr composeDirectMessageTo:self.currentSearchUsername];
+    [composeTweetDisplayMgr composeDirectMessageTo:self.currentSearchUsername
+        animated:YES];
 }
 
 - (void)sendDirectMessageToUser:(NSString *)aUsername
 {
-    [composeTweetDisplayMgr composeDirectMessageTo:aUsername];
+    [composeTweetDisplayMgr composeDirectMessageTo:aUsername animated:YES];
 }
 
 - (void)sendPublicMessageToUser:(NSString *)aUsername
 {
     [composeTweetDisplayMgr
-        composeTweetWithText:[NSString stringWithFormat:@"@%@ ", aUsername]];
+        composeTweetWithText:[NSString stringWithFormat:@"@%@ ", aUsername]
+        animated:YES];
 }
 
 - (void)showResultsForSearch:(NSString *)query

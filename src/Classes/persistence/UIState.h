@@ -18,6 +18,12 @@
     BOOL nearbySearch;
 
     NSInteger numNewMentions;
+
+    BOOL composingTweet;
+    NSString * directMessageRecipient;
+
+    NSString * viewingUrl;
+    NSString * viewingHtml;
 }
 
 @property (nonatomic, assign) NSUInteger selectedTab;
@@ -33,5 +39,11 @@
 @property (nonatomic, assign) BOOL nearbySearch;
 
 @property (nonatomic, assign) NSInteger numNewMentions;
+
+@property (nonatomic, assign) BOOL composingTweet;
+@property (nonatomic, copy) NSString * directMessageRecipient;
+
+@property (nonatomic, copy) NSString * viewingUrl;
+@property (nonatomic, copy) NSString * viewingHtml;
 
 @end

@@ -60,16 +60,22 @@
 
     UIPersonSelector * personSelector;
     BOOL selectingRecipient;
+
+    BOOL composingTweet;
+    NSString * directMessageRecipient;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;
+
+@property (nonatomic, assign) BOOL composingTweet;
+@property (nonatomic, copy) NSString * directMessageRecipient;
 
 - (id)initWithRootViewController:(UIViewController *)aRootViewController
                   twitterService:(TwitterService *)aService
                          context:(NSManagedObjectContext *)aContext;
 
-- (void)composeTweet;
-- (void)composeTweetWithText:(NSString *)tweet;
+- (void)composeTweetAnimated:(BOOL)animated;
+- (void)composeTweetWithText:(NSString *)tweet animated:(BOOL)animated;
 
 - (void)composeReplyToTweet:(NSNumber *)tweetId
                    fromUser:(NSString *)user;
@@ -78,8 +84,9 @@
                    withText:(NSString *)text;
 
 - (void)composeDirectMessage;
-- (void)composeDirectMessageTo:(NSString *)username;
-- (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)tweet;
+- (void)composeDirectMessageTo:(NSString *)username animated:(BOOL)animated;
+- (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)tweet
+    animated:(BOOL)animated;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
 
