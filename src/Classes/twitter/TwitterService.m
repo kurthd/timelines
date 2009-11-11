@@ -309,6 +309,25 @@ static NSMutableDictionary * oaTokens;
     [self request:requestId isHandledBy:processor];
 }
 
+#pragma mark Lists
+
+- (void)fetchListsFromCursor:(NSString *)cursor
+{
+    ResponseProcessor * processor =
+        [FetchListsResponseProcessor processorWithCredentials:credentials
+                                                       cursor:cursor
+                                                      context:context
+                                                     delegate:delegate];
+
+    if (!cursor)
+        cursor = @"-1";  // start from the first page
+
+    NSString * requestId =
+        [twitter getListsFor:credentials.username cursor:cursor];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark User info
 
 - (void)fetchUserInfoForUsername:(NSString *)username

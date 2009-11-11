@@ -122,6 +122,14 @@
                asFavorite:(BOOL)favorite
                     error:(NSError *)error;
 
+#pragma mark Lists
+
+@optional
+
+- (void)lists:(NSArray *)lists fetchedFromCursor:(NSString *)cursor
+    nextCursor:(NSString *)nextCursor;
+- (void)failedToFetchListsFromCursor:(NSString *)cursor error:(NSError *)error;
+
 #pragma mark User info
 
 @optional

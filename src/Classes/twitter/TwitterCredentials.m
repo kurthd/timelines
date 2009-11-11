@@ -2,7 +2,7 @@
 //  TwitterCredentials.m
 //  twitch
 //
-//  Created by John A. Debay on 8/31/09.
+//  Created by John A. Debay on 11/10/09.
 //  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
@@ -16,17 +16,19 @@
 #import "PhotoServiceCredentials.h"
 #import "TweetDraft.h"
 #import "UserTweet.h"
+#import "UserTwitterList.h"
 
 @implementation TwitterCredentials 
 
 @dynamic username;
-@dynamic instapaperCredentials;
+@dynamic directMessages;
 @dynamic activeCredentials;
 @dynamic userTimeline;
 @dynamic directMessageDrafts;
+@dynamic lists;
 @dynamic tweetDraft;
-@dynamic mentions;
 @dynamic photoServiceCredentials;
-@dynamic directMessages;
+@dynamic instapaperCredentials;
+@dynamic mentions;
 
 @end

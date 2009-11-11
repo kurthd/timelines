@@ -249,6 +249,18 @@
     dm.created = [[data objectForKey:@"created_at"] twitterDateValue];
 }
 
+- (void)populateList:(TwitterList *)list fromData:(NSDictionary *)data
+{
+    list.identifier = [data objectForKey:@"id"];
+    list.fullName = [data objectForKey:@"full_name"];
+    list.memberCount = [data objectForKey:@"member_count"];
+    list.mode = [data objectForKey:@"mode"];
+    list.name = [data objectForKey:@"name"];
+    list.slug = [data objectForKey:@"slug"];
+    list.subscriberCount = [data objectForKey:@"subscriber_count"];
+    list.uri = [data objectForKey:@"uri"];
+}
+
 #pragma mark Private implementation
 
 - (BOOL)normalizeTweetDataIfNecessary:(NSMutableDictionary **)tweetDataPtr
