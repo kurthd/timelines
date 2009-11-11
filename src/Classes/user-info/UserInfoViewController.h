@@ -26,8 +26,6 @@
     IBOutlet UILabel * nameLabel;
     IBOutlet UILabel * activeAcctLabel;
     IBOutlet UILabel * bioLabel;
-    IBOutlet UIActivityIndicatorView * followingActivityIndicator;
-    IBOutlet UILabel * followingLoadingLabel;
     IBOutlet UIButton * followButton;
     IBOutlet UIButton * stopFollowingButton;
     IBOutlet UIButton * blockButton;

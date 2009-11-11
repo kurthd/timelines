@@ -70,9 +70,6 @@ static UIImage * defaultAvatar;
     [webAddressButton release];
     [followsYouLabel release];
 
-    [followingActivityIndicator release];
-    [followingLoadingLabel release];
-
     [followButton release];
     [stopFollowingButton release];
     [blockButton release];
@@ -114,9 +111,6 @@ static UIImage * defaultAvatar;
 
         nameLabel.textColor = [UIColor whiteColor];
         nameLabel.shadowColor = [UIColor blackColor];
-
-        followingLoadingLabel.shadowColor =
-            [UIColor colorWithRed:.1 green:.1 blue:.1 alpha:1];
 
         [stopFollowingButton
             setBackgroundImage:
@@ -493,17 +487,15 @@ static UIImage * defaultAvatar;
 
     if (followingEnabled) {
         if (!followingStateSet) {
-            followingActivityIndicator.hidden = NO;
-            followingLoadingLabel.hidden = NO;
-            followButton.hidden = YES;
+            followButton.hidden = NO;
+            followButton.enabled = NO;
             stopFollowingButton.hidden = YES;
         } else {
             NSLog(@"Not updating following elements in header");
             [self updateDisplayForFollwoing:currentlyFollowing];
         }
     } else {
-        followingActivityIndicator.hidden = YES;
-        followingLoadingLabel.hidden = YES;
+        followButton.enabled = YES;
         activeAcctLabel.hidden = NO;
         followButton.hidden = YES;
         stopFollowingButton.hidden = YES;
@@ -561,8 +553,7 @@ static UIImage * defaultAvatar;
     if (followingEnabled)
         [self updateDisplayForFollwoing:following];
     else {
-        followingActivityIndicator.hidden = YES;
-        followingLoadingLabel.hidden = YES;
+        followButton.enabled = YES;
         followButton.hidden = YES;
         stopFollowingButton.hidden = YES;
     }
@@ -570,8 +561,7 @@ static UIImage * defaultAvatar;
 
 - (void)setFailedToQueryFollowing
 {
-    followingActivityIndicator.hidden = YES;
-    followingLoadingLabel.hidden = YES;
+    followButton.enabled = YES;
     followButton.hidden = YES;
     stopFollowingButton.hidden = YES;
 }
@@ -693,8 +683,6 @@ static UIImage * defaultAvatar;
     else
         NSLog(@"Not following");
 
-    followingActivityIndicator.hidden = YES;
-    followingLoadingLabel.hidden = YES;
     followButton.enabled = !following;
     stopFollowingButton.enabled = following;
     followButton.hidden = following;

@@ -174,7 +174,7 @@
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="IBUIText">Bio bio bio bio bio bio bio bio</string>
-						<object class="NSFont" key="IBUIFont" id="552914104">
+						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Helvetica</string>
 							<double key="NSSize">14</double>
 							<int key="NSfFlags">16</int>
@@ -222,38 +222,6 @@
 							<bytes key="NSRGB">MC42NDc5NTkxNzI3IDAuNjQ3OTU5MTcyNyAwLjY0Nzk1OTE3MjcAA</bytes>
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
-					</object>
-					<object class="IBUIActivityIndicatorView" id="653947448">
-						<reference key="NSNextResponder" ref="521307497"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{91, 341}, {20, 20}}</string>
-						<reference key="NSSuperview" ref="521307497"/>
-						<bool key="IBUIOpaque">NO</bool>
-						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<bool key="IBUIHidesWhenStopped">NO</bool>
-						<bool key="IBUIAnimating">YES</bool>
-						<int key="IBUIStyle">2</int>
-					</object>
-					<object class="IBUILabel" id="316327267">
-						<reference key="NSNextResponder" ref="521307497"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{119, 340}, {185, 21}}</string>
-						<reference key="NSSuperview" ref="521307497"/>
-						<bool key="IBUIOpaque">NO</bool>
-						<bool key="IBUIClipsSubviews">YES</bool>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<string key="IBUIText">Loading 'following' status...</string>
-						<reference key="IBUIFont" ref="552914104"/>
-						<object class="NSColor" key="IBUITextColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC40MDAwMDAwMDYgMC40MDAwMDAwMDYgMC40MDAwMDAwMDYAA</bytes>
-						</object>
-						<nil key="IBUIHighlightedColor"/>
-						<reference key="IBUIShadowColor" ref="842790299"/>
-						<string key="IBUIShadowOffset">{0, 1}</string>
-						<int key="IBUIBaselineAdjustment">1</int>
-						<float key="IBUIMinimumFontSize">10</float>
 					</object>
 					<object class="IBUILabel" id="1069915547">
 						<reference key="NSNextResponder" ref="521307497"/>
@@ -516,22 +484,6 @@
 					<int key="connectionID">29</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">followingActivityIndicator</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="653947448"/>
-					</object>
-					<int key="connectionID">44</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">followingLoadingLabel</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="316327267"/>
-					</object>
-					<int key="connectionID">45</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">showFullProfileImage:</string>
 						<reference key="source" ref="155567633"/>
@@ -717,8 +669,6 @@
 							<reference ref="221748051"/>
 							<reference ref="286202496"/>
 							<reference ref="538576021"/>
-							<reference ref="653947448"/>
-							<reference ref="316327267"/>
 							<reference ref="315318784"/>
 							<reference ref="362908434"/>
 							<reference ref="804106776"/>
@@ -791,16 +741,6 @@
 						<reference key="parent" ref="521307497"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">41</int>
-						<reference key="object" ref="653947448"/>
-						<reference key="parent" ref="521307497"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">42</int>
-						<reference key="object" ref="316327267"/>
-						<reference key="parent" ref="521307497"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">46</int>
 						<reference key="object" ref="155567633"/>
 						<reference key="parent" ref="286202496"/>
@@ -868,8 +808,6 @@
 					<string>4.IBEditorWindowLastContentRect</string>
 					<string>4.IBPluginDependency</string>
 					<string>40.IBPluginDependency</string>
-					<string>41.IBPluginDependency</string>
-					<string>42.IBPluginDependency</string>
 					<string>46.IBPluginDependency</string>
 					<string>48.IBPluginDependency</string>
 					<string>5.IBEditorWindowLastContentRect</string>
@@ -898,8 +836,6 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{417, 226}, {320, 500}}</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1037,7 +973,6 @@
 							<string>bookmarkButton</string>
 							<string>followButton</string>
 							<string>followingActivityIndicator</string>
-							<string>followingLoadingLabel</string>
 							<string>followsYouLabel</string>
 							<string>footerView</string>
 							<string>headerBackgroundView</string>
@@ -1060,7 +995,6 @@
 							<string>UIButton</string>
 							<string>UIButton</string>
 							<string>UIActivityIndicatorView</string>
-							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UIView</string>
 							<string>UIImageView</string>
