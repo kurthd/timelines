@@ -40,11 +40,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
 - (id)init
 {
-    if (self = [super init]) {
-        self.tableView =
-            [[[UITableView alloc]
-            initWithFrame:self.tableView.frame style:UITableViewStyleGrouped]
-            autorelease];
+    if (self = [super initWithStyle:UITableViewStyleGrouped]) {
         self.tableView.allowsSelectionDuringEditing = NO;
         self.navigationItem.leftBarButtonItem = self.editButtonItem;
     }
@@ -170,6 +166,9 @@ NSInteger usernameSort(TwitterCredentials * user1,
         TwitterCredentials * account =
             [self.accounts objectAtIndex:indexPath.row];
         [accountCell setUsername:account.username];
+
+        UIImage * avatar = [delegate avatarImageForUsername:account.username];
+        [accountCell setAvatarImage:avatar];
 
         if ([account.username isEqualToString:self.selectedAccount.username])
             [[self class] configureSelectedAccountCell:accountCell];
@@ -308,13 +307,11 @@ NSInteger usernameSort(TwitterCredentials * user1,
 + (void)configureSelectedAccountCell:(AccountTableViewCell *)cell
 {
     [cell setSelectedAccount:YES];
-    [cell setAvatarImage:[UIImage imageNamed:@"DefaultAvatar48x48.png"]];
 }
 
 + (void)configureNormalAccountCell:(AccountTableViewCell *)cell
 {
     [cell setSelectedAccount:NO];
-    [cell setAvatarImage:[UIImage imageNamed:@"DefaultAvatar48x48.png"]];
 }
 
 @end

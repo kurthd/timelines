@@ -16,6 +16,8 @@
 
 - (TwitterCredentials *)currentActiveAccount;
 
+- (UIImage *)avatarImageForUsername:(NSString *)username;
+
 @end
 
 @interface AccountsViewController : UITableViewController

@@ -132,6 +132,7 @@ userinfo.followsyou.checking = "Checking if %@ follows you...";
 userinfo.followsyou.failed = "Failed to check if %@ follows you";
 
 /* AccountsViewController */
+account.title = "Accounts";
 account.deletion.failed.alert.title = "Failed to Remove %@";
 account.prompt = "Choose an Account...";
 account.footer = "If you use multiple Twitter accounts, add\nthem all here to avoid re-entering your username and password.";

@@ -3,6 +3,7 @@
 //
 
 #import "AccountsButtonSetter.h"
+#import "TwitbitShared.h"
 
 @interface AccountsButtonSetter ()
 
@@ -18,6 +19,7 @@
 {
     [accountsButton release];
     [twitterService release];
+    [context release];
     
     [username release];
 
@@ -26,10 +28,12 @@
 
 - (id)initWithAccountsButton:(AccountsButton *)anAccountsButton
     twitterService:(TwitterService *)aTwitterService
+           context:(NSManagedObjectContext *)aContext
 {
     if (self = [super init]) {
         accountsButton = [anAccountsButton retain];
         twitterService = [aTwitterService retain];
+        context = [aContext retain];
     }
 
     return self;
@@ -38,9 +42,13 @@
 - (void)setButtonWithUsername:(NSString *)aUsername
 {
     self.username = aUsername;
-    UIImage * defaultAvatar = [UIImage imageNamed:@"DefaultAvatar.png"];
-    [accountsButton setUsername:self.username avatar:defaultAvatar];
-    [twitterService fetchUserInfoForUsername:aUsername];
+
+    User * user = [User userWithUsername:username context:context];
+    UIImage * avatar = user ? [user thumbnailAvatar] : [Avatar defaultAvatar];
+    [accountsButton setUsername:self.username avatar:avatar];
+
+    if (!user)
+        [twitterService fetchUserInfoForUsername:aUsername];
 }
 
 #pragma mark TwitterServiceDelegate implementation

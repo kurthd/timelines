@@ -550,7 +550,9 @@ enum {
 
         accountsButtonSetter =
             [[AccountsButtonSetter alloc]
-            initWithAccountsButton:accountsButton twitterService:service];
+            initWithAccountsButton:accountsButton
+            twitterService:service
+            context:[self managedObjectContext]];
         service.delegate = accountsButtonSetter;
     }
 
@@ -787,7 +789,8 @@ enum {
         action:@selector(processUserAccountSelection)]
         autorelease];
     accountsViewController.navigationItem.rightBarButtonItem = doneButton;
-    accountsViewController.navigationItem.title = @"Accounts";
+    accountsViewController.navigationItem.title =
+        NSLocalizedString(@"account.title", @"");
 
     [displayMgr release];
 }

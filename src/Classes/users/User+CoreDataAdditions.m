@@ -43,4 +43,12 @@
     return [results lastObject];
 }
 
++ (id)userWithUsername:(NSString *)username
+               context:(NSManagedObjectContext *)context
+{
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:@"username == %@", username];
+    return [self findFirst:predicate context:context];
+}
+
 @end
