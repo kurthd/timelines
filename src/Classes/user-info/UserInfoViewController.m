@@ -17,20 +17,19 @@
 enum {
     kUserInfoSectionDetails,
     kUserInfoSectionNetwork,
-    kUserInfoSectionFavorites,
     kUserInfoSectionActions
 };
 
 enum {
     kUserInfoFollowingRow,
     kUserInfoFollowersRow,
-    kUserInfoNumUpdatesRow,
-    kUserInfoFavoritesRow
+    kUserInfoNumUpdatesRow
 };
 
 enum {
     kUserInfoPublicMessage,
     kUserInfoDirectMessage,
+    kUserInfoFavoritesRow,
     kUserInfoSearchForUser
 };
 
@@ -70,9 +69,6 @@ static UIImage * defaultAvatar;
     [webAddressButton release];
     [followsYouLabel release];
 
-    [followingActivityIndicator release];
-    [followingLoadingLabel release];
-
     [followButton release];
     [stopFollowingButton release];
     [blockButton release];
@@ -95,11 +91,11 @@ static UIImage * defaultAvatar;
 
     self.tableView.tableHeaderView = headerView;
     self.tableView.tableFooterView = footerView;
-    
+
     self.view.frame =
         [[RotatableTabBarController instance] landscape] ?
         CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
-    
+
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         self.tableView.separatorColor = [UIColor twitchGrayColor];
 
@@ -114,9 +110,6 @@ static UIImage * defaultAvatar;
 
         nameLabel.textColor = [UIColor whiteColor];
         nameLabel.shadowColor = [UIColor blackColor];
-
-        followingLoadingLabel.shadowColor =
-            [UIColor colorWithRed:.1 green:.1 blue:.1 alpha:1];
 
         [stopFollowingButton
             setBackgroundImage:
@@ -182,8 +175,12 @@ static UIImage * defaultAvatar;
             forState:UIControlStateDisabled];
         [bookmarkButton setBackgroundImage:buttonImage
             forState:UIControlStateDisabled];
-            
+
         activeAcctLabel.shadowColor = [UIColor blackColor];
+        
+        followsYouLabel.backgroundColor = self.view.backgroundColor;
+        followsYouLabel.textColor = [UIColor lightGrayColor];
+        followsYouLabel.shadowColor = [UIColor blackColor];
     }
 
     [self layoutViews];
@@ -256,7 +253,7 @@ static UIImage * defaultAvatar;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView 
@@ -268,9 +265,7 @@ static UIImage * defaultAvatar;
         if (user.location && ![user.location isEqual:@""])
             numRows++;
     } else if (section == kUserInfoSectionActions)
-        numRows = 3;
-    else if (section == kUserInfoSectionFavorites)
-        numRows = 1;
+        numRows = 4;
     else
         numRows = 3;
 
@@ -358,18 +353,6 @@ static UIImage * defaultAvatar;
                     [formatter stringFromNumber:user.statusesCount]];
             }
             break;
-        case kUserInfoSectionFavorites:
-            cell = [self getBasicCell];
-            cell.accessoryType =
-                UITableViewCellAccessoryDisclosureIndicator;
-            cell.textLabel.text =
-                NSLocalizedString(@"userinfoview.favorites", @"");
-            cell.imageView.image =
-                [UIImage imageNamed:@"FavoriteIconForUserView.png"];
-            cell.imageView.highlightedImage =
-                [UIImage
-                imageNamed:@"FavoriteIconForUserViewHighlighted.png"];
-            break;
         case kUserInfoSectionActions:
             cell = cell = [self getBasicCell];
 
@@ -384,6 +367,16 @@ static UIImage * defaultAvatar;
                 cell.imageView.highlightedImage =
                     [UIImage
                     imageNamed:@"MagnifyingGlassHighlighted.png"];
+            } else if (indexPath.row == kUserInfoFavoritesRow) {
+                cell.accessoryType =
+                    UITableViewCellAccessoryDisclosureIndicator;
+                cell.textLabel.text =
+                    NSLocalizedString(@"userinfoview.favorites", @"");
+                cell.imageView.image =
+                    [UIImage imageNamed:@"FavoriteIconForUserView.png"];
+                cell.imageView.highlightedImage =
+                    [UIImage
+                    imageNamed:@"FavoriteIconForUserViewHighlighted.png"];
             } else {
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.textLabel.text =
@@ -421,14 +414,13 @@ static UIImage * defaultAvatar;
             else
                 [delegate displayFollowersForUser:user.username];
             break;
-        case kUserInfoSectionFavorites:
-            [delegate displayFavoritesForUser:user.username];
-            break;
         case kUserInfoSectionActions:
             if (indexPath.row == kUserInfoPublicMessage)
                 [delegate sendPublicMessageToUser:user.username];
             else if (indexPath.row == kUserInfoDirectMessage)
                 [delegate sendDirectMessageToUser:user.username];
+            else if (indexPath.row == kUserInfoFavoritesRow)
+                [delegate displayFavoritesForUser:user.username];
             else
                 [delegate
                     showResultsForSearch:
@@ -454,6 +446,18 @@ static UIImage * defaultAvatar;
         return nil;
 
     return indexPath;
+}
+
+- (UIView *)tableView:(UITableView *)tableView
+    viewForFooterInSection:(NSInteger)section
+{
+    return section == kUserInfoSectionNetwork ? followsYouLabel : nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView
+    heightForFooterInSection:(NSInteger)section
+{
+    return section == kUserInfoSectionNetwork ? 34 : 0;
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -493,17 +497,15 @@ static UIImage * defaultAvatar;
 
     if (followingEnabled) {
         if (!followingStateSet) {
-            followingActivityIndicator.hidden = NO;
-            followingLoadingLabel.hidden = NO;
-            followButton.hidden = YES;
+            followButton.hidden = NO;
+            followButton.enabled = NO;
             stopFollowingButton.hidden = YES;
         } else {
             NSLog(@"Not updating following elements in header");
             [self updateDisplayForFollwoing:currentlyFollowing];
         }
     } else {
-        followingActivityIndicator.hidden = YES;
-        followingLoadingLabel.hidden = YES;
+        followButton.enabled = YES;
         activeAcctLabel.hidden = NO;
         followButton.hidden = YES;
         stopFollowingButton.hidden = YES;
@@ -561,8 +563,7 @@ static UIImage * defaultAvatar;
     if (followingEnabled)
         [self updateDisplayForFollwoing:following];
     else {
-        followingActivityIndicator.hidden = YES;
-        followingLoadingLabel.hidden = YES;
+        followButton.enabled = YES;
         followButton.hidden = YES;
         stopFollowingButton.hidden = YES;
     }
@@ -570,8 +571,7 @@ static UIImage * defaultAvatar;
 
 - (void)setFailedToQueryFollowing
 {
-    followingActivityIndicator.hidden = YES;
-    followingLoadingLabel.hidden = YES;
+    followButton.enabled = YES;
     followButton.hidden = YES;
     stopFollowingButton.hidden = YES;
 }
@@ -641,19 +641,10 @@ static UIImage * defaultAvatar;
     webAddressFrame.size.width = labelWidth;
     webAddressButton.frame = webAddressFrame;
 
-    CGFloat baseFollowsYouPosition = webAddressFrame.origin.y;
-    CGRect followsYouLabelFrame = followsYouLabel.frame;
-    followsYouLabelFrame.origin.y =
-        user.webpage ?
-        webAddressFrame.size.height + baseFollowsYouPosition :
-        baseFollowsYouPosition;
-    followsYouLabelFrame.size.width = labelWidth;
-    followsYouLabel.frame = followsYouLabelFrame;
-
     CGRect headerViewFrame = headerView.frame;
     headerViewFrame.size.height =
         user.webpage ?
-        followsYouLabelFrame.origin.y + 24 : followsYouLabelFrame.origin.y;
+        webAddressFrame.origin.y + 24 : webAddressFrame.origin.y;
     headerView.frame = headerViewFrame;
 
     // force the header view to redraw
@@ -702,8 +693,6 @@ static UIImage * defaultAvatar;
     else
         NSLog(@"Not following");
 
-    followingActivityIndicator.hidden = YES;
-    followingLoadingLabel.hidden = YES;
     followButton.enabled = !following;
     stopFollowingButton.enabled = following;
     followButton.hidden = following;
