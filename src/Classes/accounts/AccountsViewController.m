@@ -40,11 +40,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
 - (id)init
 {
-    if (self = [super init]) {
-        self.tableView =
-            [[[UITableView alloc]
-            initWithFrame:self.tableView.frame style:UITableViewStyleGrouped]
-            autorelease];
+    if (self = [super initWithStyle:UITableViewStyleGrouped]) {
         self.tableView.allowsSelectionDuringEditing = NO;
         self.navigationItem.leftBarButtonItem = self.editButtonItem;
     }
@@ -61,7 +57,6 @@ NSInteger usernameSort(TwitterCredentials * user1,
     if (!self.selectedAccount)
         self.selectedAccount = [self.delegate currentActiveAccount];
 
-    [self setEditing:NO animated:animated];
     [self.tableView reloadData];
 }
 
@@ -134,7 +129,8 @@ NSInteger usernameSort(TwitterCredentials * user1,
 - (NSInteger)tableView:(UITableView *)tv
  numberOfRowsInSection:(NSInteger)section
 {
-    return self.accounts.count + 1;
+    return
+        self.tableView.editing ? self.accounts.count : self.accounts.count + 1;
 }
 
 // Customize the appearance of table view cells.
@@ -170,6 +166,9 @@ NSInteger usernameSort(TwitterCredentials * user1,
         TwitterCredentials * account =
             [self.accounts objectAtIndex:indexPath.row];
         [accountCell setUsername:account.username];
+
+        UIImage * avatar = [delegate avatarImageForUsername:account.username];
+        [accountCell setAvatarImage:avatar];
 
         if ([account.username isEqualToString:self.selectedAccount.username])
             [[self class] configureSelectedAccountCell:accountCell];
@@ -298,9 +297,22 @@ NSInteger usernameSort(TwitterCredentials * user1,
     if (editing) {
         self.rightButton = self.navigationItem.rightBarButtonItem;
         [self.navigationItem setRightBarButtonItem:nil animated:animated];
-    } else if (self.rightButton)
-        [self.navigationItem setRightBarButtonItem:self.rightButton
-            animated:animated];
+
+        NSIndexPath * path =
+            [NSIndexPath indexPathForRow:accounts.count inSection:0];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:path]
+                              withRowAnimation:UITableViewRowAnimationTop];
+
+    } else {
+        if (self.rightButton)
+            [self.navigationItem setRightBarButtonItem:self.rightButton
+                                              animated:animated];
+
+        NSIndexPath * path =
+            [NSIndexPath indexPathForRow:accounts.count inSection:0];
+        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path]
+                              withRowAnimation:UITableViewRowAnimationTop];
+    }
 }
 
 #pragma mark Private implementation
@@ -308,13 +320,11 @@ NSInteger usernameSort(TwitterCredentials * user1,
 + (void)configureSelectedAccountCell:(AccountTableViewCell *)cell
 {
     [cell setSelectedAccount:YES];
-    [cell setAvatarImage:[UIImage imageNamed:@"DefaultAvatar48x48.png"]];
 }
 
 + (void)configureNormalAccountCell:(AccountTableViewCell *)cell
 {
     [cell setSelectedAccount:NO];
-    [cell setAvatarImage:[UIImage imageNamed:@"DefaultAvatar48x48.png"]];
 }
 
 @end

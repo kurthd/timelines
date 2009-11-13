@@ -34,6 +34,13 @@
 //
 #import "Tweet+GeneralHelpers.h"
 
+#import "User.h"
+#import "User+CoreDataAdditions.h"
+#import "User+UIAdditions.h"
+
+#import "Avatar.h"
+#import "Avatar+UIAdditions.h"
+
 
 //
 // Vendor libraries

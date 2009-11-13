@@ -12,12 +12,14 @@
 {
     AccountsButton * accountsButton;
     TwitterService * twitterService;
+    NSManagedObjectContext * context;
 
     NSString * username;
 }
 
 - (id)initWithAccountsButton:(AccountsButton *)accountsButton
-    twitterService:(TwitterService *)twitterService;
+    twitterService:(TwitterService *)twitterService
+                     context:(NSManagedObjectContext *)aContext;
 
 - (void)setButtonWithUsername:(NSString *)username;
 

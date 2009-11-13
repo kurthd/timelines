@@ -9,6 +9,7 @@
 #import "AccountSettingsChangedPublisher.h"
 #import "ActiveTwitterCredentials.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
+#import "TwitbitShared.h"
 
 @interface AccountsDisplayMgr ()
 
@@ -146,6 +147,13 @@
 - (TwitterCredentials *)currentActiveAccount
 {
     return [[ActiveTwitterCredentials findFirst:context] credentials];
+}
+
+- (UIImage *)avatarImageForUsername:(NSString *)username
+{
+    User * user = [User userWithUsername:username context:context];
+    UIImage * avatar = [user thumbnailAvatar];
+    return avatar ? avatar : [Avatar defaultAvatar];
 }
 
 #pragma mark LogInDisplayMgrDelegate implementation

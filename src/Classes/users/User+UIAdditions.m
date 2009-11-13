@@ -155,11 +155,6 @@ static NSMutableDictionary * followersDescriptions;
     return followersDescriptions;
 }
 
-- (BOOL)isComplete
-{
-    return self.name && ![self.name isEqual:@""];
-}
-
 @end
 
 @implementation User (SortingAdditions)

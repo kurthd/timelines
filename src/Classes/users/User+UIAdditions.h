@@ -16,8 +16,6 @@
 - (UIImage *)thumbnailAvatar;
 - (UIImage *)fullAvatar;
 
-- (BOOL)isComplete;
-
 + (void)setAvatar:(UIImage *)avatar forUrl:(NSString *)url;
 
 + (NSString *)fullAvatarUrlForUrl:(NSString *)url;

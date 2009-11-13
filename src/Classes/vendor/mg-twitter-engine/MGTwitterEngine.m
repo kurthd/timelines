@@ -43,10 +43,11 @@
 	#endif
 #endif
 
-#define TWITTER_DOMAIN          @"api.twitter.com"
-#define TWITTER_API_VERSION     @"1"
+#define TWITTER_DOMAIN_UNVERSIONED       @"twitter.com"
+#define TWITTER_DOMAIN_VERSIONED          @"api.twitter.com"
+#define TWITTER_API_VERSION               @"1"
 #if JSON_AVAILABLE || YAJL_AVAILABLE
-	#define TWITTER_SEARCH_DOMAIN	@"search.twitter.com"
+	#define TWITTER_SEARCH_DOMAIN         @"search.twitter.com"
 #endif
 #define HTTP_POST_METHOD        @"POST"
 #define MAX_MESSAGE_LENGTH      140 // Twitter recommends tweets of max 140 chars
@@ -68,6 +69,9 @@
 - (NSDate *)_HTTPToDate:(NSString *)httpDate;
 - (NSString *)_dateToHTTP:(NSDate *)date;
 - (NSString *)_encodeString:(NSString *)string;
+
+- (NSString *)baseUrlWithPath:(NSString *)path requestType:(MGTwitterRequestType)requestType params:(NSDictionary *)params;
++ (NSString *)apiDomain;
 
 // Connection/Request methods
 - (NSString *)_sendRequestWithMethod:(NSString *)method 
@@ -103,14 +107,14 @@
     if (self = [super init]) {
         _delegate = newDelegate; // deliberately weak reference
         _connections = [[NSMutableDictionary alloc] initWithCapacity:0];
-        _clientName = [DEFAULT_CLIENT_NAME retain];
-        _clientVersion = [DEFAULT_CLIENT_VERSION retain];
-        _clientURL = [DEFAULT_CLIENT_URL retain];
-		_clientSourceToken = [DEFAULT_CLIENT_TOKEN retain];
-		_APIDomain = [TWITTER_DOMAIN retain];
-        _APIVersion = [TWITTER_API_VERSION retain];
+        _clientName = DEFAULT_CLIENT_NAME;
+        _clientVersion = DEFAULT_CLIENT_VERSION;
+        _clientURL = DEFAULT_CLIENT_URL;
+		_clientSourceToken = DEFAULT_CLIENT_TOKEN;
+		_APIDomain = [[self class] apiDomain];
+        _APIVersion = TWITTER_API_VERSION;
 #if JSON_AVAILABLE || YAJL_AVAILABLE
-		_searchDomain = [TWITTER_SEARCH_DOMAIN retain];
+		_searchDomain = TWITTER_SEARCH_DOMAIN;
 #endif
 
         _secureConnection = YES;
@@ -249,7 +253,7 @@
 {
 	[_APIDomain release];
 	if (!domain || [domain length] == 0) {
-		_APIDomain = [TWITTER_DOMAIN retain];
+		_APIDomain = [[self class] apiDomain];
 	} else {
 		_APIDomain = [domain retain];
 	}
@@ -461,6 +465,7 @@
                          requestType:(MGTwitterRequestType)requestType 
                         responseType:(MGTwitterResponseType)responseType
 {
+    /*
     // Construct appropriate URL string.
     NSString *fullPath = path;
     if (params) {
@@ -514,6 +519,9 @@
                            [self _encodeString:_username], [self _encodeString:_password], 
                            domain, version, fullPath];
 #endif
+     */
+
+    NSString * urlString = [self baseUrlWithPath:path requestType:requestType params:params];
     
     NSURL *finalURL = [NSURL URLWithString:urlString];
     if (!finalURL) {
@@ -1757,6 +1765,27 @@
                            responseType:MGTwitterStatuses];
 }
 
+- (NSString *)fetchStatusesForListWithId:(NSNumber *)listId ownedByUser:(NSString *)username
+                           sinceUpdateId:(NSNumber *)updateId page:(NSNumber *)page count:(NSNumber *)count
+{
+    if (!username || !listId)
+        return nil;
+
+    NSString * path = [NSString stringWithFormat:@"%@/lists/%@/statuses.%@", username, listId, API_FORMAT];
+
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    if (updateId)
+        [params setObject:updateId forKey:@"since_id"];
+    if (page)
+        [params setObject:page forKey:@"page"];
+    if (count)
+        [params setObject:count forKey:@"per_page"];
+
+    return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil
+                            requestType:MGTwitterStatusesRequest
+                           responseType:MGTwitterStatuses];
+}
+
 #if JSON_AVAILABLE || YAJL_AVAILABLE
 
 #pragma mark Search
@@ -1885,6 +1914,89 @@
 + (NSString *)twitterApiErrorDomain
 {
     return @"Twitter API";
+}
+
+- (NSString *)baseUrlWithPath:(NSString *)path
+                  requestType:(MGTwitterRequestType)requestType
+                       params:(NSDictionary *)params
+{
+    NSString *fullPath = path;
+    if (params) {
+        fullPath = [self _queryStringWithBase:fullPath
+                                   parameters:params
+                                     prefixed:YES];
+    }
+
+#if JSON_AVAILABLE || YAJL_AVAILABLE
+	NSString *domain = nil;
+    NSString *version = nil;
+	NSString *connectionType = nil;
+	if (requestType == MGTwitterSearchRequest)
+	{
+		domain = _searchDomain;
+        version = @"";
+		connectionType = @"http";
+	}
+	else
+	{
+		domain = _APIDomain;
+        version = [[self class] useVersionedApi] ? [NSString stringWithFormat:@"/%@", _APIVersion] : @"";
+
+		if (_secureConnection)
+		{
+			connectionType = @"https";
+		}
+		else
+		{
+			connectionType = @"http";
+		}
+	}
+#else
+	NSString *domain = _APIDomain;
+    NSString *version = _APIVersion;
+	NSString *connectionType = nil;
+	if (_secureConnection)
+	{
+		connectionType = @"https";
+	}
+	else
+	{
+		connectionType = @"http";
+	}
+#endif
+
+	NSString * urlString = nil;
+#if SET_AUTHORIZATION_IN_HEADER
+    if ([[self class] useVersionedApi])
+        urlString = [NSString stringWithFormat:@"%@://%@%@/%@", connectionType, domain, version, fullPath];
+    else
+        urlString = [NSString stringWithFormat:@"%@://%@%@", connectionType, domain, fullPath];
+#else
+    if ([[self class] useVersionedApi])
+        urlString = [NSString stringWithFormat:@"%@://%@:%@@%@%@/%@", connectionType, [self _encodeString:_username], [self _encodeString:_password], domain, version, fullPath];
+    else
+        urlString = [NSString stringWithFormat:@"%@://%@:%@@%@%@", connectionType, [self _encodeString:_username], [self _encodeString:_password], domain, fullPath];
+#endif
+
+    return urlString;
+}
+
++ (BOOL)useVersionedApi
+{
+    // Set to YES to use a versioned API, e.g.:
+    //   https://api.twitter.com/1/users/show/rwzombie.xml
+    // Set to NO to use old, non-versioned API, e.g.:
+    //   https://twitter.com/users/show/rwzombie.xml
+    // Using the versioned API is important as Twitter changes their API
+    // frequently, but we are currently getting pretty constant "untrusted
+    // server certificate" errors. Waiting until it stabilizes before switching
+    // over.
+    return NO;
+}
+
++ (NSString *)apiDomain
+{
+    return [[self class] useVersionedApi] ? TWITTER_DOMAIN_VERSIONED : TWITTER_DOMAIN_UNVERSIONED;
 }
 
 @end
