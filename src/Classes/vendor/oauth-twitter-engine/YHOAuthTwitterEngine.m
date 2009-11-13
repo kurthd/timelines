@@ -346,7 +346,7 @@
 		connectionType = @"http";
 	} else {
 		domain = _APIDomain;
-        version = [NSString stringWithFormat:@"/%@", _APIVersion];
+        version = [[self class] useVersionedApi] ? [NSString stringWithFormat:@"/%@", _APIVersion] : @"";
 		if (_secureConnection)
 			connectionType = @"https";
 		else

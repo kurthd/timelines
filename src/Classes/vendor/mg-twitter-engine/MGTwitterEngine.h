@@ -230,6 +230,7 @@
 
 #endif
 
++ (BOOL)useVersionedApi;
 + (NSString *)twitterApiErrorDomain;
 
 @end
