@@ -22,4 +22,9 @@
 @dynamic uri;
 @dynamic user;
 
+- (NSComparisonResult)compare:(TwitterList *)list
+{
+    return [self.fullName compare:list.fullName];
+}
+
 @end

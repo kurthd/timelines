@@ -7,11 +7,15 @@
 //
 
 #import "UserTwitterList.h"
-
 #import "TwitterCredentials.h"
 
 @implementation UserTwitterList 
 
 @dynamic credentials;
+
+- (NSComparisonResult)compare:(TwitterList *)list
+{
+    return [self.fullName compare:list.fullName];
+}
 
 @end

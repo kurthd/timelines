@@ -38,6 +38,7 @@
 #import "UIApplication+ConfigurationAdditions.h"
 #import "NSArray+IterationAdditions.h"
 #import "TwitbitShared.h"
+#import "ListsViewController.h"
 
 @interface TwitchAppDelegate ()
 
@@ -149,6 +150,7 @@ enum {
     [directMessageAcctMgr release];
     [mentionsAcctMgr release];
     [mentionDisplayMgr release];
+    [listsDisplayMgr release];
 
     [composeTweetDisplayMgr release];
 
@@ -172,9 +174,12 @@ enum {
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
-    if ([SettingsReader displayTheme] == kDisplayThemeDark)
+    if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+        UINavigationController * moreNavController =
+            tabBarController.moreNavigationController;
+        moreNavController.navigationBar.barStyle = UIBarStyleBlackOpaque;
         [application setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:NO];
-    else
+    } else
         [application setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
 
     NSLog(@"Application did finish launching; initializing");
@@ -752,7 +757,39 @@ enum {
 
 - (void)initListsTab
 {
-    
+    listsNetAwareViewController.navigationController.navigationBar.barStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIBarStyleBlackOpaque : UIBarStyleDefault;
+
+    ListsViewController * listsViewController =
+        [[ListsViewController alloc] init];
+    listsNetAwareViewController.targetViewController = listsViewController;
+
+    TwitterCredentials * creds =
+        self.activeCredentials ? self.activeCredentials.credentials : nil;
+
+    TwitterService * service =
+        [[[TwitterService alloc]
+        initWithTwitterCredentials:creds
+        context:[self managedObjectContext]] autorelease];
+
+    // Don't autorelease
+    [[CredentialsActivatedPublisher alloc]
+        initWithListener:service action:@selector(setCredentials:)];
+
+    listsDisplayMgr =
+        [[ListsDisplayMgr alloc]
+        initWithWrapperController:listsNetAwareViewController
+        navigationController:listsNetAwareViewController.navigationController
+        listsViewController:listsViewController
+        service:service];
+    service.delegate = listsDisplayMgr;
+    listsNetAwareViewController.delegate = listsDisplayMgr;
+
+    UIBarButtonItem * refreshButton =
+        listsNetAwareViewController.navigationItem.leftBarButtonItem;
+    refreshButton.target = listsDisplayMgr;
+    refreshButton.action = @selector(refreshLists);
 }
 
 - (void)initAccountsView
@@ -1724,6 +1761,8 @@ enum {
         
         // This isn't called automatically, so force call here
         [homeNetAwareViewController viewWillAppear:YES];
+
+        [listsDisplayMgr resetState];
     }
 }
 

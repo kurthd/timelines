@@ -19,6 +19,7 @@
 #import "MentionsAcctMgr.h"
 #import "AccountsButton.h"
 #import "AccountsButtonSetter.h"
+#import "ListsDisplayMgr.h"
 
 @class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class SearchBarDisplayMgr;
@@ -79,6 +80,7 @@
     FindPeopleSearchDisplayMgr * findPeopleSearchDisplayMgr;
     AccountsDisplayMgr * accountsDisplayMgr;
     MentionTimelineDisplayMgr * mentionDisplayMgr;
+    ListsDisplayMgr * listsDisplayMgr;
 
     UIBarButtonItem * homeSendingTweetProgressView;
 

@@ -198,7 +198,7 @@ static UIImage * defaultAvatar;
     UIInterfaceOrientation orientation =
         [[RotatableTabBarController instance] effectiveOrientation];
     [self updateButtonsForOrientation:orientation];
-    
+
     BOOL landscape = [[RotatableTabBarController instance] landscape];
     if (lastDisplayedInLandscape != landscape) {
         [self.tableView reloadData];

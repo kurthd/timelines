@@ -53,13 +53,23 @@ timelinedisplaymgr.error.unblock = "Failed to unblock user %@";
 timelinedisplaymgr.error.block = "Failed to block user %@";
 timelinedisplaymgr.nearbysearch = "Nearby Tweets";
 
-/* TimelineDisplayMgr */
+/* MentionDisplayMgr */
 mentiondisplaymgr.title = "Mentions";
 mentiondisplaymgr.title.formatstring = "Mentions (%d)";
 
 /* DirectMessageDisplayMgr */
 directmessage.actions.cancel = "Cancel";
 directmessage.actions.email = "Email This Message";
+
+/* ListsDisplayMgr */
+listsdisplaymgr.error.fetchlists = "Failed to fetch lists";
+listsdisplaymgr.nolists = "You are not subscribed to any lists";
+
+/* ListsViewController */
+listsviewcontroller.sections.lists = "My Lists";
+listsviewcontroller.sections.subscriptions = "Subscriptions";
+listsviewcontroller.subscribercount = "%@ followers";
+listsviewcontroller.membercount = "following %@";
 
 /* TweetDetailsViewController */
 tweetdetailsview.title = "Tweet";
@@ -127,7 +137,7 @@ userinfo.directmessage = "Direct Message";
 userinfo.block = "Block";
 userinfo.unblock = "Unblock";
 userinfo.followsyou.yes = "%@ follows you";
-userinfo.followsyou.no = "%@ doesn't follow you";
+userinfo.followsyou.no = "%@ does not follow you";
 userinfo.followsyou.checking = "Checking if %@ follows you...";
 userinfo.followsyou.failed = "Failed to check if %@ follows you";
 
