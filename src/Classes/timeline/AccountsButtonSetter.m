@@ -47,7 +47,9 @@
     self.username = aUsername;
 
     User * user = [User userWithUsername:username context:context];
-    UIImage * avatar = user ? [user thumbnailAvatar] : [Avatar defaultAvatar];
+    UIImage * avatar = [user thumbnailAvatar];
+    if (!avatar)
+        avatar = [Avatar defaultAvatar];
     [accountsButton setUsername:self.username avatar:avatar];
 
     if (!user)
