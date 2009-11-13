@@ -346,6 +346,31 @@ static NSMutableDictionary * oaTokens;
     [self request:requestId isHandledBy:processor];
 }
 
+- (void)fetchStatusesForListWithId:(NSNumber *)listId
+                       ownedByUser:(NSString *)username
+                     sinceUpdateId:(NSNumber *)updateId
+                              page:(NSNumber *)page
+                             count:(NSNumber *)count
+{
+    ResponseProcessor * processor =
+        [FetchListStatusesResponseProcessor processorWithListId:listId
+                                                    ownedByUser:username
+                                                  sinceUpdateId:updateId
+                                                           page:page
+                                                          count:count
+                                                        context:context
+                                                       delegate:delegate];
+
+    NSString * requestId =
+        [twitter fetchStatusesForListWithId:listId
+                                ownedByUser:username
+                              sinceUpdateId:updateId
+                                       page:page
+                                      count:count];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark User info
 
 - (void)fetchUserInfoForUsername:(NSString *)username

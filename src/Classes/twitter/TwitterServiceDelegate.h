@@ -136,6 +136,20 @@
 - (void)failedToFetchListSubscriptionsFromCursor:(NSString *)cursor
                                            error:(NSError *)error;
 
+- (void)statuses:(NSArray *)statuses
+fetchedForListId:(NSNumber *)listId
+     ownedByUser:(NSString *)username
+   sinceUpdateId:(NSNumber *)updateId
+            page:(NSNumber *)page
+           count:(NSNumber *)count;
+- (void)failedToFetchStatusesForListId:(NSNumber *)listId
+                           ownedByUser:(NSString *)username
+                         sinceUpdateId:(NSNumber *)updateId
+                                  page:(NSNumber *)page
+                                 count:(NSNumber *)count
+                                 error:(NSError *)error;
+
+
 #pragma mark User info
 
 @optional

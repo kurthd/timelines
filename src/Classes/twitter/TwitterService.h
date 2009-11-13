@@ -106,6 +106,16 @@
  */
 - (void)fetchListSubscriptionsFromCursor:(NSString *)cursor;
 
+/**
+ * Fetch statuses for the given list. The 'updateId', 'page', and 'count'
+ * parameters can be nil.
+ */
+- (void)fetchStatusesForListWithId:(NSNumber *)listId
+                       ownedByUser:(NSString *)username
+                     sinceUpdateId:(NSNumber *)updateId
+                              page:(NSNumber *)page
+                             count:(NSNumber *)count;
+
 #pragma mark User info
 
 - (void)fetchUserInfoForUsername:(NSString *)username;

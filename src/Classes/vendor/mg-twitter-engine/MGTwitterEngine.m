@@ -1765,6 +1765,27 @@
                            responseType:MGTwitterStatuses];
 }
 
+- (NSString *)fetchStatusesForListWithId:(NSNumber *)listId ownedByUser:(NSString *)username
+                           sinceUpdateId:(NSNumber *)updateId page:(NSNumber *)page count:(NSNumber *)count
+{
+    if (!username || !listId)
+        return nil;
+
+    NSString * path = [NSString stringWithFormat:@"%@/lists/%@/statuses.%@", username, listId, API_FORMAT];
+
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    if (updateId)
+        [params setObject:updateId forKey:@"since_id"];
+    if (page)
+        [params setObject:page forKey:@"page"];
+    if (count)
+        [params setObject:count forKey:@"per_page"];
+
+    return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil
+                            requestType:MGTwitterStatusesRequest
+                           responseType:MGTwitterStatuses];
+}
+
 #if JSON_AVAILABLE || YAJL_AVAILABLE
 
 #pragma mark Search

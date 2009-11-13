@@ -142,6 +142,8 @@
 - (NSString *)getListsFor:(NSString *)username cursor:(NSString *)cursor;
 - (NSString *)getListSubscriptionsFor:(NSString *)username cursor:(NSString *)cursor;
 
+- (NSString *)fetchStatusesForListWithId:(NSNumber *)listId ownedByUser:(NSString *)username sinceUpdateId:(NSNumber *)updateId page:(NSNumber *)page count:(NSNumber *)count;
+
 
 // Friendship methods - http://apiwiki.twitter.com/REST+API+Documentation#FriendshipMethods
 
