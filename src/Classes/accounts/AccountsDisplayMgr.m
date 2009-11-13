@@ -152,7 +152,8 @@
 - (UIImage *)avatarImageForUsername:(NSString *)username
 {
     User * user = [User userWithUsername:username context:context];
-    return user ? [user thumbnailAvatar] : [Avatar defaultAvatar];
+    UIImage * avatar = [user thumbnailAvatar];
+    return avatar ? avatar : [Avatar defaultAvatar];
 }
 
 #pragma mark LogInDisplayMgrDelegate implementation
