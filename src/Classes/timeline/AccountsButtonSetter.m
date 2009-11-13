@@ -73,6 +73,7 @@
 {
     UIImage * avatarImage = [UIImage imageWithData:data];
     [accountsButton setUsername:self.username avatar:avatarImage];
+    [User setAvatar:avatarImage forUrl:[url absoluteString]];
 }
 
 #pragma mark Private implementation
