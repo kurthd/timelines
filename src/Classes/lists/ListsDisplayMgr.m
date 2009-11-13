@@ -6,6 +6,7 @@
 #import "ListsViewController.h"
 #import "ErrorState.h"
 #import "TwitterList.h"
+#import "ListTimelineDataSource.h"
 
 @interface ListsDisplayMgr ()
 
@@ -13,6 +14,12 @@
 @property (nonatomic, copy) NSString * subscriptionsCursor;
 @property (nonatomic, retain) NSMutableDictionary * lists;
 @property (nonatomic, retain) NSMutableDictionary * subscriptions;
+
+@property (nonatomic, retain)
+    NetworkAwareViewController * nextWrapperController;
+@property (nonatomic, retain) TimelineDisplayMgr * timelineDisplayMgr;
+@property (nonatomic, retain)
+    CredentialsActivatedPublisher * credentialsPublisher;
 
 - (void)fetchListsFromCursor:(NSString *)cursor;
 - (void)fetchListSubscriptionsFromCursor:(NSString *)cursor;
@@ -26,6 +33,7 @@
 @synthesize fetchedInitialLists;
 @synthesize listsCursor, subscriptionsCursor;
 @synthesize lists, subscriptions;
+@synthesize nextWrapperController, timelineDisplayMgr, credentialsPublisher;
 
 - (void)dealloc
 {
@@ -33,11 +41,20 @@
     [navigationController release];
     [listsViewController release];
     [service release];
+    [timelineDisplayMgrFactory release];
+    [composeTweetDisplayMgr release];
+    [context release];
 
     [listsViewController release];
     [subscriptionsCursor release];
     [lists release];
     [subscriptions release];
+
+    [nextWrapperController release];
+    [timelineDisplayMgr release];
+    [credentialsPublisher release];
+
+    [credentials release];
 
     [super dealloc];
 }
@@ -46,13 +63,19 @@
     navigationController:(UINavigationController *)aNavigationController
     listsViewController:(ListsViewController *)aListsViewController
     service:(TwitterService *)aService
+    factory:(TimelineDisplayMgrFactory *)aTimelineDisplayMgrFactory
+    composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)aComposeTweetDisplayMgr
+    context:(NSManagedObjectContext *)aContext
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
         navigationController = [aNavigationController retain];
         listsViewController = [aListsViewController retain];
         service = [aService retain];
-        
+        timelineDisplayMgrFactory = [aTimelineDisplayMgrFactory retain];
+        composeTweetDisplayMgr = [aComposeTweetDisplayMgr retain];
+        context = [aContext retain];
+
         [self resetState];
     }
 
@@ -133,6 +156,56 @@
     }
 }
 
+#pragma mark ListsViewControllerDelegate implementation
+
+- (void)userDidSelectListWithId:(NSNumber *)identifier
+{
+    NSLog(@"User selected list with id: %@", identifier);
+
+    TwitterList * list = [lists objectForKey:identifier];
+    if (!list)
+        list = [subscriptions objectForKey:identifier];
+
+    NSString * title = list.name;
+    self.nextWrapperController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    self.timelineDisplayMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:nextWrapperController
+        navigationController:navigationController
+        title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
+    self.timelineDisplayMgr.displayAsConversation = YES;
+    self.timelineDisplayMgr.setUserToFirstTweeter = NO;
+    [self.timelineDisplayMgr setCredentials:credentials];
+
+    self.nextWrapperController.delegate = self.timelineDisplayMgr;
+
+    TwitterService * twitterService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil context:context]
+        autorelease];
+
+    ListTimelineDataSource * dataSource =
+        [[[ListTimelineDataSource alloc]
+        initWithTwitterService:twitterService username:list.user.username
+        listId:list.identifier]
+        autorelease];
+
+    self.credentialsPublisher =
+        [[CredentialsActivatedPublisher alloc]
+        initWithListener:dataSource action:@selector(setCredentials:)];
+
+    twitterService.delegate = dataSource;
+    [self.timelineDisplayMgr setService:dataSource tweets:nil page:1
+        forceRefresh:NO allPagesLoaded:NO];
+    dataSource.delegate = self.timelineDisplayMgr;
+
+    [dataSource setCredentials:credentials];
+    [navigationController pushViewController:self.nextWrapperController
+        animated:YES];
+}
+
 #pragma mark Public implementation
 
 - (void)resetState
@@ -171,6 +244,15 @@
         
         [self updateViewForOutstandingQueries];
     }
+}
+
+- (void)setCredentials:(TwitterCredentials *)someCredentials
+{
+    [someCredentials retain];
+    [credentials release];
+    credentials = someCredentials;
+
+    self.timelineDisplayMgr.credentials = someCredentials;
 }
 
 #pragma mark Private implementation

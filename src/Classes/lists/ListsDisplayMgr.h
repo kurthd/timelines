@@ -6,6 +6,8 @@
 #import "NetworkAwareViewController.h"
 #import "ListsViewController.h"
 #import "TwitterService.h"
+#import "TimelineDisplayMgr.h"
+#import "TimelineDisplayMgrFactory.h"
 
 enum {
     kListRequestTypeInitial,
@@ -14,12 +16,16 @@ enum {
 } ListRequestType;
 
 @interface ListsDisplayMgr :
-    NSObject <TwitterServiceDelegate, NetworkAwareViewControllerDelegate>
+    NSObject <TwitterServiceDelegate, NetworkAwareViewControllerDelegate,
+    ListsViewControllerDelegate>
 {
     NetworkAwareViewController * wrapperController;
     UINavigationController * navigationController;
     ListsViewController * listsViewController;
     TwitterService * service;
+    TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
+    ComposeTweetDisplayMgr * composeTweetDisplayMgr;
+    NSManagedObjectContext * context;
 
     BOOL fetchedInitialLists;
     NSUInteger outstandingListRequests;
@@ -30,17 +36,28 @@ enum {
     NSMutableDictionary * lists;
     NSMutableDictionary * subscriptions;
     NSUInteger pagesShown;
+    
+    NetworkAwareViewController * nextWrapperController;
+    TimelineDisplayMgr * timelineDisplayMgr;
+    CredentialsActivatedPublisher * credentialsPublisher;
+
+    TwitterCredentials * credentials;
 }
+
+@property (nonatomic, assign) BOOL fetchedInitialLists;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     navigationController:(UINavigationController *)aNavigationController
     listsViewController:(ListsViewController *)listsViewController
-    service:(TwitterService *)aService;
+    service:(TwitterService *)aService
+    factory:(TimelineDisplayMgrFactory *)timelineDisplayMgrFactory
+    composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
+    context:(NSManagedObjectContext *)context;
 
 - (void)resetState;
 - (void)refreshLists;
 - (void)loadMoreLists;
 
-@property (nonatomic, assign) BOOL fetchedInitialLists;
+- (void)setCredentials:(TwitterCredentials *)credentials;
 
 @end

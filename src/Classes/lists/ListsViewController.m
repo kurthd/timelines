@@ -21,6 +21,7 @@
 
 @implementation ListsViewController
 
+@synthesize delegate;
 @synthesize lists, subscriptions;
 @synthesize sortedListCache, sortedSubscriptionCache;
 
@@ -113,6 +114,20 @@
     [cell setList:list];
 
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView
+    didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BOOL subscription =
+        indexPath.section == 1 || [[self sortedLists] count] == 0;
+
+    TwitterList * list =
+        subscription ?
+        [[self sortedSubscriptions] objectAtIndex:indexPath.row] :
+        [[self sortedLists] objectAtIndex:indexPath.row];
+
+    [delegate userDidSelectListWithId:list.identifier];
 }
 
 #pragma mark Public implementation

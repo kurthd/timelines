@@ -784,9 +784,18 @@ enum {
         initWithWrapperController:listsNetAwareViewController
         navigationController:listsNetAwareViewController.navigationController
         listsViewController:listsViewController
-        service:service];
+        service:service
+        factory:timelineDisplayMgrFactory
+        composeTweetDisplayMgr:self.composeTweetDisplayMgr
+        context:[self managedObjectContext]];
     service.delegate = listsDisplayMgr;
     listsNetAwareViewController.delegate = listsDisplayMgr;
+    listsViewController.delegate = listsDisplayMgr;
+
+    [listsDisplayMgr setCredentials:creds];
+    // Don't autorelease
+    [[CredentialsActivatedPublisher alloc]
+        initWithListener:listsDisplayMgr action:@selector(setCredentials:)];
 
     UIBarButtonItem * refreshButton =
         listsNetAwareViewController.navigationItem.leftBarButtonItem;

@@ -20,6 +20,7 @@
 #import "AccountsButton.h"
 #import "AccountsButtonSetter.h"
 #import "ListsDisplayMgr.h"
+#import "TwitterCredentials.h"
 
 @class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class SearchBarDisplayMgr;

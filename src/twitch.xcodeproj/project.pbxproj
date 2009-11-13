@@ -881,6 +881,8 @@
 		915B555410AD26190028B0B4 /* PrivateIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 915B555210AD26190028B0B4 /* PrivateIcon.png */; };
 		915B559A10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 915B559910ADCB700028B0B4 /* PrivateIconHighlighted.png */; };
 		915B559B10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 915B559910ADCB700028B0B4 /* PrivateIconHighlighted.png */; };
+		915B567810AE12F40028B0B4 /* ListTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B567710AE12F40028B0B4 /* ListTimelineDataSource.m */; };
+		915B567910AE12F40028B0B4 /* ListTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B567710AE12F40028B0B4 /* ListTimelineDataSource.m */; };
 		916A24431083E59800C5895D /* DarkThemeBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A24421083E59800C5895D /* DarkThemeBottomGradient.png */; };
 		916A24501083E72300C5895D /* DarkThemeTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A244F1083E72300C5895D /* DarkThemeTopGradient.png */; };
 		916A25431084283D00C5895D /* DarkThemeButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A25421084283D00C5895D /* DarkThemeButtonBackground.png */; };
@@ -1611,6 +1613,8 @@
 		915B54E610ACECD60028B0B4 /* TwitterListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterListCellView.m; path = lists/TwitterListCellView.m; sourceTree = "<group>"; };
 		915B555210AD26190028B0B4 /* PrivateIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PrivateIcon.png; path = images/PrivateIcon.png; sourceTree = "<group>"; };
 		915B559910ADCB700028B0B4 /* PrivateIconHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PrivateIconHighlighted.png; path = images/PrivateIconHighlighted.png; sourceTree = "<group>"; };
+		915B567610AE12F40028B0B4 /* ListTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListTimelineDataSource.h; path = lists/ListTimelineDataSource.h; sourceTree = "<group>"; };
+		915B567710AE12F40028B0B4 /* ListTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListTimelineDataSource.m; path = lists/ListTimelineDataSource.m; sourceTree = "<group>"; };
 		916A24421083E59800C5895D /* DarkThemeBottomGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeBottomGradient.png; path = images/DarkThemeBottomGradient.png; sourceTree = "<group>"; };
 		916A244F1083E72300C5895D /* DarkThemeTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeTopGradient.png; path = images/DarkThemeTopGradient.png; sourceTree = "<group>"; };
 		916A25421084283D00C5895D /* DarkThemeButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeButtonBackground.png; path = images/DarkThemeButtonBackground.png; sourceTree = "<group>"; };
@@ -1978,6 +1982,8 @@
 				915B54E010ACE9510028B0B4 /* TwitterListCell.m */,
 				915B54E510ACECD60028B0B4 /* TwitterListCellView.h */,
 				915B54E610ACECD60028B0B4 /* TwitterListCellView.m */,
+				915B567610AE12F40028B0B4 /* ListTimelineDataSource.h */,
+				915B567710AE12F40028B0B4 /* ListTimelineDataSource.m */,
 			);
 			name = lists;
 			sourceTree = "<group>";
@@ -3926,6 +3932,7 @@
 				915B54E110ACE9510028B0B4 /* TwitterListCell.m in Sources */,
 				915B54E710ACECD60028B0B4 /* TwitterListCellView.m in Sources */,
 				05D44C4710AD3498006E605B /* FetchListStatusesResponseProcessor.m in Sources */,
+				915B567910AE12F40028B0B4 /* ListTimelineDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4238,6 +4245,7 @@
 				915B54E210ACE9510028B0B4 /* TwitterListCell.m in Sources */,
 				915B54E810ACECD60028B0B4 /* TwitterListCellView.m in Sources */,
 				05D44C4810AD3498006E605B /* FetchListStatusesResponseProcessor.m in Sources */,
+				915B567810AE12F40028B0B4 /* ListTimelineDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
