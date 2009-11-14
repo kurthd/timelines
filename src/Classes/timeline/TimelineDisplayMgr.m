@@ -523,6 +523,8 @@
 
     self.selectedTweet = tweet;
 
+    controller.allowDeletion =
+        [tweet.user.username isEqual:credentials.username];
     [controller hideFavoriteButton:NO];
     controller.showsExtendedActions = YES;
     [controller displayTweet:tweet

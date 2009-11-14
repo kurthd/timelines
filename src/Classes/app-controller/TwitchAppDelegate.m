@@ -39,6 +39,7 @@
 #import "NSArray+IterationAdditions.h"
 #import "TwitbitShared.h"
 #import "ListsViewController.h"
+#import "ErrorState.h"
 
 @interface TwitchAppDelegate ()
 
@@ -1743,6 +1744,8 @@ enum {
     if (activeAccount &&
         activeAccount != self.activeCredentials.credentials) {
         NSLog(@"Switching account to: '%@'.", activeAccount.username);
+
+        [[ErrorState instance] exitErrorState];
 
         // oldUsername will be nil when the previously active account is
         // deleted
