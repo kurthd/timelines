@@ -514,9 +514,13 @@ static UIFont * favoriteFont;
 {
     if (displayAsMention != shouldDisplayAsMention) {
         displayAsMention = shouldDisplayAsMention;
+
+        UIColor * nonMentionCellColor =
+            displayAsOld ?
+            [UIColor darkenedCellColor] : [UIColor defaultTimelineCellColor];
+
         self.backgroundColor =
-            displayAsMention ?
-            [UIColor mentionCellColor] : [UIColor whiteColor];
+            displayAsMention ? [UIColor mentionCellColor] : nonMentionCellColor;
 
         [self setNeedsDisplay];
     }
