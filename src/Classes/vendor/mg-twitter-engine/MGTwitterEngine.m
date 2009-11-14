@@ -1774,7 +1774,7 @@
     NSString * path = [NSString stringWithFormat:@"%@/lists/%@/statuses.%@", username, listId, API_FORMAT];
 
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
-    if (updateId)
+    if (updateId && [updateId longLongValue] > 0)
         [params setObject:[updateId description] forKey:@"since_id"];
     if (page)
         [params setObject:[page description] forKey:@"page"];
