@@ -1775,11 +1775,11 @@
 
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     if (updateId)
-        [params setObject:updateId forKey:@"since_id"];
+        [params setObject:[updateId description] forKey:@"since_id"];
     if (page)
-        [params setObject:page forKey:@"page"];
+        [params setObject:[page description] forKey:@"page"];
     if (count)
-        [params setObject:count forKey:@"per_page"];
+        [params setObject:[count description] forKey:@"per_page"];
 
     return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil
                             requestType:MGTwitterStatusesRequest
