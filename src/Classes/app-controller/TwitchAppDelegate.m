@@ -95,9 +95,9 @@ enum {
     kOriginalTabOrderTimeline,
     kOriginalTabOrderMentions,
     kOriginalTabOrderMessages,
-    kOriginalTabOrderPeople,
+    kOriginalTabOrderLists,
     kOriginalTabOrderSearch,
-    kOriginalTabOrderLists
+    kOriginalTabOrderPeople
 } OriginalTabOrder;
 
 @implementation TwitchAppDelegate

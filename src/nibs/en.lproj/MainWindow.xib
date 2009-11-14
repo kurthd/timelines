@@ -12,8 +12,8 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="106"/>
 			<integer value="2"/>
-			<integer value="241"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -55,19 +55,19 @@
 			<object class="IBUITabBarController" id="1034742383">
 				<object class="IBUISimulatedTabBarMetrics" key="IBUISimulatedBottomBarMetrics"/>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
-				<object class="IBUINavigationController" key="IBUISelectedViewController" id="54541401">
-					<object class="IBUITabBarItem" key="IBUITabBarItem" id="395848791">
+				<object class="IBUINavigationController" key="IBUISelectedViewController" id="623908236">
+					<object class="IBUITabBarItem" key="IBUITabBarItem" id="98785706">
 						<int key="IBUITag">5</int>
-						<string key="IBUITitle">Lists</string>
+						<string key="IBUITitle">People</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">ListsGlyph.png</string>
+							<string key="NSResourceName">Profile.png</string>
 						</object>
 						<reference key="IBUITabBar"/>
 					</object>
 					<reference key="IBUIParentViewController" ref="1034742383"/>
 					<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
-					<object class="IBUINavigationBar" key="IBUINavigationBar" id="347508419">
+					<object class="IBUINavigationBar" key="IBUINavigationBar" id="698183839">
 						<nil key="NSNextResponder"/>
 						<int key="NSvFlags">256</int>
 						<string key="NSFrameSize">{0, 0}</string>
@@ -77,20 +77,12 @@
 					</object>
 					<object class="NSMutableArray" key="IBUIViewControllers">
 						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="IBUIViewController" id="394787989">
-							<object class="IBUINavigationItem" key="IBUINavigationItem" id="104434848">
+						<object class="IBUIViewController" id="407754901">
+							<object class="IBUINavigationItem" key="IBUINavigationItem" id="707168499">
 								<reference key="IBUINavigationBar"/>
-								<string key="IBUITitle">Lists</string>
-								<object class="IBUIBarButtonItem" key="IBUILeftBarButtonItem" id="421309729">
-									<int key="IBUIStyle">1</int>
-									<int key="IBUISystemItemIdentifier">13</int>
-								</object>
-								<object class="IBUIBarButtonItem" key="IBUIRightBarButtonItem" id="115147354">
-									<int key="IBUIStyle">1</int>
-									<int key="IBUISystemItemIdentifier">7</int>
-								</object>
+								<string key="IBUITitle">People</string>
 							</object>
-							<reference key="IBUIParentViewController" ref="54541401"/>
+							<reference key="IBUIParentViewController" ref="623908236"/>
 						</object>
 					</object>
 				</object>
@@ -239,19 +231,19 @@
 							</object>
 						</object>
 					</object>
-					<object class="IBUINavigationController" id="623908236">
-						<object class="IBUITabBarItem" key="IBUITabBarItem" id="98785706">
+					<object class="IBUINavigationController" id="54541401">
+						<object class="IBUITabBarItem" key="IBUITabBarItem" id="395848791">
 							<int key="IBUITag">3</int>
-							<string key="IBUITitle">People</string>
+							<string key="IBUITitle">Lists</string>
 							<object class="NSCustomResource" key="IBUIImage">
 								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">Profile.png</string>
+								<string key="NSResourceName">ListsGlyph.png</string>
 							</object>
 							<reference key="IBUITabBar"/>
 						</object>
 						<reference key="IBUIParentViewController" ref="1034742383"/>
 						<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
-						<object class="IBUINavigationBar" key="IBUINavigationBar" id="698183839">
+						<object class="IBUINavigationBar" key="IBUINavigationBar" id="347508419">
 							<nil key="NSNextResponder"/>
 							<int key="NSvFlags">256</int>
 							<string key="NSFrameSize">{0, 0}</string>
@@ -261,11 +253,19 @@
 						</object>
 						<object class="NSMutableArray" key="IBUIViewControllers">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBUIViewController" id="407754901">
-								<object class="IBUINavigationItem" key="IBUINavigationItem" id="707168499">
-									<string key="IBUITitle">People</string>
+							<object class="IBUIViewController" id="394787989">
+								<object class="IBUINavigationItem" key="IBUINavigationItem" id="104434848">
+									<string key="IBUITitle">Lists</string>
+									<object class="IBUIBarButtonItem" key="IBUILeftBarButtonItem" id="421309729">
+										<int key="IBUIStyle">1</int>
+										<int key="IBUISystemItemIdentifier">13</int>
+									</object>
+									<object class="IBUIBarButtonItem" key="IBUIRightBarButtonItem" id="115147354">
+										<int key="IBUIStyle">1</int>
+										<int key="IBUISystemItemIdentifier">7</int>
+									</object>
 								</object>
-								<reference key="IBUIParentViewController" ref="623908236"/>
+								<reference key="IBUIParentViewController" ref="54541401"/>
 							</object>
 						</object>
 					</object>
@@ -296,7 +296,7 @@
 							</object>
 						</object>
 					</object>
-					<reference ref="54541401"/>
+					<reference ref="623908236"/>
 				</object>
 				<object class="IBUITabBar" key="IBUITabBar" id="795333663">
 					<nil key="NSNextResponder"/>
@@ -471,8 +471,8 @@
 							<reference ref="900829570"/>
 							<reference ref="764736734"/>
 							<reference ref="688532303"/>
-							<reference ref="54541401"/>
 							<reference ref="623908236"/>
+							<reference ref="54541401"/>
 							<reference ref="106744414"/>
 						</object>
 						<reference key="parent" ref="0"/>
@@ -825,7 +825,7 @@
 					<string>UIApplication</string>
 					<string>UIResponder</string>
 					<string>RotatableTabBarController</string>
-					<string>{{430, 263}, {320, 480}}</string>
+					<string>{{432, 245}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -852,7 +852,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 						</object>
 					</object>
-					<string>{{231, 370}, {320, 480}}</string>
+					<string>{{146, 293}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>NetworkAwareViewController</string>
 					<string>{{110, 360}, {320, 480}}</string>
