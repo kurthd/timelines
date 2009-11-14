@@ -181,8 +181,6 @@ static UIImage * defaultAvatar;
     NSURL * avatarUrl =
         [NSURL URLWithString:tweet.sender.avatar.thumbnailImageUrl];
     [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
-    
-    [self.tableView reloadData];
 }
 
 - (void)deleteTweet:(NSNumber *)tweetId

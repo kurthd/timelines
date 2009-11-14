@@ -984,7 +984,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         [self.conversationController addTweet:dm];
 
     [directMessageCache addSentDirectMessage:dm];
-    [self updateViewsWithNewMessages];
+
+    // introduce a delay so adding the cell animates correctly
+    [self performSelector:@selector(updateViewsWithNewMessages) withObject:nil
+        afterDelay:0.3];
 }
 
 - (NSMutableDictionary *)tweetIdToIndexDict
