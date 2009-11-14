@@ -760,6 +760,8 @@ enum {
 
 - (void)initListsTab
 {
+    NSLog(@"Initializing lists tab");
+
     listsNetAwareViewController.navigationController.navigationBar.barStyle =
         [SettingsReader displayTheme] == kDisplayThemeDark ?
         UIBarStyleBlackOpaque : UIBarStyleDefault;
@@ -898,7 +900,7 @@ enum {
         [self initSearchTab];
     } else if (viewController ==
         listsNetAwareViewController.navigationController &&
-        !searchBarDisplayMgr) {
+        !listsDisplayMgr) {
         NSLog(@"Selected lists tab");
         [self initListsTab];
     } else if (viewController == tabBarController.moreNavigationController) {

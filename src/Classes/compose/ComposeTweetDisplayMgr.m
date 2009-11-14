@@ -311,6 +311,7 @@
 
 - (void)userWantsToSendTweet:(NSString *)text
 {
+    composingTweet = NO;
     [self.rootViewController dismissModalViewControllerAnimated:YES];
 
     if (self.origTweetId) {  // sending a public reply
@@ -335,6 +336,8 @@
 - (void)userWantsToSendDirectMessage:(NSString *)text
                          toRecipient:(NSString *)recipient
 {
+    self.directMessageRecipient = nil;
+
     [self.rootViewController dismissModalViewControllerAnimated:YES];
 
     [self.delegate userIsSendingDirectMessage:text to:recipient];
