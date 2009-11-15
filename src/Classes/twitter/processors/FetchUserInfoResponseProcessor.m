@@ -7,6 +7,7 @@
 #import "User+CoreDataAdditions.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
 #import "ResponseProcessor+ParsingHelpers.h"
+#import "TwitbitShared.h"
 
 @interface FetchUserInfoResponseProcessor ()
 
@@ -64,6 +65,17 @@
     NSNumber * userId = [info objectForKey:@"id"];
     User * user = [User findOrCreateWithId:userId context:context];
     [self populateUser:user fromData:info];
+
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:@"username == %@", user.username];
+    TwitterCredentials * ctls =
+        [TwitterCredentials findFirst:predicate context:context];
+    if (ctls)
+        ctls.user = user;
+
+    NSError * error = nil;
+    if (![context save:&error])
+        NSLog(@"Failed to save state: %@", [error detailedDescription]);
 
     SEL sel = @selector(userInfo:fetchedForUsername:);
     if ([delegate respondsToSelector:sel])

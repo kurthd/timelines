@@ -24,5 +24,6 @@
 
 - (id)initWithFrame:(CGRect)frame;
 - (void)setUsername:(NSString *)aUsername;
+- (NSString *)username;
 
 @end

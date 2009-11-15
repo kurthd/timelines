@@ -95,6 +95,11 @@
         dm.recipient = recipient;
         dm.sender = sender;
         dm.credentials = self.credentials;
+
+        if ([credentials.username isEqualToString:sender.username])
+            credentials.user = sender;
+        else if ([credentials.username isEqualToString:recipient.username])
+            credentials.user = recipient;
     }
 
     SEL sel = @selector(directMessage:sentToUser:);

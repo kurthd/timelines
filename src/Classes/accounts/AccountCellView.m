@@ -68,6 +68,11 @@
     [self setNeedsDisplay];
 }
 
+- (NSString *)username
+{
+    return username;
+}
+
 - (void)setAvatar:(UIImage *)anAvatar
 {
     [anAvatar retain];

@@ -9,7 +9,7 @@
 #import "AccountSettingsChangedPublisher.h"
 #import "ActiveTwitterCredentials.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
-#import "TwitbitShared.h"
+#import "TwitterService.h"
 
 @interface AccountsDisplayMgr ()
 
@@ -17,10 +17,13 @@
 @property (nonatomic, retain) OauthLogInDisplayMgr * logInDisplayMgr;
 @property (nonatomic, retain) AccountSettingsDisplayMgr *
     accountSettingsDisplayMgr;
-@property (nonatomic, copy) NSMutableSet * userAccounts;
+@property (nonatomic, retain) NSMutableSet * userAccounts;
+@property (nonatomic, retain) NSMutableSet * pendingUserFetches;
 @property (nonatomic, retain) CredentialsSetChangedPublisher *
     credentialsSetChangedPublisher;
 @property (nonatomic, retain) NSManagedObjectContext * context;
+
+- (void)fetchUserData:(TwitterCredentials *)credentials;
 
 @end
 
@@ -28,7 +31,7 @@
 
 @synthesize accountsViewController;
 @synthesize logInDisplayMgr, accountSettingsDisplayMgr;
-@synthesize userAccounts;
+@synthesize userAccounts, pendingUserFetches;
 @synthesize context, credentialsSetChangedPublisher;
 
 - (void)dealloc
@@ -37,6 +40,7 @@
     self.logInDisplayMgr = nil;
     self.accountSettingsDisplayMgr = nil;
     self.userAccounts = nil;
+    self.pendingUserFetches = nil;
     self.credentialsSetChangedPublisher = nil;
     self.context = nil;
 
@@ -50,6 +54,8 @@
     if (self = [super init]) {
         self.accountsViewController = aViewController;
         self.accountsViewController.delegate = self;
+
+        pendingUserFetches = [[NSMutableSet alloc] init];
 
         self.logInDisplayMgr = aLogInDisplayMgr;
         self.logInDisplayMgr.allowsCancel = YES;
@@ -75,10 +81,12 @@
 - (void)credentialsChanged:(TwitterCredentials *)credentials
                      added:(NSNumber *)added
 {
-    if ([added integerValue]) {
+    if ([added boolValue]) {
         [self.userAccounts addObject:credentials];
         [self.accountsViewController accountAdded:credentials];
         self.logInDisplayMgr.allowsCancel = YES;
+
+        [self fetchUserData:credentials];
     }
 }
 
@@ -153,6 +161,16 @@
 {
     User * user = [User userWithUsername:username context:context];
     UIImage * avatar = [user thumbnailAvatar];
+
+    if (!avatar && ![pendingUserFetches containsObject:username]) {
+        NSPredicate * predicate =
+            [NSPredicate predicateWithFormat:@"username == %@", username];
+        TwitterCredentials * credentials =
+            [TwitterCredentials findFirst:predicate context:context];
+        if (credentials)
+            [self fetchUserData:credentials];
+    }
+
     return avatar ? avatar : [Avatar defaultAvatar];
 }
 
@@ -164,6 +182,45 @@
         if ([c.username isEqualToString:username])
             return NO;
     return YES;
+}
+
+#pragma mark UserFetcherDelegate implementation
+
+- (void)userUpdater:(UserFetcher *)updater fetchedUser:(User *)user
+{
+    [self.accountsViewController refreshAvatarImages];
+    [pendingUserFetches removeObject:updater.username];
+
+    [updater autorelease];
+}
+
+- (void)userUpdater:(UserFetcher *)updater failedToFetchUser:(NSError *)error
+{
+    NSLog(@"Failed to update user: %@: %@", updater.username,
+        [error detailedDescription]);
+    [pendingUserFetches removeObject:updater.username];
+
+    [updater autorelease];
+}
+
+#pragma mark Private implementation
+
+- (void)fetchUserData:(TwitterCredentials *)credentials
+{
+    TwitterService * service =
+        [[TwitterService alloc] initWithTwitterCredentials:credentials
+                                                   context:self.context];
+
+    UserFetcher * fetcher =
+        [[UserFetcher alloc] initWithUsername:credentials.username
+                                      service:service];
+    fetcher.delegate = self;
+
+    [service release];
+
+    [fetcher fetchUserInfo];
+
+    [pendingUserFetches addObject:credentials.username];
 }
 
 #pragma mark Accessors

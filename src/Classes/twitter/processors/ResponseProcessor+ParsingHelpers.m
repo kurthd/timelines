@@ -114,6 +114,9 @@
     [self populateTweet:tweet fromData:tweetData context:context];
     tweet.user = tweetAuthor;
 
+    if (credentials && [credentials.username isEqual:tweetAuthor.username])
+        credentials.user = tweetAuthor;
+
     NSAssert1(tweet.source, @"Failed to parse tweet: %@", status);
     NSAssert1(tweetAuthor.username, @"Failed to parse tweet: %@", status);
 
@@ -153,6 +156,9 @@
     [self populateTweet:tweet fromData:tweetData context:context];
     tweet.user = tweetAuthor;
     tweet.credentials = credentials;
+
+    if ([credentials.username isEqualToString:tweetAuthor.username])
+        credentials.user = tweetAuthor;
 
     return tweet;
 }

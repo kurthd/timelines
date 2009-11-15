@@ -16,9 +16,13 @@
     reuseIdentifier:(NSString *)reuseIdentifier;
 
 - (void)setUsername:(NSString *)username;
+- (NSString *)username;
 - (void)setAvatarImage:(UIImage *)avatarImage;
+- (UIImage *)avatarImage;
 - (void)setLandscape:(BOOL)landscape;
+- (BOOL)landscape;
 - (void)setSelectedAccount:(BOOL)selectedAccount;
+- (BOOL)selectedAccount;
 
 - (void)redisplay;
 

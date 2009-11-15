@@ -103,8 +103,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
 
     self.accounts = newAccounts;
 
-    NSIndexPath * indexPath =
-        [NSIndexPath indexPathForRow:where inSection:0];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:where inSection:0];
 
     [self.tableView
         insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
@@ -115,6 +114,18 @@ NSInteger usernameSort(TwitterCredentials * user1,
             (AccountTableViewCell *)
             [self.tableView cellForRowAtIndexPath:indexPath];
         [[self class] configureSelectedAccountCell:cell];
+    }
+}
+
+- (void)refreshAvatarImages
+{
+    for (UITableViewCell * cell in self.tableView.visibleCells) {
+        if ([cell isKindOfClass:[AccountTableViewCell class]]) {
+            AccountTableViewCell * accountCell = (AccountTableViewCell *) cell;
+            NSString * username = [accountCell username];
+            UIImage * avatar = [delegate avatarImageForUsername:username];
+            [accountCell setAvatarImage:avatar];
+        }
     }
 }
 

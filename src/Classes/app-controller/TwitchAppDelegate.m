@@ -1234,6 +1234,11 @@ enum {
     NSArray * allTweets = [Tweet findAll:context];
     NSMutableSet * sparedUsers = [NSMutableSet set];
 
+    // all users bound to credentials will be spared
+    for (TwitterCredentials * c in credentials)
+        if (c.user)
+            [sparedUsers addObject:c.user];
+
     // delete all 'un-owned' tweets -- everything that's not in the user's
     // timeline, a mention, or a dm
     for (Tweet * tweet in allTweets) {

@@ -7,13 +7,14 @@
 #import "OauthLogInDisplayMgr.h"
 #import "TwitterCredentials.h"
 #import "AccountSettingsDisplayMgr.h"
+#import "UserFetcher.h"
 
 @class CredentialsSetChangedPublisher;
 
 @interface AccountsDisplayMgr :
     NSObject
     <AccountsViewControllerDelegate, OathLogInDisplayMgrDelegate,
-    AccountSettingsDisplayMgrDelegate>
+    AccountSettingsDisplayMgrDelegate, UserFetcherDelegate>
 {
     AccountsViewController * accountsViewController;
 
@@ -21,6 +22,7 @@
     AccountSettingsDisplayMgr * accountSettingsDisplayMgr;
 
     NSMutableSet * userAccounts;
+    NSMutableSet * pendingUserFetches;
 
     CredentialsSetChangedPublisher * credentialsSetChangedPublisher;
 

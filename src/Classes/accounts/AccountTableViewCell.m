@@ -41,9 +41,19 @@
     [accountCellView setUsername:username];
 }
 
+- (NSString *)username
+{
+    return [accountCellView username];
+}
+
 - (void)setLandscape:(BOOL)landscape
 {
     accountCellView.landscape = landscape;
+}
+
+- (BOOL)landscape
+{
+    return accountCellView.landscape;
 }
 
 - (void)setAvatarImage:(UIImage *)avatarImage
@@ -51,9 +61,19 @@
     accountCellView.avatar = avatarImage;
 }
 
+- (UIImage *)avatarImage
+{
+    return accountCellView.avatar;
+}
+
 - (void)setSelectedAccount:(BOOL)selectedAccount
 {
     accountCellView.selectedAccount = selectedAccount;
+}
+
+- (BOOL)selectedAccount
+{
+    return accountCellView.selectedAccount;
 }
 
 - (void)redisplay

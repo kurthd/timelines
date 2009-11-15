@@ -43,5 +43,6 @@
 - (IBAction)userWantsToAddAccount:(id)sender;
 
 - (void)accountAdded:(TwitterCredentials *)credentials;
+- (void)refreshAvatarImages;
 
 @end
