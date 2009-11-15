@@ -729,15 +729,16 @@ enum TweetActionSheets {
     }
 
     UIImage * avatar = [tweet.user fullAvatar];
-    if (!avatar)
+    if (!avatar) {
         avatar = [tweet.user thumbnailAvatar];
-    if (!avatar)
+        [self fetchRemoteImage:tweet.user.avatar.fullImageUrl];
+    }
+    if (!avatar) {
         avatar = [[self class] defaultAvatar];
+        [self fetchRemoteImage:tweet.user.avatar.thumbnailImageUrl];
+    }
 
     [avatarImage setImage:avatar];
-
-    [self fetchRemoteImage:tweet.user.avatar.fullImageUrl];
-    [self fetchRemoteImage:tweet.user.avatar.thumbnailImageUrl];
 
     [self.tableView reloadData];
     self.tableView.contentInset = UIEdgeInsetsMake(-300, 0, 0, 0);
