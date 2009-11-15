@@ -2,7 +2,7 @@
 //  User.m
 //  twitch
 //
-//  Created by John A. Debay on 11/10/09.
+//  Created by John A. Debay on 11/15/09.
 //  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
@@ -11,11 +11,11 @@
 #import "Avatar.h"
 #import "DirectMessage.h"
 #import "Tweet.h"
+#import "TwitterCredentials.h"
 #import "TwitterList.h"
 
 @implementation User 
 
-@dynamic name;
 @dynamic followersCount;
 @dynamic webpage;
 @dynamic friendsCount;
@@ -25,11 +25,13 @@
 @dynamic created;
 @dynamic username;
 @dynamic geoEnabled;
+@dynamic name;
 @dynamic statusesCount;
+@dynamic sentDirectMessages;
 @dynamic lists;
 @dynamic tweets;
+@dynamic credentials;
 @dynamic receivedDirectMessages;
 @dynamic avatar;
-@dynamic sentDirectMessages;
 
 @end

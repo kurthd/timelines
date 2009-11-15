@@ -123,10 +123,6 @@
 		051AD34610AA258E00CFF86C /* TwitterList.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD34410AA258E00CFF86C /* TwitterList.m */; };
 		051AD35810AA261D00CFF86C /* TwitterList+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD35710AA261D00CFF86C /* TwitterList+CoreDataAdditions.m */; };
 		051AD35910AA261D00CFF86C /* TwitterList+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD35710AA261D00CFF86C /* TwitterList+CoreDataAdditions.m */; };
-		051AD3C810AA2B5E00CFF86C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD3C710AA2B5E00CFF86C /* User.m */; };
-		051AD3C910AA2B5E00CFF86C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD3C710AA2B5E00CFF86C /* User.m */; };
-		051AD3F510AA2F9700CFF86C /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD3F310AA2F9700CFF86C /* TwitterCredentials.m */; };
-		051AD3F710AA2F9700CFF86C /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD3F310AA2F9700CFF86C /* TwitterCredentials.m */; };
 		051AD3FC10AA300C00CFF86C /* UserTwitterList.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD3FB10AA300C00CFF86C /* UserTwitterList.m */; };
 		051AD3FD10AA300C00CFF86C /* UserTwitterList.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD3FB10AA300C00CFF86C /* UserTwitterList.m */; };
 		051AD40910AA314000CFF86C /* UserTwitterList+CoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD40810AA314000CFF86C /* UserTwitterList+CoreDataAdditions.m */; };
@@ -137,6 +133,10 @@
 		051AD4F010AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD4EE10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m */; };
 		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
 		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
+		05271BCE10B09294008E86DB /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271BCD10B09294008E86DB /* User.m */; };
+		05271BCF10B09294008E86DB /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271BCD10B09294008E86DB /* User.m */; };
+		05271BD410B092DB008E86DB /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271BD310B092DB008E86DB /* TwitterCredentials.m */; };
+		05271BD510B092DB008E86DB /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271BD310B092DB008E86DB /* TwitterCredentials.m */; };
 		052E03FA10700858005CEC5F /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		052E03FB10700858005CEC5F /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
 		052E03FC10700858005CEC5F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 05B239470FEDD10900A6A2E6 /* Localizable.strings */; };
@@ -1061,10 +1061,6 @@
 		051AD34410AA258E00CFF86C /* TwitterList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterList.m; path = lists/TwitterList.m; sourceTree = "<group>"; };
 		051AD35610AA261D00CFF86C /* TwitterList+CoreDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TwitterList+CoreDataAdditions.h"; path = "lists/TwitterList+CoreDataAdditions.h"; sourceTree = "<group>"; };
 		051AD35710AA261D00CFF86C /* TwitterList+CoreDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TwitterList+CoreDataAdditions.m"; path = "lists/TwitterList+CoreDataAdditions.m"; sourceTree = "<group>"; };
-		051AD3C610AA2B5E00CFF86C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = users/User.h; sourceTree = "<group>"; };
-		051AD3C710AA2B5E00CFF86C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = users/User.m; sourceTree = "<group>"; };
-		051AD3F210AA2F9700CFF86C /* TwitterCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterCredentials.h; path = twitter/TwitterCredentials.h; sourceTree = "<group>"; };
-		051AD3F310AA2F9700CFF86C /* TwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterCredentials.m; path = twitter/TwitterCredentials.m; sourceTree = "<group>"; };
 		051AD3FA10AA300C00CFF86C /* UserTwitterList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTwitterList.h; path = lists/UserTwitterList.h; sourceTree = "<group>"; };
 		051AD3FB10AA300C00CFF86C /* UserTwitterList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTwitterList.m; path = lists/UserTwitterList.m; sourceTree = "<group>"; };
 		051AD40710AA314000CFF86C /* UserTwitterList+CoreDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UserTwitterList+CoreDataAdditions.h"; path = "lists/UserTwitterList+CoreDataAdditions.h"; sourceTree = "<group>"; };
@@ -1097,6 +1093,11 @@
 		0524C4B70FF2B51600A6099B /* FetchFriendsForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFriendsForUserResponseProcessor.m; path = twitter/processors/FetchFriendsForUserResponseProcessor.m; sourceTree = "<group>"; };
 		0524C53E0FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFollowersForUserResponseProcessor.h; path = twitter/processors/FetchFollowersForUserResponseProcessor.h; sourceTree = "<group>"; };
 		0524C53F0FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFollowersForUserResponseProcessor.m; path = twitter/processors/FetchFollowersForUserResponseProcessor.m; sourceTree = "<group>"; };
+		05271BC910B09215008E86DB /* twitch-v2.3-3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.3-3.xcdatamodel"; sourceTree = "<group>"; };
+		05271BCC10B09294008E86DB /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = users/User.h; sourceTree = "<group>"; };
+		05271BCD10B09294008E86DB /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = users/User.m; sourceTree = "<group>"; };
+		05271BD210B092DB008E86DB /* TwitterCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterCredentials.h; path = twitter/TwitterCredentials.h; sourceTree = "<group>"; };
+		05271BD310B092DB008E86DB /* TwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterCredentials.m; path = twitter/TwitterCredentials.m; sourceTree = "<group>"; };
 		052C64170FED703200B259D7 /* TwitchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchAppDelegate.h; path = "app-controller/TwitchAppDelegate.h"; sourceTree = "<group>"; };
 		052C64180FED703200B259D7 /* TwitchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchAppDelegate.m; path = "app-controller/TwitchAppDelegate.m"; sourceTree = "<group>"; };
 		052E05A910700858005CEC5F /* Twitbit Lite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twitbit Lite.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2295,8 +2296,8 @@
 		05B238F30FEDC85300A6A2E6 /* users */ = {
 			isa = PBXGroup;
 			children = (
-				051AD3C610AA2B5E00CFF86C /* User.h */,
-				051AD3C710AA2B5E00CFF86C /* User.m */,
+				05271BCC10B09294008E86DB /* User.h */,
+				05271BCD10B09294008E86DB /* User.m */,
 				055C92E010362DC2000B9A00 /* Avatar.h */,
 				055C92E110362DC2000B9A00 /* Avatar.m */,
 				05F45A4F0FF01D5E00EBAFC7 /* User+CoreDataAdditions.h */,
@@ -2313,8 +2314,8 @@
 			isa = PBXGroup;
 			children = (
 				05B23B3C0FEED50E00A6A2E6 /* processors */,
-				051AD3F210AA2F9700CFF86C /* TwitterCredentials.h */,
-				051AD3F310AA2F9700CFF86C /* TwitterCredentials.m */,
+				05271BD210B092DB008E86DB /* TwitterCredentials.h */,
+				05271BD310B092DB008E86DB /* TwitterCredentials.m */,
 				05D173E10FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.h */,
 				05D173E20FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m */,
 				0524C02D0FF1B1E300A6099B /* ActiveTwitterCredentials.h */,
@@ -3921,8 +3922,6 @@
 				051AD2FF10AA01F900CFF86C /* FetchListsResponseProcessor.m in Sources */,
 				051AD34510AA258E00CFF86C /* TwitterList.m in Sources */,
 				051AD35810AA261D00CFF86C /* TwitterList+CoreDataAdditions.m in Sources */,
-				051AD3C810AA2B5E00CFF86C /* User.m in Sources */,
-				051AD3F510AA2F9700CFF86C /* TwitterCredentials.m in Sources */,
 				051AD3FC10AA300C00CFF86C /* UserTwitterList.m in Sources */,
 				051AD40910AA314000CFF86C /* UserTwitterList+CoreDataAdditions.m in Sources */,
 				051AD44210AA356200CFF86C /* v2.3-1-v2.3-2.xcmappingmodel in Sources */,
@@ -3933,6 +3932,8 @@
 				915B54E710ACECD60028B0B4 /* TwitterListCellView.m in Sources */,
 				05D44C4710AD3498006E605B /* FetchListStatusesResponseProcessor.m in Sources */,
 				915B567910AE12F40028B0B4 /* ListTimelineDataSource.m in Sources */,
+				05271BCF10B09294008E86DB /* User.m in Sources */,
+				05271BD510B092DB008E86DB /* TwitterCredentials.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4234,8 +4235,6 @@
 				051AD30010AA01F900CFF86C /* FetchListsResponseProcessor.m in Sources */,
 				051AD34610AA258E00CFF86C /* TwitterList.m in Sources */,
 				051AD35910AA261D00CFF86C /* TwitterList+CoreDataAdditions.m in Sources */,
-				051AD3C910AA2B5E00CFF86C /* User.m in Sources */,
-				051AD3F710AA2F9700CFF86C /* TwitterCredentials.m in Sources */,
 				051AD3FD10AA300C00CFF86C /* UserTwitterList.m in Sources */,
 				051AD40A10AA314000CFF86C /* UserTwitterList+CoreDataAdditions.m in Sources */,
 				051AD44310AA356200CFF86C /* v2.3-1-v2.3-2.xcmappingmodel in Sources */,
@@ -4246,6 +4245,8 @@
 				915B54E810ACECD60028B0B4 /* TwitterListCellView.m in Sources */,
 				05D44C4810AD3498006E605B /* FetchListStatusesResponseProcessor.m in Sources */,
 				915B567810AE12F40028B0B4 /* ListTimelineDataSource.m in Sources */,
+				05271BCE10B09294008E86DB /* User.m in Sources */,
+				05271BD410B092DB008E86DB /* TwitterCredentials.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4911,8 +4912,9 @@
 				05A667F4107E6B090077343D /* twitch-v2.1.xcdatamodel */,
 				05B8D69210A3BA430030F0BF /* twitch-v2.3-1.xcdatamodel */,
 				051AD2B610A91CB400CFF86C /* twitch-v2.3-2.xcdatamodel */,
+				05271BC910B09215008E86DB /* twitch-v2.3-3.xcdatamodel */,
 			);
-			currentVersion = 051AD2B610A91CB400CFF86C /* twitch-v2.3-2.xcdatamodel */;
+			currentVersion = 05271BC910B09215008E86DB /* twitch-v2.3-3.xcdatamodel */;
 			name = twitch.xcdatamodeld;
 			path = "data-model/twitch.xcdatamodeld";
 			sourceTree = "<group>";
