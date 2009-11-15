@@ -10,6 +10,7 @@
 #import "AsynchronousNetworkFetcherDelegate.h"
 #import "MarkAsFavoriteCell.h"
 #import "TweetLocationCell.h"
+#import "ActionButtonCell.h"
 
 @interface TweetViewController :
     UITableViewController <UIActionSheetDelegate, UIWebViewDelegate,
@@ -47,10 +48,10 @@
     UIViewController * realParentViewController;
 
     TweetLocationCell * locationCell;
-    UITableViewCell * publicReplyCell;
-    UITableViewCell * retweetCell;
+    ActionButtonCell * publicReplyCell;
+    ActionButtonCell * retweetCell;
     MarkAsFavoriteCell * favoriteCell;
-    UITableViewCell * deleteTweetCell;
+    ActionButtonCell * deleteTweetCell;
         
     BOOL markingFavorite;
 

@@ -885,6 +885,10 @@
 		915B567910AE12F40028B0B4 /* ListTimelineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B567710AE12F40028B0B4 /* ListTimelineDataSource.m */; };
 		915B580E10AFCB940028B0B4 /* UserInfoLabelCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B580D10AFCB940028B0B4 /* UserInfoLabelCellView.m */; };
 		915B580F10AFCB940028B0B4 /* UserInfoLabelCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B580D10AFCB940028B0B4 /* UserInfoLabelCellView.m */; };
+		915B588B10B08CB00028B0B4 /* ActionButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B588A10B08CB00028B0B4 /* ActionButtonCell.m */; };
+		915B588C10B08CB00028B0B4 /* ActionButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B588A10B08CB00028B0B4 /* ActionButtonCell.m */; };
+		915B588F10B08CC60028B0B4 /* ActionButtonCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B588E10B08CC60028B0B4 /* ActionButtonCellView.m */; };
+		915B589010B08CC60028B0B4 /* ActionButtonCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B588E10B08CC60028B0B4 /* ActionButtonCellView.m */; };
 		916A24431083E59800C5895D /* DarkThemeBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A24421083E59800C5895D /* DarkThemeBottomGradient.png */; };
 		916A24501083E72300C5895D /* DarkThemeTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A244F1083E72300C5895D /* DarkThemeTopGradient.png */; };
 		916A25431084283D00C5895D /* DarkThemeButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A25421084283D00C5895D /* DarkThemeButtonBackground.png */; };
@@ -1619,6 +1623,10 @@
 		915B567710AE12F40028B0B4 /* ListTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListTimelineDataSource.m; path = lists/ListTimelineDataSource.m; sourceTree = "<group>"; };
 		915B580C10AFCB940028B0B4 /* UserInfoLabelCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoLabelCellView.h; path = "user-info/UserInfoLabelCellView.h"; sourceTree = "<group>"; };
 		915B580D10AFCB940028B0B4 /* UserInfoLabelCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoLabelCellView.m; path = "user-info/UserInfoLabelCellView.m"; sourceTree = "<group>"; };
+		915B588910B08CB00028B0B4 /* ActionButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionButtonCell.h; path = shared/ActionButtonCell.h; sourceTree = "<group>"; };
+		915B588A10B08CB00028B0B4 /* ActionButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionButtonCell.m; path = shared/ActionButtonCell.m; sourceTree = "<group>"; };
+		915B588D10B08CC60028B0B4 /* ActionButtonCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionButtonCellView.h; path = shared/ActionButtonCellView.h; sourceTree = "<group>"; };
+		915B588E10B08CC60028B0B4 /* ActionButtonCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionButtonCellView.m; path = shared/ActionButtonCellView.m; sourceTree = "<group>"; };
 		916A24421083E59800C5895D /* DarkThemeBottomGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeBottomGradient.png; path = images/DarkThemeBottomGradient.png; sourceTree = "<group>"; };
 		916A244F1083E72300C5895D /* DarkThemeTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeTopGradient.png; path = images/DarkThemeTopGradient.png; sourceTree = "<group>"; };
 		916A25421084283D00C5895D /* DarkThemeButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeButtonBackground.png; path = images/DarkThemeButtonBackground.png; sourceTree = "<group>"; };
@@ -2414,6 +2422,10 @@
 				9142CCFC10920AF900BFE960 /* ToggleViewController.m */,
 				053F815210A87F1B00F7912C /* NSObject+GeneralHelpers.h */,
 				053F815310A87F1B00F7912C /* NSObject+GeneralHelpers.m */,
+				915B588910B08CB00028B0B4 /* ActionButtonCell.h */,
+				915B588A10B08CB00028B0B4 /* ActionButtonCell.m */,
+				915B588D10B08CC60028B0B4 /* ActionButtonCellView.h */,
+				915B588E10B08CC60028B0B4 /* ActionButtonCellView.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -3940,6 +3952,8 @@
 				05D44C4710AD3498006E605B /* FetchListStatusesResponseProcessor.m in Sources */,
 				915B567910AE12F40028B0B4 /* ListTimelineDataSource.m in Sources */,
 				915B580E10AFCB940028B0B4 /* UserInfoLabelCellView.m in Sources */,
+				915B588B10B08CB00028B0B4 /* ActionButtonCell.m in Sources */,
+				915B588F10B08CC60028B0B4 /* ActionButtonCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4254,6 +4268,8 @@
 				05D44C4810AD3498006E605B /* FetchListStatusesResponseProcessor.m in Sources */,
 				915B567810AE12F40028B0B4 /* ListTimelineDataSource.m in Sources */,
 				915B580F10AFCB940028B0B4 /* UserInfoLabelCellView.m in Sources */,
+				915B588C10B08CB00028B0B4 /* ActionButtonCell.m in Sources */,
+				915B589010B08CC60028B0B4 /* ActionButtonCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
