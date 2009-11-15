@@ -8,29 +8,41 @@
 
 - (void)dealloc
 {
-    [keyLabel release];
-    [valueLabel release];
+    [cellView release];
     [super dealloc];
 }
 
-- (void)setKeyText:(NSString *)text
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier
+    backgroundColor:(UIColor *)aBackgroundColor
 {
-    keyLabel.text = text;
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        CGRect cellViewFrame =
+		    CGRectMake(4.0, 4.0, self.contentView.bounds.size.width - 8,
+		    self.contentView.bounds.size.height - 8);
+		cellView =
+		    [[UserInfoLabelCellView alloc] initWithFrame:cellViewFrame
+		    backgroundColor:aBackgroundColor];
+		cellView.autoresizingMask =
+		    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	    cellView.contentMode = UIViewContentModeTopLeft;
+		[self.contentView addSubview:cellView];
+
+		self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        self.backgroundColor = aBackgroundColor;
+    }
+
+    return self;
 }
 
-- (void)setValueText:(NSString *)text
+- (void)setKeyText:(NSString *)keyText valueText:(NSString *)valueText
 {
-    valueLabel.text = text;
+    [cellView setKeyText:keyText valueText:valueText];
 }
 
-- (void)setKeyColor:(UIColor *)color
+- (void)redisplay
 {
-    keyLabel.textColor = color;
-}
-
-- (void)setValueColor:(UIColor *)color
-{
-    valueLabel.textColor = color;
+    [cellView setNeedsDisplay];
 }
 
 @end

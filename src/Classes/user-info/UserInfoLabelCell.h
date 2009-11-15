@@ -3,17 +3,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UserInfoLabelCellView.h"
 
 @interface UserInfoLabelCell : UITableViewCell
 {
-    IBOutlet UILabel * keyLabel;
-    IBOutlet UILabel * valueLabel;
+    UserInfoLabelCellView * cellView;
 }
 
-- (void)setKeyText:(NSString *)text;
-- (void)setValueText:(NSString *)text;
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier
+    backgroundColor:(UIColor *)backgroundColor;
 
-- (void)setKeyColor:(UIColor *)color;
-- (void)setValueColor:(UIColor *)color;
+- (void)setKeyText:(NSString *)keyText valueText:(NSString *)valueText;
+- (void)redisplay;
 
 @end
