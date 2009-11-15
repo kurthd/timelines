@@ -1737,50 +1737,56 @@ enum {
 
 - (void)processUserAccountSelection
 {
-    [accountsNavController dismissModalViewControllerAnimated:YES];
-    
     TwitterCredentials * activeAccount = [accountsDisplayMgr selectedAccount];
 
     NSLog(@"Processing user account selection ('%@')", activeAccount.username);
 
     if (activeAccount &&
         activeAccount != self.activeCredentials.credentials) {
-        NSLog(@"Switching account to: '%@'.", activeAccount.username);
-
-        [[ErrorState instance] exitErrorState];
-
-        // oldUsername will be nil when the previously active account is
-        // deleted
-        NSString * oldUsername =
-            self.activeCredentials.credentials.username;
-
-        [self broadcastActivatedCredentialsChanged:activeAccount];
-        [self loadHomeViewWithCachedData:activeAccount];
-        [self loadMentionsViewWithCachedData:activeAccount];
-        [self loadMessagesViewWithCachedData:activeAccount];
-
-        [directMessageAcctMgr
-            processAccountChangeToUsername:activeAccount.username
-            fromUsername:oldUsername];
-        [mentionsAcctMgr
-            processAccountChangeToUsername:activeAccount.username
-            fromUsername:oldUsername];
-
-        [directMessageDisplayMgr updateDirectMessagesAfterCredentialChange];
-        [mentionDisplayMgr updateMentionsAfterCredentialChange];
-
-        TwitterCredentials * c = self.activeCredentials.credentials;
-        AccountSettings * settings =
-            [AccountSettings settingsForKey:c.username];
-        mentionDisplayMgr.showBadge = [settings pushMentions];
-
         [accountsButtonSetter setButtonWithUsername:activeAccount.username];
-        
-        // This isn't called automatically, so force call here
-        [homeNetAwareViewController viewWillAppear:YES];
+        [homeNetAwareViewController setCachedDataAvailable:NO];
 
-        [listsDisplayMgr resetState];
+        [self performSelector:@selector(processAccountChange:)
+            withObject:activeAccount afterDelay:0.0];
     }
+    [accountsNavController dismissModalViewControllerAnimated:YES];
+}
+
+- (void)processAccountChange:(TwitterCredentials *)activeAccount
+{
+    NSLog(@"Switching account to: '%@'.", activeAccount.username);
+
+    [[ErrorState instance] exitErrorState];
+
+    // oldUsername will be nil when the previously active account is
+    // deleted
+    NSString * oldUsername =
+        self.activeCredentials.credentials.username;
+
+    [self broadcastActivatedCredentialsChanged:activeAccount];
+    [self loadHomeViewWithCachedData:activeAccount];
+    [self loadMentionsViewWithCachedData:activeAccount];
+    [self loadMessagesViewWithCachedData:activeAccount];
+
+    [directMessageAcctMgr
+        processAccountChangeToUsername:activeAccount.username
+        fromUsername:oldUsername];
+    [mentionsAcctMgr
+        processAccountChangeToUsername:activeAccount.username
+        fromUsername:oldUsername];
+
+    [directMessageDisplayMgr updateDirectMessagesAfterCredentialChange];
+    [mentionDisplayMgr updateMentionsAfterCredentialChange];
+
+    TwitterCredentials * c = self.activeCredentials.credentials;
+    AccountSettings * settings =
+        [AccountSettings settingsForKey:c.username];
+    mentionDisplayMgr.showBadge = [settings pushMentions];
+
+    // This isn't called automatically, so force call here
+    [homeNetAwareViewController viewWillAppear:YES];
+
+    [listsDisplayMgr resetState];
 }
 
 #pragma mark Accessors
