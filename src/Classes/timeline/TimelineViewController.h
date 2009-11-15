@@ -41,7 +41,7 @@
     BOOL delayedRefreshTriggered;
 
     NSString * mentionUsername;
-    NSString * mentionRegex;
+    NSString * mentionString;
 
     NSNumber * visibleTweetId;
 }

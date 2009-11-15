@@ -16,7 +16,7 @@
 
 @interface TimelineViewController ()
 
-@property (nonatomic, retain) NSString * mentionRegex;
+@property (nonatomic, retain) NSString * mentionString;
 @property (nonatomic, retain) NSNumber * visibleTweetId;
 
 - (UIImage *)getLargeAvatarForUser:(User *)aUser;
@@ -49,7 +49,7 @@ static BOOL highlightNewTweets;
 static BOOL alreadyReadHighlightNewTweetsValue;
 
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
-    showWithoutAvatars, mentionUsername, mentionRegex, visibleTweetId;
+    showWithoutAvatars, mentionUsername, mentionString, visibleTweetId;
 
 - (void)dealloc
 {
@@ -515,8 +515,10 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     [mentionUsername release];
     mentionUsername = tempUsername;
 
-    self.mentionRegex =
-        [NSString stringWithFormat:@"\\B@%@", mentionUsername];
+    self.mentionString =
+        mentionUsername ?
+        [NSString stringWithFormat:@"@%@", mentionUsername] :
+        nil;
 }
 
 - (NSInteger)indexForTweetId:(NSString *)tweetId
@@ -577,9 +579,12 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         [[self class] highlightNewTweets] && newerThanVisibleTweetId;
     [cell displayAsOld:darkenForOld];
 
-    BOOL highlightForMention =
-    self.mentionRegex ?
-        [tweet.text isMatchedByRegex:self.mentionRegex] : NO;
+    BOOL highlightForMention = NO;
+    if (self.mentionString) {
+        NSRange where = [tweet.text rangeOfString:mentionString
+                                          options:NSCaseInsensitiveSearch];
+        highlightForMention = !NSEqualRanges(where, NSMakeRange(NSNotFound, 0));
+    }
     [cell displayAsMention:highlightForMention];
 }
 
