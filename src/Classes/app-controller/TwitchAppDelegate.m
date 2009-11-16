@@ -40,6 +40,7 @@
 #import "TwitbitShared.h"
 #import "ListsViewController.h"
 #import "ErrorState.h"
+#import "UserTwitterList.h"
 
 @interface TwitchAppDelegate ()
 
@@ -814,6 +815,15 @@ enum {
         listsNetAwareViewController.navigationItem.leftBarButtonItem;
     refreshButton.target = listsDisplayMgr;
     refreshButton.action = @selector(refreshLists);
+
+    if (creds) {
+        NSPredicate * predicate =
+            [NSPredicate predicateWithFormat:@"credentials.username == %@",
+            creds.username];
+        NSArray * lists = [UserTwitterList findAll:predicate
+                                           context:[self managedObjectContext]];
+        [listsDisplayMgr displayLists:lists];
+    }
 }
 
 - (UINavigationController *)getNavControllerForController:(UIViewController *)c

@@ -58,6 +58,8 @@ enum {
 - (void)refreshLists;
 - (void)loadMoreLists;
 
+- (void)displayLists:(NSArray *)lists;
+
 - (void)setCredentials:(TwitterCredentials *)credentials;
 
 @end

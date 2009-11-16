@@ -246,6 +246,18 @@
     }
 }
 
+- (void)displayLists:(NSArray *)someLists
+{
+    self.listsCursor = nil;  // assume we need to start paging from here
+
+    [self.lists removeAllObjects];
+    for (TwitterList * list in someLists)
+        [self.lists setObject:list forKey:list.identifier];
+
+    [self updateViewWithNewLists];
+    [[ErrorState instance] exitErrorState];
+}
+
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
     [someCredentials retain];
