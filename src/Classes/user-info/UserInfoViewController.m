@@ -469,13 +469,14 @@ static NSNumberFormatter * formatter;
 - (UIView *)tableView:(UITableView *)tableView
     viewForFooterInSection:(NSInteger)section
 {
-    return section == kUserInfoSectionNetwork ? followsYouLabel : nil;
+    return section == kUserInfoSectionNetwork && self.followingEnabled ?
+        followsYouLabel : nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
     heightForFooterInSection:(NSInteger)section
 {
-    return section == kUserInfoSectionNetwork ? 34 : 0;
+    return section == kUserInfoSectionNetwork && self.followingEnabled ? 34 : 0;
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -522,6 +523,8 @@ static NSNumberFormatter * formatter;
             NSLog(@"Not updating following elements in header");
             [self updateDisplayForFollwoing:currentlyFollowing];
         }
+        if (followsYouLabelSet)
+            [self setFollowedBy:followedByUser];
     } else {
         followButton.enabled = YES;
         activeAcctLabel.hidden = NO;
@@ -614,6 +617,7 @@ static NSNumberFormatter * formatter;
 
 - (void)setQueryingFollowedBy
 {
+    followsYouLabelSet = NO;
     followsYouLabel.text =
         [NSString stringWithFormat:
         NSLocalizedString(@"userinfo.followsyou.checking", @""),
@@ -622,6 +626,7 @@ static NSNumberFormatter * formatter;
 
 - (void)setFailedToQueryFollowedBy
 {
+    followsYouLabelSet = NO;
     followsYouLabel.text =
         [NSString stringWithFormat:
         NSLocalizedString(@"userinfo.followsyou.failed", @""),
@@ -630,6 +635,8 @@ static NSNumberFormatter * formatter;
 
 - (void)setFollowedBy:(BOOL)followedBy
 {
+    followsYouLabelSet = YES;
+    followedByUser = followedBy;
     NSString * formatString =
         followedBy ?
         NSLocalizedString(@"userinfo.followsyou.yes", @"") :

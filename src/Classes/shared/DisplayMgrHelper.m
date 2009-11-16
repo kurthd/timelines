@@ -577,11 +577,11 @@
     self.userInfoController.followingEnabled =
         ![credentials.username isEqual:aUser.username];
     [self.userInfoController setUser:aUser];
-    if (self.userInfoController.followingEnabled) // check if you're following
+    if (self.userInfoController.followingEnabled) {
         [service isUser:credentials.username following:aUser.username];
-    // check if they're following you
-    [service isUser:aUser.username following:credentials.username];
-    [self.userInfoController setQueryingFollowedBy];
+        [service isUser:aUser.username following:credentials.username];
+        [self.userInfoController setQueryingFollowedBy];
+    }
 
     NSLog(@"Querying blocked status for '%@'", aUser.username);
     NSLog(@"service.credentials: %@", service.credentials);
@@ -604,11 +604,11 @@
     self.userInfoController.followingEnabled =
         ![credentials.username isEqual:aUsername];
 
-    if (self.userInfoController.followingEnabled) // check if you're following
+    if (self.userInfoController.followingEnabled) {
         [service isUser:credentials.username following:aUsername];
-    // check if they're following you
-    [service isUser:aUsername following:credentials.username];
-    [self.userInfoController setQueryingFollowedBy];
+        [service isUser:aUsername following:credentials.username];
+        [self.userInfoController setQueryingFollowedBy];
+    }
 
     [service isUserBlocked:aUsername];
 

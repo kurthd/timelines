@@ -39,6 +39,8 @@
     BOOL followingStateSet;
     BOOL blockedStateSet;
     BOOL currentlyBlocked;
+    BOOL followsYouLabelSet;
+    BOOL followedByUser;
 
     User * user;
 

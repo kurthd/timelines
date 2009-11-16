@@ -227,16 +227,24 @@
 {
     NSLog(@"Find people display manager: %@ is following %@", username,
         followee);
-    if ([self.currentSearchUsername isEqual:followee])
+    if ([[self.currentSearchUsername lowercaseString]
+        isEqual:[followee lowercaseString]])
         [userInfoController setFollowing:YES];
+    else if ([[self.currentSearchUsername lowercaseString] 
+        isEqual:[username lowercaseString]])
+        [userInfoController setFollowedBy:YES];
 }
 
 - (void)user:(NSString *)username isNotFollowing:(NSString *)followee
 {
     NSLog(@"Find people display manager: %@ is not following %@", username,
         followee);
-    if ([self.currentSearchUsername isEqual:followee])
+    if ([[self.currentSearchUsername lowercaseString]
+        isEqual:[followee lowercaseString]])
         [userInfoController setFollowing:NO];
+    else if ([[self.currentSearchUsername lowercaseString] 
+        isEqual:[username lowercaseString]])
+        [userInfoController setFollowedBy:NO];
 }
 
 - (void)failedToQueryIfUser:(NSString *)username
@@ -245,8 +253,12 @@
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
 
-    if ([self.currentSearchUsername isEqual:followee])
+    if ([[self.currentSearchUsername lowercaseString]
+        isEqual:[followee lowercaseString]])
         [userInfoController setFailedToQueryFollowing];
+    else if ([[self.currentSearchUsername lowercaseString] 
+        isEqual:[username lowercaseString]])
+        [userInfoController setFailedToQueryFollowedBy];
 
     [[ErrorState instance] displayErrorWithTitle:errorMessage];
 }
@@ -694,8 +706,12 @@
     [service fetchUserInfoForUsername:searchName];
     userInfoController.followingEnabled =
         ![credentials.username isEqual:searchName];
-    if (userInfoController.followingEnabled)
+    if (userInfoController.followingEnabled) {
         [service isUser:credentials.username following:searchName];
+        [service isUser:searchName following:credentials.username];
+        [userInfoController setQueryingFollowedBy];
+    }
+
     [service isUserBlocked:searchName];
 
     UITableViewController * tvc = (UITableViewController *)
