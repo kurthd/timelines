@@ -91,6 +91,7 @@
     NetworkAwareViewController * lastTweetDetailsWrapperController;
 @property (nonatomic, retain) TweetViewController * lastTweetDetailsController;
 @property (readonly) TweetViewController * tweetDetailsController;
+@property (nonatomic, retain) UINavigationController * navigationController;
 
 @property (nonatomic, retain) Tweet * selectedTweet;
 @property (nonatomic, retain) NSString * currentUsername;

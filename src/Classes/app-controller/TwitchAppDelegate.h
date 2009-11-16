@@ -74,6 +74,7 @@
     DirectMessageAcctMgr * directMessageAcctMgr;
     MentionsAcctMgr * mentionsAcctMgr;
     TimelineDisplayMgr * timelineDisplayMgr;
+    TimelineDisplayMgr * searchBarTimelineDisplayMgr;
 
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 

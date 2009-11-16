@@ -742,20 +742,20 @@ enum {
     UINavigationController * navController =
         [self getNavControllerForController:searchNetAwareViewController];
 
-    TimelineDisplayMgr * displayMgr =
+     searchBarTimelineDisplayMgr =
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         searchNetAwareViewController
         navigationController:navController
         title:@"Search"  // set programmatically later
         composeTweetDisplayMgr:self.composeTweetDisplayMgr];
-    searchNetAwareViewController.delegate = displayMgr;
+    searchNetAwareViewController.delegate = searchBarTimelineDisplayMgr;
 
     searchBarDisplayMgr =
         [[SearchBarDisplayMgr alloc]
         initWithTwitterService:searchService
             netAwareController:searchNetAwareViewController
-            timelineDisplayMgr:displayMgr
+            timelineDisplayMgr:searchBarTimelineDisplayMgr
                        context:[self managedObjectContext]];
     searchNetAwareViewController.delegate = searchBarDisplayMgr;
 
@@ -905,7 +905,30 @@ enum {
     changed:(BOOL)changed
 {
     NSLog(@"Tab bar controller finished customizing view controllers");
-    [self initTabForViewController:tabBarController.moreNavigationController];
+    if (changed) {
+        [self initTabForViewController:
+            tabBarController.moreNavigationController];
+
+        [homeNetAwareViewController.navigationController
+            popToRootViewControllerAnimated:NO];
+        [mentionsNetAwareViewController.navigationController
+            popToRootViewControllerAnimated:NO];
+        [messagesNetAwareViewController.navigationController
+            popToRootViewControllerAnimated:NO];
+        [listsNetAwareViewController.navigationController
+            popToRootViewControllerAnimated:NO];
+        [searchNetAwareViewController.navigationController
+            popToRootViewControllerAnimated:NO];
+        [findPeopleNetAwareViewController.navigationController
+            popToRootViewControllerAnimated:NO];
+
+        timelineDisplayMgr.navigationController =
+            [self getNavControllerForController:homeNetAwareViewController];
+        mentionDisplayMgr.navigationController =
+            [self getNavControllerForController:mentionsNetAwareViewController];
+        searchBarTimelineDisplayMgr.navigationController =
+            [self getNavControllerForController:searchNetAwareViewController];
+    }
 }
 
 - (void)initTabForViewController:(UIViewController *)viewController

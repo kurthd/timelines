@@ -25,8 +25,6 @@
 - (void)showPreviousTweet;
 - (void)updateTweetIndexCache;
 
-- (UINavigationController *)navigationController;
-
 @property (nonatomic, readonly) NSMutableDictionary * tweetIdToIndexDict;
 @property (nonatomic, readonly) NSMutableDictionary * tweetIndexToIdDict;
 
@@ -39,7 +37,7 @@
     setUserToFirstTweeter, lastTweetDetailsWrapperController,
     currentUsername, allPagesLoaded,setUserToAuthenticatedUser,
     firstFetchReceived, tweetIdToShow, suppressTimelineFailures, credentials,
-    showMentions, tweetIdToIndexDict;
+    showMentions, tweetIdToIndexDict, navigationController;
 
 - (void)dealloc
 {
@@ -910,11 +908,6 @@
         tweetIndexToIdDict = [[NSMutableDictionary dictionary] retain];
 
     return tweetIndexToIdDict;
-}
-
-- (UINavigationController *)navigationController
-{
-    return navigationController;
 }
 
 @end

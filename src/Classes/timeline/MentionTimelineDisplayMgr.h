@@ -65,6 +65,7 @@
 @property (nonatomic, assign) NSInteger numNewMentions;
 @property (nonatomic, assign) BOOL showBadge;
 @property (nonatomic, copy) NSNumber * mentionIdToShow;
+@property (nonatomic, retain) UINavigationController * navigationController;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     navigationController:(UINavigationController *)aNavigationController

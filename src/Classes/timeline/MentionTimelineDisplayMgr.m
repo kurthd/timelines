@@ -42,7 +42,7 @@
 
 @synthesize lastUpdateId, mentions, activeAcctUsername, mentionIdToShow,
     selectedTweet, lastTweetDetailsWrapperController, numNewMentions, showBadge,
-    lastTweetDetailsController;
+    lastTweetDetailsController, navigationController;
 
 - (void)dealloc
 {
