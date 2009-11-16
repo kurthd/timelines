@@ -45,6 +45,7 @@ enum {
 }
 
 @property (nonatomic, assign) BOOL fetchedInitialLists;
+@property (nonatomic, retain) UINavigationController * navigationController;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     navigationController:(UINavigationController *)aNavigationController

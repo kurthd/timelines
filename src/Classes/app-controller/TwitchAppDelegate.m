@@ -793,10 +793,13 @@ enum {
     [[CredentialsActivatedPublisher alloc]
         initWithListener:service action:@selector(setCredentials:)];
 
+    UINavigationController * navController =
+        [self getNavControllerForController:listsNetAwareViewController];
+
     listsDisplayMgr =
         [[ListsDisplayMgr alloc]
         initWithWrapperController:listsNetAwareViewController
-        navigationController:listsNetAwareViewController.navigationController
+        navigationController:navController
         listsViewController:listsViewController
         service:service
         factory:timelineDisplayMgrFactory
@@ -928,6 +931,8 @@ enum {
             [self getNavControllerForController:mentionsNetAwareViewController];
         searchBarTimelineDisplayMgr.navigationController =
             [self getNavControllerForController:searchNetAwareViewController];
+        listsDisplayMgr.navigationController =
+            [self getNavControllerForController:listsNetAwareViewController];
     }
 }
 

@@ -34,6 +34,7 @@
 @synthesize listsCursor, subscriptionsCursor;
 @synthesize lists, subscriptions;
 @synthesize nextWrapperController, timelineDisplayMgr, credentialsPublisher;
+@synthesize navigationController;
 
 - (void)dealloc
 {
