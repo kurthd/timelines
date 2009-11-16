@@ -14,6 +14,7 @@
 #import "User+UIAdditions.h"
 #import "NSDictionary+GeneralHelpers.h"
 #import "TweetLocation.h"
+#import "TwitbitShared.h"
 
 @interface NSDictionary (ParsingHelpers)
 - (id)safeObjectForKey:(id)key;
@@ -203,6 +204,7 @@
 {
     tweet.identifier = [data safeObjectForKey:@"id"];
     tweet.text = [data safeObjectForKey:@"text"];
+    tweet.decodedText = [tweet.text stringByDecodingHtmlEntities];
     tweet.source = [data safeObjectForKey:@"source"];
 
     tweet.timestamp = [[data safeObjectForKey:@"created_at"] twitterDateValue];

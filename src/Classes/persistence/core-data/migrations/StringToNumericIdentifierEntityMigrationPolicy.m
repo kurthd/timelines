@@ -3,8 +3,6 @@
 //
 
 #import "StringToNumericIdentifierEntityMigrationPolicy.h"
-#import "Tweet.h"  // debugging only
-#import "NSManagedObject+TediousCodeAdditions.h"  // debugging only
 
 @implementation StringToNumericIdentifierEntityMigrationPolicy
 

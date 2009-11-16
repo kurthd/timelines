@@ -11,6 +11,7 @@
 #import "NSManagedObject+TediousCodeAdditions.h"
 #import "NSString+HtmlEncodingAdditions.h"
 #import "User+UIAdditions.h"
+#import "TwitbitShared.h"
 
 @interface NSDictionary (CopyAndPastedParsingHelpers)
 - (id)safeObjectForKey:(id)key;
@@ -120,6 +121,7 @@
 
         tweet.identifier = tweetId;
         tweet.text = [tweetData safeObjectForKey:@"text"];
+        tweet.decodedText = [tweet.text stringByDecodingHtmlEntities];
         tweet.source = [tweetData safeObjectForKey:@"source"];
         tweet.timestamp =
             [[tweetData objectForKey:@"created_at"] twitterDateValue];

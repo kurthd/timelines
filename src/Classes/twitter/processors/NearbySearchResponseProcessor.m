@@ -147,6 +147,7 @@
 
         tweet.identifier = tweetId;
         tweet.text = [tweetData safeObjectForKey:@"text"];
+        tweet.decodedText = [tweet.text stringByDecodingHtmlEntities];
         tweet.source = [tweetData safeObjectForKey:@"source"];
         tweet.timestamp =
             [[tweetData objectForKey:@"created_at"] twitterDateValue];
