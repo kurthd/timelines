@@ -6,24 +6,30 @@
 
 @implementation NSDate (IsToday)
 
-- (BOOL) isToday
+- (BOOL)isToday
 {
-    NSCalendar * currentCalendar = [NSCalendar currentCalendar];
-    
-    unsigned unitFlags =
-        NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
-    
-    NSDateComponents * selfComps =
-        [currentCalendar components:unitFlags fromDate:self];
-    
-    NSDate * now = [NSDate date];
+    static NSCalendar * calendar = nil;
+    if (!calendar)
+        calendar = [[NSCalendar currentCalendar] retain];
 
-    NSDateComponents * nowComps =
-        [currentCalendar components:unitFlags fromDate:now];
-    
-    return [nowComps day] == [selfComps day] &&
-        [nowComps month] == [selfComps month] &&
-        [nowComps year] == [selfComps year];
+    static NSDate * startOfToday = nil;
+    if (!startOfToday) {
+        startOfToday = [[NSDate alloc] init];
+        NSCalendarUnit units =
+            NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+        NSDateComponents * components = [calendar components:units 
+                                                    fromDate:startOfToday];
+
+        [components setHour:components.hour * -1];
+        [components setMinute:components.minute * -1];
+        [components setSecond:components.second * -1];
+
+        startOfToday = [[calendar dateByAddingComponents:components
+                                                  toDate:startOfToday
+                                                 options:0] retain];
+    }
+
+    return [self compare:startOfToday] == NSOrderedDescending;
 }
 
 - (BOOL) isYesterday

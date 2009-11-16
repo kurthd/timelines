@@ -65,11 +65,25 @@
 
 - (NSString *)tableViewCellDescription
 {
-    static NSDateFormatter * formatter = nil;
-    if (!formatter) {
-        formatter = [[NSDateFormatter alloc] init];
-        [formatter setTimeStyle:NSDateFormatterShortStyle];
-        [formatter setDateStyle:NSDateFormatterNoStyle];
+    static NSDateFormatter * dateTimeFormatter = nil;
+    static NSDateFormatter * timeFormatter = nil;
+
+    NSDateFormatter * formatter = nil;
+
+    if ([self isToday]) {
+        if (!timeFormatter) {
+            timeFormatter = [[NSDateFormatter alloc] init];
+            [timeFormatter setTimeStyle:NSDateFormatterShortStyle];
+            [timeFormatter setDateStyle:NSDateFormatterNoStyle];
+        }
+        formatter = timeFormatter;
+    } else {
+        if (!dateTimeFormatter) {
+            dateTimeFormatter = [[NSDateFormatter alloc] init];
+            [dateTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
+            [dateTimeFormatter setDateStyle:NSDateFormatterShortStyle];
+        }
+        formatter = dateTimeFormatter;
     }
 
     return [formatter stringFromDate:self];
