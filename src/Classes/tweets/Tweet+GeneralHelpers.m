@@ -78,6 +78,11 @@ static NSString * hashRegex = @"\\B(#[\\w_]+)";
                                   source:self.source];
 }
 
+- (NSString *)htmlDecodedText
+{
+    return [self.text stringByDecodingHtmlEntities];
+}
+
 - (NSString *)displayName
 {
     return

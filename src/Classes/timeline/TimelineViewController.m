@@ -563,7 +563,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         displayType = FastTimelineTableViewCellDisplayTypeNormal;
     [cell setDisplayType:displayType];
 
-    [cell setTweetText:[tweet.text stringByDecodingHtmlEntities]];
+    [cell setTweetText:[tweet htmlDecodedText]];
     [cell setAuthor:[tweet displayName]];
     [cell setTimestamp:[tweet.timestamp tableViewCellDescription]];
     [cell setFavorite:[tweet.favorited boolValue]];

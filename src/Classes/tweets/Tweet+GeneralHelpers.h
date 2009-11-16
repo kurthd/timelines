@@ -13,6 +13,8 @@
 
 - (NSString *)textAsHtml;
 
+- (NSString *)htmlDecodedText;
+
 // Either the full name, if present, or the username, depending on the
 // user's preferences.
 - (NSString *)displayName;

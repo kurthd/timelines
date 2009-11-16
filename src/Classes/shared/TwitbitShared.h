@@ -32,7 +32,11 @@
 //
 // Twitbit
 //
+#import "Tweet.h"
 #import "Tweet+GeneralHelpers.h"
+
+#import "DirectMessage.h"
+#import "DirectMessage+GeneralHelpers.h"
 
 #import "User.h"
 #import "User+CoreDataAdditions.h"

@@ -229,7 +229,7 @@
 
     [cell setAuthor:[tweet displayName]];
     [cell setTimestamp:[tweet.timestamp tableViewCellDescription]];
-    [cell setTweetText:[tweet.text stringByDecodingHtmlEntities]];
+    [cell setTweetText:[tweet htmlDecodedText]];
 
     BOOL landscape = [[RotatableTabBarController instance] landscape];
     [cell setLandscape:landscape];

@@ -9,4 +9,6 @@
 
 - (NSString *)textAsHtml;
 
+- (NSString *)htmlDecodedText;
+
 @end
