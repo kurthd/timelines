@@ -13,6 +13,7 @@
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
 #import "TwitbitShared.h"
+#import "ActionButtonCell.h"
 
 enum {
     kUserInfoSectionDetails,
@@ -39,10 +40,26 @@ enum {
 - (void)updateDisplayForFollwoing:(BOOL)following;
 - (void)updateDisplayForProcessingFollowingRequest:(BOOL)following;
 - (void)updateButtonsForOrientation:(UIInterfaceOrientation)o;
-- (UITableViewCell *)getBasicCell;
+- (ActionButtonCell *)getBasicCell;
 - (UITableViewCell *)getLabelCell;
 
 + (UIImage *)defaultAvatar;
+
++ (UIImage *)mentionsButtonIcon;
++ (UIImage *)favoritesButtonIcon;
++ (UIImage *)publicMessageButtonIcon;
++ (UIImage *)directMessageButtonIcon;
+
++ (NSString *)followersLabelText;
++ (NSString *)followingLabelText;
++ (NSString *)tweetsLabelText;
+
++ (NSString *)mentionsButtonText;
++ (NSString *)favoritesButtonText;
++ (NSString *)publicMessageButtonText;
++ (NSString *)directMessageButtonText;
+
++ (NSNumberFormatter *)formatter;
 
 @end
 
@@ -51,6 +68,22 @@ enum {
 @synthesize delegate, followingEnabled, findPeopleBookmarkMgr;
 
 static UIImage * defaultAvatar;
+
+static UIImage * mentionsButtonIcon;
+static UIImage * favoritesButtonIcon;
+static UIImage * publicMessageButtonIcon;
+static UIImage * directMessageButtonIcon;
+
+static NSString * followersLabelText;
+static NSString * followingLabelText;
+static NSString * tweetsLabelText;
+
+static NSString * mentionsButtonText;
+static NSString * favoritesButtonText;
+static NSString * publicMessageButtonText;
+static NSString * directMessageButtonText;
+
+static NSNumberFormatter * formatter;
 
 - (void)dealloc
 {
@@ -282,8 +315,10 @@ static UIImage * defaultAvatar;
     cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell * cell;
-    NSString * formatString;
     UserInfoLabelCell * userInfoLabelCell;
+    ActionButtonCell * actionButtonCell;
+    NSString * actionText;
+    UIImage * actionImage;
     BOOL landscape = [[RotatableTabBarController instance] landscape];
     switch (indexPath.section) {
         case kUserInfoSectionDetails:
@@ -295,14 +330,11 @@ static UIImage * defaultAvatar;
             userInfoLabelCell = (UserInfoLabelCell *)cell;
             cell.accessoryType =
                 UITableViewCellAccessoryDisclosureIndicator;
-
-            NSNumberFormatter * formatter =
-                [[[NSNumberFormatter alloc] init] autorelease];
-            [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        
             if (indexPath.row == kUserInfoFollowersRow) {
                 if ([user.followersCount
                     isEqual:[NSNumber numberWithInt:0]]) {
-
+        
                     cell.accessoryType = UITableViewCellAccessoryNone;
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 } else {
@@ -310,12 +342,10 @@ static UIImage * defaultAvatar;
                         UITableViewCellAccessoryDisclosureIndicator;
                     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 }
-                formatString =
-                    NSLocalizedString(@"userinfoview.followers", @"");
-                [userInfoLabelCell setKeyText:formatString];
-                [userInfoLabelCell
-                    setValueText:
-                    [formatter stringFromNumber:user.followersCount]];
+                [userInfoLabelCell setKeyText:[[self class] followersLabelText]
+                    valueText:
+                    [[[self class] formatter]
+                    stringFromNumber:user.followersCount]];
             } else if (indexPath.row == kUserInfoFollowingRow) {
                 if ([user.friendsCount
                     isEqual:[NSNumber numberWithInt:0]]) {
@@ -327,12 +357,10 @@ static UIImage * defaultAvatar;
                         UITableViewCellAccessoryDisclosureIndicator;
                     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
                 }
-                formatString =
-                    NSLocalizedString(@"userinfoview.following", @"");
-                [userInfoLabelCell setKeyText:formatString];
-                [userInfoLabelCell
-                    setValueText:
-                    [formatter stringFromNumber:user.friendsCount]];
+                [userInfoLabelCell setKeyText:[[self class] followingLabelText]
+                    valueText:
+                    [[[self class] formatter]
+                    stringFromNumber:user.friendsCount]];
             } else {
                 if ([user.statusesCount
                     isEqual:[NSNumber numberWithInt:0]]) {
@@ -345,53 +373,43 @@ static UIImage * defaultAvatar;
                     cell.selectionStyle =
                         UITableViewCellSelectionStyleBlue;
                 }
-                formatString =
-                    NSLocalizedString(@"userinfoview.statusescount", @"");
-                [userInfoLabelCell setKeyText:formatString];
-                [userInfoLabelCell
-                    setValueText:
-                    [formatter stringFromNumber:user.statusesCount]];
+                [userInfoLabelCell setKeyText:[[self class] tweetsLabelText]
+                    valueText:
+                    [[[self class] formatter]
+                    stringFromNumber:user.statusesCount]];
             }
             break;
         case kUserInfoSectionActions:
-            cell = cell = [self getBasicCell];
+            actionButtonCell = [self getBasicCell];
+            cell = actionButtonCell;
 
             if (indexPath.row == kUserInfoSearchForUser) {
-                cell.accessoryType =
+                actionButtonCell.accessoryType =
                     UITableViewCellAccessoryDisclosureIndicator;
-                cell.textLabel.text =
-                    NSLocalizedString(@"userinfoview.searchforuser",
-                    @"");
-                cell.imageView.image =
-                    [UIImage imageNamed:@"MagnifyingGlass.png"];
-                cell.imageView.highlightedImage =
-                    [UIImage
-                    imageNamed:@"MagnifyingGlassHighlighted.png"];
+                actionText = [[self class] mentionsButtonText];
+                actionImage = [[self class] mentionsButtonIcon];
+                [actionButtonCell setActionText:actionText];
+                [actionButtonCell setActionImage:actionImage];
             } else if (indexPath.row == kUserInfoFavoritesRow) {
-                cell.accessoryType =
+                actionButtonCell.accessoryType =
                     UITableViewCellAccessoryDisclosureIndicator;
-                cell.textLabel.text =
-                    NSLocalizedString(@"userinfoview.favorites", @"");
-                cell.imageView.image =
-                    [UIImage imageNamed:@"FavoriteIconForUserView.png"];
-                cell.imageView.highlightedImage =
-                    [UIImage
-                    imageNamed:@"FavoriteIconForUserViewHighlighted.png"];
+                actionText = [[self class] favoritesButtonText];
+                actionImage = [[self class] favoritesButtonIcon];
+                [actionButtonCell setActionText:actionText];
+                [actionButtonCell setActionImage:actionImage];
             } else {
-                cell.accessoryType = UITableViewCellAccessoryNone;
-                cell.textLabel.text =
+                actionButtonCell.accessoryType = UITableViewCellAccessoryNone;
+                actionText =
                     indexPath.row == kUserInfoPublicMessage ?
-                    NSLocalizedString(@"userinfo.publicmessage", @"") :
-                    NSLocalizedString(@"userinfo.directmessage", @"");
-                cell.imageView.image =
+                    [[self class] publicMessageButtonText] :
+                    [[self class] directMessageButtonText];
+                actionImage =
                     indexPath.row == kUserInfoPublicMessage ?
-                    [UIImage imageNamed:@"PublicMessageButtonIcon.png"] :
-                    [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
-                cell.imageView.highlightedImage =
-                    indexPath.row == kUserInfoPublicMessage ?
-                    [UIImage
-                    imageNamed:@"PublicMessageButtonIconHighlighted.png"] :
-                    [UIImage imageNamed:@"DirectMessageButtonIcon.png"];
+                    [[self class] publicMessageButtonIcon] :
+                    [[self class] directMessageButtonIcon];
+
+                [actionButtonCell setActionText:actionText];
+                [actionButtonCell setActionImage:actionImage];
             }
         break;
     }
@@ -731,23 +749,23 @@ static UIImage * defaultAvatar;
     [[TwitchWebBrowserDisplayMgr instance] visitWebpage:user.webpage];
 }
 
-- (UITableViewCell *)getBasicCell
+- (ActionButtonCell *)getBasicCell
 {
-    static NSString * cellIdentifier = @"UITableViewCell";
+    static NSString * cellIdentifier = @"ActionButtonCell";
 
-    UITableViewCell * cell =
+    ActionButtonCell * cell =
+        (ActionButtonCell *)
         [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
     if (!cell) {
+        UIColor * bColor =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [UIColor defaultDarkThemeCellColor] : [UIColor whiteColor];
         cell =
-            [[[UITableViewCell alloc]
-            initWithFrame:CGRectZero reuseIdentifier:cellIdentifier]
+            [[[ActionButtonCell alloc]
+            initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:cellIdentifier backgroundColor:bColor]
             autorelease];
-
-        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            cell.backgroundColor = [UIColor defaultDarkThemeCellColor];
-            cell.textLabel.textColor = [UIColor whiteColor];
-        }
     }
 
     return cell;
@@ -762,16 +780,15 @@ static UIImage * defaultAvatar;
         [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
     if (!cell) {
-        NSArray * nib =
-            [[NSBundle mainBundle]
-            loadNibNamed:cellIdentifier owner:self options:nil];
-
-        cell = [nib objectAtIndex:0];
-        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            cell.backgroundColor = [UIColor defaultDarkThemeCellColor];
-            [cell setKeyColor:[UIColor twitchBlueOnDarkBackgroundColor]];
-            [cell setValueColor:[UIColor whiteColor]];
-        }
+        UIColor * bColor =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [UIColor defaultDarkThemeCellColor] : [UIColor whiteColor];
+        cell =
+            [[[UserInfoLabelCell alloc]
+            initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:cellIdentifier
+            backgroundColor:bColor]
+            autorelease];
     }
 
     return cell;
@@ -798,6 +815,125 @@ static UIImage * defaultAvatar;
         defaultAvatar = [[UIImage imageNamed:@"DefaultAvatar.png"] retain];
 
     return defaultAvatar;
+}
+
++ (UIImage *)mentionsButtonIcon
+{
+    if (!mentionsButtonIcon)
+        mentionsButtonIcon =
+            [[UIImage imageNamed:@"MagnifyingGlass.png"] retain];
+
+    return mentionsButtonIcon;
+}
+
++ (UIImage *)favoritesButtonIcon
+{
+    if (!favoritesButtonIcon)
+        favoritesButtonIcon =
+            [[UIImage imageNamed:@"FavoriteIconForUserView.png"] retain];
+
+    return favoritesButtonIcon;
+}
+
++ (UIImage *)publicMessageButtonIcon
+{
+    if (!publicMessageButtonIcon)
+        publicMessageButtonIcon =
+            [[UIImage imageNamed:@"PublicMessageButtonIcon.png"] retain];
+
+    return publicMessageButtonIcon;
+}
+
++ (UIImage *)directMessageButtonIcon
+{
+    if (!directMessageButtonIcon)
+        directMessageButtonIcon =
+            [[UIImage imageNamed:@"DirectMessageButtonIcon.png"] retain];
+
+    return directMessageButtonIcon;
+}
+
++ (NSNumberFormatter *)formatter
+{
+    if (!formatter) {
+        formatter = [[NSNumberFormatter alloc] init];
+        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    }
+
+    return formatter;
+}
+
++ (NSString *)followersLabelText
+{
+    if (!followersLabelText) {
+        followersLabelText = NSLocalizedString(@"userinfoview.followers", @"");
+        [followersLabelText retain];
+    }
+
+    return followersLabelText;
+}
+
++ (NSString *)followingLabelText
+{
+    if (!followingLabelText) {
+        followingLabelText = NSLocalizedString(@"userinfoview.following", @"");
+        [followingLabelText retain];
+    }
+
+    return followingLabelText;
+}
+
++ (NSString *)tweetsLabelText
+{
+    if (!tweetsLabelText) {
+        tweetsLabelText = NSLocalizedString(@"userinfoview.statusescount", @"");
+        [tweetsLabelText retain];
+    }
+
+    return tweetsLabelText;
+}
+
++ (NSString *)mentionsButtonText
+{
+    if (!mentionsButtonText) {
+        mentionsButtonText =
+            NSLocalizedString(@"userinfoview.searchforuser", @"");
+        [mentionsButtonText retain];
+    }
+
+    return mentionsButtonText;
+}
+
++ (NSString *)favoritesButtonText
+{
+    if (!favoritesButtonText) {
+        favoritesButtonText = NSLocalizedString(@"userinfoview.favorites", @"");
+        [favoritesButtonText retain];
+    }
+
+    return favoritesButtonText;
+}
+
++ (NSString *)publicMessageButtonText
+{
+    if (!publicMessageButtonText) {
+        publicMessageButtonText =
+            NSLocalizedString(@"userinfo.publicmessage", @"") ;
+        [publicMessageButtonText retain];
+    }
+
+    return publicMessageButtonText;
+}
+
++ (NSString *)directMessageButtonText
+{
+    if (!directMessageButtonText) {
+        directMessageButtonText =
+            NSLocalizedString(@"userinfo.directmessage", @"") ;
+        [directMessageButtonText retain];
+    }
+
+    return directMessageButtonText;
 }
 
 @end

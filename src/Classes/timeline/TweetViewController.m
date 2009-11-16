@@ -57,10 +57,10 @@ enum TweetActionSheets {
 @property (nonatomic, retain) UIWebView * tweetContentView;
 
 @property (readonly) UITableViewCell * conversationCell;
-@property (readonly) UITableViewCell * publicReplyCell;
-@property (readonly) UITableViewCell * retweetCell;
+@property (readonly) ActionButtonCell * publicReplyCell;
+@property (readonly) ActionButtonCell * retweetCell;
 @property (readonly) MarkAsFavoriteCell * favoriteCell;
-@property (readonly) UITableViewCell * deleteTweetCell;
+@property (readonly) ActionButtonCell * deleteTweetCell;
 
 - (void)displayTweet;
 - (void)loadTweetWebView;
@@ -649,41 +649,40 @@ enum TweetActionSheets {
 - (UITableViewCell *)publicReplyCell
 {
     if (!publicReplyCell) {
+        UIColor * bColor =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [UIColor defaultDarkThemeCellColor] : [UIColor whiteColor];
         publicReplyCell = 
-            [[UITableViewCell alloc]
-            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        publicReplyCell.textLabel.text =
+            [[ActionButtonCell alloc]
+            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""
+            backgroundColor:bColor];
+        NSString * actionText =
             NSLocalizedString(@"tweetdetailsview.publicreply.label", @"");
-        publicReplyCell.imageView.image =
+        [publicReplyCell setActionText:actionText];
+        UIImage * actionImage =
             [UIImage imageNamed:@"PublicReplyButtonIcon.png"];
-        publicReplyCell.imageView.highlightedImage =
-            [UIImage imageNamed:@"PublicReplyButtonIconHighlighted.png"];
-        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            publicReplyCell.backgroundColor =
-                [UIColor defaultDarkThemeCellColor];
-            publicReplyCell.textLabel.textColor = [UIColor whiteColor];
-        }
+        [publicReplyCell setActionImage:actionImage];
     }
-    
+
     return publicReplyCell;
 }
 
 - (UITableViewCell *)retweetCell
 {
     if (!retweetCell) {
+        UIColor * bColor =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [UIColor defaultDarkThemeCellColor] : [UIColor whiteColor];
         retweetCell = 
-            [[UITableViewCell alloc]
-            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        retweetCell.textLabel.text =
+            [[ActionButtonCell alloc]
+            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""
+            backgroundColor:bColor];
+        NSString * actionText =
             NSLocalizedString(@"tweetdetailsview.retweet.label", @"");
-        retweetCell.imageView.image =
-            [UIImage imageNamed:@"RetweetButtonIcon.png"];
-        retweetCell.imageView.highlightedImage =
+        [retweetCell setActionText:actionText];
+        UIImage * actionImage =
             [UIImage imageNamed:@"RetweetButtonIconHighlighted.png"];
-        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            retweetCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
-            retweetCell.textLabel.textColor = [UIColor whiteColor];
-        }
+        [retweetCell setActionImage:actionImage];
     }
 
     return retweetCell;
@@ -729,15 +728,16 @@ enum TweetActionSheets {
     }
 
     UIImage * avatar = [tweet.user fullAvatar];
-    if (!avatar)
+    if (!avatar) {
         avatar = [tweet.user thumbnailAvatar];
-    if (!avatar)
+        [self fetchRemoteImage:tweet.user.avatar.fullImageUrl];
+    }
+    if (!avatar) {
         avatar = [[self class] defaultAvatar];
+        [self fetchRemoteImage:tweet.user.avatar.thumbnailImageUrl];
+    }
 
     [avatarImage setImage:avatar];
-
-    [self fetchRemoteImage:tweet.user.avatar.fullImageUrl];
-    [self fetchRemoteImage:tweet.user.avatar.thumbnailImageUrl];
 
     [self.tableView reloadData];
     self.tableView.contentInset = UIEdgeInsetsMake(-300, 0, 0, 0);
@@ -775,18 +775,19 @@ enum TweetActionSheets {
 - (UITableViewCell *)deleteTweetCell
 {
     if (!deleteTweetCell) {
+        UIColor * bColor =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [UIColor defaultDarkThemeCellColor] : [UIColor whiteColor];
         deleteTweetCell =
-            [[UITableViewCell alloc]
-            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-        deleteTweetCell.textLabel.text =
+            [[ActionButtonCell alloc]
+            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""
+            backgroundColor:bColor];
+        NSString * actionText =
             NSLocalizedString(@"tweetdetailsview.deletetweet.label", @"");
-        deleteTweetCell.imageView.image =
+        [deleteTweetCell setActionText:actionText];
+        UIImage * actionIcon =
             [UIImage imageNamed:@"DeleteTweetButtonIcon.png"];
-        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-            deleteTweetCell.backgroundColor =
-                [UIColor defaultDarkThemeCellColor];
-            deleteTweetCell.textLabel.textColor = [UIColor whiteColor];
-        }
+        [deleteTweetCell setActionImage:actionIcon];
     }
 
     return deleteTweetCell;

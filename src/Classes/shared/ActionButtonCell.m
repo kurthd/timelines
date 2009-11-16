@@ -2,9 +2,11 @@
 //  Copyright 2009 High Order Bit, Inc. All rights reserved.
 //
 
-#import "UserInfoLabelCell.h"
+#import "ActionButtonCell.h"
 
-@implementation UserInfoLabelCell
+@implementation ActionButtonCell
+
+@synthesize cellView;
 
 - (void)dealloc
 {
@@ -16,28 +18,39 @@
     reuseIdentifier:(NSString *)reuseIdentifier
     backgroundColor:(UIColor *)aBackgroundColor
 {
-    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        CGRect cellViewFrame =
+	if (self = [super initWithStyle:UITableViewCellStyleDefault
+	    reuseIdentifier:reuseIdentifier]) {
+
+		CGRect cellViewFrame =
 		    CGRectMake(4.0, 4.0, self.contentView.bounds.size.width - 8,
 		    self.contentView.bounds.size.height - 8);
 		cellView =
-		    [[UserInfoLabelCellView alloc] initWithFrame:cellViewFrame
+		    [[ActionButtonCellView alloc] initWithFrame:cellViewFrame
 		    backgroundColor:aBackgroundColor];
 		cellView.autoresizingMask =
 		    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	    cellView.contentMode = UIViewContentModeTopLeft;
 		[self.contentView addSubview:cellView];
 
-		self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         self.backgroundColor = aBackgroundColor;
-    }
+	}
 
-    return self;
+	return self;
 }
 
-- (void)setKeyText:(NSString *)keyText valueText:(NSString *)valueText
+- (void)setActionText:(NSString *)actionText
 {
-    [cellView setKeyText:keyText valueText:valueText];
+    [cellView setActionText:actionText];
+}
+
+- (void)setLandscape:(BOOL)landscape
+{
+    cellView.landscape = landscape;
+}
+
+- (void)setActionImage:(UIImage *)actionImage
+{
+    cellView.actionImage = actionImage;
 }
 
 - (void)redisplay

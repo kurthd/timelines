@@ -62,6 +62,7 @@
     BOOL setUserToAuthenticatedUser;
     BOOL firstFetchReceived;
     BOOL showMentions;
+    BOOL displayedATweet;
 
     NSManagedObjectContext * managedObjectContext;
 

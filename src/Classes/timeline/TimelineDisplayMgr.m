@@ -2,6 +2,7 @@
 //  Copyright 2009 High Order Bit, Inc. All rights reserved.
 //
 
+#import <QuartzCore/CALayer.h>
 #import "TimelineDisplayMgr.h"
 #import "TimelineDisplayMgrFactory.h"
 #import "TweetViewController.h"
@@ -119,6 +120,10 @@
         wrapperController.title = title;
 
         conversationDisplayMgrs = [[NSMutableArray alloc] init];
+
+        // attempt to preload the tweet view, but not in the critical path
+        [self performSelector:@selector(preloadTweetView) withObject:nil
+            afterDelay:2.0];
     }
 
     return self;
@@ -288,6 +293,7 @@
 
 - (void)selectedTweet:(Tweet *)tweet
 {
+    displayedATweet = YES;
     // HACK: forces to scroll to top
     [self.tweetDetailsController.tableView setContentOffset:CGPointMake(0, 300)
         animated:NO];
@@ -688,6 +694,24 @@
     }
 
     return tweetDetailsController;
+}
+
+- (void)preloadTweetView
+{
+    if (!displayedATweet) {
+        Tweet * someTweet =
+            [[timeline allKeys] count] > 0 ?
+            [[timeline allValues] objectAtIndex:0] : nil;
+        if (someTweet) {
+            [self.tweetDetailsController displayTweet:someTweet
+                onNavigationController:nil];
+
+            UIView * tweetView = self.tweetDetailsController.view;
+            UIGraphicsBeginImageContext(tweetView.bounds.size);
+            [tweetView.layer renderInContext:UIGraphicsGetCurrentContext()];
+            UIGraphicsEndImageContext();
+        }
+    }
 }
 
 - (void)setService:(NSObject<TimelineDataSource> *)aTimelineSource
