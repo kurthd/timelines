@@ -68,7 +68,7 @@ static UIImage * privateIconHighlighted;
 #define FOLLOWERS_TOP_MARGIN 24
 
 #define LABEL_WIDTH_LANDSCAPE 302
-#define LABEL_WIDTH 442
+#define LABEL_WIDTH 290
 
     UIColor * nameLabelTextColor = nil;
     UIFont * nameLabelFont = [UIFont boldSystemFontOfSize:18];
