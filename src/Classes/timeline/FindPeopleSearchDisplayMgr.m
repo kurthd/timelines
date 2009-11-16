@@ -147,6 +147,15 @@
 {
     CGFloat viewWidth = landscape ? 470 : 310;
     CGFloat barHeight = landscape ? 32 : 44;
+
+    // this shortens the search field to avoid weird adjustment animations when
+    // there's a back button
+    NSArray * viewControllers =
+        [netAwareController.navigationController viewControllers];
+    UIViewController * topViewController = [viewControllers objectAtIndex:0];
+    if (netAwareController != topViewController)
+        viewWidth -= 57;
+
     CGRect searchBarRect = CGRectMake(0.0, 0.0, viewWidth, barHeight);
     searchBar.bounds = searchBarRect;
 }

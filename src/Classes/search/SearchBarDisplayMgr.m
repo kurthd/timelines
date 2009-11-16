@@ -162,6 +162,7 @@
 
 - (void)setSearchBarFrame
 {
+    NSLog(@"Setting search bar frame");
     BOOL landscape = [[RotatableTabBarController instance] landscape];
     CGFloat viewWidth = landscape ? 470 : 310;
     CGFloat barHeight = landscape ? 32 : 44;
