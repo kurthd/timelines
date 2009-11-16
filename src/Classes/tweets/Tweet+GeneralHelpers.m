@@ -80,7 +80,7 @@ static NSString * hashRegex = @"\\B(#[\\w_]+)";
 
 - (NSString *)htmlDecodedText
 {
-    return [self.text stringByDecodingHtmlEntities];
+    return self.decodedText;
 }
 
 - (NSString *)displayName

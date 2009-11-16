@@ -139,6 +139,12 @@
 		05271BD510B092DB008E86DB /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271BD310B092DB008E86DB /* TwitterCredentials.m */; };
 		05271BF110B095FB008E86DB /* UserFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271BF010B095FB008E86DB /* UserFetcher.m */; };
 		05271BF210B095FB008E86DB /* UserFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271BF010B095FB008E86DB /* UserFetcher.m */; };
+		05271EA110B0E4B2008E86DB /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271EA010B0E4B2008E86DB /* Tweet.m */; };
+		05271EA210B0E4B2008E86DB /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271EA010B0E4B2008E86DB /* Tweet.m */; };
+		05271ED610B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271ED510B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m */; };
+		05271ED710B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271ED510B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m */; };
+		05271F0110B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05271F0010B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel */; };
+		05271F0210B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05271F0010B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel */; };
 		052E03FA10700858005CEC5F /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		052E03FB10700858005CEC5F /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
 		052E03FC10700858005CEC5F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 05B239470FEDD10900A6A2E6 /* Localizable.strings */; };
@@ -200,8 +206,6 @@
 		052E059E10700858005CEC5F /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 055777131063018D006596DB /* libz.1.2.3.dylib */; };
 		052E05DD10700F1D005CEC5F /* libYAJLIPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */; };
 		052E05E510700F45005CEC5F /* libTwitVid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D88103F575D005BB245 /* libTwitVid.a */; };
-		0531DA46107FEDEC003DC0D6 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0531DA45107FEDEC003DC0D6 /* Tweet.m */; };
-		0531DA47107FEDEC003DC0D6 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0531DA45107FEDEC003DC0D6 /* Tweet.m */; };
 		05340ABA101A3DAD0077E7C0 /* SearchBookmarksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05340AB8101A3DAD0077E7C0 /* SearchBookmarksView.xib */; };
 		05377FC910A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */; };
 		05377FCA10A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */; };
@@ -1108,14 +1112,18 @@
 		05271BD310B092DB008E86DB /* TwitterCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterCredentials.m; path = twitter/TwitterCredentials.m; sourceTree = "<group>"; };
 		05271BEF10B095FB008E86DB /* UserFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserFetcher.h; path = users/UserFetcher.h; sourceTree = "<group>"; };
 		05271BF010B095FB008E86DB /* UserFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserFetcher.m; path = users/UserFetcher.m; sourceTree = "<group>"; };
+		05271E9A10B0E274008E86DB /* twitch-v2.3-4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.3-4.xcdatamodel"; sourceTree = "<group>"; };
+		05271E9F10B0E4B2008E86DB /* Tweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tweet.h; path = tweets/Tweet.h; sourceTree = "<group>"; };
+		05271EA010B0E4B2008E86DB /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tweet.m; path = tweets/Tweet.m; sourceTree = "<group>"; };
+		05271ED410B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DecodeHtmlTweetTextEntityMigrationPolicy.h; path = "persistence/core-data/migrations/DecodeHtmlTweetTextEntityMigrationPolicy.h"; sourceTree = "<group>"; };
+		05271ED510B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DecodeHtmlTweetTextEntityMigrationPolicy.m; path = "persistence/core-data/migrations/DecodeHtmlTweetTextEntityMigrationPolicy.m"; sourceTree = "<group>"; };
+		05271F0010B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2.3-2-v2.3-4.xcmappingmodel"; path = "data-model/v2.3-2-v2.3-4.xcmappingmodel"; sourceTree = "<group>"; };
 		052C64170FED703200B259D7 /* TwitchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchAppDelegate.h; path = "app-controller/TwitchAppDelegate.h"; sourceTree = "<group>"; };
 		052C64180FED703200B259D7 /* TwitchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchAppDelegate.m; path = "app-controller/TwitchAppDelegate.m"; sourceTree = "<group>"; };
 		052E05A910700858005CEC5F /* Twitbit Lite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twitbit Lite.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		052E05AE1070093F005CEC5F /* UIApplication+ConfigurationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIApplication+ConfigurationAdditions.h"; path = "shared/UIApplication+ConfigurationAdditions.h"; sourceTree = "<group>"; };
 		052E05AF1070093F005CEC5F /* UIApplication+ConfigurationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+ConfigurationAdditions.m"; path = "shared/UIApplication+ConfigurationAdditions.m"; sourceTree = "<group>"; };
 		052E05BB10700B7E005CEC5F /* twitbit-lite-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "twitbit-lite-info.plist"; sourceTree = "<group>"; };
-		0531DA44107FEDEC003DC0D6 /* Tweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tweet.h; path = tweets/Tweet.h; sourceTree = "<group>"; };
-		0531DA45107FEDEC003DC0D6 /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tweet.m; path = tweets/Tweet.m; sourceTree = "<group>"; };
 		05340AB9101A3DAD0077E7C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/SearchBookmarksView.xib; sourceTree = "<group>"; };
 		05340ABB101A3E7E0077E7C0 /* SearchBookmarksDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBookmarksDisplayMgr.h; path = search/SearchBookmarksDisplayMgr.h; sourceTree = "<group>"; };
 		05340ABC101A3E7E0077E7C0 /* SearchBookmarksDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBookmarksDisplayMgr.m; path = search/SearchBookmarksDisplayMgr.m; sourceTree = "<group>"; };
@@ -2515,6 +2523,7 @@
 				050BA143106D717F00EC2E88 /* v1.1-v2.0.xcmappingmodel */,
 				05A7460010A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel */,
 				051AD44110AA356200CFF86C /* v2.3-1-v2.3-2.xcmappingmodel */,
+				05271F0010B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel */,
 			);
 			name = "data-model";
 			sourceTree = "<group>";
@@ -2592,8 +2601,8 @@
 		05B23C0C0FEEEEC000A6A2E6 /* tweets */ = {
 			isa = PBXGroup;
 			children = (
-				0531DA44107FEDEC003DC0D6 /* Tweet.h */,
-				0531DA45107FEDEC003DC0D6 /* Tweet.m */,
+				05271E9F10B0E4B2008E86DB /* Tweet.h */,
+				05271EA010B0E4B2008E86DB /* Tweet.m */,
 				05DBF1EB1082E61E004AB521 /* UserTweet.h */,
 				05DBF1EC1082E61E004AB521 /* UserTweet.m */,
 				05B8D5F710A3B4910030F0BF /* Tweet+GeneralHelpers.h */,
@@ -2655,6 +2664,8 @@
 			children = (
 				05B8D6C710A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.h */,
 				05B8D6C810A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m */,
+				05271ED410B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.h */,
+				05271ED510B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m */,
 			);
 			name = migrations;
 			sourceTree = "<group>";
@@ -3653,7 +3664,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				052E049010700858005CEC5F /* twitch.xcdatamodeld in Sources */,
-				0531DA47107FEDEC003DC0D6 /* Tweet.m in Sources */,
 				05DBF2131082E76B004AB521 /* BitlyLogInDisplayMgr.m in Sources */,
 				05DBF2141082E76B004AB521 /* BitlyLogInViewController.m in Sources */,
 				05DBF2151082E76B004AB521 /* NSString+WebViewAdditions.m in Sources */,
@@ -3962,6 +3972,9 @@
 				915B580E10AFCB940028B0B4 /* UserInfoLabelCellView.m in Sources */,
 				915B588B10B08CB00028B0B4 /* ActionButtonCell.m in Sources */,
 				915B588F10B08CC60028B0B4 /* ActionButtonCellView.m in Sources */,
+				05271EA210B0E4B2008E86DB /* Tweet.m in Sources */,
+				05271ED710B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m in Sources */,
+				05271F0210B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3970,7 +3983,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0599416C0FFB32F100842518 /* twitch.xcdatamodeld in Sources */,
-				0531DA46107FEDEC003DC0D6 /* Tweet.m in Sources */,
 				05DBF3281082E76D004AB521 /* BitlyLogInDisplayMgr.m in Sources */,
 				05DBF3291082E76D004AB521 /* BitlyLogInViewController.m in Sources */,
 				05DBF32A1082E76D004AB521 /* NSString+WebViewAdditions.m in Sources */,
@@ -4279,6 +4291,9 @@
 				915B580F10AFCB940028B0B4 /* UserInfoLabelCellView.m in Sources */,
 				915B588C10B08CB00028B0B4 /* ActionButtonCell.m in Sources */,
 				915B589010B08CC60028B0B4 /* ActionButtonCellView.m in Sources */,
+				05271EA110B0E4B2008E86DB /* Tweet.m in Sources */,
+				05271ED610B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m in Sources */,
+				05271F0110B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4945,8 +4960,9 @@
 				05B8D69210A3BA430030F0BF /* twitch-v2.3-1.xcdatamodel */,
 				051AD2B610A91CB400CFF86C /* twitch-v2.3-2.xcdatamodel */,
 				05271BC910B09215008E86DB /* twitch-v2.3-3.xcdatamodel */,
+				05271E9A10B0E274008E86DB /* twitch-v2.3-4.xcdatamodel */,
 			);
-			currentVersion = 05271BC910B09215008E86DB /* twitch-v2.3-3.xcdatamodel */;
+			currentVersion = 05271E9A10B0E274008E86DB /* twitch-v2.3-4.xcdatamodel */;
 			name = twitch.xcdatamodeld;
 			path = "data-model/twitch.xcdatamodeld";
 			sourceTree = "<group>";

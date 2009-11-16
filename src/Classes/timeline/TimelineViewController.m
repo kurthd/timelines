@@ -422,12 +422,23 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         NSString * url = aUser.avatar.thumbnailImageUrl;
         if (![alreadySent objectForKey:url]) {
             NSURL * avatarUrl = [NSURL URLWithString:url];
-            [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+
+            // Fetching after delay to allow scrolling to continue. Calling this
+            // here is as much superstition as anything. I have no idea if this
+            // actually helps scrolling performance.
+            [self performSelector:@selector(fetchUrl:)
+                       withObject:avatarUrl
+                       afterDelay:0.1];
             [alreadySent setObject:url forKey:url];
         }
     }
 
     return avatarImage;
+}
+
+- (void)fetchUrl:(NSURL *)url
+{
+    [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];
 }
 
 - (UIImage *)convertUrlToImage:(NSString *)url
