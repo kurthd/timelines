@@ -33,7 +33,7 @@ static UIColor * defaultDarkThemeCellColor;
 {
     if (!twitchBlueColor)
         twitchBlueColor =
-            [[UIColor colorWithRed:0 green:.4 blue:.8 alpha:1] retain];
+            [[UIColor colorWithRed:.141 green:.439 blue:.847 alpha:1] retain];
 
     return twitchBlueColor;
 }
