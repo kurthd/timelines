@@ -825,7 +825,9 @@ enum {
             creds.username];
         NSArray * lists = [UserTwitterList findAll:predicate
                                            context:[self managedObjectContext]];
+
         [listsDisplayMgr displayLists:lists];
+        [listsDisplayMgr refreshLists];
     }
 }
 
@@ -1302,6 +1304,11 @@ enum {
     for (TwitterCredentials * c in credentials)
         if (c.user)
             [sparedUsers addObject:c.user];
+
+    // all users that own lists will be spared
+    NSArray * allLists = [UserTwitterList findAll:context];
+    for (UserTwitterList * list in allLists)
+        [sparedUsers addObject:list.user];
 
     // delete all 'un-owned' tweets -- everything that's not in the user's
     // timeline, a mention, or a dm

@@ -249,11 +249,13 @@
 
 - (void)displayLists:(NSArray *)someLists
 {
-    self.listsCursor = nil;  // assume we need to start paging from here
+    [self resetState];
 
-    [self.lists removeAllObjects];
     for (TwitterList * list in someLists)
-        [self.lists setObject:list forKey:list.identifier];
+        if ([list.user.username isEqualToString:credentials.username])
+            [self.lists setObject:list forKey:list.identifier];
+        else
+            [self.subscriptions setObject:list forKey:list.identifier];
 
     [self updateViewWithNewLists];
     [[ErrorState instance] exitErrorState];
