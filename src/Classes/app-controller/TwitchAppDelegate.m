@@ -62,6 +62,7 @@
 - (void)initAccountsView;
 - (void)initSearchTab;
 - (void)initListsTab;
+- (UINavigationController *)getNavControllerForController:(UIViewController *)c;
 
 - (UIBarButtonItem *)newTweetButtonItem;
 - (UIBarButtonItem *)homeSendingTweetProgressView;
@@ -516,13 +517,16 @@ enum {
         [SettingsReader displayTheme] == kDisplayThemeDark ?
         UIBarStyleBlackOpaque : UIBarStyleDefault;
 
+    UINavigationController * navController =
+        [self getNavControllerForController:homeNetAwareViewController];
+
     NSString * homeTabTitle =
         NSLocalizedString(@"appdelegate.hometabtitle", @"");
     timelineDisplayMgr =
         [[timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         homeNetAwareViewController
-        navigationController:homeNetAwareViewController.navigationController
+        navigationController:navController
         title:homeTabTitle
         composeTweetDisplayMgr:self.composeTweetDisplayMgr]
         retain];
@@ -618,12 +622,15 @@ enum {
         findPeopleBookmarkMgr:findPeopleBookmarkMgr]
         autorelease];
 
+    UINavigationController * navController =
+        [self getNavControllerForController:mentionsNetAwareViewController];
+
     UITabBarItem * tabBarItem =
         mentionsNetAwareViewController.parentViewController.tabBarItem;
     mentionDisplayMgr =
         [[MentionTimelineDisplayMgr alloc]
         initWithWrapperController:mentionsNetAwareViewController
-        navigationController:mentionsNetAwareViewController.navigationController
+        navigationController:navController
         timelineController:timelineController
         service:service
         factory:timelineDisplayMgrFactory
@@ -731,11 +738,14 @@ enum {
         initWithTwitterCredentials:nil
                            context:[self managedObjectContext]] autorelease];
 
+    UINavigationController * navController =
+        [self getNavControllerForController:searchNetAwareViewController];
+
     TimelineDisplayMgr * displayMgr =
         [timelineDisplayMgrFactory
         createTimelineDisplayMgrWithWrapperController:
         searchNetAwareViewController
-        navigationController:searchNetAwareViewController.navigationController
+        navigationController:navController
         title:@"Search"  // set programmatically later
         composeTweetDisplayMgr:self.composeTweetDisplayMgr];
     searchNetAwareViewController.delegate = displayMgr;
@@ -804,6 +814,22 @@ enum {
         listsNetAwareViewController.navigationItem.leftBarButtonItem;
     refreshButton.target = listsDisplayMgr;
     refreshButton.action = @selector(refreshLists);
+}
+
+- (UINavigationController *)getNavControllerForController:(UIViewController *)c
+{
+    BOOL onMoreTab = NO;
+    NSArray * viewControllers = tabBarController.viewControllers;
+    for (NSInteger i = 4; i < [viewControllers count]; i++) {
+        UIViewController * vc = [viewControllers objectAtIndex:i];
+        if (vc == c.navigationController) {
+            onMoreTab = YES;
+            break;
+        }
+    }
+    return onMoreTab ?
+        tabBarController.moreNavigationController :
+        c.navigationController;
 }
 
 - (void)initAccountsView
