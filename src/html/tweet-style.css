@@ -12,7 +12,7 @@ body {
     font-family: "Helvetica";
     font-size: 12pt;
     margin: 0px;
-    padding: 7px 0px 0px 5px;
+    padding: 7px 3px 0px 5px;
     /*border: 1px solid black;*/
     word-wrap: break-word;
     background-color: transparent;
@@ -33,6 +33,7 @@ a {
     font-size: 10pt;
     color: #909090;
     margin-bottom: 10px;
+    padding-right: 1px;
     width: 100%;
 }
 
