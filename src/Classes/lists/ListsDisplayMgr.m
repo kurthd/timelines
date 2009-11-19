@@ -90,6 +90,12 @@
 {
     self.listsCursor = nextCursor;
 
+    // HACK: Insure lists deleted on the server are deleted in the app. If this
+    // is the first page of lists we've received, just remove everything we
+    // have and replace with what we've received from Twitter.
+    if (!cursor)
+        [self.lists removeAllObjects];
+
     for (TwitterList * list in someLists)
         [self.lists setObject:list forKey:list.identifier];
 
