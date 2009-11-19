@@ -13,6 +13,7 @@
 
 @interface FetchListSubscriptionsResponseProcessor ()
 @property (nonatomic, retain) TwitterCredentials * credentials;
+@property (nonatomic, copy) NSString * username;
 @property (nonatomic, copy) NSString * cursor;
 @property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
@@ -21,14 +22,16 @@
 
 @implementation FetchListSubscriptionsResponseProcessor
 
-@synthesize credentials, cursor, delegate, context;
+@synthesize credentials, username, cursor, delegate, context;
 
 + (id)processorWithCredentials:(TwitterCredentials *)someCredentials
+                      username:(NSString *)aUsername
                         cursor:(NSString *)aCursor
                        context:(NSManagedObjectContext *)aContext
                       delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id processor = [[[self class] alloc] initWithCredentials:someCredentials
+                                                    username:aUsername
                                                       cursor:aCursor
                                                      context:aContext
                                                     delegate:aDelegate];
@@ -38,6 +41,7 @@
 - (void)dealloc
 {
     self.credentials = nil;
+    self.username = nil;
     self.cursor = nil;
     self.context = nil;
     self.delegate = nil;
@@ -45,12 +49,14 @@
 }
 
 - (id)initWithCredentials:(TwitterCredentials *)someCredentials
+                 username:(NSString *)aUsername
                    cursor:(NSString *)aCursor
                   context:(NSManagedObjectContext *)aContext
                  delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.credentials = someCredentials;
+        self.username = aUsername;
         self.cursor = aCursor;
         self.context = aContext;
         self.delegate = aDelegate;
@@ -99,10 +105,12 @@
     if ([nextCursor isEqualToString:@"0"])
         nextCursor = nil;
 
-    SEL sel = @selector(listSubscriptions:fetchedFromCursor:nextCursor:);
+    SEL sel =
+        @selector(listSubscriptions:fetchedForUser:fromCursor:nextCursor:);
     if ([delegate respondsToSelector:sel])
         [delegate listSubscriptions:lists
-                  fetchedFromCursor:cursor
+                     fetchedForUser:username
+                         fromCursor:cursor
                          nextCursor:nextCursor];
 
     return YES;
@@ -112,9 +120,11 @@
 {
     NSLog(@"Failed to process lists: %@", [error detailedDescription]);
 
-    SEL sel = @selector(failedToFetchListSubscriptionsFromCursor:error:);
+    SEL sel = @selector(failedToFetchListSubscriptionsForUser:fromCursor:error:);
     if ([delegate respondsToSelector:sel])
-        [delegate failedToFetchListsFromCursor:cursor error:error];
+        [delegate failedToFetchListSubscriptionsForUser:username
+                                             fromCursor:cursor
+                                                  error:error];
 
     return YES;
 }

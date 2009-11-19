@@ -85,8 +85,8 @@
 
 #pragma mark TwitterServiceDelegate implementation
 
-- (void)lists:(NSArray *)someLists fetchedFromCursor:(NSString *)cursor
-    nextCursor:(NSString *)nextCursor
+- (void)lists:(NSArray *)someLists fetchedForUser:(NSString *)username
+    fromCursor:(NSString *)cursor nextCursor:(NSString *)nextCursor
 {
     self.listsCursor = nextCursor;
 
@@ -98,7 +98,8 @@
     [[ErrorState instance] exitErrorState];
 }
     
-- (void)failedToFetchListsFromCursor:(NSString *)cursor error:(NSError *)error
+- (void)failedToFetchListsForUser:(NSString *)username
+    fromCursor:(NSString *)cursor error:(NSError *)error
 {
     NSLog(@"Lists Display Manager: failed to fetch lists from cursor %@",
         cursor);
@@ -113,7 +114,8 @@
 }
 
 - (void)listSubscriptions:(NSArray *)listSubscriptions
-    fetchedFromCursor:(NSString *)cursor nextCursor:(NSString *)nextCursor
+    fetchedForUser:(NSString *)username fromCursor:(NSString *)cursor
+    nextCursor:(NSString *)nextCursor
 {
     self.subscriptionsCursor = nextCursor;
 
@@ -125,8 +127,8 @@
     [[ErrorState instance] exitErrorState];
 }
 
-- (void)failedToFetchListSubscriptionsFromCursor:(NSString *)cursor
-    error:(NSError *)error
+- (void)failedToFetchListSubscriptionsForUser:(NSString *)username
+    fromCursor:(NSString *)cursor error:(NSError *)error
 {
     NSLog(
         @"Lists Display Manager: failed to fetch subscriptions from cursor %@",

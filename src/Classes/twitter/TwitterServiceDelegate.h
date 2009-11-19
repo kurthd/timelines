@@ -126,15 +126,19 @@
 
 @optional
 
-- (void)lists:(NSArray *)lists fetchedFromCursor:(NSString *)cursor
-    nextCursor:(NSString *)nextCursor;
-- (void)failedToFetchListsFromCursor:(NSString *)cursor error:(NSError *)error;
+- (void)lists:(NSArray *)lists fetchedForUser:(NSString *)username
+    fromCursor:(NSString *)cursor nextCursor:(NSString *)nextCursor;
+- (void)failedToFetchListsForUser:(NSString *)username
+                       fromCursor:(NSString *)cursor
+                       error:(NSError *)error;
 
 - (void)listSubscriptions:(NSArray *)listSubscriptions
-        fetchedFromCursor:(NSString *)cursor
+           fetchedForUser:(NSString *)username
+               fromCursor:(NSString *)cursor
                nextCursor:(NSString *)nextCursor;
-- (void)failedToFetchListSubscriptionsFromCursor:(NSString *)cursor
-                                           error:(NSError *)error;
+- (void)failedToFetchListSubscriptionsForUser:(NSString *)username
+                                   fromCursor:(NSString *)cursor
+                                        error:(NSError *)error;
 
 - (void)statuses:(NSArray *)statuses
 fetchedForListId:(NSNumber *)listId

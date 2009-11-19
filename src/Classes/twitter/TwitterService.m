@@ -313,8 +313,10 @@ static NSMutableDictionary * oaTokens;
 
 - (void)fetchListsFromCursor:(NSString *)cursor
 {
+    NSString * username = credentials.username;
     ResponseProcessor * processor =
         [FetchListsResponseProcessor processorWithCredentials:credentials
+                                                     username:username
                                                        cursor:cursor
                                                       context:context
                                                      delegate:delegate];
@@ -322,8 +324,7 @@ static NSMutableDictionary * oaTokens;
     if (!cursor)
         cursor = @"-1";  // start from the first page
 
-    NSString * requestId =
-        [twitter getListsFor:credentials.username cursor:cursor];
+    NSString * requestId = [twitter getListsFor:username cursor:cursor];
 
     [self request:requestId isHandledBy:processor];
 }
@@ -333,6 +334,7 @@ static NSMutableDictionary * oaTokens;
     ResponseProcessor * processor =
         [FetchListSubscriptionsResponseProcessor
         processorWithCredentials:credentials
+                        username:credentials.username
                           cursor:cursor
                          context:context
                         delegate:delegate];
