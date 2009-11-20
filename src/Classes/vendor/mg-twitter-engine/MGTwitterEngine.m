@@ -1968,14 +1968,14 @@
 	NSString * urlString = nil;
 #if SET_AUTHORIZATION_IN_HEADER
     if ([[self class] useVersionedApi])
-        urlString = [NSString stringWithFormat:@"%@://%@%@/%@", connectionType, domain, version, fullPath];
+        urlString = [NSString stringWithFormat:@"%@://%@/%@/%@", connectionType, domain, version, fullPath];
     else
-        urlString = [NSString stringWithFormat:@"%@://%@%@", connectionType, domain, fullPath];
+        urlString = [NSString stringWithFormat:@"%@://%@/%@", connectionType, domain, fullPath];
 #else
     if ([[self class] useVersionedApi])
         urlString = [NSString stringWithFormat:@"%@://%@:%@@%@%@/%@", connectionType, [self _encodeString:_username], [self _encodeString:_password], domain, version, fullPath];
     else
-        urlString = [NSString stringWithFormat:@"%@://%@:%@@%@%@", connectionType, [self _encodeString:_username], [self _encodeString:_password], domain, fullPath];
+        urlString = [NSString stringWithFormat:@"%@://%@:%@@%@/%@", connectionType, [self _encodeString:_username], [self _encodeString:_password], domain, fullPath];
 #endif
 
     return urlString;
