@@ -16,8 +16,9 @@
 @property (nonatomic, copy) NSString * username;
 @property (nonatomic, copy) NSString * cursor;
 @property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
-
 @property (nonatomic, retain) NSManagedObjectContext * context;
+
+- (NSDictionary *)currentListsForAccount:(NSString *)aUsername;
 @end
 
 @implementation FetchListSubscriptionsResponseProcessor
@@ -77,6 +78,16 @@
     NSArray * listsData = [wrapper objectForKey:@"lists"];
     NSAssert1(listsData, @"No lists found in dictionary: %@", wrapper);
 
+    // HACK: Insure we delete lists locally that have been deleted on the
+    // server. Fetch all current lists, and delete those that we haven't
+    // downloaded once we've processed the current list. Only do this for
+    // the first set of lists that have been retrieved, in effect
+    // 'resetting' the lists once we start paging through them.
+    NSMutableDictionary * currentLists = nil;
+    if (cursor)
+        currentLists =
+            [[self currentListsForAccount:credentials.username] mutableCopy];
+
     NSMutableArray * lists = [NSMutableArray arrayWithCapacity:listsData.count];
     for (NSDictionary * listData in listsData) {
         NSDictionary * userData = [listData objectForKey:@"user"];
@@ -96,11 +107,6 @@
         [lists addObject:list];
     }
 
-    NSError * error = nil;
-    if (![context save:&error])
-        NSLog(@"Failed to save state after downloading lists: %@",
-            [error detailedDescription]);
-
     NSString * nextCursor = [[wrapper objectForKey:@"next_cursor"] description];
     if ([nextCursor isEqualToString:@"0"])
         nextCursor = nil;
@@ -113,6 +119,16 @@
                          fromCursor:cursor
                          nextCursor:nextCursor];
 
+    // now that we've notified the delegate of the lists, delete lists that
+    // weren't re-downloaded
+    for (NSNumber * listId in [currentLists allKeys])
+        [context deleteObject:[currentLists objectForKey:listId]];
+
+    NSError * error = nil;
+    if (![context save:&error])
+        NSLog(@"Failed to save state after downloading lists: %@",
+            [error detailedDescription]);
+
     return YES;
 }
 
@@ -120,13 +136,31 @@
 {
     NSLog(@"Failed to process lists: %@", [error detailedDescription]);
 
-    SEL sel = @selector(failedToFetchListSubscriptionsForUser:fromCursor:error:);
+    SEL sel =
+        @selector(failedToFetchListSubscriptionsForUser:fromCursor:error:);
     if ([delegate respondsToSelector:sel])
         [delegate failedToFetchListSubscriptionsForUser:username
                                              fromCursor:cursor
                                                   error:error];
 
     return YES;
+}
+
+#pragma mark Private implementation
+
+- (NSDictionary *)currentListsForAccount:(NSString *)aUsername
+{
+    NSPredicate * predicate = 
+        [NSPredicate predicateWithFormat:
+        @"credentials.username == %@ AND user.username == %@",
+        username, aUsername];
+    NSArray * lists = [UserTwitterList findAll:predicate context:context];
+    NSMutableDictionary * d =
+        [NSMutableDictionary dictionaryWithCapacity:lists.count];
+    for (UserTwitterList * list in lists)
+        [d setObject:list forKey:list.identifier];
+
+    return d;
 }
 
 @end
