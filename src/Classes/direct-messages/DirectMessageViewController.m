@@ -245,14 +245,18 @@ enum TweetActionSheets {
 {
     NSIndexPath * transformedPath = [self indexForActualIndexPath:indexPath];
 
+    BOOL deselectRow = YES;
     if (transformedPath.section == kTweetActionsSection) {
         if (transformedPath.row == kReplyRow)
             [self sendReply];
-        else if (transformedPath.row == kDeleteRow)
+        else if (transformedPath.row == kDeleteRow) {
             [self confirmDeletion];
+            deselectRow = NO;
+        }
     }
 
-    [self.tableView deselectRowAtIndexPath:transformedPath animated:YES];
+    if (deselectRow)
+        [self.tableView deselectRowAtIndexPath:transformedPath animated:YES];
 }
 
 #pragma mark UIWebViewDelegate implementation
@@ -355,6 +359,9 @@ enum TweetActionSheets {
         [self.navigationController popViewControllerAnimated:YES];
         [delegate deleteTweet:directMessage.identifier];
     }
+
+    NSIndexPath * indexPath = [self.tableView indexPathForSelectedRow];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     [sheet autorelease];
 }
@@ -591,9 +598,9 @@ enum TweetActionSheets {
 - (void)confirmDeletion
 {
     NSString * cancel =
-        NSLocalizedString(@"tweetdetailsview.deletetweet.cancel", @"");
+        NSLocalizedString(@"directmessageview.deletetmessage.cancel", @"");
     NSString * delete =
-        NSLocalizedString(@"tweetdetailsview.deletetweet.confirm", @"");
+        NSLocalizedString(@"directmessageview.deletemessage.confirm", @"");
 
     UIActionSheet * sheet =
         [[UIActionSheet alloc]

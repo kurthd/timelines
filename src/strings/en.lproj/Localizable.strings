@@ -71,7 +71,7 @@ listsviewcontroller.sections.subscriptions = "Subscriptions";
 listsviewcontroller.subscribercount = "%@ followers";
 listsviewcontroller.membercount = "following %@";
 
-/* TweetDetailsViewController */
+/* TweetViewController */
 tweetdetailsview.title = "Tweet";
 tweetdetailsview.titleformat = "%d of %d";
 tweetdetailsview.title.directmessage = "Direct Message";
@@ -91,6 +91,10 @@ tweetdetailsview.deletetweet.label = "Delete";
 tweetdetailsview.deletetweet.confirm = "Delete Tweet";
 tweetdetailsview.deletetweet.cancel = "Cancel";
 tweetdetailsview.reply.label = "Reply with Direct Message";
+
+/* DirectMessageViewController */
+directmessageview.deletetmessage.cancel = "Cancel";
+directmessageview.deletemessage.confirm = "Delete Direct Message";
 
 /* Sending tweets */
 sendtweet.failed.alert.title = "Failed to Send Tweet";
