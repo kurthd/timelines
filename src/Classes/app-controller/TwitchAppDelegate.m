@@ -1655,18 +1655,26 @@ enum {
 
     NSMutableArray * viewControllers = [NSMutableArray array];
     [viewControllers addObjectsFromArray:tabBarController.viewControllers];
-    NSArray * tabOrder = uiState.tabOrder;
-    if (tabOrder) {
-        for (int i = [tabOrder count] - 1; i >= 0; i--) {
-            NSNumber * tabNumber = [tabOrder objectAtIndex:i];
-            for (UIViewController * viewController in
-                tabBarController.viewControllers)
-                    if (viewController.tabBarItem.tag == [tabNumber intValue]) {
-                        [viewControllers removeObject:viewController];
-                        [viewControllers insertObject:viewController
-                            atIndex:0];
+
+    // HACK: Fixing a bug when upgrading from Twitbit 2.2 to 2.3 where we added
+    // a tab. The tab order set in MainWindow.xib is not honored because the tab
+    // order read from persistence, which is the 2.2 default since tabs could
+    // not be reordered in that version, does not include the new lists tab. At
+    // least when upgrading from 2.2 to 2.3, let's preserve the default order as
+    // set in MainWindow. We may have to do something more intelligent in future
+    // versions if we continue to add tabs.
+    if (uiState.tabOrder.count == viewControllers.count) {
+        NSArray * tabOrder = uiState.tabOrder;
+        if (tabOrder) {
+            for (int i = [tabOrder count] - 1; i >= 0; i--) {
+                NSNumber * tabNumber = [tabOrder objectAtIndex:i];
+                for (UIViewController * vc in tabBarController.viewControllers)
+                    if (vc.tabBarItem.tag == [tabNumber intValue]) {
+                        [viewControllers removeObject:vc];
+                        [viewControllers insertObject:vc atIndex:0];
                         break;
                     }
+            }
         }
         tabBarController.viewControllers = viewControllers;
     }
