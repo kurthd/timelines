@@ -32,6 +32,8 @@
 //
 // Twitbit
 //
+#import "NSManagedObject+TediousCodeAdditions.h"
+
 #import "Tweet.h"
 #import "Tweet+GeneralHelpers.h"
 

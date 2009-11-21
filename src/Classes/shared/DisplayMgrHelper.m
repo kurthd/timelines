@@ -12,6 +12,7 @@
 #import "UIColor+TwitchColors.h"
 #import "NearbySearchDataSource.h"
 #import "ErrorState.h"
+#import "TwitbitShared.h"
 
 @interface DisplayMgrHelper ()
 
@@ -590,29 +591,38 @@
 
 - (void)showUserInfoForUsername:(NSString *)aUsername
 {
-    self.userInfoUsername = [aUsername lowercaseString];
+    // see if we have the user in the persistence store before fetching it from
+    // the network
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:@"username like[c] %@", aUsername];
+    NSArray * users = [User findAll:predicate context:context];
+    if (users.count == 1)
+        [self showUserInfoForUser:[users objectAtIndex:0]];
+    else {
+        self.userInfoUsername = [aUsername lowercaseString];
 
-    // HACK: forces to scroll to top
-    [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
-        animated:NO];
-    [self.userInfoController showingNewUser];
-    self.userInfoControllerWrapper.navigationItem.title = aUsername;
-    [self.userInfoControllerWrapper setCachedDataAvailable:NO];
-    [self.userInfoControllerWrapper setUpdatingState:kConnectedAndUpdating];
-    [navigationController pushViewController:self.userInfoControllerWrapper
-        animated:YES];
-    self.userInfoController.followingEnabled =
-        ![credentials.username isEqual:aUsername];
+        // HACK: forces to scroll to top
+        [self.userInfoController.tableView setContentOffset:CGPointMake(0, 300)
+            animated:NO];
+        [self.userInfoController showingNewUser];
+        self.userInfoControllerWrapper.navigationItem.title = aUsername;
+        [self.userInfoControllerWrapper setCachedDataAvailable:NO];
+        [self.userInfoControllerWrapper setUpdatingState:kConnectedAndUpdating];
+        [navigationController pushViewController:self.userInfoControllerWrapper
+            animated:YES];
+        self.userInfoController.followingEnabled =
+            ![credentials.username isEqual:aUsername];
 
-    if (self.userInfoController.followingEnabled) {
-        [service isUser:credentials.username following:aUsername];
-        [service isUser:aUsername following:credentials.username];
-        [self.userInfoController setQueryingFollowedBy];
+        if (self.userInfoController.followingEnabled) {
+            [service isUser:credentials.username following:aUsername];
+            [service isUser:aUsername following:credentials.username];
+            [self.userInfoController setQueryingFollowedBy];
+        }
+
+        [service isUserBlocked:aUsername];
+
+        [self.userInfoTwitterService fetchUserInfoForUsername:aUsername];
     }
-
-    [service isUserBlocked:aUsername];
-
-    [self.userInfoTwitterService fetchUserInfoForUsername:aUsername];
 }
 
 - (void)sendDirectMessageToCurrentUser
