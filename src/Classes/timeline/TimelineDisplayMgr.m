@@ -238,9 +238,6 @@
     self.lastTweetDetailsController.showsExtendedActions = YES;
     [self.lastTweetDetailsController displayTweet:tweet
          onNavigationController:nil];
-    [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
-    [self.lastTweetDetailsWrapperController
-        setUpdatingState:kConnectedAndNotUpdating];
 }
 
 - (void)failedToFetchTweetWithId:(NSNumber *)tweetId error:(NSError *)error
@@ -249,7 +246,7 @@
     NSLog(@"Error: %@", error);
     NSString * errorMessage =
         NSLocalizedString(@"timelinedisplaymgr.error.fetchtweet", @"");
-    [[ErrorState instance] displayErrorWithTitle:errorMessage];
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
     [self.lastTweetDetailsWrapperController setUpdatingState:kDisconnected];
 }
 
@@ -291,6 +288,11 @@
 
 - (void)selectedTweet:(Tweet *)tweet
 {
+    if ([[tweet searchResult] boolValue]) {
+        [self loadNewTweetWithId:tweet.identifier username:tweet.user.username];
+        return;
+    }
+
     displayedATweet = YES;
     // HACK: forces to scroll to top
     [self.tweetDetailsController.tableView setContentOffset:CGPointMake(0, 300)
@@ -519,6 +521,16 @@
     [displayMgrHelper showLocationOnMap:location];
 }
 
+- (void)tweetViewController:(TweetViewController *)controller
+       finishedLoadingTweet:(Tweet *)tweet
+{
+    if (controller == self.lastTweetDetailsController) {
+        [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
+        [self.lastTweetDetailsWrapperController
+            setUpdatingState:kConnectedAndNotUpdating];
+    }
+}
+
 #pragma mark ConversationDisplayMgrDelegate implementation
 
 - (void)displayTweetFromConversation:(Tweet *)tweet
@@ -638,14 +650,6 @@
         autorelease];
     tempTweetDetailsController.realParentViewController =
         tweetDetailsWrapperController;
-
-    UIBarButtonItem * replyButton =
-        [[[UIBarButtonItem alloc]
-        initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
-        action:@selector(presentActionsForCurrentTweetDetailsUser)]
-        autorelease];
-    [tweetDetailsWrapperController.navigationItem
-        setRightBarButtonItem:replyButton];
 
     NSString * title = NSLocalizedString(@"tweetdetailsview.title", @"");
     tweetDetailsWrapperController.navigationItem.title = title;

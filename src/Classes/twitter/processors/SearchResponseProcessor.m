@@ -131,6 +131,8 @@
         tweet.truncated = [NSNumber numberWithBool:NO];
         tweet.favorited = [NSNumber numberWithInteger:0];
 
+        tweet.searchResult = [NSNumber numberWithBool:YES];
+
         tweet.user = tweetAuthor;
 
         [tweets addObject:tweet];

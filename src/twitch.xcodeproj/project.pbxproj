@@ -139,8 +139,6 @@
 		05271BD510B092DB008E86DB /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271BD310B092DB008E86DB /* TwitterCredentials.m */; };
 		05271BF110B095FB008E86DB /* UserFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271BF010B095FB008E86DB /* UserFetcher.m */; };
 		05271BF210B095FB008E86DB /* UserFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271BF010B095FB008E86DB /* UserFetcher.m */; };
-		05271EA110B0E4B2008E86DB /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271EA010B0E4B2008E86DB /* Tweet.m */; };
-		05271EA210B0E4B2008E86DB /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271EA010B0E4B2008E86DB /* Tweet.m */; };
 		05271ED610B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271ED510B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m */; };
 		05271ED710B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271ED510B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m */; };
 		05271F0110B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05271F0010B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel */; };
@@ -837,6 +835,8 @@
 		05FA5685109F5E10004931EA /* FastTimelineTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FA5683109F5E10004931EA /* FastTimelineTableViewCellView.m */; };
 		05FA5686109F5E10004931EA /* FastTimelineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FA5680109F5E10004931EA /* FastTimelineTableViewCell.m */; };
 		05FA5687109F5E10004931EA /* FastTimelineTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FA5683109F5E10004931EA /* FastTimelineTableViewCellView.m */; };
+		05FC8FEE10B7CA3A00721DEC /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FC8FED10B7CA3A00721DEC /* Tweet.m */; };
+		05FC8FEF10B7CA3A00721DEC /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FC8FED10B7CA3A00721DEC /* Tweet.m */; };
 		910EFE1D1017E391002083D6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 910EFE1C1017E391002083D6 /* AudioToolbox.framework */; };
 		9112EAB5102E236E002715DC /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
 		9125779A104C7A53006F5DBD /* DarkenedTableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */; };
@@ -1119,8 +1119,6 @@
 		05271BEF10B095FB008E86DB /* UserFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserFetcher.h; path = users/UserFetcher.h; sourceTree = "<group>"; };
 		05271BF010B095FB008E86DB /* UserFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserFetcher.m; path = users/UserFetcher.m; sourceTree = "<group>"; };
 		05271E9A10B0E274008E86DB /* twitch-v2.3-4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.3-4.xcdatamodel"; sourceTree = "<group>"; };
-		05271E9F10B0E4B2008E86DB /* Tweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tweet.h; path = tweets/Tweet.h; sourceTree = "<group>"; };
-		05271EA010B0E4B2008E86DB /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tweet.m; path = tweets/Tweet.m; sourceTree = "<group>"; };
 		05271ED410B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DecodeHtmlTweetTextEntityMigrationPolicy.h; path = "persistence/core-data/migrations/DecodeHtmlTweetTextEntityMigrationPolicy.h"; sourceTree = "<group>"; };
 		05271ED510B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DecodeHtmlTweetTextEntityMigrationPolicy.m; path = "persistence/core-data/migrations/DecodeHtmlTweetTextEntityMigrationPolicy.m"; sourceTree = "<group>"; };
 		05271F0010B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2.3-2-v2.3-4.xcmappingmodel"; path = "data-model/v2.3-2-v2.3-4.xcmappingmodel"; sourceTree = "<group>"; };
@@ -1531,6 +1529,8 @@
 		05FA5681109F5E10004931EA /* FastTimelineTableViewCellDisplayType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FastTimelineTableViewCellDisplayType.h; path = timeline/FastTimelineTableViewCellDisplayType.h; sourceTree = "<group>"; };
 		05FA5682109F5E10004931EA /* FastTimelineTableViewCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FastTimelineTableViewCellView.h; path = timeline/FastTimelineTableViewCellView.h; sourceTree = "<group>"; };
 		05FA5683109F5E10004931EA /* FastTimelineTableViewCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FastTimelineTableViewCellView.m; path = timeline/FastTimelineTableViewCellView.m; sourceTree = "<group>"; };
+		05FC8FEC10B7CA3A00721DEC /* Tweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tweet.h; path = tweets/Tweet.h; sourceTree = "<group>"; };
+		05FC8FED10B7CA3A00721DEC /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tweet.m; path = tweets/Tweet.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -2613,8 +2613,8 @@
 		05B23C0C0FEEEEC000A6A2E6 /* tweets */ = {
 			isa = PBXGroup;
 			children = (
-				05271E9F10B0E4B2008E86DB /* Tweet.h */,
-				05271EA010B0E4B2008E86DB /* Tweet.m */,
+				05FC8FEC10B7CA3A00721DEC /* Tweet.h */,
+				05FC8FED10B7CA3A00721DEC /* Tweet.m */,
 				05DBF1EB1082E61E004AB521 /* UserTweet.h */,
 				05DBF1EC1082E61E004AB521 /* UserTweet.m */,
 				05B8D5F710A3B4910030F0BF /* Tweet+GeneralHelpers.h */,
@@ -3957,12 +3957,12 @@
 				915B580E10AFCB940028B0B4 /* UserInfoLabelCellView.m in Sources */,
 				915B588B10B08CB00028B0B4 /* ActionButtonCell.m in Sources */,
 				915B588F10B08CC60028B0B4 /* ActionButtonCellView.m in Sources */,
-				05271EA210B0E4B2008E86DB /* Tweet.m in Sources */,
 				05271ED710B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m in Sources */,
 				05271F0210B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel in Sources */,
 				057A2A7110B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m in Sources */,
 				057A2A7210B7079B00784593 /* UserOrDirectMessage21To23EntityMigrationPolicy.m in Sources */,
 				057A2A8010B7090A00784593 /* v2.1-v2.3.xcmappingmodel in Sources */,
+				05FC8FEE10B7CA3A00721DEC /* Tweet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4279,12 +4279,12 @@
 				915B580F10AFCB940028B0B4 /* UserInfoLabelCellView.m in Sources */,
 				915B588C10B08CB00028B0B4 /* ActionButtonCell.m in Sources */,
 				915B589010B08CC60028B0B4 /* ActionButtonCellView.m in Sources */,
-				05271EA110B0E4B2008E86DB /* Tweet.m in Sources */,
 				05271ED610B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m in Sources */,
 				05271F0110B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel in Sources */,
 				057A2A7310B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m in Sources */,
 				057A2A7410B7079B00784593 /* UserOrDirectMessage21To23EntityMigrationPolicy.m in Sources */,
 				057A2A8110B7090A00784593 /* v2.1-v2.3.xcmappingmodel in Sources */,
+				05FC8FEF10B7CA3A00721DEC /* Tweet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

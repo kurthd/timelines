@@ -62,7 +62,7 @@
 
     NSNumber * nextId = firstTweetId;
     Tweet * tweet = nil;
-    while (nextId || tweet) {
+    while ([nextId integerValue] || tweet) {
         NSPredicate * predicate =
             [NSPredicate predicateWithFormat:@"identifier == %@", nextId];
         Tweet * tweet = [Tweet findFirst:predicate context:context];

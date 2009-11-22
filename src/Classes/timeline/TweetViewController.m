@@ -387,6 +387,11 @@ enum TweetActionSheets {
         [navigationController pushViewController:self animated:YES];
 
     [self displayTweet];
+
+    SEL sel = @selector(tweetViewController:finishedLoadingTweet:);
+    if ([self.delegate respondsToSelector:sel])
+        [self.delegate tweetViewController:self
+                      finishedLoadingTweet:self.tweet];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error

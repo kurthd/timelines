@@ -64,6 +64,7 @@
     NSDictionary * status = [statuses objectAtIndex:0];
     Tweet * tweet = [self createTweetFromStatus:status
                                     isUserTweet:NO
+                                 isSearchResult:NO
                                     credentials:nil
                                         context:self.context];
 

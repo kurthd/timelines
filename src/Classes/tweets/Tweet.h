@@ -2,7 +2,7 @@
 //  Tweet.h
 //  twitch
 //
-//  Created by John A. Debay on 11/15/09.
+//  Created by John A. Debay on 11/21/09.
 //  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
@@ -17,6 +17,7 @@
 
 @property (nonatomic, retain) NSString * inReplyToTwitterUserId;
 @property (nonatomic, retain) NSDate * timestamp;
+@property (nonatomic, retain) NSNumber * searchResult;
 @property (nonatomic, retain) NSString * source;
 @property (nonatomic, retain) NSNumber * inReplyToTwitterTweetId;
 @property (nonatomic, retain) NSNumber * identifier;

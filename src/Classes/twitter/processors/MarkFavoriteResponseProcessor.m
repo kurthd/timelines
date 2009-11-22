@@ -85,7 +85,8 @@
     if (!tweet)
         tweet = [Tweet createInstance:context];
 
-    [self populateTweet:tweet fromData:tweetData context:context];
+    [self populateTweet:tweet fromData:tweetData
+        isSearchResult:NO context:context];
 
     // mark the tweet as a favorite or not manually; twitter caches this
     // information, so the received data will be stale

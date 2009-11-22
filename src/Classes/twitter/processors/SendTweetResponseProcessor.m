@@ -87,7 +87,8 @@
     if (!tweet)
         tweet = [UserTweet createInstance:context];
 
-    [self populateTweet:tweet fromData:tweetData context:context];
+    [self populateTweet:tweet fromData:tweetData
+        isSearchResult:NO context:context];
     tweet.user = user;
     tweet.credentials = self.credentials;
 

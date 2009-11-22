@@ -69,6 +69,7 @@
 
 - (Tweet *)createTweetFromStatus:(NSDictionary *)status
                      isUserTweet:(BOOL)isUserTweet
+                  isSearchResult:(BOOL)isSearchResult
                      credentials:(TwitterCredentials *)credentials
                          context:(NSManagedObjectContext *)context
 {
@@ -101,7 +102,7 @@
                            credentials:credentials
                                context:context];
     else
-        [Tweet tweetWithId:tweetId context:context];
+        tweet = [Tweet tweetWithId:tweetId context:context];
 
     if (!tweet) {
         if (isUserTweet) {
@@ -112,7 +113,8 @@
             tweet = [Tweet createInstance:context];
     }
 
-    [self populateTweet:tweet fromData:tweetData context:context];
+    [self populateTweet:tweet fromData:tweetData
+        isSearchResult:isSearchResult context:context];
     tweet.user = tweetAuthor;
 
     if (credentials && [credentials.username isEqual:tweetAuthor.username])
@@ -154,7 +156,8 @@
     Mention * tweet = [Mention tweetWithId:tweetId context:context];
     if (!tweet)
         tweet = [Mention createInstance:context];
-    [self populateTweet:tweet fromData:tweetData context:context];
+    [self populateTweet:tweet fromData:tweetData
+        isSearchResult:NO context:context];
     tweet.user = tweetAuthor;
     tweet.credentials = credentials;
 
@@ -200,6 +203,7 @@
 
 - (void)populateTweet:(Tweet *)tweet
              fromData:(NSDictionary *)data
+       isSearchResult:(BOOL)isSearchResult
               context:(NSManagedObjectContext *)context
 {
     tweet.identifier = [data safeObjectForKey:@"id"];
@@ -227,8 +231,7 @@
     tweet.inReplyToTwitterUserId =
         [[data safeObjectForKey:@"in_reply_to_user_id"] description];
 
-    if ([tweet.text isEqual:@"i finally (blanked) the (blank). whew"])
-        NSLog(@"here's the tweet: %@", data);
+    tweet.searchResult = [NSNumber numberWithBool:isSearchResult];
 
     NSDictionary * geodata = [data objectForKey:@"geo"];
     if (geodata && ![geodata isEqual:[NSNull null]]) {

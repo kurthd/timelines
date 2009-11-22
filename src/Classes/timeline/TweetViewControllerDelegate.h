@@ -8,7 +8,7 @@
 
 @class TweetViewController;
 
-@protocol TweetViewControllerDelegate
+@protocol TweetViewControllerDelegate <NSObject>
 
 - (void)showUserInfoForUser:(User *)aUser;
 - (void)showUserInfoForUsername:(NSString *)aUsername;
@@ -22,5 +22,10 @@
 - (void)loadConversationFromTweetId:(NSNumber *)tweetId;
 - (void)deleteTweet:(NSNumber *)tweetId;
 - (void)showLocationOnMap:(NSString *)location;
+
+@optional
+
+- (void)tweetViewController:(TweetViewController *)controller
+       finishedLoadingTweet:(Tweet *)tweet;
 
 @end

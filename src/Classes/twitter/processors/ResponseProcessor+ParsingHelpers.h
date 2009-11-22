@@ -14,6 +14,7 @@
 
 - (Tweet *)createTweetFromStatus:(NSDictionary *)status
                      isUserTweet:(BOOL)isUserTweet
+                  isSearchResult:(BOOL)isSearchResult
                      credentials:(TwitterCredentials *)credentials
                          context:(NSManagedObjectContext *)context;
 - (Mention *)createMentionFromStatus:(NSDictionary *)status
@@ -23,6 +24,7 @@
 - (void)populateUser:(User *)user fromData:(NSDictionary *)data;
 - (void)populateTweet:(Tweet *)tweet
              fromData:(NSDictionary *)data
+       isSearchResult:(BOOL)isSearchResult
               context:(NSManagedObjectContext *)context;
 - (void)populateDirectMessage:(DirectMessage *)dm fromData:(NSDictionary *)data;
 

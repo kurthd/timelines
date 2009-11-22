@@ -88,6 +88,7 @@
     for (NSDictionary * status in statuses) {
         Tweet * tweet = [self createTweetFromStatus:status
                                         isUserTweet:NO
+                                     isSearchResult:NO
                                         credentials:nil
                                             context:self.context];
         if (tweet)
