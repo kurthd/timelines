@@ -754,7 +754,7 @@
                 errorMessage = [[parsedObjects objectAtIndex:0] objectForKey:@"error"];
             if (errorMessage) {
                 [mutableInfo setObject:errorMessage forKey:NSLocalizedDescriptionKey];
-                NSString * errorDomain = [[self class] twitterApiErrorDomain];
+                NSString * errorDomain = [NSError twitterApiErrorDomain];
                 [connection setError:[NSError errorWithDomain:errorDomain code:error.code userInfo:mutableInfo]];
             }
             [mutableInfo release];
@@ -1911,11 +1911,6 @@
 
 #endif
 
-+ (NSString *)twitterApiErrorDomain
-{
-    return @"Twitter API";
-}
-
 - (NSString *)baseUrlWithPath:(NSString *)path
                   requestType:(MGTwitterRequestType)requestType
                        params:(NSDictionary *)params
@@ -1997,6 +1992,15 @@
 + (NSString *)apiDomain
 {
     return [[self class] useVersionedApi] ? TWITTER_DOMAIN_VERSIONED : TWITTER_DOMAIN_UNVERSIONED;
+}
+
+@end
+
+@implementation NSError (MGTwitterEngine)
+
++ (NSString *)twitterApiErrorDomain
+{
+    return @"Twitter API";
 }
 
 @end

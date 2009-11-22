@@ -12,6 +12,7 @@
 #import "RegexKitLite.h"
 #import "ErrorState.h"
 #import "NSArray+IterationAdditions.h"
+#import "MGTwitterEngine.h"  // for [NSError twitterApiErrorDomain]
 
 @interface DirectMessagesDisplayMgr ()
 
@@ -250,19 +251,29 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     outstandingSentRequests--;
 }
 
-- (void)deletedDirectMessageWithId:(NSString *)directMessageId
+- (void)deletedDirectMessageWithId:(NSNumber *)directMessageId
 {
-    [directMessageCache removeDirectMessageWithId:directMessageId];
+    [directMessageCache
+        removeDirectMessageWithId:[directMessageId description]];
 }
 
-- (void)failedToDeleteDirectMessageWithId:(NSString *)directMessageId
+- (void)failedToDeleteDirectMessageWithId:(NSNumber *)directMessageId
     error:(NSError *)error;
 {
     NSLog(@"Direct message display manager: failed to delete direct message");
     NSLog(@"Error: %@", error);
-    NSString * errorMessage =
-        NSLocalizedString(@"timelinedisplaymgr.error.deletedirectmessage", @"");
-    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+
+    // if the message has already been deleted on the server, don't treat it as
+    // an error; the DM has already been removed from the display
+    BOOL alreadyDeletedOnServer =
+        [[error domain] isEqualToString:[NSError twitterApiErrorDomain]] &&
+        [error code] == 404;
+    if (!alreadyDeletedOnServer) {
+        NSString * errorMessage =
+            NSLocalizedString(@"timelinedisplaymgr.error.deletedirectmessage",
+            @"");
+        [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+    }
 }
 
 #pragma mark DirectMessageInboxViewControllerDelegate implementation

@@ -6,7 +6,7 @@
 #import "User.h"
 #import "User+CoreDataAdditions.h"
 #import "ResponseProcessor+ParsingHelpers.h"
-#import "MGTwitterEngine.h"
+#import "MGTwitterEngine.h"  // for [NSError twitterApiErrorDomain]
 
 @interface BlockExistsResponseProcessor ()
 
@@ -70,7 +70,7 @@
 
 - (BOOL)processErrorResponse:(NSError *)error
 {
-    NSString * twitterApiErrorDomain = [MGTwitterEngine twitterApiErrorDomain];
+    NSString * twitterApiErrorDomain = [NSError twitterApiErrorDomain];
     if ([error.domain isEqual:twitterApiErrorDomain] && error.code == 404) {
         // Twitter sends a 404 when a block does not exist
         SEL sel = @selector(userIsNotBlocked:);

@@ -79,7 +79,7 @@
 
 - (void)sendDirectMessage:(NSString *)message to:(NSString *)username;
 
-- (void)deleteDirectMessage:(NSString *)directMessageId;
+- (void)deleteDirectMessage:(NSNumber *)directMessageId;
 
 #pragma mark Favorites
 

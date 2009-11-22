@@ -266,7 +266,7 @@ static NSMutableDictionary * oaTokens;
     [self request:requestId isHandledBy:processor];
 }
 
-- (void)deleteDirectMessage:(NSString *)directMessageId
+- (void)deleteDirectMessage:(NSNumber *)directMessageId
 {
     ResponseProcessor * processor =
         [DeleteDirectMessageResponseProcessor
@@ -274,7 +274,8 @@ static NSMutableDictionary * oaTokens;
                              context:context
                             delegate:delegate];
 
-    NSString * requestId = [twitter deleteDirectMessage:directMessageId];
+    NSString * requestId =
+        [twitter deleteDirectMessage:[directMessageId description]];
 
     [self request:requestId isHandledBy:processor];
 }

@@ -5,12 +5,15 @@
 #import "DeleteDirectMessageResponseProcessor.h"
 #import "DirectMessage.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
+#import "MGTwitterEngine.h"  // for [NSError twitterApiErrorDomain]
 
 @interface DeleteDirectMessageResponseProcessor ()
 
-@property (nonatomic, copy) NSString * directMessageId;
+@property (nonatomic, copy) NSNumber * directMessageId;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
+
+- (BOOL)physicallyDeleteDirectMessageWithId:(NSNumber *)dmId;
 
 @end
 
@@ -18,7 +21,7 @@
 
 @synthesize directMessageId, context, delegate;
 
-+ (id)processorWithDirectMessageId:(NSString *)aDirectMessageId
++ (id)processorWithDirectMessageId:(NSNumber *)aDirectMessageId
                            context:(NSManagedObjectContext *)aContext
                           delegate:(id<TwitterServiceDelegate>)aDelegate
 {
@@ -36,7 +39,7 @@
     [super dealloc];
 }
 
-- (id)initWithDirectMessageId:(NSString *)aDirectMessageId
+- (id)initWithDirectMessageId:(NSNumber *)aDirectMessageId
                       context:(NSManagedObjectContext *)aContext
                      delegate:(id<TwitterServiceDelegate>)aDelegate
 {
@@ -62,13 +65,7 @@
     if ([delegate respondsToSelector:sel])
         [delegate deletedDirectMessageWithId:directMessageId];
 
-    NSPredicate * predicate =
-        [NSPredicate predicateWithFormat:@"identifier == %@", directMessageId];
-    DirectMessage * dm = [DirectMessage findFirst:predicate context:context];
-    NSAssert1(dm, @"Failed to find expected direct message with ID so it can "
-        "be deleted: '%@'.", directMessageId);
-    [context deleteObject:dm];
-    [context save:NULL];
+    [self physicallyDeleteDirectMessageWithId:directMessageId];
 
     return YES;
 }
@@ -82,7 +79,31 @@
         [delegate failedToDeleteDirectMessageWithId:directMessageId
                                               error:error];
 
+    // if the message has already been deleted on the server, delete our local
+    // copy
+    BOOL alreadyDeletedOnServer =
+        [[error domain] isEqualToString:[NSError twitterApiErrorDomain]] &&
+        [error code] == 404;
+    if (alreadyDeletedOnServer)
+        [self physicallyDeleteDirectMessageWithId:directMessageId];
+
     return YES;
+}
+
+#pragma mark Private implementation
+
+- (BOOL)physicallyDeleteDirectMessageWithId:(NSNumber *)dmId
+{
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:@"identifier == %@", directMessageId];
+    DirectMessage * dm = [DirectMessage findFirst:predicate context:context];
+
+    if (dm) {
+        [context deleteObject:dm];
+        return [context save:NULL];
+    }
+
+    return NO;
 }
 
 @end

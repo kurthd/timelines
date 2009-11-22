@@ -233,6 +233,11 @@
 #endif
 
 + (BOOL)useVersionedApi;
+
+@end
+
+@interface NSError (MGTwitterEngineAdditions)
+
 + (NSString *)twitterApiErrorDomain;
 
 @end

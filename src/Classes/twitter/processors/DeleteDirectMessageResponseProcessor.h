@@ -8,15 +8,15 @@
 
 @interface DeleteDirectMessageResponseProcessor : ResponseProcessor
 {
-    NSString * directMessageId;
+    NSNumber * directMessageId;
     id<TwitterServiceDelegate> delegate;
     NSManagedObjectContext * context;
 }
 
-+ (id)processorWithDirectMessageId:(NSString *)aDirectMessageId
++ (id)processorWithDirectMessageId:(NSNumber *)aDirectMessageId
                            context:(NSManagedObjectContext *)aContext
                           delegate:(id<TwitterServiceDelegate>)aDelegate;
-- (id)initWithDirectMessageId:(NSString *)aDirectMessageId
+- (id)initWithDirectMessageId:(NSNumber *)aDirectMessageId
                       context:(NSManagedObjectContext *)aContext
                      delegate:(id<TwitterServiceDelegate>)aDelegate;
 
