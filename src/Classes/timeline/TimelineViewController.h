@@ -39,6 +39,7 @@
 
     BOOL showInbox;
     BOOL delayedRefreshTriggered;
+    BOOL flashingScrollIndicators;
 
     NSString * mentionUsername;
     NSString * mentionString;

@@ -18,6 +18,7 @@
 
 @property (nonatomic, retain) NSString * mentionString;
 @property (nonatomic, retain) NSNumber * visibleTweetId;
+@property (nonatomic, assign) BOOL flashingScrollIndicators;
 
 - (UIImage *)getLargeAvatarForUser:(User *)aUser;
 - (UIImage *)getThumbnailAvatarForUser:(User *)aUser;
@@ -31,6 +32,8 @@
 
 - (void)configureCell:(FastTimelineTableViewCell *)cell
     forTweet:(Tweet *)tweet;
+
+- (void)setScrollIndicatorBlackoutTimer;
 
 + (UIImage *)defaultAvatar;
 + (BOOL)displayWithUsername;
@@ -49,7 +52,8 @@ static BOOL highlightNewTweets;
 static BOOL alreadyReadHighlightNewTweetsValue;
 
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
-    showWithoutAvatars, mentionUsername, mentionString, visibleTweetId;
+    showWithoutAvatars, mentionUsername, mentionString, visibleTweetId,
+    flashingScrollIndicators;
 
 - (void)dealloc
 {
@@ -135,6 +139,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
 
     [self.tableView reloadData];
+    [self setScrollIndicatorBlackoutTimer];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
@@ -371,7 +376,8 @@ static BOOL alreadyReadHighlightNewTweetsValue;
                 [self.tableView scrollToRowAtIndexPath:scrollIndexPath
                     atScrollPosition:UITableViewScrollPositionTop animated:NO];
             }
-            [self.tableView flashScrollIndicators];
+            if (!flashingScrollIndicators)
+                [self.tableView flashScrollIndicators];
         }
     }
 }
@@ -597,6 +603,13 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         highlightForMention = !NSEqualRanges(where, NSMakeRange(NSNotFound, 0));
     }
     [cell displayAsMention:highlightForMention];
+}
+
+- (void)setScrollIndicatorBlackoutTimer
+{
+    flashingScrollIndicators = YES;
+    [self performSelector:@selector(setFlashingScrollIndicators:) withObject:nil
+        afterDelay:1.0];
 }
 
 + (BOOL)displayWithUsername
