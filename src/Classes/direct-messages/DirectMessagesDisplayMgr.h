@@ -93,6 +93,7 @@
     BOOL receivedQueryResponse;
     NSArray * newDirectMessages;
     NewDirectMessagesState * newDirectMessagesState;
+    NSArray * lastFetchedReceivedDMs;
 
     NSUInteger loadMoreSentNextPage;
     NSUInteger loadMoreReceivedNextPage;

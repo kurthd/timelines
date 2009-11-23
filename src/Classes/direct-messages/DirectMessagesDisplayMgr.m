@@ -41,6 +41,7 @@
 
 @property (nonatomic, retain) UIBarButtonItem * inboxViewComposeTweetButton;
 @property (nonatomic, readonly) NSMutableDictionary * tweetIdToIndexDict;
+@property (nonatomic, retain) NSArray * lastFetchedReceivedDMs;
 
 @end
 
@@ -53,7 +54,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     tweetDetailsTimelineDisplayMgr, tweetDetailsNetAwareViewController,
     tweetDetailsCredentialsPublisher, tweetIdToIndexDict,
     directMessageCache, newDirectMessages, inboxViewComposeTweetButton,
-    newDirectMessagesState, currentConversationUserId;
+    newDirectMessagesState, currentConversationUserId, lastFetchedReceivedDMs;
 
 - (void)dealloc
 {
@@ -71,6 +72,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [activeAcctUsername release];
     [otherUserInConversation release];
     [selectedMessage release];
+    [lastFetchedReceivedDMs release];
 
     [managedObjectContext release];
     [credentials release];
@@ -177,13 +179,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     }
 
     if (refreshingMessages) {
-        if ([directMessages count] > 0) {
-            [newDirectMessagesState incrementCountBy:[directMessages count]];
-            [self updateBadge];
-            self.newDirectMessages = directMessages;
-
-            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
-        }
+        if ([directMessages count] > 0)
+            self.lastFetchedReceivedDMs = directMessages;
     } else
         loadMoreReceivedNextPage = [page intValue] + 1;
 
@@ -765,6 +762,17 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     [self setUpdatingState];
     if (outstandingReceivedRequests == 0 && outstandingSentRequests == 0) {
+        if (self.lastFetchedReceivedDMs) {
+            [newDirectMessagesState
+                incrementCountBy:[self.lastFetchedReceivedDMs count]];
+            [self updateBadge];
+            self.newDirectMessages = self.lastFetchedReceivedDMs;
+
+            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+
+            self.lastFetchedReceivedDMs = nil;
+        }
+
         [self constructConversationsFromMessages];
         NSArray * convoPreviews =
             [self constructConversationPreviewsFromMessages];
