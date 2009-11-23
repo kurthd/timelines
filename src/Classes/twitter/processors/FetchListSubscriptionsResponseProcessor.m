@@ -91,11 +91,13 @@
     NSMutableArray * lists = [NSMutableArray arrayWithCapacity:listsData.count];
     for (NSDictionary * listData in listsData) {
         NSDictionary * userData = [listData objectForKey:@"user"];
-        NSNumber * userId = [userData objectForKey:@"id"];
+        NSNumber * userId =
+            [[userData objectForKey:@"id"] twitterIdentifierValue];
         User * user = [User findOrCreateWithId:userId context:context];
         [self populateUser:user fromData:userData];
 
-        NSNumber * listId = [listData objectForKey:@"id"];
+        NSNumber * listId =
+            [[listData objectForKey:@"id"] twitterIdentifierValue];
         UserTwitterList * list = [UserTwitterList findOrCreateWithId:listId
                                                          credentials:credentials
                                                              context:context];

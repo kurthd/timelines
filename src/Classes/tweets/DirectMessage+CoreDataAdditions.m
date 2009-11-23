@@ -8,7 +8,7 @@
 
 @implementation DirectMessage (CoreDataAdditions)
 
-+ (id)directMessageWithId:(NSString *)targetId
++ (id)directMessageWithId:(NSNumber *)targetId
                   context:(NSManagedObjectContext *)context
 {
     NSPredicate * predicate = 

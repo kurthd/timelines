@@ -62,7 +62,7 @@
         infos.count);
     NSDictionary * info = [infos objectAtIndex:0];
 
-    NSNumber * userId = [info objectForKey:@"id"];
+    NSNumber * userId = [[info objectForKey:@"id"] twitterIdentifierValue];
     User * user = [User findOrCreateWithId:userId context:context];
     [self populateUser:user fromData:info];
 

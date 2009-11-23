@@ -83,9 +83,9 @@
     User * sender = [self userFromData:senderData];
     User * recipient = [self userFromData:recipientData];
 
-    NSString * dmId = [[status objectForKey:@"id"] description];
-    DirectMessage * dm = [DirectMessage directMessageWithId:dmId
-                                                    context:context];
+    NSNumber * dmId = [[status objectForKey:@"id"] twitterIdentifierValue];
+    DirectMessage * dm =
+        [DirectMessage directMessageWithId:dmId context:context];
 
     if (!dm) {
         dm = [DirectMessage createInstance:context];
@@ -122,7 +122,7 @@
 
 - (User *)userFromData:(NSDictionary *)data
 {
-    NSNumber * userId = [data objectForKey:@"id"];
+    NSNumber * userId = [[data objectForKey:@"id"] twitterIdentifierValue];
     User * user = [User findOrCreateWithId:userId context:context];
     [self populateUser:user fromData:data];
 

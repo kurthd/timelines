@@ -35,3 +35,7 @@
 @interface NSString (ParsingHelpers)
 - (NSDate *)twitterDateValue;
 @end
+
+@interface NSNumber (ParsingHelpers)
+- (NSNumber *)twitterIdentifierValue;
+@end

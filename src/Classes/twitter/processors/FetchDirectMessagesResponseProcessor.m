@@ -98,7 +98,7 @@
 
         NSDictionary * dmData = datum;
 
-        NSString * dmId = [[dmData objectForKey:@"id"] description];
+        NSNumber * dmId = [[dmData objectForKey:@"id"] twitterIdentifierValue];
 
         NSPredicate * predicate =
             [NSPredicate predicateWithFormat:
@@ -177,7 +177,7 @@
 
 - (User *)userFromData:(NSDictionary *)data
 {
-    NSNumber * userId = [data objectForKey:@"id"];
+    NSNumber * userId = [[data objectForKey:@"id"] twitterIdentifierValue];
     User * user = [User findOrCreateWithId:userId context:context];
     [self populateUser:user fromData:data];
 

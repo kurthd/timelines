@@ -69,7 +69,8 @@
     NSDictionary * status = [statuses lastObject];
 
     NSDictionary * userData = [status objectForKey:@"user"];
-    NSNumber * userId = [userData objectForKey:@"id"];
+    NSNumber * userId =
+        [[userData objectForKey:@"id"] twitterIdentifierValue];
     User * user = [User findOrCreateWithId:userId context:context];
     [self populateUser:user fromData:userData];
 

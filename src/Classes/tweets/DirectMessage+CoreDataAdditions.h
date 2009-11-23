@@ -7,7 +7,7 @@
 
 @interface DirectMessage (CoreDataAdditions)
 
-+ (id)directMessageWithId:(NSString *)anIdentifier
++ (id)directMessageWithId:(NSNumber *)anIdentifier
                   context:(NSManagedObjectContext *)context;
 
 @end

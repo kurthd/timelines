@@ -69,7 +69,8 @@
 
     NSMutableArray * users = [NSMutableArray arrayWithCapacity:infos.count];
     for (NSDictionary * info in infos) {
-        NSNumber * userId = [info objectForKey:@"id"];
+        NSNumber * userId =
+            [[info objectForKey:@"id"] twitterIdentifierValue];
         if (!userId)
             // asking for more when there are none gives us an element in the
             // dictionary with one element named 'friends'

@@ -91,11 +91,12 @@
         return nil;
     }
 
-    NSNumber * userId = [userData objectForKey:@"id"];
+    NSNumber * userId = [[userData objectForKey:@"id"] twitterIdentifierValue];
     User * tweetAuthor = [User findOrCreateWithId:userId context:context];
     [self populateUser:tweetAuthor fromData:userData];
 
-    NSNumber * tweetId = [tweetData objectForKey:@"id"];
+    NSNumber * tweetId =
+        [[tweetData objectForKey:@"id"] twitterIdentifierValue];
     Tweet * tweet = nil;
     if (isUserTweet)
         tweet = [UserTweet tweetWithId:tweetId
@@ -148,11 +149,12 @@
         return nil;
     }
 
-    NSNumber * userId = [userData objectForKey:@"id"];
+    NSNumber * userId = [[userData objectForKey:@"id"] twitterIdentifierValue];
     User * tweetAuthor = [User findOrCreateWithId:userId context:context];
     [self populateUser:tweetAuthor fromData:userData];
 
-    NSNumber * tweetId = [tweetData objectForKey:@"id"];
+    NSNumber * tweetId =
+        [[tweetData objectForKey:@"id"] twitterIdentifierValue];
     Mention * tweet = [Mention tweetWithId:tweetId context:context];
     if (!tweet)
         tweet = [Mention createInstance:context];
@@ -169,7 +171,7 @@
 
 - (void)populateUser:(User *)user fromData:(NSDictionary *)data
 {
-    user.identifier = [data safeObjectForKey:@"id"];
+    user.identifier = [[data safeObjectForKey:@"id"] twitterIdentifierValue];
     user.username = [data safeObjectForKey:@"screen_name"];
 
     user.name = [data safeObjectForKey:@"name"];
@@ -206,7 +208,7 @@
        isSearchResult:(BOOL)isSearchResult
               context:(NSManagedObjectContext *)context
 {
-    tweet.identifier = [data safeObjectForKey:@"id"];
+    tweet.identifier = [[data safeObjectForKey:@"id"] twitterIdentifierValue];
     tweet.text = [data safeObjectForKey:@"text"];
     tweet.decodedText = [tweet.text stringByDecodingHtmlEntities];
     tweet.source = [data safeObjectForKey:@"source"];
@@ -252,7 +254,7 @@
 
 - (void)populateDirectMessage:(DirectMessage *)dm fromData:(NSDictionary *)data
 {
-    dm.identifier = [data objectForKey:@"id"];
+    dm.identifier = [[data objectForKey:@"id"] twitterIdentifierValue];
     dm.text = [data objectForKey:@"text"];
     dm.sourceApiRequestType =
         [[data objectForKey:@"source_api_request_type"] description];
@@ -262,7 +264,7 @@
 
 - (void)populateList:(TwitterList *)list fromData:(NSDictionary *)data
 {
-    list.identifier = [data objectForKey:@"id"];
+    list.identifier = [[data objectForKey:@"id"] twitterIdentifierValue];
     list.fullName = [data objectForKey:@"full_name"];
     list.memberCount = [data objectForKey:@"member_count"];
     list.mode = [data objectForKey:@"mode"];
@@ -295,8 +297,10 @@
             // Swap the IDs and created dates of the user and tweet
             //
 
-            NSNumber * userId = [tweetData objectForKey:@"id"];
-            NSNumber * tweetId = [userData objectForKey:@"id"];
+            NSNumber * userId =
+                [[tweetData objectForKey:@"id"] twitterIdentifierValue];
+            NSNumber * tweetId =
+                [[userData objectForKey:@"id"] twitterIdentifierValue];
             [actualUserData setObject:userId forKey:@"id"];
             [actualTweetData setObject:tweetId forKey:@"id"];
 
@@ -350,6 +354,17 @@
             nil];
 
     return [tweetData containsKeys:requiredFields];
+}
+
+@end
+
+@implementation NSNumber (ParsingHelpers)
+
+- (NSNumber *)twitterIdentifierValue
+{
+    NSString * desc = [self description];
+    long long val = [desc longLongValue];
+    return [NSNumber numberWithLongLong:val];
 }
 
 @end

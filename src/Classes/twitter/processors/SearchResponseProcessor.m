@@ -114,7 +114,8 @@
 
         NSDictionary * tweetData = result;
 
-        NSNumber * tweetId = [tweetData objectForKey:@"id"];
+        NSNumber * tweetId =
+            [[tweetData objectForKey:@"id"] twitterIdentifierValue];
         Tweet * tweet = [Tweet tweetWithId:tweetId context:context];
         if (!tweet)
             tweet = [Tweet createInstance:context];
