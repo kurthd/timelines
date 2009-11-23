@@ -240,7 +240,7 @@ enum {
     [self performSelector:
         @selector(finishInitializationWithTimeInsensitiveOperations)
         withObject:nil
-        afterDelay:0.7];
+        afterDelay:0.6];
 
     accountsButton.action = @selector(showAccountsView);
 
@@ -277,6 +277,14 @@ enum {
 
     if ([SettingsReader displayTheme] == kDisplayThemeDark)
         window.backgroundColor = [UIColor blackColor];
+
+    // Ensure 'more' tab has all sub-tabs initialized if started on a tab under
+    // 'more'
+    if (tabBarController.selectedIndex > 3) {
+        UINavigationController * moreController =
+            tabBarController.moreNavigationController;
+        [self initTabForViewController:moreController];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
