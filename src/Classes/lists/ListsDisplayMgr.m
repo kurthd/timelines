@@ -238,6 +238,7 @@
 - (void)resetState
 {
     NSLog(@"Resetting list display manager state...");
+
     fetchedInitialLists = NO;
     pagesShown = 0;
     outstandingListRequests = 0;
@@ -245,6 +246,10 @@
     self.lists = [NSMutableDictionary dictionary];
     self.subscriptions = [NSMutableDictionary dictionary];
     [wrapperController setCachedDataAvailable:NO];
+
+    // HACK: forces to scroll to top
+    [listsViewController.tableView setContentOffset:CGPointMake(0, 0)
+        animated:NO];
 }
 
 - (void)refreshLists
