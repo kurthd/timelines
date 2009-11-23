@@ -1746,7 +1746,7 @@ enum {
 {
     UIStatePersistenceStore * uiStatePersistenceStore =
         [[[UIStatePersistenceStore alloc] init] autorelease];
-    if (tabBarController.selectedIndex <= kOriginalTabOrderLists)
+    if (tabBarController.selectedIndex <= kOriginalTabOrderPeople)
         uiState.selectedTab = tabBarController.selectedIndex;
     else
         uiState.selectedTab = 0;
