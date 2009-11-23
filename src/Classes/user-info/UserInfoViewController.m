@@ -487,13 +487,23 @@ static NSNumberFormatter * formatter;
     NSLog(@"Received avatar for url: %@", url);
     UIImage * avatarImage = [UIImage imageWithData:data];
     NSString * urlAsString = [url absoluteString];
-    [User setAvatar:avatarImage forUrl:urlAsString];
-    NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
-    if (NSEqualRanges([urlAsString rangeOfString:@"_normal."], notFoundRange) &&
-        avatarImage &&
-        ([user.avatar.thumbnailImageUrl isEqual:urlAsString] ||
-        [user.avatar.fullImageUrl isEqual:urlAsString]))
-        [avatarView setImage:avatarImage];
+
+    if (avatarImage) {
+        [User setAvatar:avatarImage forUrl:urlAsString];
+        NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
+
+        // did we fetch the full image?
+        NSRange where = [urlAsString rangeOfString:@"_normal."];
+        if (NSEqualRanges(where, notFoundRange)) {
+            // if so, always display it
+            [avatarView setImage:avatarImage];
+        } else {  // we fetched the thumbnail image
+            // only display the thumbnail if we're showing the default image
+            UIImage * currentAvatarImage = [avatarView image];
+            if (currentAvatarImage == [[self class] defaultAvatar])
+                [avatarView setImage:avatarImage];
+        }
+    }
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
@@ -536,21 +546,19 @@ static NSNumberFormatter * formatter;
     blockButton.enabled = blockedStateSet;
 
     UIImage * avatar = [user fullAvatar];
-    if (!avatar)
+    if (!avatar) {
         avatar = [user thumbnailAvatar];
-    if (!avatar)
+
+        NSURL * url = [NSURL URLWithString:user.avatar.fullImageUrl];
+        [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];
+    }
+    if (!avatar) {
         avatar = [[self class] defaultAvatar];
 
+        NSURL * avatarUrl = [NSURL URLWithString:user.avatar.thumbnailImageUrl];
+        [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+    }
     [avatarView setImage:avatar];
-
-    NSURL * largeAvatarUrl = [NSURL URLWithString:user.avatar.fullImageUrl];
-    NSURL * avatarUrl = [NSURL URLWithString:user.avatar.thumbnailImageUrl];
-    [AsynchronousNetworkFetcher fetcherWithUrl:largeAvatarUrl delegate:self];
-    [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
-
-    UIImage * avatarImage = [user thumbnailAvatar];
-    if (avatarImage)
-        [avatarView setImage:avatarImage];
 
     nameLabel.text = aUser.name;
     bioLabel.text = [aUser.bio stringByDecodingHtmlEntities];
