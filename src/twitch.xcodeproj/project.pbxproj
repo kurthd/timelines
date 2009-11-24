@@ -949,6 +949,12 @@
 		91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD5A3C100FED36009C2179 /* MessageUI.framework */; };
 		91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
 		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
+		91B76FE010BB5AE80014172A /* StandardButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B76FDE10BB5AE80014172A /* StandardButtonBackground.png */; };
+		91B76FE110BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B76FDF10BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png */; };
+		91B76FE210BB5AE80014172A /* StandardButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B76FDE10BB5AE80014172A /* StandardButtonBackground.png */; };
+		91B76FE310BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B76FDF10BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png */; };
+		91B76FE610BB5B6C0014172A /* TwoLineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B76FE510BB5B6C0014172A /* TwoLineButton.m */; };
+		91B76FE710BB5B6C0014172A /* TwoLineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B76FE510BB5B6C0014172A /* TwoLineButton.m */; };
 		91BD113B1006736F0082D209 /* PhotoBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BD11391006736F0082D209 /* PhotoBrowserView.xib */; };
 		91D36956100D12B300B59D12 /* ButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36955100D12B300B59D12 /* ButtonBackground.png */; };
 		91D36965100D1CC900B59D12 /* ButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */; };
@@ -1810,6 +1816,10 @@
 		91AD5A3C100FED36009C2179 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		91AD5A6F101017AC009C2179 /* PhotoBackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoBackButton.png; path = images/PhotoBackButton.png; sourceTree = "<group>"; };
 		91AD5A711010187D009C2179 /* PhotoForwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoForwardButton.png; path = images/PhotoForwardButton.png; sourceTree = "<group>"; };
+		91B76FDE10BB5AE80014172A /* StandardButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StandardButtonBackground.png; path = images/StandardButtonBackground.png; sourceTree = "<group>"; };
+		91B76FDF10BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StandardButtonBackgroundDarkTheme.png; path = images/StandardButtonBackgroundDarkTheme.png; sourceTree = "<group>"; };
+		91B76FE410BB5B6C0014172A /* TwoLineButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwoLineButton.h; path = shared/TwoLineButton.h; sourceTree = "<group>"; };
+		91B76FE510BB5B6C0014172A /* TwoLineButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwoLineButton.m; path = shared/TwoLineButton.m; sourceTree = "<group>"; };
 		91BD113A1006736F0082D209 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/PhotoBrowserView.xib; sourceTree = "<group>"; };
 		91C4F25510192FDA00896046 /* DirectMessageAcctMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageAcctMgr.h; path = "direct-messages/DirectMessageAcctMgr.h"; sourceTree = "<group>"; };
 		91C4F25610192FDA00896046 /* DirectMessageAcctMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageAcctMgr.m; path = "direct-messages/DirectMessageAcctMgr.m"; sourceTree = "<group>"; };
@@ -2452,6 +2462,8 @@
 				915B588A10B08CB00028B0B4 /* ActionButtonCell.m */,
 				915B588D10B08CC60028B0B4 /* ActionButtonCellView.h */,
 				915B588E10B08CC60028B0B4 /* ActionButtonCellView.m */,
+				91B76FE410BB5B6C0014172A /* TwoLineButton.h */,
+				91B76FE510BB5B6C0014172A /* TwoLineButton.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -2968,6 +2980,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91B76FDE10BB5AE80014172A /* StandardButtonBackground.png */,
+				91B76FDF10BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png */,
 				915B559910ADCB700028B0B4 /* PrivateIconHighlighted.png */,
 				915B555210AD26190028B0B4 /* PrivateIcon.png */,
 				915B507E10A8B53D0028B0B4 /* ListsGlyph.png */,
@@ -3468,6 +3482,8 @@
 				915B508010A8B53D0028B0B4 /* ListsGlyph.png in Resources */,
 				915B555310AD26190028B0B4 /* PrivateIcon.png in Resources */,
 				915B559A10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */,
+				91B76FE010BB5AE80014172A /* StandardButtonBackground.png in Resources */,
+				91B76FE110BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3638,6 +3654,8 @@
 				915B507F10A8B53D0028B0B4 /* ListsGlyph.png in Resources */,
 				915B555410AD26190028B0B4 /* PrivateIcon.png in Resources */,
 				915B559B10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */,
+				91B76FE210BB5AE80014172A /* StandardButtonBackground.png in Resources */,
+				91B76FE310BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3963,6 +3981,7 @@
 				057A2A7210B7079B00784593 /* UserOrDirectMessage21To23EntityMigrationPolicy.m in Sources */,
 				057A2A8010B7090A00784593 /* v2.1-v2.3.xcmappingmodel in Sources */,
 				05FC8FEE10B7CA3A00721DEC /* Tweet.m in Sources */,
+				91B76FE710BB5B6C0014172A /* TwoLineButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4285,6 +4304,7 @@
 				057A2A7410B7079B00784593 /* UserOrDirectMessage21To23EntityMigrationPolicy.m in Sources */,
 				057A2A8110B7090A00784593 /* v2.1-v2.3.xcmappingmodel in Sources */,
 				05FC8FEF10B7CA3A00721DEC /* Tweet.m in Sources */,
+				91B76FE610BB5B6C0014172A /* TwoLineButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
