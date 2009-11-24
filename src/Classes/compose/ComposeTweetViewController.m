@@ -82,7 +82,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 @implementation ComposeTweetViewController
 
 @synthesize delegate, sendButton, cancelButton, currentSender, textViewText,
-    displayingActivity, currentRecipient;
+    displayingActivity, currentRecipient, displayLocation;
 
 - (void)dealloc
 {
@@ -105,6 +105,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [recipientToLabel release];
     [recipientBackgroundView release];
     [addRecipientButton release];
+
+    [locationView release];
+    [locationTextField release];
 
     [photoUploadView release];
     [photoUploadProgressView release];
@@ -297,6 +300,12 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     [self hideActivityView:urlShorteningView];
     displayingActivity = NO;
+}
+
+- (void)updateLocationDescription:(NSString *)description
+{
+    NSLog(@"Updating location to: %@", description);
+    locationTextField.text = description;
 }
 
 #pragma mark UIViewController overrides
@@ -662,6 +671,18 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)initializeView
 {
+    if (displayLocation) {
+        locationView.hidden = NO;
+        CGRect frame = textView.frame;
+        frame.size.height = 156 - locationView.frame.size.height;
+        textView.frame = frame;
+    } else {
+        locationView.hidden = YES;
+        CGRect frame = textView.frame;
+        frame.size.height = 156;
+        textView.frame = frame;
+    }
+
     if (hideRecipientView || recipientTextField.text.length > 0)
         [textView becomeFirstResponder];
     else

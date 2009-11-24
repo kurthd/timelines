@@ -1158,6 +1158,7 @@ enum {
 
 - (void)registerDeviceForPushNotifications
 {
+    /*
     if (![[UIApplication sharedApplication] isLiteVersion]) {
         UIRemoteNotificationType notificationTypes =
         (UIRemoteNotificationTypeBadge |
@@ -1167,6 +1168,7 @@ enum {
         [[UIApplication sharedApplication]
             registerForRemoteNotificationTypes:notificationTypes];
     }
+     */
 }
 
 #pragma mark Application notifications

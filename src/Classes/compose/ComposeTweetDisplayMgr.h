@@ -11,6 +11,7 @@
 #import "AddPhotoServiceDisplayMgr.h"
 #import "UIPersonSelector.h"
 #import "BitlyUrlShorteningService.h"
+#import "Geolocator.h"
 
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
 @class TweetDraft, DirectMessageDraft;
@@ -25,7 +26,7 @@
     UIImagePickerControllerDelegate, UINavigationControllerDelegate,
     UIActionSheetDelegate, AddPhotoServiceDisplayMgrDelegate,
     UIPersonSelectorDelegate, BitlyUrlShorteningServiceDelegate,
-    UIAlertViewDelegate>
+    UIAlertViewDelegate, GeolocatorDelegate>
 {
     id<ComposeTweetDisplayMgrDelegate> delegate;
 
@@ -63,6 +64,9 @@
 
     BOOL composingTweet;
     NSString * directMessageRecipient;
+
+    Geolocator * geolocator;
+    CLLocationCoordinate2D lastCoordinate;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;

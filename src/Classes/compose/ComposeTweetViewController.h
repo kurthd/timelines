@@ -32,6 +32,10 @@
     IBOutlet UITextField * recipientTextField;
     IBOutlet UIButton * addRecipientButton;
 
+    BOOL displayLocation;
+    IBOutlet UIView * locationView;
+    IBOutlet UITextField * locationTextField;
+
     /* Displaying activity while uploading media and shortening links. */
 
     BOOL displayingActivity;
@@ -55,6 +59,7 @@
 @property (nonatomic, retain) UIBarButtonItem * sendButton;
 @property (nonatomic, retain) UIBarButtonItem * cancelButton;
 
+@property (nonatomic, assign) BOOL displayLocation;
 @property (nonatomic, assign) BOOL displayingActivity;
 
 - (void)composeTweet:(NSString *)text from:(NSString *)sender;
@@ -79,6 +84,8 @@
 
 - (void)displayUrlShorteningView;
 - (void)hideUrlShorteningView;
+
+- (void)updateLocationDescription:(NSString *)description;
 
 - (void)userDidSend;
 - (void)userDidClose;

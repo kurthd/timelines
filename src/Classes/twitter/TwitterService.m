@@ -85,14 +85,20 @@ static NSMutableDictionary * oaTokens;
 // DK: I love code comment conversations
 - (void)sendTweet:(NSString *)tweet
 {
+    [self sendTweet:tweet inReplyTo:nil];
+}
+
+- (void)sendTweet:(NSString *)tweet coordinate:(CLLocationCoordinate2D)coord
+{
     ResponseProcessor * processor =
         [SendTweetResponseProcessor processorWithTweet:tweet
+                                            coordinate:coord
                                            referenceId:nil
                                            credentials:credentials
                                                context:context
                                               delegate:delegate];
 
-    NSString * requestId = [twitter sendUpdate:tweet];
+    NSString * requestId = [twitter sendUpdate:tweet coordinate:coord];
 
     [self request:requestId isHandledBy:processor];
 }

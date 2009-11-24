@@ -6,7 +6,7 @@
 //
 // Foundation class categories and helpers
 //
-
+#import "NSString+ConvenienceMethods.h"
 #import "NSString+HtmlEncodingAdditions.h"
 #import "NSDate+IsToday.h"
 #import "NSDate+StringHelpers.h"
@@ -17,16 +17,24 @@
 //
 // UIKit class categories and helpers
 //
-
 #import "UIImage+GeneralHelpers.h"
 #import "UIImage+DrawingAdditions.h"
 #import "UIColor+TwitchColors.h"
+#import "UIAlertView+InstantiationAdditions.h"
 
 
 //
-// Our "core library"
+// MapKit class categories and helpers
+//
+#import "MKPlacemark+GeneralHelpers.h"
+
+//
+// Our "core library" and other general purpose helper classes
 //
 #import "SettingsReader.h"
+#import "ErrorState.h"
+#import "AsynchronousNetworkFetcher.h"
+#import "InfoPlistConfigReader.h"
 
 
 //
@@ -47,6 +55,19 @@
 #import "Avatar.h"
 #import "Avatar+UIAdditions.h"
 
+#import "PhotoService+ServiceAdditions.h"
+#import "TwitterCredentials+PhotoServiceAdditions.h"
+
+#import "AccountSettings.h"
+
+#import "CredentialsActivatedPublisher.h"
+#import "CredentialsSetChangedPublisher.h"
+
+#import "TweetDraft.h"
+#import "DirectMessageDraft.h"
+#import "TweetDraftMgr.h"
+
+#import "ComposeTweetViewController.h"
 
 //
 // Vendor libraries

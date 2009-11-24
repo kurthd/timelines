@@ -2,27 +2,9 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import <MobileCoreServices/MobileCoreServices.h>  // for kUTTypeMovie
 #import "ComposeTweetDisplayMgr.h"
-#import "ComposeTweetViewController.h"
-#import "UIAlertView+InstantiationAdditions.h"
-#import "CredentialsActivatedPublisher.h"
-#import "CredentialsSetChangedPublisher.h"
-#import "TweetDraft.h"
-#import "DirectMessageDraft.h"
-#import "TweetDraftMgr.h"
-#import "TwitterCredentials+PhotoServiceAdditions.h"
-#import "PhotoService+ServiceAdditions.h"
-#import "AccountSettings.h"
-#import "NSString+ConvenienceMethods.h"
-#import "UIColor+TwitchColors.h"
-#import "AsynchronousNetworkFetcher.h"
-#import "InfoPlistConfigReader.h"
-#import "RegexKitLite.h"
-#import "ErrorState.h"
-#import "UIImage+GeneralHelpers.h"
-#import "UIAlertView+InstantiationAdditions.h"
-#import "SettingsReader.h"
+#import "TwitbitShared.h"
+#import <MobileCoreServices/MobileCoreServices.h>  // for kUTTypeMovie
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -60,6 +42,8 @@
 
 @property (nonatomic, retain) UIPersonSelector * personSelector;
 
+@property (nonatomic, retain) Geolocator * geolocator;
+
 - (void)promptForPhotoSource:(UIViewController *)controller;
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source
                 controller:(UIViewController *)controller;
@@ -69,6 +53,8 @@
 - (void)updateMediaTitleFromTweet:(Tweet *)tweet;
 - (void)updateMediaTitleFromDirectMessage:(DirectMessage *)dm;
 - (void)updateMediaTitleFromTweetText:(NSString *)text;
+
+- (void)startUpdatingLocation;
 
 @end
 
@@ -87,6 +73,7 @@
 @synthesize urlShorteningService, urlsToShorten;
 @synthesize personSelector;
 @synthesize composingTweet, directMessageRecipient;
+@synthesize geolocator;
 
 - (void)dealloc
 {
@@ -107,6 +94,7 @@
     self.urlShorteningService = nil;
     self.urlsToShorten = nil;
     self.personSelector = nil;
+    self.geolocator = nil;
 
     [super dealloc];
 }
@@ -147,11 +135,13 @@
 
     NSString * text = draft ? draft.text : @"";
     if (draft.inReplyToTweetId && draft.inReplyToUsername)
-        [self composeReplyToTweet:[NSNumber numberWithLongLong:[draft.inReplyToTweetId longLongValue]]
+        [self composeReplyToTweet:draft.inReplyToTweetId
                          fromUser:draft.inReplyToUsername
                          withText:text];
     else
         [self composeTweetWithText:text animated:animated];
+
+    [self startUpdatingLocation];
 }
 
 - (void)composeTweetWithText:(NSString *)tweet animated:(BOOL)animated
@@ -164,6 +154,8 @@
                                              from:service.credentials.username];
     [self.rootViewController presentModalViewController:self.navController
                                                animated:animated];
+
+    [self startUpdatingLocation];
 }
 
 - (void)composeReplyToTweet:(NSNumber *)tweetId
@@ -188,6 +180,8 @@
                                         inReplyTo:user];
     [self.rootViewController presentModalViewController:self.navController
                                                animated:YES];
+
+    [self startUpdatingLocation];
 }
 
 - (void)composeReplyToTweet:(NSNumber *)tweetId
@@ -207,6 +201,8 @@
 
     [self.rootViewController presentModalViewController:self.navController
                                                animated:YES];
+
+    [self startUpdatingLocation];
 }
 
 - (void)composeDirectMessage
@@ -246,8 +242,9 @@
     [self composeDirectMessageTo:username withText:text animated:animated];
 }
 
-- (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)text
-    animated:(BOOL)animated
+- (void)composeDirectMessageTo:(NSString *)username
+                      withText:(NSString *)text
+                      animated:(BOOL)animated
 {
     self.directMessageRecipient = username;
     self.origUsername = nil;
@@ -321,8 +318,10 @@
         [self.service sendTweet:text inReplyTo:self.origTweetId];
     } else {
         [self.delegate userIsSendingTweet:text];
-        [self.service sendTweet:text];
+        [self.service sendTweet:text coordinate:lastCoordinate];
     }
+
+    self.geolocator = nil;
 
     NSError * error = nil;
     [self.draftMgr deleteTweetDraftForCredentials:self.service.credentials
@@ -485,6 +484,7 @@
 {
     composingTweet = NO;
     self.directMessageRecipient = nil;
+    self.geolocator = nil;
     [self.rootViewController dismissModalViewControllerAnimated:YES];
     [self.delegate userDidCancelComposingTweet];
 }
@@ -948,6 +948,29 @@
                afterDelay:0.5];
 }
 
+#pragma mark GeolocatorDelegate implementation
+
+- (void)geolocator:(Geolocator *)locator
+ didUpdateLocation:(CLLocationCoordinate2D)crd
+         placemark:(MKPlacemark *)placemark
+{
+    NSString * desc = [placemark humanReadableDescription];
+    NSLog(@"Have location: (%f, %f): %@.", crd.latitude, crd.longitude, desc);
+
+    NSString * fmt =
+        NSLocalizedString(@"composetweet.location.formatstring", @"");
+
+    NSString * fullDesc = [NSString stringWithFormat:fmt, desc];
+    [self.composeTweetViewController updateLocationDescription:fullDesc];
+
+    memcpy(&lastCoordinate, &crd, sizeof(lastCoordinate));
+}
+
+- (void)geolocator:(Geolocator *)locator didFailWithError:(NSError *)error
+{
+    NSLog(@"Geolocator failed with error: %@", error);
+}
+
 #pragma mark Private implementation
 
 + (NSString *)removeStrings:(NSArray *)strings fromString:(NSString *)str
@@ -1010,6 +1033,11 @@
     }
 }
 
+- (void)startUpdatingLocation
+{
+    [self.geolocator startLocating];
+}
+
 #pragma mark Accessors
 
 - (ComposeTweetViewController *)composeTweetViewController
@@ -1040,6 +1068,8 @@
         composeTweetViewController.navigationItem.rightBarButtonItem =
             sendButton;
         composeTweetViewController.sendButton = sendButton;
+
+        composeTweetViewController.displayLocation = YES;
     }
 
     return composeTweetViewController;
@@ -1081,8 +1111,6 @@
     return addPhotoServiceDisplayMgr;
 }
 
-#pragma mark Accessors
-
 - (UIViewController *)navController
 {
     if (!navController)
@@ -1112,6 +1140,16 @@
     }
 
     return urlShorteningService;
+}
+
+- (Geolocator *)geolocator
+{
+    if (!geolocator) {
+        geolocator = [[Geolocator alloc] init];
+        geolocator.delegate = self;
+    }
+
+    return geolocator;
 }
 
 @end
