@@ -951,19 +951,32 @@
 #pragma mark GeolocatorDelegate implementation
 
 - (void)geolocator:(Geolocator *)locator
- didUpdateLocation:(CLLocationCoordinate2D)crd
+ didUpdateLocation:(CLLocationCoordinate2D)coordinate
          placemark:(MKPlacemark *)placemark
 {
     NSString * desc = [placemark humanReadableDescription];
-    NSLog(@"Have location: (%f, %f): %@.", crd.latitude, crd.longitude, desc);
 
-    NSString * fmt =
-        NSLocalizedString(@"composetweet.location.formatstring", @"");
+    CLLocationDegrees latitude = lastCoordinate.latitude;
+    CLLocationDegrees longitude = lastCoordinate.longitude;
+    if (coordinate.latitude == latitude && coordinate.longitude == longitude) {
+        NSLog(@"Final location: (%f, %f): %@.", coordinate.latitude,
+            coordinate.longitude, desc);
 
-    NSString * fullDesc = [NSString stringWithFormat:fmt, desc];
-    [self.composeTweetViewController updateLocationDescription:fullDesc];
+        // we got the same location, so assume location has been determined
+        [geolocator autorelease];
+        geolocator = nil;
+    } else {
+        NSLog(@"Updating location to: (%f, %f): %@.", coordinate.latitude,
+            coordinate.longitude, desc);
 
-    memcpy(&lastCoordinate, &crd, sizeof(lastCoordinate));
+        NSString * fmt =
+            NSLocalizedString(@"composetweet.location.formatstring", @"");
+
+        NSString * fullDesc = [NSString stringWithFormat:fmt, desc];
+        [self.composeTweetViewController updateLocationDescription:fullDesc];
+
+        memcpy(&lastCoordinate, &coordinate, sizeof(lastCoordinate));
+    }
 }
 
 - (void)geolocator:(Geolocator *)locator didFailWithError:(NSError *)error
