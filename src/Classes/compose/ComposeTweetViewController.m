@@ -301,6 +301,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)displayLocationDescription:(BOOL)display animated:(BOOL)animated
 {
+    if (display == displayLocation)
+        return;  // HACK: nothing to do
+
     if (animated)
         [UIView beginAnimations:nil context:NULL];
 
