@@ -12,15 +12,21 @@
 {
     [context release];
     [findPeopleBookmarkMgr release];
+    [contactCache release];
+    [contactMgr release];
     [super dealloc];
 }
 
 - (id)initWithContext:(NSManagedObjectContext *)someContext
     findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr
 {
     if (self = [super init]) {
         context = [someContext retain];
         findPeopleBookmarkMgr = [aFindPeopleBookmarkMgr retain];
+        contactCache = [aContactCache retain];
+        contactMgr = [aContactMgr retain];
     }
 
     return self;
@@ -45,7 +51,8 @@
 
     TimelineDisplayMgrFactory * timelineFactory =
         [[[TimelineDisplayMgrFactory alloc]
-        initWithContext:context findPeopleBookmarkMgr:findPeopleBookmarkMgr]
+        initWithContext:context findPeopleBookmarkMgr:findPeopleBookmarkMgr
+        contactCache:contactCache contactMgr:contactMgr]
         autorelease];
 
     UserListDisplayMgr * userListDisplayMgr =
@@ -56,7 +63,8 @@
         managedObjectContext:context
         composeTweetDisplayMgr:composeTweetDisplayMgr
         findPeopleBookmarkMgr:findPeopleBookmarkMgr
-        showFollowing:showFollowing username:username]
+        showFollowing:showFollowing username:username
+        contactCache:contactCache contactMgr:contactMgr]
         autorelease];
     userListController.delegate = userListDisplayMgr;
     service.delegate = userListDisplayMgr;

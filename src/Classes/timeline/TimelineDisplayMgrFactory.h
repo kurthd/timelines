@@ -6,15 +6,21 @@
 #import "TimelineDisplayMgr.h"
 #import "ComposeTweetDisplayMgr.h"
 #import "SavedSearchMgr.h"
+#import "ContactCache.h"
+#import "ContactMgr.h"
 
 @interface TimelineDisplayMgrFactory : NSObject
 {
     NSManagedObjectContext * context;
     SavedSearchMgr * findPeopleBookmarkMgr;
+    ContactCache * contactCache;
+    ContactMgr * contactMgr;
 }
 
 - (id)initWithContext:(NSManagedObjectContext *)someContext
-    findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr;
+    findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr;
 
 - (TimelineDisplayMgr *)
     createTimelineDisplayMgrWithWrapperController:

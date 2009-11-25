@@ -14,15 +14,21 @@
 {
     [context release];
     [findPeopleBookmarkMgr release];
+    [contactCache release];
+    [contactMgr release];
     [super dealloc];
 }
 
 - (id)initWithContext:(NSManagedObjectContext *)someContext
     findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr
 {
     if (self = [super init]) {
         context = [someContext retain];
         findPeopleBookmarkMgr = [aFindPeopleBookmarkMgr retain];
+        contactCache = [aContactCache retain];
+        contactMgr = [aContactMgr retain];
     }
 
     return self;
@@ -47,7 +53,8 @@
 
     UserListDisplayMgrFactory * userListDisplayMgrFactory =
         [[[UserListDisplayMgrFactory alloc]
-        initWithContext:context findPeopleBookmarkMgr:findPeopleBookmarkMgr]
+        initWithContext:context findPeopleBookmarkMgr:findPeopleBookmarkMgr
+        contactCache:contactCache contactMgr:contactMgr]
         autorelease];
 
     DirectMessagesDisplayMgr * directMessageDisplayMgr =
@@ -58,7 +65,8 @@
         managedObjectContext:context
         composeTweetDisplayMgr:composeTweetDisplayMgr
         findPeopleBookmarkMgr:findPeopleBookmarkMgr
-        userListDisplayMgrFactory:userListDisplayMgrFactory]
+        userListDisplayMgrFactory:userListDisplayMgrFactory
+        contactCache:contactCache contactMgr:contactMgr]
         autorelease];
     service.delegate = directMessageDisplayMgr;
     inboxController.delegate = directMessageDisplayMgr;

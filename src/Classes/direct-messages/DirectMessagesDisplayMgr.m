@@ -96,6 +96,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)aComposeTweetDisplayMgr
     findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr
     userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
@@ -120,7 +122,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             twitterService:displayHelperService
             timelineFactory:factory
             managedObjectContext:managedObjectContext
-            findPeopleBookmarkMgr:aFindPeopleBookmarkMgr];
+            findPeopleBookmarkMgr:aFindPeopleBookmarkMgr
+            contactCache:aContactCache contactMgr:aContactMgr];
         displayHelperService.delegate = displayMgrHelper;
 
         if (initialCache) {

@@ -9,6 +9,9 @@
 #import "AsynchronousNetworkFetcherDelegate.h"
 #import "SavedSearchMgr.h"
 #import "LocationCell.h"
+#import "TwoLineButton.h"
+#import "ContactMgr.h"
+#import "ContactCacheReader.h"
 
 @interface UserInfoViewController :
     UITableViewController <AsynchronousNetworkFetcherDelegate>
@@ -28,11 +31,15 @@
     IBOutlet UILabel * bioLabel;
     IBOutlet UIButton * followButton;
     IBOutlet UIButton * stopFollowingButton;
-    IBOutlet UIButton * blockButton;
-    IBOutlet UIButton * bookmarkButton;
+    IBOutlet TwoLineButton * blockButton;
+    IBOutlet TwoLineButton * addToContactsButton;
+    IBOutlet TwoLineButton * bookmarkButton;
     IBOutlet UIActivityIndicatorView * processingFollowingIndicator;
     IBOutlet UIButton * webAddressButton;
     IBOutlet UILabel * followsYouLabel;
+
+    ContactMgr * contactMgr;
+    NSObject<ContactCacheReader> * contactCacheReader;
 
     BOOL currentlyFollowing;
     BOOL followingEnabled;
@@ -55,6 +62,8 @@
 @property (nonatomic, assign) BOOL followingEnabled;
 @property (nonatomic, retain) SavedSearchMgr * findPeopleBookmarkMgr;
 @property (nonatomic, readonly) LocationCell * locationCell;
+@property (nonatomic, retain) ContactMgr * contactMgr;
+@property (nonatomic, retain) NSObject<ContactCacheReader> * contactCacheReader;
 
 - (void)setUser:(User *)user;
 - (void)setFollowing:(BOOL)enabled;
@@ -63,10 +72,8 @@
 - (IBAction)follow:(id)sender;
 - (IBAction)stopFollowing:(id)sender;
 - (IBAction)sendMessage:(id)sender;
-- (IBAction)bookmark:(id)sender;
 - (IBAction)showFullProfileImage:(id)sender;
 - (IBAction)visitWebpage:(id)sender;
-- (IBAction)changeBlockedState:(id)sender;
 
 - (void)setQueryingFollowedBy;
 - (void)setFailedToQueryFollowedBy;

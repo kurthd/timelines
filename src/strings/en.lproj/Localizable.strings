@@ -140,10 +140,15 @@ userinfo.publicmessage = "Public Message";
 userinfo.directmessage = "Direct Message";
 userinfo.block = "Block";
 userinfo.unblock = "Unblock";
+userinfo.blockuser.two = "User";
 userinfo.followsyou.yes = "%@ follows you";
 userinfo.followsyou.no = "%@ does not follow you";
 userinfo.followsyou.checking = "Checking if %@ follows you...";
 userinfo.followsyou.failed = "Failed to check if %@ follows you";
+userinfo.addtocontacts.one = "Add to";
+userinfo.addtocontacts.two = "Contacts";
+userinfo.addtobookmarks.one = "Add to";
+userinfo.addtobookmarks.two = "Bookmarks";
 
 /* AccountsViewController */
 account.title = "Accounts";

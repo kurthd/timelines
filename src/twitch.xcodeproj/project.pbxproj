@@ -955,6 +955,16 @@
 		91B76FE310BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B76FDF10BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png */; };
 		91B76FE610BB5B6C0014172A /* TwoLineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B76FE510BB5B6C0014172A /* TwoLineButton.m */; };
 		91B76FE710BB5B6C0014172A /* TwoLineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B76FE510BB5B6C0014172A /* TwoLineButton.m */; };
+		91B7704210BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7704110BC49900014172A /* StandardButtonBackgroundHighlighted.png */; };
+		91B7704310BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7704110BC49900014172A /* StandardButtonBackgroundHighlighted.png */; };
+		91B770B310BC63590014172A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B770B210BC63590014172A /* AddressBookUI.framework */; };
+		91B770C910BC63A70014172A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B770C810BC63A70014172A /* AddressBook.framework */; };
+		91B770DA10BC66A20014172A /* ContactMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B770D910BC66A20014172A /* ContactMgr.m */; };
+		91B770DB10BC66A20014172A /* ContactMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B770D910BC66A20014172A /* ContactMgr.m */; };
+		91B770E810BC67F40014172A /* ContactCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B770E710BC67F40014172A /* ContactCache.m */; };
+		91B770E910BC67F40014172A /* ContactCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B770E710BC67F40014172A /* ContactCache.m */; };
+		91B771F710BD8D5B0014172A /* ContactCachePersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B771F610BD8D5B0014172A /* ContactCachePersistenceStore.m */; };
+		91B771F810BD8D5B0014172A /* ContactCachePersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B771F610BD8D5B0014172A /* ContactCachePersistenceStore.m */; };
 		91BD113B1006736F0082D209 /* PhotoBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BD11391006736F0082D209 /* PhotoBrowserView.xib */; };
 		91D36956100D12B300B59D12 /* ButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36955100D12B300B59D12 /* ButtonBackground.png */; };
 		91D36965100D1CC900B59D12 /* ButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */; };
@@ -1820,6 +1830,17 @@
 		91B76FDF10BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StandardButtonBackgroundDarkTheme.png; path = images/StandardButtonBackgroundDarkTheme.png; sourceTree = "<group>"; };
 		91B76FE410BB5B6C0014172A /* TwoLineButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwoLineButton.h; path = shared/TwoLineButton.h; sourceTree = "<group>"; };
 		91B76FE510BB5B6C0014172A /* TwoLineButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwoLineButton.m; path = shared/TwoLineButton.m; sourceTree = "<group>"; };
+		91B7704110BC49900014172A /* StandardButtonBackgroundHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StandardButtonBackgroundHighlighted.png; path = images/StandardButtonBackgroundHighlighted.png; sourceTree = "<group>"; };
+		91B770B210BC63590014172A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		91B770C810BC63A70014172A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		91B770D810BC66A20014172A /* ContactMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactMgr.h; path = "user-info/ContactMgr.h"; sourceTree = "<group>"; };
+		91B770D910BC66A20014172A /* ContactMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactMgr.m; path = "user-info/ContactMgr.m"; sourceTree = "<group>"; };
+		91B770DC10BC67390014172A /* ContactCacheSetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactCacheSetter.h; path = "user-info/ContactCacheSetter.h"; sourceTree = "<group>"; };
+		91B770E210BC67C30014172A /* ContactCacheReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactCacheReader.h; path = "user-info/ContactCacheReader.h"; sourceTree = "<group>"; };
+		91B770E610BC67F40014172A /* ContactCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactCache.h; path = "user-info/ContactCache.h"; sourceTree = "<group>"; };
+		91B770E710BC67F40014172A /* ContactCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactCache.m; path = "user-info/ContactCache.m"; sourceTree = "<group>"; };
+		91B771F510BD8D5B0014172A /* ContactCachePersistenceStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactCachePersistenceStore.h; path = "user-info/ContactCachePersistenceStore.h"; sourceTree = "<group>"; };
+		91B771F610BD8D5B0014172A /* ContactCachePersistenceStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactCachePersistenceStore.m; path = "user-info/ContactCachePersistenceStore.m"; sourceTree = "<group>"; };
 		91BD113A1006736F0082D209 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/PhotoBrowserView.xib; sourceTree = "<group>"; };
 		91C4F25510192FDA00896046 /* DirectMessageAcctMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageAcctMgr.h; path = "direct-messages/DirectMessageAcctMgr.h"; sourceTree = "<group>"; };
 		91C4F25610192FDA00896046 /* DirectMessageAcctMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageAcctMgr.m; path = "direct-messages/DirectMessageAcctMgr.m"; sourceTree = "<group>"; };
@@ -1916,6 +1937,8 @@
 				053A2D8D103F57B2005BB245 /* SystemConfiguration.framework in Frameworks */,
 				0519C6FB1043461600C2C7BD /* CFNetwork.framework in Frameworks */,
 				055777141063018D006596DB /* libz.1.2.3.dylib in Frameworks */,
+				91B770B310BC63590014172A /* AddressBookUI.framework in Frameworks */,
+				91B770C910BC63A70014172A /* AddressBook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2909,6 +2932,8 @@
 				05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */,
 				053A2D88103F575D005BB245 /* libTwitVid.a */,
 				055777131063018D006596DB /* libz.1.2.3.dylib */,
+				91B770B210BC63590014172A /* AddressBookUI.framework */,
+				91B770C810BC63A70014172A /* AddressBook.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2980,6 +3005,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91B7704110BC49900014172A /* StandardButtonBackgroundHighlighted.png */,
 				91B76FDE10BB5AE80014172A /* StandardButtonBackground.png */,
 				91B76FDF10BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png */,
 				915B559910ADCB700028B0B4 /* PrivateIconHighlighted.png */,
@@ -3204,6 +3230,14 @@
 				914CA4D6103B646700421C60 /* LocationCellView.m */,
 				915B580C10AFCB940028B0B4 /* UserInfoLabelCellView.h */,
 				915B580D10AFCB940028B0B4 /* UserInfoLabelCellView.m */,
+				91B770D810BC66A20014172A /* ContactMgr.h */,
+				91B770D910BC66A20014172A /* ContactMgr.m */,
+				91B770DC10BC67390014172A /* ContactCacheSetter.h */,
+				91B770E210BC67C30014172A /* ContactCacheReader.h */,
+				91B770E610BC67F40014172A /* ContactCache.h */,
+				91B770E710BC67F40014172A /* ContactCache.m */,
+				91B771F510BD8D5B0014172A /* ContactCachePersistenceStore.h */,
+				91B771F610BD8D5B0014172A /* ContactCachePersistenceStore.m */,
 			);
 			name = "user-info";
 			sourceTree = "<group>";
@@ -3484,6 +3518,7 @@
 				915B559A10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */,
 				91B76FE010BB5AE80014172A /* StandardButtonBackground.png in Resources */,
 				91B76FE110BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */,
+				91B7704310BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3656,6 +3691,7 @@
 				915B559B10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */,
 				91B76FE210BB5AE80014172A /* StandardButtonBackground.png in Resources */,
 				91B76FE310BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */,
+				91B7704210BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3982,6 +4018,9 @@
 				057A2A8010B7090A00784593 /* v2.1-v2.3.xcmappingmodel in Sources */,
 				05FC8FEE10B7CA3A00721DEC /* Tweet.m in Sources */,
 				91B76FE710BB5B6C0014172A /* TwoLineButton.m in Sources */,
+				91B770DB10BC66A20014172A /* ContactMgr.m in Sources */,
+				91B770E910BC67F40014172A /* ContactCache.m in Sources */,
+				91B771F810BD8D5B0014172A /* ContactCachePersistenceStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4305,6 +4344,9 @@
 				057A2A8110B7090A00784593 /* v2.1-v2.3.xcmappingmodel in Sources */,
 				05FC8FEF10B7CA3A00721DEC /* Tweet.m in Sources */,
 				91B76FE610BB5B6C0014172A /* TwoLineButton.m in Sources */,
+				91B770DA10BC66A20014172A /* ContactMgr.m in Sources */,
+				91B770E810BC67F40014172A /* ContactCache.m in Sources */,
+				91B771F710BD8D5B0014172A /* ContactCachePersistenceStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

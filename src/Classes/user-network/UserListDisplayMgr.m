@@ -57,6 +57,8 @@
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)aComposeTweetDisplayMgr
     findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr
     showFollowing:(BOOL)showFollowingValue username:(NSString *)aUsername
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
@@ -86,7 +88,8 @@
             twitterService:displayHelperService
             timelineFactory:timelineFactory
             managedObjectContext:managedObjectContext
-            findPeopleBookmarkMgr:aFindPeopleBookmarkMgr];
+            findPeopleBookmarkMgr:aFindPeopleBookmarkMgr
+            contactCache:aContactCache contactMgr:aContactMgr];
         displayHelperService.delegate = displayMgrHelper;
 
         cursor = @"-1";  // per Twitter's documentation

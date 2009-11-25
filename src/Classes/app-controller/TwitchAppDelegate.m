@@ -41,6 +41,7 @@
 #import "ListsViewController.h"
 #import "ErrorState.h"
 #import "UserTwitterList.h"
+#import "ContactCachePersistenceStore.h"
 
 @interface TwitchAppDelegate ()
 
@@ -141,6 +142,9 @@ enum {
     [findPeopleNetAwareViewController release];
     [listsNetAwareViewController release];
 
+    [contactCache release];
+    [contactMgr release];
+
     [accountsButton release];
     [accountsButtonSetter release];
     [accountsNavController release];
@@ -201,17 +205,25 @@ enum {
     // Add the tab bar controller's current view as a subview of the window
     [window addSubview:tabBarController.view];
 
+    contactCache = [[ContactCache alloc] init];
+    contactMgr =
+        [[ContactMgr alloc]
+        initWithTabBarController:tabBarController
+        contactCacheSetter:contactCache];
+
     findPeopleBookmarkMgr =
         [[SavedSearchMgr alloc] initWithAccountName:@"saved.people"
         context:[self managedObjectContext]];
     timelineDisplayMgrFactory =
         [[TimelineDisplayMgrFactory alloc]
         initWithContext:[self managedObjectContext]
-        findPeopleBookmarkMgr:findPeopleBookmarkMgr];
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr contactCache:contactCache
+        contactMgr:contactMgr];
     directMessageDisplayMgrFactory =
         [[DirectMessageDisplayMgrFactory alloc]
         initWithContext:[self managedObjectContext]
-        findPeopleBookmarkMgr:findPeopleBookmarkMgr];
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr contactCache:contactCache
+        contactMgr:contactMgr];
 
     [self initAccountsView];
 
@@ -285,6 +297,11 @@ enum {
             tabBarController.moreNavigationController;
         [self initTabForViewController:moreController];
     }
+
+    ContactCachePersistenceStore * contactCachePersistenceStore =
+        [[[ContactCachePersistenceStore alloc]
+        initWithContactCache:contactCache] autorelease];
+    [contactCachePersistenceStore load];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -628,7 +645,8 @@ enum {
     UserListDisplayMgrFactory * userListDisplayMgrFactory =
         [[[UserListDisplayMgrFactory alloc]
         initWithContext:[self managedObjectContext]
-        findPeopleBookmarkMgr:findPeopleBookmarkMgr]
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr contactCache:contactCache
+        contactMgr:contactMgr]
         autorelease];
 
     UINavigationController * navController =
@@ -647,7 +665,7 @@ enum {
         composeTweetDisplayMgr:self.composeTweetDisplayMgr
         findPeopleBookmarkMgr:findPeopleBookmarkMgr
         userListDisplayMgrFactory:userListDisplayMgrFactory
-        tabBarItem:tabBarItem];
+        tabBarItem:tabBarItem contactCache:contactCache contactMgr:contactMgr];
     service.delegate = mentionDisplayMgr;
     timelineController.delegate = mentionDisplayMgr;
     mentionsNetAwareViewController.delegate = mentionDisplayMgr;
@@ -698,13 +716,16 @@ enum {
         [[UserInfoViewController alloc]
         initWithNibName:@"UserInfoView" bundle:nil];
     userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
+    userInfoController.contactCacheReader = contactCache;
+    userInfoController.contactMgr = contactMgr;
 
     findPeopleNetAwareViewController.targetViewController = userInfoController;
 
     UserListDisplayMgrFactory * userListFactory =
         [[[UserListDisplayMgrFactory alloc]
         initWithContext:[self managedObjectContext]
-        findPeopleBookmarkMgr:findPeopleBookmarkMgr]
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr contactCache:contactCache
+        contactMgr:contactMgr]
         autorelease];
 
     findPeopleSearchDisplayMgr =
@@ -1816,6 +1837,11 @@ enum {
     NSUInteger numTotalMessages = numUnreadMessages + numUnreadMentions;
     [[UIApplication sharedApplication]
         setApplicationIconBadgeNumber:numTotalMessages];
+
+    ContactCachePersistenceStore * contactCachePersistenceStore =
+        [[[ContactCachePersistenceStore alloc]
+        initWithContactCache:contactCache] autorelease];
+    [contactCachePersistenceStore save];
 }
 
 #pragma mark Account management
