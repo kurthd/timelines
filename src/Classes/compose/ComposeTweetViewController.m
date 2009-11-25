@@ -299,6 +299,38 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     displayingActivity = NO;
 }
 
+- (void)displayLocationDescription:(BOOL)display animated:(BOOL)animated
+{
+    if (animated)
+        [UIView beginAnimations:nil context:NULL];
+
+    if (display) {
+        CGRect locationFrame = [locationView frame];
+        locationFrame.origin.y -= locationFrame.size.height;
+        [locationView setFrame:locationFrame];
+
+        CGRect textViewFrame = [textView frame];
+        textViewFrame.size.height -= locationFrame.size.height;
+        [textView setFrame:textViewFrame];
+
+        [locationView
+            setText:NSLocalizedString(@"composetweet.location.updating", @"")];
+    } else {
+        CGRect locationFrame = [locationView frame];
+        locationFrame.origin.y += locationFrame.size.height;
+        [locationView setFrame:locationFrame];
+
+        CGRect textViewFrame = [textView frame];
+        textViewFrame.size.height += locationFrame.size.height;
+        [textView setFrame:textViewFrame];
+    }
+
+    if (animated)
+        [UIView commitAnimations];
+
+    displayLocation = display;
+}
+
 - (void)displayUpdatingLocationActivity:(BOOL)display
 {
     displayLocationActivity = display;
@@ -556,6 +588,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (IBAction)choosePerson
 {
     [delegate userWantsToSelectPerson];
+}
+
+- (IBAction)geotag
+{
+    [delegate userDidTapGeotagButton];
 }
 
 - (void)userDidCancelPhotoUpload

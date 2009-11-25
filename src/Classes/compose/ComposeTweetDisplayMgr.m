@@ -492,6 +492,19 @@
     return error == nil;
 }
 
+- (void)userDidTapGeotagButton
+{
+    if (geolocator) {
+        [self resetLocationState];
+        [self.composeTweetViewController displayLocationDescription:NO
+                                                           animated:YES];
+    } else {
+        [self startUpdatingLocation];
+        [self.composeTweetViewController displayLocationDescription:YES
+                                                           animated:YES];
+    }
+}
+
 - (void)closeView
 {
     composingTweet = NO;

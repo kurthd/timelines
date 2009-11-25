@@ -86,6 +86,7 @@
 - (void)displayUrlShorteningView;
 - (void)hideUrlShorteningView;
 
+- (void)displayLocationDescription:(BOOL)display animated:(BOOL)animated;
 - (void)displayUpdatingLocationActivity:(BOOL)display;
 - (void)updateLocationDescription:(NSString *)description;
 
@@ -96,6 +97,7 @@
 - (IBAction)choosePhoto;
 - (IBAction)shortenLinks;
 - (IBAction)choosePerson;
+- (IBAction)geotag;
 
 @end
 
@@ -121,6 +123,8 @@
 
 - (BOOL)clearCurrentDirectMessageDraftTo:(NSString *)recipient;
 - (BOOL)clearCurrentTweetDraft;
+
+- (void)userDidTapGeotagButton;
 
 - (void)closeView;
 

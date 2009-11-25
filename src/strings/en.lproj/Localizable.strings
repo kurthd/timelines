@@ -111,6 +111,7 @@ composetweet.shorteninglink = "Shortening link...";
 composetweet.cancelshortening = "Cancel";
 composetweet.shorteningerror = "Failed to Shorten Link";
 composetweet.location.formatstring = "Near %@";
+composetweet.location.updating = "Updating location...";
 directmessage.failed.alert.title = "Failed to Send Direct Message";
 composedirectmessage.view.title = "DM to @%@";
 compose.draft.save.failed.title = "Failed to Save Draft";
