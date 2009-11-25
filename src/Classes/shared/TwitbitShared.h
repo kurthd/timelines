@@ -8,6 +8,7 @@
 //
 #import "NSString+ConvenienceMethods.h"
 #import "NSString+HtmlEncodingAdditions.h"
+#import "NSString+UrlAdditions.h"
 #import "NSDate+IsToday.h"
 #import "NSDate+StringHelpers.h"
 #import "NSError+GeneralHelpers.h"
@@ -29,7 +30,7 @@
 #import "MKPlacemark+GeneralHelpers.h"
 
 //
-// Our "core library" and other general purpose helper classes
+// Our "core library" and other general purpose classes
 //
 #import "SettingsReader.h"
 #import "ErrorState.h"
@@ -67,6 +68,7 @@
 #import "DirectMessageDraft.h"
 #import "TweetDraftMgr.h"
 
+#import "RotatableTabBarController.h"
 #import "ComposeTweetViewController.h"
 
 //

@@ -224,6 +224,8 @@
 		0552818A1088E8020055A37C /* NSString+UrlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 055281891088E8020055A37C /* NSString+UrlAdditions.m */; };
 		0552818B1088E8020055A37C /* NSString+UrlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 055281891088E8020055A37C /* NSString+UrlAdditions.m */; };
 		055777141063018D006596DB /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 055777131063018D006596DB /* libz.1.2.3.dylib */; };
+		0572F16710BC9708006EF58D /* CurrentLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0572F16610BC9708006EF58D /* CurrentLocationView.m */; };
+		0572F16810BC9708006EF58D /* CurrentLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0572F16610BC9708006EF58D /* CurrentLocationView.m */; };
 		057A2A7110B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 057A2A6E10B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m */; };
 		057A2A7210B7079B00784593 /* UserOrDirectMessage21To23EntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 057A2A7010B7079B00784593 /* UserOrDirectMessage21To23EntityMigrationPolicy.m */; };
 		057A2A7310B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 057A2A6E10B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m */; };
@@ -1180,6 +1182,8 @@
 		055C92E110362DC2000B9A00 /* Avatar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Avatar.m; path = users/Avatar.m; sourceTree = "<group>"; };
 		0562BE2D0FF6AB6B005DA549 /* FetchTweetResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTweetResponseProcessor.h; path = twitter/processors/FetchTweetResponseProcessor.h; sourceTree = "<group>"; };
 		0562BE2E0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchTweetResponseProcessor.m; path = twitter/processors/FetchTweetResponseProcessor.m; sourceTree = "<group>"; };
+		0572F16510BC9708006EF58D /* CurrentLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurrentLocationView.h; path = compose/CurrentLocationView.h; sourceTree = "<group>"; };
+		0572F16610BC9708006EF58D /* CurrentLocationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurrentLocationView.m; path = compose/CurrentLocationView.m; sourceTree = "<group>"; };
 		05761F5C0FF72C1C00392ADC /* NSMutableURLRequest+Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+Parameters.h"; sourceTree = "<group>"; };
 		05761F5D0FF72C1C00392ADC /* NSMutableURLRequest+Parameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+Parameters.m"; sourceTree = "<group>"; };
 		05761F600FF72C1C00392ADC /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
@@ -1941,6 +1945,8 @@
 				050ACC2A1087D11A004B6C2D /* PersonDirectory.m */,
 				055281881088E8020055A37C /* NSString+UrlAdditions.h */,
 				055281891088E8020055A37C /* NSString+UrlAdditions.m */,
+				0572F16510BC9708006EF58D /* CurrentLocationView.h */,
+				0572F16610BC9708006EF58D /* CurrentLocationView.m */,
 			);
 			name = compose;
 			sourceTree = "<group>";
@@ -3977,6 +3983,7 @@
 				05FC8FEE10B7CA3A00721DEC /* Tweet.m in Sources */,
 				05295D9610BB0DAB0008BB7F /* Geolocator.m in Sources */,
 				0525DE5310BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m in Sources */,
+				0572F16810BC9708006EF58D /* CurrentLocationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4301,6 +4308,7 @@
 				05FC8FEF10B7CA3A00721DEC /* Tweet.m in Sources */,
 				05295D9710BB0DAB0008BB7F /* Geolocator.m in Sources */,
 				0525DE5410BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m in Sources */,
+				0572F16710BC9708006EF58D /* CurrentLocationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

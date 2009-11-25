@@ -3,10 +3,8 @@
 //
 
 #import "ComposeTweetViewController.h"
-#import "UIColor+TwitchColors.h"
-#import "RotatableTabBarController.h"
-#import "NSString+UrlAdditions.h"
-#import "SettingsReader.h"
+#import "TwitbitShared.h"
+#import "CurrentLocationView.h"
 
 static const NSInteger MAX_TWEET_LENGTH = 140;
 
@@ -107,7 +105,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [addRecipientButton release];
 
     [locationView release];
-    [locationTextField release];
 
     [photoUploadView release];
     [photoUploadProgressView release];
@@ -302,10 +299,16 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     displayingActivity = NO;
 }
 
+- (void)displayUpdatingLocationActivity:(BOOL)display
+{
+    displayLocationActivity = display;
+    [locationView displayActivity:display];
+    [self setViewNeedsInitialization:YES];
+}
+
 - (void)updateLocationDescription:(NSString *)description
 {
-    NSLog(@"Updating location to: %@", description);
-    locationTextField.text = description;
+    [locationView setText:description];
 }
 
 #pragma mark UIViewController overrides
@@ -676,6 +679,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         CGRect frame = textView.frame;
         frame.size.height = 156 - locationView.frame.size.height;
         textView.frame = frame;
+
+        [locationView displayActivity:displayLocationActivity];
     } else {
         locationView.hidden = YES;
         CGRect frame = textView.frame;

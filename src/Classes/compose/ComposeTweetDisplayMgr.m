@@ -55,6 +55,7 @@
 - (void)updateMediaTitleFromTweetText:(NSString *)text;
 
 - (void)startUpdatingLocation;
+- (void)resetLocationState;
 
 @end
 
@@ -95,6 +96,9 @@
     self.urlsToShorten = nil;
     self.personSelector = nil;
     self.geolocator = nil;
+
+    if (lastCoordinate)
+        free(lastCoordinate);
 
     [super dealloc];
 }
@@ -140,8 +144,6 @@
                          withText:text];
     else
         [self composeTweetWithText:text animated:animated];
-
-    [self startUpdatingLocation];
 }
 
 - (void)composeTweetWithText:(NSString *)tweet animated:(BOOL)animated
@@ -318,10 +320,10 @@
         [self.service sendTweet:text inReplyTo:self.origTweetId];
     } else {
         [self.delegate userIsSendingTweet:text];
-        [self.service sendTweet:text coordinate:lastCoordinate];
+        [self.service sendTweet:text coordinate:*lastCoordinate];
     }
 
-    self.geolocator = nil;
+    [self resetLocationState];
 
     NSError * error = nil;
     [self.draftMgr deleteTweetDraftForCredentials:self.service.credentials
@@ -484,7 +486,7 @@
 {
     composingTweet = NO;
     self.directMessageRecipient = nil;
-    self.geolocator = nil;
+    [self resetLocationState];
     [self.rootViewController dismissModalViewControllerAnimated:YES];
     [self.delegate userDidCancelComposingTweet];
 }
@@ -951,23 +953,34 @@
 #pragma mark GeolocatorDelegate implementation
 
 - (void)geolocator:(Geolocator *)locator
- didUpdateLocation:(CLLocationCoordinate2D)coordinate
+ didUpdateLocation:(CLLocationCoordinate2D)crd
          placemark:(MKPlacemark *)placemark
 {
+    BOOL firstTime = !lastCoordinate;
+    if (!lastCoordinate) {
+        lastCoordinate =
+            (CLLocationCoordinate2D *) malloc(sizeof(CLLocationCoordinate2D));
+        memset(lastCoordinate, 0, sizeof(CLLocationCoordinate2D));
+    }
+
     NSString * desc = [placemark humanReadableDescription];
 
-    CLLocationDegrees latitude = lastCoordinate.latitude;
-    CLLocationDegrees longitude = lastCoordinate.longitude;
-    if (coordinate.latitude == latitude && coordinate.longitude == longitude) {
-        NSLog(@"Final location: (%f, %f): %@.", coordinate.latitude,
-            coordinate.longitude, desc);
+    CLLocationDegrees lat = lastCoordinate->latitude;
+    CLLocationDegrees lng = lastCoordinate->longitude;
+    if (!firstTime && (crd.latitude == lat && crd.longitude == lng)) {
+        NSLog(@"Final location: (%f, %f): %@.", lat, lng, desc);
 
         // we got the same location, so assume location has been determined
+        [geolocator stopLocating];
         [geolocator autorelease];
         geolocator = nil;
+
+        [self.composeTweetViewController displayUpdatingLocationActivity:NO];
+
+        findingLocation = NO;
     } else {
-        NSLog(@"Updating location to: (%f, %f): %@.", coordinate.latitude,
-            coordinate.longitude, desc);
+        NSLog(@"Updating location to: (%f, %f): %@.", crd.latitude,
+            crd.longitude, desc);
 
         NSString * fmt =
             NSLocalizedString(@"composetweet.location.formatstring", @"");
@@ -975,13 +988,27 @@
         NSString * fullDesc = [NSString stringWithFormat:fmt, desc];
         [self.composeTweetViewController updateLocationDescription:fullDesc];
 
-        memcpy(&lastCoordinate, &coordinate, sizeof(lastCoordinate));
+        memcpy(lastCoordinate, &crd, sizeof(CLLocationCoordinate2D));
+
+        findingLocation = YES;
+        [self performSelector:@selector(processFindingLocationTimeout)
+                   withObject:nil
+                   afterDelay:4.0];
     }
 }
 
 - (void)geolocator:(Geolocator *)locator didFailWithError:(NSError *)error
 {
     NSLog(@"Geolocator failed with error: %@", error);
+}
+
+- (void)processFindingLocationTimeout
+{
+    if (findingLocation) {
+        NSLog(@"Finding location timed out.");
+        [self.composeTweetViewController displayUpdatingLocationActivity:NO];
+        findingLocation = NO;
+    }
 }
 
 #pragma mark Private implementation
@@ -1048,7 +1075,24 @@
 
 - (void)startUpdatingLocation
 {
+    if (lastCoordinate) {
+        free(lastCoordinate);
+        lastCoordinate = NULL;
+    }
+    findingLocation = YES;
     [self.geolocator startLocating];
+    [self.composeTweetViewController displayUpdatingLocationActivity:YES];
+}
+
+- (void)resetLocationState
+{
+    [self.geolocator stopLocating];
+    self.geolocator = nil;
+    if (lastCoordinate) {
+        free(lastCoordinate);
+        lastCoordinate = NULL;
+    }
+    findingLocation = NO;
 }
 
 #pragma mark Accessors

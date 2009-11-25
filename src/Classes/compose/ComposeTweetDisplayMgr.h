@@ -66,7 +66,8 @@
     NSString * directMessageRecipient;
 
     Geolocator * geolocator;
-    CLLocationCoordinate2D lastCoordinate;
+    CLLocationCoordinate2D * lastCoordinate;
+    BOOL findingLocation;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;

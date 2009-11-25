@@ -4,6 +4,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class CurrentLocationView;
 @protocol ComposeTweetViewControllerDelegate;
 
 @interface ComposeTweetViewController :
@@ -33,8 +34,8 @@
     IBOutlet UIButton * addRecipientButton;
 
     BOOL displayLocation;
-    IBOutlet UIView * locationView;
-    IBOutlet UITextField * locationTextField;
+    IBOutlet CurrentLocationView * locationView;
+    BOOL displayLocationActivity;  // HACK
 
     /* Displaying activity while uploading media and shortening links. */
 
@@ -85,6 +86,7 @@
 - (void)displayUrlShorteningView;
 - (void)hideUrlShorteningView;
 
+- (void)displayUpdatingLocationActivity:(BOOL)display;
 - (void)updateLocationDescription:(NSString *)description;
 
 - (void)userDidSend;

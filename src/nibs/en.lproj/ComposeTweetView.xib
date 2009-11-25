@@ -12,9 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="86"/>
-			<integer value="111"/>
 			<integer value="52"/>
+			<integer value="111"/>
+			<integer value="86"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -113,6 +113,17 @@
 								<int key="IBUISystemItemIdentifier">15</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="781288039">
+								<reference key="IBUIToolbar" ref="615118956"/>
+								<int key="IBUISystemItemIdentifier">5</int>
+							</object>
+							<object class="IBUIBarButtonItem" id="384940417">
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">Location.png</string>
+								</object>
+								<reference key="IBUIToolbar" ref="615118956"/>
+							</object>
+							<object class="IBUIBarButtonItem" id="407015081">
 								<reference key="IBUIToolbar" ref="615118956"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
@@ -263,7 +274,7 @@
 							<object class="IBUITextField" id="772793766">
 								<reference key="NSNextResponder" ref="739002946"/>
 								<int key="NSvFlags">274</int>
-								<string key="NSFrame">{{10, 4}, {305, 30}}</string>
+								<string key="NSFrame">{{38, 4}, {277, 30}}</string>
 								<reference key="NSSuperview" ref="739002946"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -278,12 +289,21 @@
 									<double key="NSSize">14</double>
 									<int key="NSfFlags">16</int>
 								</object>
-								<int key="IBUITextAlignment">1</int>
 								<float key="IBUIMinimumFontSize">17</float>
 								<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 									<int key="IBUIAutocorrectionType">1</int>
 									<int key="IBUIReturnKeyType">4</int>
 								</object>
+							</object>
+							<object class="IBUIActivityIndicatorView" id="856740378">
+								<reference key="NSNextResponder" ref="739002946"/>
+								<int key="NSvFlags">-2147483356</int>
+								<string key="NSFrame">{{10, 9}, {20, 20}}</string>
+								<reference key="NSSuperview" ref="739002946"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<int key="IBUIStyle">2</int>
 							</object>
 						</object>
 						<string key="NSFrame">{{0, 118}, {320, 39}}</string>
@@ -304,7 +324,7 @@
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 			</object>
 			<object class="IBUIView" id="81032601">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -313,7 +333,6 @@
 						<int key="NSvFlags">319</int>
 						<string key="NSFrame">{{0, 5}, {200, 18}}</string>
 						<reference key="NSSuperview" ref="81032601"/>
-						<reference key="NSWindow"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MCAwIDAgMAA</bytes>
@@ -338,7 +357,6 @@
 						<int key="NSvFlags">319</int>
 						<string key="NSFrame">{{0, 20}, {200, 18}}</string>
 						<reference key="NSSuperview" ref="81032601"/>
-						<reference key="NSWindow"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MCAwIDAgMAA</bytes>
@@ -364,8 +382,6 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{200, 44}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MSAwAA</bytes>
@@ -686,11 +702,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="772793766"/>
-						<reference key="destination" ref="372490531"/>
+						<string key="label">textField</string>
+						<reference key="source" ref="739002946"/>
+						<reference key="destination" ref="772793766"/>
 					</object>
-					<int key="connectionID">117</int>
+					<int key="connectionID">123</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -698,15 +714,15 @@
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="739002946"/>
 					</object>
-					<int key="connectionID">119</int>
+					<int key="connectionID">124</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">locationTextField</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="772793766"/>
+						<string key="label">activityIndicator</string>
+						<reference key="source" ref="739002946"/>
+						<reference key="destination" ref="856740378"/>
 					</object>
-					<int key="connectionID">120</int>
+					<int key="connectionID">126</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -762,6 +778,8 @@
 							<reference ref="244315353"/>
 							<reference ref="94766283"/>
 							<reference ref="781288039"/>
+							<reference ref="384940417"/>
+							<reference ref="407015081"/>
 						</object>
 						<reference key="parent" ref="431717833"/>
 					</object>
@@ -925,6 +943,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="258261256"/>
 							<reference ref="772793766"/>
+							<reference ref="856740378"/>
 						</object>
 						<reference key="parent" ref="431717833"/>
 						<string key="objectName">Location View</string>
@@ -940,6 +959,21 @@
 						<reference key="parent" ref="739002946"/>
 						<string key="objectName">Location Description Text Field</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">121</int>
+						<reference key="object" ref="384940417"/>
+						<reference key="parent" ref="615118956"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">122</int>
+						<reference key="object" ref="407015081"/>
+						<reference key="parent" ref="615118956"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">125</int>
+						<reference key="object" ref="856740378"/>
+						<reference key="parent" ref="739002946"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -950,11 +984,15 @@
 					<string>-2.CustomClassName</string>
 					<string>103.IBPluginDependency</string>
 					<string>107.IBPluginDependency</string>
+					<string>111.CustomClassName</string>
 					<string>111.IBEditorWindowLastContentRect</string>
 					<string>111.IBPluginDependency</string>
 					<string>113.IBPluginDependency</string>
 					<string>114.IBPluginDependency</string>
 					<string>12.IBPluginDependency</string>
+					<string>121.IBPluginDependency</string>
+					<string>122.IBPluginDependency</string>
+					<string>125.IBPluginDependency</string>
 					<string>13.IBPluginDependency</string>
 					<string>30.IBPluginDependency</string>
 					<string>39.IBPluginDependency</string>
@@ -992,7 +1030,11 @@
 					<string>UIResponder</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>CurrentLocationView</string>
 					<string>{{1070, 1063}, {320, 39}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1045,7 +1087,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">120</int>
+			<int key="maxID">126</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1080,7 +1122,6 @@
 							<string>characterCountLandscape</string>
 							<string>characterCountPortrait</string>
 							<string>delegate</string>
-							<string>locationTextField</string>
 							<string>locationView</string>
 							<string>photoUploadProgressView</string>
 							<string>photoUploadView</string>
@@ -1102,8 +1143,7 @@
 							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>id</string>
-							<string>UITextField</string>
-							<string>UIView</string>
+							<string>CurrentLocationView</string>
 							<string>UIProgressView</string>
 							<string>UIView</string>
 							<string>UILabel</string>
@@ -1122,6 +1162,27 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/compose/ComposeTweetViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">CurrentLocationView</string>
+					<string key="superclassName">UIView</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>activityIndicator</string>
+							<string>textField</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UIActivityIndicatorView</string>
+							<string>UITextField</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Classes/compose/CurrentLocationView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
