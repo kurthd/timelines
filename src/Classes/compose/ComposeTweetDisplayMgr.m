@@ -317,10 +317,20 @@
         [self.delegate userIsReplyingToTweet:self.origTweetId
                                     fromUser:self.origUsername
                                     withText:text];
-        [self.service sendTweet:text inReplyTo:self.origTweetId];
+
+        if (lastCoordinate)
+            [self.service sendTweet:text
+                         coordinate:*lastCoordinate
+                          inReplyTo:self.origTweetId];
+        else
+            [self.service sendTweet:text inReplyTo:self.origTweetId];
     } else {
         [self.delegate userIsSendingTweet:text];
-        [self.service sendTweet:text coordinate:*lastCoordinate];
+
+        if (lastCoordinate)
+            [self.service sendTweet:text coordinate:*lastCoordinate];
+        else
+            [self.service sendTweet:text];
     }
 
     [self resetLocationState];

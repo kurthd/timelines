@@ -42,11 +42,9 @@
 - (void)sendTweet:(NSString *)tweet;
 - (void)sendTweet:(NSString *)tweet coordinate:(CLLocationCoordinate2D)coord;
 - (void)sendTweet:(NSString *)tweet inReplyTo:(NSNumber *)referenceId;
-/*
 - (void)sendTweet:(NSString *)tweet
-        inReplyTo:(NSNumber *)referenceId
-       coordinate:(CLLocationCoordinate2D)coord;
-*/
+       coordinate:(CLLocationCoordinate2D)coord
+        inReplyTo:(NSNumber *)referenceId;
 
 #pragma mark Fetching individual tweets
 

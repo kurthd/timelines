@@ -1640,7 +1640,7 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
     [params setObject:trimmedText forKey:@"status"];
-    if (updateID > 0) {
+    if (updateID && [updateID length] > 0) {
         [params setObject:updateID forKey:@"in_reply_to_status_id"];
     }
     NSString *body = [self _queryStringWithBase:nil parameters:params prefixed:NO];
@@ -1666,7 +1666,7 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
     [params setObject:trimmedText forKey:@"status"];
-    if (updateID > 0) {
+    if (updateID && [updateID length] > 0) {
         [params setObject:updateID forKey:@"in_reply_to_status_id"];
     }
     [params setObject:[NSString stringWithFormat:@"%f", coord.latitude] forKey:@"lat"];
