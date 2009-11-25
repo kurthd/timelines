@@ -6,6 +6,7 @@
 
 @interface CurrentLocationView : UIView
 {
+    IBOutlet UIImageView * pushpinImageView;
     IBOutlet UIActivityIndicatorView * activityIndicator;
     IBOutlet UITextField * textField;
 }

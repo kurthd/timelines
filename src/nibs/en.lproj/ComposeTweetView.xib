@@ -116,14 +116,14 @@
 								<reference key="IBUIToolbar" ref="615118956"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
-							<object class="IBUIBarButtonItem" id="384940417">
+							<object class="IBUIBarButtonItem" id="507077437">
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">Location.png</string>
 								</object>
 								<reference key="IBUIToolbar" ref="615118956"/>
 							</object>
-							<object class="IBUIBarButtonItem" id="407015081">
+							<object class="IBUIBarButtonItem" id="82592529">
 								<reference key="IBUIToolbar" ref="615118956"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
@@ -278,6 +278,7 @@
 								<reference key="NSSuperview" ref="739002946"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+								<bool key="IBUIEnabled">NO</bool>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<string key="IBUIText">Updating location...</string>
 								<object class="NSColor" key="IBUITextColor">
@@ -295,7 +296,7 @@
 									<int key="IBUIReturnKeyType">4</int>
 								</object>
 							</object>
-							<object class="IBUIActivityIndicatorView" id="856740378">
+							<object class="IBUIActivityIndicatorView" id="455260325">
 								<reference key="NSNextResponder" ref="739002946"/>
 								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{10, 9}, {20, 20}}</string>
@@ -304,6 +305,20 @@
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<int key="IBUIStyle">2</int>
+							</object>
+							<object class="IBUIImageView" id="900571496">
+								<reference key="NSNextResponder" ref="739002946"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{10, 9}, {20, 20}}</string>
+								<reference key="NSSuperview" ref="739002946"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+								<int key="IBUIContentMode">1</int>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">PushpinGrayscale.png</string>
+								</object>
 							</object>
 						</object>
 						<string key="NSFrame">{{0, 118}, {320, 39}}</string>
@@ -702,14 +717,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">textField</string>
-						<reference key="source" ref="739002946"/>
-						<reference key="destination" ref="772793766"/>
-					</object>
-					<int key="connectionID">123</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">locationView</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="739002946"/>
@@ -720,9 +727,25 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">activityIndicator</string>
 						<reference key="source" ref="739002946"/>
-						<reference key="destination" ref="856740378"/>
+						<reference key="destination" ref="455260325"/>
 					</object>
 					<int key="connectionID">126</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">pushpinImageView</string>
+						<reference key="source" ref="739002946"/>
+						<reference key="destination" ref="900571496"/>
+					</object>
+					<int key="connectionID">128</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">textField</string>
+						<reference key="source" ref="739002946"/>
+						<reference key="destination" ref="772793766"/>
+					</object>
+					<int key="connectionID">130</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -778,8 +801,8 @@
 							<reference ref="244315353"/>
 							<reference ref="94766283"/>
 							<reference ref="781288039"/>
-							<reference ref="384940417"/>
-							<reference ref="407015081"/>
+							<reference ref="507077437"/>
+							<reference ref="82592529"/>
 						</object>
 						<reference key="parent" ref="431717833"/>
 					</object>
@@ -942,8 +965,9 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="258261256"/>
+							<reference ref="455260325"/>
+							<reference ref="900571496"/>
 							<reference ref="772793766"/>
-							<reference ref="856740378"/>
 						</object>
 						<reference key="parent" ref="431717833"/>
 						<string key="objectName">Location View</string>
@@ -954,25 +978,30 @@
 						<reference key="parent" ref="739002946"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">114</int>
-						<reference key="object" ref="772793766"/>
-						<reference key="parent" ref="739002946"/>
-						<string key="objectName">Location Description Text Field</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">121</int>
-						<reference key="object" ref="384940417"/>
+						<reference key="object" ref="507077437"/>
 						<reference key="parent" ref="615118956"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">122</int>
-						<reference key="object" ref="407015081"/>
+						<reference key="object" ref="82592529"/>
 						<reference key="parent" ref="615118956"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">125</int>
-						<reference key="object" ref="856740378"/>
+						<reference key="object" ref="455260325"/>
 						<reference key="parent" ref="739002946"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">127</int>
+						<reference key="object" ref="900571496"/>
+						<reference key="parent" ref="739002946"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">114</int>
+						<reference key="object" ref="772793766"/>
+						<reference key="parent" ref="739002946"/>
+						<string key="objectName">Location Description Text Field</string>
 					</object>
 				</object>
 			</object>
@@ -993,6 +1022,7 @@
 					<string>121.IBPluginDependency</string>
 					<string>122.IBPluginDependency</string>
 					<string>125.IBPluginDependency</string>
+					<string>127.IBPluginDependency</string>
 					<string>13.IBPluginDependency</string>
 					<string>30.IBPluginDependency</string>
 					<string>39.IBPluginDependency</string>
@@ -1032,6 +1062,7 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>CurrentLocationView</string>
 					<string>{{1070, 1063}, {320, 39}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1087,7 +1118,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">126</int>
+			<int key="maxID">130</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1172,11 +1203,13 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>activityIndicator</string>
+							<string>pushpinImageView</string>
 							<string>textField</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UIActivityIndicatorView</string>
+							<string>UIImageView</string>
 							<string>UITextField</string>
 						</object>
 					</object>

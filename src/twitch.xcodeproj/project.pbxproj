@@ -226,6 +226,8 @@
 		055777141063018D006596DB /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 055777131063018D006596DB /* libz.1.2.3.dylib */; };
 		0572F16710BC9708006EF58D /* CurrentLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0572F16610BC9708006EF58D /* CurrentLocationView.m */; };
 		0572F16810BC9708006EF58D /* CurrentLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0572F16610BC9708006EF58D /* CurrentLocationView.m */; };
+		0572F22C10BCB172006EF58D /* PushpinGrayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 0572F22B10BCB172006EF58D /* PushpinGrayscale.png */; };
+		0572F22D10BCB172006EF58D /* PushpinGrayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 0572F22B10BCB172006EF58D /* PushpinGrayscale.png */; };
 		057A2A7110B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 057A2A6E10B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m */; };
 		057A2A7210B7079B00784593 /* UserOrDirectMessage21To23EntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 057A2A7010B7079B00784593 /* UserOrDirectMessage21To23EntityMigrationPolicy.m */; };
 		057A2A7310B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 057A2A6E10B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m */; };
@@ -1184,6 +1186,7 @@
 		0562BE2E0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchTweetResponseProcessor.m; path = twitter/processors/FetchTweetResponseProcessor.m; sourceTree = "<group>"; };
 		0572F16510BC9708006EF58D /* CurrentLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurrentLocationView.h; path = compose/CurrentLocationView.h; sourceTree = "<group>"; };
 		0572F16610BC9708006EF58D /* CurrentLocationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurrentLocationView.m; path = compose/CurrentLocationView.m; sourceTree = "<group>"; };
+		0572F22B10BCB172006EF58D /* PushpinGrayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PushpinGrayscale.png; path = images/PushpinGrayscale.png; sourceTree = "<group>"; };
 		05761F5C0FF72C1C00392ADC /* NSMutableURLRequest+Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+Parameters.h"; sourceTree = "<group>"; };
 		05761F5D0FF72C1C00392ADC /* NSMutableURLRequest+Parameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+Parameters.m"; sourceTree = "<group>"; };
 		05761F600FF72C1C00392ADC /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
@@ -2982,6 +2985,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				0572F22B10BCB172006EF58D /* PushpinGrayscale.png */,
 				915B559910ADCB700028B0B4 /* PrivateIconHighlighted.png */,
 				915B555210AD26190028B0B4 /* PrivateIcon.png */,
 				915B507E10A8B53D0028B0B4 /* ListsGlyph.png */,
@@ -3486,6 +3490,7 @@
 				915B508010A8B53D0028B0B4 /* ListsGlyph.png in Resources */,
 				915B555310AD26190028B0B4 /* PrivateIcon.png in Resources */,
 				915B559A10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */,
+				0572F22D10BCB172006EF58D /* PushpinGrayscale.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3656,6 +3661,7 @@
 				915B507F10A8B53D0028B0B4 /* ListsGlyph.png in Resources */,
 				915B555410AD26190028B0B4 /* PrivateIcon.png in Resources */,
 				915B559B10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */,
+				0572F22C10BCB172006EF58D /* PushpinGrayscale.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

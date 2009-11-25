@@ -27,10 +27,13 @@
 
 - (void)displayActivity:(BOOL)displayActivity
 {
-    if (displayActivity)
+    if (displayActivity) {
         [activityIndicator startAnimating];
-    else
+        [pushpinImageView setHidden:YES];
+    } else {
         [activityIndicator stopAnimating];
+        [pushpinImageView setHidden:NO];
+    }
 }
 
 @end
