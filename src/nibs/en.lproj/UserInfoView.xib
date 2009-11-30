@@ -12,9 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="80"/>
-			<integer value="5"/>
 			<integer value="2"/>
+			<integer value="5"/>
+			<integer value="80"/>
 			<integer value="4"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -71,7 +71,7 @@
 					<object class="IBUIImageView" id="229661645">
 						<reference key="NSNextResponder" ref="521307497"/>
 						<int key="NSvFlags">294</int>
-						<string key="NSFrame">{{0, 300}, {320, 76}}</string>
+						<string key="NSFrame">{{0, 300}, {320, 75}}</string>
 						<reference key="NSSuperview" ref="521307497"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -118,7 +118,7 @@
 								</object>
 							</object>
 						</object>
-						<string key="NSFrame">{{20, 309}, {58, 58}}</string>
+						<string key="NSFrame">{{20, 308}, {58, 58}}</string>
 						<reference key="NSSuperview" ref="521307497"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -156,7 +156,7 @@
 					<object class="IBUILabel" id="518721630">
 						<reference key="NSNextResponder" ref="521307497"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 388}, {280, 41}}</string>
+						<string key="NSFrame">{{20, 387}, {280, 41}}</string>
 						<reference key="NSSuperview" ref="521307497"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -342,10 +342,10 @@
 				<int key="NSvFlags">292</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="IBUIView" id="1071854404">
+					<object class="IBUIView" id="106688010">
 						<reference key="NSNextResponder" ref="626556568"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{113, 7}, {94, 44}}</string>
+						<string key="NSFrame">{{9, 7}, {96, 44}}</string>
 						<reference key="NSSuperview" ref="626556568"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -354,10 +354,10 @@
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 					</object>
-					<object class="IBUIView" id="106688010">
+					<object class="IBUIView" id="1071854404">
 						<reference key="NSNextResponder" ref="626556568"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{9, 7}, {94, 44}}</string>
+						<string key="NSFrame">{{112, 7}, {96, 44}}</string>
 						<reference key="NSSuperview" ref="626556568"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -369,7 +369,7 @@
 					<object class="IBUIView" id="43628962">
 						<reference key="NSNextResponder" ref="626556568"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{217, 7}, {94, 44}}</string>
+						<string key="NSFrame">{{215, 7}, {96, 44}}</string>
 						<reference key="NSSuperview" ref="626556568"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -728,8 +728,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="1071854404"/>
-							<reference ref="106688010"/>
 							<reference ref="43628962"/>
+							<reference ref="106688010"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Footer View</string>
@@ -1034,7 +1034,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>activeAcctLabel</string>
 							<string>addToContactsButton</string>
-							<string>avatarBackgroundView</string>
 							<string>avatarView</string>
 							<string>bioLabel</string>
 							<string>blockButton</string>
@@ -1043,7 +1042,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>followsYouLabel</string>
 							<string>footerView</string>
 							<string>headerBackgroundView</string>
-							<string>headerBottomLine</string>
 							<string>headerTopLine</string>
 							<string>headerView</string>
 							<string>headerViewPadding</string>
@@ -1056,7 +1054,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UILabel</string>
 							<string>TwoLineButton</string>
-							<string>UIImageView</string>
 							<string>RoundedImage</string>
 							<string>UILabel</string>
 							<string>TwoLineButton</string>
@@ -1065,7 +1062,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>UILabel</string>
 							<string>UIView</string>
 							<string>UIImageView</string>
-							<string>UIView</string>
 							<string>UIView</string>
 							<string>UIView</string>
 							<string>UIView</string>

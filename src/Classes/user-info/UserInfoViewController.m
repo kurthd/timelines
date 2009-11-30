@@ -277,9 +277,9 @@ static NSNumberFormatter * formatter;
     CGFloat addToContactsX;
     if (o == UIInterfaceOrientationPortrait ||
         o == UIInterfaceOrientationPortraitUpsideDown) {
-        buttonWidth = 94;
-        addToContactsX = 113;
-        bookmarkButtonX = 217;
+        buttonWidth = 96;
+        addToContactsX = 112;
+        bookmarkButtonX = 215;
     } else {
         buttonWidth = 148;
         addToContactsX = 166;
@@ -705,7 +705,7 @@ static NSNumberFormatter * formatter;
     CGRect webAddressFrame = webAddressButton.frame;
     webAddressFrame.origin.y =
         bioLabel.text.length > 0 ?
-        bioLabelFrame.size.height + 388.0 : 388.0;
+        bioLabelFrame.size.height + 387.0 : 387.0;
     webAddressFrame.size.width = labelWidth;
     webAddressButton.frame = webAddressFrame;
 

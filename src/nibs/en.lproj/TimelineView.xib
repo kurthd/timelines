@@ -12,11 +12,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="10"/>
 			<integer value="6"/>
-			<integer value="28"/>
 			<integer value="2"/>
+			<integer value="10"/>
 			<integer value="53"/>
+			<integer value="28"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -219,8 +219,8 @@
 						<string key="NSFrame">{{0, 391}, {480, 1}}</string>
 						<reference key="NSSuperview" ref="94378415"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC44NjI3NDUxMDYyIDAuODYyNzQ1MTA2MiAwLjg2Mjc0NTEwNjIAA</bytes>
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MC44AA</bytes>
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 					</object>
