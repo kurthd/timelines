@@ -19,10 +19,8 @@
     NSObject<UserInfoViewControllerDelegate> * delegate;
 
     IBOutlet UIView * headerView;
-    IBOutlet UIImageView * avatarBackgroundView;
     IBOutlet UIImageView * headerBackgroundView;
     IBOutlet UIView * headerTopLine;
-    IBOutlet UIView * headerBottomLine;
     IBOutlet UIView * headerViewPadding;
     IBOutlet UIView * footerView;
     IBOutlet RoundedImage * avatarView;

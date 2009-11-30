@@ -14,8 +14,8 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="80"/>
 			<integer value="5"/>
-			<integer value="4"/>
 			<integer value="2"/>
+			<integer value="4"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -79,23 +79,10 @@
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="IBUIContentStretch">{{0.5, 0}, {0.5, 1}}</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">UserHeaderGradient.png</string>
-						</object>
-					</object>
-					<object class="IBUIImageView" id="315318784">
-						<reference key="NSNextResponder" ref="521307497"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{17, 306}, {64, 64}}</string>
-						<reference key="NSSuperview" ref="521307497"/>
-						<bool key="IBUIOpaque">NO</bool>
-						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
-						<int key="IBUIContentMode">4</int>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<object class="NSCustomResource" key="IBUIImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">AvatarBackground.png</string>
 						</object>
 					</object>
 					<object class="IBUIView" id="286202496">
@@ -203,17 +190,6 @@
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC45NDExNzY0NzQxIDAuOTQxMTc2NDc0MSAwLjk0MTE3NjQ3NDEAA</bytes>
-						</object>
-						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
-					</object>
-					<object class="IBUIView" id="362908434">
-						<reference key="NSNextResponder" ref="521307497"/>
-						<int key="NSvFlags">294</int>
-						<string key="NSFrame">{{0, 375}, {320, 1}}</string>
-						<reference key="NSSuperview" ref="521307497"/>
-						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC41Njg2Mjc0NzY3IDAuNTY4NjI3NDc2NyAwLjU2ODYyNzQ3NjcAA</bytes>
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 					</object>
@@ -622,14 +598,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">avatarBackgroundView</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="315318784"/>
-					</object>
-					<int key="connectionID">73</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">headerBackgroundView</string>
 						<reference key="source" ref="841351856"/>
 						<reference key="destination" ref="229661645"/>
@@ -643,14 +611,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="destination" ref="804106776"/>
 					</object>
 					<int key="connectionID">75</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">headerBottomLine</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="362908434"/>
-					</object>
-					<int key="connectionID">76</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -752,8 +712,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="221748051"/>
 							<reference ref="286202496"/>
 							<reference ref="538576021"/>
-							<reference ref="315318784"/>
-							<reference ref="362908434"/>
 							<reference ref="804106776"/>
 							<reference ref="1069915547"/>
 							<reference ref="612045605"/>
@@ -806,12 +764,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="parent" ref="521307497"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">39</int>
-						<reference key="object" ref="362908434"/>
-						<reference key="parent" ref="521307497"/>
-						<string key="objectName">Gray Line</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">40</int>
 						<reference key="object" ref="221748051"/>
 						<object class="NSMutableArray" key="children">
@@ -823,11 +775,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<int key="objectID">46</int>
 						<reference key="object" ref="155567633"/>
 						<reference key="parent" ref="286202496"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">48</int>
-						<reference key="object" ref="315318784"/>
-						<reference key="parent" ref="521307497"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">51</int>
@@ -900,12 +847,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>2.IBEditorWindowLastContentRect</string>
 					<string>2.IBPluginDependency</string>
 					<string>38.IBPluginDependency</string>
-					<string>39.IBPluginDependency</string>
 					<string>4.IBEditorWindowLastContentRect</string>
 					<string>4.IBPluginDependency</string>
 					<string>40.IBPluginDependency</string>
 					<string>46.IBPluginDependency</string>
-					<string>48.IBPluginDependency</string>
 					<string>5.IBEditorWindowLastContentRect</string>
 					<string>5.IBPluginDependency</string>
 					<string>51.IBPluginDependency</string>
@@ -936,9 +881,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>{{57, 320}, {320, 367}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{417, 226}, {320, 500}}</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>

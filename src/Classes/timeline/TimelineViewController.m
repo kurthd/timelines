@@ -59,9 +59,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 {
     [headerView release];
     [headerBackgroundView release];
-    [avatarBackgroundView release];
     [headerTopLine release];
-    [headerBottomLine release];
     [headerViewPadding release];
     
     [plainHeaderView release];
@@ -109,11 +107,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         headerBackgroundView.image =
             [UIImage imageNamed:@"UserHeaderDarkThemeGradient.png"];
 
-        avatarBackgroundView.image =
-            [UIImage imageNamed:@"AvatarDarkThemeBackground.png"];
-
         headerTopLine.backgroundColor = [UIColor blackColor];
-        headerBottomLine.backgroundColor = [UIColor blackColor];
         headerViewPadding.backgroundColor = [UIColor defaultDarkThemeCellColor];
 
         fullNameLabel.textColor = [UIColor whiteColor];

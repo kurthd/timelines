@@ -12,9 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="37"/>
 			<integer value="19"/>
 			<integer value="2"/>
+			<integer value="37"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -53,23 +53,10 @@
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="IBUIContentStretch">{{0.5, 0}, {0.5, 1}}</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">UserHeaderGradient.png</string>
-						</object>
-					</object>
-					<object class="IBUIImageView" id="108657311">
-						<reference key="NSNextResponder" ref="736073960"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{17, 306}, {64, 64}}</string>
-						<reference key="NSSuperview" ref="736073960"/>
-						<bool key="IBUIOpaque">NO</bool>
-						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
-						<int key="IBUIContentMode">4</int>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<object class="NSCustomResource" key="IBUIImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">AvatarBackground.png</string>
 						</object>
 					</object>
 					<object class="IBUIView" id="974093840">
@@ -122,17 +109,6 @@
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC45NDExNzY0NyAwLjk0MTE3NjQ3IDAuOTQxMTc2NDcAA</bytes>
-						</object>
-						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
-					</object>
-					<object class="IBUIView" id="4762288">
-						<reference key="NSNextResponder" ref="736073960"/>
-						<int key="NSvFlags">294</int>
-						<string key="NSFrame">{{0, 375}, {320, 1}}</string>
-						<reference key="NSSuperview" ref="736073960"/>
-						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC41Njg2Mjc0OCAwLjU2ODYyNzQ4IDAuNTY4NjI3NDgAA</bytes>
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 					</object>
@@ -233,14 +209,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">avatarBackgroundView</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="108657311"/>
-					</object>
-					<int key="connectionID">39</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">headerBackgroundView</string>
 						<reference key="source" ref="841351856"/>
 						<reference key="destination" ref="1063557550"/>
@@ -254,14 +222,6 @@
 						<reference key="destination" ref="522464781"/>
 					</object>
 					<int key="connectionID">41</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">headerBottomLine</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="4762288"/>
-					</object>
-					<int key="connectionID">42</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -298,8 +258,6 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="457696840"/>
-							<reference ref="4762288"/>
-							<reference ref="108657311"/>
 							<reference ref="483590059"/>
 							<reference ref="974093840"/>
 							<reference ref="522464781"/>
@@ -313,17 +271,6 @@
 						<reference key="object" ref="457696840"/>
 						<reference key="parent" ref="736073960"/>
 						<string key="objectName">Gray Line</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">9</int>
-						<reference key="object" ref="4762288"/>
-						<reference key="parent" ref="736073960"/>
-						<string key="objectName">Gray Line</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">10</int>
-						<reference key="object" ref="108657311"/>
-						<reference key="parent" ref="736073960"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">13</int>
@@ -366,7 +313,6 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>-1.CustomClassName</string>
 					<string>-2.CustomClassName</string>
-					<string>10.IBPluginDependency</string>
 					<string>13.IBPluginDependency</string>
 					<string>14.CustomClassName</string>
 					<string>14.IBPluginDependency</string>
@@ -379,13 +325,11 @@
 					<string>37.IBEditorWindowLastContentRect</string>
 					<string>37.IBPluginDependency</string>
 					<string>8.IBPluginDependency</string>
-					<string>9.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>LocationInfoViewController</string>
 					<string>UIResponder</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>RoundedImage</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -396,7 +340,6 @@
 					<string>{{390, 322}, {320, 376}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{63, 718}, {58, 58}}</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
@@ -429,10 +372,8 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>avatarBackgroundView</string>
 							<string>delegate</string>
 							<string>headerBackgroundView</string>
-							<string>headerBottomLine</string>
 							<string>headerTopLine</string>
 							<string>headerView</string>
 							<string>headerViewPadding</string>
@@ -441,10 +382,8 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>UIImageView</string>
 							<string>id</string>
 							<string>UIImageView</string>
-							<string>UIView</string>
 							<string>UIView</string>
 							<string>UIView</string>
 							<string>UIView</string>
@@ -461,14 +400,14 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/shared/NSObject+RuntimeAdditions.h</string>
+						<string key="minorKey">Classes/shared/NSObject+GeneralHelpers.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/shared/NSObject+TweetHelpers.h</string>
+						<string key="minorKey">Classes/shared/NSObject+RuntimeAdditions.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

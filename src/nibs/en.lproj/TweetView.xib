@@ -160,21 +160,11 @@
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="IBUIContentStretch">{{0.5, 0}, {0.5, 1}}</string>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">UserHeaderGradient.png</string>
 								</object>
-							</object>
-							<object class="IBUIView" id="14086707">
-								<reference key="NSNextResponder" ref="717978432"/>
-								<int key="NSvFlags">294</int>
-								<string key="NSFrame">{{0, 74}, {320, 1}}</string>
-								<reference key="NSSuperview" ref="717978432"/>
-								<object class="NSColor" key="IBUIBackgroundColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC41Njg2Mjc0OCAwLjU2ODYyNzQ4IDAuNTY4NjI3NDgAA</bytes>
-								</object>
-								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 							</object>
 							<object class="IBUIImageView" id="1013016521">
 								<reference key="NSNextResponder" ref="717978432"/>
@@ -188,20 +178,6 @@
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">ChatArrow.png</string>
-								</object>
-							</object>
-							<object class="IBUIImageView" id="786307387">
-								<reference key="NSNextResponder" ref="717978432"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{17, 5}, {64, 64}}</string>
-								<reference key="NSSuperview" ref="717978432"/>
-								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
-								<int key="IBUIContentMode">4</int>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<object class="NSCustomResource" key="IBUIImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">AvatarBackground.png</string>
 								</object>
 							</object>
 							<object class="IBUIView" id="275771538">
@@ -241,6 +217,7 @@
 									</object>
 								</object>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+								<string key="IBUIContentStretch">{{0.5, 0}, {1, 1}}</string>
 							</object>
 							<object class="IBUILabel" id="967829520">
 								<reference key="NSNextResponder" ref="717978432"/>
@@ -481,22 +458,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">headerBottomLine</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="14086707"/>
-					</object>
-					<int key="connectionID">73</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">avatarBackgroundView</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="786307387"/>
-					</object>
-					<int key="connectionID">74</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">headerTopLine</string>
 						<reference key="source" ref="841351856"/>
 						<reference key="destination" ref="579758285"/>
@@ -564,13 +525,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="275771538"/>
 							<reference ref="639357514"/>
-							<reference ref="786307387"/>
 							<reference ref="968256882"/>
 							<reference ref="701012251"/>
 							<reference ref="967829520"/>
 							<reference ref="579758285"/>
 							<reference ref="1013016521"/>
-							<reference ref="14086707"/>
 						</object>
 						<reference key="parent" ref="585198063"/>
 					</object>
@@ -596,11 +555,6 @@
 						<string key="objectName">Full Name</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">34</int>
-						<reference key="object" ref="786307387"/>
-						<reference key="parent" ref="717978432"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">31</int>
 						<reference key="object" ref="968256882"/>
 						<reference key="parent" ref="717978432"/>
@@ -619,12 +573,6 @@
 						<int key="objectID">53</int>
 						<reference key="object" ref="276214475"/>
 						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">58</int>
-						<reference key="object" ref="14086707"/>
-						<reference key="parent" ref="717978432"/>
-						<string key="objectName">Dark Grey Line</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">60</int>
@@ -675,7 +623,6 @@
 					<string>31.IBPluginDependency</string>
 					<string>32.IBPluginDependency</string>
 					<string>33.IBPluginDependency</string>
-					<string>34.IBPluginDependency</string>
 					<string>35.CustomClassName</string>
 					<string>35.IBPluginDependency</string>
 					<string>36.IBPluginDependency</string>
@@ -684,7 +631,6 @@
 					<string>42.IBPluginDependency</string>
 					<string>53.IBEditorWindowLastContentRect</string>
 					<string>53.IBPluginDependency</string>
-					<string>58.IBPluginDependency</string>
 					<string>60.IBPluginDependency</string>
 					<string>61.IBPluginDependency</string>
 					<string>62.IBEditorWindowLastContentRect</string>
@@ -704,15 +650,13 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>RoundedImage</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{390, 159}, {320, 375}}</string>
+					<string>{{61, 256}, {320, 375}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{312, 684}, {58, 58}}</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -738,7 +682,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">76</int>
+			<int key="maxID">78</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -21,10 +21,8 @@
     UINavigationController * navigationController;
 
     IBOutlet UIView * headerView;
-    IBOutlet UIImageView * avatarBackgroundView;
     IBOutlet UIImageView * headerBackgroundView;
     IBOutlet UIView * headerTopLine;
-    IBOutlet UIView * headerBottomLine;
     IBOutlet UIView * headerViewPadding;
     IBOutlet UIImageView * chatArrowView;
     IBOutlet UIView * footerView;
