@@ -372,6 +372,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [locationView setText:description];
 }
 
+- (void)displayUpdatingLocationError:(NSError *)error
+{
+    [locationView setErrorMessage:error.localizedDescription];
+}
+
 #pragma mark UIViewController overrides
 
 - (void)viewDidLoad

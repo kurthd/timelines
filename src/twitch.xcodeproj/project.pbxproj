@@ -789,6 +789,8 @@
 		05DBF43A1082E76D004AB521 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0590E2081062FF79009D1C11 /* Reachability.m */; };
 		05DBF43B1082E76D004AB521 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		05DBF43C1082E76D004AB521 /* UserTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05DBF1EC1082E61E004AB521 /* UserTweet.m */; };
+		05E39EEB10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 05E39EEA10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png */; };
+		05E39EEC10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 05E39EEA10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png */; };
 		05EDAF0C1029FAAB00D0B62B /* TweetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05EDAF0A1029FAAB00D0B62B /* TweetView.xib */; };
 		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		05EF40D50FFADF95007B59F1 /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
@@ -1500,6 +1502,7 @@
 		05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearchMgr.m; path = search/RecentSearchMgr.m; sourceTree = "<group>"; };
 		05E1B94C104F36D500DD8876 /* BlockExistsResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlockExistsResponseProcessor.h; path = twitter/processors/BlockExistsResponseProcessor.h; sourceTree = "<group>"; };
 		05E1B94D104F36D500DD8876 /* BlockExistsResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BlockExistsResponseProcessor.m; path = twitter/processors/BlockExistsResponseProcessor.m; sourceTree = "<group>"; };
+		05E39EEA10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ErrorExclamationMarkGrayscale.png; path = images/ErrorExclamationMarkGrayscale.png; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
 		05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+TediousCodeAdditions.m"; path = "shared/NSManagedObject+TediousCodeAdditions.m"; sourceTree = "<group>"; };
 		05EDAEFA1029F6F500D0B62B /* TweetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetViewController.h; path = timeline/TweetViewController.h; sourceTree = "<group>"; };
@@ -2985,6 +2988,7 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				05E39EEA10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png */,
 				0572F22B10BCB172006EF58D /* PushpinGrayscale.png */,
 				915B559910ADCB700028B0B4 /* PrivateIconHighlighted.png */,
 				915B555210AD26190028B0B4 /* PrivateIcon.png */,
@@ -3491,6 +3495,7 @@
 				915B555310AD26190028B0B4 /* PrivateIcon.png in Resources */,
 				915B559A10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */,
 				0572F22D10BCB172006EF58D /* PushpinGrayscale.png in Resources */,
+				05E39EEC10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3662,6 +3667,7 @@
 				915B555410AD26190028B0B4 /* PrivateIcon.png in Resources */,
 				915B559B10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */,
 				0572F22C10BCB172006EF58D /* PushpinGrayscale.png in Resources */,
+				05E39EEB10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

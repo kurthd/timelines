@@ -1028,13 +1028,15 @@
         findingLocation = YES;
         [self performSelector:@selector(processFindingLocationTimeout)
                    withObject:nil
-                   afterDelay:4.0];
+                   afterDelay:6.0];
     }
 }
 
 - (void)geolocator:(Geolocator *)locator didFailWithError:(NSError *)error
 {
     NSLog(@"Geolocator failed with error: %@", error);
+    [self.composeTweetViewController displayUpdatingLocationError:error];
+    findingLocation = NO;
 }
 
 - (void)processFindingLocationTimeout

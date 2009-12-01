@@ -92,6 +92,7 @@
 - (void)displayLocationDescription:(BOOL)display animated:(BOOL)animated;
 - (void)displayUpdatingLocationActivity:(BOOL)display;
 - (void)updateLocationDescription:(NSString *)description;
+- (void)displayUpdatingLocationError:(NSError *)error;
 
 - (void)userDidSend;
 - (void)userDidClose;

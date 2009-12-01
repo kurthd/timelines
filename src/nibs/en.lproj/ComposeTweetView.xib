@@ -121,6 +121,20 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<int key="IBUIStyle">2</int>
 							</object>
+							<object class="IBUIImageView" id="712480992">
+								<reference key="NSNextResponder" ref="739002946"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{10, 9}, {20, 20}}</string>
+								<reference key="NSSuperview" ref="739002946"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+								<int key="IBUIContentMode">1</int>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">ErrorExclamationMarkGrayscale.png</string>
+								</object>
+							</object>
 							<object class="IBUIImageView" id="691534994">
 								<reference key="NSNextResponder" ref="739002946"/>
 								<int key="NSvFlags">292</int>
@@ -759,6 +773,14 @@
 					</object>
 					<int key="connectionID">131</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">errorImageView</string>
+						<reference key="source" ref="739002946"/>
+						<reference key="destination" ref="712480992"/>
+					</object>
+					<int key="connectionID">133</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -980,6 +1002,7 @@
 							<reference ref="370312050"/>
 							<reference ref="691534994"/>
 							<reference ref="772793766"/>
+							<reference ref="712480992"/>
 						</object>
 						<reference key="parent" ref="431717833"/>
 						<string key="objectName">Location View</string>
@@ -1008,12 +1031,19 @@
 						<int key="objectID">127</int>
 						<reference key="object" ref="691534994"/>
 						<reference key="parent" ref="739002946"/>
+						<string key="objectName">Pushpin Image</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">114</int>
 						<reference key="object" ref="772793766"/>
 						<reference key="parent" ref="739002946"/>
 						<string key="objectName">Location Description Text Field</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">132</int>
+						<reference key="object" ref="712480992"/>
+						<reference key="parent" ref="739002946"/>
+						<string key="objectName">Error Image</string>
 					</object>
 				</object>
 			</object>
@@ -1036,6 +1066,7 @@
 					<string>125.IBPluginDependency</string>
 					<string>127.IBPluginDependency</string>
 					<string>13.IBPluginDependency</string>
+					<string>132.IBPluginDependency</string>
 					<string>30.IBPluginDependency</string>
 					<string>39.IBPluginDependency</string>
 					<string>4.IBEditorWindowLastContentRect</string>
@@ -1085,7 +1116,8 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{705, 143}, {320, 480}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>{{962, 147}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{1070, 1063}, {320, 33}}</string>
@@ -1130,7 +1162,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">131</int>
+			<int key="maxID">133</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1217,12 +1249,14 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>activityIndicator</string>
+							<string>errorImageView</string>
 							<string>pushpinImageView</string>
 							<string>textField</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UIActivityIndicatorView</string>
+							<string>UIImageView</string>
 							<string>UIImageView</string>
 							<string>UITextField</string>
 						</object>
