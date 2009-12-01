@@ -34,6 +34,7 @@
 
     UITableViewCell * tweetTextTableViewCell;
     UITableViewCell * conversationCell;
+    UITableViewCell * retweetAuthorCell;
     UIWebView * tweetContentView;
 
     Tweet * tweet;
@@ -48,6 +49,7 @@
     TweetLocationCell * locationCell;
     ActionButtonCell * publicReplyCell;
     ActionButtonCell * retweetCell;
+    ActionButtonCell * quoteCell;
     MarkAsFavoriteCell * favoriteCell;
     ActionButtonCell * deleteTweetCell;
         

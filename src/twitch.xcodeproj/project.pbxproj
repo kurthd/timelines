@@ -870,6 +870,10 @@
 		914CA0F91039C62C00421C60 /* StopFollowingButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA0F71039C62C00421C60 /* StopFollowingButtonHighlighted.png */; };
 		914CA284103A1DC300421C60 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914CA283103A1DC300421C60 /* MapKit.framework */; };
 		914CA331103A444000421C60 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914CA330103A444000421C60 /* CoreLocation.framework */; };
+		914E9DA110C5769A007036F2 /* QuoteButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 914E9D9F10C5769A007036F2 /* QuoteButtonIcon.png */; };
+		914E9DA210C5769A007036F2 /* QuoteButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914E9DA010C5769A007036F2 /* QuoteButtonIconHighlighted.png */; };
+		914E9DA310C5769A007036F2 /* QuoteButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 914E9D9F10C5769A007036F2 /* QuoteButtonIcon.png */; };
+		914E9DA410C5769A007036F2 /* QuoteButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914E9DA010C5769A007036F2 /* QuoteButtonIconHighlighted.png */; };
 		9152E1571014F86C0033B63B /* DirectMessageInboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1551014F86C0033B63B /* DirectMessageInboxView.xib */; };
 		9152E15A1014F8850033B63B /* DirectMessageConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1581014F8850033B63B /* DirectMessageConversationView.xib */; };
 		9152E239101557AC0033B63B /* NewMessagesDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9152E238101557AC0033B63B /* NewMessagesDot.png */; };
@@ -1624,6 +1628,8 @@
 		914CA330103A444000421C60 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		914CA4D5103B646700421C60 /* LocationCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationCellView.h; path = "user-info/LocationCellView.h"; sourceTree = "<group>"; };
 		914CA4D6103B646700421C60 /* LocationCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationCellView.m; path = "user-info/LocationCellView.m"; sourceTree = "<group>"; };
+		914E9D9F10C5769A007036F2 /* QuoteButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = QuoteButtonIcon.png; path = images/QuoteButtonIcon.png; sourceTree = "<group>"; };
+		914E9DA010C5769A007036F2 /* QuoteButtonIconHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = QuoteButtonIconHighlighted.png; path = images/QuoteButtonIconHighlighted.png; sourceTree = "<group>"; };
 		9152E14C1014F6B70033B63B /* DirectMessagesDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessagesDisplayMgr.h; path = "direct-messages/DirectMessagesDisplayMgr.h"; sourceTree = "<group>"; };
 		9152E14D1014F6B70033B63B /* DirectMessagesDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessagesDisplayMgr.m; path = "direct-messages/DirectMessagesDisplayMgr.m"; sourceTree = "<group>"; };
 		9152E14F1014F8260033B63B /* DirectMessageInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageInboxViewController.h; path = "direct-messages/DirectMessageInboxViewController.h"; sourceTree = "<group>"; };
@@ -3005,6 +3011,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				914E9D9F10C5769A007036F2 /* QuoteButtonIcon.png */,
+				914E9DA010C5769A007036F2 /* QuoteButtonIconHighlighted.png */,
 				91B7704110BC49900014172A /* StandardButtonBackgroundHighlighted.png */,
 				91B76FDE10BB5AE80014172A /* StandardButtonBackground.png */,
 				91B76FDF10BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png */,
@@ -3519,6 +3527,8 @@
 				91B76FE010BB5AE80014172A /* StandardButtonBackground.png in Resources */,
 				91B76FE110BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */,
 				91B7704310BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */,
+				914E9DA310C5769A007036F2 /* QuoteButtonIcon.png in Resources */,
+				914E9DA410C5769A007036F2 /* QuoteButtonIconHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3692,6 +3702,8 @@
 				91B76FE210BB5AE80014172A /* StandardButtonBackground.png in Resources */,
 				91B76FE310BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */,
 				91B7704210BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */,
+				914E9DA110C5769A007036F2 /* QuoteButtonIcon.png in Resources */,
+				914E9DA210C5769A007036F2 /* QuoteButtonIconHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

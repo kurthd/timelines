@@ -33,13 +33,15 @@ static const NSInteger NUM_TWEET_DETAILS_ROWS = 1;
 enum TweetDetailsRows {
     kTweetTextRow,
     kLocationRow,
-    kConversationRow
+    kConversationRow,
+    kRetweetAuthorRow
 };
 
-static const NSInteger NUM_TWEET_ACTION_ROWS = 3;
+static const NSInteger NUM_TWEET_ACTION_ROWS = 4;
 enum TweetActionRows {
     kPublicReplyRow,
     kRetweetRow,
+    kQuoteRow,
     kFavoriteRow,
     kDeleteRow
 };
@@ -59,8 +61,10 @@ enum TweetActionSheets {
 @property (readonly) UITableViewCell * conversationCell;
 @property (readonly) ActionButtonCell * publicReplyCell;
 @property (readonly) ActionButtonCell * retweetCell;
+@property (readonly) ActionButtonCell * quoteCell;
 @property (readonly) MarkAsFavoriteCell * favoriteCell;
 @property (readonly) ActionButtonCell * deleteTweetCell;
+@property (readonly) UITableViewCell * retweetAuthorCell;
 
 - (void)displayTweet;
 - (void)loadTweetWebView;
@@ -108,8 +112,10 @@ enum TweetActionSheets {
     [locationCell release];
     [publicReplyCell release];
     [retweetCell release];
+    [quoteCell release];
     [favoriteCell release];
     [deleteTweetCell release];
+    [retweetAuthorCell release];
 
     [tweetTextTableViewCell release];
     self.tweetContentView = nil;
@@ -130,7 +136,7 @@ enum TweetActionSheets {
 
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         self.tableView.separatorColor = [UIColor twitchGrayColor];
-        
+
         headerBackgroundView.image =
             [UIImage imageNamed:@"UserHeaderDarkThemeGradient.png"];
 
@@ -252,13 +258,16 @@ enum TweetActionSheets {
                 nrows++;
             if (tweet.location)
                 nrows++;
+            // TODO: remove comment
+            // if (tweet.retweet)
+                // nrows++;
             break;
         case kTweetActionsSection:
             nrows = NUM_TWEET_ACTION_ROWS;
             if (!showsFavoriteButton)
                 nrows--;
             if (!showsExtendedActions)
-                nrows--;
+                nrows-=2;
             if (allowDeletion)
                 nrows++;
             break;
@@ -309,12 +318,22 @@ enum TweetActionSheets {
             BOOL landscape = [[RotatableTabBarController instance] landscape];
             [self.locationCell setLandscape:landscape];
             cell = self.locationCell;
+        } else if (transformedPath.row == kRetweetAuthorRow) {
+            cell = self.retweetAuthorCell;
+            NSString * formatString =
+                NSLocalizedString(@"tweetdetailsview.retweet.formatstring",
+                @"");
+            // TODO: create retweet string from retweet author
+            cell.textLabel.text =
+                [NSString stringWithFormat:formatString, @"someone"];
         }
     } else if (transformedPath.section == kTweetActionsSection) {
         if (transformedPath.row == kPublicReplyRow)
             cell = self.publicReplyCell;
         else if (transformedPath.row == kRetweetRow)
             cell = self.retweetCell;
+        else if (transformedPath.row == kQuoteRow)
+            cell = self.quoteCell;
         else if (transformedPath.row == kFavoriteRow) {
             cell = self.favoriteCell;
             [self.favoriteCell setMarkedState:[tweet.favorited boolValue]];
@@ -334,6 +353,8 @@ enum TweetActionSheets {
     if (transformedPath.section == kTweetDetailsSection) {
         if (transformedPath.row == kConversationRow)
             [delegate loadConversationFromTweetId:tweet.identifier];
+        else if (transformedPath.row == kRetweetAuthorRow)
+            [delegate showUserInfoForUser:nil]; // TODO: swap in retweet user
         else if (transformedPath.row == kLocationRow) {
             CLLocation * location = [tweet.location asCllocation];
             CLLocationCoordinate2D coord = location.coordinate;
@@ -347,6 +368,8 @@ enum TweetActionSheets {
         if (transformedPath.row == kPublicReplyRow)
             [self sendReply];
         else if (transformedPath.row == kRetweetRow)
+            [self retweet];
+        else if (transformedPath.row == kQuoteRow)
             [self retweet];
         else if (transformedPath.row == kFavoriteRow)
             [self toggleFavoriteValue];
@@ -645,6 +668,25 @@ enum TweetActionSheets {
     return conversationCell;
 }
 
+- (UITableViewCell *)retweetAuthorCell
+{
+    if (!retweetAuthorCell) {
+        retweetAuthorCell =
+            [[UITableViewCell alloc]
+            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+        retweetAuthorCell.accessoryType =
+            UITableViewCellAccessoryDisclosureIndicator;
+
+        if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+            retweetAuthorCell.backgroundColor =
+                [UIColor defaultDarkThemeCellColor];
+            retweetAuthorCell.textLabel.textColor = [UIColor whiteColor];
+        }
+    }
+
+    return retweetAuthorCell;
+}
+
 - (UITableViewCell *)publicReplyCell
 {
     if (!publicReplyCell) {
@@ -679,12 +721,31 @@ enum TweetActionSheets {
         NSString * actionText =
             NSLocalizedString(@"tweetdetailsview.retweet.label", @"");
         [retweetCell setActionText:actionText];
-        UIImage * actionImage =
-            [UIImage imageNamed:@"RetweetButtonIconHighlighted.png"];
+        UIImage * actionImage = [UIImage imageNamed:@"RetweetButtonIcon.png"];
         [retweetCell setActionImage:actionImage];
     }
 
     return retweetCell;
+}
+
+- (UITableViewCell *)quoteCell
+{
+    if (!quoteCell) {
+        UIColor * bColor =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [UIColor defaultDarkThemeCellColor] : [UIColor whiteColor];
+        quoteCell =
+            [[ActionButtonCell alloc]
+            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""
+            backgroundColor:bColor];
+        NSString * actionText =
+            NSLocalizedString(@"tweetdetailsview.quote.label", @"");
+        [quoteCell setActionText:actionText];
+        UIImage * actionImage = [UIImage imageNamed:@"QuoteButtonIcon.png"];
+        [quoteCell setActionImage:actionImage];
+    }
+
+    return quoteCell;
 }
 
 - (void)loadTweetWebView
@@ -794,12 +855,13 @@ enum TweetActionSheets {
 
 - (NSIndexPath *)indexForActualIndexPath:(NSIndexPath *)actual
 {
-    NSInteger row;
-    if (actual.section == kTweetDetailsSection && !tweet.location &&
-        actual.row == kLocationRow)
-        row = kConversationRow;
-    else
-        row = actual.row;
+    NSInteger row = actual.row;
+    if (actual.section == kTweetDetailsSection) {
+        if (row >= kLocationRow && !tweet.location)
+            row++;
+        if (row >= kConversationRow && !tweet.inReplyToTwitterTweetId)
+            row++;
+    }
 
     return [NSIndexPath indexPathForRow:row inSection:actual.section];
 }
