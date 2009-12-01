@@ -88,71 +88,83 @@
 - (void)lists:(NSArray *)someLists fetchedForUser:(NSString *)username
     fromCursor:(NSString *)cursor nextCursor:(NSString *)nextCursor
 {
-    self.listsCursor = nextCursor;
+    // Make sure accounts weren't switched
+    if ([username isEqual:credentials.username]) {
+        self.listsCursor = nextCursor;
 
-    // HACK: Insure lists deleted on the server are deleted in the app. If this
-    // is the first page of lists we've received, just remove everything we
-    // have and replace with what we've received from Twitter.
-    if (!cursor)
-        [self.lists removeAllObjects];
+        // HACK: Ensure lists deleted on the server are deleted in the app. If
+        // this is the first page of lists we've received, just remove
+        // everything we have and replace with what we've received from Twitter.
+        if (!cursor)
+            [self.lists removeAllObjects];
 
-    for (TwitterList * list in someLists)
-        [self.lists setObject:list forKey:list.identifier];
+        for (TwitterList * list in someLists)
+            [self.lists setObject:list forKey:list.identifier];
 
-    outstandingListRequests--;
-    [self updateViewWithNewLists];
-    [[ErrorState instance] exitErrorState];
+        outstandingListRequests--;
+        [self updateViewWithNewLists];
+        [[ErrorState instance] exitErrorState];
+    }
 }
     
 - (void)failedToFetchListsForUser:(NSString *)username
     fromCursor:(NSString *)cursor error:(NSError *)error
 {
-    NSLog(@"Lists Display Manager: failed to fetch lists from cursor %@",
-        cursor);
-    NSLog(@"Error: %@", error);
-    NSString * errorMessage =
-        NSLocalizedString(@"listsdisplaymgr.error.fetchlists", @"");
-    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
-        retryTarget:self retryAction:@selector(refreshLists)];
-    [wrapperController setUpdatingState:kDisconnected];
-
-    outstandingListRequests--;
+    // Make sure accounts weren't switched
+    if ([username isEqual:credentials.username]) {
+        NSLog(@"Lists Display Manager: failed to fetch lists from cursor %@",
+            cursor);
+        NSLog(@"Error: %@", error);
+        NSString * errorMessage =
+            NSLocalizedString(@"listsdisplaymgr.error.fetchlists", @"");
+        [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
+            retryTarget:self retryAction:@selector(refreshLists)];
+        [wrapperController setUpdatingState:kDisconnected];
+    
+        outstandingListRequests--;
+    }
 }
 
 - (void)listSubscriptions:(NSArray *)listSubscriptions
     fetchedForUser:(NSString *)username fromCursor:(NSString *)cursor
     nextCursor:(NSString *)nextCursor
 {
-    self.subscriptionsCursor = nextCursor;
+    // Make sure accounts weren't switched
+    if ([username isEqual:credentials.username]) {
+        self.subscriptionsCursor = nextCursor;
 
-    // HACK: Insure lists deleted on the server are deleted in the app. If this
-    // is the first page of lists we've received, just remove everything we
-    // have and replace with what we've received from Twitter.
-    if (!cursor)
-        [self.subscriptions removeAllObjects];
+        // HACK: Ensure lists deleted on the server are deleted in the app. If
+        // this is the first page of lists we've received, just remove
+        // everything we have and replace with what we've received from Twitter.
+        if (!cursor)
+            [self.subscriptions removeAllObjects];
 
-    for (TwitterList * list in listSubscriptions)
-        [self.subscriptions setObject:list forKey:list.identifier];
+        for (TwitterList * list in listSubscriptions)
+            [self.subscriptions setObject:list forKey:list.identifier];
 
-    outstandingListSubscriptionRequests--;
-    [self updateViewWithNewLists];
-    [[ErrorState instance] exitErrorState];
+        outstandingListSubscriptionRequests--;
+        [self updateViewWithNewLists];
+        [[ErrorState instance] exitErrorState];
+    }
 }
 
 - (void)failedToFetchListSubscriptionsForUser:(NSString *)username
     fromCursor:(NSString *)cursor error:(NSError *)error
 {
-    NSLog(
-        @"Lists Display Manager: failed to fetch subscriptions from cursor %@",
-        cursor);
-    NSLog(@"Error: %@", error);
-    NSString * errorMessage =
-        NSLocalizedString(@"listsdisplaymgr.error.fetchlists", @"");
-    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
-        retryTarget:self retryAction:@selector(refreshLists)];
-    [wrapperController setUpdatingState:kDisconnected];
+    // Make sure accounts weren't switched
+    if ([username isEqual:credentials.username]) {
+        NSLog(
+            @"Lists Display Manager: failed to fetch subscriptions; cursor: %@",
+            cursor);
+        NSLog(@"Error: %@", error);
+        NSString * errorMessage =
+            NSLocalizedString(@"listsdisplaymgr.error.fetchlists", @"");
+        [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
+            retryTarget:self retryAction:@selector(refreshLists)];
+        [wrapperController setUpdatingState:kDisconnected];
 
-    outstandingListSubscriptionRequests--;
+        outstandingListSubscriptionRequests--;
+    }
 }
 
 #pragma mark NetworkAwareViewControllerDelegate implementation
@@ -226,11 +238,18 @@
 - (void)resetState
 {
     NSLog(@"Resetting list display manager state...");
+
     fetchedInitialLists = NO;
     pagesShown = 0;
+    outstandingListRequests = 0;
+    outstandingListSubscriptionRequests = 0;
     self.lists = [NSMutableDictionary dictionary];
     self.subscriptions = [NSMutableDictionary dictionary];
     [wrapperController setCachedDataAvailable:NO];
+
+    // HACK: forces to scroll to top
+    [listsViewController.tableView setContentOffset:CGPointMake(0, 0)
+        animated:NO];
 }
 
 - (void)refreshLists

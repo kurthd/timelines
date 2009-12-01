@@ -62,12 +62,18 @@
     [usernameShadowColor set];
     point = CGPointMake(baseX, 1);
 
-    [username drawAtPoint:point withFont:usernameFont];
+	[username drawAtPoint:point forWidth:150
+	    withFont:usernameFont minFontSize:18
+	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
+	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
 
     [usernameColor set];
     point = CGPointMake(baseX, 2);
 
-    [username drawAtPoint:point withFont:usernameFont];
+	[username drawAtPoint:point forWidth:150
+	    withFont:usernameFont minFontSize:18
+	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
+	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
 
     CGRect dropDownArrowRect =
         CGRectMake((contentRect.size.width + size.width + OFFSET) / 2 + 3, 9,

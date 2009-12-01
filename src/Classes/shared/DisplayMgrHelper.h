@@ -18,6 +18,8 @@
 #import "SavedSearchMgr.h"
 #import "LocationInfoViewController.h"
 #import "UserInfoRequestAdapter.h"
+#import "ContactCache.h"
+#import "ContactMgr.h"
 
 @interface DisplayMgrHelper :
     NSObject
@@ -32,6 +34,8 @@
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     NSManagedObjectContext * context;
     SavedSearchMgr * findPeopleBookmarkMgr;
+    ContactMgr * contactMgr;
+    ContactCache * contactCache;
 
     TwitterCredentials * credentials;
 
@@ -59,7 +63,9 @@
     twitterService:(TwitterService *)service
     timelineFactory:(TimelineDisplayMgrFactory *)timelineFactory
     managedObjectContext:(NSManagedObjectContext *)managedObjectContext
-    findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr;
+    findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr;
 
 - (void)showUserInfoForUser:(User *)aUser;
 - (void)showUserInfoForUsername:(NSString *)aUsername;

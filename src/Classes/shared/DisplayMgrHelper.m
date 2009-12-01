@@ -61,6 +61,8 @@
     [timelineDisplayMgrFactory release];
     [context release];
     [findPeopleBookmarkMgr release];
+    [contactMgr release];
+    [contactCache release];
 
     [credentials release];
 
@@ -91,6 +93,8 @@
     timelineFactory:(TimelineDisplayMgrFactory *)timelineFactory
     managedObjectContext:(NSManagedObjectContext *)managedObjectContext
     findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr
 {
     if (self = [super init]) {
         wrapperController = [wrapperCtrlr retain];
@@ -101,6 +105,8 @@
         timelineDisplayMgrFactory = [timelineFactory retain];
         context = [managedObjectContext retain];
         findPeopleBookmarkMgr = [aFindPeopleBookmarkMgr retain];
+        contactCache = [aContactCache retain];
+        contactMgr = [aContactMgr retain];
     }
 
     return self;
@@ -706,6 +712,8 @@
 
         userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
         userInfoController.delegate = self;
+        userInfoController.contactCacheReader = contactCache;
+        userInfoController.contactMgr = contactMgr;
     }
 
     return userInfoController;

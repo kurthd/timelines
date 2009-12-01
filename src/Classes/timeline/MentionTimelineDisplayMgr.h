@@ -13,6 +13,8 @@
 #import "Tweet.h"
 #import "TwitterCredentials.h"
 #import "NetworkAwareViewControllerDelegate.h"
+#import "ContactCache.h"
+#import "ContactMgr.h"
 
 @interface MentionTimelineDisplayMgr :
     NSObject
@@ -76,7 +78,9 @@
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
     userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry
-    tabBarItem:(UITabBarItem *)tabBarItem;
+    tabBarItem:(UITabBarItem *)tabBarItem
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr;
 
 - (void)refreshWithLatest;
 - (void)updateMentionsSinceLastUpdateIds;

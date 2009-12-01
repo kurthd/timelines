@@ -21,10 +21,8 @@
     UINavigationController * navigationController;
 
     IBOutlet UIView * headerView;
-    IBOutlet UIImageView * avatarBackgroundView;
     IBOutlet UIImageView * headerBackgroundView;
     IBOutlet UIView * headerTopLine;
-    IBOutlet UIView * headerBottomLine;
     IBOutlet UIView * headerViewPadding;
     IBOutlet UIImageView * chatArrowView;
     IBOutlet UIView * footerView;
@@ -36,6 +34,7 @@
 
     UITableViewCell * tweetTextTableViewCell;
     UITableViewCell * conversationCell;
+    UITableViewCell * retweetAuthorCell;
     UIWebView * tweetContentView;
 
     Tweet * tweet;
@@ -50,6 +49,7 @@
     TweetLocationCell * locationCell;
     ActionButtonCell * publicReplyCell;
     ActionButtonCell * retweetCell;
+    ActionButtonCell * quoteCell;
     MarkAsFavoriteCell * favoriteCell;
     ActionButtonCell * deleteTweetCell;
         

@@ -5,6 +5,8 @@
 #import <Foundation/Foundation.h>
 #import "SavedSearchMgr.h"
 #import "UserListDisplayMgr.h"
+#import "ContactCache.h"
+#import "ContactMgr.h"
 
 @class UserListDisplayMgr;
 
@@ -12,10 +14,14 @@
 {
     NSManagedObjectContext * context;
     SavedSearchMgr * findPeopleBookmarkMgr;
+    ContactCache * contactCache;
+    ContactMgr * contactMgr;
 }
 
 - (id)initWithContext:(NSManagedObjectContext *)someContext
-    findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr;
+    findPeopleBookmarkMgr:(SavedSearchMgr *)aFindPeopleBookmarkMgr
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr;
 
 - (UserListDisplayMgr *)
     createUserListDisplayMgrWithWrapperController:

@@ -82,9 +82,11 @@ tweetdetailsview.actions.cancel = "Cancel";
 tweetdetailsview.actions.browser = "Open in Browser";
 tweetdetailsview.actions.email = "Mail Link to This Tweet";
 tweetdetailsview.inreplyto.formatstring = "In reply to %@";
+tweetdetailsview.retweet.formatstring = "Retweeted by %@";
 tweetdetailsview.publicreply.label = "Public Reply";
 tweetdetailsview.directmessage.label = "Direct Message";
 tweetdetailsview.retweet.label = "Retweet";
+tweetdetailsview.quote.label = "Quote";
 tweetdetailsview.favorite.label = "Mark as Favorite";
 tweetdetailsview.unfavorite.label = "Unfavorite";
 tweetdetailsview.deletetweet.label = "Delete";
@@ -146,10 +148,15 @@ userinfo.publicmessage = "Public Message";
 userinfo.directmessage = "Direct Message";
 userinfo.block = "Block";
 userinfo.unblock = "Unblock";
+userinfo.blockuser.two = "User";
 userinfo.followsyou.yes = "%@ follows you";
 userinfo.followsyou.no = "%@ does not follow you";
 userinfo.followsyou.checking = "Checking if %@ follows you...";
 userinfo.followsyou.failed = "Failed to check if %@ follows you";
+userinfo.addtocontacts.one = "Add to";
+userinfo.addtocontacts.two = "Contacts";
+userinfo.addtobookmarks.one = "Add to";
+userinfo.addtobookmarks.two = "Bookmarks";
 
 /* AccountsViewController */
 account.title = "Accounts";

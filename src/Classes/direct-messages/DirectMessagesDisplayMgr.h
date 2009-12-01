@@ -21,6 +21,8 @@
 #import "NewDirectMessagesState.h"
 #import "UserInfoRequestAdapter.h"
 #import "DisplayMgrHelper.h"
+#import "ContactCache.h"
+#import "ContactMgr.h"
 
 /*  This class is responsible for managing the display of the direct messages
     tab.  It will function very similarly to the timeline display, re-using many
@@ -93,6 +95,7 @@
     BOOL receivedQueryResponse;
     NSArray * newDirectMessages;
     NewDirectMessagesState * newDirectMessagesState;
+    NSArray * lastFetchedReceivedDMs;
 
     NSUInteger loadMoreSentNextPage;
     NSUInteger loadMoreReceivedNextPage;
@@ -140,7 +143,9 @@
     managedObjectContext:(NSManagedObjectContext* )managedObjectContext
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
-    userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry;
+    userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)clearState;

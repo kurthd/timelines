@@ -880,6 +880,10 @@
 		914CA0F91039C62C00421C60 /* StopFollowingButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914CA0F71039C62C00421C60 /* StopFollowingButtonHighlighted.png */; };
 		914CA284103A1DC300421C60 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914CA283103A1DC300421C60 /* MapKit.framework */; };
 		914CA331103A444000421C60 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914CA330103A444000421C60 /* CoreLocation.framework */; };
+		914E9DA110C5769A007036F2 /* QuoteButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 914E9D9F10C5769A007036F2 /* QuoteButtonIcon.png */; };
+		914E9DA210C5769A007036F2 /* QuoteButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914E9DA010C5769A007036F2 /* QuoteButtonIconHighlighted.png */; };
+		914E9DA310C5769A007036F2 /* QuoteButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 914E9D9F10C5769A007036F2 /* QuoteButtonIcon.png */; };
+		914E9DA410C5769A007036F2 /* QuoteButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914E9DA010C5769A007036F2 /* QuoteButtonIconHighlighted.png */; };
 		9152E1571014F86C0033B63B /* DirectMessageInboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1551014F86C0033B63B /* DirectMessageInboxView.xib */; };
 		9152E15A1014F8850033B63B /* DirectMessageConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1581014F8850033B63B /* DirectMessageConversationView.xib */; };
 		9152E239101557AC0033B63B /* NewMessagesDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9152E238101557AC0033B63B /* NewMessagesDot.png */; };
@@ -959,6 +963,22 @@
 		91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD5A3C100FED36009C2179 /* MessageUI.framework */; };
 		91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
 		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
+		91B76FE010BB5AE80014172A /* StandardButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B76FDE10BB5AE80014172A /* StandardButtonBackground.png */; };
+		91B76FE110BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B76FDF10BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png */; };
+		91B76FE210BB5AE80014172A /* StandardButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B76FDE10BB5AE80014172A /* StandardButtonBackground.png */; };
+		91B76FE310BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B76FDF10BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png */; };
+		91B76FE610BB5B6C0014172A /* TwoLineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B76FE510BB5B6C0014172A /* TwoLineButton.m */; };
+		91B76FE710BB5B6C0014172A /* TwoLineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B76FE510BB5B6C0014172A /* TwoLineButton.m */; };
+		91B7704210BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7704110BC49900014172A /* StandardButtonBackgroundHighlighted.png */; };
+		91B7704310BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7704110BC49900014172A /* StandardButtonBackgroundHighlighted.png */; };
+		91B770B310BC63590014172A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B770B210BC63590014172A /* AddressBookUI.framework */; };
+		91B770C910BC63A70014172A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B770C810BC63A70014172A /* AddressBook.framework */; };
+		91B770DA10BC66A20014172A /* ContactMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B770D910BC66A20014172A /* ContactMgr.m */; };
+		91B770DB10BC66A20014172A /* ContactMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B770D910BC66A20014172A /* ContactMgr.m */; };
+		91B770E810BC67F40014172A /* ContactCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B770E710BC67F40014172A /* ContactCache.m */; };
+		91B770E910BC67F40014172A /* ContactCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B770E710BC67F40014172A /* ContactCache.m */; };
+		91B771F710BD8D5B0014172A /* ContactCachePersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B771F610BD8D5B0014172A /* ContactCachePersistenceStore.m */; };
+		91B771F810BD8D5B0014172A /* ContactCachePersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B771F610BD8D5B0014172A /* ContactCachePersistenceStore.m */; };
 		91BD113B1006736F0082D209 /* PhotoBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BD11391006736F0082D209 /* PhotoBrowserView.xib */; };
 		91D36956100D12B300B59D12 /* ButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36955100D12B300B59D12 /* ButtonBackground.png */; };
 		91D36965100D1CC900B59D12 /* ButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */; };
@@ -1626,6 +1646,8 @@
 		914CA330103A444000421C60 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		914CA4D5103B646700421C60 /* LocationCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationCellView.h; path = "user-info/LocationCellView.h"; sourceTree = "<group>"; };
 		914CA4D6103B646700421C60 /* LocationCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationCellView.m; path = "user-info/LocationCellView.m"; sourceTree = "<group>"; };
+		914E9D9F10C5769A007036F2 /* QuoteButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = QuoteButtonIcon.png; path = images/QuoteButtonIcon.png; sourceTree = "<group>"; };
+		914E9DA010C5769A007036F2 /* QuoteButtonIconHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = QuoteButtonIconHighlighted.png; path = images/QuoteButtonIconHighlighted.png; sourceTree = "<group>"; };
 		9152E14C1014F6B70033B63B /* DirectMessagesDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessagesDisplayMgr.h; path = "direct-messages/DirectMessagesDisplayMgr.h"; sourceTree = "<group>"; };
 		9152E14D1014F6B70033B63B /* DirectMessagesDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessagesDisplayMgr.m; path = "direct-messages/DirectMessagesDisplayMgr.m"; sourceTree = "<group>"; };
 		9152E14F1014F8260033B63B /* DirectMessageInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageInboxViewController.h; path = "direct-messages/DirectMessageInboxViewController.h"; sourceTree = "<group>"; };
@@ -1828,6 +1850,21 @@
 		91AD5A3C100FED36009C2179 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		91AD5A6F101017AC009C2179 /* PhotoBackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoBackButton.png; path = images/PhotoBackButton.png; sourceTree = "<group>"; };
 		91AD5A711010187D009C2179 /* PhotoForwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoForwardButton.png; path = images/PhotoForwardButton.png; sourceTree = "<group>"; };
+		91B76FDE10BB5AE80014172A /* StandardButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StandardButtonBackground.png; path = images/StandardButtonBackground.png; sourceTree = "<group>"; };
+		91B76FDF10BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StandardButtonBackgroundDarkTheme.png; path = images/StandardButtonBackgroundDarkTheme.png; sourceTree = "<group>"; };
+		91B76FE410BB5B6C0014172A /* TwoLineButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwoLineButton.h; path = shared/TwoLineButton.h; sourceTree = "<group>"; };
+		91B76FE510BB5B6C0014172A /* TwoLineButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwoLineButton.m; path = shared/TwoLineButton.m; sourceTree = "<group>"; };
+		91B7704110BC49900014172A /* StandardButtonBackgroundHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StandardButtonBackgroundHighlighted.png; path = images/StandardButtonBackgroundHighlighted.png; sourceTree = "<group>"; };
+		91B770B210BC63590014172A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		91B770C810BC63A70014172A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		91B770D810BC66A20014172A /* ContactMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactMgr.h; path = "user-info/ContactMgr.h"; sourceTree = "<group>"; };
+		91B770D910BC66A20014172A /* ContactMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactMgr.m; path = "user-info/ContactMgr.m"; sourceTree = "<group>"; };
+		91B770DC10BC67390014172A /* ContactCacheSetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactCacheSetter.h; path = "user-info/ContactCacheSetter.h"; sourceTree = "<group>"; };
+		91B770E210BC67C30014172A /* ContactCacheReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactCacheReader.h; path = "user-info/ContactCacheReader.h"; sourceTree = "<group>"; };
+		91B770E610BC67F40014172A /* ContactCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactCache.h; path = "user-info/ContactCache.h"; sourceTree = "<group>"; };
+		91B770E710BC67F40014172A /* ContactCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactCache.m; path = "user-info/ContactCache.m"; sourceTree = "<group>"; };
+		91B771F510BD8D5B0014172A /* ContactCachePersistenceStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactCachePersistenceStore.h; path = "user-info/ContactCachePersistenceStore.h"; sourceTree = "<group>"; };
+		91B771F610BD8D5B0014172A /* ContactCachePersistenceStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactCachePersistenceStore.m; path = "user-info/ContactCachePersistenceStore.m"; sourceTree = "<group>"; };
 		91BD113A1006736F0082D209 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/PhotoBrowserView.xib; sourceTree = "<group>"; };
 		91C4F25510192FDA00896046 /* DirectMessageAcctMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageAcctMgr.h; path = "direct-messages/DirectMessageAcctMgr.h"; sourceTree = "<group>"; };
 		91C4F25610192FDA00896046 /* DirectMessageAcctMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessageAcctMgr.m; path = "direct-messages/DirectMessageAcctMgr.m"; sourceTree = "<group>"; };
@@ -1924,6 +1961,8 @@
 				053A2D8D103F57B2005BB245 /* SystemConfiguration.framework in Frameworks */,
 				0519C6FB1043461600C2C7BD /* CFNetwork.framework in Frameworks */,
 				055777141063018D006596DB /* libz.1.2.3.dylib in Frameworks */,
+				91B770B310BC63590014172A /* AddressBookUI.framework in Frameworks */,
+				91B770C910BC63A70014172A /* AddressBook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2472,6 +2511,8 @@
 				915B588A10B08CB00028B0B4 /* ActionButtonCell.m */,
 				915B588D10B08CC60028B0B4 /* ActionButtonCellView.h */,
 				915B588E10B08CC60028B0B4 /* ActionButtonCellView.m */,
+				91B76FE410BB5B6C0014172A /* TwoLineButton.h */,
+				91B76FE510BB5B6C0014172A /* TwoLineButton.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -2917,6 +2958,8 @@
 				05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */,
 				053A2D88103F575D005BB245 /* libTwitVid.a */,
 				055777131063018D006596DB /* libz.1.2.3.dylib */,
+				91B770B210BC63590014172A /* AddressBookUI.framework */,
+				91B770C810BC63A70014172A /* AddressBook.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2990,6 +3033,11 @@
 			children = (
 				05E39EEA10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png */,
 				0572F22B10BCB172006EF58D /* PushpinGrayscale.png */,
+				914E9D9F10C5769A007036F2 /* QuoteButtonIcon.png */,
+				914E9DA010C5769A007036F2 /* QuoteButtonIconHighlighted.png */,
+				91B7704110BC49900014172A /* StandardButtonBackgroundHighlighted.png */,
+				91B76FDE10BB5AE80014172A /* StandardButtonBackground.png */,
+				91B76FDF10BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png */,
 				915B559910ADCB700028B0B4 /* PrivateIconHighlighted.png */,
 				915B555210AD26190028B0B4 /* PrivateIcon.png */,
 				915B507E10A8B53D0028B0B4 /* ListsGlyph.png */,
@@ -3212,6 +3260,14 @@
 				914CA4D6103B646700421C60 /* LocationCellView.m */,
 				915B580C10AFCB940028B0B4 /* UserInfoLabelCellView.h */,
 				915B580D10AFCB940028B0B4 /* UserInfoLabelCellView.m */,
+				91B770D810BC66A20014172A /* ContactMgr.h */,
+				91B770D910BC66A20014172A /* ContactMgr.m */,
+				91B770DC10BC67390014172A /* ContactCacheSetter.h */,
+				91B770E210BC67C30014172A /* ContactCacheReader.h */,
+				91B770E610BC67F40014172A /* ContactCache.h */,
+				91B770E710BC67F40014172A /* ContactCache.m */,
+				91B771F510BD8D5B0014172A /* ContactCachePersistenceStore.h */,
+				91B771F610BD8D5B0014172A /* ContactCachePersistenceStore.m */,
 			);
 			name = "user-info";
 			sourceTree = "<group>";
@@ -3496,6 +3552,11 @@
 				915B559A10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */,
 				0572F22D10BCB172006EF58D /* PushpinGrayscale.png in Resources */,
 				05E39EEC10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png in Resources */,
+				91B76FE010BB5AE80014172A /* StandardButtonBackground.png in Resources */,
+				91B76FE110BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */,
+				91B7704310BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */,
+				914E9DA310C5769A007036F2 /* QuoteButtonIcon.png in Resources */,
+				914E9DA410C5769A007036F2 /* QuoteButtonIconHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3668,6 +3729,11 @@
 				915B559B10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */,
 				0572F22C10BCB172006EF58D /* PushpinGrayscale.png in Resources */,
 				05E39EEB10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png in Resources */,
+				91B76FE210BB5AE80014172A /* StandardButtonBackground.png in Resources */,
+				91B76FE310BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */,
+				91B7704210BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */,
+				914E9DA110C5769A007036F2 /* QuoteButtonIcon.png in Resources */,
+				914E9DA210C5769A007036F2 /* QuoteButtonIconHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3996,6 +4062,10 @@
 				05295D9610BB0DAB0008BB7F /* Geolocator.m in Sources */,
 				0525DE5310BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m in Sources */,
 				0572F16810BC9708006EF58D /* CurrentLocationView.m in Sources */,
+				91B76FE710BB5B6C0014172A /* TwoLineButton.m in Sources */,
+				91B770DB10BC66A20014172A /* ContactMgr.m in Sources */,
+				91B770E910BC67F40014172A /* ContactCache.m in Sources */,
+				91B771F810BD8D5B0014172A /* ContactCachePersistenceStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4321,6 +4391,10 @@
 				05295D9710BB0DAB0008BB7F /* Geolocator.m in Sources */,
 				0525DE5410BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m in Sources */,
 				0572F16710BC9708006EF58D /* CurrentLocationView.m in Sources */,
+				91B76FE610BB5B6C0014172A /* TwoLineButton.m in Sources */,
+				91B770DA10BC66A20014172A /* ContactMgr.m in Sources */,
+				91B770E810BC67F40014172A /* ContactCache.m in Sources */,
+				91B771F710BD8D5B0014172A /* ContactCachePersistenceStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

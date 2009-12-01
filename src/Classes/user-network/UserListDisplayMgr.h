@@ -24,6 +24,8 @@
 #import "LocationMapViewControllerDelegate.h"
 #import "LocationInfoViewController.h"
 #import "LocationInfoViewControllerDelegate.h"
+#import "ContactCache.h"
+#import "ContactMgr.h"
 
 @class DisplayMgrHelper;
 
@@ -64,7 +66,9 @@
     managedObjectContext:(NSManagedObjectContext *)managedObjectContext
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
-    showFollowing:(BOOL)showFollowing username:(NSString *)username;
+    showFollowing:(BOOL)showFollowing username:(NSString *)username
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
 

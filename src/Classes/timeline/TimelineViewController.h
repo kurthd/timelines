@@ -15,9 +15,7 @@
 
     IBOutlet UIView * headerView;
     IBOutlet UIImageView * headerBackgroundView;
-    IBOutlet UIImageView * avatarBackgroundView;
     IBOutlet UIView * headerTopLine;
-    IBOutlet UIView * headerBottomLine;
     IBOutlet UIView * headerViewPadding;
     IBOutlet UIView * plainHeaderView;
     IBOutlet UIView * plainHeaderViewLine;
@@ -39,6 +37,7 @@
 
     BOOL showInbox;
     BOOL delayedRefreshTriggered;
+    BOOL flashingScrollIndicators;
 
     NSString * mentionUsername;
     NSString * mentionString;

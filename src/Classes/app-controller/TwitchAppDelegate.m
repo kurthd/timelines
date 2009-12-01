@@ -41,6 +41,7 @@
 #import "ListsViewController.h"
 #import "ErrorState.h"
 #import "UserTwitterList.h"
+#import "ContactCachePersistenceStore.h"
 
 @interface TwitchAppDelegate ()
 
@@ -141,6 +142,9 @@ enum {
     [findPeopleNetAwareViewController release];
     [listsNetAwareViewController release];
 
+    [contactCache release];
+    [contactMgr release];
+
     [accountsButton release];
     [accountsButtonSetter release];
     [accountsNavController release];
@@ -201,17 +205,25 @@ enum {
     // Add the tab bar controller's current view as a subview of the window
     [window addSubview:tabBarController.view];
 
+    contactCache = [[ContactCache alloc] init];
+    contactMgr =
+        [[ContactMgr alloc]
+        initWithTabBarController:tabBarController
+        contactCacheSetter:contactCache];
+
     findPeopleBookmarkMgr =
         [[SavedSearchMgr alloc] initWithAccountName:@"saved.people"
         context:[self managedObjectContext]];
     timelineDisplayMgrFactory =
         [[TimelineDisplayMgrFactory alloc]
         initWithContext:[self managedObjectContext]
-        findPeopleBookmarkMgr:findPeopleBookmarkMgr];
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr contactCache:contactCache
+        contactMgr:contactMgr];
     directMessageDisplayMgrFactory =
         [[DirectMessageDisplayMgrFactory alloc]
         initWithContext:[self managedObjectContext]
-        findPeopleBookmarkMgr:findPeopleBookmarkMgr];
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr contactCache:contactCache
+        contactMgr:contactMgr];
 
     [self initAccountsView];
 
@@ -240,7 +252,7 @@ enum {
     [self performSelector:
         @selector(finishInitializationWithTimeInsensitiveOperations)
         withObject:nil
-        afterDelay:0.7];
+        afterDelay:0.6];
 
     accountsButton.action = @selector(showAccountsView);
 
@@ -277,6 +289,19 @@ enum {
 
     if ([SettingsReader displayTheme] == kDisplayThemeDark)
         window.backgroundColor = [UIColor blackColor];
+
+    // Ensure 'more' tab has all sub-tabs initialized if started on a tab under
+    // 'more'
+    if (tabBarController.selectedIndex > 3) {
+        UINavigationController * moreController =
+            tabBarController.moreNavigationController;
+        [self initTabForViewController:moreController];
+    }
+
+    ContactCachePersistenceStore * contactCachePersistenceStore =
+        [[[ContactCachePersistenceStore alloc]
+        initWithContactCache:contactCache] autorelease];
+    [contactCachePersistenceStore load];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -620,7 +645,8 @@ enum {
     UserListDisplayMgrFactory * userListDisplayMgrFactory =
         [[[UserListDisplayMgrFactory alloc]
         initWithContext:[self managedObjectContext]
-        findPeopleBookmarkMgr:findPeopleBookmarkMgr]
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr contactCache:contactCache
+        contactMgr:contactMgr]
         autorelease];
 
     UINavigationController * navController =
@@ -639,7 +665,7 @@ enum {
         composeTweetDisplayMgr:self.composeTweetDisplayMgr
         findPeopleBookmarkMgr:findPeopleBookmarkMgr
         userListDisplayMgrFactory:userListDisplayMgrFactory
-        tabBarItem:tabBarItem];
+        tabBarItem:tabBarItem contactCache:contactCache contactMgr:contactMgr];
     service.delegate = mentionDisplayMgr;
     timelineController.delegate = mentionDisplayMgr;
     mentionsNetAwareViewController.delegate = mentionDisplayMgr;
@@ -690,13 +716,16 @@ enum {
         [[UserInfoViewController alloc]
         initWithNibName:@"UserInfoView" bundle:nil];
     userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
+    userInfoController.contactCacheReader = contactCache;
+    userInfoController.contactMgr = contactMgr;
 
     findPeopleNetAwareViewController.targetViewController = userInfoController;
 
     UserListDisplayMgrFactory * userListFactory =
         [[[UserListDisplayMgrFactory alloc]
         initWithContext:[self managedObjectContext]
-        findPeopleBookmarkMgr:findPeopleBookmarkMgr]
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr contactCache:contactCache
+        contactMgr:contactMgr]
         autorelease];
 
     findPeopleSearchDisplayMgr =
@@ -1746,7 +1775,7 @@ enum {
 {
     UIStatePersistenceStore * uiStatePersistenceStore =
         [[[UIStatePersistenceStore alloc] init] autorelease];
-    if (tabBarController.selectedIndex <= kOriginalTabOrderLists)
+    if (tabBarController.selectedIndex <= kOriginalTabOrderPeople)
         uiState.selectedTab = tabBarController.selectedIndex;
     else
         uiState.selectedTab = 0;
@@ -1808,6 +1837,11 @@ enum {
     NSUInteger numTotalMessages = numUnreadMessages + numUnreadMentions;
     [[UIApplication sharedApplication]
         setApplicationIconBadgeNumber:numTotalMessages];
+
+    ContactCachePersistenceStore * contactCachePersistenceStore =
+        [[[ContactCachePersistenceStore alloc]
+        initWithContactCache:contactCache] autorelease];
+    [contactCachePersistenceStore save];
 }
 
 #pragma mark Account management

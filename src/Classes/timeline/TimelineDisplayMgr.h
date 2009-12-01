@@ -19,6 +19,8 @@
 #import "TwitterService.h"
 #import "TwitterServiceDelegate.h"
 #import "ConversationDisplayMgr.h"
+#import "ContactCache.h"
+#import "ContactMgr.h"
 
 @class TimelineDisplayMgrFactory;
 @class TweetViewController;
@@ -124,7 +126,9 @@
     managedObjectContext:(NSManagedObjectContext* )managedObjectContext
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
-    userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry;
+    userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr;
 
 - (void)setService:(NSObject<TimelineDataSource> *)aService
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page

@@ -66,9 +66,7 @@ enum {
 {
     [headerView release];
     [headerBackgroundView release];
-    [avatarBackgroundView release];
     [headerTopLine release];
-    [headerBottomLine release];
     [headerViewPadding release];
     [titleLabel release];
     [mapThumbnail release];
@@ -100,10 +98,7 @@ enum {
 
         headerBackgroundView.image =
             [UIImage imageNamed:@"UserHeaderDarkThemeGradient.png"];
-        avatarBackgroundView.image =
-            [UIImage imageNamed:@"AvatarDarkThemeBackground.png"];
         headerTopLine.backgroundColor = [UIColor blackColor];
-        headerBottomLine.backgroundColor = [UIColor twitchGrayColor];
         headerViewPadding.backgroundColor = [UIColor defaultDarkThemeCellColor];
 
         titleLabel.textColor = [UIColor whiteColor];

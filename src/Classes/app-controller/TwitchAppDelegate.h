@@ -21,6 +21,8 @@
 #import "AccountsButtonSetter.h"
 #import "ListsDisplayMgr.h"
 #import "TwitterCredentials.h"
+#import "ContactCache.h"
+#import "ContactMgr.h"
 
 @class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class SearchBarDisplayMgr;
@@ -93,6 +95,9 @@
     InstapaperLogInDisplayMgr * instapaperLogInDisplayMgr;
 
     UIState * uiState;
+    
+    ContactCache * contactCache;
+    ContactMgr * contactMgr;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;

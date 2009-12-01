@@ -19,9 +19,7 @@
 
     IBOutlet UIView * headerView;
     IBOutlet UIImageView * headerBackgroundView;
-    IBOutlet UIImageView * avatarBackgroundView;
     IBOutlet UIView * headerTopLine;
-    IBOutlet UIView * headerBottomLine;
     IBOutlet UIView * headerViewPadding;
     IBOutlet UILabel * titleLabel;
     IBOutlet RoundedImage * mapThumbnail;

@@ -84,6 +84,8 @@
     findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
     userListDisplayMgrFactory:(UserListDisplayMgrFactory *)userListDispMgrFctry
     tabBarItem:(UITabBarItem *)aTabBarItem
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr
 {
     if (self = [super init]) {
         wrapperController = [aWrapperController retain];
@@ -111,7 +113,8 @@
             twitterService:displayHelperService
             timelineFactory:timelineFactory
             managedObjectContext:aManagedObjectContext
-            findPeopleBookmarkMgr:findPeopleBookmarkMgr];
+            findPeopleBookmarkMgr:findPeopleBookmarkMgr
+            contactCache:aContactCache contactMgr:aContactMgr];
         displayHelperService.delegate = displayMgrHelper;
 
         conversationDisplayMgrs = [[NSMutableArray alloc] init];
