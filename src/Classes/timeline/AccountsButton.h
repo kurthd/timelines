@@ -3,18 +3,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RoundedImage.h"
 
 @interface AccountsButton : UIControl
 {
     NSString * username;
-    UIImage * avatar;
+    RoundedImage * avatar;
     UIImage * dropDownArrow;
     UIImage * highlightedDropDownArrow;
     UIImage * avatarBackground;
-    UIImage * highlightedAvatarMask;
+    UIImageView * highlightedAvatarMask;
 
     IBOutlet id target;
     SEL action;
+
+    BOOL newUser;
 }
 
 - (void)setUsername:(NSString * )username avatar:(UIImage *)avatar;

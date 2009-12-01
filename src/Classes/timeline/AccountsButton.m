@@ -10,11 +10,11 @@
 @interface AccountsButton ()
 
 @property (nonatomic, copy) NSString * username;
-@property (nonatomic, retain) UIImage * avatar;
+@property (nonatomic, readonly) RoundedImage * avatar;
 @property (nonatomic, readonly) UIImage * dropDownArrow;
 @property (nonatomic, readonly) UIImage * highlightedDropDownArrow;
 @property (nonatomic, readonly) UIImage * avatarBackground;
-@property (nonatomic, readonly) UIImage * highlightedAvatarMask;
+@property (nonatomic, readonly) UIImageView * highlightedAvatarMask;
 
 @end
 
@@ -86,11 +86,26 @@
     CGRect avatarBackgroundRect = CGRectMake(baseX - 41, 0, 33, 33);
     [self.avatarBackground drawInRect:avatarBackgroundRect];
 
-    CGRect avatarRect = CGRectMake(baseX - 38, 3, AVATAR_WIDTH, AVATAR_WIDTH);
-    [self.avatar drawInRect:avatarRect withRoundedCornersWithRadius:4];
+    self.highlightedAvatarMask.frame = CGRectMake(baseX - 40, 1, 31, 31);
+    self.highlightedAvatarMask.hidden = !self.highlighted;
 
-    if (self.highlighted)
-        [self.highlightedAvatarMask drawInRect:avatarBackgroundRect];
+    CGRect avatarFrame = self.avatar.frame;
+    avatarFrame.origin.x = baseX - 38;
+    self.avatar.frame = avatarFrame;
+
+    if (newUser) {
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:1];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+            forView:self.avatar cache:YES];
+    }
+
+    [super drawRect:rect];
+
+    if (newUser)
+        [UIView commitAnimations];
+
+    newUser = NO;
 }
 
 #pragma mark UIControler overrides
@@ -120,12 +135,25 @@
 - (void)setUsername:(NSString *)aUsername avatar:(UIImage *)anAvatar
 {
     self.username = aUsername;
-    self.avatar = anAvatar;
+    [self.avatar setImage:anAvatar];
 
+    newUser = YES;
     [self setNeedsDisplay];
 }
 
 #pragma mark Private method implementation
+
+- (RoundedImage *)avatar
+{
+    if (!avatar) {
+        avatar = [[RoundedImage alloc] initWithRadius:4];
+        avatar.frame = CGRectMake(0, 3, 27, 27);
+        avatar.backgroundColor = [UIColor clearColor];
+        [self addSubview:avatar];
+    }
+
+    return avatar;
+}
 
 - (UIImage *)dropDownArrow
 {
@@ -144,11 +172,18 @@
     return highlightedDropDownArrow;
 }
 
-- (UIImage *)highlightedAvatarMask
+- (UIImageView *)highlightedAvatarMask
 {
-    if (!highlightedAvatarMask)
+    if (!highlightedAvatarMask) {
+        UIImage * highlightedAvatarMaskImage =
+            [UIImage imageNamed:@"AccountsAvatarMask.png"];
         highlightedAvatarMask =
-            [[UIImage imageNamed:@"AccountsAvatarMask.png"] retain];
+            [[UIImageView alloc] initWithImage:highlightedAvatarMaskImage];
+        CGRect maskFrame = highlightedAvatarMask.frame;
+        maskFrame.origin.y = 0;
+        highlightedAvatarMask.frame = maskFrame;
+        [self addSubview:highlightedAvatarMask];
+    }
 
     return highlightedAvatarMask;
 }
