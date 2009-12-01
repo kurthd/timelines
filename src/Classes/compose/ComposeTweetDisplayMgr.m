@@ -2,27 +2,9 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import <MobileCoreServices/MobileCoreServices.h>  // for kUTTypeMovie
 #import "ComposeTweetDisplayMgr.h"
-#import "ComposeTweetViewController.h"
-#import "UIAlertView+InstantiationAdditions.h"
-#import "CredentialsActivatedPublisher.h"
-#import "CredentialsSetChangedPublisher.h"
-#import "TweetDraft.h"
-#import "DirectMessageDraft.h"
-#import "TweetDraftMgr.h"
-#import "TwitterCredentials+PhotoServiceAdditions.h"
-#import "PhotoService+ServiceAdditions.h"
-#import "AccountSettings.h"
-#import "NSString+ConvenienceMethods.h"
-#import "UIColor+TwitchColors.h"
-#import "AsynchronousNetworkFetcher.h"
-#import "InfoPlistConfigReader.h"
-#import "RegexKitLite.h"
-#import "ErrorState.h"
-#import "UIImage+GeneralHelpers.h"
-#import "UIAlertView+InstantiationAdditions.h"
-#import "SettingsReader.h"
+#import "TwitbitShared.h"
+#import <MobileCoreServices/MobileCoreServices.h>  // for kUTTypeMovie
 
 @interface ComposeTweetDisplayMgr ()
 
@@ -60,6 +42,8 @@
 
 @property (nonatomic, retain) UIPersonSelector * personSelector;
 
+@property (nonatomic, retain) Geolocator * geolocator;
+
 - (void)promptForPhotoSource:(UIViewController *)controller;
 - (void)displayImagePicker:(UIImagePickerControllerSourceType)source
                 controller:(UIViewController *)controller;
@@ -69,6 +53,10 @@
 - (void)updateMediaTitleFromTweet:(Tweet *)tweet;
 - (void)updateMediaTitleFromDirectMessage:(DirectMessage *)dm;
 - (void)updateMediaTitleFromTweetText:(NSString *)text;
+
+- (BOOL)initializeGeotaggingIfAppropriate;
+- (void)startUpdatingLocation;
+- (void)resetLocationState;
 
 @end
 
@@ -87,6 +75,7 @@
 @synthesize urlShorteningService, urlsToShorten;
 @synthesize personSelector;
 @synthesize composingTweet, directMessageRecipient;
+@synthesize geolocator;
 
 - (void)dealloc
 {
@@ -107,6 +96,10 @@
     self.urlShorteningService = nil;
     self.urlsToShorten = nil;
     self.personSelector = nil;
+    self.geolocator = nil;
+
+    if (lastCoordinate)
+        free(lastCoordinate);
 
     [super dealloc];
 }
@@ -135,6 +128,8 @@
         self.attachedVideos = [NSMutableArray array];
 
         self.urlsToShorten = [NSMutableSet set];
+
+        locationEnabled = [self.service.credentials.user.geoEnabled boolValue];
     }
 
     return self;
@@ -147,7 +142,7 @@
 
     NSString * text = draft ? draft.text : @"";
     if (draft.inReplyToTweetId && draft.inReplyToUsername)
-        [self composeReplyToTweet:[NSNumber numberWithLongLong:[draft.inReplyToTweetId longLongValue]]
+        [self composeReplyToTweet:draft.inReplyToTweetId
                          fromUser:draft.inReplyToUsername
                          withText:text];
     else
@@ -160,8 +155,12 @@
     self.origTweetId = nil;
     self.origUsername = nil;
 
+    BOOL geotagging = [self initializeGeotaggingIfAppropriate];
+
     [self.composeTweetViewController composeTweet:tweet
-                                             from:service.credentials.username];
+                                             from:service.credentials.username
+                                           geotag:geotagging];
+
     [self.rootViewController presentModalViewController:self.navController
                                                animated:animated];
 }
@@ -182,9 +181,12 @@
     else
         tweetText = [NSString stringWithFormat:@"@%@ ", user];
 
+    BOOL geotagging = [self initializeGeotaggingIfAppropriate];
+
     NSString * username = self.service.credentials.username;
     [self.composeTweetViewController composeTweet:tweetText
                                              from:username
+                                           geotag:geotagging
                                         inReplyTo:user];
     [self.rootViewController presentModalViewController:self.navController
                                                animated:YES];
@@ -201,8 +203,11 @@
     self.origTweetId = tweetId;
     self.origUsername = user;
 
+    BOOL geotagging = [self initializeGeotaggingIfAppropriate];
+
     [self.composeTweetViewController composeTweet:text
                                              from:service.credentials.username
+                                           geotag:geotagging
                                         inReplyTo:user];
 
     [self.rootViewController presentModalViewController:self.navController
@@ -246,8 +251,9 @@
     [self composeDirectMessageTo:username withText:text animated:animated];
 }
 
-- (void)composeDirectMessageTo:(NSString *)username withText:(NSString *)text
-    animated:(BOOL)animated
+- (void)composeDirectMessageTo:(NSString *)username
+                      withText:(NSString *)text
+                      animated:(BOOL)animated
 {
     self.directMessageRecipient = username;
     self.origUsername = nil;
@@ -318,11 +324,23 @@
         [self.delegate userIsReplyingToTweet:self.origTweetId
                                     fromUser:self.origUsername
                                     withText:text];
-        [self.service sendTweet:text inReplyTo:self.origTweetId];
+
+        if (lastCoordinate)
+            [self.service sendTweet:text
+                         coordinate:*lastCoordinate
+                          inReplyTo:self.origTweetId];
+        else
+            [self.service sendTweet:text inReplyTo:self.origTweetId];
     } else {
         [self.delegate userIsSendingTweet:text];
-        [self.service sendTweet:text];
+
+        if (lastCoordinate)
+            [self.service sendTweet:text coordinate:*lastCoordinate];
+        else
+            [self.service sendTweet:text];
     }
+
+    [self resetLocationState];
 
     NSError * error = nil;
     [self.draftMgr deleteTweetDraftForCredentials:self.service.credentials
@@ -481,10 +499,29 @@
     return error == nil;
 }
 
+- (void)userDidTapGeotagButton
+{
+    locationEnabled = !locationEnabled;
+
+    [self.composeTweetViewController displayLocationDescription:locationEnabled
+                                                       animated:YES];
+
+    if (locationEnabled)
+        [self startUpdatingLocation];
+    else
+        [self resetLocationState];
+
+    NSString * settingsKey = self.service.credentials.username;
+    AccountSettings * settings = [AccountSettings settingsForKey:settingsKey];
+    [settings setGeotagTweets:locationEnabled];
+    [AccountSettings setSettings:settings forKey:settingsKey];
+}
+
 - (void)closeView
 {
     composingTweet = NO;
     self.directMessageRecipient = nil;
+    [self resetLocationState];
     [self.rootViewController dismissModalViewControllerAnimated:YES];
     [self.delegate userDidCancelComposingTweet];
 }
@@ -948,6 +985,69 @@
                afterDelay:0.5];
 }
 
+#pragma mark GeolocatorDelegate implementation
+
+- (void)geolocator:(Geolocator *)locator
+ didUpdateLocation:(CLLocationCoordinate2D)crd
+         placemark:(MKPlacemark *)placemark
+{
+    BOOL firstTime = !lastCoordinate;
+    if (!lastCoordinate) {
+        lastCoordinate =
+            (CLLocationCoordinate2D *) malloc(sizeof(CLLocationCoordinate2D));
+        memset(lastCoordinate, 0, sizeof(CLLocationCoordinate2D));
+    }
+
+    NSString * desc = [placemark humanReadableDescription];
+
+    CLLocationDegrees lat = lastCoordinate->latitude;
+    CLLocationDegrees lng = lastCoordinate->longitude;
+    if (!firstTime && (crd.latitude == lat && crd.longitude == lng)) {
+        NSLog(@"Final location: (%f, %f): %@.", lat, lng, desc);
+
+        // we got the same location, so assume location has been determined
+        [geolocator stopLocating];
+        [geolocator autorelease];
+        geolocator = nil;
+
+        [self.composeTweetViewController displayUpdatingLocationActivity:NO];
+
+        findingLocation = NO;
+    } else {
+        NSLog(@"Updating location to: (%f, %f): %@.", crd.latitude,
+            crd.longitude, desc);
+
+        NSString * fmt =
+            NSLocalizedString(@"composetweet.location.formatstring", @"");
+
+        NSString * fullDesc = [NSString stringWithFormat:fmt, desc];
+        [self.composeTweetViewController updateLocationDescription:fullDesc];
+
+        memcpy(lastCoordinate, &crd, sizeof(CLLocationCoordinate2D));
+
+        findingLocation = YES;
+        [self performSelector:@selector(processFindingLocationTimeout)
+                   withObject:nil
+                   afterDelay:6.0];
+    }
+}
+
+- (void)geolocator:(Geolocator *)locator didFailWithError:(NSError *)error
+{
+    NSLog(@"Geolocator failed with error: %@", error);
+    [self.composeTweetViewController displayUpdatingLocationError:error];
+    findingLocation = NO;
+}
+
+- (void)processFindingLocationTimeout
+{
+    if (findingLocation) {
+        NSLog(@"Finding location timed out.");
+        [self.composeTweetViewController displayUpdatingLocationActivity:NO];
+        findingLocation = NO;
+    }
+}
+
 #pragma mark Private implementation
 
 + (NSString *)removeStrings:(NSArray *)strings fromString:(NSString *)str
@@ -1010,6 +1110,70 @@
     }
 }
 
+- (BOOL)initializeGeotaggingIfAppropriate
+{
+    // get the user's last setting
+    NSString * settingsKey = self.service.credentials.username;
+    AccountSettings * settings = [AccountSettings settingsForKey:settingsKey];
+    BOOL lastEnabled = [settings geotagTweets];
+
+    if (lastEnabled)
+        [self startUpdatingLocation];
+    /*
+    else {
+        NSString * title =
+            NSLocalizedString(@"composetweet.geo.disabled.error.title", @"");
+        NSString * message =
+            [NSString stringWithFormat:
+            NSLocalizedString(@"composetweet.geo.disabled.error.message", @""),
+            self.service.credentials.username];
+        NSString * enable =
+            NSLocalizedString(@"composetweet.geo.disabled.error.enable", @"");
+        NSString * cancel =
+            NSLocalizedString(@"composetweet.geo.disabled.error.cancel", @"");
+
+        UIAlertView * alert =
+            [[UIAlertView alloc] initWithTitle:title
+                                       message:message
+                                      delegate:self
+                             cancelButtonTitle:cancel
+                             otherButtonTitles:enable, nil];
+        [alert show];
+    }
+     */
+
+    return lastEnabled;
+}
+
+- (void)startUpdatingLocation
+{
+    if (lastCoordinate) {
+        free(lastCoordinate);
+        lastCoordinate = NULL;
+    }
+
+    locationEnabled = YES;
+    findingLocation = YES;
+    [self.geolocator startLocating];
+    [self.composeTweetViewController displayUpdatingLocationActivity:YES];
+}
+
+- (void)resetLocationState
+{
+    if (locationEnabled) {
+        [self.geolocator stopLocating];
+        self.geolocator = nil;
+    }
+
+    if (lastCoordinate) {
+        free(lastCoordinate);
+        lastCoordinate = NULL;
+    }
+
+    locationEnabled = NO;
+    findingLocation = NO;
+}
+
 #pragma mark Accessors
 
 - (ComposeTweetViewController *)composeTweetViewController
@@ -1040,6 +1204,8 @@
         composeTweetViewController.navigationItem.rightBarButtonItem =
             sendButton;
         composeTweetViewController.sendButton = sendButton;
+
+        composeTweetViewController.displayLocation = YES;
     }
 
     return composeTweetViewController;
@@ -1081,8 +1247,6 @@
     return addPhotoServiceDisplayMgr;
 }
 
-#pragma mark Accessors
-
 - (UIViewController *)navController
 {
     if (!navController)
@@ -1112,6 +1276,16 @@
     }
 
     return urlShorteningService;
+}
+
+- (Geolocator *)geolocator
+{
+    if (!geolocator) {
+        geolocator = [[Geolocator alloc] init];
+        geolocator.delegate = self;
+    }
+
+    return geolocator;
 }
 
 @end

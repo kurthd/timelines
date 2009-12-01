@@ -11,6 +11,8 @@
 #import "MGTwitterEngineDelegate.h"
 #import "MGTwitterParserDelegate.h"
 
+#import <CoreLocation/CoreLocation.h>  // for CLLocationCoordinate2D
+
 @interface MGTwitterEngine : NSObject <MGTwitterParserDelegate> {
     __weak NSObject <MGTwitterEngineDelegate> *_delegate;
     NSString *_username;
@@ -98,7 +100,9 @@
 
 - (NSString *)getUpdate:(NSString *)updateID; // statuses/show
 - (NSString *)sendUpdate:(NSString *)status; // statuses/update
+- (NSString *)sendUpdate:(NSString *)status coordinate:(CLLocationCoordinate2D)coord;
 - (NSString *)sendUpdate:(NSString *)status inReplyTo:(NSString *)updateID; // statuses/update
+- (NSString *)sendUpdate:(NSString *)status coordinate:(CLLocationCoordinate2D)coord inReplyTo:(NSString *)updateID;
 
 - (NSString *)getRepliesStartingAtPage:(int)pageNum; // statuses/replies
 - (NSString *)getRepliesSince:(NSDate *)date startingAtPage:(int)pageNum count:(int)count; // statuses/replies

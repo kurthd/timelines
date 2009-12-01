@@ -3,10 +3,8 @@
 //
 
 #import "ComposeTweetViewController.h"
-#import "UIColor+TwitchColors.h"
-#import "RotatableTabBarController.h"
-#import "NSString+UrlAdditions.h"
-#import "SettingsReader.h"
+#import "TwitbitShared.h"
+#import "CurrentLocationView.h"
 
 static const NSInteger MAX_TWEET_LENGTH = 140;
 
@@ -68,6 +66,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)displayActivityView:(UIView *)activityView;
 - (void)hideActivityView:(UIView *)activityView;
 
+- (void)unhideLocationView;
+- (void)hideLocationView;
+
 - (void)initializePhotoUploadView;
 - (void)initializeLinkShorteningView;
 
@@ -82,7 +83,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 @implementation ComposeTweetViewController
 
 @synthesize delegate, sendButton, cancelButton, currentSender, textViewText,
-    displayingActivity, currentRecipient;
+    displayingActivity, currentRecipient, displayLocation;
 
 - (void)dealloc
 {
@@ -106,6 +107,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [recipientBackgroundView release];
     [addRecipientButton release];
 
+    [locationView release];
+
     [photoUploadView release];
     [photoUploadProgressView release];
 
@@ -120,8 +123,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 #pragma mark Public implementation
 
-- (void)composeTweet:(NSString *)text from:(NSString *)sender
+- (void)composeTweet:(NSString *)text
+                from:(NSString *)sender
+              geotag:(BOOL)geotag
 {
+    /*
     self.currentSender = sender;
     self.currentRecipient = nil;
     self.textViewText = text;
@@ -133,10 +139,14 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [self setViewNeedsInitialization:YES];
     if (text.length)
         [self saveCurrentStateAsDraft];
+        */
+
+    [self composeTweet:text from:sender geotag:geotag inReplyTo:nil];
 }
 
 - (void)composeTweet:(NSString *)text
                 from:(NSString *)sender
+              geotag:(BOOL)geotag
            inReplyTo:(NSString *)recipient
 {
     self.currentSender = sender;
@@ -146,6 +156,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     textView.text = text;
     recipientTextField.text = @"";
 
+    displayLocation = geotag;
+
     [self hideRecipientView];
     [self setViewNeedsInitialization:YES];
     if (text.length)
@@ -154,6 +166,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)composeDirectMessage:(NSString *)text from:(NSString *)sender
 {
+    /*
     self.currentSender = sender;
     self.currentRecipient = nil;
     self.textViewText = text;
@@ -165,6 +178,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [self setViewNeedsInitialization:YES];
     if (text.length)
         [self saveCurrentStateAsDraft];
+    */
+
+    [self composeDirectMessage:text from:sender to:nil];
 }
 
 - (void)composeDirectMessage:(NSString *)text
@@ -177,6 +193,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     textView.text = text;
     recipientTextField.text = recipient;
+
+    displayLocation = NO;
 
     [self showRecipientView];
     [self setViewNeedsInitialization:YES];
@@ -297,6 +315,66 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     [self hideActivityView:urlShorteningView];
     displayingActivity = NO;
+}
+
+- (void)displayLocationDescription:(BOOL)display animated:(BOOL)animated
+{
+    if (display == displayLocation)
+        return;  // HACK: nothing to do
+
+    if (display != [locationView isHidden])
+        return;  // HACK: also nothing to do
+
+    if (animated)
+        [UIView beginAnimations:nil context:NULL];
+
+    if (display) {
+        [self unhideLocationView];
+
+        CGRect locationFrame = [locationView frame];
+        locationFrame.origin.y -= locationFrame.size.height;
+        [locationView setFrame:locationFrame];
+
+        CGRect textViewFrame = [textView frame];
+        textViewFrame.size.height -= locationFrame.size.height;
+        [textView setFrame:textViewFrame];
+
+        [locationView setText:LS(@"composetweet.location.updating")];
+    } else {
+        CGRect locationFrame = [locationView frame];
+        locationFrame.origin.y += locationFrame.size.height;
+        [locationView setFrame:locationFrame];
+
+        CGRect textViewFrame = [textView frame];
+        textViewFrame.size.height += locationFrame.size.height;
+        [textView setFrame:textViewFrame];
+
+        [self performSelector:@selector(hideLocationView)
+                   withObject:nil
+                   afterDelay:0.3];
+    }
+
+    if (animated)
+        [UIView commitAnimations];
+
+    displayLocation = display;
+}
+
+- (void)displayUpdatingLocationActivity:(BOOL)display
+{
+    displayLocationActivity = display;
+    [locationView displayActivity:display];
+    [self setViewNeedsInitialization:YES];
+}
+
+- (void)updateLocationDescription:(NSString *)description
+{
+    [locationView setText:description];
+}
+
+- (void)displayUpdatingLocationError:(NSError *)error
+{
+    [locationView setErrorMessage:error.localizedDescription];
 }
 
 #pragma mark UIViewController overrides
@@ -512,10 +590,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (IBAction)promptToClearTweet
 {
-    NSString * cancelTitle =
-        NSLocalizedString(@"composetweet.clear.confirm.cancel", @"");
-    NSString * clearTitle =
-        NSLocalizedString(@"composetweet.clear.confirm.clear", @"");
+    NSString * cancelTitle = LS(@"composetweet.clear.confirm.cancel");
+    NSString * clearTitle = LS(@"composetweet.clear.confirm.clear");
  
     UIActionSheet * sheet =
         [[UIActionSheet alloc] initWithTitle:nil
@@ -544,6 +620,11 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (IBAction)choosePerson
 {
     [delegate userWantsToSelectPerson];
+}
+
+- (IBAction)geotag
+{
+    [delegate userDidTapGeotagButton];
 }
 
 - (void)userDidCancelPhotoUpload
@@ -662,6 +743,27 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)initializeView
 {
+    if (displayLocation) {
+        locationView.hidden = NO;
+        CGRect frame = textView.frame;
+        frame.size.height = 156 - locationView.frame.size.height;
+        textView.frame = frame;
+
+        frame = locationView.frame;
+        frame.origin.y = 118;
+        locationView.frame = frame;
+    } else {
+        locationView.hidden = YES;
+        CGRect frame = textView.frame;
+        frame.size.height = 156;
+        textView.frame = frame;
+
+        frame = locationView.frame;
+        frame.origin.y = 157;
+        locationView.frame = frame;
+    }
+    [self displayUpdatingLocationActivity:displayLocationActivity];
+
     if (hideRecipientView || recipientTextField.text.length > 0)
         [textView becomeFirstResponder];
     else
@@ -711,23 +813,20 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)setTitleView
 {
     if ([self composingDirectMessage])
-        portraitTitleLabel.text =
-            NSLocalizedString(@"composetweet.view.header.dm.title", @"");
+        portraitTitleLabel.text = LS(@"composetweet.view.header.dm.title");
     else {
         if (currentRecipient) {  // format for a public reply
             NSString * titleFormatString =
-                NSLocalizedString(@"composetweet.view.header.tweet.reply.title",
-                        @"");
+                LS(@"composetweet.view.header.tweet.reply.title");
             portraitTitleLabel.text =
                 [NSString stringWithFormat:titleFormatString, currentRecipient];
         } else  // format for a regular tweet
             portraitTitleLabel.text =
-                NSLocalizedString(
-                        @"composetweet.view.header.tweet.update.title", @"");
+                LS(@"composetweet.view.header.tweet.update.title");
     }
 
     NSString * accountFormatString =
-        NSLocalizedString(@"composetweet.view.header.tweet.account", @"");
+        LS(@"composetweet.view.header.tweet.account");
     portraitAccountLabel.text =
         [NSString stringWithFormat:accountFormatString, currentSender];
 
@@ -832,6 +931,16 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [photoUploadView addSubview:photoUploadCancelButton];
     [photoUploadCancelButton release];
+}
+
+- (void)unhideLocationView
+{
+    [locationView setHidden:NO];
+}
+
+- (void)hideLocationView
+{
+    [locationView setHidden:YES];
 }
 
 - (void)initializeLinkShorteningView

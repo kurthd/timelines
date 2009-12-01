@@ -4,6 +4,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class CurrentLocationView;
 @protocol ComposeTweetViewControllerDelegate;
 
 @interface ComposeTweetViewController :
@@ -32,6 +33,10 @@
     IBOutlet UITextField * recipientTextField;
     IBOutlet UIButton * addRecipientButton;
 
+    BOOL displayLocation;
+    IBOutlet CurrentLocationView * locationView;
+    BOOL displayLocationActivity;  // HACK
+
     /* Displaying activity while uploading media and shortening links. */
 
     BOOL displayingActivity;
@@ -55,11 +60,15 @@
 @property (nonatomic, retain) UIBarButtonItem * sendButton;
 @property (nonatomic, retain) UIBarButtonItem * cancelButton;
 
+@property (nonatomic, assign) BOOL displayLocation;
 @property (nonatomic, assign) BOOL displayingActivity;
 
-- (void)composeTweet:(NSString *)text from:(NSString *)sender;
 - (void)composeTweet:(NSString *)text
                 from:(NSString *)sender
+              geotag:(BOOL)geotag;
+- (void)composeTweet:(NSString *)text
+                from:(NSString *)sender
+              geotag:(BOOL)geotag
            inReplyTo:(NSString *)recipient;
 
 - (void)composeDirectMessage:(NSString *)text from:(NSString *)sender;
@@ -80,6 +89,11 @@
 - (void)displayUrlShorteningView;
 - (void)hideUrlShorteningView;
 
+- (void)displayLocationDescription:(BOOL)display animated:(BOOL)animated;
+- (void)displayUpdatingLocationActivity:(BOOL)display;
+- (void)updateLocationDescription:(NSString *)description;
+- (void)displayUpdatingLocationError:(NSError *)error;
+
 - (void)userDidSend;
 - (void)userDidClose;
 - (IBAction)chooseDirectMessageRecipient;
@@ -87,6 +101,7 @@
 - (IBAction)choosePhoto;
 - (IBAction)shortenLinks;
 - (IBAction)choosePerson;
+- (IBAction)geotag;
 
 @end
 
@@ -112,6 +127,8 @@
 
 - (BOOL)clearCurrentDirectMessageDraftTo:(NSString *)recipient;
 - (BOOL)clearCurrentTweetDraft;
+
+- (void)userDidTapGeotagButton;
 
 - (void)closeView;
 

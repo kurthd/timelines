@@ -6,6 +6,7 @@
 #import "MGTwitterEngineDelegate.h"
 #import "TwitterCredentials.h"
 #import "TwitterServiceDelegate.h"
+#import <CoreLocation/CoreLocation.h>
 
 @class YHOAuthTwitterEngine;
 
@@ -39,7 +40,11 @@
 
 // is 'tweet' a verb or a noun?
 - (void)sendTweet:(NSString *)tweet;
+- (void)sendTweet:(NSString *)tweet coordinate:(CLLocationCoordinate2D)coord;
 - (void)sendTweet:(NSString *)tweet inReplyTo:(NSNumber *)referenceId;
+- (void)sendTweet:(NSString *)tweet
+       coordinate:(CLLocationCoordinate2D)coord
+        inReplyTo:(NSNumber *)referenceId;
 
 #pragma mark Fetching individual tweets
 

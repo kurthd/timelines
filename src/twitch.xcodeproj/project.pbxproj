@@ -133,6 +133,8 @@
 		051AD4F010AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD4EE10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m */; };
 		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
 		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
+		0525DE5310BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0525DE5210BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m */; };
+		0525DE5410BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0525DE5210BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m */; };
 		05271BCE10B09294008E86DB /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271BCD10B09294008E86DB /* User.m */; };
 		05271BCF10B09294008E86DB /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271BCD10B09294008E86DB /* User.m */; };
 		05271BD410B092DB008E86DB /* TwitterCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271BD310B092DB008E86DB /* TwitterCredentials.m */; };
@@ -143,6 +145,8 @@
 		05271ED710B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 05271ED510B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m */; };
 		05271F0110B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05271F0010B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel */; };
 		05271F0210B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05271F0010B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel */; };
+		05295D9610BB0DAB0008BB7F /* Geolocator.m in Sources */ = {isa = PBXBuildFile; fileRef = 05295D9510BB0DAB0008BB7F /* Geolocator.m */; };
+		05295D9710BB0DAB0008BB7F /* Geolocator.m in Sources */ = {isa = PBXBuildFile; fileRef = 05295D9510BB0DAB0008BB7F /* Geolocator.m */; };
 		052E03FA10700858005CEC5F /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		052E03FB10700858005CEC5F /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
 		052E03FC10700858005CEC5F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 05B239470FEDD10900A6A2E6 /* Localizable.strings */; };
@@ -220,6 +224,10 @@
 		0552818A1088E8020055A37C /* NSString+UrlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 055281891088E8020055A37C /* NSString+UrlAdditions.m */; };
 		0552818B1088E8020055A37C /* NSString+UrlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 055281891088E8020055A37C /* NSString+UrlAdditions.m */; };
 		055777141063018D006596DB /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 055777131063018D006596DB /* libz.1.2.3.dylib */; };
+		0572F16710BC9708006EF58D /* CurrentLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0572F16610BC9708006EF58D /* CurrentLocationView.m */; };
+		0572F16810BC9708006EF58D /* CurrentLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0572F16610BC9708006EF58D /* CurrentLocationView.m */; };
+		0572F22C10BCB172006EF58D /* PushpinGrayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 0572F22B10BCB172006EF58D /* PushpinGrayscale.png */; };
+		0572F22D10BCB172006EF58D /* PushpinGrayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 0572F22B10BCB172006EF58D /* PushpinGrayscale.png */; };
 		057A2A7110B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 057A2A6E10B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m */; };
 		057A2A7210B7079B00784593 /* UserOrDirectMessage21To23EntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 057A2A7010B7079B00784593 /* UserOrDirectMessage21To23EntityMigrationPolicy.m */; };
 		057A2A7310B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 057A2A6E10B7079B00784593 /* Tweet21To23EntityMigrationPolicy.m */; };
@@ -781,6 +789,8 @@
 		05DBF43A1082E76D004AB521 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0590E2081062FF79009D1C11 /* Reachability.m */; };
 		05DBF43B1082E76D004AB521 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		05DBF43C1082E76D004AB521 /* UserTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05DBF1EC1082E61E004AB521 /* UserTweet.m */; };
+		05E39EEB10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 05E39EEA10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png */; };
+		05E39EEC10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 05E39EEA10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png */; };
 		05EDAF0C1029FAAB00D0B62B /* TweetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05EDAF0A1029FAAB00D0B62B /* TweetView.xib */; };
 		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		05EF40D50FFADF95007B59F1 /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
@@ -1131,6 +1141,8 @@
 		0524C4B70FF2B51600A6099B /* FetchFriendsForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFriendsForUserResponseProcessor.m; path = twitter/processors/FetchFriendsForUserResponseProcessor.m; sourceTree = "<group>"; };
 		0524C53E0FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchFollowersForUserResponseProcessor.h; path = twitter/processors/FetchFollowersForUserResponseProcessor.h; sourceTree = "<group>"; };
 		0524C53F0FF2BEFB00A6099B /* FetchFollowersForUserResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchFollowersForUserResponseProcessor.m; path = twitter/processors/FetchFollowersForUserResponseProcessor.m; sourceTree = "<group>"; };
+		0525DE5110BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MKPlacemark+GeneralHelpers.h"; path = "geo-services/MKPlacemark+GeneralHelpers.h"; sourceTree = "<group>"; };
+		0525DE5210BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MKPlacemark+GeneralHelpers.m"; path = "geo-services/MKPlacemark+GeneralHelpers.m"; sourceTree = "<group>"; };
 		05271BC910B09215008E86DB /* twitch-v2.3-3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.3-3.xcdatamodel"; sourceTree = "<group>"; };
 		05271BCC10B09294008E86DB /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = users/User.h; sourceTree = "<group>"; };
 		05271BCD10B09294008E86DB /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = users/User.m; sourceTree = "<group>"; };
@@ -1142,6 +1154,8 @@
 		05271ED410B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DecodeHtmlTweetTextEntityMigrationPolicy.h; path = "persistence/core-data/migrations/DecodeHtmlTweetTextEntityMigrationPolicy.h"; sourceTree = "<group>"; };
 		05271ED510B0E674008E86DB /* DecodeHtmlTweetTextEntityMigrationPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DecodeHtmlTweetTextEntityMigrationPolicy.m; path = "persistence/core-data/migrations/DecodeHtmlTweetTextEntityMigrationPolicy.m"; sourceTree = "<group>"; };
 		05271F0010B0E8C4008E86DB /* v2.3-2-v2.3-4.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2.3-2-v2.3-4.xcmappingmodel"; path = "data-model/v2.3-2-v2.3-4.xcmappingmodel"; sourceTree = "<group>"; };
+		05295D9410BB0DAB0008BB7F /* Geolocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geolocator.h; path = "geo-services/Geolocator.h"; sourceTree = "<group>"; };
+		05295D9510BB0DAB0008BB7F /* Geolocator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Geolocator.m; path = "geo-services/Geolocator.m"; sourceTree = "<group>"; };
 		052C64170FED703200B259D7 /* TwitchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitchAppDelegate.h; path = "app-controller/TwitchAppDelegate.h"; sourceTree = "<group>"; };
 		052C64180FED703200B259D7 /* TwitchAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitchAppDelegate.m; path = "app-controller/TwitchAppDelegate.m"; sourceTree = "<group>"; };
 		052E05A910700858005CEC5F /* Twitbit Lite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twitbit Lite.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1192,6 +1206,9 @@
 		055C92E110362DC2000B9A00 /* Avatar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Avatar.m; path = users/Avatar.m; sourceTree = "<group>"; };
 		0562BE2D0FF6AB6B005DA549 /* FetchTweetResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTweetResponseProcessor.h; path = twitter/processors/FetchTweetResponseProcessor.h; sourceTree = "<group>"; };
 		0562BE2E0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchTweetResponseProcessor.m; path = twitter/processors/FetchTweetResponseProcessor.m; sourceTree = "<group>"; };
+		0572F16510BC9708006EF58D /* CurrentLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurrentLocationView.h; path = compose/CurrentLocationView.h; sourceTree = "<group>"; };
+		0572F16610BC9708006EF58D /* CurrentLocationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurrentLocationView.m; path = compose/CurrentLocationView.m; sourceTree = "<group>"; };
+		0572F22B10BCB172006EF58D /* PushpinGrayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PushpinGrayscale.png; path = images/PushpinGrayscale.png; sourceTree = "<group>"; };
 		05761F5C0FF72C1C00392ADC /* NSMutableURLRequest+Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+Parameters.h"; sourceTree = "<group>"; };
 		05761F5D0FF72C1C00392ADC /* NSMutableURLRequest+Parameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+Parameters.m"; sourceTree = "<group>"; };
 		05761F600FF72C1C00392ADC /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
@@ -1505,6 +1522,7 @@
 		05E0271A101B983D00A97AC9 /* RecentSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearchMgr.m; path = search/RecentSearchMgr.m; sourceTree = "<group>"; };
 		05E1B94C104F36D500DD8876 /* BlockExistsResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlockExistsResponseProcessor.h; path = twitter/processors/BlockExistsResponseProcessor.h; sourceTree = "<group>"; };
 		05E1B94D104F36D500DD8876 /* BlockExistsResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BlockExistsResponseProcessor.m; path = twitter/processors/BlockExistsResponseProcessor.m; sourceTree = "<group>"; };
+		05E39EEA10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ErrorExclamationMarkGrayscale.png; path = images/ErrorExclamationMarkGrayscale.png; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
 		05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+TediousCodeAdditions.m"; path = "shared/NSManagedObject+TediousCodeAdditions.m"; sourceTree = "<group>"; };
 		05EDAEFA1029F6F500D0B62B /* TweetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetViewController.h; path = timeline/TweetViewController.h; sourceTree = "<group>"; };
@@ -1972,6 +1990,8 @@
 				050ACC2A1087D11A004B6C2D /* PersonDirectory.m */,
 				055281881088E8020055A37C /* NSString+UrlAdditions.h */,
 				055281891088E8020055A37C /* NSString+UrlAdditions.m */,
+				0572F16510BC9708006EF58D /* CurrentLocationView.h */,
+				0572F16610BC9708006EF58D /* CurrentLocationView.m */,
 			);
 			name = compose;
 			sourceTree = "<group>";
@@ -3011,6 +3031,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				05E39EEA10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png */,
+				0572F22B10BCB172006EF58D /* PushpinGrayscale.png */,
 				914E9D9F10C5769A007036F2 /* QuoteButtonIcon.png */,
 				914E9DA010C5769A007036F2 /* QuoteButtonIconHighlighted.png */,
 				91B7704110BC49900014172A /* StandardButtonBackgroundHighlighted.png */,
@@ -3266,6 +3288,10 @@
 				918F393510433E61000236AE /* LocationInfoLabelCell.h */,
 				918F393610433E61000236AE /* LocationInfoLabelCell.m */,
 				918F3ACC1044A582000236AE /* LocationInfoViewControllerDelegate.h */,
+				05295D9410BB0DAB0008BB7F /* Geolocator.h */,
+				05295D9510BB0DAB0008BB7F /* Geolocator.m */,
+				0525DE5110BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.h */,
+				0525DE5210BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m */,
 			);
 			name = "geo-services";
 			sourceTree = "<group>";
@@ -3524,6 +3550,8 @@
 				915B508010A8B53D0028B0B4 /* ListsGlyph.png in Resources */,
 				915B555310AD26190028B0B4 /* PrivateIcon.png in Resources */,
 				915B559A10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */,
+				0572F22D10BCB172006EF58D /* PushpinGrayscale.png in Resources */,
+				05E39EEC10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png in Resources */,
 				91B76FE010BB5AE80014172A /* StandardButtonBackground.png in Resources */,
 				91B76FE110BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */,
 				91B7704310BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */,
@@ -3699,6 +3727,8 @@
 				915B507F10A8B53D0028B0B4 /* ListsGlyph.png in Resources */,
 				915B555410AD26190028B0B4 /* PrivateIcon.png in Resources */,
 				915B559B10ADCB700028B0B4 /* PrivateIconHighlighted.png in Resources */,
+				0572F22C10BCB172006EF58D /* PushpinGrayscale.png in Resources */,
+				05E39EEB10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png in Resources */,
 				91B76FE210BB5AE80014172A /* StandardButtonBackground.png in Resources */,
 				91B76FE310BB5AE80014172A /* StandardButtonBackgroundDarkTheme.png in Resources */,
 				91B7704210BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */,
@@ -4029,6 +4059,9 @@
 				057A2A7210B7079B00784593 /* UserOrDirectMessage21To23EntityMigrationPolicy.m in Sources */,
 				057A2A8010B7090A00784593 /* v2.1-v2.3.xcmappingmodel in Sources */,
 				05FC8FEE10B7CA3A00721DEC /* Tweet.m in Sources */,
+				05295D9610BB0DAB0008BB7F /* Geolocator.m in Sources */,
+				0525DE5310BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m in Sources */,
+				0572F16810BC9708006EF58D /* CurrentLocationView.m in Sources */,
 				91B76FE710BB5B6C0014172A /* TwoLineButton.m in Sources */,
 				91B770DB10BC66A20014172A /* ContactMgr.m in Sources */,
 				91B770E910BC67F40014172A /* ContactCache.m in Sources */,
@@ -4355,6 +4388,9 @@
 				057A2A7410B7079B00784593 /* UserOrDirectMessage21To23EntityMigrationPolicy.m in Sources */,
 				057A2A8110B7090A00784593 /* v2.1-v2.3.xcmappingmodel in Sources */,
 				05FC8FEF10B7CA3A00721DEC /* Tweet.m in Sources */,
+				05295D9710BB0DAB0008BB7F /* Geolocator.m in Sources */,
+				0525DE5410BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m in Sources */,
+				0572F16710BC9708006EF58D /* CurrentLocationView.m in Sources */,
 				91B76FE610BB5B6C0014172A /* TwoLineButton.m in Sources */,
 				91B770DA10BC66A20014172A /* ContactMgr.m in Sources */,
 				91B770E810BC67F40014172A /* ContactCache.m in Sources */,

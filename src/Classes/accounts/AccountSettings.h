@@ -11,6 +11,8 @@
 
     NSString * photoServiceName;
     NSString * videoServiceName;
+
+    NSNumber * geotagTweets;
 }
 
 - (BOOL)pushMentions;
@@ -24,6 +26,9 @@
 
 - (NSString *)videoServiceName;
 - (void)setVideoServiceName:(NSString *)name;
+
+- (BOOL)geotagTweets;
+- (void)setGeotagTweets:(BOOL)geotag;
 
 // returns all push settings masked together in an integer
 - (NSNumber *)pushSettings;

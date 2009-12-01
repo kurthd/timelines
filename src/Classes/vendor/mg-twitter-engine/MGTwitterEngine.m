@@ -1620,6 +1620,10 @@
     return [self sendUpdate:status inReplyTo:nil];
 }
 
+- (NSString *)sendUpdate:(NSString *)status coordinate:(CLLocationCoordinate2D)coord
+{
+    return [self sendUpdate:status coordinate:coord inReplyTo:nil];
+}
 
 - (NSString *)sendUpdate:(NSString *)status inReplyTo:(NSString *)updateID
 {
@@ -1636,9 +1640,37 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
     [params setObject:trimmedText forKey:@"status"];
-    if (updateID > 0) {
+    if (updateID && [updateID length] > 0) {
         [params setObject:updateID forKey:@"in_reply_to_status_id"];
     }
+    NSString *body = [self _queryStringWithBase:nil parameters:params prefixed:NO];
+    
+    return [self _sendRequestWithMethod:HTTP_POST_METHOD path:path 
+                        queryParameters:params body:body 
+                            requestType:MGTwitterStatusSend 
+                           responseType:MGTwitterStatus];
+}
+
+- (NSString *)sendUpdate:(NSString *)status coordinate:(CLLocationCoordinate2D)coord inReplyTo:(NSString *)updateID
+{
+    if (!status) {
+        return nil;
+    }
+    
+    NSString *path = [NSString stringWithFormat:@"statuses/update.%@", API_FORMAT];
+    
+    NSString *trimmedText = status;
+    if ([trimmedText length] > MAX_MESSAGE_LENGTH) {
+        trimmedText = [trimmedText substringToIndex:MAX_MESSAGE_LENGTH];
+    }
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
+    [params setObject:trimmedText forKey:@"status"];
+    if (updateID && [updateID length] > 0) {
+        [params setObject:updateID forKey:@"in_reply_to_status_id"];
+    }
+    [params setObject:[NSString stringWithFormat:@"%f", coord.latitude] forKey:@"lat"];
+    [params setObject:[NSString stringWithFormat:@"%f", coord.longitude] forKey:@"long"];
     NSString *body = [self _queryStringWithBase:nil parameters:params prefixed:NO];
     
     return [self _sendRequestWithMethod:HTTP_POST_METHOD path:path 

@@ -9,3 +9,5 @@
 - (BOOL)containsString:(NSString *)s;
 
 @end
+
+#define LS(key) NSLocalizedString((key), @"")
