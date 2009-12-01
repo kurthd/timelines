@@ -9,6 +9,8 @@
 
 @interface AccountsButton ()
 
+- (void)animateAvatarTransition:(UIImage *)anAvatar;
+
 @property (nonatomic, copy) NSString * username;
 @property (nonatomic, readonly) RoundedImage * avatar;
 @property (nonatomic, readonly) UIImage * dropDownArrow;
@@ -135,8 +137,21 @@
 - (void)setUsername:(NSString *)aUsername avatar:(UIImage *)anAvatar
 {
     self.username = aUsername;
-    [self.avatar setImage:anAvatar];
 
+    if (self.avatar.image) {
+        [self.avatar setImage:self.avatar.image];
+        [self setNeedsDisplay];
+
+        [self performSelector:@selector(animateAvatarTransition:)
+            withObject:anAvatar afterDelay:0];
+    } else
+        [self animateAvatarTransition:anAvatar];
+}
+
+- (void)animateAvatarTransition:(UIImage *)anAvatar
+{
+    [self.avatar setImage:anAvatar];
+    
     newUser = YES;
     [self setNeedsDisplay];
 }
