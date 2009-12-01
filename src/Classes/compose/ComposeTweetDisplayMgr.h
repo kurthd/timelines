@@ -65,6 +65,7 @@
     BOOL composingTweet;
     NSString * directMessageRecipient;
 
+    BOOL locationEnabled;
     Geolocator * geolocator;
     CLLocationCoordinate2D * lastCoordinate;
     BOOL findingLocation;

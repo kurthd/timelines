@@ -17,11 +17,16 @@ enum PushSettings
 + (NSMutableDictionary *)allAccountSettings;
 + (void)setAllAccountSettings:(NSDictionary *)allAccountSettings;
 
++ (NSNumber *)pushMentionsDefaultValue;
++ (NSNumber *)pushDirectMessagesDefaultValue;
++ (NSNumber *)geotagTweetsDefaultValue;
+
 + (NSString *)pushMentionsKey;
 + (NSString *)pushDirectMessagesKey;
 + (NSString *)photoServiceNameKey;
 + (NSString *)videoServiceNameKey;
 + (NSString *)allAccountSettingsKey;
++ (NSString *)geotagTweetsKey;
 
 @end
 
@@ -77,14 +82,17 @@ enum PushSettings
     [pushDirectMessages release];
     [photoServiceName release];
     [videoServiceName release];
+    [geotagTweets release];
     [super dealloc];
 }
 
 - (id)init
 {
     if (self = [super init]) {
-        pushMentions = [[NSNumber alloc] initWithBool:YES];
-        pushDirectMessages = [[NSNumber alloc] initWithBool:YES];
+        pushMentions = [[[self class] pushMentionsDefaultValue] retain];
+        pushDirectMessages =
+            [[[self class] pushDirectMessagesDefaultValue] retain];
+        geotagTweets = [[[self class] geotagTweetsDefaultValue] retain];
     }
 
     return self;
@@ -107,6 +115,7 @@ enum PushSettings
     [copy setPushDirectMessages:[self pushDirectMessages]];
     [copy setPhotoServiceName:[self photoServiceName]];
     [copy setVideoServiceName:[self videoServiceName]];
+    [copy setGeotagTweets:[self geotagTweets]];
 
     return copy;
 }
@@ -165,6 +174,19 @@ enum PushSettings
     }
 }
 
+- (BOOL)geotagTweets
+{
+    return [geotagTweets boolValue];
+}
+
+- (void)setGeotagTweets:(BOOL)geotag
+{
+    if ([self geotagTweets] != geotag) {
+        [geotagTweets release];
+        geotagTweets = [[NSNumber alloc] initWithBool:geotag];
+    }
+}
+
 - (NSNumber *)pushSettings
 {
     NSInteger n = 0;
@@ -192,6 +214,7 @@ enum PushSettings
         [NSMutableDictionary dictionaryWithObjectsAndKeys:
         pushMentions, [[self class] pushMentionsKey],
         pushDirectMessages, [[self class] pushDirectMessagesKey],
+        geotagTweets, [[self class] geotagTweetsKey],
         nil];
 
     if ([self photoServiceName])
@@ -212,6 +235,11 @@ enum PushSettings
         [[dictionary objectForKey:[[self class] pushMentionsKey]] retain];
     settings->pushDirectMessages =
         [[dictionary objectForKey:[[self class] pushDirectMessagesKey]] retain];
+    NSNumber * geotag =
+        [dictionary objectForKey:[[self class] geotagTweetsKey]];
+    if (!geotag)
+        geotag = [[self class] geotagTweetsDefaultValue];
+    settings->geotagTweets = [geotag retain];
 
     NSString * photoService =
         [dictionary objectForKey:[[self class] photoServiceNameKey]];
@@ -244,6 +272,25 @@ enum PushSettings
     [defaults synchronize];
 }
 
+#pragma mark Settings default values
+
++ (NSNumber *)pushMentionsDefaultValue
+{
+    return [NSNumber numberWithBool:YES];
+}
+
++ (NSNumber *)pushDirectMessagesDefaultValue
+{
+    return [NSNumber numberWithBool:YES];
+}
+
++ (NSNumber *)geotagTweetsDefaultValue
+{
+    return [NSNumber numberWithBool:NO];
+}
+
+#pragma mark Settings key values
+
 + (NSString *)pushMentionsKey
 {
     return @"push-mentions";
@@ -267,6 +314,11 @@ enum PushSettings
 + (NSString *)allAccountSettingsKey
 {
     return @"account-settings";
+}
+
++ (NSString *)geotagTweetsKey
+{
+    return @"geotag-tweets";
 }
 
 @end

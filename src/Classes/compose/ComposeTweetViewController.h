@@ -63,9 +63,12 @@
 @property (nonatomic, assign) BOOL displayLocation;
 @property (nonatomic, assign) BOOL displayingActivity;
 
-- (void)composeTweet:(NSString *)text from:(NSString *)sender;
 - (void)composeTweet:(NSString *)text
                 from:(NSString *)sender
+              geotag:(BOOL)geotag;
+- (void)composeTweet:(NSString *)text
+                from:(NSString *)sender
+              geotag:(BOOL)geotag
            inReplyTo:(NSString *)recipient;
 
 - (void)composeDirectMessage:(NSString *)text from:(NSString *)sender;
