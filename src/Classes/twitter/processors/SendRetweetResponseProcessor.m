@@ -101,6 +101,10 @@
 
         tweet.retweet = retweet;
 
+        NSError * error;
+        if (![context save:&error])
+            NSLog(@"Failed to save tweets and users: '%@'", error);
+
         SEL sel = @selector(retweetSentSuccessfully:tweetId:);
         if ([delegate respondsToSelector:sel])
             [delegate retweetSentSuccessfully:tweet tweetId:tweetId];

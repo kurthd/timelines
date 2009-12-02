@@ -1181,7 +1181,7 @@
 
 - (NSString *)getFollowedTimelineFor:(NSString *)username sinceID:(NSString *)updateID startingAtPage:(int)pageNum count:(int)count
 {
-	NSString *path = [NSString stringWithFormat:@"statuses/friends_timeline.%@", API_FORMAT];
+	NSString *path = [NSString stringWithFormat:@"statuses/home_timeline.%@", API_FORMAT];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
     if ([updateID longLongValue] > 0) {
@@ -1191,7 +1191,7 @@
         [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];
     }
     if (username) {
-        path = [NSString stringWithFormat:@"statuses/friends_timeline/%@.%@", username, API_FORMAT];
+        path = [NSString stringWithFormat:@"statuses/home_timeline/%@.%@", username, API_FORMAT];
     }
 	int tweetCount = DEFAULT_TWEET_COUNT;
 	if (count > 0) {
