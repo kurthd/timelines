@@ -41,7 +41,6 @@
 
     // configure the display
     BOOL showsFavoriteButton;
-    BOOL showsExtendedActions;
     BOOL allowDeletion;
 
     UIViewController * realParentViewController;
@@ -62,7 +61,6 @@
 
 @property (nonatomic, assign) NSObject<TweetViewControllerDelegate> * delegate;
 @property (nonatomic, retain, readonly) Tweet * tweet;
-@property (nonatomic, assign) BOOL showsExtendedActions;
 @property (nonatomic, assign) BOOL allowDeletion;
 @property (nonatomic, retain) UIViewController * realParentViewController;
 @property (nonatomic, readonly) TweetLocationCell * locationCell;

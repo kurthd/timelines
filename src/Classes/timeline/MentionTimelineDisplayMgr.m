@@ -216,7 +216,6 @@
     NSLog(@"Mention display mgr: fetched tweet: %@", tweet);
 
     [self.lastTweetDetailsController hideFavoriteButton:NO];
-    self.lastTweetDetailsController.showsExtendedActions = YES;
     [self.lastTweetDetailsController displayTweet:tweet
          onNavigationController:nil];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
@@ -318,7 +317,6 @@
         rightBarButtonItem;
 
     [self.tweetDetailsController hideFavoriteButton:NO];
-    self.tweetDetailsController.showsExtendedActions = YES;
     [self.tweetDetailsController displayTweet:tweet
         onNavigationController:navigationController];
     self.tweetDetailsController.allowDeletion =
@@ -513,7 +511,6 @@
     controller.allowDeletion =
         [tweet.user.username isEqual:credentials.username];
     [controller hideFavoriteButton:NO];
-    controller.showsExtendedActions = YES;
     [controller displayTweet:tweet onNavigationController:navigationController];
 }
 

@@ -92,7 +92,7 @@ enum TweetActionSheets {
 @implementation TweetViewController
 
 @synthesize delegate, navigationController, tweetContentView, tweet;
-@synthesize showsExtendedActions, allowDeletion;
+@synthesize allowDeletion;
 @synthesize realParentViewController;
 @synthesize photoPreviewFetcher;
 
@@ -272,10 +272,6 @@ enum TweetActionSheets {
             nrows = NUM_TWEET_ACTION_ROWS;
             if (!showsFavoriteButton)
                 nrows--;
-            if (!showsExtendedActions)
-                nrows-=2;
-            if (allowDeletion)
-                nrows++;
             break;
     }
 
@@ -370,7 +366,7 @@ enum TweetActionSheets {
             [delegate showLocationOnMap:locationAsString];
         }
     } else if (transformedPath.section == kTweetActionsSection) {
-        [self.tableView deselectRowAtIndexPath:transformedPath animated:YES];
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         if (transformedPath.row == kPublicReplyRow)
             [self sendReply];
         else if (transformedPath.row == kRetweetRow)
@@ -889,7 +885,8 @@ enum TweetActionSheets {
             row++;
         if (row >= kConversationRow && !tweet.inReplyToTwitterTweetId)
             row++;
-    }
+    } else if (allowDeletion && row > kPublicReplyRow) // remove retweet cell
+        row++;
 
     return [NSIndexPath indexPathForRow:row inSection:actual.section];
 }
