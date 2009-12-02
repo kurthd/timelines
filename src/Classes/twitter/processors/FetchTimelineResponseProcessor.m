@@ -122,18 +122,19 @@
                                      isSearchResult:NO
                                         credentials:self.credentials
                                             context:self.context];
-        if (tweet)
-            [tweets addObject:tweet];
 
         NSDictionary * retweetData = [status objectForKey:@"retweeted_status"];
         if (retweetData) {
             Tweet * retweet = [self createTweetFromStatus:retweetData
-                                              isUserTweet:YES
+                                              isUserTweet:!self.username
                                            isSearchResult:NO
                                               credentials:self.credentials
                                                   context:context];
             tweet.retweet = retweet;
         }
+
+        if (tweet)
+            [tweets addObject:tweet];
     }
 
     NSError * error;
