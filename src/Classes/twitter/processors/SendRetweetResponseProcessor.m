@@ -94,7 +94,7 @@
         NSDictionary * retweetData =
             [tweetData objectForKey:@"retweeted_status"];
         Tweet * retweet = [self createTweetFromStatus:retweetData
-                                          isUserTweet:NO
+                                          isUserTweet:YES
                                        isSearchResult:NO
                                           credentials:credentials
                                               context:context];
