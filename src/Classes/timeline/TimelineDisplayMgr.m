@@ -277,6 +277,25 @@
         [self.lastTweetDetailsController.tweet.favorited boolValue]];
 }
 
+- (void)retweetSentSuccessfully:(Tweet *)retweet tweetId:(NSNumber *)tweetId
+{
+    NSLog(@"Successfully posted retweet; id: %@", tweetId);
+    if ([self.lastTweetDetailsController.tweet.identifier
+        isEqual:tweetId])
+        [self.lastTweetDetailsController setSentRetweet];
+}
+
+- (void)failedToSendRetweet:(NSNumber *)tweetId error:(NSError *)error
+{
+    NSLog(@"Failed to post retweet: %@", tweetId);
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.retweet", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+    if ([self.lastTweetDetailsController.tweet.identifier isEqual:tweetId])
+        [self.lastTweetDetailsController setSentRetweet];
+}
+
 - (void)failedToDeleteTweetWithId:(NSNumber *)tweetId error:(NSError *)error
 {
     NSLog(@"Timeline display manager: failed to delete tweet");
@@ -636,6 +655,12 @@
     }
 
     [composeTweetDisplayMgr composeTweetWithText:reTweetMessage animated:YES];
+}
+
+- (void)retweetNativelyWithTwitter
+{
+    NSLog(@"Posting retweet of tweet %@", selectedTweet.identifier);
+    [service sendRetweet:selectedTweet.identifier];
 }
 
 #pragma mark Accessors

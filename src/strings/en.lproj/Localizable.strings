@@ -51,6 +51,7 @@ timelinedisplaymgr.error.deletetweet = "Failed to delete tweet";
 timelinedisplaymgr.error.deletedirectmessage = "Failed to delete direct message";
 timelinedisplaymgr.error.unblock = "Failed to unblock user %@";
 timelinedisplaymgr.error.block = "Failed to block user %@";
+timelinedisplaymgr.error.retweet = "Failed to post retweet";
 timelinedisplaymgr.nearbysearch = "Nearby Tweets";
 
 /* MentionDisplayMgr */

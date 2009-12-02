@@ -61,7 +61,7 @@ enum TweetActionSheets {
 
 @property (readonly) UITableViewCell * conversationCell;
 @property (readonly) ActionButtonCell * publicReplyCell;
-@property (readonly) ActionButtonCell * retweetCell;
+@property (readonly) RetweetCell * retweetCell;
 @property (readonly) ActionButtonCell * quoteCell;
 @property (readonly) MarkAsFavoriteCell * favoriteCell;
 @property (readonly) ActionButtonCell * deleteTweetCell;
@@ -369,8 +369,10 @@ enum TweetActionSheets {
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         if (transformedPath.row == kPublicReplyRow)
             [self sendReply];
-        else if (transformedPath.row == kRetweetRow)
-            [self retweet];
+        else if (transformedPath.row == kRetweetRow) {
+            [delegate retweetNativelyWithTwitter];
+            [self.retweetCell setUpdatingState:YES];
+        }
         else if (transformedPath.row == kQuoteRow)
             [self retweet];
         else if (transformedPath.row == kFavoriteRow)
@@ -506,6 +508,11 @@ enum TweetActionSheets {
     [self.favoriteCell setMarkedState:favorited];
     [self.favoriteCell setUpdatingState:NO];
     markingFavorite = NO;
+}
+
+- (void)setSentRetweet
+{
+    [self.retweetCell setUpdatingState:NO];
 }
 
 - (void)setUsersTweet:(BOOL)usersTweet
@@ -732,26 +739,6 @@ enum TweetActionSheets {
     return publicReplyCell;
 }
 
-- (UITableViewCell *)retweetCell
-{
-    if (!retweetCell) {
-        UIColor * bColor =
-            [SettingsReader displayTheme] == kDisplayThemeDark ?
-            [UIColor defaultDarkThemeCellColor] : [UIColor whiteColor];
-        retweetCell = 
-            [[ActionButtonCell alloc]
-            initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""
-            backgroundColor:bColor];
-        NSString * actionText =
-            NSLocalizedString(@"tweetdetailsview.retweet.label", @"");
-        [retweetCell setActionText:actionText];
-        UIImage * actionImage = [UIImage imageNamed:@"RetweetButtonIcon.png"];
-        [retweetCell setActionImage:actionImage];
-    }
-
-    return retweetCell;
-}
-
 - (UITableViewCell *)quoteCell
 {
     if (!quoteCell) {
@@ -837,6 +824,24 @@ enum TweetActionSheets {
 {
     return self.parentViewController ?
         self.parentViewController : realParentViewController;
+}
+
+- (UITableViewCell *)retweetCell
+{
+    if (!retweetCell) {
+        NSArray * nib =
+            [[[NSBundle mainBundle] loadNibNamed:@"RetweetCell"
+            owner:self options:nil] retain];
+
+         retweetCell = [nib objectAtIndex:0];
+         if ([SettingsReader displayTheme] == kDisplayThemeDark) {
+             retweetCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
+             retweetCell.textLabel.textColor = [UIColor whiteColor];
+         }
+         [retweetCell setUpdatingState:NO];
+    }
+
+    return retweetCell;
 }
 
 - (MarkAsFavoriteCell *)favoriteCell
