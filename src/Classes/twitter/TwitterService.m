@@ -85,11 +85,7 @@ static NSMutableDictionary * oaTokens;
 // DK: I love code comment conversations
 - (void)sendTweet:(NSString *)tweet
 {
-    //[self sendTweet:tweet inReplyTo:nil];
-
-    //NSNumber * id = [NSNumber numberWithLongLong:[@"6228167763" longLongValue]];  // jfsikora
-    NSNumber * id = [NSNumber numberWithLongLong:[@"6105167154" longLongValue]];  // debay
-    [self sendRetweet:id];
+    [self sendTweet:tweet inReplyTo:nil];
 }
 
 - (void)sendTweet:(NSString *)tweet coordinate:(CLLocationCoordinate2D)coord
