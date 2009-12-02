@@ -11,6 +11,7 @@
 #import "MarkAsFavoriteCell.h"
 #import "TweetLocationCell.h"
 #import "ActionButtonCell.h"
+#import "RetweetCell.h"
 
 @interface TweetViewController :
     UITableViewController <UIActionSheetDelegate, UIWebViewDelegate,
@@ -41,14 +42,13 @@
 
     // configure the display
     BOOL showsFavoriteButton;
-    BOOL showsExtendedActions;
     BOOL allowDeletion;
 
     UIViewController * realParentViewController;
 
     TweetLocationCell * locationCell;
     ActionButtonCell * publicReplyCell;
-    ActionButtonCell * retweetCell;
+    RetweetCell * retweetCell;
     ActionButtonCell * quoteCell;
     MarkAsFavoriteCell * favoriteCell;
     ActionButtonCell * deleteTweetCell;
@@ -62,7 +62,6 @@
 
 @property (nonatomic, assign) NSObject<TweetViewControllerDelegate> * delegate;
 @property (nonatomic, retain, readonly) Tweet * tweet;
-@property (nonatomic, assign) BOOL showsExtendedActions;
 @property (nonatomic, assign) BOOL allowDeletion;
 @property (nonatomic, retain) UIViewController * realParentViewController;
 @property (nonatomic, readonly) TweetLocationCell * locationCell;
@@ -72,6 +71,7 @@
 - (void)setFavorited:(BOOL)favorited;
 - (void)setUsersTweet:(BOOL)usersTweet;
 - (void)hideFavoriteButton:(BOOL)hide;
+- (void)setSentRetweet;
 
 #pragma mark Button actions
 

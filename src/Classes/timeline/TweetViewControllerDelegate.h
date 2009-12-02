@@ -18,6 +18,7 @@
 - (void)showingTweetDetails:(TweetViewController *)tweetController;
 - (void)loadNewTweetWithId:(NSNumber *)tweetId username:(NSString *)username;
 - (void)reTweetSelected;
+- (void)retweetNativelyWithTwitter;
 - (void)replyToTweet;
 - (void)loadConversationFromTweetId:(NSNumber *)tweetId;
 - (void)deleteTweet:(NSNumber *)tweetId;

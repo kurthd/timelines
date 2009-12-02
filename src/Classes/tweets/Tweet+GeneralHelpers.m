@@ -5,6 +5,7 @@
 #import "Tweet+GeneralHelpers.h"
 #import "TwitbitShared.h"
 #import "User.h"
+#import "SettingsReader.h"
 
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 static NSString * hashRegex = @"\\B(#[\\w_]+)";
@@ -55,7 +56,8 @@ static NSMutableDictionary * photoUrlDict;
         @"tweet-style.css";
 
     if (!photoUrl && photoUrlWebpage)
-        photoUrl = @"PhotoPlaceholder.png";
+        photoUrl = [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"PhotoPlaceholderDarkTheme.png" : @"PhotoPlaceholder.png";
 
     NSString * html =
         !photoUrl ?

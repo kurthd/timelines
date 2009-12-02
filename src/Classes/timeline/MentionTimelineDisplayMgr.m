@@ -216,7 +216,6 @@
     NSLog(@"Mention display mgr: fetched tweet: %@", tweet);
 
     [self.lastTweetDetailsController hideFavoriteButton:NO];
-    self.lastTweetDetailsController.showsExtendedActions = YES;
     [self.lastTweetDetailsController displayTweet:tweet
          onNavigationController:nil];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
@@ -256,6 +255,25 @@
         [self.lastTweetDetailsController
         setFavorited:
         [self.lastTweetDetailsController.tweet.favorited boolValue]];
+}
+
+- (void)retweetSentSuccessfully:(Tweet *)retweet tweetId:(NSNumber *)tweetId
+{
+    NSLog(@"Successfully posted retweet; id: %@", tweetId);
+    if ([self.lastTweetDetailsController.tweet.identifier
+        isEqual:tweetId])
+        [self.lastTweetDetailsController setSentRetweet];
+}
+
+- (void)failedToSendRetweet:(NSNumber *)tweetId error:(NSError *)error
+{
+    NSLog(@"Failed to post retweet: %@", tweetId);
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"timelinedisplaymgr.error.retweet", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+    if ([self.lastTweetDetailsController.tweet.identifier isEqual:tweetId])
+        [self.lastTweetDetailsController setSentRetweet];
 }
 
 - (void)failedToDeleteTweetWithId:(NSNumber *)tweetId error:(NSError *)error
@@ -318,7 +336,6 @@
         rightBarButtonItem;
 
     [self.tweetDetailsController hideFavoriteButton:NO];
-    self.tweetDetailsController.showsExtendedActions = YES;
     [self.tweetDetailsController displayTweet:tweet
         onNavigationController:navigationController];
     self.tweetDetailsController.allowDeletion =
@@ -461,6 +478,12 @@
     [composeTweetDisplayMgr composeTweetWithText:reTweetMessage animated:YES];
 }
 
+- (void)retweetNativelyWithTwitter
+{
+    NSLog(@"Posting retweet of tweet %@", selectedTweet.identifier);
+    [service sendRetweet:selectedTweet.identifier];
+}
+
 - (void)replyToTweet
 {
     NSLog(@"Mention display manager: reply to tweet selected");
@@ -513,7 +536,6 @@
     controller.allowDeletion =
         [tweet.user.username isEqual:credentials.username];
     [controller hideFavoriteButton:NO];
-    controller.showsExtendedActions = YES;
     [controller displayTweet:tweet onNavigationController:navigationController];
 }
 
