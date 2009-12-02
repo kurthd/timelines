@@ -116,7 +116,7 @@
 {
     [mapView setCenterCoordinate:coord animated:YES];
 
-    MKCoordinateSpan span = { 0.5, 0.5 };
+    MKCoordinateSpan span = { 0.01, 0.002 };
     MKCoordinateRegion region = { coord, span };
 
     [mapView setRegion:region animated:YES];
