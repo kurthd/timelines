@@ -1183,6 +1183,8 @@
     findingLocation = YES;
     [self.geolocator startLocating];
     [self.composeTweetViewController displayUpdatingLocationActivity:YES];
+    [self.composeTweetViewController
+        updateLocationDescription:LS(@"composetweet.location.updating")];
 }
 
 - (void)resetLocationState
