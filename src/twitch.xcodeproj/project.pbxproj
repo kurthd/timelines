@@ -795,6 +795,8 @@
 		05E39FE910C5D42200D935B3 /* SendRetweetResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E39FE710C5D42200D935B3 /* SendRetweetResponseProcessor.m */; };
 		05E3A05C10C5E20400D935B3 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E3A05B10C5E20400D935B3 /* Tweet.m */; };
 		05E3A05D10C5E20400D935B3 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E3A05B10C5E20400D935B3 /* Tweet.m */; };
+		05E3A16010C6E52400D935B3 /* ComposeLocationGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 05E3A15F10C6E52400D935B3 /* ComposeLocationGradient.png */; };
+		05E3A16110C6E52400D935B3 /* ComposeLocationGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 05E3A15F10C6E52400D935B3 /* ComposeLocationGradient.png */; };
 		05EDAF0C1029FAAB00D0B62B /* TweetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05EDAF0A1029FAAB00D0B62B /* TweetView.xib */; };
 		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		05EF40D50FFADF95007B59F1 /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
@@ -1534,6 +1536,7 @@
 		05E3A05410C5E0F500D935B3 /* twitch-v2.3-5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.3-5.xcdatamodel"; sourceTree = "<group>"; };
 		05E3A05A10C5E20400D935B3 /* Tweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tweet.h; path = tweets/Tweet.h; sourceTree = "<group>"; };
 		05E3A05B10C5E20400D935B3 /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tweet.m; path = tweets/Tweet.m; sourceTree = "<group>"; };
+		05E3A15F10C6E52400D935B3 /* ComposeLocationGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ComposeLocationGradient.png; path = images/ComposeLocationGradient.png; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
 		05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+TediousCodeAdditions.m"; path = "shared/NSManagedObject+TediousCodeAdditions.m"; sourceTree = "<group>"; };
 		05EDAEFA1029F6F500D0B62B /* TweetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetViewController.h; path = timeline/TweetViewController.h; sourceTree = "<group>"; };
@@ -3045,6 +3048,7 @@
 			isa = PBXGroup;
 			children = (
 				914EA0B610C6F258007036F2 /* PhotoPlaceholderDarkTheme.png */,
+				05E3A15F10C6E52400D935B3 /* ComposeLocationGradient.png */,
 				914E9F4F10C61DE8007036F2 /* PhotoPlaceholder.png */,
 				05E39EEA10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png */,
 				0572F22B10BCB172006EF58D /* PushpinGrayscale.png */,
@@ -3572,6 +3576,7 @@
 				91B7704310BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */,
 				914E9DA310C5769A007036F2 /* QuoteButtonIcon.png in Resources */,
 				914E9DA410C5769A007036F2 /* QuoteButtonIconHighlighted.png in Resources */,
+				05E3A16010C6E52400D935B3 /* ComposeLocationGradient.png in Resources */,
 				914E9F5110C61DE8007036F2 /* PhotoPlaceholder.png in Resources */,
 				914EA0B810C6F258007036F2 /* PhotoPlaceholderDarkTheme.png in Resources */,
 			);
@@ -3751,6 +3756,7 @@
 				91B7704210BC49900014172A /* StandardButtonBackgroundHighlighted.png in Resources */,
 				914E9DA110C5769A007036F2 /* QuoteButtonIcon.png in Resources */,
 				914E9DA210C5769A007036F2 /* QuoteButtonIconHighlighted.png in Resources */,
+				05E3A16110C6E52400D935B3 /* ComposeLocationGradient.png in Resources */,
 				914E9F5010C61DE8007036F2 /* PhotoPlaceholder.png in Resources */,
 				914EA0B710C6F258007036F2 /* PhotoPlaceholderDarkTheme.png in Resources */,
 			);

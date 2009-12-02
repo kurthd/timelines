@@ -11,7 +11,7 @@
     [pushpinImageView release];
     [errorImageView release];
     [activityIndicator release];
-    [textField release];
+    [descriptionLabel release];
     [super dealloc];
 }
 
@@ -24,7 +24,7 @@
 
 - (void)setText:(NSString *)text
 {
-    textField.text = text;
+    descriptionLabel.text = text;
     [errorImageView setHidden:YES];
 }
 
@@ -44,7 +44,7 @@
 {
     [activityIndicator stopAnimating];
     [pushpinImageView setHidden:YES];
-    textField.text = errorMessage;
+    descriptionLabel.text = errorMessage;
     [errorImageView setHidden:NO];
 }
 
