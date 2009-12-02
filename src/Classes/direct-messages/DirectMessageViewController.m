@@ -15,6 +15,7 @@
 #import "SettingsReader.h"
 #import "UIColor+TwitchColors.h"
 #import "DirectMessage+GeneralHelpers.h"
+#import "CommonTwitterServicePhotoSource.h"
 
 static NSString * usernameRegex = @"x-twitbit://user\\?screen_name=@([\\w_]+)";
 static NSString * hashRegex = @"x-twitbit://search\\?query=(.+)";
@@ -54,6 +55,8 @@ enum TweetActionSheets {
 @property (readonly) UITableViewCell * replyCell;
 @property (readonly) UITableViewCell * deleteTweetCell;
 
+@property (nonatomic, retain) AsynchronousNetworkFetcher * photoPreviewFetcher;
+
 - (void)displayDirectMessage;
 - (void)loadTweetWebView;
 
@@ -74,6 +77,7 @@ enum TweetActionSheets {
 
 @synthesize delegate, navigationController, tweetContentView, directMessage;
 @synthesize realParentViewController;
+@synthesize photoPreviewFetcher;
 
 - (void)dealloc
 {
@@ -100,6 +104,8 @@ enum TweetActionSheets {
     self.tweetContentView = nil;
 
     self.directMessage = nil;
+
+    [photoPreviewFetcher release];
 
     [super dealloc];
 }
@@ -342,6 +348,13 @@ enum TweetActionSheets {
     self.directMessage = dm;
     self.navigationController = navController;
 
+    NSString * photoUrlString = [self.directMessage photoUrlWebpage];
+    if (photoUrlString && ![self.directMessage photoUrl]) {
+        NSURL * photoUrl = [NSURL URLWithString:photoUrlString];
+        self.photoPreviewFetcher =
+            [AsynchronousNetworkFetcher fetcherWithUrl:photoUrl delegate:self];
+    }
+
     [self loadTweetWebView];
 }
 
@@ -389,16 +402,32 @@ enum TweetActionSheets {
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
     didReceiveData:(NSData *)data fromUrl:(NSURL *)url
 {
-    NSLog(@"Received avatar for url: %@", url);
-    UIImage * avatar = [UIImage imageWithData:data];
     NSString * urlAsString = [url absoluteString];
-    [User setAvatar:avatar forUrl:urlAsString];
-    NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
-    if (NSEqualRanges([urlAsString rangeOfString:@"_normal."], notFoundRange) &&
-        avatar &&
-        ([directMessage.sender.avatar.thumbnailImageUrl isEqual:urlAsString] ||
-        [directMessage.sender.avatar.fullImageUrl isEqual:urlAsString]))
-        [avatarImage setImage:avatar];
+    if (fetcher == self.photoPreviewFetcher) {
+        NSString * html =
+            [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]
+            autorelease];
+        NSString * photoUrl =
+            [CommonTwitterServicePhotoSource photoUrlFromPageHtml:html
+            url:urlAsString];
+        NSLog(@"Received photo webpage; photo url is: %@", photoUrl);
+        [self.directMessage setPhotoUrl:photoUrl];
+
+        [tweetContentView
+            loadHTMLStringRelativeToMainBundle:[self.directMessage textAsHtml]];
+    } else {
+        NSLog(@"Received avatar for url: %@", url);
+        UIImage * avatar = [UIImage imageWithData:data];
+        [User setAvatar:avatar forUrl:urlAsString];
+        NSRange notFoundRange = NSMakeRange(NSNotFound, 0);
+        if (NSEqualRanges([urlAsString rangeOfString:@"_normal."],
+            notFoundRange) &&
+            avatar &&
+            ([directMessage.sender.avatar.thumbnailImageUrl
+            isEqual:urlAsString] ||
+            [directMessage.sender.avatar.fullImageUrl isEqual:urlAsString]))
+            [avatarImage setImage:avatar];
+    }
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher

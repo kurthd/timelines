@@ -16,4 +16,6 @@
 
 @property (nonatomic, assign) NSObject<PhotoSourceDelegate> * delegate;
 
++ (NSString *)photoUrlFromPageHtml:(NSString *)html url:(NSString *)url;
+
 @end

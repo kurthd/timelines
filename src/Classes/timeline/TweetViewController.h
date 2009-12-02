@@ -56,6 +56,8 @@
     BOOL markingFavorite;
 
     BOOL lastDisplayedInLandscape;
+
+    AsynchronousNetworkFetcher * photoPreviewFetcher;
 }
 
 @property (nonatomic, assign) NSObject<TweetViewControllerDelegate> * delegate;

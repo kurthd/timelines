@@ -42,6 +42,8 @@
     UITableViewCell * deleteTweetCell;
 
     BOOL usersDirectMessage;
+
+    AsynchronousNetworkFetcher * photoPreviewFetcher;
 }
 
 @property (nonatomic, assign)
