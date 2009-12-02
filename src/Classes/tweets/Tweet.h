@@ -2,7 +2,7 @@
 //  Tweet.h
 //  twitch
 //
-//  Created by John A. Debay on 11/21/09.
+//  Created by John A. Debay on 12/1/09.
 //  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
@@ -26,10 +26,19 @@
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) NSString * inReplyToTwitterUsername;
 @property (nonatomic, retain) NSString * decodedText;
+@property (nonatomic, retain) Tweet * retweet;
+@property (nonatomic, retain) NSSet* retweets;
 @property (nonatomic, retain) TweetLocation * location;
 @property (nonatomic, retain) User * user;
 
 @end
 
 
+@interface Tweet (CoreDataGeneratedAccessors)
+- (void)addRetweetsObject:(Tweet *)value;
+- (void)removeRetweetsObject:(Tweet *)value;
+- (void)addRetweets:(NSSet *)value;
+- (void)removeRetweets:(NSSet *)value;
+
+@end
 

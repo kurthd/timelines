@@ -362,3 +362,6 @@ bitly.shortening.failed = "An unknown error occurred";
 
 /* SelectPersonView */
 selectpersonview.title = "Find a Person";
+
+/* Twitter */
+twitter.retweet.failed.unknown = "Invalid retweet";

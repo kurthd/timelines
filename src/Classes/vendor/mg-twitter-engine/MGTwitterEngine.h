@@ -104,6 +104,8 @@
 - (NSString *)sendUpdate:(NSString *)status inReplyTo:(NSString *)updateID; // statuses/update
 - (NSString *)sendUpdate:(NSString *)status coordinate:(CLLocationCoordinate2D)coord inReplyTo:(NSString *)updateID;
 
+- (NSString *)sendRetweet:(NSString *)updateID;  // statuses/retweet
+
 - (NSString *)getRepliesStartingAtPage:(int)pageNum; // statuses/replies
 - (NSString *)getRepliesSince:(NSDate *)date startingAtPage:(int)pageNum count:(int)count; // statuses/replies
 - (NSString *)getRepliesSinceID:(int)updateID startingAtPage:(int)pageNum count:(int)count; // statuses/replies

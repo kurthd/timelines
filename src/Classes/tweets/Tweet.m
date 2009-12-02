@@ -2,7 +2,7 @@
 //  Tweet.m
 //  twitch
 //
-//  Created by John A. Debay on 11/21/09.
+//  Created by John A. Debay on 12/1/09.
 //  Copyright 2009 High Order Bit, Inc.. All rights reserved.
 //
 
@@ -24,6 +24,8 @@
 @dynamic text;
 @dynamic inReplyToTwitterUsername;
 @dynamic decodedText;
+@dynamic retweet;
+@dynamic retweets;
 @dynamic location;
 @dynamic user;
 

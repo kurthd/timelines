@@ -4,21 +4,21 @@
 
 #import "NSError+InstantiationAdditions.h"
 
-@implementation NSError (BuildWatchAdditions)
+@implementation NSError (InstantiationAdditions)
 
-+ (NSString *) applicationErrorDomain
++ (NSString *)applicationErrorDomain
 {
-    return @"BugWatchErrorDomain";
+    return @"TwitbitErrorDomain";
 }
 
-+ (NSError *) errorWithLocalizedDescription:(NSString *)localizedDescription
++ (NSError *)errorWithLocalizedDescription:(NSString *)localizedDescription
 {
     return [[self class] errorWithLocalizedDescription:localizedDescription
                                              rootCause:nil];
 }
 
-+ (NSError *) errorWithLocalizedDescription:(NSString *)localizedDescription
-                                  rootCause:(NSError *)rootCause
++ (NSError *)errorWithLocalizedDescription:(NSString *)localizedDescription
+                                 rootCause:(NSError *)rootCause
 {
     NSMutableDictionary * userInfo =
         [NSMutableDictionary dictionaryWithCapacity:2];

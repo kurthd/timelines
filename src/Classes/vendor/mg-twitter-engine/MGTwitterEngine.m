@@ -1679,6 +1679,20 @@
                            responseType:MGTwitterStatus];
 }
 
+- (NSString *)sendRetweet:(NSString *)updateID
+{
+    if (!updateID) {
+        return nil;
+    }
+
+    NSString *path = [NSString stringWithFormat:@"statuses/retweet/%@.%@", updateID, API_FORMAT];
+
+    return [self _sendRequestWithMethod:HTTP_POST_METHOD path:path
+                        queryParameters:[NSDictionary dictionary]
+                                   body:nil
+                            requestType:MGTwitterStatusSend
+                           responseType:MGTwitterStatus];
+}
 
 - (NSString *)deleteUpdate:(NSString *)updateID
 {

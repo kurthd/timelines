@@ -85,7 +85,11 @@ static NSMutableDictionary * oaTokens;
 // DK: I love code comment conversations
 - (void)sendTweet:(NSString *)tweet
 {
-    [self sendTweet:tweet inReplyTo:nil];
+    //[self sendTweet:tweet inReplyTo:nil];
+
+    //NSNumber * id = [NSNumber numberWithLongLong:[@"6228167763" longLongValue]];  // jfsikora
+    NSNumber * id = [NSNumber numberWithLongLong:[@"6105167154" longLongValue]];  // debay
+    [self sendRetweet:id];
 }
 
 - (void)sendTweet:(NSString *)tweet coordinate:(CLLocationCoordinate2D)coord
@@ -123,6 +127,21 @@ static NSMutableDictionary * oaTokens;
     NSString * requestId = [twitter sendUpdate:tweet
                                     coordinate:coord
                                      inReplyTo:[referenceId description]];
+
+    [self request:requestId isHandledBy:processor];
+}
+
+#pragma mark Retweets
+
+- (void)sendRetweet:(NSNumber *)tweetId
+{
+    ResponseProcessor * processor =
+        [SendRetweetResponseProcessor processorWithTweetId:tweetId
+                                               credentials:credentials
+                                                   context:context
+                                                  delegate:delegate];
+
+    NSString * requestId = [twitter sendRetweet:[tweetId description]];
 
     [self request:requestId isHandledBy:processor];
 }

@@ -46,6 +46,10 @@
        coordinate:(CLLocationCoordinate2D)coord
         inReplyTo:(NSNumber *)referenceId;
 
+#pragma mark Retweets
+
+- (void)sendRetweet:(NSNumber *)tweetId;
+
 #pragma mark Fetching individual tweets
 
 - (void)fetchTweet:(NSNumber *)tweetId;
