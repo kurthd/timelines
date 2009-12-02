@@ -128,7 +128,7 @@
 @implementation ComposeMapViewController (InstantiationHelpers)
 
 - (id)initWithCenterCoordinate:(CLLocationCoordinate2D)aCoordinate
-                      delegate:(id<ComposeMapViewControllerDelegate>)aDelegate;
+                      delegate:(id<ComposeMapViewControllerDelegate>)aDelegate
 {
     if (self = [self initWithNibName:@"ComposeMapView" bundle:nil]) {
         self.delegate = aDelegate;
