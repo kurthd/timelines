@@ -84,6 +84,18 @@
 
 - (void)requestImageFromHtml:(NSString *)html withUrl:(NSString *)url
 {
+    NSString * imageUrl = [[self class] photoUrlFromPageHtml:html url:url];
+
+    if (imageUrl && ![imageUrl isEqual:@""]) {
+        [urlMapping setObject:url forKey:imageUrl];
+    
+        [self fetchImageWithUrl:imageUrl];
+    } else
+        [delegate unableToFindImageForUrl:url];
+}
+
++ (NSString *)photoUrlFromPageHtml:(NSString *)html url:(NSString *)url
+{
     NSString * regex = nil;
     NSInteger capture = 0;
 
@@ -152,12 +164,7 @@
     NSString * imageUrl = [html stringByMatching:regex capture:capture];
     NSLog(@"Parsed image '%@' from html; sending request...", imageUrl);
 
-    if (imageUrl && ![imageUrl isEqual:@""]) {
-        [urlMapping setObject:url forKey:imageUrl];
-    
-        [self fetchImageWithUrl:imageUrl];
-    } else
-        [delegate unableToFindImageForUrl:url];
+    return imageUrl;
 }
 
 @end

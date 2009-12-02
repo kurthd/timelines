@@ -9,20 +9,27 @@
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 static NSString * hashRegex = @"\\B(#[\\w_]+)";
 
+static NSMutableDictionary * photoUrlWebpageDict;
+static NSMutableDictionary * photoUrlDict;
+
 @interface Tweet (GeneralHelpersPrivate)
 + (NSString *)bodyWithLinks:(NSString *)body;
 + (NSString *)bodyWithUserLinks:(NSString *)body;
 + (NSString *)bodyWithHashLinks:(NSString *)body;
 
++ (NSMutableDictionary *)photoUrlWebpageDict;
++ (NSMutableDictionary *)photoUrlDict;
+
 + (BOOL)displayWithUsername;
 @end
-
 
 @implementation Tweet (GeneralHelpers)
 
 + (NSString *)tweetTextAsHtml:(NSString *)text
                     timestamp:(NSDate *)timestamp
                        source:(NSString *)source
+                     photoUrl:(NSString *)photoUrl
+              photoUrlWebpage:(NSString *)photoUrlWebpage
 {
         NSString * body = [[self class] bodyWithLinks:text];
     // some tweets have newlines -- convert them to HTML line breaks for
@@ -47,7 +54,11 @@ static NSString * hashRegex = @"\\B(#[\\w_]+)";
         @"dark-theme-tweet-style.css" :
         @"tweet-style.css";
 
+    if (!photoUrl && photoUrlWebpage)
+        photoUrl = @"PhotoPlaceholder.png";
+
     NSString * html =
+        !photoUrl ?
         [NSString stringWithFormat:
         @"<html>"
         "  <head>"
@@ -66,7 +77,28 @@ static NSString * hashRegex = @"\\B(#[\\w_]+)";
         "    </table>"
         "  </body>"
         "</html>",
-        cssFile, body, sourceString, timestampAsString];
+        cssFile, body, sourceString, timestampAsString] :
+        [NSString stringWithFormat:
+        @"<html>"
+        "  <head>"
+        "   <style media=\"screen\" type=\"text/css\" rel=\"stylesheet\">"
+        "     @import url(%@);"
+        "   </style>"
+        "  </head>"
+        "  <body>"
+        "    <p class=\"text\">%@</p>"
+        "    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+        "      width=\"100%%\" class=\"footer\">"
+        "      <a href=\"%@\"><img src=\"%@\" class=\"photo\"/></a>"
+        "      <tr>"
+        "        <td align=\"left\" valign=\"top\">%@</td>"
+        "        <td align=\"right\" valign=\"top\">%@</td>"
+        "      </tr>"
+        "    </table>"
+        "  </body>"
+        "</html>",
+        cssFile, body, photoUrlWebpage, photoUrl, sourceString,
+        timestampAsString];
 
     return html;
 }
@@ -75,7 +107,9 @@ static NSString * hashRegex = @"\\B(#[\\w_]+)";
 {
     return [[self class] tweetTextAsHtml:self.text
                                timestamp:self.timestamp
-                                  source:self.source];
+                                  source:self.source
+                                photoUrl:[self photoUrl]
+                         photoUrlWebpage:[self photoUrlWebpage]];
 }
 
 - (NSString *)htmlDecodedText
@@ -95,6 +129,43 @@ static NSString * hashRegex = @"\\B(#[\\w_]+)";
 {
     return [NSString stringWithFormat:@"http://twitter.com/%@/status/%@",
         self.user.username, self.identifier];
+}
+
+- (NSString *)photoUrl
+{
+    return [[[self class] photoUrlDict] objectForKey:self.identifier];
+}
+
+- (void)setPhotoUrl:(NSString *)photoUrl
+{
+    [[[self class] photoUrlDict] setObject:photoUrl forKey:self.identifier];
+}
+
+- (NSString *)photoUrlWebpage
+{
+    static NSString * noPhotoUrlsString = @"nil";
+    NSString * photoUrl =
+        [[[self class] photoUrlWebpageDict] objectForKey:self.identifier];
+    if (!photoUrl) {
+        static NSString * imageUrlRegex =
+            @"\\bhttp://twitpic.com/.+|"
+             "\\bhttp://.*\\.?yfrog.com/.+|"
+             "\\bhttp://tinypic.com/.+|"
+             "\\bhttp://twitgoo.com/.+|"
+             "\\bhttp://mobypicture.com/.+|"
+             "\\.jpg$|\\.jpeg$|\\.bmp|\\.gif|\\.png";
+
+        photoUrl = [self.text stringByMatching:imageUrlRegex];
+        if (photoUrl)
+            [[[self class] photoUrlWebpageDict]
+                setObject:photoUrl forKey:self.identifier];
+        else
+            [[[self class] photoUrlWebpageDict]
+                setObject:noPhotoUrlsString forKey:self.identifier];
+    } else if ([photoUrl isEqual:noPhotoUrlsString])
+        photoUrl = nil;
+
+    return photoUrl;
 }
 
 #pragma mark Private implementation
@@ -189,6 +260,22 @@ static NSString * hashRegex = @"\\B(#[\\w_]+)";
     }
 
     return bodyWithHashLinks;
+}
+
++ (NSMutableDictionary *)photoUrlWebpageDict
+{
+    if (!photoUrlWebpageDict)
+        photoUrlWebpageDict = [[NSMutableDictionary dictionary] retain];
+
+    return photoUrlWebpageDict;
+}
+
++ (NSMutableDictionary *)photoUrlDict
+{
+    if (!photoUrlDict)
+        photoUrlDict = [[NSMutableDictionary dictionary] retain];
+
+    return photoUrlDict;
 }
 
 + (BOOL)displayWithUsername
