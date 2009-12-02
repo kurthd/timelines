@@ -3,12 +3,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CurrentLocationView.h"
 
-@class CurrentLocationView;
 @protocol ComposeTweetViewControllerDelegate;
 
 @interface ComposeTweetViewController :
-    UIViewController <UIActionSheetDelegate, UITextFieldDelegate>
+    UIViewController <UIActionSheetDelegate, UITextFieldDelegate,
+    CurrentLocationViewDelegate>
 {
     id<ComposeTweetViewControllerDelegate> delegate;
 
@@ -129,6 +130,7 @@
 - (BOOL)clearCurrentTweetDraft;
 
 - (void)userDidTapGeotagButton;
+- (void)showCurrentLocation;
 
 - (void)closeView;
 

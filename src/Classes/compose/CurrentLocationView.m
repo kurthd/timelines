@@ -6,8 +6,12 @@
 
 @implementation CurrentLocationView
 
+@synthesize delegate;
+
 - (void)dealloc
 {
+    self.delegate = nil;
+
     [pushpinImageView release];
     [errorImageView release];
     [activityIndicator release];
@@ -46,6 +50,21 @@
     [pushpinImageView setHidden:YES];
     descriptionLabel.text = errorMessage;
     [errorImageView setHidden:NO];
+}
+
+#pragma mark UIResponder overrides
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    //NSLog(@"Touches ended: %@ with event: %@", touches, event);
+
+    UITouch * touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self];
+    if ([self pointInside:point withEvent:event]) {
+        NSLog(@"Point is inside.");
+        [self.delegate userDidTouchView:self];
+    } else
+        NSLog(@"Point is outside.");
 }
 
 @end

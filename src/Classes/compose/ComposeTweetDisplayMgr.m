@@ -9,7 +9,7 @@
 @interface ComposeTweetDisplayMgr ()
 
 @property (nonatomic, retain) UIViewController * rootViewController;
-@property (nonatomic, retain) UIViewController * navController;
+@property (nonatomic, retain) UINavigationController * navController;
 @property (nonatomic, retain) ComposeTweetViewController *
     composeTweetViewController;
 
@@ -517,6 +517,26 @@
     [AccountSettings setSettings:settings forKey:settingsKey];
 }
 
+- (void)showCurrentLocation
+{
+    if (lastCoordinate) {
+        NSLog(@"Showing location (%f, %f) on a map", lastCoordinate->latitude,
+            lastCoordinate->longitude);
+
+        ComposeMapViewController * mapViewController =
+            [[ComposeMapViewController alloc]
+            initWithCenterCoordinate:*lastCoordinate delegate:self];
+        UINavigationController * nc =
+            [[UINavigationController alloc]
+            initWithRootViewController:mapViewController];
+        [mapViewController release];
+
+        nc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self.navController presentModalViewController:nc animated:YES];
+        [nc release];
+    }
+}
+
 - (void)closeView
 {
     composingTweet = NO;
@@ -524,6 +544,13 @@
     [self resetLocationState];
     [self.rootViewController dismissModalViewControllerAnimated:YES];
     [self.delegate userDidCancelComposingTweet];
+}
+
+#pragma mark ComposeLocationMapViewControllerDelegate implementation
+
+- (void)composeMapViewControllerShouldDismiss:(ComposeMapViewController *)c
+{
+    [c dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark TwitterServiceDelegate implementation
@@ -1247,7 +1274,7 @@
     return addPhotoServiceDisplayMgr;
 }
 
-- (UIViewController *)navController
+- (UINavigationController *)navController
 {
     if (!navController)
         navController =
