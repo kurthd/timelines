@@ -30,6 +30,11 @@
                     withText:(NSString *)text
                        error:(NSError *)error;
 
+#pragma mark Retweets
+
+- (void)retweetSentSuccessfully:(Tweet *)retweet tweetId:(NSNumber *)tweetId;
+- (void)failedToSendRetweet:(NSNumber *)tweetId error:(NSError *)error;
+
 #pragma mark Fetching individual tweets
 
 - (void)fetchedTweet:(Tweet *)tweet withId:(NSNumber *)tweetId;

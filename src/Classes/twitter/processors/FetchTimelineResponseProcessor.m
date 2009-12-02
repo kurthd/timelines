@@ -124,6 +124,16 @@
                                             context:self.context];
         if (tweet)
             [tweets addObject:tweet];
+
+        NSDictionary * retweetData = [status objectForKey:@"retweeted_status"];
+        if (retweetData) {
+            Tweet * retweet = [self createTweetFromStatus:retweetData
+                                              isUserTweet:YES
+                                           isSearchResult:NO
+                                              credentials:self.credentials
+                                                  context:context];
+            tweet.retweet = retweet;
+        }
     }
 
     NSError * error;

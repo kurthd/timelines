@@ -27,6 +27,7 @@
 #import "BlockExistsResponseProcessor.h"
 
 #import "SendTweetResponseProcessor.h"
+#import "SendRetweetResponseProcessor.h"
 #import "SendDirectMessageResponseProcessor.h"
 
 #import "FetchTrendsResponseProcessor.h"

@@ -127,6 +127,21 @@ static NSMutableDictionary * oaTokens;
     [self request:requestId isHandledBy:processor];
 }
 
+#pragma mark Retweets
+
+- (void)sendRetweet:(NSNumber *)tweetId
+{
+    ResponseProcessor * processor =
+        [SendRetweetResponseProcessor processorWithTweetId:tweetId
+                                               credentials:credentials
+                                                   context:context
+                                                  delegate:delegate];
+
+    NSString * requestId = [twitter sendRetweet:[tweetId description]];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 #pragma mark Fetching individual tweets
 
 - (void)fetchTweet:(NSNumber *)tweetId
