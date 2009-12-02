@@ -9,7 +9,7 @@
     IBOutlet UIImageView * pushpinImageView;
     IBOutlet UIImageView * errorImageView;
     IBOutlet UIActivityIndicatorView * activityIndicator;
-    IBOutlet UITextField * textField;
+    IBOutlet UILabel * descriptionLabel;
 }
 
 - (void)setText:(NSString *)text;
