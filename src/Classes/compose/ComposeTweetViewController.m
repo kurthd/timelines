@@ -336,7 +336,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         [locationView setFrame:locationFrame];
 
         CGRect textViewFrame = [textView frame];
-        textViewFrame.size.height -= locationFrame.size.height;
+        textViewFrame.size.height -= (locationFrame.size.height - 1);
         [textView setFrame:textViewFrame];
 
         [locationView setText:LS(@"composetweet.location.updating")];
@@ -745,22 +745,24 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     if (displayLocation) {
         locationView.hidden = NO;
-        CGRect frame = textView.frame;
-        frame.size.height = 156 - locationView.frame.size.height;
-        textView.frame = frame;
 
-        frame = locationView.frame;
-        frame.origin.y = 118;
-        locationView.frame = frame;
+        CGRect textViewFrame = textView.frame;
+        textViewFrame.size.height = 157 - locationView.frame.size.height;
+        textView.frame = textViewFrame;
+
+        CGRect locationViewFrame = locationView.frame;
+        locationViewFrame.origin.y = 118;
+        locationView.frame = locationViewFrame;
     } else {
         locationView.hidden = YES;
-        CGRect frame = textView.frame;
-        frame.size.height = 156;
-        textView.frame = frame;
 
-        frame = locationView.frame;
-        frame.origin.y = 157;
-        locationView.frame = frame;
+        CGRect textViewFrame = textView.frame;
+        textViewFrame.size.height = 156;
+        textView.frame = textViewFrame;
+
+        CGRect locationViewFrame = locationView.frame;
+        locationViewFrame.origin.y = 157;
+        locationView.frame = locationViewFrame;
     }
     [self displayUpdatingLocationActivity:displayLocationActivity];
 

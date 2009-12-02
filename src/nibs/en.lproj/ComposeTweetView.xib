@@ -13,7 +13,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="52"/>
-			<integer value="111"/>
+			<integer value="4"/>
 			<integer value="86"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -81,9 +81,9 @@
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<object class="NSCustomResource" key="IBUIImage" id="149083257">
+								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">ComposeRecipientGradient.png</string>
+									<string key="NSResourceName">ComposeLocationGradient.png</string>
 								</object>
 							</object>
 							<object class="IBUIActivityIndicatorView" id="370312050">
@@ -96,7 +96,7 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<int key="IBUIStyle">2</int>
 							</object>
-							<object class="IBUIImageView" id="403588760">
+							<object class="IBUIImageView" id="620604141">
 								<reference key="NSNextResponder" ref="739002946"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{10, 9}, {20, 20}}</string>
@@ -110,7 +110,7 @@
 									<string key="NSResourceName">ErrorExclamationMarkGrayscale.png</string>
 								</object>
 							</object>
-							<object class="IBUILabel" id="694203153">
+							<object class="IBUILabel" id="120649645">
 								<reference key="NSNextResponder" ref="739002946"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{38, 8}, {277, 21}}</string>
@@ -235,7 +235,10 @@
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<reference key="IBUIImage" ref="149083257"/>
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">ComposeRecipientGradient.png</string>
+								</object>
 							</object>
 							<object class="IBUITextField" id="349808707">
 								<reference key="NSNextResponder" ref="546282671"/>
@@ -768,7 +771,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">errorImageView</string>
 						<reference key="source" ref="739002946"/>
-						<reference key="destination" ref="403588760"/>
+						<reference key="destination" ref="620604141"/>
 					</object>
 					<int key="connectionID">133</int>
 				</object>
@@ -776,7 +779,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">descriptionLabel</string>
 						<reference key="source" ref="739002946"/>
-						<reference key="destination" ref="694203153"/>
+						<reference key="destination" ref="120649645"/>
 					</object>
 					<int key="connectionID">137</int>
 				</object>
@@ -1000,8 +1003,8 @@
 							<reference ref="258261256"/>
 							<reference ref="370312050"/>
 							<reference ref="691534994"/>
-							<reference ref="403588760"/>
-							<reference ref="694203153"/>
+							<reference ref="620604141"/>
+							<reference ref="120649645"/>
 						</object>
 						<reference key="parent" ref="431717833"/>
 						<string key="objectName">Location View</string>
@@ -1034,13 +1037,13 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">132</int>
-						<reference key="object" ref="403588760"/>
+						<reference key="object" ref="620604141"/>
 						<reference key="parent" ref="739002946"/>
 						<string key="objectName">Error Image</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">134</int>
-						<reference key="object" ref="694203153"/>
+						<reference key="object" ref="120649645"/>
 						<reference key="parent" ref="739002946"/>
 						<string key="objectName">Location Description</string>
 					</object>
