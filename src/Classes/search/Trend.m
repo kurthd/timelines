@@ -6,11 +6,12 @@
 
 @implementation Trend
 
-@synthesize name, query;
+@synthesize name, explanation, query;
 
 - (void)dealloc
 {
     self.name = nil;
+    self.explanation = nil;
     self.query = nil;
     [super dealloc];
 }

@@ -42,6 +42,7 @@
 #import "ErrorState.h"
 #import "UserTwitterList.h"
 #import "ContactCachePersistenceStore.h"
+#import "TrendsViewController.h"
 
 @interface TwitchAppDelegate ()
 
@@ -64,6 +65,7 @@
 - (void)initAccountsView;
 - (void)initSearchTab;
 - (void)initListsTab;
+- (void)initTrendsTab;
 - (UINavigationController *)getNavControllerForController:(UIViewController *)c;
 
 - (UIBarButtonItem *)newTweetButtonItem;
@@ -141,6 +143,7 @@ enum {
     [searchNetAwareViewController release];
     [findPeopleNetAwareViewController release];
     [listsNetAwareViewController release];
+    [trendsNetAwareViewController release];
 
     [contactCache release];
     [contactMgr release];
@@ -158,6 +161,7 @@ enum {
     [mentionsAcctMgr release];
     [mentionDisplayMgr release];
     [listsDisplayMgr release];
+    [trendsViewController release];
 
     [composeTweetDisplayMgr release];
 
@@ -860,6 +864,20 @@ enum {
     }
 }
 
+- (void)initTrendsTab
+{
+    NSLog(@"Initializing trends tab");
+
+    trendsNetAwareViewController.navigationController.navigationBar.barStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIBarStyleBlackOpaque : UIBarStyleDefault;
+
+    trendsViewController =
+        [[TrendsViewController alloc] initWithNibName:@"TrendsView" bundle:nil];
+    trendsNetAwareViewController.targetViewController = trendsViewController;
+    trendsViewController.netController = trendsNetAwareViewController;
+}
+
 - (UINavigationController *)getNavControllerForController:(UIViewController *)c
 {
     BOOL onMoreTab = NO;
@@ -998,6 +1016,11 @@ enum {
         !listsDisplayMgr) {
         NSLog(@"Selected lists tab");
         [self initListsTab];
+    } else if (viewController ==
+        trendsNetAwareViewController.navigationController &&
+        !trendsViewController) {
+        NSLog(@"Selected trends tab");
+        [self initTrendsTab];
     } else if (viewController == tabBarController.moreNavigationController) {
         NSLog(@"Selected more tab; initializing everything under 'More'");
         NSArray * viewControllers = tabBarController.viewControllers;

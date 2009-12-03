@@ -7,10 +7,12 @@
 @interface Trend : NSObject
 {
     NSString * name;
+    NSString * explanation;
     NSString * query;
 }
 
 @property (nonatomic, copy) NSString * name;
+@property (nonatomic, copy) NSString * explanation;
 @property (nonatomic, copy) NSString * query;
 
 @end
