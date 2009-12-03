@@ -71,6 +71,7 @@
     static const CGFloat LEFT_MARGIN = 5.0;
     static const CGFloat TOP_MARGIN = 4.0;
     static const CGFloat ELEMENT_SPACE = 1.0;
+    static const CGFloat EXPLANATION_HEIGHT = 40.0;
 
     CGPoint point;
     CGSize size;
@@ -91,8 +92,8 @@
 
     [[self explanationColor] set];
     point = CGPointMake(LEFT_MARGIN, TOP_MARGIN + size.height + ELEMENT_SPACE);
-    CGSize explanationSize =
-        CGSizeMake(self.bounds.size.width - LEFT_MARGIN * 2, 40);
+    CGSize explanationSize = CGSizeMake(
+        self.bounds.size.width - LEFT_MARGIN * 2, EXPLANATION_HEIGHT);
 
     CGRect explanationRect =
         CGRectMake(
@@ -104,78 +105,6 @@
     [explanation drawInRect:explanationRect
                    withFont:explanationFont
               lineBreakMode:UILineBreakModeTailTruncation];
-
-
-    /*
-    [[self timestampColor] set];
-    size = [timestamp sizeWithFont:timestampFont];
-    point =
-        CGPointMake(
-            (contentRect.origin.x + contentRect.size.width) -
-            TIMESTAMP_RIGHT_MARGIN - size.width,
-            TIMESTAMP_TOP_MARGIN);
-
-    [timestamp drawAtPoint:point withFont:timestampFont];
-
-    //
-    // Draw the author in the space that remains between the avatar and the
-    // timestamp, without shrinking the text
-    //
-
-    [[self authorColor] set];
-    CGFloat padding = favorite ? 19.0 : 5.0;
-    size =
-        CGSizeMake(point.x - padding - AUTHOR_LEFT_MARGIN,
-        authorFont.pointSize);
-    point = CGPointMake(AUTHOR_LEFT_MARGIN, AUTHOR_TOP_MARGIN);
-
-    [author drawAtPoint:point forWidth:size.width withFont:authorFont
-        fontSize:authorFont.pointSize
-        lineBreakMode:UILineBreakModeTailTruncation
-        baselineAdjustment:UIBaselineAdjustmentNone];
-
-    //
-    // Draw the favorite indicator
-    //
-    if (favorite) {
-        [[self favoriteColor] set];
-        point =
-            CGPointMake(AUTHOR_LEFT_MARGIN + size.width + 2, AUTHOR_TOP_MARGIN);
-        size = CGSizeMake(13, authorFont.pointSize);
-
-        [[[self class] starText] drawAtPoint:point forWidth:size.width
-            withFont:authorFont fontSize:authorFont.pointSize
-            lineBreakMode:UILineBreakModeTailTruncation
-            baselineAdjustment:UIBaselineAdjustmentNone];
-    }
- 
-    //
-    // Draw the main text.
-    //
-    [[self textColor] set];
-    CGFloat textWidth =
-        landscape ? TEXT_WIDTH_WITH_AVATAR_LANDSCAPE : TEXT_WIDTH_WITH_AVATAR;
-    CGSize textSize = CGSizeMake(textWidth, 999999.0);
-    size = [text sizeWithFont:textFont
-            constrainedToSize:textSize
-                lineBreakMode:UILineBreakModeWordWrap];
-
-    CGRect drawingRect = CGRectMake(TEXT_LEFT_MARGIN, TEXT_TOP_MARGIN,
-        size.width, size.height);
-
-    [text drawInRect:drawingRect
-            withFont:textFont
-       lineBreakMode:UILineBreakModeWordWrap];
-
-    //
-    // Draw the avatar.
-    //
-    CGRect avatarRect =
-        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN, AVATAR_WIDTH,
-        AVATAR_HEIGHT);
-    [avatar drawInRect:avatarRect
-        withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
-    */
 }
 
 #pragma mark Private implementation
