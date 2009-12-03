@@ -193,7 +193,8 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
-    NSString * tweetText = tweet.text;
+    Tweet * displayTweet = tweet.retweet ? tweet.retweet : tweet;
+    NSString * tweetText = displayTweet.text;
     FastTimelineTableViewCellDisplayType displayType =
         showWithoutAvatars ?
         FastTimelineTableViewCellDisplayTypeNoAvatar :
