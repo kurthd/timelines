@@ -17,6 +17,7 @@
 - (void)setDisplayType:(FastTimelineTableViewCellDisplayType)type;
 - (void)setTweetText:(NSString *)tweetText;
 - (void)setAuthor:(NSString *)author;
+- (void)setRetweetAuthor:(NSString *)retweetAuthor;
 - (void)setTimestamp:(NSString *)timestamp;
 - (void)setAvatar:(UIImage *)avatar;
 - (void)setFavorite:(BOOL)favorite;
@@ -27,6 +28,7 @@
 @property (nonatomic, retain) id userData;
 
 + (CGFloat)heightForContent:(NSString *)tweetText
+                    retweet:(BOOL)retweet
                 displayType:(FastTimelineTableViewCellDisplayType)displayType
                   landscape:(BOOL)landscape;
 

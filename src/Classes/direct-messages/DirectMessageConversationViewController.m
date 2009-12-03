@@ -132,6 +132,7 @@ static UIImage * defaultAvatar;
 
     return [FastTimelineTableViewCell
         heightForContent:tweetText
+        retweet:NO
         displayType:FastTimelineTableViewCellDisplayTypeNormal
         landscape:landscape];
 }

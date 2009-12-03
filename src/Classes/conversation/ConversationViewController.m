@@ -257,7 +257,8 @@
     BOOL landscape = [[RotatableTabBarController instance] landscape];
 
     return [FastTimelineTableViewCell
-        heightForContent:tweet.text displayType:type landscape:landscape];
+        heightForContent:tweet.text retweet:NO displayType:type
+        landscape:landscape];
 }
 
 - (void)tableView:(UITableView *)tv

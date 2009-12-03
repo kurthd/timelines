@@ -68,6 +68,11 @@
     timelineView.author = author;
 }
 
+- (void)setRetweetAuthor:(NSString *)retweetAuthor
+{
+    timelineView.retweetAuthorName = retweetAuthor;
+}
+
 - (void)setTimestamp:(NSString *)timestamp
 {
     timelineView.timestamp = timestamp;
@@ -96,10 +101,12 @@
 #pragma mark Public class implementation
 
 + (CGFloat)heightForContent:(NSString *)tweetText
+                    retweet:(BOOL)retweet
                 displayType:(FastTimelineTableViewCellDisplayType)displayType
                   landscape:(BOOL)landscape
 {
     return [FastTimelineTableViewCellView heightForContent:tweetText
+                                                   retweet:retweet
                                                displayType:displayType
                                                  landscape:landscape];
 }

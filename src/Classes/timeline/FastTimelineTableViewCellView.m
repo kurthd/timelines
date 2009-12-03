@@ -29,7 +29,12 @@ static UIFont * authorFont;
 static UIFont * timestampFont;
 static UIFont * textFont;
 static UIFont * favoriteFont;
+static UIFont * retweetFormatFont;
+static UIFont * retweetAuthorFont;
 
+static NSString * retweetFormatString;
+static UIImage * retweetGlyph;
+static UIImage * highlightedRetweetGlyph;
 
 @interface FastTimelineTableViewCellView ()
 
@@ -46,8 +51,12 @@ static UIFont * favoriteFont;
 - (UIColor *)timestampColor;
 - (UIColor *)textColor;
 - (UIColor *)favoriteColor;
-
+- (UIColor *)retweetTextColor;
 + (NSString *)starText;
+
++ (NSString *)retweetFormatString;
++ (UIImage *)retweetGlyph;
++ (UIImage *)highlightedRetweetGlyph;
 
 @end
 
@@ -56,6 +65,7 @@ static UIFont * favoriteFont;
 @synthesize landscape, highlighted;
 @synthesize displayType, text, author, timestamp, avatar, favorite;
 @synthesize displayAsMention, displayAsOld;
+@synthesize retweetAuthorName;
 
 + (void)initialize
 {
@@ -97,12 +107,15 @@ static UIFont * favoriteFont;
     timestampFont = [[UIFont systemFontOfSize:14.0] retain];
     textFont = [[UIFont systemFontOfSize:14.0] retain];
     favoriteFont = [[UIFont boldSystemFontOfSize:16.0] retain];
+    retweetFormatFont = [[UIFont systemFontOfSize:14.0] retain];
+    retweetAuthorFont = [[UIFont boldSystemFontOfSize:14.0] retain];
 }
 
 - (void)dealloc
 {
     self.text = nil;
     self.author = nil;
+    self.retweetAuthorName = nil;
     self.timestamp = nil;
     self.avatar = nil;
 
@@ -189,8 +202,13 @@ static UIFont * favoriteFont;
     //
 
     [[self authorColor] set];
-    CGFloat padding = favorite ? 19.0 : 5.0;
-    size =
+    CGFloat padding = 5.0;
+    if (favorite)
+        padding += 14.0;
+    if (self.retweetAuthorName)
+        padding += 13.0;
+
+    CGSize authorLabelSize = size =
         CGSizeMake(point.x - padding - AUTHOR_LEFT_MARGIN,
         authorFont.pointSize);
     point = CGPointMake(AUTHOR_LEFT_MARGIN, AUTHOR_TOP_MARGIN);
@@ -214,7 +232,23 @@ static UIFont * favoriteFont;
             lineBreakMode:UILineBreakModeTailTruncation
             baselineAdjustment:UIBaselineAdjustmentNone];
     }
- 
+
+    //
+    // Draw the retweet inidcator
+    //
+    if (self.retweetAuthorName) {
+        CGFloat favoriteAdjustment = favorite ? 17 : 2;
+        point =
+            CGPointMake(
+            AUTHOR_LEFT_MARGIN + authorLabelSize.width + favoriteAdjustment,
+            AUTHOR_TOP_MARGIN + 5);
+        UIImage * retweetGlyph =
+            self.highlighted ?
+            [[self class] highlightedRetweetGlyph] :
+            [[self class] retweetGlyph];
+        [retweetGlyph drawAtPoint:point];
+    }
+
     //
     // Draw the main text.
     //
@@ -232,6 +266,26 @@ static UIFont * favoriteFont;
     [text drawInRect:drawingRect
             withFont:textFont
        lineBreakMode:UILineBreakModeWordWrap];
+
+    //
+    // Draw the retweet text, if applicable
+    //
+    if (self.retweetAuthorName) {
+        // draw format string
+        [[self retweetTextColor] set];
+        point =
+            CGPointMake(AUTHOR_LEFT_MARGIN, size.height + TEXT_TOP_MARGIN + 2);
+        [[[self class] retweetFormatString] drawAtPoint:point
+            withFont:retweetFormatFont];
+        
+        // draw username
+        CGSize retweetFormatSize =
+            [[[self class] retweetFormatString] sizeWithFont:retweetFormatFont];
+        point =
+            CGPointMake(AUTHOR_LEFT_MARGIN + retweetFormatSize.width,
+            size.height + TEXT_TOP_MARGIN + 2);
+        [self.retweetAuthorName drawAtPoint:point withFont:retweetAuthorFont];
+    }
 
     //
     // Draw the avatar.
@@ -271,7 +325,7 @@ static UIFont * favoriteFont;
     //
 
     [[self timestampColor] set];
-    size = [timestamp sizeWithFont:timestampFont];
+    CGSize authorLabelSize = size = [timestamp sizeWithFont:timestampFont];
     point = CGPointMake(TIMESTAMP_LEFT_MARGIN, TIMESTAMP_TOP_MARGIN);
 
     [timestamp drawAtPoint:point withFont:timestampFont];
@@ -290,6 +344,22 @@ static UIFont * favoriteFont;
             withFont:favoriteFont fontSize:favoriteFont.pointSize
             lineBreakMode:UILineBreakModeTailTruncation
             baselineAdjustment:UIBaselineAdjustmentNone];
+    }
+    
+    //
+    // Draw the retweet inidcator
+    //
+    if (self.retweetAuthorName) {
+        CGFloat favoriteAdjustment = favorite ? 20 : 5;
+        point =
+            CGPointMake(
+            TEXT_LEFT_MARGIN + authorLabelSize.width + favoriteAdjustment,
+            TIMESTAMP_TOP_MARGIN + 3);
+        UIImage * retweetGlyph =
+            self.highlighted ?
+            [[self class] highlightedRetweetGlyph] :
+            [[self class] retweetGlyph];
+        [retweetGlyph drawAtPoint:point];
     }
 
     //
@@ -310,6 +380,26 @@ static UIFont * favoriteFont;
     [text drawInRect:drawingRect
             withFont:textFont
        lineBreakMode:UILineBreakModeWordWrap];
+
+    //
+    // Draw the retweet text, if applicable
+    //
+    if (self.retweetAuthorName) {
+        // draw format string
+        [[self retweetTextColor] set];
+        point =
+            CGPointMake(TEXT_LEFT_MARGIN, size.height + TEXT_TOP_MARGIN + 2);
+        [[[self class] retweetFormatString] drawAtPoint:point
+            withFont:retweetFormatFont];
+        
+        // draw username
+        CGSize retweetFormatSize =
+            [[[self class] retweetFormatString] sizeWithFont:retweetFormatFont];
+        point =
+            CGPointMake(TEXT_LEFT_MARGIN + retweetFormatSize.width,
+            size.height + TEXT_TOP_MARGIN + 2);
+        [self.retweetAuthorName drawAtPoint:point withFont:retweetAuthorFont];
+    }
 
     //
     // Draw the avatar.
@@ -342,7 +432,7 @@ static UIFont * favoriteFont;
     //
 
     [[self timestampColor] set];
-    size = [timestamp sizeWithFont:timestampFont];
+    CGSize authorLabelSize = size = [timestamp sizeWithFont:timestampFont];
     point = CGPointMake(TIMESTAMP_LEFT_MARGIN, TIMESTAMP_TOP_MARGIN);
     [timestamp drawAtPoint:point withFont:timestampFont];
 
@@ -360,6 +450,22 @@ static UIFont * favoriteFont;
             withFont:favoriteFont fontSize:favoriteFont.pointSize
             lineBreakMode:UILineBreakModeTailTruncation
             baselineAdjustment:UIBaselineAdjustmentNone];
+    }
+    
+    //
+    // Draw the retweet inidcator
+    //
+    if (self.retweetAuthorName) {
+        CGFloat favoriteAdjustment = favorite ? 20 : 5;
+        point =
+            CGPointMake(
+            TEXT_LEFT_MARGIN + authorLabelSize.width + favoriteAdjustment,
+            TIMESTAMP_TOP_MARGIN + 3);
+        UIImage * retweetGlyph =
+            self.highlighted ?
+            [[self class] highlightedRetweetGlyph] :
+            [[self class] retweetGlyph];
+        [retweetGlyph drawAtPoint:point];
     }
 
     //
@@ -381,6 +487,26 @@ static UIFont * favoriteFont;
     [text drawInRect:drawingRect
             withFont:textFont
        lineBreakMode:UILineBreakModeWordWrap];
+
+    //
+    // Draw the retweet text, if applicable
+    //
+    if (self.retweetAuthorName) {
+        // draw format string
+        [[self retweetTextColor] set];
+        point =
+            CGPointMake(TEXT_LEFT_MARGIN, size.height + TEXT_TOP_MARGIN + 2);
+        [[[self class] retweetFormatString] drawAtPoint:point
+            withFont:retweetFormatFont];
+        
+        // draw username
+        CGSize retweetFormatSize =
+            [[[self class] retweetFormatString] sizeWithFont:retweetFormatFont];
+        point =
+            CGPointMake(TEXT_LEFT_MARGIN + retweetFormatSize.width,
+            size.height + TEXT_TOP_MARGIN + 2);
+        [self.retweetAuthorName drawAtPoint:point withFont:retweetAuthorFont];
+    }
 }
 
 - (void)drawRectNormalNoName:(CGRect)rect
@@ -482,6 +608,16 @@ static UIFont * favoriteFont;
     }
 }
 
+- (void)setRetweetAuthorName:(NSString *)s
+{
+    if (retweetAuthorName != s && ![retweetAuthorName isEqualToString:s]) {
+        [retweetAuthorName release];
+        retweetAuthorName = [s copy];
+
+        [self setNeedsDisplay];
+    }
+}
+
 - (void)setTimestamp:(NSString *)s
 {
     if (timestamp != s && ![timestamp isEqualToString:s]) {
@@ -551,6 +687,7 @@ static UIFont * favoriteFont;
 #pragma mark Public class implementation
 
 + (CGFloat)heightForContent:(NSString *)tweetText
+                    retweet:(BOOL)retweet
                 displayType:(FastTimelineTableViewCellDisplayType)displayType
                   landscape:(BOOL)landscape
 {
@@ -575,8 +712,12 @@ static UIFont * favoriteFont;
     NSInteger minHeight =
         displayType == FastTimelineTableViewCellDisplayTypeNoAvatar ?
         0 : MIN_CELL_HEIGHT;
+    
+    CGFloat height = 32.0 + size.height;
+    if (retweet)
+        height += 19;
 
-    return MAX(32.0 + size.height, minHeight);
+    return MAX(height, minHeight);
 }
 
 #pragma mark Private implementation
@@ -723,9 +864,44 @@ static UIFont * favoriteFont;
     return highlighted ? [UIColor whiteColor] : [UIColor grayColor];
 }
 
+- (UIColor *)retweetTextColor
+{
+    return highlighted ? [UIColor whiteColor] : [UIColor grayColor];
+}
+
 + (NSString *)starText
 {
     return @"★";
+}
+
++ (NSString *)retweetFormatString
+{
+    if (!retweetFormatString) {
+        retweetFormatString =
+            NSLocalizedString(@"timelineview.retweet.formatstring", @"");
+        [retweetFormatString retain];
+    }
+
+    return retweetFormatString;
+}
+
++ (UIImage *)retweetGlyph
+{
+    if (!retweetGlyph)
+        retweetGlyph =
+            [[UIImage imageNamed:@"RetweetTimelineIndicator.png"] retain];
+
+    return retweetGlyph;
+}
+
++ (UIImage *)highlightedRetweetGlyph
+{
+    if (!highlightedRetweetGlyph)
+        highlightedRetweetGlyph =
+            [[UIImage imageNamed:@"RetweetTimelineIndicatorHighlighted.png"]
+            retain];
+
+    return highlightedRetweetGlyph;
 }
 
 @end

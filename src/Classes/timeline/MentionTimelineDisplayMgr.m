@@ -425,12 +425,13 @@
 
 - (void)setFavorite:(BOOL)favorite
 {
-    if (favorite)
-        NSLog(@"Mention display manager: setting tweet to 'favorite'");
-    else
-        NSLog(@"Mention display manager: setting tweet to 'not favorite'");
+    Tweet * effectiveTweet =
+        selectedTweet.retweet ? selectedTweet.retweet : selectedTweet;
+    NSLog(@"Mention display manager: setting tweet %@ by %@ to '%@'",
+        effectiveTweet.identifier, effectiveTweet.user.username,
+        favorite ? @"favorite" : @"not favorite");
     [[ErrorState instance] exitErrorState];
-    [service markTweet:selectedTweet.identifier asFavorite:favorite];
+    [service markTweet:effectiveTweet.identifier asFavorite:favorite];
 }
 
 - (void)showLocationOnMap:(NSString *)location

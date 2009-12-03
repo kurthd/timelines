@@ -447,10 +447,13 @@
 
 - (void)setFavorite:(BOOL)favorite
 {
-    NSLog(@"Timeline display manager: setting tweet %@ to '%@'",
-        selectedTweet.identifier, favorite ? @"favorite" : @"not favorite");
+    Tweet * effectiveTweet =
+        selectedTweet.retweet ? selectedTweet.retweet : selectedTweet;
+    NSLog(@"Timeline display manager: setting tweet %@ by %@ to '%@'",
+        effectiveTweet.identifier, effectiveTweet.user.username,
+        favorite ? @"favorite" : @"not favorite");
     [[ErrorState instance] exitErrorState];
-    [service markTweet:selectedTweet.identifier asFavorite:favorite];
+    [service markTweet:effectiveTweet.identifier asFavorite:favorite];
 }
 
 - (void)replyToTweet

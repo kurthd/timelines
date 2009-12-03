@@ -31,7 +31,7 @@
 - (NSInteger)sortedIndexForTweetId:(NSString *)tweetId;
 
 - (void)configureCell:(FastTimelineTableViewCell *)cell
-    forTweet:(Tweet *)tweet;
+    forTweet:(Tweet *)tweet retweetAuthor:(NSString *)retweetAuthor;
 
 - (void)setScrollIndicatorBlackoutTimer;
 
@@ -174,8 +174,15 @@ static BOOL alreadyReadHighlightNewTweetsValue;
             reuseIdentifier:reuseIdentifier] autorelease];
 
     Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
-    Tweet * displayTweet = tweet.retweet ? tweet.retweet : tweet;
-    [self configureCell:cell forTweet:displayTweet];
+    Tweet * displayTweet;
+    NSString * retweetAuthor = nil;
+    if (tweet.retweet) {
+        displayTweet = tweet.retweet;
+        retweetAuthor = tweet.user.username;
+    } else
+        displayTweet = tweet;
+
+    [self configureCell:cell forTweet:displayTweet retweetAuthor:retweetAuthor];
 
     return cell;
 }
@@ -202,7 +209,8 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     BOOL landscape = [[RotatableTabBarController instance] landscape];
 
     return [FastTimelineTableViewCell
-        heightForContent:tweetText displayType:displayType landscape:landscape];
+        heightForContent:tweetText retweet:!!tweet.retweet
+        displayType:displayType landscape:landscape];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -563,7 +571,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 }
 
 - (void)configureCell:(FastTimelineTableViewCell *)cell
-    forTweet:(Tweet *)tweet
+    forTweet:(Tweet *)tweet retweetAuthor:(NSString *)retweetAuthor
 {
     [cell setLandscape:[[RotatableTabBarController instance] landscape]];
 
@@ -583,6 +591,8 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
     [cell setAvatar:[self getThumbnailAvatarForUser:tweet.user]];
     [cell setUserData:tweet.user.avatar.thumbnailImageUrl];
+
+    [cell setRetweetAuthor:retweetAuthor];
 
     BOOL newerThanVisibleTweetId =
         self.visibleTweetId &&

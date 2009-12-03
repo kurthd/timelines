@@ -33,6 +33,7 @@ timelineview.showingsinglepage = "Showing page 1";
 timelineview.usertweets.title = "User's Tweets";
 timelineview.favorites.title = "Favorites";
 timelineview.directmessage.name = "To: %@";
+timelineview.retweet.formatstring = "Retweeted by ";
 
 /* TimelineDisplayMgr */
 timelinedisplaymgr.error.fetchtimeline = "Failed to update timeline";

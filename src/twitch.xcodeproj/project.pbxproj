@@ -900,6 +900,10 @@
 		914EA11310C72873007036F2 /* RetweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 914EA11110C72873007036F2 /* RetweetCell.m */; };
 		914EA11610C729B0007036F2 /* RetweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 914EA11410C729B0007036F2 /* RetweetCell.xib */; };
 		914EA11710C729B0007036F2 /* RetweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 914EA11410C729B0007036F2 /* RetweetCell.xib */; };
+		914EA20110C82F26007036F2 /* RetweetTimelineIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 914EA20010C82F26007036F2 /* RetweetTimelineIndicator.png */; };
+		914EA20210C82F26007036F2 /* RetweetTimelineIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 914EA20010C82F26007036F2 /* RetweetTimelineIndicator.png */; };
+		914EA22310C83E44007036F2 /* RetweetTimelineIndicatorHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914EA22210C83E44007036F2 /* RetweetTimelineIndicatorHighlighted.png */; };
+		914EA22410C83E44007036F2 /* RetweetTimelineIndicatorHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914EA22210C83E44007036F2 /* RetweetTimelineIndicatorHighlighted.png */; };
 		9152E1571014F86C0033B63B /* DirectMessageInboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1551014F86C0033B63B /* DirectMessageInboxView.xib */; };
 		9152E15A1014F8850033B63B /* DirectMessageConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1581014F8850033B63B /* DirectMessageConversationView.xib */; };
 		9152E239101557AC0033B63B /* NewMessagesDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9152E238101557AC0033B63B /* NewMessagesDot.png */; };
@@ -1676,6 +1680,8 @@
 		914EA11010C72873007036F2 /* RetweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RetweetCell.h; path = timeline/RetweetCell.h; sourceTree = "<group>"; };
 		914EA11110C72873007036F2 /* RetweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RetweetCell.m; path = timeline/RetweetCell.m; sourceTree = "<group>"; };
 		914EA11510C729B0007036F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/RetweetCell.xib; sourceTree = "<group>"; };
+		914EA20010C82F26007036F2 /* RetweetTimelineIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RetweetTimelineIndicator.png; path = images/RetweetTimelineIndicator.png; sourceTree = "<group>"; };
+		914EA22210C83E44007036F2 /* RetweetTimelineIndicatorHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RetweetTimelineIndicatorHighlighted.png; path = images/RetweetTimelineIndicatorHighlighted.png; sourceTree = "<group>"; };
 		9152E14C1014F6B70033B63B /* DirectMessagesDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessagesDisplayMgr.h; path = "direct-messages/DirectMessagesDisplayMgr.h"; sourceTree = "<group>"; };
 		9152E14D1014F6B70033B63B /* DirectMessagesDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessagesDisplayMgr.m; path = "direct-messages/DirectMessagesDisplayMgr.m"; sourceTree = "<group>"; };
 		9152E14F1014F8260033B63B /* DirectMessageInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageInboxViewController.h; path = "direct-messages/DirectMessageInboxViewController.h"; sourceTree = "<group>"; };
@@ -3065,6 +3071,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				914EA22210C83E44007036F2 /* RetweetTimelineIndicatorHighlighted.png */,
+				914EA20010C82F26007036F2 /* RetweetTimelineIndicator.png */,
 				914EA0B610C6F258007036F2 /* PhotoPlaceholderDarkTheme.png */,
 				05E3A15F10C6E52400D935B3 /* ComposeLocationGradient.png */,
 				914E9F4F10C61DE8007036F2 /* PhotoPlaceholder.png */,
@@ -3601,6 +3609,8 @@
 				05E3A2F810C708C000D935B3 /* ComposeMapView.xib in Resources */,
 				914EA0B810C6F258007036F2 /* PhotoPlaceholderDarkTheme.png in Resources */,
 				914EA11710C729B0007036F2 /* RetweetCell.xib in Resources */,
+				914EA20210C82F26007036F2 /* RetweetTimelineIndicator.png in Resources */,
+				914EA22410C83E44007036F2 /* RetweetTimelineIndicatorHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3783,6 +3793,8 @@
 				05E3A2F710C708C000D935B3 /* ComposeMapView.xib in Resources */,
 				914EA0B710C6F258007036F2 /* PhotoPlaceholderDarkTheme.png in Resources */,
 				914EA11610C729B0007036F2 /* RetweetCell.xib in Resources */,
+				914EA20110C82F26007036F2 /* RetweetTimelineIndicator.png in Resources */,
+				914EA22310C83E44007036F2 /* RetweetTimelineIndicatorHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
