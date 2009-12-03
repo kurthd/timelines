@@ -31,6 +31,7 @@
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
 @class AccountSettingsChangedPublisher;
 @class ActiveTwitterCredentials;
+@class TrendsViewController;
 
 @interface TwitchAppDelegate : NSObject
     <UIApplicationDelegate, UITabBarControllerDelegate, DeviceRegistrarDelegate,
@@ -64,6 +65,7 @@
     IBOutlet NetworkAwareViewController * searchNetAwareViewController;
     IBOutlet NetworkAwareViewController * findPeopleNetAwareViewController;
     IBOutlet NetworkAwareViewController * listsNetAwareViewController;
+    IBOutlet NetworkAwareViewController * trendsNetAwareViewController;
 
     IBOutlet AccountsButton * accountsButton;
     AccountsButtonSetter * accountsButtonSetter;
@@ -85,6 +87,7 @@
     AccountsDisplayMgr * accountsDisplayMgr;
     MentionTimelineDisplayMgr * mentionDisplayMgr;
     ListsDisplayMgr * listsDisplayMgr;
+    TrendsViewController * trendsViewController;
 
     UIBarButtonItem * homeSendingTweetProgressView;
 

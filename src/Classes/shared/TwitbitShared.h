@@ -56,6 +56,8 @@
 #import "Avatar.h"
 #import "Avatar+UIAdditions.h"
 
+#import "Trend.h"
+
 #import "PhotoService+ServiceAdditions.h"
 #import "TwitterCredentials+PhotoServiceAdditions.h"
 
@@ -75,3 +77,4 @@
 // Vendor libraries
 //
 #import "RegexKitLite.h"
+#import "JSON.h"
