@@ -206,7 +206,7 @@ static UIImage * highlightedRetweetGlyph;
     if (favorite)
         padding += 14.0;
     if (self.retweetAuthorName)
-        padding += 13.0;
+        padding += 14.0;
 
     CGSize authorLabelSize = size =
         CGSizeMake(point.x - padding - AUTHOR_LEFT_MARGIN,
@@ -241,7 +241,7 @@ static UIImage * highlightedRetweetGlyph;
         point =
             CGPointMake(
             AUTHOR_LEFT_MARGIN + authorLabelSize.width + favoriteAdjustment,
-            AUTHOR_TOP_MARGIN + 5);
+            AUTHOR_TOP_MARGIN + 4);
         UIImage * retweetGlyph =
             self.highlighted ?
             [[self class] highlightedRetweetGlyph] :
@@ -354,7 +354,7 @@ static UIImage * highlightedRetweetGlyph;
         point =
             CGPointMake(
             TEXT_LEFT_MARGIN + authorLabelSize.width + favoriteAdjustment,
-            TIMESTAMP_TOP_MARGIN + 3);
+            TIMESTAMP_TOP_MARGIN + 2);
         UIImage * retweetGlyph =
             self.highlighted ?
             [[self class] highlightedRetweetGlyph] :
@@ -460,7 +460,7 @@ static UIImage * highlightedRetweetGlyph;
         point =
             CGPointMake(
             TEXT_LEFT_MARGIN + authorLabelSize.width + favoriteAdjustment,
-            TIMESTAMP_TOP_MARGIN + 3);
+            TIMESTAMP_TOP_MARGIN + 2);
         UIImage * retweetGlyph =
             self.highlighted ?
             [[self class] highlightedRetweetGlyph] :
