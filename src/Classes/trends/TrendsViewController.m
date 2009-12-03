@@ -115,6 +115,7 @@
     [self.netController setCachedDataAvailable:YES];
 
     [self.tableView reloadData];
+    [self.tableView flashScrollIndicators];
 }
 
 - (void)service:(WhatTheTrendService *)svc failedToFetchTrends:(NSError *)e
