@@ -564,6 +564,14 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     return YES;
 }
 
+#pragma mark CurrentLocationViewDelegate implementation
+
+- (void)userDidTouchView:(CurrentLocationView *)view
+{
+    NSLog(@"User did touch location view.");
+    [self.delegate showCurrentLocation];
+}
+
 #pragma mark Button actions
 
 - (void)userDidSend

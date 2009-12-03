@@ -12,6 +12,7 @@
 #import "UIPersonSelector.h"
 #import "BitlyUrlShorteningService.h"
 #import "Geolocator.h"
+#import "ComposeMapViewController.h"
 
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
 @class TweetDraft, DirectMessageDraft;
@@ -26,12 +27,12 @@
     UIImagePickerControllerDelegate, UINavigationControllerDelegate,
     UIActionSheetDelegate, AddPhotoServiceDisplayMgrDelegate,
     UIPersonSelectorDelegate, BitlyUrlShorteningServiceDelegate,
-    UIAlertViewDelegate, GeolocatorDelegate>
+    UIAlertViewDelegate, GeolocatorDelegate, ComposeMapViewControllerDelegate>
 {
     id<ComposeTweetDisplayMgrDelegate> delegate;
 
     UIViewController * rootViewController;
-    UIViewController * navController;
+    UINavigationController * navController;
     ComposeTweetViewController * composeTweetViewController;
 
     TwitterService * service;

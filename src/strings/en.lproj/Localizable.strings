@@ -366,3 +366,6 @@ selectpersonview.title = "Find a Person";
 
 /* Twitter */
 twitter.retweet.failed.unknown = "Invalid retweet";
+
+/* ComposeLocationMapView */
+composelocationmapview.title = "Tweet Location";

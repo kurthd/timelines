@@ -96,7 +96,7 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<int key="IBUIStyle">2</int>
 							</object>
-							<object class="IBUIImageView" id="620604141">
+							<object class="IBUIImageView" id="932755371">
 								<reference key="NSNextResponder" ref="739002946"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{10, 9}, {20, 20}}</string>
@@ -110,7 +110,7 @@
 									<string key="NSResourceName">ErrorExclamationMarkGrayscale.png</string>
 								</object>
 							</object>
-							<object class="IBUILabel" id="120649645">
+							<object class="IBUILabel" id="684980199">
 								<reference key="NSNextResponder" ref="739002946"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{38, 8}, {277, 21}}</string>
@@ -771,7 +771,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">errorImageView</string>
 						<reference key="source" ref="739002946"/>
-						<reference key="destination" ref="620604141"/>
+						<reference key="destination" ref="932755371"/>
 					</object>
 					<int key="connectionID">133</int>
 				</object>
@@ -779,9 +779,17 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">descriptionLabel</string>
 						<reference key="source" ref="739002946"/>
-						<reference key="destination" ref="120649645"/>
+						<reference key="destination" ref="684980199"/>
 					</object>
 					<int key="connectionID">137</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="739002946"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">138</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1003,8 +1011,8 @@
 							<reference ref="258261256"/>
 							<reference ref="370312050"/>
 							<reference ref="691534994"/>
-							<reference ref="620604141"/>
-							<reference ref="120649645"/>
+							<reference ref="932755371"/>
+							<reference ref="684980199"/>
 						</object>
 						<reference key="parent" ref="431717833"/>
 						<string key="objectName">Location View</string>
@@ -1037,13 +1045,13 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">132</int>
-						<reference key="object" ref="620604141"/>
+						<reference key="object" ref="932755371"/>
 						<reference key="parent" ref="739002946"/>
 						<string key="objectName">Error Image</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">134</int>
-						<reference key="object" ref="120649645"/>
+						<reference key="object" ref="684980199"/>
 						<reference key="parent" ref="739002946"/>
 						<string key="objectName">Location Description</string>
 					</object>
@@ -1164,7 +1172,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">137</int>
+			<int key="maxID">138</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1251,6 +1259,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>activityIndicator</string>
+							<string>delegate</string>
 							<string>descriptionLabel</string>
 							<string>errorImageView</string>
 							<string>pushpinImageView</string>
@@ -1258,6 +1267,7 @@
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UIActivityIndicatorView</string>
+							<string>id</string>
 							<string>UILabel</string>
 							<string>UIImageView</string>
 							<string>UIImageView</string>
