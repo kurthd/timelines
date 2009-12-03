@@ -6,6 +6,7 @@
 #import "WhatTheTrendService.h"
 #import "NetworkAwareViewController.h"
 #import "TrendsTableViewCell.h"
+#import "RotatableTabBarController.h"
 
 @interface TrendsViewController ()
 @property (nonatomic, retain) WhatTheTrendService * service;
@@ -42,6 +43,27 @@
     [refreshButton release];
 
     [self refreshTrends];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    self.view.frame =
+        [[RotatableTabBarController instance] landscape] ?
+        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+    (UIInterfaceOrientation)orientation
+{
+    return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
+    duration:(NSTimeInterval)duration
+{
+    [self.tableView reloadData];
 }
 
 #pragma mark UITableViewDataSource implementation
