@@ -264,9 +264,8 @@ enum TweetActionSheets {
                 nrows++;
             if (tweet.location)
                 nrows++;
-            // TODO: remove comment
-            // if (tweet.retweet)
-                // nrows++;
+            if (tweet.retweet)
+                nrows++;
             break;
         case kTweetActionsSection:
             nrows = NUM_TWEET_ACTION_ROWS;
@@ -325,9 +324,9 @@ enum TweetActionSheets {
             NSString * formatString =
                 NSLocalizedString(@"tweetdetailsview.retweet.formatstring",
                 @"");
-            // TODO: create retweet string from retweet author
             cell.textLabel.text =
-                [NSString stringWithFormat:formatString, @"someone"];
+                [NSString stringWithFormat:formatString,
+                self.tweet.retweet.user.username];
         }
     } else if (transformedPath.section == kTweetActionsSection) {
         if (transformedPath.row == kPublicReplyRow)
@@ -356,7 +355,7 @@ enum TweetActionSheets {
         if (transformedPath.row == kConversationRow)
             [delegate loadConversationFromTweetId:tweet.identifier];
         else if (transformedPath.row == kRetweetAuthorRow)
-            [delegate showUserInfoForUser:nil]; // TODO: swap in retweet user
+            [delegate showUserInfoForUser:self.tweet.retweet.user];
         else if (transformedPath.row == kLocationRow) {
             CLLocation * location = [tweet.location asCllocation];
             CLLocationCoordinate2D coord = location.coordinate;
