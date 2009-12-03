@@ -69,7 +69,7 @@ enum TweetActionSheets {
 
 @property (nonatomic, retain) AsynchronousNetworkFetcher * photoPreviewFetcher;
 
-- (void)displayTweet;
+- (void)displayTweetOnView;
 - (void)loadTweetWebView;
 
 - (void)retweet;
@@ -84,6 +84,8 @@ enum TweetActionSheets {
 - (void)confirmDeletion;
 
 - (void)updateButtonsForOrientation:(UIInterfaceOrientation)o;
+
+- (Tweet *)displayTweet;
 
 + (UIImage *)defaultAvatar;
 
@@ -260,11 +262,11 @@ enum TweetActionSheets {
     switch (transformedSection) {
         case kTweetDetailsSection:
             nrows = NUM_TWEET_DETAILS_ROWS;
-            if (tweet.inReplyToTwitterTweetId)
+            if ([self displayTweet].inReplyToTwitterTweetId)
+                nrows;
+            if ([self displayTweet].location)
                 nrows++;
-            if (tweet.location)
-                nrows++;
-            if (tweet.retweet)
+            if (self.tweet.retweet)
                 nrows++;
             break;
         case kTweetActionsSection:
@@ -314,7 +316,7 @@ enum TweetActionSheets {
                 @"");
             cell.textLabel.text =
                 [NSString stringWithFormat:formatString,
-                tweet.inReplyToTwitterUsername];
+                [self displayTweet].inReplyToTwitterUsername];
         } else if (transformedPath.row == kLocationRow) {
             BOOL landscape = [[RotatableTabBarController instance] landscape];
             [self.locationCell setLandscape:landscape];
@@ -326,7 +328,7 @@ enum TweetActionSheets {
                 @"");
             cell.textLabel.text =
                 [NSString stringWithFormat:formatString,
-                self.tweet.retweet.user.username];
+                self.tweet.user.username];
         }
     } else if (transformedPath.section == kTweetActionsSection) {
         if (transformedPath.row == kPublicReplyRow)
@@ -337,7 +339,8 @@ enum TweetActionSheets {
             cell = self.quoteCell;
         else if (transformedPath.row == kFavoriteRow) {
             cell = self.favoriteCell;
-            [self.favoriteCell setMarkedState:[tweet.favorited boolValue]];
+            [self.favoriteCell
+                setMarkedState:[[self displayTweet].favorited boolValue]];
             [self.favoriteCell setUpdatingState:markingFavorite];
         } else if (transformedPath.row == kDeleteRow)
             cell = self.deleteTweetCell;
@@ -353,11 +356,12 @@ enum TweetActionSheets {
 
     if (transformedPath.section == kTweetDetailsSection) {
         if (transformedPath.row == kConversationRow)
-            [delegate loadConversationFromTweetId:tweet.identifier];
+            [delegate
+                loadConversationFromTweetId:[self displayTweet].identifier];
         else if (transformedPath.row == kRetweetAuthorRow)
-            [delegate showUserInfoForUser:self.tweet.retweet.user];
+            [delegate showUserInfoForUser:self.tweet.user];
         else if (transformedPath.row == kLocationRow) {
-            CLLocation * location = [tweet.location asCllocation];
+            CLLocation * location = [[self displayTweet].location asCllocation];
             CLLocationCoordinate2D coord = location.coordinate;
             NSString * locationAsString =
                 [NSString stringWithFormat:@"%f, %f", coord.latitude,
@@ -406,7 +410,7 @@ enum TweetActionSheets {
         self.parentViewController != navigationController)
         [navigationController pushViewController:self animated:YES];
 
-    [self displayTweet];
+    [self displayTweetOnView];
 
     SEL sel = @selector(tweetViewController:finishedLoadingTweet:);
     if ([self.delegate respondsToSelector:sel])
@@ -454,7 +458,8 @@ enum TweetActionSheets {
             NSString * tweetIdString = [inReplyToString substringFromIndex:1];
             NSNumber * tweetId =
                 [NSNumber numberWithLongLong:[tweetIdString longLongValue]];
-            NSString * replyToUsername = self.tweet.inReplyToTwitterUsername;
+            NSString * replyToUsername =
+                [self displayTweet].inReplyToTwitterUsername;
             [delegate loadNewTweetWithId:tweetId username:replyToUsername];
         } else if ([webpage isMatchedByRegex:@"^mailto:"]) {
             NSLog(@"Opening 'Mail' with url: %@", webpage);
@@ -489,8 +494,9 @@ enum TweetActionSheets {
     self.tweet = aTweet;
     self.navigationController = navController;
 
-    NSString * photoUrlString = [self.tweet photoUrlWebpage];
-    if (photoUrlString && ![self.tweet photoUrl]) {
+    NSString * photoUrlString = [[self displayTweet] photoUrlWebpage];
+    if (photoUrlString && ![[self displayTweet] photoUrl]) {
+        NSLog(@"Fetching photo preview: %@", photoUrlString);
         NSURL * photoUrl = [NSURL URLWithString:photoUrlString];
         self.photoPreviewFetcher =
             [AsynchronousNetworkFetcher fetcherWithUrl:photoUrl delegate:self];
@@ -498,8 +504,9 @@ enum TweetActionSheets {
 
     [self loadTweetWebView];
 
-    if (self.tweet.location)
-        [self.locationCell setLocation:[self.tweet.location asCllocation]];
+    if ([self displayTweet].location)
+        [self.locationCell
+            setLocation:[[self displayTweet].location asCllocation]];
 }
 
 - (void)setFavorited:(BOOL)favorited
@@ -531,7 +538,7 @@ enum TweetActionSheets {
 {
     if (buttonIndex == 0) {
         [self.navigationController popViewControllerAnimated:YES];
-        [delegate deleteTweet:tweet.identifier];
+        [delegate deleteTweet:self.tweet.identifier];
     }
 
     [sheet autorelease];
@@ -570,10 +577,11 @@ enum TweetActionSheets {
             [CommonTwitterServicePhotoSource photoUrlFromPageHtml:html
             url:urlAsString];
         NSLog(@"Received photo webpage; photo url is: %@", photoUrl);
-        [self.tweet setPhotoUrl:photoUrl];
+        [[self displayTweet] setPhotoUrl:photoUrl];
 
         [tweetContentView
-            loadHTMLStringRelativeToMainBundle:[self.tweet textAsHtml]];
+            loadHTMLStringRelativeToMainBundle:
+            [[self displayTweet] textAsHtml]];
     } else {
         NSLog(@"Received avatar for url: %@", url);
         UIImage * avatar = [UIImage imageWithData:data];
@@ -582,8 +590,9 @@ enum TweetActionSheets {
         if (NSEqualRanges([urlAsString rangeOfString:@"_normal."],
             notFoundRange) &&
             avatar &&
-            ([tweet.user.avatar.thumbnailImageUrl isEqual:urlAsString] ||
-            [tweet.user.avatar.fullImageUrl isEqual:urlAsString]))
+            ([[self displayTweet].user.avatar.thumbnailImageUrl
+            isEqual:urlAsString] ||
+            [[self displayTweet].user.avatar.fullImageUrl isEqual:urlAsString]))
             [avatarImage setImage:avatar];
     }
 }
@@ -596,12 +605,12 @@ enum TweetActionSheets {
 
 - (IBAction)showUserTweets:(id)sender
 {
-    [delegate showUserInfoForUser:tweet.user];
+    [delegate showUserInfoForUser:[self displayTweet].user];
 }
 
 - (IBAction)showFullProfileImage:(id)sender
 {
-    User * selectedUser = tweet.user;
+    User * selectedUser = [self displayTweet].user;
 
     NSString * url = selectedUser.avatar.fullImageUrl;
     UIImage * remoteAvatar =
@@ -630,16 +639,17 @@ enum TweetActionSheets {
 
         static NSString * subjectRegex = @"\\S+\\s\\S+\\s\\S+\\s\\S+\\s\\S+";
         NSString * subject =
-            [self.tweet.text stringByMatching:subjectRegex];
+            [[self displayTweet].text stringByMatching:subjectRegex];
         if (subject && ![subject isEqual:@""])
             subject = [NSString stringWithFormat:@"%@...", subject];
         else
-            subject = self.tweet.text;
+            subject = [self displayTweet].text;
         [picker setSubject:subject];
 
         NSString * body =
-            [NSString stringWithFormat:@"\"%@\"\n- %@\n\n%@", self.tweet.text,
-            self.tweet.user.username, [tweet tweetUrl]];
+            [NSString stringWithFormat:@"\"%@\"\n- %@\n\n%@",
+            [self displayTweet].text,
+            [self displayTweet].user.username, [tweet tweetUrl]];
         [picker setMessageBody:body isHTML:NO];
 
         [self.realParentViewController presentModalViewController:picker
@@ -673,7 +683,7 @@ enum TweetActionSheets {
     if (!markingFavorite) {
         markingFavorite = YES;
         [self.favoriteCell setUpdatingState:YES];
-        [delegate setFavorite:![tweet.favorited boolValue]];
+        [delegate setFavorite:![[self displayTweet].favorited boolValue]];
     }
 }
 
@@ -782,29 +792,30 @@ enum TweetActionSheets {
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
     [window addSubview:tweetContentView];
 
-    NSString * html = [self.tweet textAsHtml];
+    NSString * html = [[self displayTweet] textAsHtml];
     [tweetContentView loadHTMLStringRelativeToMainBundle:html];
 }
 
-- (void)displayTweet
+- (void)displayTweetOnView
 {
-    if (tweet.user.name.length > 0) {
+    if ([self displayTweet].user.name.length > 0) {
         usernameLabel.text =
-            [NSString stringWithFormat:@"@%@", tweet.user.username];
-        fullNameLabel.text = tweet.user.name;
+            [NSString stringWithFormat:@"@%@",
+            [self displayTweet].user.username];
+        fullNameLabel.text = [self displayTweet].user.name;
     } else {
         usernameLabel.text = @"";
-        fullNameLabel.text = tweet.user.username;
+        fullNameLabel.text = [self displayTweet].user.username;
     }
 
-    UIImage * avatar = [tweet.user fullAvatar];
+    UIImage * avatar = [[self displayTweet].user fullAvatar];
     if (!avatar) {
-        avatar = [tweet.user thumbnailAvatar];
-        [self fetchRemoteImage:tweet.user.avatar.fullImageUrl];
+        avatar = [[self displayTweet].user thumbnailAvatar];
+        [self fetchRemoteImage:[self displayTweet].user.avatar.fullImageUrl];
     }
     if (!avatar) {
         avatar = [[self class] defaultAvatar];
-        [self fetchRemoteImage:tweet.user.avatar.thumbnailImageUrl];
+        [self fetchRemoteImage:[self displayTweet].user.avatar.thumbnailImageUrl];
     }
 
     [avatarImage setImage:avatar];
@@ -885,9 +896,10 @@ enum TweetActionSheets {
 {
     NSInteger row = actual.row;
     if (actual.section == kTweetDetailsSection) {
-        if (row >= kLocationRow && !tweet.location)
+        if (row >= kLocationRow && ![self displayTweet].location)
             row++;
-        if (row >= kConversationRow && !tweet.inReplyToTwitterTweetId)
+        if (row >= kConversationRow &&
+            ![self displayTweet].inReplyToTwitterTweetId)
             row++;
     } else if (allowDeletion && row > kPublicReplyRow) // remove retweet cell
         row++;
@@ -937,6 +949,11 @@ enum TweetActionSheets {
     }
 
     return locationCell;
+}
+
+- (Tweet *)displayTweet
+{
+    return self.tweet.retweet ? self.tweet.retweet : self.tweet;
 }
 
 + (UIImage *)defaultAvatar
