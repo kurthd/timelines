@@ -53,10 +53,23 @@
         for (NSDictionary * rawTrend in rawTrends) {
             Trend * trend = [[Trend alloc] init];
 
-            trend.name = [rawTrend objectForKey:@"name"];
+            // Don't know what kind of objects we're going to get here, so be
+            // excessively defensive.
+
+            NSString * name = [rawTrend objectForKey:@"name"];
+            trend.name = [name isKindOfClass:[NSString class]] ? name : @"";
+
+            NSString * explanation = nil;
+            id description = [rawTrend objectForKey:@"description"];
+            if ([description isKindOfClass:[NSDictionary class]])
+                explanation = [description objectForKey:@"text"];
             trend.explanation =
-                [[rawTrend objectForKey:@"description"] objectForKey:@"text"];
-            trend.query = [rawTrend objectForKey:@"query"];
+                [explanation isKindOfClass:[NSString class]] ?
+                explanation :
+                @"";
+
+            NSString * query = [rawTrend objectForKey:@"query"];
+            trend.query = [query isKindOfClass:[NSString class]] ? query : @"";
 
             if (trend.name && trend.query)
                 [trends addObject:trend];

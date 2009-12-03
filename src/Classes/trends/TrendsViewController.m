@@ -5,6 +5,7 @@
 #import "TrendsViewController.h"
 #import "WhatTheTrendService.h"
 #import "NetworkAwareViewController.h"
+#import "TrendsTableViewCell.h"
 
 @interface TrendsViewController ()
 @property (nonatomic, retain) WhatTheTrendService * service;
@@ -56,19 +57,30 @@
 {
     static NSString * ReuseIdentifier = @"TrendsTableViewCell";
 
-    UITableViewCell * cell = (UITableViewCell *)
+    TrendsTableViewCell * cell = (TrendsTableViewCell *)
         [self.tableView dequeueReusableCellWithIdentifier:ReuseIdentifier];
     if (!cell)
         cell =
-            [[[UITableViewCell alloc]
+            [[[TrendsTableViewCell alloc]
             initWithStyle:UITableViewCellStyleSubtitle
             reuseIdentifier:ReuseIdentifier] autorelease];
 
     Trend * trend = [self.trends objectAtIndex:indexPath.row];
-    cell.textLabel.text = trend.name;
-    cell.detailTextLabel.text = trend.explanation;
+    [cell setTitle:trend.name];
+    [cell setExplanation:trend.explanation];
 
     return cell;
+}
+
+#pragma mark UITableViewDelegate implementation
+
+- (CGFloat)tableView:(UITableView *)tableView
+    heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Trend * trend = [self.trends objectAtIndex:indexPath.row];
+
+    return [TrendsTableViewCell heightForTitle:trend.name
+                                   explanation:trend.explanation];
 }
 
 #pragma mark WhatTheTrendServiceDelegate implementation

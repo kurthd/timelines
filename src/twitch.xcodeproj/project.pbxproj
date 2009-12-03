@@ -209,6 +209,10 @@
 		052E05DD10700F1D005CEC5F /* libYAJLIPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C5E7B80FF45EE10073E7F2 /* libYAJLIPhone.a */; };
 		052E05E510700F45005CEC5F /* libTwitVid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D88103F575D005BB245 /* libTwitVid.a */; };
 		05340ABA101A3DAD0077E7C0 /* SearchBookmarksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05340AB8101A3DAD0077E7C0 /* SearchBookmarksView.xib */; };
+		0536EECD10C826CB00479158 /* TrendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0536EECC10C826CB00479158 /* TrendsTableViewCell.m */; };
+		0536EECE10C826CB00479158 /* TrendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0536EECC10C826CB00479158 /* TrendsTableViewCell.m */; };
+		0536EED110C8279500479158 /* TrendsTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0536EED010C8279500479158 /* TrendsTableViewCellView.m */; };
+		0536EED210C8279500479158 /* TrendsTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0536EED010C8279500479158 /* TrendsTableViewCellView.m */; };
 		05377FC910A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */; };
 		05377FCA10A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */; };
 		0538FE97104C7897009E50CE /* InstapaperLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0538FE95104C7897009E50CE /* InstapaperLogInView.xib */; };
@@ -1192,6 +1196,10 @@
 		05340B32101A5B0D0077E7C0 /* twitch-v1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v1.1.xcdatamodel"; sourceTree = "<group>"; };
 		05340B35101A5BFB0077E7C0 /* RecentSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecentSearch.h; path = search/RecentSearch.h; sourceTree = "<group>"; };
 		05340B36101A5BFB0077E7C0 /* RecentSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecentSearch.m; path = search/RecentSearch.m; sourceTree = "<group>"; };
+		0536EECB10C826CB00479158 /* TrendsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendsTableViewCell.h; path = trends/TrendsTableViewCell.h; sourceTree = "<group>"; };
+		0536EECC10C826CB00479158 /* TrendsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrendsTableViewCell.m; path = trends/TrendsTableViewCell.m; sourceTree = "<group>"; };
+		0536EECF10C8279500479158 /* TrendsTableViewCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendsTableViewCellView.h; path = trends/TrendsTableViewCellView.h; sourceTree = "<group>"; };
+		0536EED010C8279500479158 /* TrendsTableViewCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrendsTableViewCellView.m; path = trends/TrendsTableViewCellView.m; sourceTree = "<group>"; };
 		05377FC710A10C3000DE3FDA /* NSError+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+GeneralHelpers.h"; path = "shared/NSError+GeneralHelpers.h"; sourceTree = "<group>"; };
 		05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+GeneralHelpers.m"; path = "shared/NSError+GeneralHelpers.m"; sourceTree = "<group>"; };
 		0538FE1C104C4584009E50CE /* DeleteDirectMessageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeleteDirectMessageResponseProcessor.h; path = twitter/processors/DeleteDirectMessageResponseProcessor.h; sourceTree = "<group>"; };
@@ -2899,6 +2907,10 @@
 				05E3A46A10C7425E00D935B3 /* TrendsViewController.m */,
 				05E3A48410C7446300D935B3 /* WhatTheTrendService.h */,
 				05E3A48510C7446300D935B3 /* WhatTheTrendService.m */,
+				0536EECB10C826CB00479158 /* TrendsTableViewCell.h */,
+				0536EECC10C826CB00479158 /* TrendsTableViewCell.m */,
+				0536EECF10C8279500479158 /* TrendsTableViewCellView.h */,
+				0536EED010C8279500479158 /* TrendsTableViewCellView.m */,
 			);
 			name = trends;
 			sourceTree = "<group>";
@@ -4146,6 +4158,8 @@
 				914EA11310C72873007036F2 /* RetweetCell.m in Sources */,
 				05E3A46B10C7425E00D935B3 /* TrendsViewController.m in Sources */,
 				05E3A48610C7446300D935B3 /* WhatTheTrendService.m in Sources */,
+				0536EECD10C826CB00479158 /* TrendsTableViewCell.m in Sources */,
+				0536EED110C8279500479158 /* TrendsTableViewCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4480,6 +4494,8 @@
 				914EA11210C72873007036F2 /* RetweetCell.m in Sources */,
 				05E3A46C10C7425E00D935B3 /* TrendsViewController.m in Sources */,
 				05E3A48710C7446300D935B3 /* WhatTheTrendService.m in Sources */,
+				0536EECE10C826CB00479158 /* TrendsTableViewCell.m in Sources */,
+				0536EED210C8279500479158 /* TrendsTableViewCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
