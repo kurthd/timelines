@@ -350,6 +350,7 @@ enum TweetActionSheets {
 
     NSString * photoUrlString = [self.directMessage photoUrlWebpage];
     if (photoUrlString && ![self.directMessage photoUrl]) {
+        NSLog(@"Fetching photo preview: %@", photoUrlString);
         NSURL * photoUrl = [NSURL URLWithString:photoUrlString];
         self.photoPreviewFetcher =
             [AsynchronousNetworkFetcher fetcherWithUrl:photoUrl delegate:self];
