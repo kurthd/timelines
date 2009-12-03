@@ -174,7 +174,8 @@ static BOOL alreadyReadHighlightNewTweetsValue;
             reuseIdentifier:reuseIdentifier] autorelease];
 
     Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
-    [self configureCell:cell forTweet:tweet];
+    Tweet * displayTweet = tweet.retweet ? tweet.retweet : tweet;
+    [self configureCell:cell forTweet:displayTweet];
 
     return cell;
 }
