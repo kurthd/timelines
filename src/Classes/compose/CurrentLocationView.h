@@ -14,6 +14,7 @@
     IBOutlet UIImageView * errorImageView;
     IBOutlet UIActivityIndicatorView * activityIndicator;
     IBOutlet UILabel * descriptionLabel;
+    IBOutlet UIButton * infoButton;
 }
 
 @property (nonatomic, assign) IBOutlet <CurrentLocationViewDelegate> delegate;
@@ -21,6 +22,8 @@
 - (void)setText:(NSString *)text;
 - (void)displayActivity:(BOOL)displayActivity;
 - (void)setErrorMessage:(NSString *)errorMessage;
+
+- (IBAction)userDidTapInfoButton:(id)sender;
 
 @end
 

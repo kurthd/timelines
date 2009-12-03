@@ -16,6 +16,7 @@
     [errorImageView release];
     [activityIndicator release];
     [descriptionLabel release];
+    [infoButton release];
     [super dealloc];
 }
 
@@ -38,9 +39,11 @@
     if (displayActivity) {
         [activityIndicator startAnimating];
         [pushpinImageView setHidden:YES];
+        [infoButton setHidden:YES];
     } else {
         [activityIndicator stopAnimating];
         [pushpinImageView setHidden:NO];
+        [infoButton setHidden:NO];
     }
 }
 
@@ -48,10 +51,17 @@
 {
     [activityIndicator stopAnimating];
     [pushpinImageView setHidden:YES];
+    [infoButton setHidden:YES];
     descriptionLabel.text = errorMessage;
     [errorImageView setHidden:NO];
 }
 
+- (IBAction)userDidTapInfoButton:(id)sender
+{
+    [self.delegate userDidTouchView:self];
+}
+
+/*
 #pragma mark UIResponder overrides
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -66,5 +76,6 @@
     } else
         NSLog(@"Point is outside.");
 }
+*/
 
 @end
