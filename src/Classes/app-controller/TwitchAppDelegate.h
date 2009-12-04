@@ -67,6 +67,7 @@
     IBOutlet NetworkAwareViewController * findPeopleNetAwareViewController;
     IBOutlet NetworkAwareViewController * listsNetAwareViewController;
     IBOutlet NetworkAwareViewController * trendsNetAwareViewController;
+    IBOutlet NetworkAwareViewController * profileNetAwareViewController;
 
     IBOutlet AccountsButton * accountsButton;
     AccountsButtonSetter * accountsButtonSetter;

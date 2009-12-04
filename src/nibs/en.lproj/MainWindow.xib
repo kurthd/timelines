@@ -2,17 +2,17 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">768</int>
-		<string key="IBDocument.SystemVersion">10C540</string>
+		<string key="IBDocument.SystemVersion">10A432</string>
 		<string key="IBDocument.InterfaceBuilderVersion">740</string>
-		<string key="IBDocument.AppKitVersion">1038.25</string>
-		<string key="IBDocument.HIToolboxVersion">458.00</string>
+		<string key="IBDocument.AppKitVersion">1038</string>
+		<string key="IBDocument.HIToolboxVersion">437.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">62</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="106"/>
+			<integer value="256"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -53,36 +53,33 @@
 			<object class="IBUITabBarController" id="1034742383">
 				<object class="IBUISimulatedTabBarMetrics" key="IBUISimulatedBottomBarMetrics"/>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
-				<object class="IBUINavigationController" key="IBUISelectedViewController" id="248843575">
-					<object class="IBUITabBarItem" key="IBUITabBarItem" id="803386647">
-						<int key="IBUITag">6</int>
-						<string key="IBUITitle">Trends</string>
+				<object class="IBUINavigationController" key="IBUISelectedViewController" id="63658088">
+					<object class="IBUITabBarItem" key="IBUITabBarItem" id="1046915207">
+						<string key="IBUITitle">Profile</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">LineChart.png</string>
+							<string key="NSResourceName">Profile.png</string>
 						</object>
 						<reference key="IBUITabBar"/>
 					</object>
-					<reference key="IBUIToolbarItems" ref="0"/>
 					<reference key="IBUIParentViewController" ref="1034742383"/>
-					<object class="IBUINavigationBar" key="IBUINavigationBar" id="638734705">
+					<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
+					<object class="IBUINavigationBar" key="IBUINavigationBar" id="912228384">
 						<nil key="NSNextResponder"/>
 						<int key="NSvFlags">256</int>
-						<string key="NSFrameSize">{320, 44}</string>
+						<string key="NSFrameSize">{0, 0}</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 					</object>
 					<object class="NSMutableArray" key="IBUIViewControllers">
 						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="IBUIViewController" id="812485076">
-							<string key="IBUITitle">Trends</string>
-							<reference key="IBUIToolbarItems" ref="0"/>
-							<object class="IBUINavigationItem" key="IBUINavigationItem" id="102327925">
+						<object class="IBUIViewController" id="205426899">
+							<object class="IBUINavigationItem" key="IBUINavigationItem" id="900543151">
 								<reference key="IBUINavigationBar"/>
-								<string key="IBUITitle">Trends</string>
+								<string key="IBUITitle">My Profile</string>
 							</object>
-							<reference key="IBUIParentViewController" ref="248843575"/>
+							<reference key="IBUIParentViewController" ref="63658088"/>
 						</object>
 					</object>
 				</object>
@@ -302,7 +299,7 @@
 							<string key="IBUITitle">People</string>
 							<object class="NSCustomResource" key="IBUIImage">
 								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">Profile.png</string>
+								<string key="NSResourceName">PersonSearch.png</string>
 							</object>
 							<reference key="IBUITabBar"/>
 						</object>
@@ -326,7 +323,39 @@
 							</object>
 						</object>
 					</object>
-					<reference ref="248843575"/>
+					<reference ref="63658088"/>
+					<object class="IBUINavigationController" id="248843575">
+						<object class="IBUITabBarItem" key="IBUITabBarItem" id="803386647">
+							<int key="IBUITag">6</int>
+							<string key="IBUITitle">Trends</string>
+							<object class="NSCustomResource" key="IBUIImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">LineChart.png</string>
+							</object>
+							<reference key="IBUITabBar"/>
+						</object>
+						<reference key="IBUIToolbarItems" ref="0"/>
+						<reference key="IBUIParentViewController" ref="1034742383"/>
+						<object class="IBUINavigationBar" key="IBUINavigationBar" id="638734705">
+							<nil key="NSNextResponder"/>
+							<int key="NSvFlags">256</int>
+							<string key="NSFrameSize">{320, 44}</string>
+							<bool key="IBUIOpaque">NO</bool>
+							<bool key="IBUIClipsSubviews">YES</bool>
+							<bool key="IBUIMultipleTouchEnabled">YES</bool>
+						</object>
+						<object class="NSMutableArray" key="IBUIViewControllers">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBUIViewController" id="812485076">
+								<string key="IBUITitle">Trends</string>
+								<reference key="IBUIToolbarItems" ref="0"/>
+								<object class="IBUINavigationItem" key="IBUINavigationItem" id="102327925">
+									<string key="IBUITitle">Trends</string>
+								</object>
+								<reference key="IBUIParentViewController" ref="248843575"/>
+							</object>
+						</object>
+					</object>
 				</object>
 				<object class="IBUITabBar" key="IBUITabBar" id="795333663">
 					<nil key="NSNextResponder"/>
@@ -471,6 +500,14 @@
 					</object>
 					<int key="connectionID">254</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">profileNetAwareViewController</string>
+						<reference key="source" ref="664661524"/>
+						<reference key="destination" ref="205426899"/>
+					</object>
+					<int key="connectionID">260</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -513,6 +550,7 @@
 							<reference ref="54541401"/>
 							<reference ref="106744414"/>
 							<reference ref="248843575"/>
+							<reference ref="63658088"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -837,6 +875,41 @@
 						<reference key="object" ref="638734705"/>
 						<reference key="parent" ref="248843575"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">255</int>
+						<reference key="object" ref="63658088"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="205426899"/>
+							<reference ref="912228384"/>
+							<reference ref="1046915207"/>
+						</object>
+						<reference key="parent" ref="1034742383"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">256</int>
+						<reference key="object" ref="205426899"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="900543151"/>
+						</object>
+						<reference key="parent" ref="63658088"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">257</int>
+						<reference key="object" ref="912228384"/>
+						<reference key="parent" ref="63658088"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">258</int>
+						<reference key="object" ref="900543151"/>
+						<reference key="parent" ref="205426899"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">259</int>
+						<reference key="object" ref="1046915207"/>
+						<reference key="parent" ref="63658088"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -892,6 +965,11 @@
 					<string>244.IBPluginDependency</string>
 					<string>245.IBPluginDependency</string>
 					<string>251.CustomClassName</string>
+					<string>255.IBPluginDependency</string>
+					<string>256.CustomClassName</string>
+					<string>256.IBPluginDependency</string>
+					<string>257.IBPluginDependency</string>
+					<string>258.IBPluginDependency</string>
 					<string>3.CustomClassName</string>
 					<string>3.IBPluginDependency</string>
 				</object>
@@ -900,7 +978,7 @@
 					<string>UIApplication</string>
 					<string>UIResponder</string>
 					<string>RotatableTabBarController</string>
-					<string>{{870, 551}, {320, 480}}</string>
+					<string>{{834, 551}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -952,6 +1030,11 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>NetworkAwareViewController</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>NetworkAwareViewController</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>TwitchAppDelegate</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
@@ -972,7 +1055,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">254</int>
+			<int key="maxID">260</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1081,6 +1164,7 @@
 							<string>listsNetAwareViewController</string>
 							<string>mentionsNetAwareViewController</string>
 							<string>messagesNetAwareViewController</string>
+							<string>profileNetAwareViewController</string>
 							<string>searchNetAwareViewController</string>
 							<string>tabBarController</string>
 							<string>trendsNetAwareViewController</string>
@@ -1089,6 +1173,7 @@
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>AccountsButton</string>
+							<string>NetworkAwareViewController</string>
 							<string>NetworkAwareViewController</string>
 							<string>NetworkAwareViewController</string>
 							<string>NetworkAwareViewController</string>

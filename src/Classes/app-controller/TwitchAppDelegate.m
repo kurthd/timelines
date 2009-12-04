@@ -63,6 +63,7 @@
 - (void)initMentionsTab;
 - (void)initMessagesTab;
 - (void)initFindPeopleTab;
+- (void)initProfileTab;
 - (void)initAccountsView;
 - (void)initSearchTab;
 - (void)initListsTab;
@@ -103,7 +104,9 @@ enum {
     kOriginalTabOrderMessages,
     kOriginalTabOrderLists,
     kOriginalTabOrderSearch,
-    kOriginalTabOrderPeople
+    kOriginalTabOrderPeople,
+    kOriginalTabOrderProfile,
+    kOriginalTabOrderTrends
 } OriginalTabOrder;
 
 @implementation TwitchAppDelegate
@@ -145,6 +148,7 @@ enum {
     [findPeopleNetAwareViewController release];
     [listsNetAwareViewController release];
     [trendsNetAwareViewController release];
+    [profileNetAwareViewController release];
 
     [contactCache release];
     [contactMgr release];
@@ -761,6 +765,11 @@ enum {
         setSelectedBookmarkSegment:uiState.selectedPeopleBookmarkIndex];
 
     findPeopleSearchDisplayMgr.currentSearchUsername = uiState.findPeopleText;
+}
+
+- (void)initProfileTab
+{
+    
 }
 
 - (void)initSearchTab
@@ -1816,6 +1825,9 @@ enum {
             break;
         case kOriginalTabOrderLists:
             [self initListsTab];
+            break;
+        case kOriginalTabOrderProfile:
+            [self initProfileTab];
             break;
     }
 }
