@@ -18,12 +18,15 @@
 @implementation TrendsViewController
 
 @synthesize service, trends, netController;
+@synthesize selectionTarget, selectionAction;
 
 - (void)dealloc
 {
     self.service = nil;
     self.trends = nil;
     self.netController = nil;
+
+    self.selectionTarget = nil;
 
     [super dealloc];
 }
@@ -103,6 +106,16 @@
 
     return [TrendsTableViewCell heightForTitle:trend.name
                                    explanation:trend.explanation];
+}
+
+- (void)tableView:(UITableView *)tableView
+    didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.selectionTarget && self.selectionAction) {
+        Trend * trend = [self.trends objectAtIndex:indexPath.row];
+        [self.selectionTarget performSelector:self.selectionAction
+                                   withObject:trend];
+    }
 }
 
 #pragma mark WhatTheTrendServiceDelegate implementation

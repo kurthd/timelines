@@ -45,8 +45,6 @@
     if (error)
         [self fetcher:fetcher failedToReceiveDataFromUrl:url error:error];
     else {
-        NSLog(@"JSON: %@", parsedJson);
-
         NSArray * rawTrends = [parsedJson objectForKey:@"trends"];
         NSMutableArray * trends =
             [NSMutableArray arrayWithCapacity:rawTrends.count];

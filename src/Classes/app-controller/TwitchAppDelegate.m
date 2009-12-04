@@ -42,6 +42,7 @@
 #import "ErrorState.h"
 #import "UserTwitterList.h"
 #import "ContactCachePersistenceStore.h"
+#import "TrendDisplayMgr.h"
 #import "TrendsViewController.h"
 
 @interface TwitchAppDelegate ()
@@ -161,6 +162,7 @@ enum {
     [mentionsAcctMgr release];
     [mentionDisplayMgr release];
     [listsDisplayMgr release];
+    [trendDisplayMgr release];
     [trendsViewController release];
 
     [composeTweetDisplayMgr release];
@@ -876,6 +878,46 @@ enum {
         [[TrendsViewController alloc] initWithNibName:@"TrendsView" bundle:nil];
     trendsNetAwareViewController.targetViewController = trendsViewController;
     trendsViewController.netController = trendsNetAwareViewController;
+
+    TwitterCredentials * creds = self.activeCredentials.credentials;
+    TwitterService * trendService =
+        [[[TwitterService alloc] initWithTwitterCredentials:creds
+        context:[self managedObjectContext]]
+        autorelease];
+
+    SearchDisplayMgr * searchMgr =
+        [[SearchDisplayMgr alloc]
+        initWithTwitterService:trendService];
+
+    NetworkAwareViewController * navc =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:nil] autorelease];
+
+    UINavigationController * nc =
+        [self getNavControllerForController:trendsNetAwareViewController];
+
+    TimelineDisplayMgr * timelineMgr =
+        [timelineDisplayMgrFactory
+        createTimelineDisplayMgrWithWrapperController:navc
+        navigationController:nc
+        title:@"Trends"  // set programmatically later
+        composeTweetDisplayMgr:self.composeTweetDisplayMgr];
+    [timelineMgr setCredentials:creds];
+    navc.delegate = timelineMgr;
+
+    searchMgr.dataSourceDelegate = timelineMgr;
+
+    // don't release
+    [[CredentialsActivatedPublisher alloc]
+        initWithListener:timelineMgr action:@selector(setCredentials:)];
+
+    trendDisplayMgr =
+        [[TrendDisplayMgr alloc] initWithSearchDisplayMgr:searchMgr
+                                    navigationController:nc
+                                       timelineDisplayMgr:timelineMgr];
+
+    trendsViewController.selectionTarget = trendDisplayMgr;
+    trendsViewController.selectionAction = @selector(displayTrend:);
 }
 
 - (UINavigationController *)getNavControllerForController:(UIViewController *)c

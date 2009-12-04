@@ -213,6 +213,8 @@
 		0536EECE10C826CB00479158 /* TrendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0536EECC10C826CB00479158 /* TrendsTableViewCell.m */; };
 		0536EED110C8279500479158 /* TrendsTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0536EED010C8279500479158 /* TrendsTableViewCellView.m */; };
 		0536EED210C8279500479158 /* TrendsTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0536EED010C8279500479158 /* TrendsTableViewCellView.m */; };
+		0536F04110C8972F00479158 /* TrendDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0536F04010C8972F00479158 /* TrendDisplayMgr.m */; };
+		0536F04210C8972F00479158 /* TrendDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0536F04010C8972F00479158 /* TrendDisplayMgr.m */; };
 		05377FC910A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */; };
 		05377FCA10A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */; };
 		0538FE97104C7897009E50CE /* InstapaperLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0538FE95104C7897009E50CE /* InstapaperLogInView.xib */; };
@@ -1204,6 +1206,8 @@
 		0536EECC10C826CB00479158 /* TrendsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrendsTableViewCell.m; path = trends/TrendsTableViewCell.m; sourceTree = "<group>"; };
 		0536EECF10C8279500479158 /* TrendsTableViewCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendsTableViewCellView.h; path = trends/TrendsTableViewCellView.h; sourceTree = "<group>"; };
 		0536EED010C8279500479158 /* TrendsTableViewCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrendsTableViewCellView.m; path = trends/TrendsTableViewCellView.m; sourceTree = "<group>"; };
+		0536F03F10C8972F00479158 /* TrendDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendDisplayMgr.h; path = trends/TrendDisplayMgr.h; sourceTree = "<group>"; };
+		0536F04010C8972F00479158 /* TrendDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrendDisplayMgr.m; path = trends/TrendDisplayMgr.m; sourceTree = "<group>"; };
 		05377FC710A10C3000DE3FDA /* NSError+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+GeneralHelpers.h"; path = "shared/NSError+GeneralHelpers.h"; sourceTree = "<group>"; };
 		05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+GeneralHelpers.m"; path = "shared/NSError+GeneralHelpers.m"; sourceTree = "<group>"; };
 		0538FE1C104C4584009E50CE /* DeleteDirectMessageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeleteDirectMessageResponseProcessor.h; path = twitter/processors/DeleteDirectMessageResponseProcessor.h; sourceTree = "<group>"; };
@@ -2911,12 +2915,14 @@
 			children = (
 				05E3A46910C7425E00D935B3 /* TrendsViewController.h */,
 				05E3A46A10C7425E00D935B3 /* TrendsViewController.m */,
-				05E3A48410C7446300D935B3 /* WhatTheTrendService.h */,
-				05E3A48510C7446300D935B3 /* WhatTheTrendService.m */,
 				0536EECB10C826CB00479158 /* TrendsTableViewCell.h */,
 				0536EECC10C826CB00479158 /* TrendsTableViewCell.m */,
 				0536EECF10C8279500479158 /* TrendsTableViewCellView.h */,
 				0536EED010C8279500479158 /* TrendsTableViewCellView.m */,
+				0536F03F10C8972F00479158 /* TrendDisplayMgr.h */,
+				0536F04010C8972F00479158 /* TrendDisplayMgr.m */,
+				05E3A48410C7446300D935B3 /* WhatTheTrendService.h */,
+				05E3A48510C7446300D935B3 /* WhatTheTrendService.m */,
 			);
 			name = trends;
 			sourceTree = "<group>";
@@ -4172,6 +4178,7 @@
 				05E3A48610C7446300D935B3 /* WhatTheTrendService.m in Sources */,
 				0536EECD10C826CB00479158 /* TrendsTableViewCell.m in Sources */,
 				0536EED110C8279500479158 /* TrendsTableViewCellView.m in Sources */,
+				0536F04110C8972F00479158 /* TrendDisplayMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4508,6 +4515,7 @@
 				05E3A48710C7446300D935B3 /* WhatTheTrendService.m in Sources */,
 				0536EECE10C826CB00479158 /* TrendsTableViewCell.m in Sources */,
 				0536EED210C8279500479158 /* TrendsTableViewCellView.m in Sources */,
+				0536F04210C8972F00479158 /* TrendDisplayMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

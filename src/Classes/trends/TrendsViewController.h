@@ -14,7 +14,13 @@
     NSArray * trends;
 
     NetworkAwareViewController * netController;
+
+    id selectionTarget;
+    SEL selectionAction;
 }
+
+@property(nonatomic, assign) id selectionTarget;
+@property(nonatomic, assign) SEL selectionAction;
 
 @property (nonatomic, retain) NetworkAwareViewController * netController;
 
