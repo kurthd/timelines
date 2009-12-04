@@ -18,6 +18,7 @@
     NSString * retweetAuthorName;
     UIImage * avatar;
     BOOL favorite;
+    BOOL geocoded;
 
     BOOL displayAsMention;
     BOOL displayAsOld;
@@ -33,6 +34,7 @@
 @property (nonatomic, copy) NSString * timestamp;
 @property (nonatomic, retain) UIImage * avatar;
 @property (nonatomic, assign) BOOL favorite;
+@property (nonatomic, assign) BOOL geocoded;
 
 @property (nonatomic, assign) BOOL displayAsMention;
 @property (nonatomic, assign) BOOL displayAsOld;

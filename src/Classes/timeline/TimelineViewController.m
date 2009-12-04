@@ -588,6 +588,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     [cell setAuthor:[tweet displayName]];
     [cell setTimestamp:[tweet.timestamp tableViewCellDescription]];
     [cell setFavorite:[tweet.favorited boolValue]];
+    [cell setGeocoded:!!tweet.location];
 
     [cell setAvatar:[self getThumbnailAvatarForUser:tweet.user]];
     [cell setUserData:tweet.user.avatar.thumbnailImageUrl];

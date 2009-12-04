@@ -81,6 +81,11 @@
     timelineView.favorite = favorite;
 }
 
+- (void)setGeocoded:(BOOL)geocoded
+{
+    timelineView.geocoded = geocoded;
+}
+
 - (void)displayAsMention:(BOOL)displayAsMention
 {
     timelineView.displayAsMention = displayAsMention;

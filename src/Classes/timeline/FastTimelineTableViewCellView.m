@@ -57,12 +57,15 @@ static UIImage * highlightedRetweetGlyph;
 + (UIImage *)retweetGlyph;
 + (UIImage *)highlightedRetweetGlyph;
 
++ (UIImage *)geocodeGlyph;
++ (UIImage *)highlightedGeocodeGlyph;
+
 @end
 
 @implementation FastTimelineTableViewCellView
 
 @synthesize landscape, highlighted;
-@synthesize displayType, text, author, timestamp, avatar, favorite;
+@synthesize displayType, text, author, timestamp, avatar, favorite, geocoded;
 @synthesize displayAsMention, displayAsOld;
 @synthesize retweetAuthorName;
 
@@ -204,8 +207,8 @@ static UIImage * highlightedRetweetGlyph;
     CGFloat padding = 5.0;
     if (favorite)
         padding += 14.0;
-    if (self.retweetAuthorName)
-        padding += 14.0;
+    if (geocoded)
+        padding += 9.0;
 
     CGSize authorLabelSize = size =
         CGSizeMake(point.x - padding - AUTHOR_LEFT_MARGIN,
@@ -223,7 +226,7 @@ static UIImage * highlightedRetweetGlyph;
     if (favorite) {
         [[self favoriteColor] set];
         point =
-            CGPointMake(AUTHOR_LEFT_MARGIN + size.width + 2, AUTHOR_TOP_MARGIN);
+            CGPointMake(AUTHOR_LEFT_MARGIN + size.width + 1, AUTHOR_TOP_MARGIN);
         size = CGSizeMake(13, authorFont.pointSize);
 
         [[[self class] starText] drawAtPoint:point forWidth:size.width
@@ -235,17 +238,17 @@ static UIImage * highlightedRetweetGlyph;
     //
     // Draw the retweet inidcator
     //
-    if (self.retweetAuthorName) {
+    if (geocoded) {
         CGFloat favoriteAdjustment = favorite ? 17 : 2;
         point =
             CGPointMake(
             AUTHOR_LEFT_MARGIN + authorLabelSize.width + favoriteAdjustment,
             AUTHOR_TOP_MARGIN + 4);
-        UIImage * retweetGlyph =
+        UIImage * geocodeGlyph =
             self.highlighted ?
-            [[self class] highlightedRetweetGlyph] :
-            [[self class] retweetGlyph];
-        [retweetGlyph drawAtPoint:point];
+            [[self class] highlightedGeocodeGlyph] :
+            [[self class] geocodeGlyph];
+        [geocodeGlyph drawAtPoint:point];
     }
 
     //
@@ -267,21 +270,31 @@ static UIImage * highlightedRetweetGlyph;
        lineBreakMode:UILineBreakModeWordWrap];
 
     //
-    // Draw the retweet text, if applicable
+    // Draw the retweet glyph and text, if applicable
     //
     if (self.retweetAuthorName) {
+        point =
+            CGPointMake(AUTHOR_LEFT_MARGIN, size.height + TEXT_TOP_MARGIN + 4);
+        UIImage * retweetGlyph =
+            self.highlighted ?
+            [[self class] highlightedRetweetGlyph] :
+            [[self class] retweetGlyph];
+        [retweetGlyph drawAtPoint:point];
+
         // draw format string
         [[self retweetTextColor] set];
-        point =
-            CGPointMake(AUTHOR_LEFT_MARGIN, size.height + TEXT_TOP_MARGIN + 2);
+        point = CGPointMake(
+            point.x + retweetGlyph.size.width + 2,
+            size.height + TEXT_TOP_MARGIN + 2);
         [[[self class] retweetFormatString] drawAtPoint:point
             withFont:retweetFormatFont];
         
         // draw username
         CGSize retweetFormatSize =
             [[[self class] retweetFormatString] sizeWithFont:retweetFormatFont];
-        point =
-            CGPointMake(AUTHOR_LEFT_MARGIN + retweetFormatSize.width,
+        point = CGPointMake(
+            AUTHOR_LEFT_MARGIN + retweetFormatSize.width +
+            retweetGlyph.size.width + 2,
             size.height + TEXT_TOP_MARGIN + 2);
         [self.retweetAuthorName drawAtPoint:point withFont:retweetAuthorFont];
     }
@@ -348,16 +361,16 @@ static UIImage * highlightedRetweetGlyph;
     //
     // Draw the retweet inidcator
     //
-    if (self.retweetAuthorName) {
-        CGFloat favoriteAdjustment = favorite ? 20 : 5;
+    if (geocoded) {
+        CGFloat favoriteAdjustment = favorite ? 21 : 5;
         point =
             CGPointMake(
             TEXT_LEFT_MARGIN + authorLabelSize.width + favoriteAdjustment,
             TIMESTAMP_TOP_MARGIN + 2);
         UIImage * retweetGlyph =
             self.highlighted ?
-            [[self class] highlightedRetweetGlyph] :
-            [[self class] retweetGlyph];
+            [[self class] highlightedGeocodeGlyph] :
+            [[self class] geocodeGlyph];
         [retweetGlyph drawAtPoint:point];
     }
 
@@ -384,19 +397,30 @@ static UIImage * highlightedRetweetGlyph;
     // Draw the retweet text, if applicable
     //
     if (self.retweetAuthorName) {
+        // draw the retweet glyph
+        point =
+            CGPointMake(TEXT_LEFT_MARGIN, size.height + TEXT_TOP_MARGIN + 4);
+        UIImage * retweetGlyph =
+            self.highlighted ?
+            [[self class] highlightedRetweetGlyph] :
+            [[self class] retweetGlyph];
+        [retweetGlyph drawAtPoint:point];
+
         // draw format string
         [[self retweetTextColor] set];
-        point =
-            CGPointMake(TEXT_LEFT_MARGIN, size.height + TEXT_TOP_MARGIN + 2);
+        point = CGPointMake(
+            TEXT_LEFT_MARGIN + retweetGlyph.size.width + 2,
+            size.height + TEXT_TOP_MARGIN + 2);
         [[[self class] retweetFormatString] drawAtPoint:point
             withFont:retweetFormatFont];
-        
+
         // draw username
         CGSize retweetFormatSize =
             [[[self class] retweetFormatString] sizeWithFont:retweetFormatFont];
         point =
-            CGPointMake(TEXT_LEFT_MARGIN + retweetFormatSize.width,
+            CGPointMake(point.x + retweetFormatSize.width + 2,
             size.height + TEXT_TOP_MARGIN + 2);
+
         [self.retweetAuthorName drawAtPoint:point withFont:retweetAuthorFont];
     }
 
@@ -452,19 +476,19 @@ static UIImage * highlightedRetweetGlyph;
     }
     
     //
-    // Draw the retweet inidcator
+    // Draw the geocode inidcator
     //
-    if (self.retweetAuthorName) {
-        CGFloat favoriteAdjustment = favorite ? 20 : 5;
+    if (geocoded) {
+        CGFloat favoriteAdjustment = favorite ? 21 : 5;
         point =
             CGPointMake(
             TEXT_LEFT_MARGIN + authorLabelSize.width + favoriteAdjustment,
             TIMESTAMP_TOP_MARGIN + 2);
-        UIImage * retweetGlyph =
+        UIImage * geocodeGlyph =
             self.highlighted ?
-            [[self class] highlightedRetweetGlyph] :
-            [[self class] retweetGlyph];
-        [retweetGlyph drawAtPoint:point];
+            [[self class] highlightedGeocodeGlyph] :
+            [[self class] geocodeGlyph];
+        [geocodeGlyph drawAtPoint:point];
     }
 
     //
@@ -491,10 +515,20 @@ static UIImage * highlightedRetweetGlyph;
     // Draw the retweet text, if applicable
     //
     if (self.retweetAuthorName) {
-        // draw format string
-        [[self retweetTextColor] set];
+        // draw the retweet glyph
         point =
             CGPointMake(TEXT_LEFT_MARGIN, size.height + TEXT_TOP_MARGIN + 2);
+        UIImage * retweetGlyph =
+            self.highlighted ?
+            [[self class] highlightedRetweetGlyph] :
+            [[self class] retweetGlyph];
+        [retweetGlyph drawAtPoint:point];
+
+        // draw format string
+        [[self retweetTextColor] set];
+        point = CGPointMake(
+            TEXT_LEFT_MARGIN + retweetGlyph.size.width + 2,
+            size.height + TEXT_TOP_MARGIN + 2);
         [[[self class] retweetFormatString] drawAtPoint:point
             withFont:retweetFormatFont];
         
@@ -502,7 +536,7 @@ static UIImage * highlightedRetweetGlyph;
         CGSize retweetFormatSize =
             [[[self class] retweetFormatString] sizeWithFont:retweetFormatFont];
         point =
-            CGPointMake(TEXT_LEFT_MARGIN + retweetFormatSize.width,
+            CGPointMake(point.x + retweetFormatSize.width + 2,
             size.height + TEXT_TOP_MARGIN + 2);
         [self.retweetAuthorName drawAtPoint:point withFont:retweetAuthorFont];
     }
@@ -641,6 +675,14 @@ static UIImage * highlightedRetweetGlyph;
 {
     if (favorite != isFavorite) {
         favorite = isFavorite;
+        [self setNeedsDisplay];
+    }
+}
+
+- (void)setGeocoded:(BOOL)isGeocoded
+{
+    if (geocoded != isGeocoded) {
+        geocoded = isGeocoded;
         [self setNeedsDisplay];
     }
 }
@@ -900,6 +942,27 @@ static UIImage * highlightedRetweetGlyph;
             retain];
 
     return highlightedRetweetGlyph;
+}
+
++ (UIImage *)geocodeGlyph
+{
+    static UIImage * glyph = nil;
+    if (!glyph)
+        glyph =
+            [[UIImage imageNamed:@"GeocodeTimelineIndicator.png"] retain];
+
+    return glyph;
+}
+
++ (UIImage *)highlightedGeocodeGlyph
+{
+    static UIImage * glyph = nil;
+    if (!glyph)
+        glyph =
+            [[UIImage imageNamed:@"GeocodeTimelineIndicatorHighlighted.png"]
+            retain];
+
+    return glyph;
 }
 
 @end

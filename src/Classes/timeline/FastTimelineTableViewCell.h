@@ -21,6 +21,7 @@
 - (void)setTimestamp:(NSString *)timestamp;
 - (void)setAvatar:(UIImage *)avatar;
 - (void)setFavorite:(BOOL)favorite;
+- (void)setGeocoded:(BOOL)geocoded;
 
 - (void)displayAsMention:(BOOL)displayAsMention;
 - (void)displayAsOld:(BOOL)displayAsOld;
