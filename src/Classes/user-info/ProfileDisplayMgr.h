@@ -13,10 +13,16 @@
 #import "NetworkAwareViewControllerDelegate.h"
 #import "TwitterServiceDelegate.h"
 #import "UserInfoViewControllerDelegate.h"
+#import "LocationMapViewController.h"
+#import "LocationMapViewControllerDelegate.h"
+#import "CredentialsActivatedPublisher.h"
+#import "SavedSearchMgr.h"
+#import "RecentSearchMgr.h"
 
 @interface ProfileDisplayMgr :
     NSObject <TwitterServiceDelegate, NetworkAwareViewControllerDelegate,
-    UserInfoViewControllerDelegate>
+    UserInfoViewControllerDelegate, LocationMapViewControllerDelegate,
+    LocationInfoViewControllerDelegate>
 {
     NetworkAwareViewController * netAwareController;
     UserInfoViewController * userInfoController;
@@ -29,6 +35,21 @@
     UINavigationController * navigationController;
 
     TwitterCredentials * credentials;
+
+    NetworkAwareViewController * nextWrapperController;
+    TimelineDisplayMgr * timelineDisplayMgr;
+    CredentialsActivatedPublisher * credentialsPublisher;
+    UserListDisplayMgr * nextUserListDisplayMgr;
+
+    BOOL freshProfile;
+    NSString * username;
+
+    LocationMapViewController * locationMapViewController;
+    LocationInfoViewController * locationInfoViewController;
+
+    NSString * currentSearch; // mention search value
+    SavedSearchMgr * generalSavedSearchMgr;
+    RecentSearchMgr * recentSearchMgr;
 }
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc
@@ -39,7 +60,9 @@
     userListFactory:(UserListDisplayMgrFactory *)aUserListFactory
     navigationController:(UINavigationController *)navigationController;
 
+- (void)setNewProfileUsername:(NSString *)username user:(User *)user;
 - (void)refreshProfile;
+
 - (void)setCredentials:(TwitterCredentials *)credentials;
 
 @end

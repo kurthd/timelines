@@ -777,8 +777,12 @@ enum {
         UIBarStyleBlackOpaque : UIBarStyleDefault;
 
     UserInfoViewController * profileViewController =
-        [[UserInfoViewController alloc] init];
+        [[[UserInfoViewController alloc]
+        initWithNibName:@"UserInfoView" bundle:nil] autorelease];
     profileNetAwareViewController.targetViewController = profileViewController;
+    profileViewController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
+    profileViewController.contactCacheReader = contactCache;
+    profileViewController.contactMgr = contactMgr;
 
     TwitterCredentials * creds =
         self.activeCredentials ? self.activeCredentials.credentials : nil;
@@ -824,6 +828,9 @@ enum {
         profileNetAwareViewController.navigationItem.leftBarButtonItem;
     refreshButton.target = profileDisplayMgr;
     refreshButton.action = @selector(refreshProfile);
+    
+    if (creds)
+        [profileDisplayMgr setNewProfileUsername:creds.username user:nil];
 }
 
 - (void)initSearchTab
@@ -1126,6 +1133,11 @@ enum {
         !trendsViewController) {
         NSLog(@"Selected trends tab");
         [self initTrendsTab];
+    } else if (viewController ==
+        profileNetAwareViewController.navigationController &&
+        !profileDisplayMgr) {
+        NSLog(@"Selected profile tab");
+        [self initProfileTab];
     } else if (viewController == tabBarController.moreNavigationController) {
         NSLog(@"Selected more tab; initializing everything under 'More'");
         NSArray * viewControllers = tabBarController.viewControllers;
@@ -1135,7 +1147,7 @@ enum {
         }
     }
 }
-    
+
 #pragma mark -
 #pragma mark Core Data stack
 
@@ -2036,6 +2048,8 @@ enum {
     [homeNetAwareViewController viewWillAppear:YES];
 
     [listsDisplayMgr resetState];
+
+    [profileDisplayMgr setNewProfileUsername:activeAccount.username user:nil];
 }
 
 #pragma mark Accessors
