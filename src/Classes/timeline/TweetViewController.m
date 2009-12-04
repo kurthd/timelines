@@ -195,13 +195,16 @@ enum TweetActionSheets {
 {
     [super viewWillAppear:animated];
 
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    self.view.frame =
+        landscape ? CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+
     [delegate showingTweetDetails:self];
     
     UIInterfaceOrientation orientation =
         [[RotatableTabBarController instance] interfaceOrientation];
     [self updateButtonsForOrientation:orientation];
 
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
     if (lastDisplayedInLandscape != landscape)
         [self loadTweetWebView];
 }

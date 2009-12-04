@@ -115,7 +115,9 @@
     UIFont * usernameFont = [UIFont boldSystemFontOfSize:18.0];
 
     UIColor * darkLabelColor =
-        selectedAccount ? [UIColor twitchCheckedColor] : [UIColor blackColor];
+        selectedAccount ?
+        [[UIColor colorWithRed:0.196 green:0.310 blue:0.522 alpha:1.0] retain] :
+        [UIColor blackColor];
 
     usernameColor = !self.highlighted ? darkLabelColor : [UIColor whiteColor];
 
