@@ -18,7 +18,6 @@
     reuseIdentifier:(NSString *)reuseIdentifier
     backgroundColor:(UIColor *)aBackgroundColor
 {
-
 	if (self = [super initWithStyle:UITableViewCellStyleDefault
 	    reuseIdentifier:reuseIdentifier]) {
 
