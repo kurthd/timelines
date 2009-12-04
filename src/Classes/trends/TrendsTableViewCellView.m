@@ -61,46 +61,40 @@
 
 + (CGFloat)heightForTitle:(NSString *)title explanation:(NSString *)explanation
 {
-    return 69.0;
+    return 66.0;
 }
 
 #pragma mark UIView overrides
 
 - (void)drawRect:(CGRect)rect
 {
-    static const CGFloat LEFT_MARGIN = 5.0;
-    static const CGFloat TOP_MARGIN = 4.0;
-    static const CGFloat ELEMENT_SPACE = 1.0;
+    static const CGFloat LEFT_MARGIN = 12.0;
+    static const CGFloat RIGHT_MARGIN = 3.0;
+    static const CGFloat TOP_MARGIN = 3.0;
+    static const CGFloat ELEMENT_SPACE = 0.0;
     static const CGFloat EXPLANATION_HEIGHT = 40.0;
-
-    CGPoint point;
-    CGSize size;
 
     UIFont * titleFont = [UIFont boldSystemFontOfSize:18.0];
     UIFont * explanationFont = [UIFont systemFontOfSize:14.0];
 
     [[self titleColor] set];
-    size = [title sizeWithFont:titleFont];
-    point = CGPointMake(LEFT_MARGIN, TOP_MARGIN);
-
-    [title drawAtPoint:point
-              forWidth:size.width
-              withFont:titleFont
-              fontSize:titleFont.pointSize
-         lineBreakMode:UILineBreakModeTailTruncation
-    baselineAdjustment:UIBaselineAdjustmentNone];
+    CGSize titleSize = [title sizeWithFont:titleFont];
+    CGRect titleRect =
+        CGRectMake(
+            LEFT_MARGIN,
+            TOP_MARGIN,
+            self.bounds.size.width - (LEFT_MARGIN + RIGHT_MARGIN),
+            titleSize.height);
+    [title drawInRect:titleRect withFont:titleFont
+        lineBreakMode:UILineBreakModeTailTruncation];
 
     [[self explanationColor] set];
-    point = CGPointMake(LEFT_MARGIN, TOP_MARGIN + size.height + ELEMENT_SPACE);
-    CGSize explanationSize = CGSizeMake(
-        self.bounds.size.width - LEFT_MARGIN * 2, EXPLANATION_HEIGHT);
-
     CGRect explanationRect =
         CGRectMake(
-            point.x,
-            point.y,
-            explanationSize.width,
-            explanationSize.height);
+            LEFT_MARGIN,
+            TOP_MARGIN + titleSize.height + ELEMENT_SPACE,
+            self.bounds.size.width - (LEFT_MARGIN + RIGHT_MARGIN),
+            EXPLANATION_HEIGHT);
 
     [explanation drawInRect:explanationRect
                    withFont:explanationFont
