@@ -115,7 +115,9 @@
     UIFont * usernameFont = [UIFont boldSystemFontOfSize:18.0];
 
     UIColor * darkLabelColor =
-        selectedAccount ? [UIColor blackColor] : [UIColor lightGrayColor];
+        selectedAccount ?
+        [[UIColor colorWithRed:0.196 green:0.310 blue:0.522 alpha:1.0] retain] :
+        [UIColor blackColor];
 
     usernameColor = !self.highlighted ? darkLabelColor : [UIColor whiteColor];
 
@@ -123,13 +125,13 @@
     CGPoint point = CGPointMake(48, 9);
     [username drawAtPoint:point withFont:usernameFont];
 
-    CGRect contentRect = self.bounds;
     // Draw check mark
     if (selectedAccount) {
         UIImage * currentCheckMark =
             self.highlighted ? self.highlightedCheckMark : self.checkMark;
+        CGSize usernameLabelSize = [username sizeWithFont:usernameFont];
         CGRect checkMarkRect =
-            CGRectMake(contentRect.size.width - 20, 13, 14, 13);
+            CGRectMake(point.x + usernameLabelSize.width + 10, 13, 14, 13);
         [currentCheckMark drawInRect:checkMarkRect];
     }
 
@@ -138,9 +140,7 @@
     //
     CGContextRef context = UIGraphicsGetCurrentContext();
 
-    UIColor * darkColor =
-        selectedAccount ?
-        [UIColor twitchDarkGrayColor] : [UIColor twitchLightGrayColor];
+    UIColor * darkColor = [UIColor twitchDarkGrayColor];
     UIColor * rectColor =
         self.highlighted ? [UIColor whiteColor] : darkColor;
 
@@ -177,12 +177,10 @@
         TOP_MARGIN + 1 + roundedCornerHeight / 2, roundedCornerWidth,
         AVATAR_WIDTH - roundedCornerHeight));
     
-    CGFloat alpha = selectedAccount ? 1 : 0.5;
-    
     CGRect avatarRect =
         CGRectMake(TOP_MARGIN + 1, LEFT_MARGIN + 1, AVATAR_WIDTH, AVATAR_WIDTH);
     [avatar drawInRect:avatarRect
-        withRoundedCornersWithRadius:ROUNDED_CORNER_RADIUS alpha:alpha];
+        withRoundedCornersWithRadius:ROUNDED_CORNER_RADIUS];
 }
 
 @end

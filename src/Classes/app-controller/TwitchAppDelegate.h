@@ -23,6 +23,7 @@
 #import "TwitterCredentials.h"
 #import "ContactCache.h"
 #import "ContactMgr.h"
+#import "ProfileDisplayMgr.h"
 
 @class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class SearchBarDisplayMgr;
@@ -67,6 +68,7 @@
     IBOutlet NetworkAwareViewController * findPeopleNetAwareViewController;
     IBOutlet NetworkAwareViewController * listsNetAwareViewController;
     IBOutlet NetworkAwareViewController * trendsNetAwareViewController;
+    IBOutlet NetworkAwareViewController * profileNetAwareViewController;
 
     IBOutlet AccountsButton * accountsButton;
     AccountsButtonSetter * accountsButtonSetter;
@@ -85,6 +87,7 @@
 
     SearchBarDisplayMgr * searchBarDisplayMgr;
     FindPeopleSearchDisplayMgr * findPeopleSearchDisplayMgr;
+    ProfileDisplayMgr * profileDisplayMgr;
     AccountsDisplayMgr * accountsDisplayMgr;
     MentionTimelineDisplayMgr * mentionDisplayMgr;
     ListsDisplayMgr * listsDisplayMgr;

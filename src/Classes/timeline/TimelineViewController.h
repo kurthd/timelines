@@ -43,6 +43,8 @@
     NSString * mentionString;
 
     NSNumber * visibleTweetId;
+
+    BOOL lastShownLandscapeValue;
 }
 
 @property (nonatomic, assign)

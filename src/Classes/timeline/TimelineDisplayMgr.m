@@ -504,7 +504,7 @@
         pushViewController:self.newTweetDetailsWrapperController animated:YES];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:NO];
     [self.lastTweetDetailsWrapperController
-        setUpdatingState:kConnectedAndNotUpdating];
+        setUpdatingState:kConnectedAndUpdating];
 }
 
 - (void)loadConversationFromTweetId:(NSNumber *)tweetId
@@ -548,9 +548,9 @@
        finishedLoadingTweet:(Tweet *)tweet
 {
     if (controller == self.lastTweetDetailsController) {
-        [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
         [self.lastTweetDetailsWrapperController
             setUpdatingState:kConnectedAndNotUpdating];
+        [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
     }
 }
 

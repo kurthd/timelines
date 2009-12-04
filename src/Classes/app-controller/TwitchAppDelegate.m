@@ -63,6 +63,7 @@
 - (void)initMentionsTab;
 - (void)initMessagesTab;
 - (void)initFindPeopleTab;
+- (void)initProfileTab;
 - (void)initAccountsView;
 - (void)initSearchTab;
 - (void)initListsTab;
@@ -103,7 +104,9 @@ enum {
     kOriginalTabOrderMessages,
     kOriginalTabOrderLists,
     kOriginalTabOrderSearch,
-    kOriginalTabOrderPeople
+    kOriginalTabOrderPeople,
+    kOriginalTabOrderProfile,
+    kOriginalTabOrderTrends
 } OriginalTabOrder;
 
 @implementation TwitchAppDelegate
@@ -145,6 +148,7 @@ enum {
     [findPeopleNetAwareViewController release];
     [listsNetAwareViewController release];
     [trendsNetAwareViewController release];
+    [profileNetAwareViewController release];
 
     [contactCache release];
     [contactMgr release];
@@ -164,6 +168,7 @@ enum {
     [listsDisplayMgr release];
     [trendDisplayMgr release];
     [trendsViewController release];
+    [profileDisplayMgr release];
 
     [composeTweetDisplayMgr release];
 
@@ -763,6 +768,75 @@ enum {
     findPeopleSearchDisplayMgr.currentSearchUsername = uiState.findPeopleText;
 }
 
+- (void)initProfileTab
+{
+    NSLog(@"Initializing profile tab");
+
+    profileNetAwareViewController.navigationController.navigationBar.barStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIBarStyleBlackOpaque : UIBarStyleDefault;
+
+    UserInfoViewController * profileViewController =
+        [[[UserInfoViewController alloc]
+        initWithNibName:@"UserInfoView" bundle:nil] autorelease];
+    profileNetAwareViewController.targetViewController = profileViewController;
+    profileViewController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
+    profileViewController.contactCacheReader = contactCache;
+    profileViewController.contactMgr = contactMgr;
+
+    TwitterCredentials * creds =
+        self.activeCredentials ? self.activeCredentials.credentials : nil;
+
+    TwitterService * service =
+        [[[TwitterService alloc]
+        initWithTwitterCredentials:creds
+        context:[self managedObjectContext]] autorelease];
+
+    // Don't autorelease
+    [[CredentialsActivatedPublisher alloc]
+        initWithListener:service action:@selector(setCredentials:)];
+
+    UINavigationController * navController =
+        [self getNavControllerForController:profileNetAwareViewController];
+
+    UserListDisplayMgrFactory * userListFactory =
+        [[[UserListDisplayMgrFactory alloc]
+        initWithContext:[self managedObjectContext]
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr contactCache:contactCache
+        contactMgr:contactMgr]
+        autorelease];
+
+    profileDisplayMgr =
+        [[ProfileDisplayMgr alloc]
+        initWithNetAwareController:profileNetAwareViewController
+        userInfoController:profileViewController
+        service:service context:[self managedObjectContext]
+        composeTweetDisplayMgr:composeTweetDisplayMgr
+        timelineFactory:timelineDisplayMgrFactory
+        userListFactory:userListFactory
+        navigationController:navController];
+    service.delegate = profileDisplayMgr;
+    profileNetAwareViewController.delegate = profileDisplayMgr;
+    profileViewController.delegate = profileDisplayMgr;
+
+    [profileDisplayMgr setCredentials:creds];
+    // Don't autorelease
+    [[CredentialsActivatedPublisher alloc]
+        initWithListener:profileDisplayMgr action:@selector(setCredentials:)];
+
+    UIBarButtonItem * refreshButton =
+        profileNetAwareViewController.navigationItem.leftBarButtonItem;
+    refreshButton.target = profileDisplayMgr;
+    refreshButton.action = @selector(refreshProfile);
+    
+    if (creds) {
+        User * user =
+            [User userWithUsername:creds.username
+            context:[self managedObjectContext]];
+        [profileDisplayMgr setNewProfileUsername:creds.username user:user];
+    }
+}
+
 - (void)initSearchTab
 {
     searchNetAwareViewController.navigationController.navigationBar.barStyle =
@@ -1063,16 +1137,27 @@ enum {
         !trendsViewController) {
         NSLog(@"Selected trends tab");
         [self initTrendsTab];
+    } else if (viewController ==
+        profileNetAwareViewController.navigationController &&
+        !profileDisplayMgr) {
+        NSLog(@"Selected profile tab");
+        [self initProfileTab];
     } else if (viewController == tabBarController.moreNavigationController) {
         NSLog(@"Selected more tab; initializing everything under 'More'");
-        NSArray * viewControllers = tabBarController.viewControllers;
-        for (NSInteger i = 4; i < [viewControllers count]; i++) {
-            UIViewController * vc = [viewControllers objectAtIndex:i];
-            [self initTabForViewController:vc];
-        }
+        [self performSelector:@selector(initTabsUnderMore) withObject:nil
+            afterDelay:0];
     }
 }
-    
+
+- (void)initTabsUnderMore
+{
+    NSArray * viewControllers = tabBarController.viewControllers;
+    for (NSInteger i = 4; i < [viewControllers count]; i++) {
+        UIViewController * vc = [viewControllers objectAtIndex:i];
+        [self initTabForViewController:vc];
+    }
+}
+
 #pragma mark -
 #pragma mark Core Data stack
 
@@ -1817,6 +1902,9 @@ enum {
         case kOriginalTabOrderLists:
             [self initListsTab];
             break;
+        case kOriginalTabOrderProfile:
+            [self initProfileTab];
+            break;
     }
 }
 
@@ -1970,6 +2058,11 @@ enum {
     [homeNetAwareViewController viewWillAppear:YES];
 
     [listsDisplayMgr resetState];
+
+    User * user =
+        [User userWithUsername:activeAccount.username
+        context:[self managedObjectContext]];
+    [profileDisplayMgr setNewProfileUsername:activeAccount.username user:user];
 }
 
 #pragma mark Accessors

@@ -87,6 +87,8 @@ enum TweetActionSheets {
 
 - (Tweet *)displayTweet;
 
+- (void)setPhotoPreviewInWebView:(NSString *)photoUrl;
+
 + (UIImage *)defaultAvatar;
 
 @end
@@ -193,13 +195,16 @@ enum TweetActionSheets {
 {
     [super viewWillAppear:animated];
 
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    self.view.frame =
+        landscape ? CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+
     [delegate showingTweetDetails:self];
     
     UIInterfaceOrientation orientation =
         [[RotatableTabBarController instance] interfaceOrientation];
     [self updateButtonsForOrientation:orientation];
 
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
     if (lastDisplayedInLandscape != landscape)
         [self loadTweetWebView];
 }
@@ -498,8 +503,15 @@ enum TweetActionSheets {
     if (photoUrlString && ![[self displayTweet] photoUrl]) {
         NSLog(@"Fetching photo preview: %@", photoUrlString);
         NSURL * photoUrl = [NSURL URLWithString:photoUrlString];
-        self.photoPreviewFetcher =
-            [AsynchronousNetworkFetcher fetcherWithUrl:photoUrl delegate:self];
+        static NSString * directImageRegex =
+            @"\\S+\\.jpg$|\\S+\\.jpeg$|\\S+\\.bmp|\\S+\\.gif|\\S+\\.png";
+        if ([photoUrlString stringByMatching:directImageRegex])
+            [self performSelector:@selector(setPhotoPreviewInWebView:)
+            withObject:photoUrlString afterDelay:0.7];
+        else
+            self.photoPreviewFetcher =
+                [AsynchronousNetworkFetcher fetcherWithUrl:photoUrl
+                delegate:self];
     }
 
     [self loadTweetWebView];
@@ -577,11 +589,7 @@ enum TweetActionSheets {
             [CommonTwitterServicePhotoSource photoUrlFromPageHtml:html
             url:urlAsString];
         NSLog(@"Received photo webpage; photo url is: %@", photoUrl);
-        [[self displayTweet] setPhotoUrl:photoUrl];
-
-        [tweetContentView
-            loadHTMLStringRelativeToMainBundle:
-            [[self displayTweet] textAsHtml]];
+        [self setPhotoPreviewInWebView:photoUrl];
     } else {
         NSLog(@"Received avatar for url: %@", url);
         UIImage * avatar = [UIImage imageWithData:data];
@@ -595,6 +603,14 @@ enum TweetActionSheets {
             [[self displayTweet].user.avatar.fullImageUrl isEqual:urlAsString]))
             [avatarImage setImage:avatar];
     }
+}
+
+- (void)setPhotoPreviewInWebView:(NSString *)photoUrl
+{
+    [[self displayTweet] setPhotoUrl:photoUrl];
+    [tweetContentView
+        loadHTMLStringRelativeToMainBundle:
+        [[self displayTweet] textAsHtml]];
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher

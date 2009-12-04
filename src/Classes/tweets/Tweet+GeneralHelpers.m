@@ -155,7 +155,7 @@ static NSMutableDictionary * photoUrlDict;
              "\\bhttp://tinypic.com/\\S+|"
              "\\bhttp://twitgoo.com/\\S+|"
              "\\bhttp://mobypicture.com/\\S+|"
-             "\\.jpg$|\\.jpeg$|\\.bmp|\\.gif|\\.png";
+             "\\S+\\.jpg$|\\S+\\.jpeg$|\\S+\\.bmp|\\S+\\.gif|\\S+\\.png";
 
         photoUrl = [self.text stringByMatching:imageUrlRegex];
         if (photoUrl)

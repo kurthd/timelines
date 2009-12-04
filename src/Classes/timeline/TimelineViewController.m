@@ -128,12 +128,20 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 {
     [super viewWillAppear:animated];
 
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
     self.view.frame =
-        [[RotatableTabBarController instance] landscape] ?
-        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+        landscape ? CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
 
-    [self.tableView reloadData];
+    if (lastShownLandscapeValue != landscape)
+        [self.tableView reloadData];
+
     [self setScrollIndicatorBlackoutTimer];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    lastShownLandscapeValue = [[RotatableTabBarController instance] landscape];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
