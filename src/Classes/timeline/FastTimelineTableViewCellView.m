@@ -5,7 +5,6 @@
 #import "FastTimelineTableViewCellView.h"
 #import "TwitbitShared.h"
 
-
 static const CGFloat AVATAR_WIDTH = 48.0;
 static const CGFloat AVATAR_HEIGHT = 48.0;
 static const CGFloat AVATAR_ROUNDED_CORNER_RADIUS = 6.0;
@@ -760,7 +759,6 @@ static UIImage * highlightedRetweetGlyph;
         topMargin + 1 + roundedCornerHeight / 2, roundedCornerWidth,
         AVATAR_HEIGHT - roundedCornerHeight));
 }
-
 
 - (void)drawBackground
 {

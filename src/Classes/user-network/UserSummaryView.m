@@ -8,12 +8,15 @@
 #import "SettingsReader.h"
 #import "UIColor+TwitchColors.h"
 
+static const CGFloat AVATAR_ROUNDED_CORNER_RADIUS = 6.0;
+
 @interface UserSummaryView ()
 
 + (NSString *)usernameFormatString;
 + (UIColor *)lighterTextColor;
 + (UIColor *)darkerTextColor;
-+ (UIImage *)avatarBackgroundImage;
+
++ (NSNumberFormatter *)formatter;
 
 @end
 
@@ -22,7 +25,8 @@
 static NSString * usernameFormatString;
 static UIColor * lighterTextColor;
 static UIColor * darkerTextColor;
-static UIImage * avatarBackgroundImage;
+
+static NSNumberFormatter * formatter;
 
 @synthesize avatar, highlighted, landscape;
 
@@ -60,37 +64,37 @@ static UIImage * avatarBackgroundImage;
 
 - (void)drawRect:(CGRect)rect
 {
-#define LEFT_MARGIN 73
-#define TOP_MARGIN 6
-#define LABEL_WIDTH 220
-#define LABEL_WIDTH_LANDSCAPE 380
+#define LEFT_MARGIN 55
+#define TOP_MARGIN 3
+#define LABEL_WIDTH 237
+#define LABEL_WIDTH_LANDSCAPE 397
 
 #define NAME_LABEL_FONT_SIZE 18
 
-#define USERNAME_LABEL_FONT_SIZE 14
-#define USERNAME_TOP_MARGIN 27
+#define USERNAME_LABEL_FONT_SIZE 15
+#define USERNAME_TOP_MARGIN 5
 
-#define FOLLOWERS_LABEL_FONT_SIZE 14
-#define FOLLOWERS_TOP_MARGIN 45
+#define FOLLOWERS_LABEL_FONT_SIZE 15
+#define FOLLOWERS_TOP_MARGIN 25
 
-#define AVATAR_BACKGROUND_TOP_MARGIN 4
-#define AVATAR_BACKGROUND_LEFT_MARGIN 4
+#define LOCATION_LABEL_FONT_SIZE 14
+#define LOCATION_TOP_MARGIN 40
 
-#define AVATAR_LEFT_MARGIN 7
-#define AVATAR_TOP_MARGIN 7
-#define AVATAR_WIDTH 58
-#define AVATAR_HEIGHT 58
+#define AVATAR_WIDTH 48
+#define AVATAR_HEIGHT 48
 
     UIColor * nameLabelTextColor = nil;
     UIFont * nameLabelFont = [UIFont boldSystemFontOfSize:NAME_LABEL_FONT_SIZE];
 
 	UIColor * usernameLabelTextColor = nil;
 	UIFont * usernameLabelFont =
-	    [UIFont systemFontOfSize:USERNAME_LABEL_FONT_SIZE];
+	    [UIFont boldSystemFontOfSize:USERNAME_LABEL_FONT_SIZE];
 
 	UIColor * followersLabelTextColor = nil;
 	UIFont * followersLabelFont =
 	    [UIFont systemFontOfSize:FOLLOWERS_LABEL_FONT_SIZE];
+	UIFont * followersBoldLabelFont =
+	    [UIFont boldSystemFontOfSize:FOLLOWERS_LABEL_FONT_SIZE];
 
     if (self.highlighted) {
 		nameLabelTextColor = [UIColor whiteColor];
@@ -107,67 +111,58 @@ static UIImage * avatarBackgroundImage;
 	CGPoint point;
     CGFloat labelWidth = landscape ? LABEL_WIDTH_LANDSCAPE : LABEL_WIDTH;
 
-    NSString * username =
-        [NSString stringWithFormat:[[self class] usernameFormatString],
-        user.username];
-    if (!self.highlighted) {
-    	// draw white drop shadows
-    	if ([SettingsReader displayTheme] == kDisplayThemeLight) {
-        	[[UIColor whiteColor] set];
-        	point = CGPointMake(boundsX + LEFT_MARGIN, TOP_MARGIN + 1);
-        	[user.name drawAtPoint:point forWidth:labelWidth
-        	    withFont:nameLabelFont minFontSize:NAME_LABEL_FONT_SIZE
-        	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
-        	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
-        	point =
-        	    CGPointMake(boundsX + LEFT_MARGIN, USERNAME_TOP_MARGIN + 1);
-        	[username drawAtPoint:point forWidth:labelWidth
-        	    withFont:usernameLabelFont minFontSize:USERNAME_LABEL_FONT_SIZE
-        	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
-        	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
-        	point =
-        	    CGPointMake(boundsX + LEFT_MARGIN, FOLLOWERS_TOP_MARGIN + 1);
-            [[user followersDescription] drawAtPoint:point forWidth:labelWidth
-        	    withFont:followersLabelFont
-        	    minFontSize:FOLLOWERS_LABEL_FONT_SIZE
-        	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
-        	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
-	    }
-    }
-
 	[nameLabelTextColor set];
 	point =
 	    CGPointMake(boundsX + LEFT_MARGIN, TOP_MARGIN);
-	[user.name drawAtPoint:point forWidth:labelWidth
+	[user.username drawAtPoint:point forWidth:labelWidth
 	    withFont:nameLabelFont minFontSize:NAME_LABEL_FONT_SIZE
 	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
 	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
 
+    CGSize nameLabelSize = [user.username sizeWithFont:nameLabelFont];
 	[usernameLabelTextColor set];
 	point =
-	    CGPointMake(boundsX + LEFT_MARGIN, USERNAME_TOP_MARGIN);
-	[username drawAtPoint:point forWidth:labelWidth
+	    CGPointMake(boundsX + nameLabelSize.width + LEFT_MARGIN + 4,
+	    USERNAME_TOP_MARGIN);
+	[user.name drawAtPoint:point forWidth:labelWidth - nameLabelSize.width
 	    withFont:usernameLabelFont minFontSize:USERNAME_LABEL_FONT_SIZE
 	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
 	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
 
+    //
+    // Draw following/followers label
+    //
 	[followersLabelTextColor set];
-	point =
-	    CGPointMake(boundsX + LEFT_MARGIN, FOLLOWERS_TOP_MARGIN);
-    [[user followersDescription] drawAtPoint:point forWidth:labelWidth
-	    withFont:followersLabelFont minFontSize:FOLLOWERS_LABEL_FONT_SIZE
-	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
-	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
+	point = CGPointMake(boundsX + LEFT_MARGIN, FOLLOWERS_TOP_MARGIN);
 
-	point =
-        CGPointMake(boundsX + AVATAR_BACKGROUND_LEFT_MARGIN,
-        AVATAR_BACKGROUND_TOP_MARGIN);
-    [[[self class] avatarBackgroundImage] drawAtPoint:point];
+    NSString * followingCountString =
+        [[[self class] formatter] stringFromNumber:user.friendsCount];
+    [followingCountString drawAtPoint:point withFont:followersBoldLabelFont];
 
-    CGRect avatarRect =
-        CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN,
-        AVATAR_WIDTH, AVATAR_HEIGHT);
-    [avatar drawInRect:avatarRect withRoundedCornersWithRadius:6.0];
+    CGSize size = [followingCountString sizeWithFont:followersBoldLabelFont];
+    CGFloat width = size.width;
+    point = CGPointMake(boundsX + LEFT_MARGIN + width, FOLLOWERS_TOP_MARGIN);
+
+    NSString * followingFormatString = @" following, ";
+    [followingFormatString drawAtPoint:point withFont:followersLabelFont];
+
+    size = [followingFormatString sizeWithFont:followersLabelFont];
+    width += size.width;
+    point = CGPointMake(boundsX + LEFT_MARGIN + width, FOLLOWERS_TOP_MARGIN);
+
+    NSString * followersCountString =
+        [[[self class] formatter] stringFromNumber:user.followersCount];
+    [followersCountString drawAtPoint:point withFont:followersBoldLabelFont];
+
+    size = [followersCountString sizeWithFont:followersBoldLabelFont];
+    width += size.width;
+    point = CGPointMake(boundsX + LEFT_MARGIN + width, FOLLOWERS_TOP_MARGIN);
+
+    NSString * followersFormatString = @" followers";
+    [followersFormatString drawAtPoint:point withFont:followersLabelFont];
+
+    CGRect avatarRect = CGRectMake(0, 0, AVATAR_WIDTH, AVATAR_HEIGHT);
+    [avatar drawInRect:avatarRect];
 }
 
 - (void)setUser:(User *)aUser
@@ -203,8 +198,7 @@ static UIImage * avatarBackgroundImage;
     if (!lighterTextColor)
         lighterTextColor =
             [SettingsReader displayTheme] == kDisplayThemeDark ?
-            [UIColor twitchLightLightGrayColor] :
-            [[UIColor colorWithRed:.4 green:.4 blue:.4 alpha:1] retain];
+            [UIColor twitchLightLightGrayColor] : [UIColor grayColor];
 
     return lighterTextColor;
 }
@@ -219,13 +213,14 @@ static UIImage * avatarBackgroundImage;
     return darkerTextColor;
 }
 
-+ (UIImage *)avatarBackgroundImage
++ (NSNumberFormatter *)formatter
 {
-    if (!avatarBackgroundImage)
-        avatarBackgroundImage =
-            [[UIImage imageNamed:@"AvatarBackground.png"] retain];
+    if (!formatter) {
+        formatter = [[NSNumberFormatter alloc] init];
+        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    }
 
-    return avatarBackgroundImage;
+    return formatter;
 }
 
 @end

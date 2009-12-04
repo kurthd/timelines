@@ -27,7 +27,7 @@
 }
 @end
 
-#define ROW_HEIGHT 72
+#define ROW_HEIGHT 48
 
 @interface UserListTableViewController ()
 
@@ -117,18 +117,13 @@ static UIImage * defaultAvatar;
 - (UITableViewCell *)tableView:(UITableView *)tableView
     cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString * cellIdentifier =
-        indexPath.row % 2 == 0 ?
-        @"UserSummaryTableViewCellLight" :
-        @"UserSummaryTableViewCellDark";
+    NSString * cellIdentifier = @"UserSummaryTableViewCell";
 
     UserSummaryTableViewCell * cell =
         (UserSummaryTableViewCell *)
         [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        UIColor * cellColor =
-            indexPath.row % 2 == 0 ?
-            [[self class] lightCellColor] : [[self class] darkCellColor];
+        UIColor * cellColor = [[self class] lightCellColor];
         cell =
             [[[UserSummaryTableViewCell alloc]
             initWithStyle:UITableViewCellStyleDefault
@@ -262,15 +257,13 @@ static UIImage * defaultAvatar;
 + (UIColor *)lightCellColor
 {
     return [SettingsReader displayTheme] == kDisplayThemeDark ?
-        [UIColor twitchDarkGrayColor] :
-        [UIColor whiteColor];
+        [UIColor defaultDarkThemeCellColor] : [UIColor whiteColor];
 }
 
 + (UIColor *)darkCellColor
 {
     return [SettingsReader displayTheme] == kDisplayThemeDark ?
-        [UIColor defaultDarkThemeCellColor] :
-        [UIColor darkCellBackgroundColor];
+        [UIColor defaultDarkThemeCellColor] : [UIColor darkCellBackgroundColor];
 }
 
 @end
