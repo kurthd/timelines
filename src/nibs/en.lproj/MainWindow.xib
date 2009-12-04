@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="256"/>
+			<integer value="258"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -53,8 +53,8 @@
 			<object class="IBUITabBarController" id="1034742383">
 				<object class="IBUISimulatedTabBarMetrics" key="IBUISimulatedBottomBarMetrics"/>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
-				<object class="IBUINavigationController" key="IBUISelectedViewController" id="63658088">
-					<object class="IBUITabBarItem" key="IBUITabBarItem" id="1046915207">
+				<object class="IBUINavigationController" key="IBUISelectedViewController" id="1047219421">
+					<object class="IBUITabBarItem" key="IBUITabBarItem" id="380465899">
 						<string key="IBUITitle">Profile</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
@@ -64,7 +64,7 @@
 					</object>
 					<reference key="IBUIParentViewController" ref="1034742383"/>
 					<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
-					<object class="IBUINavigationBar" key="IBUINavigationBar" id="912228384">
+					<object class="IBUINavigationBar" key="IBUINavigationBar" id="8523069">
 						<nil key="NSNextResponder"/>
 						<int key="NSvFlags">256</int>
 						<string key="NSFrameSize">{0, 0}</string>
@@ -74,12 +74,20 @@
 					</object>
 					<object class="NSMutableArray" key="IBUIViewControllers">
 						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="IBUIViewController" id="205426899">
-							<object class="IBUINavigationItem" key="IBUINavigationItem" id="900543151">
+						<object class="IBUIViewController" id="1060339271">
+							<object class="IBUINavigationItem" key="IBUINavigationItem" id="370519425">
 								<reference key="IBUINavigationBar"/>
 								<string key="IBUITitle">My Profile</string>
+								<object class="IBUIBarButtonItem" key="IBUILeftBarButtonItem" id="953636466">
+									<int key="IBUIStyle">1</int>
+									<int key="IBUISystemItemIdentifier">13</int>
+								</object>
+								<object class="IBUIBarButtonItem" key="IBUIRightBarButtonItem" id="170718183">
+									<int key="IBUIStyle">1</int>
+									<int key="IBUISystemItemIdentifier">7</int>
+								</object>
 							</object>
-							<reference key="IBUIParentViewController" ref="63658088"/>
+							<reference key="IBUIParentViewController" ref="1047219421"/>
 						</object>
 					</object>
 				</object>
@@ -323,7 +331,7 @@
 							</object>
 						</object>
 					</object>
-					<reference ref="63658088"/>
+					<reference ref="1047219421"/>
 					<object class="IBUINavigationController" id="248843575">
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="803386647">
 							<int key="IBUITag">6</int>
@@ -504,9 +512,17 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">profileNetAwareViewController</string>
 						<reference key="source" ref="664661524"/>
-						<reference key="destination" ref="205426899"/>
+						<reference key="destination" ref="1060339271"/>
 					</object>
 					<int key="connectionID">260</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">composeTweet:</string>
+						<reference key="source" ref="170718183"/>
+						<reference key="destination" ref="664661524"/>
+					</object>
+					<int key="connectionID">263</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -550,7 +566,7 @@
 							<reference ref="54541401"/>
 							<reference ref="106744414"/>
 							<reference ref="248843575"/>
-							<reference ref="63658088"/>
+							<reference ref="1047219421"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -877,38 +893,53 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">255</int>
-						<reference key="object" ref="63658088"/>
+						<reference key="object" ref="1047219421"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="205426899"/>
-							<reference ref="912228384"/>
-							<reference ref="1046915207"/>
+							<reference ref="1060339271"/>
+							<reference ref="8523069"/>
+							<reference ref="380465899"/>
 						</object>
 						<reference key="parent" ref="1034742383"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">256</int>
-						<reference key="object" ref="205426899"/>
+						<reference key="object" ref="1060339271"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="900543151"/>
+							<reference ref="370519425"/>
 						</object>
-						<reference key="parent" ref="63658088"/>
+						<reference key="parent" ref="1047219421"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">257</int>
-						<reference key="object" ref="912228384"/>
-						<reference key="parent" ref="63658088"/>
+						<reference key="object" ref="8523069"/>
+						<reference key="parent" ref="1047219421"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">258</int>
-						<reference key="object" ref="900543151"/>
-						<reference key="parent" ref="205426899"/>
+						<reference key="object" ref="370519425"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="953636466"/>
+							<reference ref="170718183"/>
+						</object>
+						<reference key="parent" ref="1060339271"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">259</int>
-						<reference key="object" ref="1046915207"/>
-						<reference key="parent" ref="63658088"/>
+						<reference key="object" ref="380465899"/>
+						<reference key="parent" ref="1047219421"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">261</int>
+						<reference key="object" ref="953636466"/>
+						<reference key="parent" ref="370519425"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">262</int>
+						<reference key="object" ref="170718183"/>
+						<reference key="parent" ref="370519425"/>
 					</object>
 				</object>
 			</object>
@@ -970,6 +1001,8 @@
 					<string>256.IBPluginDependency</string>
 					<string>257.IBPluginDependency</string>
 					<string>258.IBPluginDependency</string>
+					<string>261.IBPluginDependency</string>
+					<string>262.IBPluginDependency</string>
 					<string>3.CustomClassName</string>
 					<string>3.IBPluginDependency</string>
 				</object>
@@ -978,7 +1011,7 @@
 					<string>UIApplication</string>
 					<string>UIResponder</string>
 					<string>RotatableTabBarController</string>
-					<string>{{834, 551}, {320, 480}}</string>
+					<string>{{813, 549}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1035,6 +1068,8 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>TwitchAppDelegate</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
@@ -1055,7 +1090,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">260</int>
+			<int key="maxID">263</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -168,6 +168,7 @@ enum {
     [listsDisplayMgr release];
     [trendDisplayMgr release];
     [trendsViewController release];
+    [profileDisplayMgr release];
 
     [composeTweetDisplayMgr release];
 
@@ -769,7 +770,60 @@ enum {
 
 - (void)initProfileTab
 {
-    
+    NSLog(@"Initializing profile tab");
+
+    profileNetAwareViewController.navigationController.navigationBar.barStyle =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        UIBarStyleBlackOpaque : UIBarStyleDefault;
+
+    UserInfoViewController * profileViewController =
+        [[UserInfoViewController alloc] init];
+    profileNetAwareViewController.targetViewController = profileViewController;
+
+    TwitterCredentials * creds =
+        self.activeCredentials ? self.activeCredentials.credentials : nil;
+
+    TwitterService * service =
+        [[[TwitterService alloc]
+        initWithTwitterCredentials:creds
+        context:[self managedObjectContext]] autorelease];
+
+    // Don't autorelease
+    [[CredentialsActivatedPublisher alloc]
+        initWithListener:service action:@selector(setCredentials:)];
+
+    UINavigationController * navController =
+        [self getNavControllerForController:profileNetAwareViewController];
+
+    UserListDisplayMgrFactory * userListFactory =
+        [[[UserListDisplayMgrFactory alloc]
+        initWithContext:[self managedObjectContext]
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr contactCache:contactCache
+        contactMgr:contactMgr]
+        autorelease];
+
+    profileDisplayMgr =
+        [[ProfileDisplayMgr alloc]
+        initWithNetAwareController:profileNetAwareViewController
+        userInfoController:profileViewController
+        service:service context:[self managedObjectContext]
+        composeTweetDisplayMgr:composeTweetDisplayMgr
+        timelineFactory:timelineDisplayMgrFactory
+        userListFactory:userListFactory
+        navigationController:navController];
+    service.delegate = profileDisplayMgr;
+    profileNetAwareViewController.delegate = profileDisplayMgr;
+    profileViewController.delegate = profileDisplayMgr;
+
+    [profileDisplayMgr setCredentials:creds];
+    // Don't autorelease
+    [[CredentialsActivatedPublisher alloc]
+        initWithListener:profileDisplayMgr action:@selector(setCredentials:)];
+
+    UIBarButtonItem * refreshButton =
+        profileNetAwareViewController.navigationItem.leftBarButtonItem;
+    refreshButton.target = profileDisplayMgr;
+    refreshButton.action = @selector(refreshProfile);
 }
 
 - (void)initSearchTab

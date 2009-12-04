@@ -916,6 +916,8 @@
 		914EA20210C82F26007036F2 /* RetweetTimelineIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 914EA20010C82F26007036F2 /* RetweetTimelineIndicator.png */; };
 		914EA22310C83E44007036F2 /* RetweetTimelineIndicatorHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914EA22210C83E44007036F2 /* RetweetTimelineIndicatorHighlighted.png */; };
 		914EA22410C83E44007036F2 /* RetweetTimelineIndicatorHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 914EA22210C83E44007036F2 /* RetweetTimelineIndicatorHighlighted.png */; };
+		914EA3DB10C8BD6F007036F2 /* ProfileDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 914EA3DA10C8BD6F007036F2 /* ProfileDisplayMgr.m */; };
+		914EA3DC10C8BD6F007036F2 /* ProfileDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 914EA3DA10C8BD6F007036F2 /* ProfileDisplayMgr.m */; };
 		9152E1571014F86C0033B63B /* DirectMessageInboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1551014F86C0033B63B /* DirectMessageInboxView.xib */; };
 		9152E15A1014F8850033B63B /* DirectMessageConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1581014F8850033B63B /* DirectMessageConversationView.xib */; };
 		9152E239101557AC0033B63B /* NewMessagesDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9152E238101557AC0033B63B /* NewMessagesDot.png */; };
@@ -1705,6 +1707,8 @@
 		914EA11510C729B0007036F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/RetweetCell.xib; sourceTree = "<group>"; };
 		914EA20010C82F26007036F2 /* RetweetTimelineIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RetweetTimelineIndicator.png; path = images/RetweetTimelineIndicator.png; sourceTree = "<group>"; };
 		914EA22210C83E44007036F2 /* RetweetTimelineIndicatorHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RetweetTimelineIndicatorHighlighted.png; path = images/RetweetTimelineIndicatorHighlighted.png; sourceTree = "<group>"; };
+		914EA3D910C8BD6F007036F2 /* ProfileDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileDisplayMgr.h; path = "user-info/ProfileDisplayMgr.h"; sourceTree = "<group>"; };
+		914EA3DA10C8BD6F007036F2 /* ProfileDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileDisplayMgr.m; path = "user-info/ProfileDisplayMgr.m"; sourceTree = "<group>"; };
 		9152E14C1014F6B70033B63B /* DirectMessagesDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessagesDisplayMgr.h; path = "direct-messages/DirectMessagesDisplayMgr.h"; sourceTree = "<group>"; };
 		9152E14D1014F6B70033B63B /* DirectMessagesDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessagesDisplayMgr.m; path = "direct-messages/DirectMessagesDisplayMgr.m"; sourceTree = "<group>"; };
 		9152E14F1014F8260033B63B /* DirectMessageInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageInboxViewController.h; path = "direct-messages/DirectMessageInboxViewController.h"; sourceTree = "<group>"; };
@@ -3357,6 +3361,8 @@
 				91B770E710BC67F40014172A /* ContactCache.m */,
 				91B771F510BD8D5B0014172A /* ContactCachePersistenceStore.h */,
 				91B771F610BD8D5B0014172A /* ContactCachePersistenceStore.m */,
+				914EA3D910C8BD6F007036F2 /* ProfileDisplayMgr.h */,
+				914EA3DA10C8BD6F007036F2 /* ProfileDisplayMgr.m */,
 			);
 			name = "user-info";
 			sourceTree = "<group>";
@@ -4179,6 +4185,7 @@
 				0536EECD10C826CB00479158 /* TrendsTableViewCell.m in Sources */,
 				0536EED110C8279500479158 /* TrendsTableViewCellView.m in Sources */,
 				0536F04110C8972F00479158 /* TrendDisplayMgr.m in Sources */,
+				914EA3DC10C8BD6F007036F2 /* ProfileDisplayMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4516,6 +4523,7 @@
 				0536EECE10C826CB00479158 /* TrendsTableViewCell.m in Sources */,
 				0536EED210C8279500479158 /* TrendsTableViewCellView.m in Sources */,
 				0536F04210C8972F00479158 /* TrendDisplayMgr.m in Sources */,
+				914EA3DB10C8BD6F007036F2 /* ProfileDisplayMgr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

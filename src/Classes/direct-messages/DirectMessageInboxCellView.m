@@ -100,7 +100,7 @@ static UIImage * dotImage;
 		previewLabelTextColor = 
 		    [SettingsReader displayTheme] == kDisplayThemeDark ?
 		    [UIColor twitchLightLightGrayColor] :
-		    [UIColor twitchGrayColor];
+		    [UIColor grayColor];
 		self.backgroundColor =
 		    [SettingsReader displayTheme] == kDisplayThemeDark ?
 		    [UIColor defaultDarkThemeCellColor] :

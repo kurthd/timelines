@@ -23,6 +23,7 @@
 #import "TwitterCredentials.h"
 #import "ContactCache.h"
 #import "ContactMgr.h"
+#import "ProfileDisplayMgr.h"
 
 @class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class SearchBarDisplayMgr;
@@ -86,6 +87,7 @@
 
     SearchBarDisplayMgr * searchBarDisplayMgr;
     FindPeopleSearchDisplayMgr * findPeopleSearchDisplayMgr;
+    ProfileDisplayMgr * profileDisplayMgr;
     AccountsDisplayMgr * accountsDisplayMgr;
     MentionTimelineDisplayMgr * mentionDisplayMgr;
     ListsDisplayMgr * listsDisplayMgr;
