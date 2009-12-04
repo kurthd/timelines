@@ -829,8 +829,12 @@ enum {
     refreshButton.target = profileDisplayMgr;
     refreshButton.action = @selector(refreshProfile);
     
-    if (creds)
-        [profileDisplayMgr setNewProfileUsername:creds.username user:nil];
+    if (creds) {
+        User * user =
+            [User userWithUsername:creds.username
+            context:[self managedObjectContext]];
+        [profileDisplayMgr setNewProfileUsername:creds.username user:user];
+    }
 }
 
 - (void)initSearchTab
@@ -1140,11 +1144,17 @@ enum {
         [self initProfileTab];
     } else if (viewController == tabBarController.moreNavigationController) {
         NSLog(@"Selected more tab; initializing everything under 'More'");
-        NSArray * viewControllers = tabBarController.viewControllers;
-        for (NSInteger i = 4; i < [viewControllers count]; i++) {
-            UIViewController * vc = [viewControllers objectAtIndex:i];
-            [self initTabForViewController:vc];
-        }
+        [self performSelector:@selector(initTabsUnderMore) withObject:nil
+            afterDelay:0];
+    }
+}
+
+- (void)initTabsUnderMore
+{
+    NSArray * viewControllers = tabBarController.viewControllers;
+    for (NSInteger i = 4; i < [viewControllers count]; i++) {
+        UIViewController * vc = [viewControllers objectAtIndex:i];
+        [self initTabForViewController:vc];
     }
 }
 
@@ -2049,7 +2059,10 @@ enum {
 
     [listsDisplayMgr resetState];
 
-    [profileDisplayMgr setNewProfileUsername:activeAccount.username user:nil];
+    User * user =
+        [User userWithUsername:activeAccount.username
+        context:[self managedObjectContext]];
+    [profileDisplayMgr setNewProfileUsername:activeAccount.username user:user];
 }
 
 #pragma mark Accessors

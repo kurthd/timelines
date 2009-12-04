@@ -97,6 +97,8 @@
         timelineDisplayMgrFactory = [timelineFactory retain];
         userListDisplayMgrFactory = [aUserListFactory retain];
         navigationController = [aNavigationController retain];
+
+        userInfoController.followingEnabled = NO;
     }
 
     return self;
@@ -148,24 +150,24 @@
 
 - (void)startedFollowingUsername:(NSString *)username
 {
-
+    // Don't care
 }
 
 - (void)failedToStartFollowingUsername:(NSString *)username
     error:(NSError *)error
 {
-    
+    // Don't care
 }
 
 - (void)stoppedFollowingUsername:(NSString *)username
 {
-    
+    // Don't care
 }
 
 - (void)failedToStopFollowingUsername:(NSString *)username
     error:(NSError *)error
 {
-    
+    // Don't care
 }
 
 #pragma mark UserInfoViewControllerDelegate implementation
@@ -491,6 +493,7 @@
     freshProfile = NO;
     self.username = aUsername;
     [netAwareController setCachedDataAvailable:!!user];
+    [userInfoController setUser:user];
 }
 
 - (void)refreshProfile
