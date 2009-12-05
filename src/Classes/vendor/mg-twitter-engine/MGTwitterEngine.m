@@ -1838,10 +1838,10 @@
 
 - (NSString *)getSearchResultsForQuery:(NSString *)query
 {
-    return [self getSearchResultsForQuery:query sinceID:0 startingAtPage:0 count:0]; // zero means default
+    return [self getSearchResultsForQuery:query sinceID:nil maxID:nil startingAtPage:0 count:0]; // zero means default
 }
 
-- (NSString *)getSearchResultsForQuery:(NSString *)query sinceID:(NSString *)updateID startingAtPage:(int)pageNum count:(int)count
+- (NSString *)getSearchResultsForQuery:(NSString *)query sinceID:(NSString *)updateID maxID:(NSString *)maxID startingAtPage:(int)pageNum count:(int)count
 {
     NSString *path = [NSString stringWithFormat:@"search.%@", API_FORMAT];
     
@@ -1850,7 +1850,10 @@
 		[params setObject:query forKey:@"q"];
 	}
     if ([updateID longLongValue] > 0) {
-        [params setObject:[NSString stringWithFormat:@"%@", updateID] forKey:@"since_id"];
+        [params setObject:updateID forKey:@"since_id"];
+    }
+    if ([maxID longLongValue] > 0) {
+        [params setObject:maxID forKey:@"max_id"];
     }
 	if (pageNum > 0) {
         [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];
@@ -1884,6 +1887,7 @@
 
 - (NSString *)getSearchResultsForQuery:(NSString *)query
                                sinceID:(NSString *)updateID
+                                 maxID:(NSString *)maxID
                         startingAtPage:(int)pageNum
                                  count:(int)count
                               latitude:(float)latitude
@@ -1899,6 +1903,9 @@
 	}
     if ([updateID longLongValue] > 0) {
         [params setObject:[NSString stringWithFormat:@"%@", updateID] forKey:@"since_id"];
+    }
+    if ([maxID longLongValue] > 0) {
+        [params setObject:maxID forKey:@"max_id"];
     }
 	if (pageNum > 0) {
         [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];

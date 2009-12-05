@@ -15,6 +15,8 @@
     NSObject<TimelineDataSourceDelegate> * delegate;
     TwitterService * service;
     NSString * query;
+    NSString * cursor;
+    NSNumber * page;
 }
 
 @property (nonatomic, assign) NSObject<TimelineDataSourceDelegate> * delegate;

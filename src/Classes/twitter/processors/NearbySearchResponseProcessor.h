@@ -9,7 +9,7 @@
 @interface NearbySearchResponseProcessor : ResponseProcessor
 {
     NSString * query;
-    NSNumber * page;
+    NSString * cursor;
     NSNumber * latitude;
     NSNumber * longitude;
     NSNumber * radius;
@@ -19,7 +19,7 @@
 }
 
 + (id)processorWithQuery:(NSString *)aQuery
-                    page:(NSNumber *)aPage
+                  cursor:(NSString *)aCursor
                 latitude:(NSNumber *)latitude
                longitude:(NSNumber *)longitude
                   radius:(NSNumber *)radius
@@ -27,7 +27,7 @@
                  context:(NSManagedObjectContext *)aContext
                 delegate:(id<TwitterServiceDelegate>)aDelegate;
 - (id)initWithQuery:(NSString *)aQuery
-               page:(NSNumber *)aPage
+             cursor:(NSString *)aCursor
            latitude:(NSNumber *)latitude
           longitude:(NSNumber *)longitude
              radius:(NSNumber *)radius

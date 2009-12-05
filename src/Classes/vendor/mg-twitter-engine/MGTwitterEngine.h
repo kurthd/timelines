@@ -217,11 +217,12 @@
 
 // Search method - http://apiwiki.twitter.com/Search+API+Documentation#Search
 
-- (NSString *)getSearchResultsForQuery:(NSString *)query sinceID:(NSString *)updateID startingAtPage:(int)pageNum count:(int)count; // search
+- (NSString *)getSearchResultsForQuery:(NSString *)query sinceID:(NSString *)updateID maxID:(NSString *)maxID startingAtPage:(int)pageNum count:(int)count; // search
 
 // nearby search
 - (NSString *)getSearchResultsForQuery:(NSString *)query
                                sinceID:(NSString *)updateID
+                                 maxID:(NSString *)maxID
                         startingAtPage:(int)pageNum
                                  count:(int)count
                               latitude:(float)latitude

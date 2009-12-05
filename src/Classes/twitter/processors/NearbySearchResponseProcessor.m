@@ -28,7 +28,7 @@
 @interface NearbySearchResponseProcessor ()
 
 @property (nonatomic, copy) NSString * query;
-@property (nonatomic, copy) NSNumber * page;
+@property (nonatomic, copy) NSString * cursor;
 @property (nonatomic, copy) NSNumber * latitude;
 @property (nonatomic, copy) NSNumber * longitude;
 @property (nonatomic, copy) NSNumber * radius;
@@ -40,12 +40,12 @@
 
 @implementation NearbySearchResponseProcessor
 
-@synthesize query, page;
+@synthesize query, cursor;
 @synthesize latitude, longitude, radius, radiusIsInMiles;
 @synthesize delegate, context;
 
 + (id)processorWithQuery:(NSString *)aQuery
-                    page:(NSNumber *)aPage
+                  cursor:(NSString *)aCursor
                 latitude:(NSNumber *)aLatitude
                longitude:(NSNumber *)aLongitude
                   radius:(NSNumber *)aRadius
@@ -54,7 +54,7 @@
                 delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithQuery:aQuery
-                                            page:aPage
+                                          cursor:aCursor
                                         latitude:aLatitude
                                        longitude:aLongitude
                                           radius:aRadius
@@ -67,7 +67,7 @@
 - (void)dealloc
 {
     self.query = nil;
-    self.page = nil;
+    self.cursor = nil;
     self.latitude = nil;
     self.longitude = nil;
     self.radius = nil;
@@ -78,7 +78,7 @@
 }
 
 - (id)initWithQuery:(NSString *)aQuery
-               page:(NSNumber *)aPage
+             cursor:(NSString *)aCursor
            latitude:(NSNumber *)aLatitude
           longitude:(NSNumber *)aLongitude
              radius:(NSNumber *)aRadius
@@ -88,7 +88,7 @@
 {
     if (self = [super init]) {
         self.query = aQuery;
-        self.page = aPage;
+        self.cursor = aCursor;
         self.latitude = aLatitude;
         self.longitude = aLongitude;
         self.radius = aRadius;
@@ -165,13 +165,22 @@
         [tweets addObject:tweet];
     }
 
+
+    NSString * nextCursor = nil;
+    if (tweets.count) {
+        Tweet * tweet = [tweets objectAtIndex:tweets.count - 1];
+        long long val = [tweet.identifier longLongValue] - 1;
+        nextCursor = [[NSNumber numberWithLongLong:val] description];
+    }
+
     SEL sel =
-        @selector(nearbySearchResultsReceived:forQuery:page:latitude:\
-        longitude:radius:radiusIsInMiles:);
+        @selector(nearbySearchResultsReceived:nextCursor:forQuery:\
+        cursor:latitude:longitude:radius:radiusIsInMiles:);
     if ([delegate respondsToSelector:sel])
         [delegate nearbySearchResultsReceived:tweets
+                                   nextCursor:nextCursor
                                      forQuery:query
-                                         page:page
+                                       cursor:cursor
                                      latitude:latitude
                                     longitude:longitude
                                        radius:radius
@@ -185,11 +194,11 @@
     BOOL inMiles = radiusIsInMiles.boolValue;
 
     SEL sel =
-        @selector(failedToFetchNearbySearchResultsForQuery:page:latitude:\
+        @selector(failedToFetchNearbySearchResultsForQuery:cursor:latitude:\
         longitude:radius:radiusIsInMiles:error:);
     if ([delegate respondsToSelector:sel])
         [delegate failedToFetchNearbySearchResultsForQuery:query
-                                                      page:page
+                                                    cursor:cursor
                                                   latitude:latitude
                                                  longitude:longitude
                                                     radius:radius

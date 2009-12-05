@@ -16,6 +16,8 @@
 
 @property (nonatomic, copy) NSArray * searchResults;
 @property (nonatomic, copy) NSString * queryString;
+@property (nonatomic, copy) NSString * cursor;
+@property (nonatomic, copy) NSNumber * page;
 @property (nonatomic, copy) NSString * queryTitle;
 @property (nonatomic, copy) NSNumber * updateId;
 
@@ -25,8 +27,8 @@
 
 @synthesize networkAwareViewController;
 @synthesize service;
-@synthesize searchResults, queryString, queryTitle, nearbySearchLocation,
-    updateId;
+@synthesize searchResults, queryString, cursor, page, queryTitle,
+    nearbySearchLocation, updateId;
 @synthesize dataSourceDelegate;
 
 #pragma mark Initialization
@@ -47,6 +49,8 @@
     self.service = nil;
     self.searchResults = nil;
     self.queryString = nil;
+    self.cursor = nil;
+    self.page = nil;
     self.queryTitle = nil;
     self.updateId = nil;
     self.nearbySearchLocation = nil;
@@ -60,6 +64,8 @@
 {
     self.searchResults = nil;
     self.queryString = aQueryString;
+    self.cursor = nil;
+    self.page = nil;
     self.queryTitle = aTitle;
 }
 
@@ -67,6 +73,8 @@
 {
     self.searchResults = nil;
     self.queryString = nil;
+    self.cursor = nil;
+    self.page = nil;
     self.queryTitle = nil;
 }
 
@@ -98,10 +106,11 @@
 
         NSLog(@"Searching for '%@' in a radius of %@km.", self.queryString,
             radius);
-        [service searchFor:self.queryString page:page latitude:latitude
-            longitude:longitude radius:radius radiusIsInMiles:NO];
+        [service searchFor:self.queryString cursor:self.cursor
+            latitude:latitude longitude:longitude radius:radius
+            radiusIsInMiles:NO];
     } else
-        [service searchFor:self.queryString page:page];
+        [service searchFor:self.queryString cursor:self.cursor];
 }
 
 - (TwitterCredentials *)credentials
@@ -122,11 +131,13 @@
 #pragma mark TwitterServiceDelegate
 
 - (void)searchResultsReceived:(NSArray *)newSearchResults
+                   nextCursor:(NSString *)nextCursor
                      forQuery:(NSString *)query
-                         page:(NSNumber *)page
+                       cursor:(NSString *)cursor
 {
     if ([query isEqualToString:self.queryString] &&
         !self.nearbySearchLocation) {
+        self.cursor = nextCursor;
         self.searchResults = newSearchResults;
         [self.dataSourceDelegate timeline:self.searchResults
                      fetchedSinceUpdateId:self.updateId
@@ -135,7 +146,7 @@
 }
 
 - (void)failedToFetchSearchResultsForQuery:(NSString *)query
-                                      page:(NSNumber *)page
+                                    cursor:(NSString *)cursor
                                      error:(NSError *)error
 {
     if ([query isEqualToString:self.queryString] && !self.nearbySearchLocation)
@@ -145,14 +156,16 @@
 }
 
 - (void)nearbySearchResultsReceived:(NSArray *)newSearchResults
+                         nextCursor:(NSString *)nextCursor
                            forQuery:(NSString *)query
-                               page:(NSNumber *)page
+                             cursor:(NSString *)cursor
                            latitude:(NSNumber *)latitude
                           longitude:(NSNumber *)longitude
                              radius:(NSNumber *)radius
                     radiusIsInMiles:(BOOL)radiusIsInMiles
 {
     if ([query isEqualToString:self.queryString] && self.nearbySearchLocation) {
+        self.cursor = nextCursor;
         self.searchResults = newSearchResults;
         [self.dataSourceDelegate timeline:self.searchResults
                      fetchedSinceUpdateId:self.updateId
@@ -161,7 +174,7 @@
 }
 
 - (void)failedToFetchNearbySearchResultsForQuery:(NSString *)query
-                                            page:(NSNumber *)page
+                                          cursor:(NSString *)cursor
                                         latitude:(NSNumber *)latitude
                                        longitude:(NSNumber *)longitude
                                           radius:(NSNumber *)radius

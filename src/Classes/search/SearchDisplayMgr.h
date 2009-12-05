@@ -18,6 +18,8 @@
 
     NSArray * searchResults;
     NSString * queryString;
+    NSString * cursor;
+    NSNumber * page;  // only exists to give user class abstraction of pages
     NSString * queryTitle;
     CLLocation * nearbySearchLocation;
     NSNumber * updateId;

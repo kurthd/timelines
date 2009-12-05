@@ -5,13 +5,19 @@
 #import "NearbySearchDataSource.h"
 #import "Tweet.h"
 
+@interface NearbySearchDataSource ()
+@property (nonatomic, copy) NSNumber * page;
+@end
+
 @implementation NearbySearchDataSource
 
-@synthesize delegate, latitude, longitude, radiusInKm;
+@synthesize delegate, cursor, page, latitude, longitude, radiusInKm;
 
 - (void)dealloc
 {
     [service release];
+    [cursor release];
+    [page release];
     [latitude release];
     [longitude release];
     [radiusInKm release];
@@ -34,11 +40,12 @@
 
 #pragma mark TimelineDataSource implementation
 
-- (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page
+- (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)aPage
 {
+    self.page = aPage;
     NSLog(@"Nearby search data source: fetching timeline");
-    [service searchFor:@"" page:page latitude:latitude longitude:longitude
-        radius:radiusInKm radiusIsInMiles:NO];
+    [service searchFor:@"" cursor:cursor latitude:latitude
+        longitude:longitude radius:radiusInKm radiusIsInMiles:NO];
 }
 
 - (BOOL)readyForQuery
@@ -49,19 +56,21 @@
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)nearbySearchResultsReceived:(NSArray *)searchResults
+                         nextCursor:(NSString *)nextCursor
                            forQuery:(NSString *)query
-                               page:(NSNumber *)page
+                             cursor:(NSString *)cursor
                            latitude:(NSNumber *)latitude
                           longitude:(NSNumber *)longitude
                              radius:(NSNumber *)radius
                     radiusIsInMiles:(BOOL)radiusIsInMiles
 {
+    self.cursor = nextCursor;
     [delegate timeline:searchResults
         fetchedSinceUpdateId:[NSNumber numberWithInt:0] page:page];
 }
 
 - (void)failedToFetchNearbySearchResultsForQuery:(NSString *)searchResults
-                                            page:(NSNumber *)page
+                                          cursor:(NSString *)cursor
                                         latitude:(NSNumber *)latitude
                                        longitude:(NSNumber *)longitude
                                           radius:(NSNumber *)radius

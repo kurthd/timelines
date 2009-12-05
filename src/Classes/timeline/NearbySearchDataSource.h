@@ -14,12 +14,15 @@
 {
     NSObject<TimelineDataSourceDelegate> * delegate;
     TwitterService * service;
+    NSString * cursor;
+    NSNumber * page;  // only exists to give user class abstraction of pages
     NSNumber * latitude;
     NSNumber * longitude;
     NSNumber * radiusInKm;
 }
 
 @property (nonatomic, assign) NSObject<TimelineDataSourceDelegate> * delegate;
+@property (nonatomic, copy) NSString * cursor;
 @property (nonatomic, copy) NSNumber * latitude;
 @property (nonatomic, copy) NSNumber * longitude;
 @property (nonatomic, copy) NSNumber * radiusInKm;

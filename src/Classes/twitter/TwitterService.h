@@ -151,9 +151,10 @@
 
 #pragma mark Search
 
-- (void)searchFor:(NSString *)queryString page:(NSNumber *)page;
 - (void)searchFor:(NSString *)queryString
-             page:(NSNumber *)page
+           cursor:(NSString *)cursor;
+- (void)searchFor:(NSString *)queryString
+           cursor:(NSString *)cursor
          latitude:(NSNumber *)latitude
         longitude:(NSNumber *)longitude
            radius:(NSNumber *)radius

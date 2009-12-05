@@ -224,21 +224,23 @@ fetchedForListId:(NSNumber *)listId
 #pragma mark Search results
 
 - (void)searchResultsReceived:(NSArray *)newSearchResults
+                   nextCursor:(NSString *)nextCursor
                      forQuery:(NSString *)query
-                         page:(NSNumber *)page;
+                       cursor:(NSString *)cursor;
 - (void)failedToFetchSearchResultsForQuery:(NSString *)query
-                                      page:(NSNumber *)page
+                                    cursor:(NSString *)cursor
                                      error:(NSError *)error;
 
 - (void)nearbySearchResultsReceived:(NSArray *)searchResults
+                         nextCursor:(NSString *)nextCursor
                            forQuery:(NSString *)query
-                               page:(NSNumber *)page
+                             cursor:(NSString *)cursor
                            latitude:(NSNumber *)latitude
                           longitude:(NSNumber *)longitude
                              radius:(NSNumber *)radius
                     radiusIsInMiles:(BOOL)radiusIsInMiles;
 - (void)failedToFetchNearbySearchResultsForQuery:(NSString *)searchResults
-                                            page:(NSNumber *)page
+                                          cursor:(NSString *)cursor
                                         latitude:(NSNumber *)latitude
                                        longitude:(NSNumber *)longitude
                                           radius:(NSNumber *)radius

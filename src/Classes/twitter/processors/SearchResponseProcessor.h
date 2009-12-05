@@ -9,17 +9,19 @@
 @interface SearchResponseProcessor : ResponseProcessor
 {
     NSString * query;
+    NSString * cursor;
     NSNumber * page;
+    NSNumber * maxId;
     id<TwitterServiceDelegate> delegate;
     NSManagedObjectContext * context;
 }
 
 + (id)processorWithQuery:(NSString *)aQuery
-                    page:(NSNumber *)aPage
+                  cursor:(NSString *)aCursor
                  context:(NSManagedObjectContext *)aContext
                 delegate:(id<TwitterServiceDelegate>)aDelegate;
 - (id)initWithQuery:(NSString *)aQuery
-               page:(NSNumber *)aPage
+             cursor:(NSString *)aCursor
             context:(NSManagedObjectContext *)aContext
            delegate:(id<TwitterServiceDelegate>)aDelegate;
 

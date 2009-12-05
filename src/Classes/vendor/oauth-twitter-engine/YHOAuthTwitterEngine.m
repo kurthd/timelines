@@ -357,7 +357,8 @@
     NSURL *finalURL = [NSURL URLWithString:urlString];
     if (!finalURL) {
         return nil;
-    }
+    } else
+        NSLog(@"Sending: %@", finalURL);
 	
 	// --------------------------------------------------------------------------------
 	// modificaiton from the base clase

@@ -566,25 +566,27 @@ static NSMutableDictionary * oaTokens;
 
 #pragma mark Search
 
-- (void)searchFor:(NSString *)queryString page:(NSNumber *)page
+- (void)searchFor:(NSString *)queryString
+           cursor:(NSString *)cursor
 {
     ResponseProcessor * processor =
         [SearchResponseProcessor processorWithQuery:queryString
-                                               page:page
+                                             cursor:cursor
                                             context:context
                                            delegate:delegate];
 
     NSString * requestId =
         [twitter getSearchResultsForQuery:queryString
                                   sinceID:@"0"
-                           startingAtPage:[page integerValue]
-                                    count:0];
+                                    maxID:cursor
+                           startingAtPage:1
+                                    count:20];
 
     [self request:requestId isHandledBy:processor];
 }
 
 - (void)searchFor:(NSString *)queryString
-             page:(NSNumber *)page
+           cursor:(NSString *)cursor
          latitude:(NSNumber *)latitude
         longitude:(NSNumber *)longitude
            radius:(NSNumber *)radius
@@ -593,7 +595,7 @@ static NSMutableDictionary * oaTokens;
     NSNumber * inMiles = [NSNumber numberWithBool:radiusIsInMiles];
     ResponseProcessor * processor =
         [NearbySearchResponseProcessor processorWithQuery:queryString
-                                                     page:page
+                                                   cursor:cursor
                                                  latitude:latitude
                                                 longitude:longitude
                                                    radius:radius
@@ -604,8 +606,9 @@ static NSMutableDictionary * oaTokens;
     NSString * requestId =
         [twitter getSearchResultsForQuery:queryString
                                   sinceID:@"0"
-                           startingAtPage:[page integerValue]
-                                    count:0
+                                    maxID:cursor
+                           startingAtPage:1
+                                    count:20
                                  latitude:[latitude floatValue]
                                 longitude:[longitude floatValue]
                                    radius:[radius integerValue]

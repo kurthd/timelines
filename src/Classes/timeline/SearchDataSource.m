@@ -5,14 +5,21 @@
 #import "SearchDataSource.h"
 #import "Tweet.h"
 
+@interface SearchDataSource ()
+@property (nonatomic, copy) NSString * cursor;
+@property (nonatomic, copy) NSNumber * page;
+@end
+
 @implementation SearchDataSource
 
-@synthesize delegate, query;
+@synthesize delegate, query, cursor, page;
 
 - (void)dealloc
 {
     [service release];
     [query release];
+    [cursor release];
+    [page release];
     [super dealloc];
 }
 
@@ -29,12 +36,13 @@
 
 #pragma mark TimelineDataSource implementation
 
-- (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)page
+- (void)fetchTimelineSince:(NSNumber *)updateId page:(NSNumber *)aPage
 {
     if ([self readyForQuery]) {
         NSLog(@"Search data source: fetching timeline for user %@",
             query);
-        [service searchFor:query page:page];
+        [service searchFor:query cursor:self.cursor];
+        self.page = aPage;
     }
 }
 
@@ -46,17 +54,20 @@
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)searchResultsReceived:(NSArray *)newSearchResults
-    forQuery:(NSString *)query page:(NSNumber *)page
+                   nextCursor:(NSString *)nextCursor
+                     forQuery:(NSString *)query
+                       cursor:(NSString *)cursor
 {
+    self.cursor = nextCursor;
     [delegate timeline:newSearchResults
-        fetchedSinceUpdateId:[NSNumber numberWithInt:0] page:page];
+        fetchedSinceUpdateId:[NSNumber numberWithInt:0] page:self.page];
 }
 
 - (void)failedToFetchSearchResultsForQuery:(NSString *)query
-    page:(NSNumber *)page error:(NSError *)error
+    cursor:(NSString *)cursor error:(NSError *)error
 {
     [delegate failedToFetchTimelineSinceUpdateId:[NSNumber numberWithInt:0]
-        page:page error:error];
+        page:self.page error:error];
 }
 
 - (TwitterCredentials *)credentials
@@ -67,6 +78,18 @@
 - (void)setCredentials:(TwitterCredentials *)someCredentials
 {
     [service setCredentials:someCredentials];
+}
+
+#pragma mark Accessors
+
+- (void)setQuery:(NSString *)aQuery
+{
+    NSString * tmp = [aQuery copy];
+    [query release];
+    query = tmp;
+
+    self.cursor = nil;  // reset search pagination
+    self.page = nil;
 }
 
 @end

@@ -28,7 +28,7 @@
 @interface SearchResponseProcessor ()
 
 @property (nonatomic, copy) NSString * query;
-@property (nonatomic, copy) NSNumber * page;
+@property (nonatomic, copy) NSString * cursor;
 @property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 @property (nonatomic, retain) NSManagedObjectContext * context;
 
@@ -36,15 +36,15 @@
 
 @implementation SearchResponseProcessor
 
-@synthesize query, page, delegate, context;
+@synthesize query, cursor, delegate, context;
 
 + (id)processorWithQuery:(NSString *)aQuery
-                    page:(NSNumber *)aPage
+                  cursor:(NSString *)aCursor
                  context:(NSManagedObjectContext *)aContext
                 delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     id obj = [[[self class] alloc] initWithQuery:aQuery
-                                            page:aPage
+                                          cursor:aCursor
                                          context:aContext
                                         delegate:aDelegate];
     return [obj autorelease];
@@ -53,20 +53,20 @@
 - (void)dealloc
 {
     self.query = nil;
-    self.page = nil;
+    self.cursor = nil;
     self.delegate = nil;
     self.context = nil;
     [super dealloc];
 }
 
 - (id)initWithQuery:(NSString *)aQuery
-               page:(NSNumber *)aPage
+             cursor:(NSString *)aCursor
             context:(NSManagedObjectContext *)aContext
            delegate:(id<TwitterServiceDelegate>)aDelegate
 {
     if (self = [super init]) {
         self.query = aQuery;
-        self.page = aPage;
+        self.cursor = aCursor;
         self.context = aContext;
         self.delegate = aDelegate;
     }
@@ -139,19 +139,29 @@
         [tweets addObject:tweet];
     }
 
-    SEL sel = @selector(searchResultsReceived:forQuery:page:);
+    NSString * nextCursor = nil;
+    if (tweets.count) {
+        Tweet * tweet = [tweets objectAtIndex:tweets.count - 1];
+        long long val = [tweet.identifier longLongValue] - 1;
+        nextCursor = [[NSNumber numberWithLongLong:val] description];
+    }
+
+    SEL sel = @selector(searchResultsReceived:nextCursor:forQuery:cursor:);
     if ([delegate respondsToSelector:sel])
-        [delegate searchResultsReceived:tweets forQuery:query page:page];
+        [delegate searchResultsReceived:tweets
+                             nextCursor:nextCursor
+                               forQuery:query
+                                 cursor:cursor];
 
     return YES;
 }
 
 - (BOOL)processErrorResponse:(NSError *)error
 {
-    SEL sel = @selector(failedToFetchSearchResultsForQuery:page:error:);
+    SEL sel = @selector(failedToFetchSearchResultsForQuery:cursor:error:);
     if ([delegate respondsToSelector:sel])
         [delegate failedToFetchSearchResultsForQuery:query
-                                                page:page
+                                              cursor:cursor
                                                error:error];
 
     return YES;
