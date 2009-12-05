@@ -34,9 +34,6 @@
     IBOutlet UIBarButtonItem * editSavedSearchesButton;
     IBOutlet UIBarButtonItem * doneEditingSavedSearchesButton;
 
-    IBOutlet UIView * headerView;
-    IBOutlet UIButton * headerButton;
-
     NSArray * contents;
 
     NSString * username;

@@ -6,35 +6,32 @@
 #import "TwitterService.h"
 #import "TwitterServiceDelegate.h"
 #import "NetworkAwareViewController.h"
-#import "TimelineDisplayMgr.h"
-#import "ArbUserTimelineDataSource.h"
 #import "FindPeopleBookmarkViewController.h"
 #import "RecentSearchMgr.h"
 #import "SavedSearchMgr.h"
-#import "UserInfoViewController.h"
-#import "UserInfoViewControllerDelegate.h"
-#import "ComposeTweetDisplayMgr.h"
+#import "UserListTableViewController.h"
 #import "TimelineDisplayMgrFactory.h"
 #import "UserListDisplayMgrFactory.h"
-#import "LocationMapViewController.h"
-#import "LocationMapViewControllerDelegate.h"
-#import "LocationInfoViewController.h"
-#import "LocationInfoViewControllerDelegate.h"
+#import "DisplayMgrHelper.h"
+#import "ContactCache.h"
+#import "ContactMgr.h"
 
 @interface FindPeopleSearchDisplayMgr :
     NSObject
     <TwitterServiceDelegate, UISearchBarDelegate,
-    FindPeopleBookmarkViewControllerDelegate, UserInfoViewControllerDelegate,
-    UITableViewDataSource, UITableViewDelegate,
-    LocationMapViewControllerDelegate, LocationInfoViewControllerDelegate,
-    NetworkAwareViewControllerDelegate>
+    FindPeopleBookmarkViewControllerDelegate,
+    NetworkAwareViewControllerDelegate, UserListTableViewControllerDelegate,
+    UITableViewDataSource, UITableViewDelegate>
 {
     NetworkAwareViewController * netAwareController;
-    UserInfoViewController * userInfoController;
+    UserListTableViewController * userListController;
     TwitterService * service;
     UserListDisplayMgr * userListDisplayMgr;
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     UserListDisplayMgrFactory * userListDisplayMgrFactory;
+    ComposeTweetDisplayMgr * composeTweetDisplayMgr;
+
+    DisplayMgrHelper * displayMgrHelper;
 
     UISearchBar * searchBar;
     UIView * darkTransparentView;
@@ -45,13 +42,13 @@
     FindPeopleBookmarkViewController * bookmarkController;
     NSManagedObjectContext * context;
 
-    ComposeTweetDisplayMgr * composeTweetDisplayMgr;
-
-    NetworkAwareViewController * nextWrapperController;
     TimelineDisplayMgr * timelineDisplayMgr;
-    TwitterCredentials * credentials;
-    CredentialsActivatedPublisher * credentialsPublisher;
     UserListDisplayMgr * nextUserListDisplayMgr;
+    CredentialsActivatedPublisher * credentialsPublisher;
+    NetworkAwareViewController * nextWrapperController;
+    TwitterCredentials * credentials;
+    BOOL failedState;
+    NSMutableDictionary * cache;
 
     NSString * currentSearchUsername; // main user search value
     NSString * currentSearch; // mention search value
@@ -62,9 +59,8 @@
     NSArray * autocompleteArray;
     UIView * autocompleteView;
     UITableView * autoCompleteTableView;
-
-    LocationMapViewController * locationMapViewController;
-    LocationInfoViewController * locationInfoViewController;
+    BOOL currentPage;
+    BOOL loadingMore;
 
     BOOL hasBeenDisplayed;
 }
@@ -72,12 +68,16 @@
 @property (nonatomic, retain) NSString * currentSearchUsername;
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc
-    userInfoController:(UserInfoViewController *)userInfoController
+    navigationController:(UINavigationController *)navigationController
+    userListController:(UserListTableViewController *)userListController
     service:(TwitterService *)service context:(NSManagedObjectContext *)aContext
     savedSearchMgr:(SavedSearchMgr *)aSavedSearchMgr
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
     timelineFactory:(TimelineDisplayMgrFactory *)timelineFactory
-    userListFactory:(UserListDisplayMgrFactory *)aUserListFactory;
+    userListFactory:(UserListDisplayMgrFactory *)aUserListFactory
+    findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
 

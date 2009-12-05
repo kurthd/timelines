@@ -36,8 +36,6 @@ typedef enum
 - (BookmarkCategory)selectedCategory;
 - (UITableViewCell *)createCellForCategory:(BookmarkCategory)category
                            reuseIdentifier:(NSString *)reuseIdentifier;
-                           
-- (void)setHeader;
 
 @end
 
@@ -70,9 +68,6 @@ typedef enum
 
     self.username = nil;
 
-    [headerView release];
-    [headerButton release];
-
     [super dealloc];
 }
 
@@ -93,8 +88,6 @@ typedef enum
     BookmarkCategory category = [self selectedCategory];
     [self loadDataForCategory:category];
     [self displayCategory:category];
-
-    [self setHeader];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
@@ -232,13 +225,11 @@ typedef enum
 - (IBAction)editSavedSearches
 {
     [self configureViewForEditingSavedSearches];
-    headerButton.enabled = NO;
 }
 
 - (IBAction)doneEditingSavedSearches
 {
     [self configureViewForNotEditingSavedSearches];
-    headerButton.enabled = YES;
 }
 
 #pragma mark Private implementation
@@ -290,8 +281,6 @@ typedef enum
 
             break;
     }
-
-    [self setHeader];
 }
 
 - (BookmarkCategory)selectedCategory
@@ -337,18 +326,6 @@ typedef enum
 - (void)setCredentials:(TwitterCredentials *)credentials
 {
     self.username = credentials.username;
-}
-
-- (void)setHeader
-{
-    BookmarkCategory category = [self selectedCategory];
-    if (category == kSavedSearchCategory && self.username) {
-        self.tableView.tableHeaderView = headerView;
-        [headerButton setTitle:self.username forState:UIControlStateNormal];
-        [headerButton setTitle:self.username
-            forState:UIControlStateHighlighted];
-    } else
-        self.tableView.tableHeaderView = nil;
 }
 
 - (IBAction)selectedUsername

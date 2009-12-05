@@ -723,14 +723,10 @@ enum {
         context:[self managedObjectContext]]
         autorelease];
 
-    UserInfoViewController * userInfoController =
-        [[UserInfoViewController alloc]
-        initWithNibName:@"UserInfoView" bundle:nil];
-    userInfoController.findPeopleBookmarkMgr = findPeopleBookmarkMgr;
-    userInfoController.contactCacheReader = contactCache;
-    userInfoController.contactMgr = contactMgr;
-
-    findPeopleNetAwareViewController.targetViewController = userInfoController;
+    UserListTableViewController * userListController =
+        [[[UserListTableViewController alloc]
+        initWithNibName:@"UserListTableView" bundle:nil] autorelease];
+    findPeopleNetAwareViewController.targetViewController = userListController;
 
     UserListDisplayMgrFactory * userListFactory =
         [[[UserListDisplayMgrFactory alloc]
@@ -739,20 +735,27 @@ enum {
         contactMgr:contactMgr]
         autorelease];
 
+    UINavigationController * navController =
+        [self getNavControllerForController:findPeopleNetAwareViewController];
+
     findPeopleSearchDisplayMgr =
         [[FindPeopleSearchDisplayMgr alloc]
         initWithNetAwareController:findPeopleNetAwareViewController
-        userInfoController:userInfoController
+        navigationController:navController
+        userListController:userListController
         service:twitterService
         context:[self managedObjectContext]
         savedSearchMgr:findPeopleBookmarkMgr
         composeTweetDisplayMgr:composeTweetDisplayMgr
         timelineFactory:timelineDisplayMgrFactory
-        userListFactory:userListFactory];
+        userListFactory:userListFactory
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr
+        contactCache:contactCache
+        contactMgr:contactMgr];
 
     findPeopleNetAwareViewController.delegate = findPeopleSearchDisplayMgr;
     twitterService.delegate = findPeopleSearchDisplayMgr;
-    userInfoController.delegate = findPeopleSearchDisplayMgr;
+    userListController.delegate = findPeopleSearchDisplayMgr;
 
     // Don't autorelease
     [[CredentialsActivatedPublisher alloc]

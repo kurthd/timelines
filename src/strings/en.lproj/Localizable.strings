@@ -70,6 +70,9 @@ listsdisplaymgr.nolists = "You are not subscribed to any lists";
 /* ProfileDisplayMgr */
 profiledisplaymgr.error = "Failed to update profile for '%@'";
 
+/* FindPeopleDisplayMgr */
+findpeopledisplaymgr.error = "Failed to search people for '%@'";
+
 /* ListsViewController */
 listsviewcontroller.sections.lists = "My Lists";
 listsviewcontroller.sections.subscriptions = "Subscriptions";
@@ -241,7 +244,7 @@ directmessageinbox.nummessages = "%d received, %d sent";
 
 /* Find people */
 findpeople.nouser = "No exact matches for username '%@'";
-findpeople.placeholder = "Username";
+findpeople.placeholder = "User, business or brand";
 
 /* Conversation View */
 conversationview.title = "Conversation";

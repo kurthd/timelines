@@ -36,6 +36,8 @@
 - (void)updateAutocompleteViewFrame;
 - (void)setSearchBarFrameWithLandscape:(BOOL)landscape;
 - (void)setSearchBarFrame;
+- (void)deallocateNode;
+- (void)updateUserListViewWithUsers:(NSArray *)users;
 
 @property (nonatomic, readonly)
     FindPeopleBookmarkViewController * bookmarkController;
@@ -51,11 +53,6 @@
 @property (nonatomic, retain) SavedSearchMgr * generalSavedSearchMgr;
 @property (nonatomic, copy) NSArray * autocompleteArray;
 @property (nonatomic, readonly) UIView * autocompleteView;
-
-@property (nonatomic, readonly)
-    LocationMapViewController * locationMapViewController;
-@property (nonatomic, readonly)
-    LocationInfoViewController * locationInfoViewController;
 
 @end
 
@@ -73,7 +70,7 @@
 - (void)dealloc
 {
     [netAwareController release];
-    [userInfoController release];
+    [userListController release];
     [searchBar release];
     [service release];
     [timelineDisplayMgrFactory release];
@@ -94,30 +91,52 @@
     [generalSavedSearchMgr release];
     [autocompleteArray release];
     [autoCompleteTableView release];
-    [locationMapViewController release];
-    [locationInfoViewController release];
+    [displayMgrHelper release];
 
     [super dealloc];
 }
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc
-    userInfoController:(UserInfoViewController *)aUserInfoController
+    navigationController:(UINavigationController *)navigationController
+    userListController:(UserListTableViewController *)aUserListController
     service:(TwitterService *)aService
     context:(NSManagedObjectContext *)aContext
     savedSearchMgr:(SavedSearchMgr *)aSavedSearchMgr
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)aComposeTweetDisplayMgr
     timelineFactory:(TimelineDisplayMgrFactory *)aTimelineFactory
     userListFactory:(UserListDisplayMgrFactory *)aUserListFactory
+    findPeopleBookmarkMgr:(SavedSearchMgr *)findPeopleBookmarkMgr
+    contactCache:(ContactCache *)aContactCache
+    contactMgr:(ContactMgr *)aContactMgr
 {
     if (self = [super init]) {
         netAwareController = [navc retain];
-        userInfoController = [aUserInfoController retain];
+        userListController = [aUserListController retain];
         service = [aService retain];
         context = [aContext retain];
         savedSearchMgr = [aSavedSearchMgr retain];
         composeTweetDisplayMgr = [aComposeTweetDisplayMgr retain];
         timelineDisplayMgrFactory = [aTimelineFactory retain];
         userListDisplayMgrFactory = [aUserListFactory retain];
+
+        TwitterService * displayHelperService =
+            [[[TwitterService alloc]
+            initWithTwitterCredentials:service.credentials
+            context:aContext]
+            autorelease];
+
+        displayMgrHelper =
+            [[DisplayMgrHelper alloc]
+            initWithWrapperController:navc
+            navigationController:navigationController
+            userListDisplayMgrFactor:aUserListFactory
+            composeTweetDisplayMgr:composeTweetDisplayMgr
+            twitterService:displayHelperService
+            timelineFactory:aTimelineFactory
+            managedObjectContext:aContext
+            findPeopleBookmarkMgr:findPeopleBookmarkMgr
+            contactCache:aContactCache contactMgr:aContactMgr];
+        displayHelperService.delegate = displayMgrHelper;
 
         searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
 
@@ -134,6 +153,9 @@
         UINavigationItem * navItem = netAwareController.navigationItem;
         navItem.titleView = searchBar;
         [self setSearchBarFrame];
+        
+        failedState = NO;
+        cache = [[NSMutableDictionary dictionary] retain];
 
         [netAwareController setUpdatingState:kDisconnected];
         [netAwareController setCachedDataAvailable:NO];
@@ -170,6 +192,7 @@
 
 - (void)networkAwareViewWillAppear
 {
+    NSLog(@"Showing find people view");
     if (!hasBeenDisplayed && self.currentSearchUsername) {
         hasBeenDisplayed = YES;
         if (self.currentSearchUsername &&
@@ -190,478 +213,27 @@
 
 #pragma mark TwitterServiceDelegate implementation
 
-- (void)userInfo:(User *)user fetchedForUsername:(NSString *)username
+- (void)userSearchResultsReceived:(NSArray *)userSearchResults
+    forQuery:(NSString *)query count:(NSNumber *)count page:(NSNumber *)page
 {
-    NSLog(@"Fetched user info for '%@'", username);
-
-    if ([self.currentSearchUsername isEqual:username]) {
-        [netAwareController setUpdatingState:kConnectedAndNotUpdating];
-        [netAwareController setCachedDataAvailable:YES];
-
-        // this forces the tableview to scroll to top
-        [userInfoController.tableView setContentOffset:CGPointMake(0, 300)
-            animated:NO];
-
-        [userInfoController setUser:user];
-
-        netAwareController.navigationItem.title = username;
-        netAwareController.navigationItem.backBarButtonItem =
-            [[[UIBarButtonItem alloc]
-            initWithTitle:username style:UIBarButtonItemStyleBordered target:nil
-            action:nil]
-            autorelease];
+    if ([query isEqual:self.currentSearchUsername]) {
+        NSLog(@"Received %d user search results", [userSearchResults count]);
+        NSInteger pageAsInt = [page intValue];
+        currentPage = pageAsInt > 0 ? pageAsInt : 1;
+        [self updateUserListViewWithUsers:userSearchResults];
     }
 }
 
-- (void)failedToFetchUserInfoForUsername:(NSString *)username
-    error:(NSError *)error
+- (void)failedToSearchUsersForQuery:(NSString *)query count:(NSNumber *)count
+    page:(NSNumber *)page error:(NSError *)error
 {
-    NSLog(@"Unable to find user '%@'", username);
-    self.currentSearchUsername = nil;
-
-    [netAwareController setUpdatingState:kDisconnected];
-    [netAwareController setCachedDataAvailable:NO];
-}
-
-- (void)user:(NSString *)username isFollowing:(NSString *)followee
-{
-    NSLog(@"Find people display manager: %@ is following %@", username,
-        followee);
-    if ([[self.currentSearchUsername lowercaseString]
-        isEqual:[followee lowercaseString]])
-        [userInfoController setFollowing:YES];
-    else if ([[self.currentSearchUsername lowercaseString] 
-        isEqual:[username lowercaseString]])
-        [userInfoController setFollowedBy:YES];
-}
-
-- (void)user:(NSString *)username isNotFollowing:(NSString *)followee
-{
-    NSLog(@"Find people display manager: %@ is not following %@", username,
-        followee);
-    if ([[self.currentSearchUsername lowercaseString]
-        isEqual:[followee lowercaseString]])
-        [userInfoController setFollowing:NO];
-    else if ([[self.currentSearchUsername lowercaseString] 
-        isEqual:[username lowercaseString]])
-        [userInfoController setFollowedBy:NO];
-}
-
-- (void)failedToQueryIfUser:(NSString *)username
-    isFollowing:(NSString *)followee error:(NSError *)error
-{
-    NSString * errorMessage =
-        NSLocalizedString(@"timelinedisplaymgr.error.followingstatus", @"");
-
-    if ([[self.currentSearchUsername lowercaseString]
-        isEqual:[followee lowercaseString]])
-        [userInfoController setFailedToQueryFollowing];
-    else if ([[self.currentSearchUsername lowercaseString] 
-        isEqual:[username lowercaseString]])
-        [userInfoController setFailedToQueryFollowedBy];
-
-    [[ErrorState instance] displayErrorWithTitle:errorMessage];
-}
-
-- (void)userIsBlocked:(NSString *)username
-{
-    if ([self.currentSearchUsername isEqual:username])
-        [userInfoController setBlocked:YES];
-}
-
-- (void)userIsNotBlocked:(NSString *)username
-{
-    if ([self.currentSearchUsername isEqual:username])
-        [userInfoController setBlocked:NO];
-}
-
-- (void)blockedUser:(User *)user withUsername:(NSString *)username
-{
-    if ([self.currentSearchUsername isEqual:username])
-        [userInfoController setBlocked:YES];
-}
-
-- (void)failedToBlockUserWithUsername:(NSString *)username
-    error:(NSError *)error
-{
-    NSString * errorMessageFormatString =
-        NSLocalizedString(@"timelinedisplaymgr.error.block", @"");
-    NSString * errorMessage =
-        [NSString stringWithFormat:errorMessageFormatString, username];
-    [[ErrorState instance] displayErrorWithTitle:errorMessage];
-}
-
-- (void)unblockedUser:(User *)user withUsername:(NSString *)username
-{
-    if ([self.currentSearchUsername isEqual:username])
-        [userInfoController setBlocked:NO];
-}
-
-- (void)failedToUnblockUserWithUsername:(NSString *)username
-    error:(NSError *)error
-{
-    NSString * errorMessageFormatString =
-        NSLocalizedString(@"timelinedisplaymgr.error.unblock", @"");
-    NSString * errorMessage =
-        [NSString stringWithFormat:errorMessageFormatString, username];
-    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
-}
-
-- (void)startedFollowingUsername:(NSString *)aUsername
-{
-    NSLog(@"Find people display manager: started following '%@'", aUsername);
-    if ([self.currentSearchUsername isEqual:aUsername])
-        [userInfoController setFollowing:YES];
-}
-
-- (void)failedToStartFollowingUsername:(NSString *)aUsername
-    error:(NSError *)error
-{
-    NSString * errorMessageFormatString =
-        NSLocalizedString(@"timelinedisplaymgr.error.startfollowing", @"");
-    NSString * errorMessage =
-        [NSString stringWithFormat:errorMessageFormatString, aUsername];
-    [[ErrorState instance] displayErrorWithTitle:errorMessage];
-}
-
-- (void)stoppedFollowingUsername:(NSString *)aUsername
-{
-    NSLog(@"Find people display manager: stopped following '%@'", aUsername);
-    if ([self.currentSearchUsername isEqual:aUsername])
-        [userInfoController setFollowing:NO];
-}
-
-- (void)failedToStopFollowingUsername:(NSString *)aUsername
-    error:(NSError *)error
-{
-    NSString * errorMessageFormatString =
-        NSLocalizedString(@"timelinedisplaymgr.error.stopfollowing", @"");
-    NSString * errorMessage =
-        [NSString stringWithFormat:errorMessageFormatString, aUsername];
-    [[ErrorState instance] displayErrorWithTitle:errorMessage];
-}
-                                
-#pragma mark UserInfoViewControllerDelegate implementation
-
-- (void)showTweetsForUser:(NSString *)aUsername
-{
-    NSLog(@"Find people display manager: showing tweets for %@", aUsername);
-
-    NSString * title =
-        NSLocalizedString(@"timelineview.usertweets.title", @"");
-    self.nextWrapperController =
-        [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:nil] autorelease];
-    
-    self.timelineDisplayMgr =
-        [timelineDisplayMgrFactory
-        createTimelineDisplayMgrWithWrapperController:self.nextWrapperController
-        navigationController:netAwareController.navigationController
-        title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
-    self.timelineDisplayMgr.displayAsConversation = NO;
-    self.timelineDisplayMgr.setUserToFirstTweeter = YES;
-    [self.timelineDisplayMgr setTimelineHeaderView:nil];
-    self.timelineDisplayMgr.currentUsername = aUsername;
-    [self.timelineDisplayMgr setCredentials:credentials];
-    
-    UIBarButtonItem * sendDMButton =
-        [[UIBarButtonItem alloc]
-        initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-        target:self.timelineDisplayMgr
-        action:@selector(sendDirectMessageToCurrentUser)];
-
-    self.nextWrapperController.navigationItem.rightBarButtonItem = sendDMButton;
-
-    self.nextWrapperController.delegate = self.timelineDisplayMgr;
-    
-    TwitterService * twitterService =
-        [[[TwitterService alloc] initWithTwitterCredentials:nil
-        context:context] autorelease];
-    
-    ArbUserTimelineDataSource * dataSource =
-        [[[ArbUserTimelineDataSource alloc]
-        initWithTwitterService:twitterService
-        username:aUsername]
-        autorelease];
-    
-    self.credentialsPublisher =
-        [[CredentialsActivatedPublisher alloc]
-        initWithListener:dataSource action:@selector(setCredentials:)];
-    
-    twitterService.delegate = dataSource;
-    [self.timelineDisplayMgr setService:dataSource tweets:nil page:1
-        forceRefresh:NO allPagesLoaded:NO];
-    dataSource.delegate = self.timelineDisplayMgr;
-    
-    [dataSource setCredentials:credentials];
-    [netAwareController.navigationController
-        pushViewController:self.nextWrapperController animated:YES];
-}
-
-- (void)showLocationOnMap:(NSString *)locationString
-{
-    NSLog(@"Find people display manager: showing %@ on map", locationString);
-
-    self.locationMapViewController.navigationItem.title = @"Map";
-    
-    [netAwareController.navigationController
-        pushViewController:self.locationMapViewController animated:YES];
-
-    [self.locationMapViewController setLocation:locationString];
-}
-
-- (void)showLocationInfo:(NSString *)locationString
-    coordinate:(CLLocationCoordinate2D)coordinate
-{
-    NSLog(@"Find people display manager: showing location info for %@",
-        locationString);
-
-    [netAwareController.navigationController
-        pushViewController:self.locationInfoViewController animated:YES];
-
-    [self.locationInfoViewController setLocationString:locationString
-        coordinate:coordinate];
-}
-
-- (void)displayFollowingForUser:(NSString *)aUsername
-{
-    NSLog(@"Find people display manager: displaying 'following' list for %@",
-        aUsername);
-
-    self.nextWrapperController =
-        [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:nil] autorelease];
-
-    self.nextUserListDisplayMgr =
-        [userListDisplayMgrFactory
-        createUserListDisplayMgrWithWrapperController:
-        self.nextWrapperController
-        navigationController:netAwareController.navigationController
-        composeTweetDisplayMgr:composeTweetDisplayMgr
-        showFollowing:YES
-        username:aUsername];
-    [self.nextUserListDisplayMgr setCredentials:credentials];
-
-    [netAwareController.navigationController
-        pushViewController:self.nextWrapperController animated:YES];
-}
-
-- (void)displayFollowersForUser:(NSString *)aUsername
-{
-    NSLog(@"Find people display manager: displaying 'followers' list for %@",
-        aUsername);
-
-    self.nextWrapperController =
-        [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:nil] autorelease];
-
-    self.nextUserListDisplayMgr =
-        [userListDisplayMgrFactory
-        createUserListDisplayMgrWithWrapperController:
-        self.nextWrapperController
-        navigationController:netAwareController.navigationController
-        composeTweetDisplayMgr:composeTweetDisplayMgr
-        showFollowing:NO
-        username:aUsername];
-    [self.nextUserListDisplayMgr setCredentials:credentials];
-
-    [netAwareController.navigationController
-        pushViewController:self.nextWrapperController animated:YES];
-}
-
-- (void)displayFavoritesForUser:(NSString *)aUsername
-{
-    NSLog(@"Find people display manager: displaying favorites for user %@",
-        aUsername);
-    NSString * title =
-        NSLocalizedString(@"timelineview.favorites.title", @"");
-    self.nextWrapperController =
-        [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:nil] autorelease];
-
-    self.timelineDisplayMgr =
-        [timelineDisplayMgrFactory
-        createTimelineDisplayMgrWithWrapperController:nextWrapperController
-        navigationController:netAwareController.navigationController
-        title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
-    self.timelineDisplayMgr.displayAsConversation = YES;
-    self.timelineDisplayMgr.setUserToFirstTweeter = NO;
-    [self.timelineDisplayMgr setCredentials:credentials];
-
-    self.nextWrapperController.delegate = self.timelineDisplayMgr;
-
-    TwitterService * twitterService =
-        [[[TwitterService alloc] initWithTwitterCredentials:nil context:context]
-        autorelease];
-
-    FavoritesTimelineDataSource * dataSource =
-        [[[FavoritesTimelineDataSource alloc]
-        initWithTwitterService:twitterService username:aUsername]
-        autorelease];
-
-    self.credentialsPublisher =
-        [[CredentialsActivatedPublisher alloc]
-        initWithListener:dataSource action:@selector(setCredentials:)];
-
-    twitterService.delegate = dataSource;
-    [self.timelineDisplayMgr setService:dataSource tweets:nil page:1
-        forceRefresh:NO allPagesLoaded:NO];
-    dataSource.delegate = self.timelineDisplayMgr;
-
-    [dataSource setCredentials:credentials];
-    [netAwareController.navigationController
-        pushViewController:self.nextWrapperController animated:YES];
-}
-
-- (void)startFollowingUser:(NSString *)aUsername
-{
-    [service followUser:aUsername];
-}
-
-- (void)stopFollowingUser:(NSString *)aUsername
-{
-    [service stopFollowingUser:aUsername];
-}
-
-- (void)blockUser:(NSString *)username
-{
-    [service blockUserWithUsername:username];
-}
-
-- (void)unblockUser:(NSString *)username
-{
-    [service unblockUserWithUsername:username];
-}
-
-- (void)showingUserInfoView
-{
-    self.nextWrapperController = nil;
-    self.timelineDisplayMgr = nil;
-    self.credentialsPublisher = nil;
-    self.nextUserListDisplayMgr = nil;
-}
-
-- (void)sendDirectMessageToCurrentUser
-{
-    [composeTweetDisplayMgr composeDirectMessageTo:self.currentSearchUsername
-        animated:YES];
-}
-
-- (void)sendDirectMessageToUser:(NSString *)aUsername
-{
-    [composeTweetDisplayMgr composeDirectMessageTo:aUsername animated:YES];
-}
-
-- (void)sendPublicMessageToUser:(NSString *)aUsername
-{
-    [composeTweetDisplayMgr
-        composeTweetWithText:[NSString stringWithFormat:@"@%@ ", aUsername]
-        animated:YES];
-}
-
-- (void)showResultsForSearch:(NSString *)query
-{
-    NSLog(@"Find people display manager: showing search results for '%@'",
-        query);
-    self.currentSearch = query;
-
-    self.nextWrapperController =
-        [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:nil] autorelease];
-    
-    self.timelineDisplayMgr =
-        [timelineDisplayMgrFactory
-        createTimelineDisplayMgrWithWrapperController:nextWrapperController
-        navigationController:netAwareController.navigationController
-        title:query composeTweetDisplayMgr:composeTweetDisplayMgr];
-    self.timelineDisplayMgr.displayAsConversation = NO;
-    self.timelineDisplayMgr.setUserToFirstTweeter = NO;
-    self.timelineDisplayMgr.currentUsername = nil;
-    UIView * headerView =
-        [self.generalSavedSearchMgr isSearchSaved:query] ?
-        [self removeSearchView] : [self saveSearchView];
-    [self.timelineDisplayMgr setTimelineHeaderView:headerView];
-    [self.timelineDisplayMgr setCredentials:credentials];
-    self.nextWrapperController.navigationItem.rightBarButtonItem = nil;
-    
-    self.nextWrapperController.delegate = self.timelineDisplayMgr;
-    
-    TwitterService * twitterService =
-        [[[TwitterService alloc] initWithTwitterCredentials:nil context:context]
-        autorelease];
-    
-    SearchDataSource * dataSource =
-        [[[SearchDataSource alloc]
-        initWithTwitterService:twitterService
-        query:query]
-        autorelease];
-    
-    self.credentialsPublisher =
-        [[CredentialsActivatedPublisher alloc]
-        initWithListener:dataSource action:@selector(setCredentials:)];
-    
-    twitterService.delegate = dataSource;
-    [self.timelineDisplayMgr setService:dataSource tweets:nil page:1
-        forceRefresh:NO allPagesLoaded:NO];
-    dataSource.delegate = self.timelineDisplayMgr;
-    
-    [dataSource setCredentials:credentials];
-    [netAwareController.navigationController
-        pushViewController:self.nextWrapperController
-        animated:YES];
-}
-
-- (void)showResultsForNearbySearchWithLatitude:(NSNumber *)latitude
-    longitude:(NSNumber *)longitude
-{
-    NSLog(@"Find people display manager: showing results for nearby search");
-    self.nextWrapperController =
-        [[[NetworkAwareViewController alloc]
-        initWithTargetViewController:nil] autorelease];
-
-    NSString * title =
-        NSLocalizedString(@"timelinedisplaymgr.nearbysearch", @"");
-    self.timelineDisplayMgr =
-        [timelineDisplayMgrFactory
-        createTimelineDisplayMgrWithWrapperController:nextWrapperController
-        navigationController:netAwareController.navigationController
-        title:title composeTweetDisplayMgr:composeTweetDisplayMgr];
-    self.timelineDisplayMgr.displayAsConversation = NO;
-    self.timelineDisplayMgr.setUserToFirstTweeter = NO;
-    self.timelineDisplayMgr.currentUsername = nil;
-
-    [self.timelineDisplayMgr setCredentials:credentials];
-    self.nextWrapperController.navigationItem.rightBarButtonItem =
-        nil;
-
-    self.nextWrapperController.delegate = self.timelineDisplayMgr;
-
-    TwitterService * twitterService =
-        [[[TwitterService alloc] initWithTwitterCredentials:nil context:context]
-        autorelease];
-
-    NSNumber * radius =
-        [NSNumber numberWithInt:[SettingsReader nearbySearchRadius]];
-
-    NearbySearchDataSource * dataSource =
-        [[[NearbySearchDataSource alloc]
-        initWithTwitterService:twitterService
-        latitude:latitude longitude:longitude radiusInKm:radius]
-        autorelease];
-
-    self.credentialsPublisher =
-        [[CredentialsActivatedPublisher alloc]
-        initWithListener:dataSource action:@selector(setCredentials:)];
-
-    twitterService.delegate = dataSource;
-    [self.timelineDisplayMgr setService:dataSource tweets:nil page:1
-        forceRefresh:NO allPagesLoaded:NO];
-    dataSource.delegate = self.timelineDisplayMgr;
-
-    [dataSource setCredentials:credentials];
-    [netAwareController.navigationController
-        pushViewController:self.nextWrapperController
-        animated:YES];
+    if ([query isEqual:self.currentSearchUsername]) {
+        NSString * errorMessageFormatString =
+            NSLocalizedString(@"findpeopledisplaymgr.error", @"");
+        NSString * errorMessage =
+            [NSString stringWithFormat:errorMessageFormatString, query];
+        [[ErrorState instance] displayErrorWithTitle:errorMessage];
+    }
 }
 
 #pragma mark UISearchBarDelegate implementation
@@ -681,42 +253,30 @@
 - (void)searchForQuery:(NSString *)query
 {
     hasBeenDisplayed = YES; // bit of a hack, but force this to be set
-        
+       
     [netAwareController setUpdatingState:kConnectedAndUpdating];
     [netAwareController setCachedDataAvailable:NO];
-    NSCharacterSet * validUsernameCharSet =
-        [[NSCharacterSet alphanumericCharacterSet] invertedSet];
-    NSString * searchName =
-        [[query stringByTrimmingCharactersInSet:validUsernameCharSet] 
-        stringByReplacingOccurrencesOfString:@" " withString:@""];
-    [self.recentSearchMgr addRecentSearch:searchName];
 
-    searchBar.text = searchName;
-    self.currentSearchUsername = searchName;
+    [cache removeAllObjects];
+
+    [self.recentSearchMgr addRecentSearch:query];
+    searchBar.text = query;
+    self.currentSearchUsername = query;
 
     NSString * noConnFormatString =
         NSLocalizedString(@"findpeople.nouser", @"");
     NSString * noConnText =
         [searchBar.text isEqual:@""] ? @"" :
-        [NSString stringWithFormat:noConnFormatString, searchName];
+        [NSString stringWithFormat:noConnFormatString, query];
     NSLog(@"No conn text: %@", noConnText);
     [netAwareController setNoConnectionText:noConnText];
 
-    [userInfoController showingNewUser];
-    [service fetchUserInfoForUsername:searchName];
-    userInfoController.followingEnabled =
-        ![credentials.username isEqual:searchName];
-    if (userInfoController.followingEnabled) {
-        [service isUser:credentials.username following:searchName];
-        [service isUser:searchName following:credentials.username];
-        [userInfoController setQueryingFollowedBy];
-    }
-
-    [service isUserBlocked:searchName];
+    loadingMore = NO;
+    [service searchUsersFor:query count:nil page:nil];
 
     UITableViewController * tvc = (UITableViewController *)
         netAwareController.targetViewController;
-    tvc.tableView.contentInset = UIEdgeInsetsMake(-300.0, 0, 0, 0);
+    tvc.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     tvc.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
@@ -816,6 +376,35 @@
 
     [service setCredentials:someCredentials];
     self.generalSavedSearchMgr.accountName = someCredentials.username;
+
+    [displayMgrHelper setCredentials:credentials];
+}
+
+#pragma mark UserListTableViewControllerDelegate implementation
+
+- (void)showUserInfoForUser:(User *)aUser
+{
+    [displayMgrHelper showUserInfoForUser:aUser];
+}
+
+- (void)loadMoreUsers
+{
+    NSInteger nextPage = currentPage + 1;
+    NSLog(@"Loading more person search results; page %d", nextPage);
+    loadingMore = YES;
+    [service searchUsersFor:self.currentSearchUsername count:nil
+        page:[NSNumber numberWithInt:nextPage]];
+    [netAwareController setUpdatingState:kConnectedAndUpdating];
+}
+
+- (void)userListViewWillAppear
+{
+    [self deallocateNode];
+}
+
+- (void)sendDirectMessageToCurrentUser
+{
+    [displayMgrHelper sendDirectMessageToCurrentUser];
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -1136,48 +725,6 @@
     self.autocompleteView.frame = autocompleteViewFrame;
 }
 
-- (LocationMapViewController *)locationMapViewController
-{
-    if (!locationMapViewController) {
-        locationMapViewController =
-            [[LocationMapViewController alloc]
-            initWithNibName:@"LocationMapView" bundle:nil];
-        locationMapViewController.delegate = self;
-
-        UIBarButtonItem * currentLocationButton =
-            [[[UIBarButtonItem alloc]
-            initWithImage:[UIImage imageNamed:@"Location.png"]
-            style:UIBarButtonItemStyleBordered target:locationMapViewController
-            action:@selector(setCurrentLocation:)] autorelease];
-        self.locationMapViewController.navigationItem.rightBarButtonItem =
-            currentLocationButton;
-    }
-
-    return locationMapViewController;
-}
-
-- (LocationInfoViewController *)locationInfoViewController
-{
-    if (!locationInfoViewController) {
-        locationInfoViewController =
-            [[LocationInfoViewController alloc]
-            initWithNibName:@"LocationInfoView" bundle:nil];
-        locationInfoViewController.navigationItem.title =
-            NSLocalizedString(@"locationinfo.title", @"");
-        locationInfoViewController.delegate = self;
-
-        UIBarButtonItem * forwardButton =
-            [[[UIBarButtonItem alloc]
-            initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-            target:locationInfoViewController
-            action:@selector(showForwardOptions)] autorelease];
-        self.locationInfoViewController.navigationItem.rightBarButtonItem =
-            forwardButton;
-    }
-
-    return locationInfoViewController;
-}
-
 - (NSInteger)selectedBookmarkSegment
 {
     return [self.bookmarkController selectedSegment];
@@ -1186,6 +733,27 @@
 - (void)setSelectedBookmarkSegment:(NSInteger)segment
 {
     [self.bookmarkController setSelectedSegment:segment];
+}
+
+- (void)deallocateNode
+{
+    self.timelineDisplayMgr = nil;
+    self.nextUserListDisplayMgr = nil;
+    self.credentialsPublisher = nil;
+}
+
+- (void)updateUserListViewWithUsers:(NSArray *)users
+{
+    NSLog(@"Received user list of size %d", [users count]);
+    NSInteger oldCacheCount = [cache count];
+    for (User * friend in users)
+        [cache setObject:friend forKey:friend.username];
+    BOOL allLoaded = loadingMore && [cache count] == oldCacheCount;
+    [userListController setAllPagesLoaded:allLoaded];
+    [userListController setUsers:[cache allValues]];
+    [netAwareController setUpdatingState:kConnectedAndNotUpdating];
+    [netAwareController setCachedDataAvailable:YES];
+    failedState = NO;
 }
 
 @end
