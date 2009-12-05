@@ -614,6 +614,26 @@ static NSMutableDictionary * oaTokens;
     [self request:requestId isHandledBy:processor];
 }
 
+- (void)searchUsersFor:(NSString *)queryString
+                 count:(NSNumber *)count
+                  page:(NSNumber *)page
+{
+    ResponseProcessor * processor =
+        [UserSearchResponseProcessor processorWithQuery:queryString
+                                                  count:count
+                                                   page:page
+                                                context:context
+                                               delegate:delegate];
+
+    NSString * requestId =
+        [twitter getUserSearchResultsForQuery:queryString
+                                        count:[count integerValue]
+                               startingAtPage:[page integerValue]];
+
+    [self request:requestId isHandledBy:processor];
+
+}
+
 #pragma mark MGTwitterEngineDelegate implementation
 
 - (void)requestSucceeded:(NSString *)requestId

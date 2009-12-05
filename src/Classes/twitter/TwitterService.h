@@ -159,4 +159,13 @@
            radius:(NSNumber *)radius
   radiusIsInMiles:(BOOL)radiusIsInMiles;
 
+/**
+ * Search Twitter for users. The 'queryString' parameter cannot be nil. The
+ * 'count' and 'page' parameters can be nil, in which case their value will be
+ * the defaults defined by Twitter. 'page' cannot be greater than 20.
+ */
+- (void)searchUsersFor:(NSString *)queryString
+                 count:(NSNumber *)count
+                  page:(NSNumber *)page;
+
 @end

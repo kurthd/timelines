@@ -34,3 +34,4 @@
 
 #import "SearchResponseProcessor.h"
 #import "NearbySearchResponseProcessor.h"
+#import "UserSearchResponseProcessor.h"

@@ -245,4 +245,13 @@ fetchedForListId:(NSNumber *)listId
                                  radiusIsInMiles:(BOOL)radiusIsInMiles
                                            error:(NSError *)error;
 
+- (void)userSearchResultsReceived:(NSArray *)userSearchResults
+                         forQuery:(NSString *)query
+                            count:(NSNumber *)count
+                             page:(NSNumber *)page;
+- (void)failedToSearchUsersForQuery:(NSString *)query
+                              count:(NSNumber *)count
+                               page:(NSNumber *)page
+                              error:(NSError *)error;
+
 @end

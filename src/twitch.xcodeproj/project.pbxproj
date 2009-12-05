@@ -135,6 +135,8 @@
 		0522E64410C9885D00BB96CE /* GeocodeTimelineIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 0522E64210C9885D00BB96CE /* GeocodeTimelineIndicator.png */; };
 		0522E68C10C9B2EB00BB96CE /* GeocodeTimelineIndicatorHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0522E68B10C9B2EB00BB96CE /* GeocodeTimelineIndicatorHighlighted.png */; };
 		0522E68D10C9B2EB00BB96CE /* GeocodeTimelineIndicatorHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0522E68B10C9B2EB00BB96CE /* GeocodeTimelineIndicatorHighlighted.png */; };
+		0522E71710C9D1E700BB96CE /* UserSearchResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0522E71610C9D1E700BB96CE /* UserSearchResponseProcessor.m */; };
+		0522E71810C9D1E700BB96CE /* UserSearchResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0522E71610C9D1E700BB96CE /* UserSearchResponseProcessor.m */; };
 		052481CF101D6FFC009ED4FA /* SaveSearchButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */; };
 		052481E2101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */; };
 		0525DE5310BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0525DE5210BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m */; };
@@ -1158,6 +1160,8 @@
 		051D7C68101D105A00B867C1 /* SavedSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearchMgr.m; path = search/SavedSearchMgr.m; sourceTree = "<group>"; };
 		0522E64210C9885D00BB96CE /* GeocodeTimelineIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GeocodeTimelineIndicator.png; path = images/GeocodeTimelineIndicator.png; sourceTree = "<group>"; };
 		0522E68B10C9B2EB00BB96CE /* GeocodeTimelineIndicatorHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GeocodeTimelineIndicatorHighlighted.png; path = images/GeocodeTimelineIndicatorHighlighted.png; sourceTree = "<group>"; };
+		0522E71510C9D1E700BB96CE /* UserSearchResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSearchResponseProcessor.h; path = twitter/processors/UserSearchResponseProcessor.h; sourceTree = "<group>"; };
+		0522E71610C9D1E700BB96CE /* UserSearchResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSearchResponseProcessor.m; path = twitter/processors/UserSearchResponseProcessor.m; sourceTree = "<group>"; };
 		052481CE101D6FFC009ED4FA /* SaveSearchButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackground.png; path = images/SaveSearchButtonBackground.png; sourceTree = "<group>"; };
 		052481E1101D70AB009ED4FA /* SaveSearchButtonBackgroundHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveSearchButtonBackgroundHighlighted.png; path = images/SaveSearchButtonBackgroundHighlighted.png; sourceTree = "<group>"; };
 		05248249101D7883009ED4FA /* SavedSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearch.h; path = search/SavedSearch.h; sourceTree = "<group>"; };
@@ -2741,6 +2745,8 @@
 				050224D710488ED500BCB903 /* BlockUserResponseProcessor.m */,
 				05E1B94C104F36D500DD8876 /* BlockExistsResponseProcessor.h */,
 				05E1B94D104F36D500DD8876 /* BlockExistsResponseProcessor.m */,
+				0522E71510C9D1E700BB96CE /* UserSearchResponseProcessor.h */,
+				0522E71610C9D1E700BB96CE /* UserSearchResponseProcessor.m */,
 			);
 			name = processors;
 			sourceTree = "<group>";
@@ -4198,6 +4204,7 @@
 				0536EED110C8279500479158 /* TrendsTableViewCellView.m in Sources */,
 				0536F04110C8972F00479158 /* TrendDisplayMgr.m in Sources */,
 				914EA3DC10C8BD6F007036F2 /* ProfileDisplayMgr.m in Sources */,
+				0522E71710C9D1E700BB96CE /* UserSearchResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4536,6 +4543,7 @@
 				0536EED210C8279500479158 /* TrendsTableViewCellView.m in Sources */,
 				0536F04210C8972F00479158 /* TrendDisplayMgr.m in Sources */,
 				914EA3DB10C8BD6F007036F2 /* ProfileDisplayMgr.m in Sources */,
+				0522E71810C9D1E700BB96CE /* UserSearchResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

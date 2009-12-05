@@ -1953,6 +1953,27 @@
                            responseType:MGTwitterSearchResults];
 }
 
+- (NSString *)getUserSearchResultsForQuery:(NSString *)query count:(int)count startingAtPage:(int)pageNum
+{
+    NSString *path = [NSString stringWithFormat:@"users/search.%@", API_FORMAT];
+
+    if (!query)
+        return nil;
+
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params setObject:query forKey:@"q"];
+
+    if (count > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", count] forKey:@"per_page"];
+    }
+    if (pageNum > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];
+    }
+
+    return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil 
+                            requestType:MGTwitterUserInfoRequest 
+                           responseType:MGTwitterUsers];
+}
 
 
 #endif

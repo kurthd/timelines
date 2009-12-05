@@ -236,6 +236,10 @@
 - (NSString *)getDailyTrends;
 - (NSString *)getWeeklyTrends;
 
+// People search - http://apiwiki.twitter.com/Twitter-REST-API-Method:-users-search
+
+- (NSString *)getUserSearchResultsForQuery:(NSString *)query count:(int)count startingAtPage:(int)pageNum;
+
 #endif
 
 + (BOOL)useVersionedApi;
