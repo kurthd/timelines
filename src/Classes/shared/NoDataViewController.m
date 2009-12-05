@@ -59,9 +59,9 @@
         o == UIInterfaceOrientationPortraitUpsideDown) {
 
         labelX = 21;
-        labelY = 112;
+        labelY = 132;
         activityIndicatorX = 142;
-        activityIndicatorY = 67;
+        activityIndicatorY = 87;
     } else {
         labelX = 105;
         labelY = 92;

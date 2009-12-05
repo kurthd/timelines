@@ -43,7 +43,7 @@
 					<object class="IBUILabel" id="449730798">
 						<reference key="NSNextResponder" ref="375632576"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{105, 112}, {280, 65}}</string>
+						<string key="NSFrame">{{105, 249}, {280, 65}}</string>
 						<reference key="NSSuperview" ref="375632576"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -74,7 +74,7 @@
 					<object class="IBUIActivityIndicatorView" id="612331324">
 						<reference key="NSNextResponder" ref="375632576"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{222, 67}, {37, 37}}</string>
+						<string key="NSFrame">{{222, 204}, {37, 37}}</string>
 						<reference key="NSSuperview" ref="375632576"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -212,14 +212,14 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/shared/NSObject+RuntimeAdditions.h</string>
+						<string key="minorKey">Classes/shared/NSObject+GeneralHelpers.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/shared/NSObject+TweetHelpers.h</string>
+						<string key="minorKey">Classes/shared/NSObject+RuntimeAdditions.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
