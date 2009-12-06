@@ -171,6 +171,11 @@
 
 - (void)populateUser:(User *)user fromData:(NSDictionary *)data
 {
+    /*
+     * Any numeric value created by the JSON parser is an NSDecimalNumber
+     * instance. Convert them all to NSNumbers as appropriate.
+     */
+
     user.identifier = [[data safeObjectForKey:@"id"] twitterIdentifierValue];
     user.username = [data safeObjectForKey:@"screen_name"];
 
@@ -179,13 +184,13 @@
     user.location = [data safeObjectForKey:@"location"];
 
     NSNumber * friendsCount =
-        [NSNumber numberWithLongLong:
-        [[data safeObjectForKey:@"friends_count"] longLongValue]];
+        [NSNumber numberWithInteger:
+        [[data safeObjectForKey:@"friends_count"] integerValue]];
     user.friendsCount = friendsCount;
 
     NSNumber * followersCount =
-        [NSNumber numberWithLongLong:
-        [[data safeObjectForKey:@"followers_count"] longLongValue]];
+        [NSNumber numberWithInteger:
+        [[data safeObjectForKey:@"followers_count"] integerValue]];
     user.followersCount = followersCount;
 
     user.created = [[data safeObjectForKey:@"created_at"] twitterDateValue];
@@ -196,11 +201,12 @@
     user.avatar.fullImageUrl =
         [User fullAvatarUrlForUrl:user.avatar.thumbnailImageUrl];
 
-    [user setValue:[data objectForKey:@"statuses_count"]
+    NSDecimalNumber * count = [data objectForKey:@"statuses_count"];
+    NSString * scount = [count description];
+    [user setValue:[NSNumber numberWithInteger:[scount integerValue]]
             forKey:@"statusesCount"];
 
-    NSNumber * geoEnabled = [data objectForKey:@"geo_enabled"];
-    user.geoEnabled = [NSNumber numberWithBool:[geoEnabled integerValue] == 1];
+    user.geoEnabled = [data objectForKey:@"geo_enabled"];
 }
 
 - (void)populateTweet:(Tweet *)tweet
@@ -208,6 +214,11 @@
        isSearchResult:(BOOL)isSearchResult
               context:(NSManagedObjectContext *)context
 {
+    /*
+     * Any numeric value created by the JSON parser is an NSDecimalNumber
+     * instance. Convert them all to NSNumbers as appropriate.
+     */
+
     tweet.identifier = [[data safeObjectForKey:@"id"] twitterIdentifierValue];
     tweet.text = [data safeObjectForKey:@"text"];
     tweet.decodedText = [tweet.text stringByDecodingHtmlEntities];
@@ -218,18 +229,15 @@
     [tweet setValue:[data safeObjectForKey:@"truncated"]
              forKey:@"truncated"];
 
-    NSNumber * favorited = nil;
-    NSString * rawfavorited = [data safeObjectForKey:@"favorited"];
-    if (!rawfavorited)
-        favorited = [NSNumber numberWithInteger:0];
-    else
-        favorited = [NSNumber numberWithInteger:[rawfavorited integerValue]];
-    tweet.favorited = favorited;
+    NSNumber * favoriteValue = [data safeObjectForKey:@"favorited"];
+    BOOL isFavorite = favoriteValue && [favoriteValue boolValue];
+    tweet.favorited = [NSNumber numberWithInteger:isFavorite ? 1 : 0];
 
     tweet.inReplyToTwitterUsername =
        [data safeObjectForKey:@"in_reply_to_screen_name"];
     tweet.inReplyToTwitterTweetId =
-        [data safeObjectForKey:@"in_reply_to_status_id"];
+        [[data safeObjectForKey:@"in_reply_to_status_id"]
+        twitterIdentifierValue];
     tweet.inReplyToTwitterUserId =
         [[data safeObjectForKey:@"in_reply_to_user_id"] description];
 
@@ -239,8 +247,11 @@
     if (geodata && ![geodata isEqual:[NSNull null]]) {
         NSLog(@"Have geo data: %@", geodata);
         NSArray * coordinates = [geodata objectForKey:@"coordinates"];
-        NSNumber * latitude = [coordinates objectAtIndex:0];
-        NSNumber * longitude = [coordinates objectAtIndex:1];
+
+        double lat = [[coordinates objectAtIndex:0] doubleValue];
+        double lon = [[coordinates objectAtIndex:1] doubleValue];
+        NSNumber * latitude = [NSNumber numberWithDouble:lat];
+        NSNumber * longitude = [NSNumber numberWithDouble:lon];
 
         TweetLocation * loc = tweet.location;
         if (!loc) {
@@ -254,6 +265,11 @@
 
 - (void)populateDirectMessage:(DirectMessage *)dm fromData:(NSDictionary *)data
 {
+    /*
+     * Any numeric value created by the JSON parser is an NSDecimalNumber
+     * instance. Convert them all to NSNumbers as appropriate.
+     */
+
     dm.identifier = [[data objectForKey:@"id"] twitterIdentifierValue];
     dm.text = [data objectForKey:@"text"];
     dm.sourceApiRequestType =
@@ -264,9 +280,17 @@
 
 - (void)populateList:(TwitterList *)list fromData:(NSDictionary *)data
 {
+    /*
+     * Any numeric value created by the JSON parser is an NSDecimalNumber
+     * instance. Convert them all to NSNumbers as appropriate.
+     */
+
     list.identifier = [[data objectForKey:@"id"] twitterIdentifierValue];
     list.fullName = [data objectForKey:@"full_name"];
-    list.memberCount = [data objectForKey:@"member_count"];
+
+    NSString * count = [[data objectForKey:@"member_count"] description];
+    list.memberCount = [NSNumber numberWithInteger:[count integerValue]];
+
     list.mode = [data objectForKey:@"mode"];
     list.name = [data objectForKey:@"name"];
     list.slug = [data objectForKey:@"slug"];
