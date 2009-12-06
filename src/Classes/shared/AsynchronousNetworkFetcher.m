@@ -55,10 +55,29 @@
 
 #pragma mark NSURLConnection delegate methods
 
+- (void)connection:(NSURLConnection *)conn
+    didReceiveResponse:(NSHTTPURLResponse *)response
+{
+    NSDictionary * headers = [response allHeaderFields];
+    NSString * contentLengthString = [headers objectForKey:@"Content-Length"];
+    contentLength =
+        contentLengthString ? [contentLengthString integerValue] : -1;
+
+    [data setLength:0];
+}
+
 - (void)connection:(NSURLConnection *)connection
     didReceiveData:(NSData *)fragment
 {
     [data appendData:fragment];
+
+    if (contentLength != -1) {
+        double percentComplete =
+            (double) [data length] / (double) contentLength;
+        SEL sel = @selector(fetcher:didReceiveSomeData:);
+        if (delegate && [delegate respondsToSelector:sel])
+            [delegate fetcher:self didReceiveSomeData:percentComplete];
+    }
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)conn

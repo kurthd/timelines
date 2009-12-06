@@ -15,4 +15,7 @@
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
     failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error;
 
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    didReceiveSomeData:(double)percentComplete;
+
 @end

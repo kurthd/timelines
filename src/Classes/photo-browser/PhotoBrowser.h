@@ -18,9 +18,9 @@
     IBOutlet UIBarButtonItem * forwardButton;
     IBOutlet UIBarButtonItem * backButton;
     IBOutlet UIView * loadingView;
-    IBOutlet UIActivityIndicatorView * loadingIndicator;
     IBOutlet UINavigationBar * navigationBar;
     IBOutlet UIToolbar * toolbar;
+    IBOutlet UIProgressView * progressView;
 
     NSMutableArray * photoList;
 
