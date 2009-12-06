@@ -394,7 +394,6 @@
     loadingMore = YES;
     [service searchUsersFor:self.currentSearchUsername count:nil
         page:[NSNumber numberWithInt:nextPage]];
-    [netAwareController setUpdatingState:kConnectedAndUpdating];
 }
 
 - (void)userListViewWillAppear

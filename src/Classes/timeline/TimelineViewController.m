@@ -78,6 +78,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     [loadMoreButton release];
     [noMorePagesLabel release];
     [currentPagesLabel release];
+    [loadingMoreIndicator release];
 
     [mentionUsername release];
 
@@ -258,6 +259,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     [delegate loadMoreTweets];
     [loadMoreButton setTitleColor:[UIColor grayColor]
         forState:UIControlStateNormal];
+    [loadingMoreIndicator startAnimating];
     loadMoreButton.enabled = NO;
 }
 
@@ -367,6 +369,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         
     [loadMoreButton setTitleColor:buttonColor forState:UIControlStateNormal];
     loadMoreButton.enabled = YES;
+    [loadingMoreIndicator stopAnimating];
 
     if (aVisibleTweetId) {
         NSLog(@"Scrolling to visible tweet id %@", aVisibleTweetId);

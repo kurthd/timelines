@@ -421,7 +421,6 @@
         NSLog(@"Timeline display manager: sent request for page %d",
             nextPage);
     }
-    [wrapperController setUpdatingState:kConnectedAndUpdating];
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 

@@ -52,6 +52,7 @@ static UIImage * defaultAvatar;
     [footerView release];
     [currentPagesLabel release];
     [loadMoreButton release];
+    [loadingMoreIndicator release];
     [noMorePagesLabel release];
 
     [users release];
@@ -201,7 +202,8 @@ static UIImage * defaultAvatar;
         [UIColor twitchBlueOnDarkBackgroundColor] : [UIColor twitchBlueColor];
     [loadMoreButton setTitleColor:titleColor forState:UIControlStateNormal];
     loadMoreButton.enabled = YES;
-    
+    [loadingMoreIndicator stopAnimating];
+
     [self.tableView reloadData];
 }
 
@@ -235,6 +237,7 @@ static UIImage * defaultAvatar;
     [loadMoreButton setTitleColor:[UIColor grayColor]
         forState:UIControlStateNormal];
     loadMoreButton.enabled = NO;
+    [loadingMoreIndicator startAnimating];
 }
 
 - (NSArray *)sortedUsers

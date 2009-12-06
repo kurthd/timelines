@@ -25,6 +25,7 @@
     IBOutlet UILabel * numUpdatesLabel;
     IBOutlet UILabel * currentPagesLabel;
     IBOutlet UIButton * loadMoreButton;
+    IBOutlet UIActivityIndicatorView * loadingMoreIndicator;
     IBOutlet UILabel * noMorePagesLabel;
 
     NSArray * tweets;

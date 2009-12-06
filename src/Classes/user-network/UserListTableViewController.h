@@ -14,6 +14,7 @@
     IBOutlet UIView * footerView;
     IBOutlet UILabel * currentPagesLabel;
     IBOutlet UIButton * loadMoreButton;
+    IBOutlet UIActivityIndicatorView * loadingMoreIndicator;
     IBOutlet UILabel * noMorePagesLabel;
 
     NSArray * users;
