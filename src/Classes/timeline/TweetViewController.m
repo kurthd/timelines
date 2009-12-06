@@ -268,7 +268,7 @@ enum TweetActionSheets {
         case kTweetDetailsSection:
             nrows = NUM_TWEET_DETAILS_ROWS;
             if ([self displayTweet].inReplyToTwitterTweetId)
-                nrows;
+                nrows++;
             if ([self displayTweet].location)
                 nrows++;
             if (self.tweet.retweet)
