@@ -9,5 +9,6 @@
 - (void)fetchedImage:(UIImage *)image withUrl:(NSString *)url;
 - (void)failedToFetchImageWithUrl:(NSString *)url error:(NSError *)error;
 - (void)unableToFindImageForUrl:(NSString *)url;
+- (void)progressOfImageFetch:(double)percentComplete;
 
 @end

@@ -11,6 +11,8 @@
 
     NSURL * url;
     NSURLConnection * connection;
+
+    NSInteger contentLength;
     NSMutableData * data;
 }
 

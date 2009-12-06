@@ -48,9 +48,9 @@
     [forwardButton release];
     [backButton release];
     [loadingView release];
-    [loadingIndicator release];
     [navigationBar release];
     [toolbar release];
+    [progressView release];
     [super dealloc];
 }
 
@@ -140,6 +140,11 @@
 {
     [self performSelector:@selector(openImageInBrowser) withObject:nil
         afterDelay:0.7];
+}
+
+- (void)progressOfImageFetch:(double)percentComplete
+{
+    progressView.progress = percentComplete;
 }
 
 #pragma mark UIAlertViewDelegate implementation
@@ -268,6 +273,7 @@
     else {
         [self.photoSource fetchImageWithUrl:selectedImage.url];
         [self setLoadingState:YES];
+        progressView.progress = 0;
     }
 
     navItem.title =
@@ -570,6 +576,7 @@
 {
     actionButton.enabled = !loading;
     loadingView.hidden = !loading;
+    progressView.hidden = !loading;
 }
 
 - (NSObject<PhotoSource> *)photoSource
@@ -606,10 +613,11 @@
         loadingViewFrame.size.height = 480;
         loadingView.frame = loadingViewFrame;
 
-        CGRect loadingIndicatorFrame = loadingIndicator.frame;
-        loadingIndicatorFrame.origin.x = 141;
-        loadingIndicatorFrame.origin.y = 221;
-        loadingIndicator.frame = loadingIndicatorFrame;
+        CGRect progressViewFrame = progressView.frame;
+        progressViewFrame.origin.x =
+            (self.view.frame.size.width - progressViewFrame.size.width) / 2.0;
+        progressViewFrame.origin.y = 221;
+        progressView.frame = progressViewFrame;
     } else {
         CGRect navigationBarFrame = navigationBar.frame;
         navigationBarFrame.size.width = 480;
@@ -630,10 +638,11 @@
         loadingViewFrame.size.height = 320;
         loadingView.frame = loadingViewFrame;
 
-        CGRect loadingIndicatorFrame = loadingIndicator.frame;
-        loadingIndicatorFrame.origin.x = 221;
-        loadingIndicatorFrame.origin.y = 141;
-        loadingIndicator.frame = loadingIndicatorFrame;
+        CGRect progressViewFrame = progressView.frame;
+        progressViewFrame.origin.x =
+            (self.view.frame.size.width - progressViewFrame.size.width) / 2.0;
+        progressViewFrame.origin.y = 141;
+        progressView.frame = progressViewFrame;
     }
 }
 
