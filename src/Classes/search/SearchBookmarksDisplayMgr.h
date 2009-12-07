@@ -26,10 +26,6 @@
     RecentSearchMgr * recentSearchMgr;
     SavedSearchMgr * savedSearchMgr;
 
-    // needed to fetch Twitter trends
-    TwitterService * service;
-    NSMutableArray * allTrends;  // indexed by trend type
-
     NSManagedObjectContext * context;
     NSString * accountName;
 }
@@ -38,7 +34,6 @@
 @property (nonatomic, copy, readonly) NSString * accountName;
 
 - (id)initWithAccountName:(NSString *)anAccountName
-                  service:(TwitterService *)aService
                   context:(NSManagedObjectContext *)aContext;
 
 - (void)displayBookmarksInRootView:(UIViewController *)aRootViewController;
