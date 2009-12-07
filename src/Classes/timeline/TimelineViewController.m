@@ -583,8 +583,11 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         [[RotatableTabBarController instance] landscape] ?
         CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
 
+    if ([SettingsReader displayTheme] == kDisplayThemeLight)
+        self.tableView.backgroundColor = [UIColor whiteColor];
+
     self.tableView.tableHeaderView = aView;
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, -300, 0);
 }
 
 - (void)setMentionUsername:(NSString *)aMentionUsername

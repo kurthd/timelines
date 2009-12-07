@@ -142,6 +142,7 @@
 - (void)addTweet:(Tweet *)tweet;
 
 - (NSNumber *)mostRecentTweetId;
+- (NSNumber *)currentlyViewedTweetId;
 
 // HACK: Added to get "Save Search" button in header view.
 - (void)setTimelineHeaderView:(UIView *)view;

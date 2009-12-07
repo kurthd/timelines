@@ -1889,9 +1889,17 @@ enum {
     switch (originalTabIndex) {
         case kOriginalTabOrderTimeline:
             [self initHomeTab];
+            if (uiState.currentlyViewedTweetId)
+                [timelineDisplayMgr
+                    loadNewTweetWithId:uiState.currentlyViewedTweetId
+                    username:nil animated:NO];
             break;
         case kOriginalTabOrderMentions:
             [self initMentionsTab];
+            if (uiState.currentlyViewedMentionId)
+                [mentionDisplayMgr
+                    loadNewTweetWithId:uiState.currentlyViewedMentionId
+                    username:nil animated:NO];
             break;
         case kOriginalTabOrderMessages:
             [self initMessagesTab];
@@ -1970,8 +1978,11 @@ enum {
         self.composeTweetDisplayMgr.directMessageRecipient;
 
     TwitchWebBrowserDisplayMgr * webDispMgr =
-        [TwitchWebBrowserDisplayMgr instance];    
+        [TwitchWebBrowserDisplayMgr instance];
     uiState.viewingUrl = webDispMgr.currentUrl;
+
+    uiState.currentlyViewedTweetId = timelineDisplayMgr.currentlyViewedTweetId;
+    uiState.currentlyViewedMentionId = mentionDisplayMgr.currentlyViewedTweetId;
 
     [uiStatePersistenceStore save:uiState];
 

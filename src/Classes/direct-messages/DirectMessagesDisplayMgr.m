@@ -1012,6 +1012,11 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         afterDelay:0.3];
 }
 
+- (void)loadNewMessageWithId:(NSNumber *)messageId
+{
+    
+}
+
 - (NSMutableDictionary *)tweetIdToIndexDict
 {
     if (!tweetIdToIndexDict)

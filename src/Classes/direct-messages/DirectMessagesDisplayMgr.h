@@ -161,4 +161,6 @@
 - (void)updateDisplayForFailedDirectMessage:(NSString *)recipient;
 - (void)addDirectMessage:(DirectMessage *)dm;
 
+- (void)loadNewMessageWithId:(NSNumber *)messageId;
+
 @end
