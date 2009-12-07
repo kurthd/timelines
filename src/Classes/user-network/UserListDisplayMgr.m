@@ -139,8 +139,6 @@
         [service fetchFriendsForUser:username cursor:cursor];
     else
         [service fetchFollowersForUser:username cursor:cursor];
-
-    [wrapperController setUpdatingState:kConnectedAndUpdating];
 }
 
 - (void)userListViewWillAppear
