@@ -447,13 +447,15 @@
 }
 
 - (void)loadNewTweetWithId:(NSNumber *)tweetId username:(NSString *)username
+    animated:(BOOL)animated
 {
     NSLog(@"Mention display manager: showing tweet details for tweet %@",
         tweetId);
     
     [service fetchTweet:tweetId];
     [navigationController
-        pushViewController:self.newTweetDetailsWrapperController animated:YES];
+        pushViewController:self.newTweetDetailsWrapperController
+        animated:animated];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:NO];
     [self.lastTweetDetailsWrapperController
         setUpdatingState:kConnectedAndNotUpdating];

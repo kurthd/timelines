@@ -146,4 +146,6 @@
 // HACK: Added to get "Save Search" button in header view.
 - (void)setTimelineHeaderView:(UIView *)view;
 
+- (void)pushTweetWithoutAnimation:(Tweet *)tweet;
+
 @end
