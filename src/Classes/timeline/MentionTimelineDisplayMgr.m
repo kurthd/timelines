@@ -293,6 +293,8 @@
     displayed = YES;
     numNewMentions = 0;
     [self updateBadge];
+    timelineController.searchBar.placeholder =
+        NSLocalizedString(@"mentiondisplaymgr.searchplaceholder", @"");
 }
 
 - (void)networkAwareViewWillDisappear

@@ -56,7 +56,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
     showWithoutAvatars, mentionUsername, mentionString, visibleTweetId,
-    flashingScrollIndicators, filteredTweets;
+    flashingScrollIndicators, filteredTweets, searchBar;
 
 - (void)dealloc
 {
@@ -121,7 +121,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         numUpdatesLabel.textColor = [UIColor lightGrayColor];
         numUpdatesLabel.shadowColor = [UIColor blackColor];
 
-        searchBar.barStyle = UIBarStyleBlackOpaque;
+        searchBar.tintColor = [UIColor twitchDarkDarkGrayColor];
     }
 
     self.tableView.tableFooterView = footerView;
@@ -177,11 +177,13 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     shouldReloadTableForSearchString:(NSString *)searchString
 {
     // Not sure why, but this needs to be set every time results are shown
-    self.searchDisplayController.searchResultsTableView.separatorStyle =
-        UITableViewCellSeparatorStyleNone;
+    UITableView * searchTableView =
+        self.searchDisplayController.searchResultsTableView;
+    searchTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if ([SettingsReader displayTheme] == kDisplayThemeDark)
-        self.searchDisplayController.searchResultsTableView.backgroundColor =
-            [UIColor twitchDarkGrayColor];
+        searchTableView.backgroundColor = [UIColor twitchDarkDarkGrayColor];
+    else
+        searchTableView.backgroundColor = [UIColor twitchLightLightGrayColor];
 
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:

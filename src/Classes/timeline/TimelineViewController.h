@@ -61,6 +61,8 @@
 
 @property (nonatomic, retain) NSString * mentionUsername;
 
+@property (nonatomic, retain) UISearchBar * searchBar;
+
 - (void)setUser:(User *)user;
 - (void)setTweets:(NSArray *)tweets page:(NSUInteger)page
     visibleTweetId:(NSNumber *)visibleTweetId;

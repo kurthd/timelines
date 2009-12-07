@@ -44,7 +44,7 @@
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="IBUISearchBar" id="138678722">
+					<object class="IBUISearchBar" id="498884915">
 						<reference key="NSNextResponder" ref="484456690"/>
 						<int key="NSvFlags">290</int>
 						<string key="NSFrameSize">{320, 44}</string>
@@ -52,25 +52,30 @@
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUIContentMode">3</int>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
+						<string key="IBPlaceholder">Search Timeline</string>
 						<object class="IBUITextInputTraits" key="IBTextInputTraits"/>
 					</object>
 				</object>
 				<string key="NSFrameSize">{320, 367}</string>
 				<reference key="NSSuperview"/>
-				<object class="NSColor" key="IBUIBackgroundColor" id="797388771">
-					<int key="NSColorSpace">3</int>
-					<bytes key="NSWhite">MQA</bytes>
+				<object class="NSColor" key="IBUIBackgroundColor">
+					<int key="NSColorSpace">1</int>
+					<bytes key="NSRGB">MC44ODYyNzQ1MDk4IDAuOTA1ODgyMzUyOSAwLjkyOTQxMTc2NDcAA</bytes>
 				</object>
 				<bool key="IBUIOpaque">NO</bool>
 				<bool key="IBUIClipsSubviews">YES</bool>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+				<double key="IBUIContentInset.top">0.0</double>
+				<double key="IBUIContentInset.bottom">-300</double>
+				<double key="IBUIContentInset.left">0.0</double>
+				<double key="IBUIContentInset.right">0.0</double>
 				<bool key="IBUIBouncesZoom">NO</bool>
 				<int key="IBUISectionIndexMinimumDisplayRowCount">0</int>
 				<bool key="IBUIShowsSelectionImmediatelyOnTouchBegin">YES</bool>
 				<float key="IBUIRowHeight">44</float>
 				<float key="IBUISectionHeaderHeight">22</float>
 				<float key="IBUISectionFooterHeight">22</float>
-				<reference key="IBUITableHeaderView" ref="138678722"/>
+				<reference key="IBUITableHeaderView" ref="498884915"/>
 			</object>
 			<object class="IBUIImageView" id="769004692">
 				<reference key="NSNextResponder"/>
@@ -135,7 +140,10 @@
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
 						<nil key="IBUIHighlightedColor"/>
-						<reference key="IBUIShadowColor" ref="797388771"/>
+						<object class="NSColor" key="IBUIShadowColor" id="797388771">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MQA</bytes>
+						</object>
 						<string key="IBUIShadowOffset">{0, 1}</string>
 						<int key="IBUIBaselineAdjustment">1</int>
 						<float key="IBUIMinimumFontSize">10</float>
@@ -325,7 +333,7 @@
 						<int key="IBUIStyle">2</int>
 					</object>
 				</object>
-				<string key="NSFrameSize">{320, 70}</string>
+				<string key="NSFrameSize">{320, 370}</string>
 				<reference key="NSSuperview"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -334,7 +342,7 @@
 				</object>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 			</object>
-			<object class="IBUISearchDisplayController" id="489613908"/>
+			<object class="IBUISearchDisplayController" id="1058921595"/>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
@@ -504,15 +512,15 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">searchBar</string>
-						<reference key="source" ref="489613908"/>
-						<reference key="destination" ref="138678722"/>
+						<reference key="source" ref="1058921595"/>
+						<reference key="destination" ref="498884915"/>
 					</object>
 					<int key="connectionID">74</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">searchContentsController</string>
-						<reference key="source" ref="489613908"/>
+						<reference key="source" ref="1058921595"/>
 						<reference key="destination" ref="841351856"/>
 					</object>
 					<int key="connectionID">76</int>
@@ -520,7 +528,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">searchResultsDataSource</string>
-						<reference key="source" ref="489613908"/>
+						<reference key="source" ref="1058921595"/>
 						<reference key="destination" ref="841351856"/>
 					</object>
 					<int key="connectionID">77</int>
@@ -528,7 +536,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">searchResultsDelegate</string>
-						<reference key="source" ref="489613908"/>
+						<reference key="source" ref="1058921595"/>
 						<reference key="destination" ref="841351856"/>
 					</object>
 					<int key="connectionID">78</int>
@@ -536,7 +544,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
-						<reference key="source" ref="489613908"/>
+						<reference key="source" ref="1058921595"/>
 						<reference key="destination" ref="841351856"/>
 					</object>
 					<int key="connectionID">79</int>
@@ -544,7 +552,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
-						<reference key="source" ref="138678722"/>
+						<reference key="source" ref="498884915"/>
 						<reference key="destination" ref="841351856"/>
 					</object>
 					<int key="connectionID">80</int>
@@ -553,7 +561,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">searchDisplayController</string>
 						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="489613908"/>
+						<reference key="destination" ref="1058921595"/>
 					</object>
 					<int key="connectionID">81</int>
 				</object>
@@ -561,7 +569,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">searchBar</string>
 						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="138678722"/>
+						<reference key="destination" ref="498884915"/>
 					</object>
 					<int key="connectionID">82</int>
 				</object>
@@ -591,7 +599,7 @@
 						<reference key="object" ref="484456690"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="138678722"/>
+							<reference ref="498884915"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -707,12 +715,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">73</int>
-						<reference key="object" ref="489613908"/>
+						<reference key="object" ref="1058921595"/>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">72</int>
-						<reference key="object" ref="138678722"/>
+						<reference key="object" ref="498884915"/>
 						<reference key="parent" ref="484456690"/>
 					</object>
 				</object>
@@ -761,7 +769,7 @@
 					<string>RoundedImage</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{358, 443}, {320, 70}}</string>
+					<string>{{358, 143}, {320, 370}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
