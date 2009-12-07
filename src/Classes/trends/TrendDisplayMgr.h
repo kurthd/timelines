@@ -5,13 +5,16 @@
 #import <Foundation/Foundation.h>
 #import "TwitbitShared.h"
 
-@class TimelineDisplayMgr, SearchDisplayMgr;
+@class TimelineDisplayMgr, SearchDisplayMgr, Trend;
 
-@interface TrendDisplayMgr : NSObject
+@interface TrendDisplayMgr : NSObject <UIWebViewDelegate>
 {
     UINavigationController * navigationController;
     TimelineDisplayMgr * timelineDisplayMgr;
     SearchDisplayMgr * searchDisplayMgr;
+
+    Trend * trend;
+    UIWebView * trendExplanationView;
 }
 
 - (id)initWithSearchDisplayMgr:(SearchDisplayMgr *)aSearchDisplayMgr

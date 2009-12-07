@@ -22,6 +22,8 @@
 #import "UIImage+DrawingAdditions.h"
 #import "UIColor+TwitchColors.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "UIWebView+FileLoadingAdditions.h"
+#import "NSString+WebViewAdditions.h"
 
 
 //

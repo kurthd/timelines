@@ -32,7 +32,7 @@ static NSMutableDictionary * photoUrlDict;
                      photoUrl:(NSString *)photoUrl
               photoUrlWebpage:(NSString *)photoUrlWebpage
 {
-        NSString * body = [[self class] bodyWithLinks:text];
+    NSString * body = [self bodyWithLinks:text];
     // some tweets have newlines -- convert them to HTML line breaks for
     // display in the HTML tweet view
     body = [body stringByReplacingOccurrencesOfString:@"\n"
