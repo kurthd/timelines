@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSString * mentionString;
 @property (nonatomic, retain) NSNumber * visibleTweetId;
 @property (nonatomic, assign) BOOL flashingScrollIndicators;
+@property (nonatomic, copy) NSArray * filteredTweets;
 
 - (UIImage *)getLargeAvatarForUser:(User *)aUser;
 - (UIImage *)getThumbnailAvatarForUser:(User *)aUser;
@@ -26,6 +27,8 @@
 - (NSArray *)sortedTweets;
 - (void)triggerDelayedRefresh;
 - (void)processDelayedRefresh;
+
+- (Tweet *)tweetAtIndex:(NSIndexPath *)indexPath inTableView:(UITableView *)tv;
 
 - (NSInteger)indexForTweetId:(NSString *)tweetId;
 - (NSInteger)sortedIndexForTweetId:(NSString *)tweetId;
@@ -53,7 +56,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
     showWithoutAvatars, mentionUsername, mentionString, visibleTweetId,
-    flashingScrollIndicators;
+    flashingScrollIndicators, filteredTweets;
 
 - (void)dealloc
 {
@@ -74,6 +77,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     [user release];
 
     [sortedTweetCache release];
+    [filteredTweets release];
 
     [loadMoreButton release];
     [noMorePagesLabel release];
@@ -116,13 +120,13 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
         numUpdatesLabel.textColor = [UIColor lightGrayColor];
         numUpdatesLabel.shadowColor = [UIColor blackColor];
+
+        searchBar.barStyle = UIBarStyleBlackOpaque;
     }
 
     self.tableView.tableFooterView = footerView;
     alreadySent = [[NSMutableDictionary dictionary] retain];
     showInbox = YES;
-    self.tableView.tableHeaderView = plainHeaderView;
-    self.tableView.contentInset = UIEdgeInsetsMake(-392, 0, 0, 0);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -133,10 +137,19 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     self.view.frame =
         landscape ? CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
 
-    if (lastShownLandscapeValue != landscape)
+    UITableView * searchTableView =
+        self.searchDisplayController.searchResultsTableView;
+
+    if (lastShownLandscapeValue != landscape) {
         [self.tableView reloadData];
+        [searchTableView reloadData];
+    }
 
     [self setScrollIndicatorBlackoutTimer];
+
+    [searchTableView
+        deselectRowAtIndexPath:searchTableView.indexPathForSelectedRow
+        animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -155,6 +168,29 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     duration:(NSTimeInterval)duration
 {
     [self.tableView reloadData];
+    [self.searchDisplayController.searchResultsTableView reloadData];
+}
+
+#pragma mark UISearchDisplayControllerDelegate implementation
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller
+    shouldReloadTableForSearchString:(NSString *)searchString
+{
+    // Not sure why, but this needs to be set every time results are shown
+    self.searchDisplayController.searchResultsTableView.separatorStyle =
+        UITableViewCellSeparatorStyleNone;
+    if ([SettingsReader displayTheme] == kDisplayThemeDark)
+        self.searchDisplayController.searchResultsTableView.backgroundColor =
+            [UIColor twitchDarkGrayColor];
+
+    NSPredicate * predicate =
+        [NSPredicate predicateWithFormat:
+        @"SELF.text contains[cd] %@ OR SELF.user.username contains[cd] %@ OR SELF.user.name contains[cd] %@",
+        searchString, searchString, searchString];
+    self.filteredTweets =
+        [[self sortedTweets] filteredArrayUsingPredicate:predicate];
+
+    return YES;
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -164,10 +200,11 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView
+- (NSInteger)tableView:(UITableView *)tv
     numberOfRowsInSection:(NSInteger)section
 {
-    return [[self sortedTweets] count];
+    return tv == self.tableView ?
+        [[self sortedTweets] count] : [self.filteredTweets count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv
@@ -182,7 +219,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
             initWithStyle:UITableViewCellStyleDefault
             reuseIdentifier:reuseIdentifier] autorelease];
 
-    Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
+    Tweet * tweet = [self tweetAtIndex:indexPath inTableView:tv];
     Tweet * displayTweet;
     NSString * retweetAuthor = nil;
     if (tweet.retweet) {
@@ -196,10 +233,10 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView
+- (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
+    Tweet * tweet = [self tweetAtIndex:indexPath inTableView:tv];
     [delegate selectedTweet:tweet];
 }
 
@@ -208,7 +245,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (CGFloat)tableView:(UITableView *)aTableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Tweet * tweet = [[self sortedTweets] objectAtIndex:indexPath.row];
+    Tweet * tweet = [self tweetAtIndex:indexPath inTableView:aTableView];
     Tweet * displayTweet = tweet.retweet ? tweet.retweet : tweet;
     NSString * tweetText = displayTweet.text;
     FastTimelineTableViewCellDisplayType displayType =
@@ -468,6 +505,13 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     NSData * avatarData = [NSData dataWithContentsOfURL:avatarUrl];
 
     return [UIImage imageWithData:avatarData];
+}
+
+- (Tweet *)tweetAtIndex:(NSIndexPath *)indexPath inTableView:(UITableView *)tv
+{
+    NSArray * array =
+        tv == self.tableView ? [self sortedTweets] : self.filteredTweets;
+    return [array objectAtIndex:indexPath.row];
 }
 
 - (NSArray *)sortedTweets

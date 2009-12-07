@@ -9,7 +9,8 @@
 #import "RoundedImage.h"
 
 @interface TimelineViewController :
-    UITableViewController <AsynchronousNetworkFetcherDelegate>
+    UITableViewController
+    <AsynchronousNetworkFetcherDelegate, UISearchBarDelegate>
 {
     NSObject<TimelineViewControllerDelegate> * delegate;
 
@@ -27,6 +28,7 @@
     IBOutlet UIButton * loadMoreButton;
     IBOutlet UIActivityIndicatorView * loadingMoreIndicator;
     IBOutlet UILabel * noMorePagesLabel;
+    IBOutlet UISearchBar * searchBar;
 
     NSArray * tweets;
     NSMutableDictionary * alreadySent;
@@ -35,6 +37,7 @@
     User * user;
 
     NSArray * sortedTweetCache;
+    NSArray * filteredTweets;
 
     BOOL showInbox;
     BOOL delayedRefreshTriggered;
