@@ -310,7 +310,8 @@
 - (void)selectedTweet:(Tweet *)tweet
 {
     if ([[tweet searchResult] boolValue]) {
-        [self loadNewTweetWithId:tweet.identifier username:tweet.user.username];
+        [self loadNewTweetWithId:tweet.identifier username:tweet.user.username
+            animated:YES];
         return;
     }
 
@@ -493,14 +494,15 @@
 }
 
 - (void)loadNewTweetWithId:(NSNumber *)tweetId
-    username:(NSString *)replyToUsername
+    username:(NSString *)replyToUsername animated:(BOOL)animated
 {
     NSLog(@"Timeline display manager: showing tweet details for tweet %@",
         tweetId);
 
     [service fetchTweet:tweetId];
     [[self navigationController]
-        pushViewController:self.newTweetDetailsWrapperController animated:YES];
+        pushViewController:self.newTweetDetailsWrapperController
+        animated:animated];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:NO];
     [self.lastTweetDetailsWrapperController
         setUpdatingState:kConnectedAndUpdating];
@@ -939,6 +941,16 @@
         tweetIndexToIdDict = [[NSMutableDictionary dictionary] retain];
 
     return tweetIndexToIdDict;
+}
+
+- (void)pushTweetWithoutAnimation:(Tweet *)tweet
+{
+    [[self navigationController]
+        pushViewController:self.newTweetDetailsWrapperController animated:NO];
+    [self.lastTweetDetailsWrapperController setCachedDataAvailable:NO];
+    [self.lastTweetDetailsWrapperController
+        setUpdatingState:kConnectedAndUpdating];
+    [self fetchedTweet:tweet withId:tweet.identifier];
 }
 
 @end

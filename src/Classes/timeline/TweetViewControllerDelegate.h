@@ -16,7 +16,8 @@
 - (void)setFavorite:(BOOL)favorite;
 - (void)showLocationOnMap:(NSString *)location;
 - (void)showingTweetDetails:(TweetViewController *)tweetController;
-- (void)loadNewTweetWithId:(NSNumber *)tweetId username:(NSString *)username;
+- (void)loadNewTweetWithId:(NSNumber *)tweetId username:(NSString *)username
+    animated:(BOOL)animated;
 - (void)reTweetSelected;
 - (void)retweetNativelyWithTwitter;
 - (void)replyToTweet;

@@ -465,7 +465,8 @@ enum TweetActionSheets {
                 [NSNumber numberWithLongLong:[tweetIdString longLongValue]];
             NSString * replyToUsername =
                 [self displayTweet].inReplyToTwitterUsername;
-            [delegate loadNewTweetWithId:tweetId username:replyToUsername];
+            [delegate loadNewTweetWithId:tweetId username:replyToUsername
+                animated:YES];
         } else if ([webpage isMatchedByRegex:@"^mailto:"]) {
             NSLog(@"Opening 'Mail' with url: %@", webpage);
             NSURL * url = [[NSURL alloc] initWithString:webpage];
