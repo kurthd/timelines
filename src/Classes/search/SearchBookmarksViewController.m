@@ -27,9 +27,6 @@ typedef enum
 @property (nonatomic, retain) UIBarButtonItem * clearRecentsButton;
 @property (nonatomic, retain) UIBarButtonItem * editSavedSearchesButton;
 @property (nonatomic, retain) UIBarButtonItem * doneEditingSavedSearchesButton;
-@property (nonatomic, retain) UIBarButtonItem * refreshTrendsButton;
-@property (nonatomic, retain) UIBarButtonItem * activityButton;
-@property (nonatomic, retain) UISegmentedControl * trendsCategorySelector;
 
 @property (nonatomic, copy) NSArray * contents;
 
@@ -43,12 +40,8 @@ typedef enum
                            reuseIdentifier:(NSString *)reuseIdentifier;
 
 - (BookmarkCategory)selectedCategory;
-- (TrendType)selectedTrendsCategory;
 
 - (void)resetTableView;
-
-- (void)displayActivityView;
-- (void)hideActivityView;
 
 @end
 
@@ -60,7 +53,6 @@ typedef enum
 @synthesize doneButton;
 @synthesize clearRecentsButton;
 @synthesize editSavedSearchesButton, doneEditingSavedSearchesButton;
-@synthesize refreshTrendsButton, activityButton, trendsCategorySelector;
 @synthesize contents;
 
 - (void)dealloc
@@ -76,9 +68,6 @@ typedef enum
     self.clearRecentsButton = nil;
     self.editSavedSearchesButton = nil;
     self.doneEditingSavedSearchesButton = nil;
-    self.refreshTrendsButton = nil;
-    self.activityButton = nil;
-    self.trendsCategorySelector = nil;
 
     self.contents = nil;
 
@@ -92,10 +81,6 @@ typedef enum
     [self.bookmarkCategorySelector addTarget:self
                                       action:@selector(bookmarkCategoryChanged:)
                             forControlEvents:UIControlEventValueChanged];
-
-    [self.trendsCategorySelector addTarget:self
-                                    action:@selector(trendsCategoryChanged:)
-                          forControlEvents:UIControlEventValueChanged];
 
     self.bookmarkCategorySelector.selectedSegmentIndex = selectedIndex;
 }
@@ -190,8 +175,10 @@ typedef enum
                                   withRowAnimation:UITableViewRowAnimationFade];
 
             // update UI appropriately after swiping-to-delete
-            if (self.navigationBar.topItem.leftBarButtonItem ==
-                editSavedSearchesButton)
+            BOOL editingSavedSearches =
+                self.navigationBar.topItem.leftBarButtonItem ==
+                editSavedSearchesButton;
+            if (editingSavedSearches)
                 self.navigationBar.topItem.leftBarButtonItem.enabled =
                     [self.tableView numberOfRowsInSection:0] > 0;
         }
@@ -214,29 +201,6 @@ typedef enum
     [self.delegate setSavedSearchOrder:self.contents];
 }
 
-#pragma mark Receiving trends
-
-- (void)trends:(NSArray *)trends fetchedForType:(TrendType)trendType
-{
-    if ([self selectedCategory] == kTrendsCategory) {
-        [self hideActivityView];
-        if ([self selectedTrendsCategory] == trendType) {
-            self.contents = trends;
-            [self resetTableView];
-        }
-    }
-}
-
-- (void)failedToFetchTrendsForType:(TrendType)trendType error:(NSError *)error
-{
-    NSString * title = NSLocalizedString(@"trends.fetch.failed", @"");
-    NSString * message = error.localizedDescription;
-
-    [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
-
-    [self hideActivityView];
-}
-
 #pragma mark UI element actions
 
 - (IBAction)done
@@ -257,18 +221,6 @@ typedef enum
     [self displayCategory:[self selectedCategory]];
 }
 
-- (void)trendsCategoryChanged:(id)sender
-{
-    TrendType trendType = [self selectedTrendsCategory];
-    self.contents = [self.delegate trendsOfType:trendType refresh:NO];
-
-    if (self.contents) {
-        [self resetTableView];
-        [self hideActivityView];
-    } else
-        [self displayActivityView];
-}
-
 - (IBAction)editSavedSearches
 {
     [self configureViewForEditingSavedSearches];
@@ -277,13 +229,6 @@ typedef enum
 - (IBAction)doneEditingSavedSearches
 {
     [self configureViewForNotEditingSavedSearches];
-}
-
-- (IBAction)refreshTrends
-{
-    TrendType trendType = [self selectedTrendsCategory];
-    [self.delegate trendsOfType:trendType refresh:YES];
-    [self displayActivityView];
 }
 
 #pragma mark Private implementation
@@ -297,11 +242,6 @@ typedef enum
             break;
         case kRecentsCategory:
             self.contents = [self.delegate recentSearches];
-            break;
-        case kTrendsCategory:
-            self.contents =
-                [self.delegate trendsOfType:[self selectedTrendsCategory]
-                                    refresh:NO];
             break;
     }
 
@@ -342,34 +282,12 @@ typedef enum
                 [self.tableView numberOfRowsInSection:0] > 0;
 
             break;
-
-        case kTrendsCategory:
-            if (self.tableView.editing)
-                [self configureViewForNotEditingSavedSearches];
-
-            self.navigationBar.topItem.titleView = self.trendsCategorySelector;
-
-            if (self.contents)
-                self.navigationBar.topItem.leftBarButtonItem =
-                    self.refreshTrendsButton;
-            else
-                [self displayActivityView];
-
-            self.navigationBar.topItem.prompt =
-                NSLocalizedString(@"searchbookmarks.trends.prompt", @"");
-
-            break;
     }
 }
 
 - (BookmarkCategory)selectedCategory
 {
     return bookmarkCategorySelector.selectedSegmentIndex;
-}
-
-- (TrendType)selectedTrendsCategory
-{
-    return trendsCategorySelector.selectedSegmentIndex;
 }
 
 - (UITableViewCell *)createCellForCategory:(BookmarkCategory)category
@@ -419,42 +337,7 @@ typedef enum
     [self.tableView flashScrollIndicators];
 }
 
-- (void)displayActivityView
-{
-    if ([self selectedCategory] == kTrendsCategory)
-        self.navigationBar.topItem.leftBarButtonItem = self.activityButton;
-}
-
-- (void)hideActivityView
-{
-    if ([self selectedCategory] == kTrendsCategory)
-        self.navigationBar.topItem.leftBarButtonItem = self.refreshTrendsButton;
-}
-
 #pragma mark Accessors
-
-
-- (UIBarButtonItem *)activityButton
-{
-    if (!activityButton) {
-        CGRect frame = CGRectMake(0.0, 0.0, 23.0, 23.0);
-        UIActivityIndicatorView * view =
-            [[UIActivityIndicatorView alloc] initWithFrame:frame];
-        [view startAnimating];
-
-        view.autoresizingMask =
-            UIViewAutoresizingFlexibleLeftMargin |
-            UIViewAutoresizingFlexibleRightMargin |
-            UIViewAutoresizingFlexibleTopMargin |
-            UIViewAutoresizingFlexibleBottomMargin;
-
-        activityButton = [[UIBarButtonItem alloc] initWithCustomView:view];
-
-        [view release];
-    }
-
-    return activityButton;
-}
 
 - (NSInteger)selectedSegment
 {
