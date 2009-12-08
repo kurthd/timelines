@@ -9,6 +9,7 @@
 @synthesize selectedTab, selectedTimelineFeed, tabOrder, numNewMentions,
     selectedSearchBookmarkIndex, selectedPeopleBookmarkIndex, findPeopleText,
     searchText, nearbySearch, composingTweet, directMessageRecipient,
-    viewingUrl, viewingHtml, currentlyViewedTweetId, currentlyViewedMentionId;
+    viewingUrl, viewingHtml, currentlyViewedTweetId, currentlyViewedMentionId,
+    currentlyViewedMessageId;
 
 @end

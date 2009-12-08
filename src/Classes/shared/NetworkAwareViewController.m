@@ -32,7 +32,8 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 
 @implementation NetworkAwareViewController
 
-@synthesize delegate, targetViewController, cachedDataAvailable;
+@synthesize delegate, targetViewController, cachedDataAvailable,
+    transparentUpdatingViewEnabled;
 
 - (void)dealloc
 {
@@ -80,6 +81,8 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
         [aTargetViewController retain];
         [targetViewController release];
         targetViewController = aTargetViewController;
+
+        transparentUpdatingViewEnabled = YES;
     }
 
     return self;
@@ -349,8 +352,10 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 
 - (void)addUpdatingViewAsSubview
 {
-    NSLog(@"Adding updating view as subview");
-    [targetViewController.view.superview addSubview:[self updatingView]];
+    if (transparentUpdatingViewEnabled) {
+        NSLog(@"Adding updating view as subview");
+        [targetViewController.view.superview addSubview:[self updatingView]];
+    }
 }
 
 - (void)removeUpdatingViewFromSuperview

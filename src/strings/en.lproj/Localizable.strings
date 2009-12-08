@@ -63,6 +63,7 @@ mentiondisplaymgr.searchplaceholder = "Search Mentions";
 /* DirectMessageDisplayMgr */
 directmessage.actions.cancel = "Cancel";
 directmessage.actions.email = "Email This Message";
+directmessage.error.fetchmessage = "Failed to fetch direct message";
 
 /* ListsDisplayMgr */
 listsdisplaymgr.error.fetchlists = "Failed to fetch lists";
@@ -106,6 +107,7 @@ tweetdetailsview.reply.label = "Reply with Direct Message";
 /* DirectMessageViewController */
 directmessageview.deletetmessage.cancel = "Cancel";
 directmessageview.deletemessage.confirm = "Delete Direct Message";
+directmessageview.title = "Direct Message";
 
 /* Sending tweets */
 sendtweet.failed.alert.title = "Failed to Send Tweet";

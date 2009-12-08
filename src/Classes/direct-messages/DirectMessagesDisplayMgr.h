@@ -165,5 +165,8 @@
 - (void)addDirectMessage:(DirectMessage *)dm;
 
 - (void)loadNewMessageWithId:(NSNumber *)messageId;
+- (void)pushMessageWithoutAnimation:(DirectMessage *)message;
+
+- (NSNumber *)currentlyViewedMessageId;
 
 @end

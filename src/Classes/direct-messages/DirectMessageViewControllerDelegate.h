@@ -17,4 +17,9 @@
 - (void)deleteTweet:(NSNumber *)tweetId;
 - (void)sendDirectMessageToUser:(NSString *)aUsername;
 
+@optional
+
+- (void)directMessageViewController:(DirectMessageViewController *)controller
+    finishedLoadingMessage:(DirectMessage *)dm;
+
 @end
