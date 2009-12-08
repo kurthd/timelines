@@ -30,12 +30,14 @@ typedef enum
     UIView * updatingView;
 
     BOOL visible;
+    BOOL transparentUpdatingViewEnabled;
 }
 
 @property (nonatomic, retain)
     NSObject<NetworkAwareViewControllerDelegate> * delegate;
 @property (nonatomic, retain) UIViewController * targetViewController;
 @property (nonatomic) BOOL cachedDataAvailable;
+@property (nonatomic, assign) BOOL transparentUpdatingViewEnabled;
 
 - (id)initWithTargetViewController:(UIViewController *)targetViewController;
 

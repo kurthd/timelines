@@ -99,6 +99,7 @@
         navigationController = [aNavigationController retain];
 
         userInfoController.followingEnabled = NO;
+        netAwareController.transparentUpdatingViewEnabled = NO;
     }
 
     return self;

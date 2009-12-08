@@ -1931,17 +1931,20 @@ enum {
                         loadNewMessageWithId:uiState.currentlyViewedMessageId];
             }
             break;
-        case kOriginalTabOrderPeople:
-            [self initFindPeopleTab];
+        case kOriginalTabOrderLists:
+            [self initListsTab];
             break;
         case kOriginalTabOrderSearch:
             [self initSearchTab];
             break;
-        case kOriginalTabOrderLists:
-            [self initListsTab];
+        case kOriginalTabOrderPeople:
+            [self initFindPeopleTab];
             break;
         case kOriginalTabOrderProfile:
             [self initProfileTab];
+            break;
+        case kOriginalTabOrderTrends:
+            [self initTrendsTab];
             break;
     }
 }
@@ -1966,7 +1969,7 @@ enum {
 {
     UIStatePersistenceStore * uiStatePersistenceStore =
         [[[UIStatePersistenceStore alloc] init] autorelease];
-    if (tabBarController.selectedIndex <= kOriginalTabOrderPeople)
+    if (tabBarController.selectedIndex <= kOriginalTabOrderTrends)
         uiState.selectedTab = tabBarController.selectedIndex;
     else
         uiState.selectedTab = 0;

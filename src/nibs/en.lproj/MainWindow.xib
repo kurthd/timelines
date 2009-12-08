@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="258"/>
+			<integer value="249"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -53,41 +53,36 @@
 			<object class="IBUITabBarController" id="1034742383">
 				<object class="IBUISimulatedTabBarMetrics" key="IBUISimulatedBottomBarMetrics"/>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
-				<object class="IBUINavigationController" key="IBUISelectedViewController" id="1047219421">
-					<object class="IBUITabBarItem" key="IBUITabBarItem" id="380465899">
-						<string key="IBUITitle">Profile</string>
+				<object class="IBUINavigationController" key="IBUISelectedViewController" id="248843575">
+					<object class="IBUITabBarItem" key="IBUITabBarItem" id="803386647">
+						<int key="IBUITag">7</int>
+						<string key="IBUITitle">Trends</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">Profile.png</string>
+							<string key="NSResourceName">LineChart.png</string>
 						</object>
 						<reference key="IBUITabBar"/>
 					</object>
+					<reference key="IBUIToolbarItems" ref="0"/>
 					<reference key="IBUIParentViewController" ref="1034742383"/>
-					<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
-					<object class="IBUINavigationBar" key="IBUINavigationBar" id="8523069">
+					<object class="IBUINavigationBar" key="IBUINavigationBar" id="638734705">
 						<nil key="NSNextResponder"/>
 						<int key="NSvFlags">256</int>
-						<string key="NSFrameSize">{0, 0}</string>
+						<string key="NSFrameSize">{320, 44}</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 					</object>
 					<object class="NSMutableArray" key="IBUIViewControllers">
 						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="IBUIViewController" id="1060339271">
-							<object class="IBUINavigationItem" key="IBUINavigationItem" id="370519425">
+						<object class="IBUIViewController" id="812485076">
+							<string key="IBUITitle">Trends</string>
+							<reference key="IBUIToolbarItems" ref="0"/>
+							<object class="IBUINavigationItem" key="IBUINavigationItem" id="102327925">
 								<reference key="IBUINavigationBar"/>
-								<string key="IBUITitle">My Profile</string>
-								<object class="IBUIBarButtonItem" key="IBUILeftBarButtonItem" id="953636466">
-									<int key="IBUIStyle">1</int>
-									<int key="IBUISystemItemIdentifier">13</int>
-								</object>
-								<object class="IBUIBarButtonItem" key="IBUIRightBarButtonItem" id="170718183">
-									<int key="IBUIStyle">1</int>
-									<int key="IBUISystemItemIdentifier">7</int>
-								</object>
+								<string key="IBUITitle">Trends</string>
 							</object>
-							<reference key="IBUIParentViewController" ref="1047219421"/>
+							<reference key="IBUIParentViewController" ref="248843575"/>
 						</object>
 					</object>
 				</object>
@@ -331,39 +326,45 @@
 							</object>
 						</object>
 					</object>
-					<reference ref="1047219421"/>
-					<object class="IBUINavigationController" id="248843575">
-						<object class="IBUITabBarItem" key="IBUITabBarItem" id="803386647">
+					<object class="IBUINavigationController" id="1047219421">
+						<object class="IBUITabBarItem" key="IBUITabBarItem" id="380465899">
 							<int key="IBUITag">6</int>
-							<string key="IBUITitle">Trends</string>
+							<string key="IBUITitle">Profile</string>
 							<object class="NSCustomResource" key="IBUIImage">
 								<string key="NSClassName">NSImage</string>
-								<string key="NSResourceName">LineChart.png</string>
+								<string key="NSResourceName">Profile.png</string>
 							</object>
 							<reference key="IBUITabBar"/>
 						</object>
-						<reference key="IBUIToolbarItems" ref="0"/>
 						<reference key="IBUIParentViewController" ref="1034742383"/>
-						<object class="IBUINavigationBar" key="IBUINavigationBar" id="638734705">
+						<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
+						<object class="IBUINavigationBar" key="IBUINavigationBar" id="8523069">
 							<nil key="NSNextResponder"/>
 							<int key="NSvFlags">256</int>
-							<string key="NSFrameSize">{320, 44}</string>
+							<string key="NSFrameSize">{0, 0}</string>
 							<bool key="IBUIOpaque">NO</bool>
 							<bool key="IBUIClipsSubviews">YES</bool>
 							<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						</object>
 						<object class="NSMutableArray" key="IBUIViewControllers">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBUIViewController" id="812485076">
-								<string key="IBUITitle">Trends</string>
-								<reference key="IBUIToolbarItems" ref="0"/>
-								<object class="IBUINavigationItem" key="IBUINavigationItem" id="102327925">
-									<string key="IBUITitle">Trends</string>
+							<object class="IBUIViewController" id="1060339271">
+								<object class="IBUINavigationItem" key="IBUINavigationItem" id="370519425">
+									<string key="IBUITitle">My Profile</string>
+									<object class="IBUIBarButtonItem" key="IBUILeftBarButtonItem" id="953636466">
+										<int key="IBUIStyle">1</int>
+										<int key="IBUISystemItemIdentifier">13</int>
+									</object>
+									<object class="IBUIBarButtonItem" key="IBUIRightBarButtonItem" id="170718183">
+										<int key="IBUIStyle">1</int>
+										<int key="IBUISystemItemIdentifier">7</int>
+									</object>
 								</object>
-								<reference key="IBUIParentViewController" ref="248843575"/>
+								<reference key="IBUIParentViewController" ref="1047219421"/>
 							</object>
 						</object>
 					</object>
+					<reference ref="248843575"/>
 				</object>
 				<object class="IBUITabBar" key="IBUITabBar" id="795333663">
 					<nil key="NSNextResponder"/>
