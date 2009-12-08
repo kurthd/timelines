@@ -282,6 +282,19 @@ static NSMutableDictionary * oaTokens;
     [self request:requestId isHandledBy:processor];
 }
 
+- (void)fetchDirectMessage:(NSNumber *)updateId
+{
+    ResponseProcessor * processor =
+        [FetchDirectMessageResponseProcessor processorWithUpdateId:updateId
+                                                       credentials:credentials
+                                                           context:context
+                                                          delegate:delegate];
+
+    NSString * requestId = [twitter getDirectMessage:[updateId description]];
+
+    [self request:requestId isHandledBy:processor];
+}
+
 - (void)sendDirectMessage:(NSString *)message to:(NSString *)username
 {
     ResponseProcessor * processor =

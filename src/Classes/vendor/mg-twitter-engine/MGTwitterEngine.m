@@ -1777,6 +1777,15 @@
                            responseType:MGTwitterDirectMessage];
 }
 
+- (NSString *)getDirectMessage:(NSString *)updateID
+{
+    NSString *path = [NSString stringWithFormat:@"direct_messages/show/%@.%@", updateID, API_FORMAT];
+
+    return [self _sendRequestWithMethod:nil path:path queryParameters:nil body:nil 
+                            requestType:MGTwitterAccountRequest 
+                           responseType:MGTwitterDirectMessage];
+}
+
 - (NSString *)getListsFor:(NSString *)username cursor:(NSString *)cursor
 {
     if (!username)
