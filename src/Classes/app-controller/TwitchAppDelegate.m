@@ -45,6 +45,7 @@
 #import "TrendDisplayMgr.h"
 #import "TrendsViewController.h"
 #import "Tweet+CoreDataAdditions.h"
+#import "DirectMessage+CoreDataAdditions.h"
 
 @interface TwitchAppDelegate ()
 
@@ -1918,6 +1919,17 @@ enum {
             break;
         case kOriginalTabOrderMessages:
             [self initMessagesTab];
+            if (uiState.currentlyViewedMessageId) {
+                DirectMessage * dm =
+                    [DirectMessage
+                    directMessageWithId:uiState.currentlyViewedMessageId
+                    context:[self managedObjectContext]];
+                if (dm)
+                    [directMessageDisplayMgr pushMessageWithoutAnimation:dm];
+                else
+                    [directMessageDisplayMgr
+                        loadNewMessageWithId:uiState.currentlyViewedMessageId];
+            }
             break;
         case kOriginalTabOrderPeople:
             [self initFindPeopleTab];
@@ -1998,6 +2010,8 @@ enum {
 
     uiState.currentlyViewedTweetId = timelineDisplayMgr.currentlyViewedTweetId;
     uiState.currentlyViewedMentionId = mentionDisplayMgr.currentlyViewedTweetId;
+    uiState.currentlyViewedMessageId =
+        directMessageDisplayMgr.currentlyViewedMessageId;
 
     [uiStatePersistenceStore save:uiState];
 

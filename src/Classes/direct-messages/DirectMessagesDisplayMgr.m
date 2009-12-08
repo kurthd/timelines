@@ -169,6 +169,13 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     return self;
 }
 
+#pragma mark NetworkAwareViewControllerDelegate implementation
+
+- (void)networkAwareViewWillAppear
+{
+    self.selectedMessage = nil;
+}
+
 #pragma mark TwitterServiceDelegate implementation
 
 - (void)directMessages:(NSArray *)directMessages
@@ -286,6 +293,25 @@ static BOOL alreadyReadDisplayWithUsernameValue;
             @"");
         [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
     }
+}
+
+- (void)fetchedDirectMessage:(DirectMessage *)dm
+    withUpdateId:(NSNumber *)updateId
+{
+    NSLog(@"Fetched message: %@", dm);
+    [self.lastMessageDetailsController displayDirectMessage:dm
+         onNavigationController:nil];
+}
+
+- (void)failedToFetchDirectMessageWithUpdateId:(NSNumber *)updateId
+    error:(NSError *)error
+{
+    NSLog(@"Failed to fetch direct message %@", updateId);
+    NSLog(@"Error: %@", error);
+    NSString * errorMessage =
+        NSLocalizedString(@"directmessage.error.fetchmessage", @"");
+    [[ErrorState instance] displayErrorWithTitle:errorMessage error:error];
+    [self.lastMessageDetailsWrapperController setUpdatingState:kDisconnected];
 }
 
 #pragma mark DirectMessageInboxViewControllerDelegate implementation
@@ -466,7 +492,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [controller dismissModalViewControllerAnimated:YES];
     [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
 }
-
 
 #pragma mark Public DirectMessagesDisplayMgr implementation
 
@@ -737,6 +762,16 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)showResultsForSearch:(NSString *)searchString
 {
     [displayMgrHelper showResultsForSearch:searchString];
+}
+
+- (void)directMessageViewController:(DirectMessageViewController *)controller
+    finishedLoadingMessage:(DirectMessage *)dm
+{
+    if (controller == self.lastMessageDetailsController) {
+        [self.lastMessageDetailsWrapperController
+            setUpdatingState:kConnectedAndNotUpdating];
+        [self.lastMessageDetailsWrapperController setCachedDataAvailable:YES];
+    }
 }
 
 #pragma mark Private DirectMessagesDisplayMgr implementation
@@ -1028,7 +1063,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 {
     NSLog(@"Loading new direct message with id %@", messageId);
 
-    // TODO: Fetch DM
+    [service fetchDirectMessage:messageId];
     [wrapperController.navigationController
         pushViewController:self.newMessageDetailsWrapperController
         animated:NO];
@@ -1085,7 +1120,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     tempMessageDetailsController.realParentViewController =
         messageDetailsWrapperController;
 
-    NSString * title = NSLocalizedString(@"tweetdetailsview.title", @"");
+    NSString * title = NSLocalizedString(@"directmessageview.title", @"");
     messageDetailsWrapperController.navigationItem.title = title;
 
     return self.lastMessageDetailsWrapperController =
@@ -1102,6 +1137,21 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [newMessageViewController release];
 
     return newMessageViewController;
+}
+
+- (NSNumber *)currentlyViewedMessageId
+{
+    return self.selectedMessage.identifier;
+}
+
+- (void)pushMessageWithoutAnimation:(DirectMessage *)message
+{
+    [wrapperController.navigationController
+        pushViewController:self.newMessageDetailsWrapperController animated:NO];
+    [self.lastMessageDetailsWrapperController setCachedDataAvailable:NO];
+    [self.lastMessageDetailsWrapperController
+        setUpdatingState:kConnectedAndUpdating];
+    [self fetchedDirectMessage:message withUpdateId:message.identifier];
 }
 
 @end

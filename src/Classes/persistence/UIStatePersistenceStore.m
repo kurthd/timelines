@@ -23,6 +23,7 @@
 + (NSString *)viewingHtmlKey;
 + (NSString *)currentlyViewedTweetIdKey;
 + (NSString *)currentlyViewedMentionIdKey;
++ (NSString *)currentlyViewedMessageIdKey;
 
 @end
 
@@ -65,6 +66,8 @@
         [dict objectForKey:[[self class] currentlyViewedTweetIdKey]];
     NSNumber * currentlyViewedMentionId =
         [dict objectForKey:[[self class] currentlyViewedMentionIdKey]];
+    NSNumber * currentlyViewedMessageId =
+        [dict objectForKey:[[self class] currentlyViewedMessageIdKey]];
     state.selectedTab = selectedTab;
     state.selectedTimelineFeed = selectedTimelineFeed;
     state.tabOrder = tabOrder;
@@ -80,6 +83,7 @@
     state.viewingHtml = viewingHtml;
     state.currentlyViewedTweetId = currentlyViewedTweetId;
     state.currentlyViewedMentionId = currentlyViewedMentionId;
+    state.currentlyViewedMessageId = currentlyViewedMessageId;
 
     return state;
 }
@@ -140,6 +144,10 @@
     if (state.currentlyViewedMentionId)
         [dict setObject:state.currentlyViewedMentionId
             forKey:[[self class] currentlyViewedMentionIdKey]];
+
+    if (state.currentlyViewedMessageId)
+        [dict setObject:state.currentlyViewedMessageId
+            forKey:[[self class] currentlyViewedMessageIdKey]];
 
     [PlistUtils saveDictionary:dict toPlist:[[self class] plistName]];
 }
@@ -222,6 +230,11 @@
 + (NSString *)currentlyViewedMentionIdKey
 {
     return @"currentlyViewedMentionId";
+}
+
++ (NSString *)currentlyViewedMessageIdKey
+{
+    return @"currentlyViewedMessageId";
 }
 
 @end

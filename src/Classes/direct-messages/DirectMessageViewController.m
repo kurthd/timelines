@@ -291,6 +291,11 @@ enum TweetActionSheets {
         [navigationController pushViewController:self animated:YES];
 
     [self displayDirectMessage];
+
+    SEL sel = @selector(directMessageViewController:finishedLoadingMessage:);
+    if ([self.delegate respondsToSelector:sel])
+        [self.delegate directMessageViewController:self
+            finishedLoadingMessage:self.directMessage];
 }
 
 - (BOOL)webView:(UIWebView *)webView
