@@ -85,6 +85,9 @@
 
     NSMutableDictionary * tweetIdToIndexDict;
     NSMutableDictionary * tweetIndexToIdDict;
+
+    UIBarButtonItem * updatingTimelineActivityView;
+    UIBarButtonItem * refreshButton;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;

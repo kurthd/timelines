@@ -35,6 +35,8 @@
 @property (nonatomic, retain)
     NetworkAwareViewController * lastTweetDetailsWrapperController;
 @property (nonatomic, retain) TweetViewController * lastTweetDetailsController;
+@property (nonatomic, retain) UIBarButtonItem * refreshButton;
+@property (nonatomic, readonly) UIBarButtonItem * updatingTimelineActivityView;
 
 @end
 
@@ -42,7 +44,7 @@
 
 @synthesize lastUpdateId, mentions, activeAcctUsername, mentionIdToShow,
     selectedTweet, lastTweetDetailsWrapperController, numNewMentions, showBadge,
-    lastTweetDetailsController, navigationController;
+    lastTweetDetailsController, navigationController, refreshButton;
 
 - (void)dealloc
 {
@@ -70,6 +72,9 @@
 
     [lastTweetDetailsWrapperController release];
     [lastTweetDetailsController release];
+
+    [updatingTimelineActivityView release];
+    [refreshButton release];
 
     [super dealloc];
 }
@@ -120,6 +125,8 @@
         conversationDisplayMgrs = [[NSMutableArray alloc] init];
 
         mentions = [[NSMutableDictionary dictionary] retain];
+
+        self.refreshButton = wrapperController.navigationItem.leftBarButtonItem;
     }
 
     return self;
@@ -748,10 +755,15 @@
 
 - (void)setUpdatingState
 {
+    UIBarButtonItem * buttonItem;
     if (outstandingRequests == 0)
-        [wrapperController setUpdatingState:kConnectedAndNotUpdating];
+        buttonItem = self.refreshButton;
     else
-        [wrapperController setUpdatingState:kConnectedAndUpdating];
+        buttonItem = [self updatingTimelineActivityView];
+
+    if (self.refreshButton)
+        [wrapperController.navigationItem setLeftBarButtonItem:buttonItem
+            animated:YES];
 }
 
 - (void)fetchMentionsSinceId:(NSNumber *)updateId page:(NSNumber *)page
@@ -814,6 +826,34 @@
     [self.lastTweetDetailsWrapperController
         setUpdatingState:kConnectedAndUpdating];
     [self fetchedTweet:tweet withId:tweet.identifier];
+}
+
+- (UIBarButtonItem *)updatingTimelineActivityView
+{
+    if (!updatingTimelineActivityView) {
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
+
+        updatingTimelineActivityView =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [activityView startAnimating];
+
+        [view release];
+    }
+
+    return updatingTimelineActivityView;
 }
 
 @end

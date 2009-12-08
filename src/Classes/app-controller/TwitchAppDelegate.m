@@ -2200,14 +2200,24 @@ enum {
 - (UIBarButtonItem *)homeSendingTweetProgressView
 {
     if (!homeSendingTweetProgressView) {
-        UIActivityIndicatorView * view =
-            [[UIActivityIndicatorView alloc]
-            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
 
         homeSendingTweetProgressView =
             [[UIBarButtonItem alloc] initWithCustomView:view];
 
-        [view startAnimating];
+        [activityView startAnimating];
 
         [view release];
     }

@@ -82,7 +82,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
         [targetViewController release];
         targetViewController = aTargetViewController;
 
-        transparentUpdatingViewEnabled = YES;
+        transparentUpdatingViewEnabled = NO;
     }
 
     return self;

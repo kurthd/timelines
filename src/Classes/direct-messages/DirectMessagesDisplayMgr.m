@@ -13,6 +13,7 @@
 #import "ErrorState.h"
 #import "NSArray+IterationAdditions.h"
 #import "MGTwitterEngine.h"  // for [NSError twitterApiErrorDomain]
+#import "SettingsReader.h"
 
 @interface DirectMessagesDisplayMgr ()
 
@@ -51,6 +52,9 @@
 @property (nonatomic, retain)
     DirectMessageViewController * lastMessageDetailsController;
 
+@property (nonatomic, readonly) UIBarButtonItem * updatingMessagesActivityView;
+@property (nonatomic, retain) UIBarButtonItem * refreshButton;
+
 @end
 
 @implementation DirectMessagesDisplayMgr
@@ -63,7 +67,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     tweetDetailsCredentialsPublisher, tweetIdToIndexDict,
     directMessageCache, newDirectMessages, inboxViewComposeTweetButton,
     newDirectMessagesState, currentConversationUserId, lastFetchedReceivedDMs,
-    lastMessageDetailsWrapperController, lastMessageDetailsController;
+    lastMessageDetailsWrapperController, lastMessageDetailsController,
+    refreshButton;
 
 - (void)dealloc
 {
@@ -95,6 +100,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     [lastMessageDetailsWrapperController release];
     [lastMessageDetailsController release];
+
+    [updatingMessagesActivityView release];
+    [refreshButton release];
 
     [super dealloc];
 }
@@ -155,10 +163,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         self.inboxViewComposeTweetButton.action =
             @selector(composeNewDirectMessage);
 
-        UIBarButtonItem * refreshButton =
+        self.refreshButton =
             wrapperController.navigationItem.leftBarButtonItem;
-        refreshButton.target = self;
-        refreshButton.action = @selector(refreshWithLatest);
+        self.refreshButton.target = self;
+        self.refreshButton.action = @selector(refreshWithLatest);
 
         newDirectMessagesState = [[NewDirectMessagesState alloc] init];
         
@@ -727,14 +735,24 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (UIBarButtonItem *)sendingTweetProgressView
 {
     if (!sendingTweetProgressView) {
-        UIActivityIndicatorView * view =
-            [[UIActivityIndicatorView alloc]
-            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
 
         sendingTweetProgressView =
             [[UIBarButtonItem alloc] initWithCustomView:view];
 
-        [view startAnimating];
+        [activityView startAnimating];
 
         [view release];
     }
@@ -802,10 +820,15 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)setUpdatingState
 {
+    UIBarButtonItem * barButton;
     if (outstandingReceivedRequests == 0 && outstandingSentRequests == 0)
-        [wrapperController setUpdatingState:kConnectedAndNotUpdating];
+        barButton = self.refreshButton;
     else
-        [wrapperController setUpdatingState:kConnectedAndUpdating];
+        barButton = [self updatingMessagesActivityView];
+
+    if (self.refreshButton)
+        [wrapperController.navigationItem setLeftBarButtonItem:barButton
+            animated:YES];
 }
 
 - (void)updateViewsWithNewMessages
@@ -1152,6 +1175,34 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [self.lastMessageDetailsWrapperController
         setUpdatingState:kConnectedAndUpdating];
     [self fetchedDirectMessage:message withUpdateId:message.identifier];
+}
+
+- (UIBarButtonItem *)updatingMessagesActivityView
+{
+    if (!updatingMessagesActivityView) {
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
+
+        updatingMessagesActivityView =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [activityView startAnimating];
+
+        [view release];
+    }
+
+    return updatingMessagesActivityView;
 }
 
 @end

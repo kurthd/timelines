@@ -109,6 +109,9 @@
 
     NetworkAwareViewController * lastMessageDetailsWrapperController;
     DirectMessageViewController * lastMessageDetailsController;
+
+    UIBarButtonItem * updatingMessagesActivityView;
+    UIBarButtonItem * refreshButton;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;
