@@ -997,6 +997,10 @@ enum {
 
     trendsViewController.selectionTarget = trendDisplayMgr;
     trendsViewController.selectionAction = @selector(displayTrend:);
+
+    trendsViewController.explanationTarget = trendDisplayMgr;
+    trendsViewController.explanationAction =
+        @selector(displayExplanationForTrend:);
 }
 
 - (UINavigationController *)getNavControllerForController:(UIViewController *)c

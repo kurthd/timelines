@@ -111,6 +111,10 @@
 		05166955108646B6000CA4AA /* TweetDraftMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0516694B108646B6000CA4AA /* TweetDraftMgr.m */; };
 		051807D410CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 051807D310CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m */; };
 		051807D510CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 051807D310CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m */; };
+		0518083710CF047D00EBFB62 /* TrendExplanationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0518083610CF047D00EBFB62 /* TrendExplanationViewController.m */; };
+		0518083810CF047D00EBFB62 /* TrendExplanationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0518083610CF047D00EBFB62 /* TrendExplanationViewController.m */; };
+		0518083B10CF04F000EBFB62 /* TrendExplanationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0518083910CF04F000EBFB62 /* TrendExplanationView.xib */; };
+		0518083C10CF04F000EBFB62 /* TrendExplanationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0518083910CF04F000EBFB62 /* TrendExplanationView.xib */; };
 		051975FA103A119100883FAC /* AccountSelectedCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 051975F9103A119100883FAC /* AccountSelectedCheckmark.png */; };
 		0519760E103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */; };
 		05197620103A168600883FAC /* AccountNotSelectedFiller.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519761F103A168600883FAC /* AccountNotSelectedFiller.png */; };
@@ -1106,6 +1110,9 @@
 		0516694B108646B6000CA4AA /* TweetDraftMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDraftMgr.m; path = compose/TweetDraftMgr.m; sourceTree = "<group>"; };
 		051807D210CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchDirectMessageResponseProcessor.h; path = twitter/processors/FetchDirectMessageResponseProcessor.h; sourceTree = "<group>"; };
 		051807D310CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchDirectMessageResponseProcessor.m; path = twitter/processors/FetchDirectMessageResponseProcessor.m; sourceTree = "<group>"; };
+		0518083510CF047D00EBFB62 /* TrendExplanationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendExplanationViewController.h; path = trends/TrendExplanationViewController.h; sourceTree = "<group>"; };
+		0518083610CF047D00EBFB62 /* TrendExplanationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrendExplanationViewController.m; path = trends/TrendExplanationViewController.m; sourceTree = "<group>"; };
+		0518083A10CF04F000EBFB62 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TrendExplanationView.xib; sourceTree = "<group>"; };
 		051975F9103A119100883FAC /* AccountSelectedCheckmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountSelectedCheckmark.png; path = images/AccountSelectedCheckmark.png; sourceTree = "<group>"; };
 		0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountSelectedCheckmarkHighlighted.png; path = images/AccountSelectedCheckmarkHighlighted.png; sourceTree = "<group>"; };
 		0519761F103A168600883FAC /* AccountNotSelectedFiller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountNotSelectedFiller.png; path = images/AccountNotSelectedFiller.png; sourceTree = "<group>"; };
@@ -2504,6 +2511,8 @@
 				05B23B3B0FEECECD00A6A2E6 /* TwitterServiceDelegate.h */,
 				059A6FEF103CE12600B7500C /* TwitterBasicAuthAuthenticator.h */,
 				059A6FF0103CE12600B7500C /* TwitterBasicAuthAuthenticator.m */,
+				0518083510CF047D00EBFB62 /* TrendExplanationViewController.h */,
+				0518083610CF047D00EBFB62 /* TrendExplanationViewController.m */,
 			);
 			name = twitter;
 			sourceTree = "<group>";
@@ -2645,6 +2654,7 @@
 				0538FE95104C7897009E50CE /* InstapaperLogInView.xib */,
 				05E3A2F510C708C000D935B3 /* ComposeMapView.xib */,
 				05E3A46E10C742C200D935B3 /* TrendsView.xib */,
+				0518083910CF04F000EBFB62 /* TrendExplanationView.xib */,
 			);
 			name = nibs;
 			sourceTree = "<group>";
@@ -3692,6 +3702,7 @@
 				0522E68C10C9B2EB00BB96CE /* GeocodeTimelineIndicatorHighlighted.png in Resources */,
 				914EA96F10CEF6E8007036F2 /* NavigationButtonBackground.png in Resources */,
 				914EA99010CEFC5C007036F2 /* NavigationButtonBackgroundDarkTheme.png in Resources */,
+				0518083C10CF04F000EBFB62 /* TrendExplanationView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3881,6 +3892,7 @@
 				0522E68D10C9B2EB00BB96CE /* GeocodeTimelineIndicatorHighlighted.png in Resources */,
 				914EA96E10CEF6E8007036F2 /* NavigationButtonBackground.png in Resources */,
 				914EA98F10CEFC5C007036F2 /* NavigationButtonBackgroundDarkTheme.png in Resources */,
+				0518083B10CF04F000EBFB62 /* TrendExplanationView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4224,6 +4236,7 @@
 				914EA3DC10C8BD6F007036F2 /* ProfileDisplayMgr.m in Sources */,
 				0522E71710C9D1E700BB96CE /* UserSearchResponseProcessor.m in Sources */,
 				051807D410CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m in Sources */,
+				0518083810CF047D00EBFB62 /* TrendExplanationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4564,6 +4577,7 @@
 				914EA3DB10C8BD6F007036F2 /* ProfileDisplayMgr.m in Sources */,
 				0522E71810C9D1E700BB96CE /* UserSearchResponseProcessor.m in Sources */,
 				051807D510CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m in Sources */,
+				0518083710CF047D00EBFB62 /* TrendExplanationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4576,6 +4590,14 @@
 				0515675B1047035500A26F17 /* en */,
 			);
 			name = EditTextView.xib;
+			sourceTree = "<group>";
+		};
+		0518083910CF04F000EBFB62 /* TrendExplanationView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0518083A10CF04F000EBFB62 /* en */,
+			);
+			name = TrendExplanationView.xib;
 			sourceTree = "<group>";
 		};
 		0519C76010434BD000C2C7BD /* ExplainFlickrAuthView.xib */ = {
