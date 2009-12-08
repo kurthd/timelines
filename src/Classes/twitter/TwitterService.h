@@ -85,6 +85,7 @@
 - (void)fetchSentDirectMessagesSinceId:(NSNumber *)updateId
                                   page:(NSNumber *)page
                                  count:(NSNumber *)count;
+- (void)fetchDirectMessage:(NSNumber *)updateId;
 
 - (void)sendDirectMessage:(NSString *)message to:(NSString *)username;
 

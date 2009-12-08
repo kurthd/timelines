@@ -109,6 +109,8 @@
 		05166953108646B6000CA4AA /* DirectMessageDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 05166947108646B6000CA4AA /* DirectMessageDraft.m */; };
 		05166954108646B6000CA4AA /* TweetDraft.m in Sources */ = {isa = PBXBuildFile; fileRef = 05166949108646B6000CA4AA /* TweetDraft.m */; };
 		05166955108646B6000CA4AA /* TweetDraftMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0516694B108646B6000CA4AA /* TweetDraftMgr.m */; };
+		051807D410CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 051807D310CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m */; };
+		051807D510CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 051807D310CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m */; };
 		051975FA103A119100883FAC /* AccountSelectedCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 051975F9103A119100883FAC /* AccountSelectedCheckmark.png */; };
 		0519760E103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */; };
 		05197620103A168600883FAC /* AccountNotSelectedFiller.png in Resources */ = {isa = PBXBuildFile; fileRef = 0519761F103A168600883FAC /* AccountNotSelectedFiller.png */; };
@@ -1098,6 +1100,8 @@
 		05166949108646B6000CA4AA /* TweetDraft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDraft.m; path = compose/TweetDraft.m; sourceTree = "<group>"; };
 		0516694A108646B6000CA4AA /* TweetDraftMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDraftMgr.h; path = compose/TweetDraftMgr.h; sourceTree = "<group>"; };
 		0516694B108646B6000CA4AA /* TweetDraftMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDraftMgr.m; path = compose/TweetDraftMgr.m; sourceTree = "<group>"; };
+		051807D210CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchDirectMessageResponseProcessor.h; path = twitter/processors/FetchDirectMessageResponseProcessor.h; sourceTree = "<group>"; };
+		051807D310CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchDirectMessageResponseProcessor.m; path = twitter/processors/FetchDirectMessageResponseProcessor.m; sourceTree = "<group>"; };
 		051975F9103A119100883FAC /* AccountSelectedCheckmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountSelectedCheckmark.png; path = images/AccountSelectedCheckmark.png; sourceTree = "<group>"; };
 		0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountSelectedCheckmarkHighlighted.png; path = images/AccountSelectedCheckmarkHighlighted.png; sourceTree = "<group>"; };
 		0519761F103A168600883FAC /* AccountNotSelectedFiller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountNotSelectedFiller.png; path = images/AccountNotSelectedFiller.png; sourceTree = "<group>"; };
@@ -2703,6 +2707,8 @@
 				05F45BA10FF03A6300EBAFC7 /* FetchMentionsResponseProcessor.m */,
 				05F459ED0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.h */,
 				05F459EE0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m */,
+				051807D210CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.h */,
+				051807D310CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m */,
 				057E82400FF345CA0074A91B /* SendDirectMessageResponseProcessor.h */,
 				057E82410FF345CA0074A91B /* SendDirectMessageResponseProcessor.m */,
 				05F45C210FF0482200EBAFC7 /* SendTweetResponseProcessor.h */,
@@ -4205,6 +4211,7 @@
 				0536F04110C8972F00479158 /* TrendDisplayMgr.m in Sources */,
 				914EA3DC10C8BD6F007036F2 /* ProfileDisplayMgr.m in Sources */,
 				0522E71710C9D1E700BB96CE /* UserSearchResponseProcessor.m in Sources */,
+				051807D410CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4544,6 +4551,7 @@
 				0536F04210C8972F00479158 /* TrendDisplayMgr.m in Sources */,
 				914EA3DB10C8BD6F007036F2 /* ProfileDisplayMgr.m in Sources */,
 				0522E71810C9D1E700BB96CE /* UserSearchResponseProcessor.m in Sources */,
+				051807D510CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

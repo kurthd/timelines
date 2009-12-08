@@ -143,6 +143,8 @@
 - (NSString *)sendDirectMessage:(NSString *)message to:(NSString *)username; // direct_messages/new
 - (NSString *)deleteDirectMessage:(NSString *)updateID;// direct_messages/destroy
 
+- (NSString *)getDirectMessage:(NSString *)updateID;  // direct_messages/show
+
 
 // List methods - http://apiwiki.twitter.com/Twitter-REST-API-Method%3A-GET-lists
 - (NSString *)getListsFor:(NSString *)username cursor:(NSString *)cursor;

@@ -102,6 +102,11 @@
                                                count:(NSNumber *)count
                                                error:(NSError *)error;
 
+- (void)fetchedDirectMessage:(DirectMessage *)dm
+                withUpdateId:(NSNumber *)updateId;
+- (void)failedToFetchDirectMessageWithUpdateId:(NSNumber *)updateId
+                                         error:(NSError *)error;
+
 - (void)directMessage:(DirectMessage *)dm sentToUser:(NSString *)username;
 - (void)failedToSendDirectMessage:(NSString *)text
                            toUser:(NSString *)username
