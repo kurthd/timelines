@@ -71,6 +71,9 @@ static const CGFloat WEB_VIEW_WIDTH_LANDSCAPE = 480;
     TrendExplanationViewController * controller =
         [[TrendExplanationViewController alloc] initWithHtmlExplanation:html];
 
+    controller.linkTapTarget = self;
+    controller.linkTapAction = @selector(displayUrl:);
+
     controller.navigationItem.title = trend.name;
     [self.navigationController pushViewController:controller animated:YES];
 
@@ -78,6 +81,11 @@ static const CGFloat WEB_VIEW_WIDTH_LANDSCAPE = 480;
 }
 
 #pragma mark Private implementation
+
+- (void)displayUrl:(NSString *)url
+{
+    [[TwitchWebBrowserDisplayMgr instance] visitWebpage:url];
+}
 
 + (NSString *)wrapHtml:(NSString *)html
 {

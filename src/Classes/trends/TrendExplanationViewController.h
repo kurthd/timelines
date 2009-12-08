@@ -8,7 +8,13 @@
 {
     IBOutlet UIWebView * webView;
     NSString * explanation;
+
+    id linkTapTarget;
+    SEL linkTapAction;
 }
+
+@property (nonatomic, assign) id linkTapTarget;
+@property (nonatomic, assign) SEL linkTapAction;
 
 - (id)initWithHtmlExplanation:(NSString *)html;
 
