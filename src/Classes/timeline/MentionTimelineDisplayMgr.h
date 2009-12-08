@@ -62,6 +62,9 @@
     // Every conversation display mgr is added to this array. When the
     // timeline view is displayed, the array is emptied.
     NSMutableArray * conversationDisplayMgrs;
+
+    UIBarButtonItem * updatingTimelineActivityView;
+    UIBarButtonItem * refreshButton;
 }
 
 @property (nonatomic, assign) NSInteger numNewMentions;

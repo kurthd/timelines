@@ -28,6 +28,10 @@
 @property (nonatomic, readonly) NSMutableDictionary * tweetIdToIndexDict;
 @property (nonatomic, readonly) NSMutableDictionary * tweetIndexToIdDict;
 
+@property (nonatomic, readonly) UIBarButtonItem * updatingTimelineActivityView;
+
+@property (nonatomic, retain) UIBarButtonItem * refreshButton;
+
 @end
 
 @implementation TimelineDisplayMgr
@@ -37,7 +41,8 @@
     setUserToFirstTweeter, lastTweetDetailsWrapperController,
     currentUsername, allPagesLoaded,setUserToAuthenticatedUser,
     firstFetchReceived, tweetIdToShow, suppressTimelineFailures, credentials,
-    showMentions, tweetIdToIndexDict, navigationController;
+    showMentions, tweetIdToIndexDict, navigationController,
+    updatingTimelineActivityView, refreshButton;
 
 - (void)dealloc
 {
@@ -68,6 +73,10 @@
     [conversationDisplayMgrs release];
 
     [tweetIdToIndexDict release];
+
+    [updatingTimelineActivityView release];
+
+    [refreshButton release];
 
     [super dealloc];
 }
@@ -116,7 +125,6 @@
 
         pagesShown = 1;
 
-        [wrapperController setUpdatingState:kConnectedAndUpdating];
         [wrapperController setCachedDataAvailable:NO];
         wrapperController.title = title;
 
@@ -125,6 +133,8 @@
         // attempt to preload the tweet view, but not in the critical path
         [self performSelector:@selector(preloadTweetView) withObject:nil
             afterDelay:2.0];
+
+        self.refreshButton = wrapperController.navigationItem.leftBarButtonItem;
     }
 
     return self;
@@ -187,7 +197,10 @@
 
     BOOL scrollToTop = [SettingsReader scrollToTop];
     NSNumber * scrollId = scrollToTop ? anUpdateId : self.tweetIdToShow;
-    [wrapperController setUpdatingState:kConnectedAndNotUpdating];
+    if (self.refreshButton)
+        [wrapperController.navigationItem
+            setLeftBarButtonItem:self.refreshButton
+            animated:YES];
     [wrapperController setCachedDataAvailable:YES];
     [timelineController setTweets:[timeline allValues] page:pagesShown
         visibleTweetId:scrollId];
@@ -549,8 +562,10 @@
        finishedLoadingTweet:(Tweet *)tweet
 {
     if (controller == self.lastTweetDetailsController) {
-        [self.lastTweetDetailsWrapperController
-            setUpdatingState:kConnectedAndNotUpdating];
+        if (self.refreshButton)
+            [wrapperController.navigationItem
+                setLeftBarButtonItem:self.refreshButton
+                animated:YES];
         [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
     }
 }
@@ -580,7 +595,10 @@
 
         NSLog(@"Timeline display manager:\
             fetching new timeline when shown for first time...");
-        [self.wrapperController setUpdatingState:kConnectedAndUpdating];
+        if (self.refreshButton)
+            [wrapperController.navigationItem
+                setLeftBarButtonItem:[self updatingTimelineActivityView]
+                animated:NO];
         [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
     }
@@ -604,7 +622,10 @@
             page:[NSNumber numberWithInt:0]];
     } else
         NSLog(@"Timeline display manager: not updating due to nil credentials");
-    [wrapperController setUpdatingState:kConnectedAndUpdating];
+    if (self.refreshButton)
+        [wrapperController.navigationItem
+            setLeftBarButtonItem:[self updatingTimelineActivityView]
+            animated:YES];
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 
@@ -616,7 +637,10 @@
         hasBeenDisplayed = YES;
         [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0] page:
             [NSNumber numberWithInt:pagesShown]];
-        [wrapperController setUpdatingState:kConnectedAndUpdating];
+        if (self.refreshButton)
+            [wrapperController.navigationItem
+                setLeftBarButtonItem:[self updatingTimelineActivityView]
+                animated:YES];
         [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
     } else
         NSLog(@"Timeline display manager: not updating due to nil credentials");
@@ -756,7 +780,10 @@
     timelineSource = aTimelineSource;
 
     // in case in the middle of updating while switched
-    [self.wrapperController setUpdatingState:kConnectedAndNotUpdating];
+    if (self.refreshButton)
+        [wrapperController.navigationItem
+            setLeftBarButtonItem:self.refreshButton
+            animated:YES];
 
     [timeline removeAllObjects];
     [timeline addEntriesFromDictionary:someTweets];
@@ -954,9 +981,35 @@
     [[self navigationController]
         pushViewController:self.newTweetDetailsWrapperController animated:NO];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:NO];
-    [self.lastTweetDetailsWrapperController
-        setUpdatingState:kConnectedAndUpdating];
     [self fetchedTweet:tweet withId:tweet.identifier];
+}
+
+- (UIBarButtonItem *)updatingTimelineActivityView
+{
+    if (!updatingTimelineActivityView) {
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
+
+        updatingTimelineActivityView =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [activityView startAnimating];
+
+        [view release];
+    }
+
+    return updatingTimelineActivityView;
 }
 
 @end
