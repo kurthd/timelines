@@ -17,10 +17,16 @@
 
     id selectionTarget;
     SEL selectionAction;
+
+    id explanationTarget;
+    SEL explanationAction;
 }
 
 @property(nonatomic, assign) id selectionTarget;
 @property(nonatomic, assign) SEL selectionAction;
+
+@property(nonatomic, assign) id explanationTarget;
+@property(nonatomic, assign) SEL explanationAction;
 
 @property (nonatomic, retain) NetworkAwareViewController * netController;
 

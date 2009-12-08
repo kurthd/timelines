@@ -12,16 +12,13 @@
     UINavigationController * navigationController;
     TimelineDisplayMgr * timelineDisplayMgr;
     SearchDisplayMgr * searchDisplayMgr;
-
-    Trend * trend;
-    UIWebView * trendExplanationView;
 }
 
 - (id)initWithSearchDisplayMgr:(SearchDisplayMgr *)aSearchDisplayMgr
           navigationController:(UINavigationController *)aNavicationController
             timelineDisplayMgr:(TimelineDisplayMgr *)aTimelineDisplayMgr;
 
-
 - (void)displayTrend:(Trend *)trend;
+- (void)displayExplanationForTrend:(Trend *)trend;
 
 @end

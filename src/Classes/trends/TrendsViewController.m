@@ -19,6 +19,7 @@
 
 @synthesize service, trends, netController;
 @synthesize selectionTarget, selectionAction;
+@synthesize explanationTarget, explanationAction;
 
 - (void)dealloc
 {
@@ -27,6 +28,7 @@
     self.netController = nil;
 
     self.selectionTarget = nil;
+    self.explanationTarget = nil;
 
     [super dealloc];
 }
@@ -116,6 +118,14 @@
         [self.selectionTarget performSelector:self.selectionAction
                                    withObject:trend];
     }
+}
+
+- (void)tableView:(UITableView *)tableView
+    accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    Trend * trend = [self.trends objectAtIndex:indexPath.row];
+    [self.explanationTarget performSelector:self.explanationAction
+                                 withObject:trend];
 }
 
 #pragma mark WhatTheTrendServiceDelegate implementation

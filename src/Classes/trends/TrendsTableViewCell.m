@@ -28,7 +28,7 @@
             UIViewAutoresizingFlexibleHeight;
         trendsView.contentMode = UIViewContentModeTopLeft;
 
-        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        self.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 
         [self.contentView addSubview:trendsView];
     }
