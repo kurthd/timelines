@@ -44,6 +44,7 @@
 #import "ContactCachePersistenceStore.h"
 #import "TrendDisplayMgr.h"
 #import "TrendsViewController.h"
+#import "Tweet+CoreDataAdditions.h"
 
 @interface TwitchAppDelegate ()
 
@@ -1889,17 +1890,31 @@ enum {
     switch (originalTabIndex) {
         case kOriginalTabOrderTimeline:
             [self initHomeTab];
-            if (uiState.currentlyViewedTweetId)
-                [timelineDisplayMgr
-                    loadNewTweetWithId:uiState.currentlyViewedTweetId
-                    username:nil animated:NO];
+            if (uiState.currentlyViewedTweetId) {
+                Tweet * tweet =
+                    [Tweet tweetWithId:uiState.currentlyViewedTweetId
+                    context:[self managedObjectContext]];
+                if (tweet)
+                    [timelineDisplayMgr pushTweetWithoutAnimation:tweet];
+                else
+                    [timelineDisplayMgr
+                        loadNewTweetWithId:uiState.currentlyViewedTweetId
+                        username:nil animated:NO];
+            }
             break;
         case kOriginalTabOrderMentions:
             [self initMentionsTab];
-            if (uiState.currentlyViewedMentionId)
-                [mentionDisplayMgr
-                    loadNewTweetWithId:uiState.currentlyViewedMentionId
-                    username:nil animated:NO];
+            if (uiState.currentlyViewedMentionId) {
+                Tweet * mention =
+                    [Tweet tweetWithId:uiState.currentlyViewedMentionId
+                    context:[self managedObjectContext]];
+                if (mention)
+                    [mentionDisplayMgr pushTweetWithoutAnimation:mention];
+                else
+                    [mentionDisplayMgr
+                        loadNewTweetWithId:uiState.currentlyViewedMentionId
+                        username:nil animated:NO];
+            }
             break;
         case kOriginalTabOrderMessages:
             [self initMessagesTab];
