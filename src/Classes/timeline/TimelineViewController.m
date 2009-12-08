@@ -56,7 +56,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
     showWithoutAvatars, mentionUsername, mentionString, visibleTweetId,
-    flashingScrollIndicators, filteredTweets;
+    flashingScrollIndicators, filteredTweets, searchBar;
 
 - (void)dealloc
 {
@@ -121,7 +121,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         numUpdatesLabel.textColor = [UIColor lightGrayColor];
         numUpdatesLabel.shadowColor = [UIColor blackColor];
 
-        searchBar.barStyle = UIBarStyleBlackOpaque;
+        searchBar.tintColor = [UIColor twitchDarkDarkGrayColor];
     }
 
     self.tableView.tableFooterView = footerView;
@@ -177,11 +177,13 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     shouldReloadTableForSearchString:(NSString *)searchString
 {
     // Not sure why, but this needs to be set every time results are shown
-    self.searchDisplayController.searchResultsTableView.separatorStyle =
-        UITableViewCellSeparatorStyleNone;
+    UITableView * searchTableView =
+        self.searchDisplayController.searchResultsTableView;
+    searchTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if ([SettingsReader displayTheme] == kDisplayThemeDark)
-        self.searchDisplayController.searchResultsTableView.backgroundColor =
-            [UIColor twitchDarkGrayColor];
+        searchTableView.backgroundColor = [UIColor twitchDarkDarkGrayColor];
+    else
+        searchTableView.backgroundColor = [UIColor twitchLightLightGrayColor];
 
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:
@@ -581,8 +583,11 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         [[RotatableTabBarController instance] landscape] ?
         CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
 
+    if ([SettingsReader displayTheme] == kDisplayThemeLight)
+        self.tableView.backgroundColor = [UIColor whiteColor];
+
     self.tableView.tableHeaderView = aView;
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, -300, 0);
 }
 
 - (void)setMentionUsername:(NSString *)aMentionUsername

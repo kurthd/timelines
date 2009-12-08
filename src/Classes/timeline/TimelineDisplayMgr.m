@@ -587,7 +587,8 @@
     
     hasBeenDisplayed = YES;
     needsRefresh = NO;
-    
+    self.selectedTweet = nil;
+
     [conversationDisplayMgrs removeAllObjects];
 }
 
@@ -913,6 +914,11 @@
 - (NSNumber *)mostRecentTweetId
 {
     return [self.timelineController mostRecentTweetId];
+}
+
+- (NSNumber *)currentlyViewedTweetId
+{
+    return self.selectedTweet.identifier;
 }
 
 // HACK: Added to get "Save Search" button in header view.

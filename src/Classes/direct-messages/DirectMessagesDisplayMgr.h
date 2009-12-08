@@ -106,6 +106,9 @@
     NSNumber * currentConversationUserId;
 
     NSMutableDictionary * tweetIdToIndexDict;
+
+    NetworkAwareViewController * lastMessageDetailsWrapperController;
+    DirectMessageViewController * lastMessageDetailsController;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;
@@ -160,5 +163,7 @@
 - (void)updateDisplayForSendingDirectMessage;
 - (void)updateDisplayForFailedDirectMessage:(NSString *)recipient;
 - (void)addDirectMessage:(DirectMessage *)dm;
+
+- (void)loadNewMessageWithId:(NSNumber *)messageId;
 
 @end

@@ -93,4 +93,8 @@
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)clearState;
 
+- (NSNumber *)currentlyViewedTweetId;
+
+- (void)pushTweetWithoutAnimation:(Tweet *)tweet;
+
 @end

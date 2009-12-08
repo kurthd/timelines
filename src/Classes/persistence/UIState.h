@@ -24,6 +24,9 @@
 
     NSString * viewingUrl;
     NSString * viewingHtml;
+
+    NSNumber * currentlyViewedTweetId;
+    NSNumber * currentlyViewedMentionId;
 }
 
 @property (nonatomic, assign) NSUInteger selectedTab;
@@ -45,5 +48,8 @@
 
 @property (nonatomic, copy) NSString * viewingUrl;
 @property (nonatomic, copy) NSString * viewingHtml;
+
+@property (nonatomic, copy) NSNumber * currentlyViewedTweetId;
+@property (nonatomic, copy) NSNumber * currentlyViewedMentionId;
 
 @end

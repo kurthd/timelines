@@ -218,9 +218,6 @@
     [self.lastTweetDetailsController hideFavoriteButton:NO];
     [self.lastTweetDetailsController displayTweet:tweet
          onNavigationController:nil];
-    [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
-    [self.lastTweetDetailsWrapperController
-        setUpdatingState:kConnectedAndNotUpdating];
 }
 
 - (void)failedToFetchTweetWithId:(NSNumber *)tweetId error:(NSError *)error
@@ -292,7 +289,10 @@
     NSLog(@"Mentions timeline will appear");
     displayed = YES;
     numNewMentions = 0;
+    self.selectedTweet = nil;
     [self updateBadge];
+    timelineController.searchBar.placeholder =
+        NSLocalizedString(@"mentiondisplaymgr.searchplaceholder", @"");
 }
 
 - (void)networkAwareViewWillDisappear
@@ -451,14 +451,14 @@
 {
     NSLog(@"Mention display manager: showing tweet details for tweet %@",
         tweetId);
-    
+
     [service fetchTweet:tweetId];
-    [navigationController
+    [[self navigationController]
         pushViewController:self.newTweetDetailsWrapperController
         animated:animated];
     [self.lastTweetDetailsWrapperController setCachedDataAvailable:NO];
     [self.lastTweetDetailsWrapperController
-        setUpdatingState:kConnectedAndNotUpdating];
+        setUpdatingState:kConnectedAndUpdating];
 }
 
 - (void)reTweetSelected
@@ -526,6 +526,16 @@
         withObject:tweetId afterDelay:1.0];
 
     [self updateTweetIndexCache];
+}
+
+- (void)tweetViewController:(TweetViewController *)controller
+       finishedLoadingTweet:(Tweet *)tweet
+{
+    if (controller == self.lastTweetDetailsController) {
+        [self.lastTweetDetailsWrapperController
+            setUpdatingState:kConnectedAndNotUpdating];
+        [self.lastTweetDetailsWrapperController setCachedDataAvailable:YES];
+    }
 }
 
 #pragma mark ConversationDisplayMgrDelegate implementation
@@ -718,14 +728,6 @@
     tempTweetDetailsController.realParentViewController =
         tweetDetailsWrapperController;
 
-    UIBarButtonItem * replyButton =
-        [[[UIBarButtonItem alloc]
-        initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self
-        action:@selector(presentActionsForCurrentTweetDetailsUser)]
-        autorelease];
-    [tweetDetailsWrapperController.navigationItem
-        setRightBarButtonItem:replyButton];
-
     NSString * title = NSLocalizedString(@"tweetdetailsview.title", @"");
     tweetDetailsWrapperController.navigationItem.title = title;
 
@@ -797,6 +799,21 @@
 
     BOOL cachedData = receivedQueryResponse || [mentions count] > 0;
     [wrapperController setCachedDataAvailable:cachedData];
+}
+
+- (NSNumber *)currentlyViewedTweetId
+{
+    return self.selectedTweet.identifier;
+}
+
+- (void)pushTweetWithoutAnimation:(Tweet *)tweet
+{
+    [[self navigationController]
+        pushViewController:self.newTweetDetailsWrapperController animated:NO];
+    [self.lastTweetDetailsWrapperController setCachedDataAvailable:NO];
+    [self.lastTweetDetailsWrapperController
+        setUpdatingState:kConnectedAndUpdating];
+    [self fetchedTweet:tweet withId:tweet.identifier];
 }
 
 @end

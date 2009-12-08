@@ -58,6 +58,7 @@ timelinedisplaymgr.nearbysearch = "Nearby Tweets";
 /* MentionDisplayMgr */
 mentiondisplaymgr.title = "Mentions";
 mentiondisplaymgr.title.formatstring = "Mentions (%d)";
+mentiondisplaymgr.searchplaceholder = "Search Mentions";
 
 /* DirectMessageDisplayMgr */
 directmessage.actions.cancel = "Cancel";

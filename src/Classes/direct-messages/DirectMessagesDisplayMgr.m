@@ -37,11 +37,19 @@
 - (void)showPreviousTweet;
 - (void)updateTweetIndexCache;
 
+- (NetworkAwareViewController *)newMessageDetailsWrapperController;
+- (DirectMessageViewController *)newMessageDetailsController;
+
 + (BOOL)displayWithUsername;
 
 @property (nonatomic, retain) UIBarButtonItem * inboxViewComposeTweetButton;
 @property (nonatomic, readonly) NSMutableDictionary * tweetIdToIndexDict;
 @property (nonatomic, retain) NSArray * lastFetchedReceivedDMs;
+
+@property (nonatomic, retain)
+    NetworkAwareViewController * lastMessageDetailsWrapperController;
+@property (nonatomic, retain)
+    DirectMessageViewController * lastMessageDetailsController;
 
 @end
 
@@ -54,7 +62,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     tweetDetailsTimelineDisplayMgr, tweetDetailsNetAwareViewController,
     tweetDetailsCredentialsPublisher, tweetIdToIndexDict,
     directMessageCache, newDirectMessages, inboxViewComposeTweetButton,
-    newDirectMessagesState, currentConversationUserId, lastFetchedReceivedDMs;
+    newDirectMessagesState, currentConversationUserId, lastFetchedReceivedDMs,
+    lastMessageDetailsWrapperController, lastMessageDetailsController;
 
 - (void)dealloc
 {
@@ -83,6 +92,9 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [inboxViewComposeTweetButton release];
 
     [tweetIdToIndexDict release];
+
+    [lastMessageDetailsWrapperController release];
+    [lastMessageDetailsController release];
 
     [super dealloc];
 }
@@ -1012,6 +1024,19 @@ static BOOL alreadyReadDisplayWithUsernameValue;
         afterDelay:0.3];
 }
 
+- (void)loadNewMessageWithId:(NSNumber *)messageId
+{
+    NSLog(@"Loading new direct message with id %@", messageId);
+
+    // TODO: Fetch DM
+    [wrapperController.navigationController
+        pushViewController:self.newMessageDetailsWrapperController
+        animated:NO];
+    [self.lastMessageDetailsWrapperController setCachedDataAvailable:NO];
+    [self.lastMessageDetailsWrapperController
+        setUpdatingState:kConnectedAndUpdating];
+}
+
 - (NSMutableDictionary *)tweetIdToIndexDict
 {
     if (!tweetIdToIndexDict)
@@ -1047,6 +1072,36 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     alreadyReadDisplayWithUsernameValue = YES;
 
     return displayWithUsername;
+}
+
+- (NetworkAwareViewController *)newMessageDetailsWrapperController
+{
+    DirectMessageViewController * tempMessageDetailsController =
+        self.newMessageDetailsController;
+    NetworkAwareViewController * messageDetailsWrapperController =
+        [[[NetworkAwareViewController alloc]
+        initWithTargetViewController:tempMessageDetailsController]
+        autorelease];
+    tempMessageDetailsController.realParentViewController =
+        messageDetailsWrapperController;
+
+    NSString * title = NSLocalizedString(@"tweetdetailsview.title", @"");
+    messageDetailsWrapperController.navigationItem.title = title;
+
+    return self.lastMessageDetailsWrapperController =
+        messageDetailsWrapperController;
+}
+
+- (DirectMessageViewController *)newMessageDetailsController
+{
+    DirectMessageViewController * newMessageViewController =
+        [[DirectMessageViewController alloc]
+        initWithNibName:@"DirectMessageView" bundle:nil];
+    newMessageViewController.delegate = self;
+    self.lastMessageDetailsController = newMessageViewController;
+    [newMessageViewController release];
+
+    return newMessageViewController;
 }
 
 @end
