@@ -82,6 +82,7 @@
                          context:(NSManagedObjectContext *)aContext;
 
 - (void)composeTweetAnimated:(BOOL)animated;
+- (void)composeTweetWithText:(NSString *)tweet;
 - (void)composeTweetWithText:(NSString *)tweet animated:(BOOL)animated;
 
 - (void)composeReplyToTweet:(NSNumber *)tweetId

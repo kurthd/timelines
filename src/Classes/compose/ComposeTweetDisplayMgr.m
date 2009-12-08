@@ -149,6 +149,11 @@
         [self composeTweetWithText:text animated:animated];
 }
 
+- (void)composeTweetWithText:(NSString *)tweet
+{
+    [self composeTweetWithText:tweet animated:YES];
+}
+
 - (void)composeTweetWithText:(NSString *)tweet animated:(BOOL)animated
 {
     composingTweet = YES;
