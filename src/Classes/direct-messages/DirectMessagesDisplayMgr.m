@@ -231,6 +231,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [wrapperController setUpdatingState:kDisconnected];
 
     outstandingReceivedRequests--;
+    [self setUpdatingState];
 }
 
 - (void)sentDirectMessages:(NSArray *)directMessages
@@ -276,6 +277,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [wrapperController setUpdatingState:kDisconnected];
 
     outstandingSentRequests--;
+    [self setUpdatingState];
 }
 
 - (void)deletedDirectMessageWithId:(NSNumber *)directMessageId
