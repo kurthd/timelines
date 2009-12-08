@@ -75,6 +75,8 @@
 #import "RotatableTabBarController.h"
 #import "ComposeTweetViewController.h"
 
+#import "TwitchWebBrowserDisplayMgr.h"
+
 //
 // Vendor libraries
 //
