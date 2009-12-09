@@ -537,12 +537,14 @@ static NSNumberFormatter * formatter;
 
 - (void)setUser:(User *)aUser
 {
+    BOOL newUser = ![aUser.username isEqual:user.username];
+
     [aUser retain];
     [user release];
     user = aUser;
 
     // sucks but the map span doesn't seem to set properly if we don't recreate
-    if (locationCell) {
+    if (locationCell && newUser) {
         [locationCell release];
         locationCell = nil;
     }
@@ -592,7 +594,8 @@ static NSNumberFormatter * formatter;
             forState:UIControlStateHighlighted];
     }
 
-    [self.locationCell setLocationText:user.location];
+    if (newUser)
+        [self.locationCell setLocationText:user.location];
 
     bookmarkButton.enabled =
         ![findPeopleBookmarkMgr isSearchSaved:user.username];

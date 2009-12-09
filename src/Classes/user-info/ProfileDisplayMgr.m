@@ -124,10 +124,6 @@
         [netAwareController setUpdatingState:kConnectedAndNotUpdating];
         [netAwareController setCachedDataAvailable:YES];
 
-        // this forces the tableview to scroll to top
-        [userInfoController.tableView setContentOffset:CGPointMake(0, 300)
-            animated:NO];
-
         [userInfoController setUser:user];
         freshProfile = YES;
     }
@@ -495,6 +491,10 @@
     self.username = aUsername;
     [netAwareController setCachedDataAvailable:!!user];
     [userInfoController setUser:user];
+
+    // this forces the tableview to scroll to top
+    [userInfoController.tableView setContentOffset:CGPointMake(0, 300)
+        animated:NO];
 }
 
 - (void)refreshProfile
