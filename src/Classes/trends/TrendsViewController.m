@@ -57,6 +57,16 @@
     self.view.frame =
         [[RotatableTabBarController instance] landscape] ?
         CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    if (landscape != lastDisplayedInLandscape)
+        [self.tableView reloadData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    lastDisplayedInLandscape = [[RotatableTabBarController instance] landscape];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:

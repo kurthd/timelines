@@ -20,6 +20,8 @@
 
     id explanationTarget;
     SEL explanationAction;
+
+    BOOL lastDisplayedInLandscape;
 }
 
 @property(nonatomic, assign) id selectionTarget;
