@@ -131,6 +131,9 @@
             retryTarget:self retryAction:@selector(refreshLists)];
         [wrapperController setNoConnectionText:errorMessage];
         [wrapperController setUpdatingState:kDisconnected];
+        if (self.refreshButton)
+            [wrapperController.navigationItem
+                setLeftBarButtonItem:self.refreshButton animated:YES];
 
         outstandingListRequests--;
     }
@@ -172,7 +175,11 @@
             NSLocalizedString(@"listsdisplaymgr.error.fetchlists", @"");
         [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
             retryTarget:self retryAction:@selector(refreshLists)];
+        [wrapperController setNoConnectionText:errorMessage];
         [wrapperController setUpdatingState:kDisconnected];
+        if (self.refreshButton)
+            [wrapperController.navigationItem
+                setLeftBarButtonItem:self.refreshButton animated:YES];
 
         outstandingListSubscriptionRequests--;
     }
