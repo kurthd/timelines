@@ -214,6 +214,10 @@
     [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
         retryTarget:self retryAction:@selector(refreshWithLatest)];
     [wrapperController setUpdatingState:kDisconnected];
+    if (self.refreshButton)
+        [wrapperController.navigationItem
+            setLeftBarButtonItem:self.refreshButton
+            animated:YES];
 
     outstandingRequests--;
 }

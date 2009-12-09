@@ -239,9 +239,13 @@
             NSLocalizedString(@"timelinedisplaymgr.error.fetchtimeline", @"");
         [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
             retryTarget:self retryAction:@selector(refreshWithLatest)];
-        [self.wrapperController setUpdatingState:kDisconnected];
-    } else
-        [wrapperController setUpdatingState:kDisconnected];
+    }
+
+    [self.wrapperController setUpdatingState:kDisconnected];
+    if (self.refreshButton)
+        [self.wrapperController.navigationItem
+            setLeftBarButtonItem:self.refreshButton
+            animated:YES];
 }
 
 #pragma mark TwitterServiceDelegate implementation
