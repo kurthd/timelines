@@ -221,6 +221,10 @@
         NSInteger pageAsInt = [page intValue];
         currentPage = pageAsInt > 0 ? pageAsInt : 1;
         [self updateUserListViewWithUsers:userSearchResults];
+
+        // HACK: forces to scroll to top
+        [userListController.tableView setContentOffset:CGPointMake(0, 0)
+            animated:NO];
     }
 }
 
