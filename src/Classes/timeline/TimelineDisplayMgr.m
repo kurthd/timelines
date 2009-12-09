@@ -297,8 +297,10 @@
 {
     NSLog(@"Successfully posted retweet; id: %@", tweetId);
     if ([self.lastTweetDetailsController.tweet.identifier
-        isEqual:tweetId])
+        isEqual:tweetId]) {
         [self.lastTweetDetailsController setSentRetweet];
+        [self addTweet:retweet];
+    }
 }
 
 - (void)failedToSendRetweet:(NSNumber *)tweetId error:(NSError *)error
