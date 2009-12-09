@@ -846,11 +846,17 @@ enum {
     [[CredentialsActivatedPublisher alloc]
         initWithListener:profileDisplayMgr action:@selector(setCredentials:)];
 
-    UIBarButtonItem * refreshButton =
-        profileNetAwareViewController.navigationItem.leftBarButtonItem;
-    refreshButton.target = profileDisplayMgr;
-    refreshButton.action = @selector(refreshProfile);
-    
+    if ([uiState.tabOrder
+        indexOfObject:[NSNumber numberWithInt:kOriginalTabOrderProfile]] > 3)
+        profileDisplayMgr.refreshButton = nil;
+    else {
+        UIBarButtonItem * refreshButton =
+            profileNetAwareViewController.navigationItem.leftBarButtonItem;
+        refreshButton.target = profileDisplayMgr;
+        refreshButton.action = @selector(refreshProfile);
+        profileDisplayMgr.refreshButton = refreshButton;
+    }
+
     if (creds) {
         User * user =
             [User userWithUsername:creds.username

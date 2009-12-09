@@ -50,7 +50,12 @@
     NSString * currentSearch; // mention search value
     SavedSearchMgr * generalSavedSearchMgr;
     RecentSearchMgr * recentSearchMgr;
+
+    UIBarButtonItem * updatingProfileActivityView;
+    UIBarButtonItem * refreshButton;
 }
+
+@property (nonatomic, retain) UIBarButtonItem * refreshButton;
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc
     userInfoController:(UserInfoViewController *)userInfoController
