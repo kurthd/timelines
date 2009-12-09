@@ -23,7 +23,6 @@
     CredentialsActivatedPublisher * credentialsPublisher;
     
 @property (nonatomic, readonly) UIBarButtonItem * updatingListsActivityView;
-@property (nonatomic, retain) UIBarButtonItem * refreshButton;
 
 - (void)fetchListsFromCursor:(NSString *)cursor;
 - (void)fetchListSubscriptionsFromCursor:(NSString *)cursor;
@@ -86,8 +85,6 @@
         context = [aContext retain];
 
         [self resetState];
-
-        self.refreshButton = wrapperController.navigationItem.leftBarButtonItem;
     }
 
     return self;

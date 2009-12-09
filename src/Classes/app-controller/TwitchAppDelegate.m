@@ -571,10 +571,17 @@ enum {
         retain];
     timelineDisplayMgr.displayAsConversation = YES;
     timelineDisplayMgr.showMentions = YES;
-    UIBarButtonItem * refreshButton =
-        homeNetAwareViewController.navigationItem.leftBarButtonItem;
-    refreshButton.target = timelineDisplayMgr;
-    refreshButton.action = @selector(refreshWithLatest);
+
+    if ([uiState.tabOrder
+        indexOfObject:[NSNumber numberWithInt:kOriginalTabOrderTimeline]] > 3)
+        timelineDisplayMgr.refreshButton = nil;
+    else {
+        UIBarButtonItem * refreshButton =
+            homeNetAwareViewController.navigationItem.leftBarButtonItem;
+        refreshButton.target = timelineDisplayMgr;
+        refreshButton.action = @selector(refreshWithLatest);
+        timelineDisplayMgr.refreshButton = refreshButton;
+    }
 
     TwitterCredentials * c = self.activeCredentials.credentials;
     if (c) {
@@ -622,6 +629,10 @@ enum {
         composeTweetDisplayMgr:self.composeTweetDisplayMgr
         timelineDisplayMgrFactory:timelineDisplayMgrFactory]
         retain];
+
+    if ([uiState.tabOrder
+        indexOfObject:[NSNumber numberWithInt:kOriginalTabOrderMessages]] > 3)
+        directMessageDisplayMgr.refreshButton = nil;
 
     directMessageAcctMgr =
         [[DirectMessageAcctMgr alloc]
@@ -689,10 +700,16 @@ enum {
 
     mentionDisplayMgr.numNewMentions = uiState.numNewMentions;
 
-    UIBarButtonItem * refreshButton =
-        mentionsNetAwareViewController.navigationItem.leftBarButtonItem;
-    refreshButton.target = mentionDisplayMgr;
-    refreshButton.action = @selector(refreshWithLatest);
+    if ([uiState.tabOrder
+        indexOfObject:[NSNumber numberWithInt:kOriginalTabOrderMentions]] > 3)
+        mentionDisplayMgr.refreshButton = nil;
+    else {
+        UIBarButtonItem * refreshButton =
+            mentionsNetAwareViewController.navigationItem.leftBarButtonItem;
+        refreshButton.target = mentionDisplayMgr;
+        refreshButton.action = @selector(refreshWithLatest);
+        mentionDisplayMgr.refreshButton = refreshButton;
+    }
 
     // Don't autorelease
     [[CredentialsActivatedPublisher alloc]
@@ -928,10 +945,16 @@ enum {
     [[CredentialsActivatedPublisher alloc]
         initWithListener:listsDisplayMgr action:@selector(setCredentials:)];
 
-    UIBarButtonItem * refreshButton =
-        listsNetAwareViewController.navigationItem.leftBarButtonItem;
-    refreshButton.target = listsDisplayMgr;
-    refreshButton.action = @selector(refreshLists);
+    if ([uiState.tabOrder
+        indexOfObject:[NSNumber numberWithInt:kOriginalTabOrderLists]] > 3)
+        listsDisplayMgr.refreshButton = nil;
+    else {
+        UIBarButtonItem * refreshButton =
+            listsNetAwareViewController.navigationItem.leftBarButtonItem;
+        refreshButton.target = listsDisplayMgr;
+        refreshButton.action = @selector(refreshLists);
+        listsDisplayMgr.refreshButton = refreshButton;
+    }
 
     if (creds) {
         NSPredicate * predicate =

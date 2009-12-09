@@ -35,7 +35,6 @@
 @property (nonatomic, retain)
     NetworkAwareViewController * lastTweetDetailsWrapperController;
 @property (nonatomic, retain) TweetViewController * lastTweetDetailsController;
-@property (nonatomic, retain) UIBarButtonItem * refreshButton;
 @property (nonatomic, readonly) UIBarButtonItem * updatingTimelineActivityView;
 
 @end
@@ -125,8 +124,6 @@
         conversationDisplayMgrs = [[NSMutableArray alloc] init];
 
         mentions = [[NSMutableDictionary dictionary] retain];
-
-        self.refreshButton = wrapperController.navigationItem.leftBarButtonItem;
     }
 
     return self;
