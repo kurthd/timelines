@@ -7,6 +7,7 @@
 #import "ErrorState.h"
 #import "TwitterList.h"
 #import "ListTimelineDataSource.h"
+#import "SettingsReader.h"
 
 @interface ListsDisplayMgr ()
 
@@ -20,6 +21,9 @@
 @property (nonatomic, retain) TimelineDisplayMgr * timelineDisplayMgr;
 @property (nonatomic, retain)
     CredentialsActivatedPublisher * credentialsPublisher;
+    
+@property (nonatomic, readonly) UIBarButtonItem * updatingListsActivityView;
+@property (nonatomic, retain) UIBarButtonItem * refreshButton;
 
 - (void)fetchListsFromCursor:(NSString *)cursor;
 - (void)fetchListSubscriptionsFromCursor:(NSString *)cursor;
@@ -35,6 +39,7 @@
 @synthesize lists, subscriptions;
 @synthesize nextWrapperController, timelineDisplayMgr, credentialsPublisher;
 @synthesize navigationController;
+@synthesize refreshButton;
 
 - (void)dealloc
 {
@@ -57,6 +62,9 @@
 
     [credentials release];
 
+    [updatingListsActivityView release];
+    [refreshButton release];
+
     [super dealloc];
 }
 
@@ -78,6 +86,8 @@
         context = [aContext retain];
 
         [self resetState];
+
+        self.refreshButton = wrapperController.navigationItem.leftBarButtonItem;
     }
 
     return self;
@@ -275,8 +285,6 @@
         listRequestType = kListRequestTypeLoadMore;
         [self fetchListsFromCursor:self.listsCursor];
         [self fetchListSubscriptionsFromCursor:self.subscriptionsCursor];
-        
-        [self updateViewForOutstandingQueries];
     }
 }
 
@@ -334,12 +342,13 @@
         else
             pagesShown = 1;
 
-        // TODO: enable refresh button
+        if (self.refreshButton)
+            [wrapperController.navigationItem
+                setLeftBarButtonItem:self.refreshButton
+                animated:YES];
 
         [listsViewController setLists:self.lists
             subscriptions:self.subscriptions pagesShown:pagesShown];
-
-        
 
         if ([self.lists count] > 0 || [self.subscriptions count] > 0) {
             [wrapperController setUpdatingState:kConnectedAndNotUpdating];
@@ -356,7 +365,37 @@
 
 - (void)updateViewForOutstandingQueries
 {
-    // TODO: disable refresh button
+    if (self.refreshButton && wrapperController.cachedDataAvailable)
+        [wrapperController.navigationItem
+            setLeftBarButtonItem:[self updatingListsActivityView] animated:YES];
+}
+
+- (UIBarButtonItem *)updatingListsActivityView
+{
+    if (!updatingListsActivityView) {
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
+
+        updatingListsActivityView =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [activityView startAnimating];
+
+        [view release];
+    }
+
+    return updatingListsActivityView;
 }
 
 @end

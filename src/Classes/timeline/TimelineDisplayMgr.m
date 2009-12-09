@@ -29,7 +29,6 @@
 @property (nonatomic, readonly) NSMutableDictionary * tweetIndexToIdDict;
 
 @property (nonatomic, readonly) UIBarButtonItem * updatingTimelineActivityView;
-
 @property (nonatomic, retain) UIBarButtonItem * refreshButton;
 
 @end

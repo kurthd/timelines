@@ -42,6 +42,9 @@ enum {
     CredentialsActivatedPublisher * credentialsPublisher;
 
     TwitterCredentials * credentials;
+
+    UIBarButtonItem * updatingListsActivityView;
+    UIBarButtonItem * refreshButton;
 }
 
 @property (nonatomic, assign) BOOL fetchedInitialLists;
