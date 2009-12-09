@@ -27,7 +27,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2.2.0</string>
+	<string>2.3.0</string>
 	<key>DeviceRegistrationDomain</key>
 	<string>${DEVICE_REGISTRATION_DOMAIN}</string>
 	<key>GoogleMapsApiKey</key>
