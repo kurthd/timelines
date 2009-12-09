@@ -129,8 +129,9 @@
             NSLocalizedString(@"listsdisplaymgr.error.fetchlists", @"");
         [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
             retryTarget:self retryAction:@selector(refreshLists)];
+        [wrapperController setNoConnectionText:errorMessage];
         [wrapperController setUpdatingState:kDisconnected];
-    
+
         outstandingListRequests--;
     }
 }
