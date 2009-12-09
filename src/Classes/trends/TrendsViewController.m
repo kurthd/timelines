@@ -95,6 +95,9 @@
     Trend * trend = [self.trends objectAtIndex:indexPath.row];
     [cell setTitle:trend.name];
     [cell setExplanation:trend.explanation];
+    
+    BOOL landscape = [RotatableTabBarController instance].landscape;
+    [cell setLandscape:landscape];
 
     return cell;
 }

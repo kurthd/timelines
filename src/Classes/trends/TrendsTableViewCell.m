@@ -48,6 +48,11 @@
     [trendsView setExplanation:explanation];
 }
 
+- (void)setLandscape:(BOOL)landscape
+{
+    [trendsView setLandscape:landscape];
+}
+
 + (CGFloat)heightForTitle:(NSString *)title explanation:(NSString *)explanation
 {
     return [TrendsTableViewCellView heightForTitle:title

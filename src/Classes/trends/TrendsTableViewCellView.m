@@ -11,7 +11,7 @@
 
 @implementation TrendsTableViewCellView
 
-@synthesize highlighted, title, explanation;
+@synthesize highlighted, title, explanation, landscape;
 
 - (void)dealloc
 {
@@ -37,6 +37,14 @@
 {
     if (highlighted != b) {
         highlighted = b;
+        [self setNeedsDisplay];
+    }
+}
+
+- (void)setLandscape:(BOOL)l
+{
+    if (landscape != l) {
+        landscape = l;
         [self setNeedsDisplay];
     }
 }

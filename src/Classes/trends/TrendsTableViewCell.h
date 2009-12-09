@@ -13,6 +13,7 @@
 
 - (void)setTitle:(NSString *)title;
 - (void)setExplanation:(NSString *)explanation;
+- (void)setLandscape:(BOOL)landscape;
 
 + (CGFloat)heightForTitle:(NSString *)title explanation:(NSString *)explanation;
 
