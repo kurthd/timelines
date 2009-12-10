@@ -355,7 +355,8 @@ enum {
         initWithContactCache:contactCache] autorelease];
     [contactCachePersistenceStore load];
 
-    NSString * message = [remoteNotification objectForKey:@"message"];
+    NSString * message =
+        [[remoteNotification objectForKey:@"version1"] objectForKey:@"message"];
     if (message)
         [self displayTwitterObjectFromNotification:message];
 }
