@@ -268,6 +268,7 @@ enum {
         [self.logInDisplayMgr logIn:NO];
     } else {
         if (!self.activeCredentials.credentials) {
+            NSLog(@"Recovering credentials after crash");
             // for some reason the active credentials weren't set correctly
             // last time, probably due to a crash while the app was in use;
             // prevent another crash and set the active credentials here
@@ -362,18 +363,6 @@ enum {
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // the accounts tab bar item is selected
-    if (tabBarController.selectedViewController.tabBarItem.tag == 3) {
-        // make sure account changes get saved
-
-        TwitterCredentials * activeAccount =
-            [accountsDisplayMgr selectedAccount];
-        self.activeCredentials.credentials = activeAccount;
-
-        // send any push configurations that may be uncommitted
-        [self registerDeviceForPushNotifications];
-    }
-
     if (managedObjectContext != nil) {
         [self prunePersistenceStore];
         if (![self saveContext]) {
