@@ -119,7 +119,9 @@
 @property (nonatomic, readonly) TwitterCredentials * credentials;
 
 @property (nonatomic, assign) BOOL showMentions;
-    
+
+@property (nonatomic, retain) UIBarButtonItem * refreshButton;
+
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     navigationController:(UINavigationController *)navigationController
     timelineController:(TimelineViewController *)aTimelineController

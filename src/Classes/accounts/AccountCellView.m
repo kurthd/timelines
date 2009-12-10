@@ -140,7 +140,8 @@
     //
     CGContextRef context = UIGraphicsGetCurrentContext();
 
-    UIColor * darkColor = [UIColor twitchDarkGrayColor];
+    UIColor * darkColor =
+        selectedAccount ? darkLabelColor : [UIColor twitchDarkGrayColor];
     UIColor * rectColor =
         self.highlighted ? [UIColor whiteColor] : darkColor;
 

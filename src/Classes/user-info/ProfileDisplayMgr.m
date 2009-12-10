@@ -41,6 +41,8 @@
 @property (nonatomic, retain) SavedSearchMgr * generalSavedSearchMgr;
 @property (nonatomic, retain) RecentSearchMgr * recentSearchMgr;
 
+@property (nonatomic, readonly) UIBarButtonItem * updatingProfileActivityView;
+
 @end
 
 @implementation ProfileDisplayMgr
@@ -49,6 +51,7 @@
 @synthesize nextWrapperController, credentialsPublisher, timelineDisplayMgr,
     nextUserListDisplayMgr;
 @synthesize currentSearch, generalSavedSearchMgr, recentSearchMgr;
+@synthesize refreshButton;
 
 - (void)dealloc
 {
@@ -75,6 +78,9 @@
     [currentSearch release];
     [generalSavedSearchMgr release];
     [recentSearchMgr release];
+
+    [updatingProfileActivityView release];
+    [refreshButton release];
 
     [super dealloc];
 }
@@ -121,7 +127,10 @@
     NSLog(@"Fetched user info for '%@'", aUsername);
 
     if ([self.username isEqual:aUsername]) {
-        [netAwareController setUpdatingState:kConnectedAndNotUpdating];
+        if (self.refreshButton)
+            [netAwareController.navigationItem
+                setLeftBarButtonItem:self.refreshButton
+                animated:YES];
         [netAwareController setCachedDataAvailable:YES];
 
         [userInfoController setUser:user];
@@ -515,7 +524,10 @@
 - (void)fetchUserInfo
 {
     if (self.username) {
-        [netAwareController setUpdatingState:kConnectedAndUpdating];
+        if (self.refreshButton && netAwareController.cachedDataAvailable)
+            [netAwareController.navigationItem
+                setLeftBarButtonItem:[self updatingProfileActivityView]
+                animated:YES];
         [service fetchUserInfoForUsername:self.username];
     }
 }
@@ -664,6 +676,34 @@
     [view addSubview:grayLineView];
     
     return [view autorelease];
+}
+
+- (UIBarButtonItem *)updatingProfileActivityView
+{
+    if (!updatingProfileActivityView) {
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
+
+        updatingProfileActivityView =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [activityView startAnimating];
+
+        [view release];
+    }
+
+    return updatingProfileActivityView;
 }
 
 @end

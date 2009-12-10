@@ -35,7 +35,6 @@
 @property (nonatomic, retain)
     NetworkAwareViewController * lastTweetDetailsWrapperController;
 @property (nonatomic, retain) TweetViewController * lastTweetDetailsController;
-@property (nonatomic, retain) UIBarButtonItem * refreshButton;
 @property (nonatomic, readonly) UIBarButtonItem * updatingTimelineActivityView;
 
 @end
@@ -125,8 +124,6 @@
         conversationDisplayMgrs = [[NSMutableArray alloc] init];
 
         mentions = [[NSMutableDictionary dictionary] retain];
-
-        self.refreshButton = wrapperController.navigationItem.leftBarButtonItem;
     }
 
     return self;
@@ -268,8 +265,7 @@
 - (void)retweetSentSuccessfully:(Tweet *)retweet tweetId:(NSNumber *)tweetId
 {
     NSLog(@"Successfully posted retweet; id: %@", tweetId);
-    if ([self.lastTweetDetailsController.tweet.identifier
-        isEqual:tweetId])
+    if ([self.lastTweetDetailsController.tweet.identifier isEqual:tweetId])
         [self.lastTweetDetailsController setSentRetweet];
 }
 

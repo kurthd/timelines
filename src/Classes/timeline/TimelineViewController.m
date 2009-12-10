@@ -304,6 +304,10 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
 - (void)addTweet:(Tweet *)tweet
 {
+    // HACK
+    NSIndexPath * selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+
     NSMutableArray * newTweets = [tweets mutableCopy];
     self.sortedTweetCache = nil;
     [newTweets insertObject:tweet atIndex:0];

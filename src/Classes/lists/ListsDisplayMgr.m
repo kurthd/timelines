@@ -23,7 +23,6 @@
     CredentialsActivatedPublisher * credentialsPublisher;
     
 @property (nonatomic, readonly) UIBarButtonItem * updatingListsActivityView;
-@property (nonatomic, retain) UIBarButtonItem * refreshButton;
 
 - (void)fetchListsFromCursor:(NSString *)cursor;
 - (void)fetchListSubscriptionsFromCursor:(NSString *)cursor;
@@ -86,8 +85,6 @@
         context = [aContext retain];
 
         [self resetState];
-
-        self.refreshButton = wrapperController.navigationItem.leftBarButtonItem;
     }
 
     return self;
@@ -129,8 +126,12 @@
             NSLocalizedString(@"listsdisplaymgr.error.fetchlists", @"");
         [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
             retryTarget:self retryAction:@selector(refreshLists)];
+        [wrapperController setNoConnectionText:errorMessage];
         [wrapperController setUpdatingState:kDisconnected];
-    
+        if (self.refreshButton)
+            [wrapperController.navigationItem
+                setLeftBarButtonItem:self.refreshButton animated:YES];
+
         outstandingListRequests--;
     }
 }
@@ -171,7 +172,11 @@
             NSLocalizedString(@"listsdisplaymgr.error.fetchlists", @"");
         [[ErrorState instance] displayErrorWithTitle:errorMessage error:error
             retryTarget:self retryAction:@selector(refreshLists)];
+        [wrapperController setNoConnectionText:errorMessage];
         [wrapperController setUpdatingState:kDisconnected];
+        if (self.refreshButton)
+            [wrapperController.navigationItem
+                setLeftBarButtonItem:self.refreshButton animated:YES];
 
         outstandingListSubscriptionRequests--;
     }

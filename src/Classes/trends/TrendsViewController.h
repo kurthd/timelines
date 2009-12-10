@@ -20,6 +20,11 @@
 
     id explanationTarget;
     SEL explanationAction;
+
+    BOOL lastDisplayedInLandscape;
+
+    UIBarButtonItem * updatingTrendsActivityView;
+    UIBarButtonItem * refreshButton;
 }
 
 @property(nonatomic, assign) id selectionTarget;
@@ -29,5 +34,7 @@
 @property(nonatomic, assign) SEL explanationAction;
 
 @property (nonatomic, retain) NetworkAwareViewController * netController;
+
+@property (nonatomic, retain) UIBarButtonItem * refreshButton;
 
 @end

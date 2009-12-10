@@ -117,7 +117,8 @@
         *  consecutive constants 0 - 39 are valid property keys...
         */
         for (int i = 0; i < 39; i++)
-            ABRecordSetValue(newRecord, i, ABRecordCopyValue(person, i), &error);
+            ABRecordSetValue(newRecord, i, ABRecordCopyValue(person, i),
+                &error);
         
         // update person with new properties
         [[self class] mergeStringProperty:kABPersonFirstNameProperty
@@ -144,8 +145,8 @@
         ABAddressBookSave(addressBook, &error);
         CFRelease(addressBook);
             
-        ABRecordID recordId = ABRecordGetRecordID(person);
-        [contactCacheSetter setRecordId:recordId forUser:username];
+        ABRecordID recordId = ABRecordGetRecordID(newRecord);
+        [contactCacheSetter setRecordId:recordId forUser:self.username];
     }
 
     [tabViewController dismissModalViewControllerAnimated:YES];

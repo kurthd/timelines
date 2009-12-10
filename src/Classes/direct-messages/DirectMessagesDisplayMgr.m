@@ -53,7 +53,6 @@
     DirectMessageViewController * lastMessageDetailsController;
 
 @property (nonatomic, readonly) UIBarButtonItem * updatingMessagesActivityView;
-@property (nonatomic, retain) UIBarButtonItem * refreshButton;
 
 @end
 

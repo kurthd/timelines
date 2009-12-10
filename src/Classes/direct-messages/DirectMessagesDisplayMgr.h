@@ -141,6 +141,8 @@
 
 @property (nonatomic, copy) NSNumber * currentConversationUserId;
 
+@property (nonatomic, retain) UIBarButtonItem * refreshButton;
+
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     inboxController:(DirectMessageInboxViewController *)anInboxController
     service:(TwitterService *)aService

@@ -74,6 +74,8 @@
 
 - (UIBarButtonItem *)newTweetButtonItem;
 - (UIBarButtonItem *)homeSendingTweetProgressView;
+- (UIBarButtonItem *)mentionsSendingTweetProgressView;
+- (UIBarButtonItem *)listsSendingTweetProgressView;
 
 - (void)broadcastActivatedCredentialsChanged:(TwitterCredentials *)tc;
 
@@ -193,6 +195,8 @@ enum {
     [accountsDisplayMgr release];
 
     [homeSendingTweetProgressView release];
+    [mentionsSendingTweetProgressView release];
+    [listsSendingTweetProgressView release];
 
     [findPeopleBookmarkMgr release];
 
@@ -399,7 +403,13 @@ enum {
     NSLog(@"User is sending tweet...");
     [homeNetAwareViewController.navigationItem
         setRightBarButtonItem:[self homeSendingTweetProgressView]
-                     animated:YES];
+        animated:YES];
+    [mentionsNetAwareViewController.navigationItem
+        setRightBarButtonItem:[self mentionsSendingTweetProgressView]
+        animated:YES];
+    [listsNetAwareViewController.navigationItem
+        setRightBarButtonItem:[self listsSendingTweetProgressView]
+        animated:YES];
 }
 
 - (void)userDidSendTweet:(Tweet *)tweet
@@ -409,14 +419,26 @@ enum {
 
     [homeNetAwareViewController.navigationItem
         setRightBarButtonItem:[self newTweetButtonItem]
-                     animated:YES];
+        animated:YES];
+    [mentionsNetAwareViewController.navigationItem
+        setRightBarButtonItem:[self newTweetButtonItem]
+        animated:YES];
+    [listsNetAwareViewController.navigationItem
+        setRightBarButtonItem:[self newTweetButtonItem]
+        animated:YES];
 }
 
 - (void)userFailedToSendTweet:(NSString *)tweet
 {
     [homeNetAwareViewController.navigationItem
         setRightBarButtonItem:[self newTweetButtonItem]
-                     animated:YES];
+        animated:YES];
+    [mentionsNetAwareViewController.navigationItem
+        setRightBarButtonItem:[self newTweetButtonItem]
+        animated:YES];
+    [listsNetAwareViewController.navigationItem
+        setRightBarButtonItem:[self newTweetButtonItem]
+        animated:YES];
 
     // if the error happened quickly, while the compose modal view is still
     // dismissing, re-presenting it has no effect; force a brief delay for now
@@ -610,10 +632,17 @@ enum {
         retain];
     timelineDisplayMgr.displayAsConversation = YES;
     timelineDisplayMgr.showMentions = YES;
-    UIBarButtonItem * refreshButton =
-        homeNetAwareViewController.navigationItem.leftBarButtonItem;
-    refreshButton.target = timelineDisplayMgr;
-    refreshButton.action = @selector(refreshWithLatest);
+
+    if ([uiState.tabOrder
+        indexOfObject:[NSNumber numberWithInt:kOriginalTabOrderTimeline]] > 3)
+        timelineDisplayMgr.refreshButton = nil;
+    else {
+        UIBarButtonItem * refreshButton =
+            homeNetAwareViewController.navigationItem.leftBarButtonItem;
+        refreshButton.target = timelineDisplayMgr;
+        refreshButton.action = @selector(refreshWithLatest);
+        timelineDisplayMgr.refreshButton = refreshButton;
+    }
 
     TwitterCredentials * c = self.activeCredentials.credentials;
     if (c) {
@@ -661,6 +690,10 @@ enum {
         composeTweetDisplayMgr:self.composeTweetDisplayMgr
         timelineDisplayMgrFactory:timelineDisplayMgrFactory]
         retain];
+
+    if ([uiState.tabOrder
+        indexOfObject:[NSNumber numberWithInt:kOriginalTabOrderMessages]] > 3)
+        directMessageDisplayMgr.refreshButton = nil;
 
     directMessageAcctMgr =
         [[DirectMessageAcctMgr alloc]
@@ -728,10 +761,16 @@ enum {
 
     mentionDisplayMgr.numNewMentions = uiState.numNewMentions;
 
-    UIBarButtonItem * refreshButton =
-        mentionsNetAwareViewController.navigationItem.leftBarButtonItem;
-    refreshButton.target = mentionDisplayMgr;
-    refreshButton.action = @selector(refreshWithLatest);
+    if ([uiState.tabOrder
+        indexOfObject:[NSNumber numberWithInt:kOriginalTabOrderMentions]] > 3)
+        mentionDisplayMgr.refreshButton = nil;
+    else {
+        UIBarButtonItem * refreshButton =
+            mentionsNetAwareViewController.navigationItem.leftBarButtonItem;
+        refreshButton.target = mentionDisplayMgr;
+        refreshButton.action = @selector(refreshWithLatest);
+        mentionDisplayMgr.refreshButton = refreshButton;
+    }
 
     // Don't autorelease
     [[CredentialsActivatedPublisher alloc]
@@ -868,11 +907,17 @@ enum {
     [[CredentialsActivatedPublisher alloc]
         initWithListener:profileDisplayMgr action:@selector(setCredentials:)];
 
-    UIBarButtonItem * refreshButton =
-        profileNetAwareViewController.navigationItem.leftBarButtonItem;
-    refreshButton.target = profileDisplayMgr;
-    refreshButton.action = @selector(refreshProfile);
-    
+    if ([uiState.tabOrder
+        indexOfObject:[NSNumber numberWithInt:kOriginalTabOrderProfile]] > 3)
+        profileDisplayMgr.refreshButton = nil;
+    else {
+        UIBarButtonItem * refreshButton =
+            profileNetAwareViewController.navigationItem.leftBarButtonItem;
+        refreshButton.target = profileDisplayMgr;
+        refreshButton.action = @selector(refreshProfile);
+        profileDisplayMgr.refreshButton = refreshButton;
+    }
+
     if (creds) {
         User * user =
             [User userWithUsername:creds.username
@@ -967,10 +1012,16 @@ enum {
     [[CredentialsActivatedPublisher alloc]
         initWithListener:listsDisplayMgr action:@selector(setCredentials:)];
 
-    UIBarButtonItem * refreshButton =
-        listsNetAwareViewController.navigationItem.leftBarButtonItem;
-    refreshButton.target = listsDisplayMgr;
-    refreshButton.action = @selector(refreshLists);
+    if ([uiState.tabOrder
+        indexOfObject:[NSNumber numberWithInt:kOriginalTabOrderLists]] > 3)
+        listsDisplayMgr.refreshButton = nil;
+    else {
+        UIBarButtonItem * refreshButton =
+            listsNetAwareViewController.navigationItem.leftBarButtonItem;
+        refreshButton.target = listsDisplayMgr;
+        refreshButton.action = @selector(refreshLists);
+        listsDisplayMgr.refreshButton = refreshButton;
+    }
 
     if (creds) {
         NSPredicate * predicate =
@@ -2328,6 +2379,62 @@ enum {
     }
 
     return homeSendingTweetProgressView;
+}
+
+- (UIBarButtonItem *)mentionsSendingTweetProgressView
+{
+    if (!mentionsSendingTweetProgressView) {
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
+
+        mentionsSendingTweetProgressView =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [activityView startAnimating];
+
+        [view release];
+    }
+
+    return mentionsSendingTweetProgressView;
+}
+
+- (UIBarButtonItem *)listsSendingTweetProgressView
+{
+    if (!listsSendingTweetProgressView) {
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
+
+        listsSendingTweetProgressView =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [activityView startAnimating];
+
+        [view release];
+    }
+
+    return listsSendingTweetProgressView;
 }
 
 - (UIBarButtonItem *)newTweetButtonItem

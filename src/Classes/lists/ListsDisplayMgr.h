@@ -49,6 +49,7 @@ enum {
 
 @property (nonatomic, assign) BOOL fetchedInitialLists;
 @property (nonatomic, retain) UINavigationController * navigationController;
+@property (nonatomic, retain) UIBarButtonItem * refreshButton;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     navigationController:(UINavigationController *)aNavigationController

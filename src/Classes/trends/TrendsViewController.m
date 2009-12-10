@@ -11,7 +11,7 @@
 @interface TrendsViewController ()
 @property (nonatomic, retain) WhatTheTrendService * service;
 @property (nonatomic, copy) NSArray * trends;
-
+@property (nonatomic, readonly) UIBarButtonItem * updatingTrendsActivityView;
 - (void)refreshTrends;
 @end
 
@@ -20,6 +20,7 @@
 @synthesize service, trends, netController;
 @synthesize selectionTarget, selectionAction;
 @synthesize explanationTarget, explanationAction;
+@synthesize refreshButton;
 
 - (void)dealloc
 {
@@ -30,6 +31,9 @@
     self.selectionTarget = nil;
     self.explanationTarget = nil;
 
+    self.refreshButton = nil;
+    [updatingTrendsActivityView release];
+
     [super dealloc];
 }
 
@@ -39,13 +43,12 @@
 {
     [super viewDidLoad];
 
-    UIBarButtonItem * refreshButton =
+    refreshButton =
         [[UIBarButtonItem alloc]
         initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                              target:self
                              action:@selector(refreshTrends)];
     self.netController.navigationItem.rightBarButtonItem = refreshButton;
-    [refreshButton release];
 
     [self refreshTrends];
 }
@@ -57,6 +60,16 @@
     self.view.frame =
         [[RotatableTabBarController instance] landscape] ?
         CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    if (landscape != lastDisplayedInLandscape)
+        [self.tableView reloadData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    lastDisplayedInLandscape = [[RotatableTabBarController instance] landscape];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:
@@ -137,7 +150,8 @@
 {
     self.trends = trnds;
 
-    [self.netController setUpdatingState:kConnectedAndNotUpdating];
+    [self.netController.navigationItem setRightBarButtonItem:self.refreshButton
+        animated:YES];
     [self.netController setCachedDataAvailable:YES];
 
     [self.tableView reloadData];
@@ -153,7 +167,10 @@
 
 - (void)refreshTrends
 {
-    [self.netController setUpdatingState:kConnectedAndUpdating];
+    if (!!self.trends)
+        [self.netController.navigationItem
+            setRightBarButtonItem:[self updatingTrendsActivityView]
+            animated:YES];
     [self.netController setCachedDataAvailable:!!self.trends];
 
     [self.service fetchCurrentTrends];
@@ -171,5 +188,32 @@
     return service;
 }
 
-@end
+- (UIBarButtonItem *)updatingTrendsActivityView
+{
+    if (!updatingTrendsActivityView) {
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
 
+        updatingTrendsActivityView =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [activityView startAnimating];
+
+        [view release];
+    }
+
+    return updatingTrendsActivityView;
+}
+
+@end

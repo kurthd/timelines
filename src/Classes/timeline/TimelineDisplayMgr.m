@@ -29,7 +29,6 @@
 @property (nonatomic, readonly) NSMutableDictionary * tweetIndexToIdDict;
 
 @property (nonatomic, readonly) UIBarButtonItem * updatingTimelineActivityView;
-@property (nonatomic, retain) UIBarButtonItem * refreshButton;
 
 @end
 
@@ -132,8 +131,6 @@
         // attempt to preload the tweet view, but not in the critical path
         [self performSelector:@selector(preloadTweetView) withObject:nil
             afterDelay:2.0];
-
-        self.refreshButton = wrapperController.navigationItem.leftBarButtonItem;
     }
 
     return self;
@@ -297,8 +294,10 @@
 {
     NSLog(@"Successfully posted retweet; id: %@", tweetId);
     if ([self.lastTweetDetailsController.tweet.identifier
-        isEqual:tweetId])
+        isEqual:tweetId]) {
         [self.lastTweetDetailsController setSentRetweet];
+        [self addTweet:retweet];
+    }
 }
 
 - (void)failedToSendRetweet:(NSNumber *)tweetId error:(NSError *)error
@@ -593,6 +592,7 @@
 - (void)networkAwareViewWillAppear
 {
     NSLog(@"Timeline display manager: showing timeline view...");
+
     if (((!hasBeenDisplayed && [timelineSource credentials]) || needsRefresh) &&
         [timelineSource readyForQuery]) {
 
