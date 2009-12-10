@@ -628,10 +628,6 @@
     [self updateViewWithNewMentions];
 
     [self updateTweetIndexCache];
-
-    // HACK: forces timeline to scroll to top
-    [timelineController.tableView setContentOffset:CGPointMake(0, 392)
-        animated:NO];
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials

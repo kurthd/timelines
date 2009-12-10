@@ -381,6 +381,9 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     NSLog(@"Setting %d tweets on timeline; page: %d", [someTweets count], page);
     if (aVisibleTweetId && !self.visibleTweetId)
         self.visibleTweetId = aVisibleTweetId;
+
+    BOOL firstDisplay = !tweets;
+
     self.sortedTweetCache = nil;
     NSArray * tempTweets = [someTweets copy];
     [tweets release];
@@ -428,6 +431,11 @@ static BOOL alreadyReadHighlightNewTweetsValue;
             if (!flashingScrollIndicators)
                 [self.tableView flashScrollIndicators];
         }
+    } else if (firstDisplay) {
+        NSIndexPath * scrollIndexPath =
+            [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView scrollToRowAtIndexPath:scrollIndexPath
+            atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
 }
 
