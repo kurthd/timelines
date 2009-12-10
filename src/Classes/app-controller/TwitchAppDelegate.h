@@ -95,6 +95,8 @@
     TrendsViewController * trendsViewController;
 
     UIBarButtonItem * homeSendingTweetProgressView;
+    UIBarButtonItem * mentionsSendingTweetProgressView;
+    UIBarButtonItem * listsSendingTweetProgressView;
 
     SavedSearchMgr * findPeopleBookmarkMgr;
 
