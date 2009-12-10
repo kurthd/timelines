@@ -237,6 +237,9 @@
         NSString * errorMessage =
             [NSString stringWithFormat:errorMessageFormatString, query];
         [[ErrorState instance] displayErrorWithTitle:errorMessage];
+
+        [netAwareController setNoConnectionText:errorMessage];
+        [netAwareController setUpdatingState:kDisconnected];
     }
 }
 
