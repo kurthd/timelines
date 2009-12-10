@@ -763,4 +763,9 @@
     failedState = NO;
 }
 
+- (void)setNavigationController:(UINavigationController *)navc
+{
+    displayMgrHelper.navigationController = navc;
+}
+
 @end

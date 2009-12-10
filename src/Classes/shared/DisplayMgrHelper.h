@@ -56,6 +56,8 @@
     NSString * userInfoUsername;
 }
 
+@property (nonatomic, retain) UINavigationController * navigationController;
+
 - (id)initWithWrapperController:(NetworkAwareViewController *)wrapperCtrlr
     navigationController:(UINavigationController *)navigationController
     userListDisplayMgrFactor:(UserListDisplayMgrFactory *)userListDispMgrFctry

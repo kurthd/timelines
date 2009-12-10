@@ -986,6 +986,15 @@
     [self fetchedTweet:tweet withId:tweet.identifier];
 }
 
+- (void)setNavigationController:(UINavigationController *)navc
+{
+    [navc retain];
+    [navigationController release];
+    navigationController = navc;
+
+    displayMgrHelper.navigationController = navc;
+}
+
 - (UIBarButtonItem *)updatingTimelineActivityView
 {
     if (!updatingTimelineActivityView) {
