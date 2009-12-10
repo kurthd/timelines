@@ -246,13 +246,25 @@
 - (UIBarButtonItem *)activityIndicator
 {
     if (!activityIndicator) {
-        UIActivityIndicatorView * view =
-            [[UIActivityIndicatorView alloc]
-            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
 
-        activityIndicator = [[UIBarButtonItem alloc] initWithCustomView:view];
+        activityIndicator =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
 
-        [view startAnimating];
+        [activityView startAnimating];
+
         [view release];
     }
 
