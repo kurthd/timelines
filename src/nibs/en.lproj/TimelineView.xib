@@ -12,10 +12,10 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="10"/>
 			<integer value="2"/>
 			<integer value="28"/>
 			<integer value="51"/>
-			<integer value="10"/>
 			<integer value="53"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -53,7 +53,9 @@
 						<int key="IBUIContentMode">3</int>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="IBPlaceholder">Search Timeline</string>
-						<object class="IBUITextInputTraits" key="IBTextInputTraits"/>
+						<object class="IBUITextInputTraits" key="IBTextInputTraits">
+							<int key="IBUIAutocorrectionType">1</int>
+						</object>
 					</object>
 				</object>
 				<string key="NSFrameSize">{320, 367}</string>
