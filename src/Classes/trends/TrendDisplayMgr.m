@@ -90,8 +90,8 @@ static const CGFloat WEB_VIEW_WIDTH_LANDSCAPE = 480;
 {
     NSString * cssFile =
         [SettingsReader displayTheme] == kDisplayThemeDark ?
-        @"dark-theme-tweet-style.css" :
-        @"tweet-style.css";
+        @"dark-theme-trend-style.css" :
+        @"trend-style.css";
 
     return
         [NSString stringWithFormat:
