@@ -15,6 +15,8 @@
     UIAlertView * retryAlertView;
 }
 
+@property (nonatomic, readonly) BOOL failedState;
+
 + (ErrorState *)instance;
 
 - (void)exitErrorState;
