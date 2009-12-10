@@ -26,7 +26,7 @@ typedef enum {
 
     IBOutlet UIBarButtonItem * saveButton;
     IBOutlet UIBarButtonItem * cancelButton;
-    IBOutlet UIBarButtonItem * activityButton;
+    UIBarButtonItem * activityButton;
 
     IBOutlet UITableViewCell * usernameCell;
     IBOutlet UITableViewCell * passwordCell;

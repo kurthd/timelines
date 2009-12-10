@@ -20,7 +20,7 @@
     UIBarButtonItem * cancelButton;
     UIBarButtonItem * doneButton;
 
-    IBOutlet UIBarButtonItem * activityButton;
+    UIBarButtonItem * activityButton;
     IBOutlet UIActivityIndicatorView * activityIndicator;
 
     IBOutlet UITextField * pinTextField;

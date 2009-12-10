@@ -4,8 +4,11 @@
 
 #import "BitlyLogInViewController.h"
 #import "UIButton+StandardButtonAdditions.h"
+#import "SettingsReader.h"
 
 @interface BitlyLogInViewController ()
+
+@property (nonatomic, readonly) UIBarButtonItem * activityButton;
 
 - (void)syncInterfaceToState;
 
@@ -47,7 +50,8 @@
 
 - (void)displayActivity
 {
-    [self.navigationItem setRightBarButtonItem:activityButton animated:YES];
+    [self.navigationItem setRightBarButtonItem:self.activityButton
+        animated:YES];
     usernameTextField.enabled = NO;
     passwordTextField.enabled = NO;
     [usernameTextField resignFirstResponder];
@@ -81,7 +85,6 @@
         [[UIActivityIndicatorView alloc]
         initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [ai startAnimating];
-    activityButton = [[UIBarButtonItem alloc] initWithCustomView:ai];
     [ai release];
 
     displayingActivity = NO;
@@ -248,6 +251,34 @@
 //         [self syncInterfaceToState];
 //     }
 // }
+
+- (UIBarButtonItem *)activityButton
+{
+    if (!activityButton) {
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
+
+        activityButton =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [activityView startAnimating];
+
+        [view release];
+    }
+
+    return activityButton;
+}
 
 - (void)setEditingExistingAccount:(BOOL)editing
 {

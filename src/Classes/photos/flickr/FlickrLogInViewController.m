@@ -3,13 +3,14 @@
 //
 
 #import "FlickrLogInViewController.h"
+#import "SettingsReader.h"
 
 @interface FlickrLogInViewController ()
 
 @property (nonatomic, retain) UIWebView * webView;
 
 @property (nonatomic, retain) UIBarButtonItem * doneButton;
-@property (nonatomic, retain) UIBarButtonItem * activityButton;
+@property (nonatomic, readonly) UIBarButtonItem * activityButton;
 @property (nonatomic, retain) UIBarButtonItem * cancelButton;
 
 @end
@@ -18,7 +19,7 @@
 
 @synthesize delegate;
 @synthesize webView;
-@synthesize doneButton, activityButton, cancelButton;
+@synthesize doneButton, cancelButton;
 
 - (void)dealloc
 {
@@ -27,7 +28,7 @@
     self.webView = nil;
 
     self.doneButton = nil;
-    self.activityButton = nil;
+    [activityButton release];
     self.cancelButton = nil;
 
     [super dealloc];
@@ -92,12 +93,26 @@
 - (UIBarButtonItem *)activityButton
 {
     if (!activityButton) {
-        UIActivityIndicatorView * ai =
-            [[UIActivityIndicatorView alloc]
-            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        [ai startAnimating];
-        activityButton = [[UIBarButtonItem alloc] initWithCustomView:ai];
-        [ai release];
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
+
+        activityButton =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [activityView startAnimating];
+
+        [view release];
     }
 
     return activityButton;
