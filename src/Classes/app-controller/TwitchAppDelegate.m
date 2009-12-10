@@ -112,6 +112,8 @@
 - (void)selectMessagesTab;
 - (void)selectTabBarItemWithTag:(NSInteger)tag;
 
+- (void)popAllTabsToRoot;
+
 + (NSInteger)mentionsTabBarItemTag;
 + (NSInteger)messagesTabBarItemTag;
 
@@ -1165,18 +1167,7 @@ enum {
         [self initTabForViewController:
             tabBarController.moreNavigationController];
 
-        [homeNetAwareViewController.navigationController
-            popToRootViewControllerAnimated:NO];
-        [mentionsNetAwareViewController.navigationController
-            popToRootViewControllerAnimated:NO];
-        [messagesNetAwareViewController.navigationController
-            popToRootViewControllerAnimated:NO];
-        [listsNetAwareViewController.navigationController
-            popToRootViewControllerAnimated:NO];
-        [searchNetAwareViewController.navigationController
-            popToRootViewControllerAnimated:NO];
-        [findPeopleNetAwareViewController.navigationController
-            popToRootViewControllerAnimated:NO];
+        [self popAllTabsToRoot];
 
         timelineDisplayMgr.navigationController =
             [self getNavControllerForController:homeNetAwareViewController];
@@ -1186,7 +1177,34 @@ enum {
             [self getNavControllerForController:searchNetAwareViewController];
         listsDisplayMgr.navigationController =
             [self getNavControllerForController:listsNetAwareViewController];
+        profileDisplayMgr.navigationController =
+            [self getNavControllerForController:profileNetAwareViewController];
+        findPeopleSearchDisplayMgr.navigationController =
+            [self getNavControllerForController:
+            findPeopleNetAwareViewController];
+        trendDisplayMgr.navigationController =
+            [self getNavControllerForController:trendsNetAwareViewController];
     }
+}
+
+- (void)popAllTabsToRoot
+{
+    [homeNetAwareViewController.navigationController
+        popToRootViewControllerAnimated:NO];
+    [mentionsNetAwareViewController.navigationController
+        popToRootViewControllerAnimated:NO];
+    [messagesNetAwareViewController.navigationController
+        popToRootViewControllerAnimated:NO];
+    [listsNetAwareViewController.navigationController
+        popToRootViewControllerAnimated:NO];
+    [searchNetAwareViewController.navigationController
+        popToRootViewControllerAnimated:NO];
+    [findPeopleNetAwareViewController.navigationController
+        popToRootViewControllerAnimated:NO];
+    [trendsNetAwareViewController.navigationController
+        popToRootViewControllerAnimated:NO];
+    [profileNetAwareViewController.navigationController
+        popToRootViewControllerAnimated:NO];
 }
 
 - (void)initTabForViewController:(UIViewController *)viewController
@@ -2207,6 +2225,8 @@ enum {
         activeAccount != self.activeCredentials.credentials) {
         [accountsButtonSetter setButtonWithUsername:activeAccount.username];
         [homeNetAwareViewController setCachedDataAvailable:NO];
+
+        [self popAllTabsToRoot];
 
         [self performSelector:@selector(processAccountChange:)
             withObject:activeAccount afterDelay:0.0];

@@ -52,6 +52,7 @@
     nextUserListDisplayMgr;
 @synthesize currentSearch, generalSavedSearchMgr, recentSearchMgr;
 @synthesize refreshButton;
+@synthesize navigationController;
 
 - (void)dealloc
 {

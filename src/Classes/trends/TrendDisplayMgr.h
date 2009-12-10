@@ -14,6 +14,8 @@
     SearchDisplayMgr * searchDisplayMgr;
 }
 
+@property (nonatomic, retain) UINavigationController * navigationController;
+
 - (id)initWithSearchDisplayMgr:(SearchDisplayMgr *)aSearchDisplayMgr
           navigationController:(UINavigationController *)aNavicationController
             timelineDisplayMgr:(TimelineDisplayMgr *)aTimelineDisplayMgr;

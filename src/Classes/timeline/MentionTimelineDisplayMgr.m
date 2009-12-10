@@ -647,8 +647,6 @@
 
     self.activeAcctUsername = someCredentials.username;
     [displayMgrHelper setCredentials:someCredentials];
-
-    [navigationController popToRootViewControllerAnimated:NO];
 }
 
 - (void)clearState

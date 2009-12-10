@@ -66,6 +66,7 @@
 }
 
 @property (nonatomic, retain) NSString * currentSearchUsername;
+@property (nonatomic, retain) UINavigationController * navigationController;
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc
     navigationController:(UINavigationController *)navigationController

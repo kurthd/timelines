@@ -894,7 +894,6 @@
         [timeline removeAllObjects];
         if (user)
             [service fetchUserInfoForUsername:credentials.username];
-        [[self navigationController] popToRootViewControllerAnimated:NO];
 
         needsRefresh = YES;
         pagesShown = 1;

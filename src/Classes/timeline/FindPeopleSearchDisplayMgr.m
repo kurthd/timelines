@@ -66,6 +66,7 @@
 @synthesize currentSearch;
 @synthesize generalSavedSearchMgr;
 @synthesize autocompleteArray;
+@synthesize navigationController;
 
 - (void)dealloc
 {

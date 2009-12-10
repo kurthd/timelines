@@ -519,9 +519,6 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [displayMgrHelper setCredentials:someCredentials];
 
     self.conversationController.segregatedSenderUsername = credentials.username;
-
-    [wrapperController.navigationController
-        popToRootViewControllerAnimated:NO];
 }
 
 - (void)clearState
