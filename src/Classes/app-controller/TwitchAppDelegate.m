@@ -92,13 +92,28 @@
 - (void)setSelectedTabFromPersistence;
 - (NSUInteger)originalTabIndexForIndex:(NSUInteger)index;
 
-- (void)finishInitializationWithTimeInsensitiveOperations;
+- (void)finishInitializationWithTimeInsensitiveOperations:
+    (NSDictionary *)remoteNotification;
 
 - (void)showAccountsView;
 - (void)setTimelineTitleView;
 - (void)processUserAccountSelection;
 
 - (void)initTabForViewController:(UIViewController *)viewController;
+
+- (void)displayTwitterObjectFromNotification:(NSString *)notification;
+
+- (void)activateAccountWithName:(NSString *)accountName;
+- (void)processAccountChange:(TwitterCredentials *)activeAccount;
+
+- (BOOL)isMentionsTabSelected;
+- (BOOL)isMessagesTabSelected;
+- (void)selectMentionsTab;
+- (void)selectMessagesTab;
+- (void)selectTabBarItemWithTag:(NSInteger)tag;
+
++ (NSInteger)mentionsTabBarItemTag;
++ (NSInteger)messagesTabBarItemTag;
 
 @end
 
@@ -196,7 +211,8 @@ enum {
 
 #pragma mark UIApplicationDelegate implementation
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application
+- (void)processApplicationLaunch:(UIApplication *)application
+          withRemoteNotification:(NSDictionary *)notification
 {
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         UINavigationController * moreNavController =
@@ -267,8 +283,8 @@ enum {
     [self setUIStateFromPersistence];
 
     [self performSelector:
-        @selector(finishInitializationWithTimeInsensitiveOperations)
-        withObject:nil
+        @selector(finishInitializationWithTimeInsensitiveOperations:)
+        withObject:notification
         afterDelay:0.6];
 
     accountsButton.action = @selector(showAccountsView);
@@ -276,7 +292,26 @@ enum {
     NSLog(@"Application did finish initializing");
 }
 
-- (void)finishInitializationWithTimeInsensitiveOperations
+- (void)applicationDidFinishLaunching:(UIApplication *)application
+{
+    [self processApplicationLaunch:application
+            withRemoteNotification:nil];
+}
+
+- (BOOL)application:(UIApplication *)application
+    didFinishLaunchingWithOptions:(NSDictionary *)options
+{
+    NSString * crazyLongKey = UIApplicationLaunchOptionsRemoteNotificationKey;
+    NSDictionary * remoteNotification = [options objectForKey:crazyLongKey];
+
+    [self processApplicationLaunch:application
+            withRemoteNotification:remoteNotification];
+
+    return YES;
+}
+
+- (void)finishInitializationWithTimeInsensitiveOperations:
+    (NSDictionary *)remoteNotification
 {
     [self registerDeviceForPushNotifications];
 
@@ -319,6 +354,10 @@ enum {
         [[[ContactCachePersistenceStore alloc]
         initWithContactCache:contactCache] autorelease];
     [contactCachePersistenceStore load];
+
+    NSString * message = [remoteNotification objectForKey:@"message"];
+    if (message)
+        [self displayTwitterObjectFromNotification:message];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -1506,6 +1545,52 @@ enum {
                     userInfo:userInfo];
 }
 
+#pragma mark Tab bar helpers
+
+- (BOOL)isMentionsTabSelected
+{
+    return tabBarController.selectedViewController.tabBarItem.tag ==
+        [[self class] mentionsTabBarItemTag];
+}
+
+- (BOOL)isMessagesTabSelected
+{
+    return tabBarController.selectedViewController.tabBarItem.tag ==
+        [[self class] messagesTabBarItemTag];
+}
+
+- (void)selectMentionsTab
+{
+    if (!mentionDisplayMgr)
+        [self initMentionsTab];
+    [self selectTabBarItemWithTag:[[self class] mentionsTabBarItemTag]];
+
+}
+
+- (void)selectMessagesTab
+{
+    if (!directMessageDisplayMgr)
+        [self initMessagesTab];
+    [self selectTabBarItemWithTag:[[self class] messagesTabBarItemTag]];
+}
+
+- (void)selectTabBarItemWithTag:(NSInteger)tag
+{
+    for (UIViewController * c in tabBarController.viewControllers)
+        if (c.tabBarItem.tag == tag)
+            tabBarController.selectedViewController = c;
+}
+
++ (NSInteger)mentionsTabBarItemTag
+{
+    return 1;
+}
+
++ (NSInteger)messagesTabBarItemTag
+{
+    return 2;
+}
+
 #pragma mark Persistence helpers
 
 - (BOOL)saveContext
@@ -1514,8 +1599,10 @@ enum {
     if ([managedObjectContext hasChanges] &&
         ![managedObjectContext save:&error]) {
         // Handle error
-        NSLog(@"Failed to save to data store: %@", [error localizedDescription]);
-        NSArray * detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+        NSLog(@"Failed to save to data store: %@",
+            [error localizedDescription]);
+        NSArray * detailedErrors =
+            [[error userInfo] objectForKey:NSDetailedErrorsKey];
         if(detailedErrors != nil && [detailedErrors count] > 0)
             for(NSError * detailedError in detailedErrors)
                 NSLog(@"  Detailed error: %@", [detailedError userInfo]);
@@ -2100,6 +2187,20 @@ enum {
 
 #pragma mark Account management
 
+- (void)activateAccountWithName:(NSString *)accountName
+{
+    NSPredicate * pred =
+        [NSPredicate predicateWithFormat:@"username == %@", accountName];
+    TwitterCredentials * creds =
+        [TwitterCredentials findFirst:pred context:[self managedObjectContext]];
+
+    if (creds) {
+        [accountsButtonSetter setButtonWithUsername:creds.username];
+        [homeNetAwareViewController setCachedDataAvailable:NO];
+        [self processAccountChange:creds];
+    }
+}
+
 - (void)showAccountsView
 {
     NSLog(@"Showing accounts view");
@@ -2367,6 +2468,51 @@ enum {
     }
 
     return instapaperLogInDisplayMgr;
+}
+
+
+- (void)displayTwitterObjectFromNotification:(NSString *)notification
+{
+    //
+    // Since this message comes from the server and could potentially
+    // change in the future, be excessively defensive
+    //
+
+    NSArray * comps = [notification componentsSeparatedByString:@"|"];
+    if ([comps count] == 3) {
+        NSString * account = [comps objectAtIndex:0];
+        NSString * type = [comps objectAtIndex:1];
+        NSString * objectIdAsString = [comps objectAtIndex:2];
+
+        if (account && type && objectIdAsString) {
+            NSNumber * objectId =
+                [NSNumber numberWithLongLong:[objectIdAsString longLongValue]];
+
+            NSPredicate * pred =
+                [NSPredicate
+                predicateWithFormat:@"SELF.username == %@", account];
+            NSArray * creds = [credentials filteredArrayUsingPredicate:pred];
+
+            if ([creds count] == 1) {
+                NSString * currentUser = activeCredentials.credentials.username;
+                if (![currentUser isEqualToString:account])
+                    [self activateAccountWithName:account];
+
+                if ([type isEqualToString:@"m"]) {
+                    if (![self isMentionsTabSelected])
+                        [self selectMentionsTab];
+
+                    [mentionDisplayMgr loadNewTweetWithId:objectId
+                                                 username:account
+                                                 animated:NO];
+                } else if ([type isEqualToString:@"d"]) {
+                    if (![self isMessagesTabSelected])
+                        [self selectMessagesTab];
+                    [directMessageDisplayMgr loadNewMessageWithId:objectId];
+                }
+            }
+        }
+    }
 }
 
 @end
