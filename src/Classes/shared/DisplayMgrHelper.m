@@ -50,7 +50,7 @@
 
 @synthesize userListNetAwareViewController, userListDisplayMgr,
     nextWrapperController, timelineDisplayMgr, credentialsPublisher,
-    currentSearch, userInfoUsername;
+    currentSearch, userInfoUsername, navigationController;
 
 - (void)dealloc
 {

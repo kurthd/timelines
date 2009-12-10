@@ -56,6 +56,7 @@
 }
 
 @property (nonatomic, retain) UIBarButtonItem * refreshButton;
+@property (nonatomic, retain) UINavigationController * navigationController;
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc
     userInfoController:(UserInfoViewController *)userInfoController

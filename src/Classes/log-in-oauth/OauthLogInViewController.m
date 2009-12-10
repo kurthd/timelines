@@ -13,7 +13,7 @@
 @property (nonatomic, retain) UIWebView * webView;
 
 
-@property (nonatomic, retain) UIBarButtonItem * activityButton;
+@property (nonatomic, readonly) UIBarButtonItem * activityButton;
 @property (nonatomic, retain) UIActivityIndicatorView * activityIndicator;
 
 @property (nonatomic, retain) UITextField * pinTextField;
@@ -29,7 +29,7 @@
 
 @synthesize delegate;
 @synthesize cancelButton, doneButton;
-@synthesize activityButton, activityIndicator;
+@synthesize activityIndicator;
 @synthesize webView, pinTextField;
 
 - (void)dealloc
@@ -38,7 +38,7 @@
     self.webView = nil;
     self.cancelButton = nil;
     self.doneButton = nil;
-    self.activityButton = nil;
+    [activityButton release];
     self.activityIndicator = nil;
     self.pinTextField = nil;
     [helpViewController release];
@@ -141,15 +141,6 @@
 
 #pragma mark Accessors
 
-- (UIBarButtonItem *)activityButton
-{
-    if (activityButton)
-        activityButton =
-            [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
-
-    return activityButton;
-}
-
 - (UIViewController *)helpViewController
 {
     if (!helpViewController) {
@@ -160,6 +151,34 @@
     }
 
     return helpViewController;
+}
+
+- (UIBarButtonItem *)activityButton
+{
+    if (!activityButton) {
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIView * view =
+            [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(7, 5, 20, 20);
+        [view addSubview:activityView];
+
+        activityButton =
+            [[UIBarButtonItem alloc] initWithCustomView:view];
+
+        [activityView startAnimating];
+
+        [view release];
+    }
+
+    return activityButton;
 }
 
 @end

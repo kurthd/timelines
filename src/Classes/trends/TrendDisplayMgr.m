@@ -11,7 +11,6 @@ static const CGFloat WEB_VIEW_WIDTH = 320;
 static const CGFloat WEB_VIEW_WIDTH_LANDSCAPE = 480;
 
 @interface TrendDisplayMgr ()
-@property (nonatomic, retain) UINavigationController * navigationController;
 @property (nonatomic, retain) TimelineDisplayMgr * timelineDisplayMgr;
 @property (nonatomic, retain) SearchDisplayMgr * searchDisplayMgr;
 
@@ -20,7 +19,8 @@ static const CGFloat WEB_VIEW_WIDTH_LANDSCAPE = 480;
 
 @implementation TrendDisplayMgr
 
-@synthesize navigationController, timelineDisplayMgr, searchDisplayMgr;
+@synthesize navigationController, timelineDisplayMgr, searchDisplayMgr,
+    navigationController;
 
 - (void)dealloc
 {

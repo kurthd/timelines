@@ -20,7 +20,7 @@
     IBOutlet UIWebView * webView;
 
     IBOutlet UIBarButtonItem * doneButton;
-    IBOutlet UIBarButtonItem * activityButton;
+    UIBarButtonItem * activityButton;
     IBOutlet UIBarButtonItem * cancelButton;
 }
 

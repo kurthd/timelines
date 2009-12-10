@@ -66,6 +66,7 @@
 @synthesize currentSearch;
 @synthesize generalSavedSearchMgr;
 @synthesize autocompleteArray;
+@synthesize navigationController;
 
 - (void)dealloc
 {
@@ -237,6 +238,9 @@
         NSString * errorMessage =
             [NSString stringWithFormat:errorMessageFormatString, query];
         [[ErrorState instance] displayErrorWithTitle:errorMessage];
+
+        [netAwareController setNoConnectionText:errorMessage];
+        [netAwareController setUpdatingState:kDisconnected];
     }
 }
 
@@ -757,6 +761,11 @@
     [netAwareController setUpdatingState:kConnectedAndNotUpdating];
     [netAwareController setCachedDataAvailable:YES];
     failedState = NO;
+}
+
+- (void)setNavigationController:(UINavigationController *)navc
+{
+    displayMgrHelper.navigationController = navc;
 }
 
 @end

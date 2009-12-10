@@ -33,8 +33,7 @@
 - (NSInteger)indexForTweetId:(NSString *)tweetId;
 - (NSInteger)sortedIndexForTweetId:(NSString *)tweetId;
 
-- (void)configureCell:(FastTimelineTableViewCell *)cell
-    forTweet:(Tweet *)tweet retweetAuthor:(NSString *)retweetAuthor;
+- (void)configureCell:(FastTimelineTableViewCell *)cell forTweet:(Tweet *)tweet;
 
 - (void)setScrollIndicatorBlackoutTimer;
 
@@ -222,15 +221,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
             reuseIdentifier:reuseIdentifier] autorelease];
 
     Tweet * tweet = [self tweetAtIndex:indexPath inTableView:tv];
-    Tweet * displayTweet;
-    NSString * retweetAuthor = nil;
-    if (tweet.retweet) {
-        displayTweet = tweet.retweet;
-        retweetAuthor = tweet.user.username;
-    } else
-        displayTweet = tweet;
-
-    [self configureCell:cell forTweet:displayTweet retweetAuthor:retweetAuthor];
+    [self configureCell:cell forTweet:tweet];
 
     return cell;
 }
@@ -390,6 +381,9 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     NSLog(@"Setting %d tweets on timeline; page: %d", [someTweets count], page);
     if (aVisibleTweetId && !self.visibleTweetId)
         self.visibleTweetId = aVisibleTweetId;
+
+    BOOL firstDisplay = !tweets;
+
     self.sortedTweetCache = nil;
     NSArray * tempTweets = [someTweets copy];
     [tweets release];
@@ -437,6 +431,11 @@ static BOOL alreadyReadHighlightNewTweetsValue;
             if (!flashingScrollIndicators)
                 [self.tableView flashScrollIndicators];
         }
+    } else if (firstDisplay) {
+        NSIndexPath * scrollIndexPath =
+            [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView scrollToRowAtIndexPath:scrollIndexPath
+            atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
 }
 
@@ -634,28 +633,35 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     return index;
 }
 
-- (void)configureCell:(FastTimelineTableViewCell *)cell
-    forTweet:(Tweet *)tweet retweetAuthor:(NSString *)retweetAuthor
+- (void)configureCell:(FastTimelineTableViewCell *)cell forTweet:(Tweet *)tweet
 {
+    Tweet * displayTweet;
+    NSString * retweetAuthor = nil;
+    if (tweet.retweet) {
+        displayTweet = tweet.retweet;
+        retweetAuthor = tweet.user.username;
+    } else
+        displayTweet = tweet;
+
     [cell setLandscape:[[RotatableTabBarController instance] landscape]];
 
     FastTimelineTableViewCellDisplayType displayType;
     if (showWithoutAvatars)
         displayType = FastTimelineTableViewCellDisplayTypeNoAvatar;
-    else if ([invertedCellUsernames containsObject:tweet.user.username])
+    else if ([invertedCellUsernames containsObject:displayTweet.user.username])
         displayType = FastTimelineTableViewCellDisplayTypeInverted;
     else
         displayType = FastTimelineTableViewCellDisplayTypeNormal;
     [cell setDisplayType:displayType];
 
-    [cell setTweetText:[tweet htmlDecodedText]];
-    [cell setAuthor:[tweet displayName]];
-    [cell setTimestamp:[tweet.timestamp tableViewCellDescription]];
-    [cell setFavorite:[tweet.favorited boolValue]];
-    [cell setGeocoded:!!tweet.location];
+    [cell setTweetText:[displayTweet htmlDecodedText]];
+    [cell setAuthor:[displayTweet displayName]];
+    [cell setTimestamp:[displayTweet.timestamp tableViewCellDescription]];
+    [cell setFavorite:[displayTweet.favorited boolValue]];
+    [cell setGeocoded:!!displayTweet.location];
 
-    [cell setAvatar:[self getThumbnailAvatarForUser:tweet.user]];
-    [cell setUserData:tweet.user.avatar.thumbnailImageUrl];
+    [cell setAvatar:[self getThumbnailAvatarForUser:displayTweet.user]];
+    [cell setUserData:displayTweet.user.avatar.thumbnailImageUrl];
 
     [cell setRetweetAuthor:retweetAuthor];
 
@@ -669,7 +675,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
     BOOL highlightForMention = NO;
     if (self.mentionString) {
-        NSRange where = [tweet.text rangeOfString:mentionString
+        NSRange where = [displayTweet.text rangeOfString:mentionString
                                           options:NSCaseInsensitiveSearch];
         highlightForMention = !NSEqualRanges(where, NSMakeRange(NSNotFound, 0));
     }

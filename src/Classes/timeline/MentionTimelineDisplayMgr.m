@@ -628,10 +628,6 @@
     [self updateViewWithNewMentions];
 
     [self updateTweetIndexCache];
-
-    // HACK: forces timeline to scroll to top
-    [timelineController.tableView setContentOffset:CGPointMake(0, 392)
-        animated:NO];
 }
 
 - (void)setCredentials:(TwitterCredentials *)someCredentials
@@ -647,8 +643,6 @@
 
     self.activeAcctUsername = someCredentials.username;
     [displayMgrHelper setCredentials:someCredentials];
-
-    [navigationController popToRootViewControllerAnimated:NO];
 }
 
 - (void)clearState
@@ -826,6 +820,15 @@
     [self.lastTweetDetailsWrapperController
         setUpdatingState:kConnectedAndUpdating];
     [self fetchedTweet:tweet withId:tweet.identifier];
+}
+
+- (void)setNavigationController:(UINavigationController *)navc
+{
+    [navc retain];
+    [navigationController release];
+    navigationController = navc;
+
+    displayMgrHelper.navigationController = navc;
 }
 
 - (UIBarButtonItem *)updatingTimelineActivityView
