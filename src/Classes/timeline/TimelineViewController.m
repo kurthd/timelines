@@ -431,7 +431,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
             if (!flashingScrollIndicators)
                 [self.tableView flashScrollIndicators];
         }
-    } else if (firstDisplay) {
+    } else if (firstDisplay && [tweets count] > 0) {
         NSIndexPath * scrollIndexPath =
             [NSIndexPath indexPathForRow:0 inSection:0];
         [self.tableView scrollToRowAtIndexPath:scrollIndexPath

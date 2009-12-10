@@ -234,7 +234,7 @@
 
     UITableViewController * tvc = (UITableViewController *)
         self.networkAwareViewController.targetViewController;
-    tvc.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    tvc.tableView.contentInset = UIEdgeInsetsMake(0, 0, -300, 0);
     tvc.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
 
     NSString * viewTitle =
@@ -247,6 +247,8 @@
         initWithTitle:viewTitle style:UIBarButtonItemStyleBordered
         target:nil action:nil]
         autorelease];
+    if (![[ErrorState instance] failedState])
+        [networkAwareViewController setUpdatingState:kConnectedAndUpdating];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar
@@ -707,6 +709,7 @@
 - (void)toggleNearbySearchValue
 {
     nearbySearch = !nearbySearch;
+    NSLog(@"Setting location button style; %@", self.locationButton);
     self.locationButton.style =
         nearbySearch ? UIBarButtonItemStyleDone : UIBarButtonItemStyleBordered;
 
@@ -727,13 +730,12 @@
             if (!editingQuery)
                 [self.networkAwareViewController.navigationItem
                     setRightBarButtonItem:self.locationButton animated:YES];
-                self.locationButton.style =
             locationButtonState =
                 nearbySearch ? kLocationButtonStateOn : kLocationButtonStateOff;
 
             self.searchDisplayMgr.nearbySearchLocation =
                 self.locationMgr.location;
-           [self searchBarSearchButtonClicked:searchBar];
+            [self searchBarSearchButtonClicked:searchBar];
         }
     }
 }
@@ -741,14 +743,26 @@
 - (UIBarButtonItem *)nearbySearchProgressView
 {
     if (!nearbySearchProgressView) {
-        UIActivityIndicatorView * view =
-            [[UIActivityIndicatorView alloc]
-            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        NSString * backgroundImageFilename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"NavigationButtonBackgroundDarkTheme.png" :
+            @"NavigationButtonBackground.png";
+        UIImage * image =
+            [[UIImage imageNamed:backgroundImageFilename]
+            stretchableImageWithLeftCapWidth:4 topCapHeight:0];
+        UIView * view = [[UIImageView alloc] initWithImage:image];
+        view.frame = CGRectMake(0, 0, 40, 30);
+        UIActivityIndicatorView * activityView =
+            [[[UIActivityIndicatorView alloc]
+            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
+            autorelease];
+        activityView.frame = CGRectMake(10, 5, 20, 20);
+        [view addSubview:activityView];
 
         nearbySearchProgressView =
             [[UIBarButtonItem alloc] initWithCustomView:view];
 
-        [view startAnimating];
+        [activityView startAnimating];
 
         [view release];
     }

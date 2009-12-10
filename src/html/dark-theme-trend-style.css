@@ -1,0 +1,20 @@
+body {
+    font-family: "Helvetica";
+    font-size: 13pt;
+    margin: 0px;
+    padding: 7px 3px 0px 5px;
+    word-wrap: break-word;
+    background-color: transparent;
+    color: #fff;
+}
+
+a {
+    text-decoration: none;
+    color: #46a7e0;
+}
+
+.text {
+    margin: 0px 6px 0px 6px;
+    padding-bottom: 10px;
+}
+

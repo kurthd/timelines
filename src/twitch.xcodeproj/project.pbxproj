@@ -934,6 +934,10 @@
 		914EA96F10CEF6E8007036F2 /* NavigationButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 914EA96D10CEF6E8007036F2 /* NavigationButtonBackground.png */; };
 		914EA98F10CEFC5C007036F2 /* NavigationButtonBackgroundDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 914EA98E10CEFC5C007036F2 /* NavigationButtonBackgroundDarkTheme.png */; };
 		914EA99010CEFC5C007036F2 /* NavigationButtonBackgroundDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 914EA98E10CEFC5C007036F2 /* NavigationButtonBackgroundDarkTheme.png */; };
+		914EACAF10D190F5007036F2 /* dark-theme-trend-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 914EACAD10D190F5007036F2 /* dark-theme-trend-style.css */; };
+		914EACB010D190F5007036F2 /* trend-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 914EACAE10D190F5007036F2 /* trend-style.css */; };
+		914EACB110D190F5007036F2 /* dark-theme-trend-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 914EACAD10D190F5007036F2 /* dark-theme-trend-style.css */; };
+		914EACB210D190F5007036F2 /* trend-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 914EACAE10D190F5007036F2 /* trend-style.css */; };
 		9152E1571014F86C0033B63B /* DirectMessageInboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1551014F86C0033B63B /* DirectMessageInboxView.xib */; };
 		9152E15A1014F8850033B63B /* DirectMessageConversationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9152E1581014F8850033B63B /* DirectMessageConversationView.xib */; };
 		9152E239101557AC0033B63B /* NewMessagesDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9152E238101557AC0033B63B /* NewMessagesDot.png */; };
@@ -1736,6 +1740,8 @@
 		914EA3DA10C8BD6F007036F2 /* ProfileDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileDisplayMgr.m; path = "user-info/ProfileDisplayMgr.m"; sourceTree = "<group>"; };
 		914EA96D10CEF6E8007036F2 /* NavigationButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NavigationButtonBackground.png; path = images/NavigationButtonBackground.png; sourceTree = "<group>"; };
 		914EA98E10CEFC5C007036F2 /* NavigationButtonBackgroundDarkTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NavigationButtonBackgroundDarkTheme.png; path = images/NavigationButtonBackgroundDarkTheme.png; sourceTree = "<group>"; };
+		914EACAD10D190F5007036F2 /* dark-theme-trend-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "dark-theme-trend-style.css"; sourceTree = "<group>"; };
+		914EACAE10D190F5007036F2 /* trend-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "trend-style.css"; sourceTree = "<group>"; };
 		9152E14C1014F6B70033B63B /* DirectMessagesDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessagesDisplayMgr.h; path = "direct-messages/DirectMessagesDisplayMgr.h"; sourceTree = "<group>"; };
 		9152E14D1014F6B70033B63B /* DirectMessagesDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectMessagesDisplayMgr.m; path = "direct-messages/DirectMessagesDisplayMgr.m"; sourceTree = "<group>"; };
 		9152E14F1014F8260033B63B /* DirectMessageInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageInboxViewController.h; path = "direct-messages/DirectMessageInboxViewController.h"; sourceTree = "<group>"; };
@@ -3350,6 +3356,8 @@
 		916BDA4C0FEF573A007143A9 /* html */ = {
 			isa = PBXGroup;
 			children = (
+				914EACAD10D190F5007036F2 /* dark-theme-trend-style.css */,
+				914EACAE10D190F5007036F2 /* trend-style.css */,
 				916A257F1084303000C5895D /* dark-theme-tweet-style.css */,
 				918F7166104745D000FE7ABF /* style.css */,
 				918F713D104741AE00FE7ABF /* log-in-help.html */,
@@ -3703,6 +3711,8 @@
 				914EA96F10CEF6E8007036F2 /* NavigationButtonBackground.png in Resources */,
 				914EA99010CEFC5C007036F2 /* NavigationButtonBackgroundDarkTheme.png in Resources */,
 				0518083C10CF04F000EBFB62 /* TrendExplanationView.xib in Resources */,
+				914EACB110D190F5007036F2 /* dark-theme-trend-style.css in Resources */,
+				914EACB210D190F5007036F2 /* trend-style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3893,6 +3903,8 @@
 				914EA96E10CEF6E8007036F2 /* NavigationButtonBackground.png in Resources */,
 				914EA98F10CEFC5C007036F2 /* NavigationButtonBackgroundDarkTheme.png in Resources */,
 				0518083B10CF04F000EBFB62 /* TrendExplanationView.xib in Resources */,
+				914EACAF10D190F5007036F2 /* dark-theme-trend-style.css in Resources */,
+				914EACB010D190F5007036F2 /* trend-style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

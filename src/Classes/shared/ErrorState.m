@@ -15,7 +15,7 @@
 
 @implementation ErrorState
 
-@synthesize currentAction, currentTarget;
+@synthesize currentAction, currentTarget, failedState;
 
 static ErrorState * gInstance = NULL;
 
