@@ -7,7 +7,9 @@
 
 @interface MGTwitterJSONParser ()
 
-- (NSArray *)parse;
+- (void)parseJsonInBackground:(NSData *)json;
+- (void)parseJsonWrapper:(NSData *)json;
+- (NSArray *)parse:(NSData *)json;
 
 - (BOOL)isValidDelegateForSelector:(SEL)selector;
 - (void)parsingFinished:(NSArray *)parsedObjects;
@@ -35,7 +37,6 @@ connectionIdentifier:(NSString *)identifier
 
 - (void)dealloc
 {
-    [json release];
     [identifier release];
     [URL release];
 
@@ -51,21 +52,34 @@ connectionIdentifier:(NSString *)identifier
                      URL:(NSURL *)theURL
 {
     if (self = [super init]) {
-        json = [theJSON retain];
         identifier = [theIdentifier retain];
         requestType = reqType;
         responseType = respType;
         URL = [theURL retain];
         delegate = theDelegate;
 
-        NSArray * results = [self parse];
-        [self parsingFinished:results];
+        [self parseJsonInBackground:theJSON];
     }
 
     return self;
 }
 
-- (NSArray *)parse
+- (void)parseJsonInBackground:(NSData *)json
+{
+    [self performSelectorInBackground:@selector(parseJsonWrapper:)
+                           withObject:json];
+}
+
+- (void)parseJsonWrapper:(NSData *)json
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    [self performSelectorOnMainThread:@selector(parsingFinished:)
+                           withObject:[self parse:json]
+                        waitUntilDone:NO];
+    [pool release];
+}
+
+- (NSArray *)parse:(NSData *)json
 {
     NSArray * parsedObjects = nil;
 
