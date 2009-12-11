@@ -1014,6 +1014,8 @@
 		918F7167104745D000FE7ABF /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 918F7166104745D000FE7ABF /* style.css */; };
 		919CCCBC105EB0600029C0A1 /* DeleteTweetButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 919CCCBB105EB0600029C0A1 /* DeleteTweetButtonIcon.png */; };
 		919CCCBE105EB0760029C0A1 /* NearbyTweetsButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 919CCCBD105EB0760029C0A1 /* NearbyTweetsButtonIcon.png */; };
+		91A6429F10D2A01700F7C922 /* PushNotificationMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A6429E10D2A01700F7C922 /* PushNotificationMessage.m */; };
+		91A642A010D2A01700F7C922 /* PushNotificationMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A6429E10D2A01700F7C922 /* PushNotificationMessage.m */; };
 		91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD5A3C100FED36009C2179 /* MessageUI.framework */; };
 		91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
 		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
@@ -1941,6 +1943,8 @@
 		91A2479C0FFE9D0200538F29 /* DeleteTweetSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweetSelected.png; path = images/DeleteTweetSelected.png; sourceTree = "<group>"; };
 		91A2479D0FFE9D0200538F29 /* Re-tweetSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Re-tweetSelected.png"; path = "images/Re-tweetSelected.png"; sourceTree = "<group>"; };
 		91A247A60FFE9ED300538F29 /* DeleteTweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweetDisabled.png; path = images/DeleteTweetDisabled.png; sourceTree = "<group>"; };
+		91A6429D10D2A01700F7C922 /* PushNotificationMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushNotificationMessage.h; path = "push-notifications/PushNotificationMessage.h"; sourceTree = "<group>"; };
+		91A6429E10D2A01700F7C922 /* PushNotificationMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushNotificationMessage.m; path = "push-notifications/PushNotificationMessage.m"; sourceTree = "<group>"; };
 		91AD5A3C100FED36009C2179 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		91AD5A6F101017AC009C2179 /* PhotoBackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoBackButton.png; path = images/PhotoBackButton.png; sourceTree = "<group>"; };
 		91AD5A711010187D009C2179 /* PhotoForwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoForwardButton.png; path = images/PhotoForwardButton.png; sourceTree = "<group>"; };
@@ -2262,6 +2266,8 @@
 				05B2387B0FEDC15800A6A2E6 /* DeviceRegistrar.h */,
 				05B2387C0FEDC15800A6A2E6 /* DeviceRegistrar.m */,
 				05B23AC20FEEC09800A6A2E6 /* DeviceRegistrarDelegate.h */,
+				91A6429D10D2A01700F7C922 /* PushNotificationMessage.h */,
+				91A6429E10D2A01700F7C922 /* PushNotificationMessage.m */,
 			);
 			name = "push-notifications";
 			sourceTree = "<group>";
@@ -4249,6 +4255,7 @@
 				0522E71710C9D1E700BB96CE /* UserSearchResponseProcessor.m in Sources */,
 				051807D410CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m in Sources */,
 				0518083810CF047D00EBFB62 /* TrendExplanationViewController.m in Sources */,
+				91A6429F10D2A01700F7C922 /* PushNotificationMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4590,6 +4597,7 @@
 				0522E71810C9D1E700BB96CE /* UserSearchResponseProcessor.m in Sources */,
 				051807D510CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m in Sources */,
 				0518083710CF047D00EBFB62 /* TrendExplanationViewController.m in Sources */,
+				91A642A010D2A01700F7C922 /* PushNotificationMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
