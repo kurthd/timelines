@@ -173,6 +173,12 @@ enum TweetActionSheets {
     [delegate showingTweetDetails:self];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [delegate dismissingDetails:self];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:
     (UIInterfaceOrientation)orientation
 {
