@@ -19,8 +19,7 @@ static const CGFloat WEB_VIEW_WIDTH_LANDSCAPE = 480;
 
 @implementation TrendDisplayMgr
 
-@synthesize navigationController, timelineDisplayMgr, searchDisplayMgr,
-    navigationController;
+@synthesize navigationController, timelineDisplayMgr, searchDisplayMgr;
 
 - (void)dealloc
 {

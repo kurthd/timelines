@@ -2069,7 +2069,7 @@
     // frequently, but we are currently getting pretty constant "untrusted
     // server certificate" errors. Waiting until it stabilizes before switching
     // over.
-    return NO;
+    return YES;
 }
 
 + (NSString *)apiDomain

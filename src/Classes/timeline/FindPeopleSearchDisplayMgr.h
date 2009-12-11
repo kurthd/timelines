@@ -66,10 +66,9 @@
 }
 
 @property (nonatomic, retain) NSString * currentSearchUsername;
-@property (nonatomic, retain) UINavigationController * navigationController;
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc
-    navigationController:(UINavigationController *)navigationController
+    navigationController:(UINavigationController *)aNavigationController
     userListController:(UserListTableViewController *)userListController
     service:(TwitterService *)service context:(NSManagedObjectContext *)aContext
     savedSearchMgr:(SavedSearchMgr *)aSavedSearchMgr
@@ -81,6 +80,9 @@
     contactMgr:(ContactMgr *)aContactMgr;
 
 - (void)setCredentials:(TwitterCredentials *)credentials;
+
+- (void)setNavigationController:(UINavigationController *)nc;
+- (UINavigationController *)navigationController;
 
 - (NSInteger)selectedBookmarkSegment;
 - (void)setSelectedBookmarkSegment:(NSInteger)segment;
