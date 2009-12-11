@@ -545,6 +545,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [inboxController setNumReceivedMessages:0 sentMessages:0];
     self.currentConversationUserId = nil;
     receivedQueryResponse = NO;
+    self.selectedMessage = nil;
 }
 
 - (void)updateDirectMessagesAfterCredentialChange
