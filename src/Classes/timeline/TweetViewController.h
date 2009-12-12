@@ -43,6 +43,7 @@
     // configure the display
     BOOL showsFavoriteButton;
     BOOL allowDeletion;
+    BOOL dismissedView;
 
     UIViewController * realParentViewController;
 
