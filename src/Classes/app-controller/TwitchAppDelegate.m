@@ -1169,9 +1169,9 @@ enum {
             [self getNavControllerForController:listsNetAwareViewController];
         profileDisplayMgr.navigationController =
             [self getNavControllerForController:profileNetAwareViewController];
-        findPeopleSearchDisplayMgr.navigationController =
+        [findPeopleSearchDisplayMgr setNavigationController:
             [self getNavControllerForController:
-            findPeopleNetAwareViewController];
+            findPeopleNetAwareViewController]];
         trendDisplayMgr.navigationController =
             [self getNavControllerForController:trendsNetAwareViewController];
     }

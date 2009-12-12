@@ -66,7 +66,6 @@
 @synthesize currentSearch;
 @synthesize generalSavedSearchMgr;
 @synthesize autocompleteArray;
-@synthesize navigationController;
 
 - (void)dealloc
 {
@@ -98,7 +97,7 @@
 }
 
 - (id)initWithNetAwareController:(NetworkAwareViewController *)navc
-    navigationController:(UINavigationController *)navigationController
+    navigationController:(UINavigationController *)aNavigationController
     userListController:(UserListTableViewController *)aUserListController
     service:(TwitterService *)aService
     context:(NSManagedObjectContext *)aContext
@@ -129,7 +128,7 @@
         displayMgrHelper =
             [[DisplayMgrHelper alloc]
             initWithWrapperController:navc
-            navigationController:navigationController
+            navigationController:aNavigationController
             userListDisplayMgrFactor:aUserListFactory
             composeTweetDisplayMgr:composeTweetDisplayMgr
             twitterService:displayHelperService
@@ -138,7 +137,7 @@
             findPeopleBookmarkMgr:findPeopleBookmarkMgr
             contactCache:aContactCache contactMgr:aContactMgr];
         displayHelperService.delegate = displayMgrHelper;
-
+        
         searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
 
         searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
