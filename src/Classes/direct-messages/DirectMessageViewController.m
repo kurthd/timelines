@@ -423,7 +423,8 @@ enum TweetActionSheets {
             [CommonTwitterServicePhotoSource photoUrlFromPageHtml:html
             url:urlAsString];
         NSLog(@"Received photo webpage; photo url is: %@", photoUrl);
-        [self.directMessage setPhotoUrl:photoUrl];
+        if (photoUrl)
+            [self.directMessage setPhotoUrl:photoUrl];
 
         [tweetContentView
             loadHTMLStringRelativeToMainBundle:[self.directMessage textAsHtml]];

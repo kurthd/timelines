@@ -593,7 +593,8 @@ enum TweetActionSheets {
             [CommonTwitterServicePhotoSource photoUrlFromPageHtml:html
             url:urlAsString];
         NSLog(@"Received photo webpage; photo url is: %@", photoUrl);
-        [self setPhotoPreviewInWebView:photoUrl];
+        if (photoUrl)
+            [self setPhotoPreviewInWebView:photoUrl];
     } else {
         NSLog(@"Received avatar for url: %@", url);
         UIImage * avatar = [UIImage imageWithData:data];
