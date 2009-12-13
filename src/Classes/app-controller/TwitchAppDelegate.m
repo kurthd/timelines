@@ -355,6 +355,8 @@ enum {
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    [self persistUIState];
+
     if (managedObjectContext != nil) {
         [self prunePersistenceStore];
         if (![self saveContext]) {
@@ -362,8 +364,6 @@ enum {
             exit(-1);
         }
     }
-
-    [self persistUIState];
 }
 
 #pragma mark Composing tweets
