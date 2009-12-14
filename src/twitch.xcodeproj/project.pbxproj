@@ -879,6 +879,11 @@
 		05FA5685109F5E10004931EA /* FastTimelineTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FA5683109F5E10004931EA /* FastTimelineTableViewCellView.m */; };
 		05FA5686109F5E10004931EA /* FastTimelineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FA5680109F5E10004931EA /* FastTimelineTableViewCell.m */; };
 		05FA5687109F5E10004931EA /* FastTimelineTableViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FA5683109F5E10004931EA /* FastTimelineTableViewCellView.m */; };
+		91063C4110D6ED1900DEAC3A /* AdBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91063C4010D6ED1900DEAC3A /* AdBackground.png */; };
+		91063C4210D6ED1900DEAC3A /* AdBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91063C4010D6ED1900DEAC3A /* AdBackground.png */; };
+		91063C5C10D6EED700DEAC3A /* AdBackgroundDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 91063C5B10D6EED700DEAC3A /* AdBackgroundDarkTheme.png */; };
+		91063C5D10D6EED700DEAC3A /* AdBackgroundDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 91063C5B10D6EED700DEAC3A /* AdBackgroundDarkTheme.png */; };
+		91063C7310D6F1AE00DEAC3A /* libAdMobDevice3_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A6451E10D6BE9200F7C922 /* libAdMobDevice3_0.a */; };
 		910EFE1D1017E391002083D6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 910EFE1C1017E391002083D6 /* AudioToolbox.framework */; };
 		9112EAB5102E236E002715DC /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
 		9125779A104C7A53006F5DBD /* DarkenedTableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */; };
@@ -1016,6 +1021,13 @@
 		919CCCBE105EB0760029C0A1 /* NearbyTweetsButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 919CCCBD105EB0760029C0A1 /* NearbyTweetsButtonIcon.png */; };
 		91A6429F10D2A01700F7C922 /* PushNotificationMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A6429E10D2A01700F7C922 /* PushNotificationMessage.m */; };
 		91A642A010D2A01700F7C922 /* PushNotificationMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A6429E10D2A01700F7C922 /* PushNotificationMessage.m */; };
+		91A644C810D6B1EB00F7C922 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A644C710D6B1EB00F7C922 /* MediaPlayer.framework */; };
+		91A644FA10D6BD3000F7C922 /* TwitbitAdMobDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A644F910D6BD3000F7C922 /* TwitbitAdMobDelegate.m */; };
+		91A644FB10D6BD3000F7C922 /* TwitbitAdMobDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A644F910D6BD3000F7C922 /* TwitbitAdMobDelegate.m */; };
+		91A6452310D6BE9200F7C922 /* libAdMobSimulator3_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A6451F10D6BE9200F7C922 /* libAdMobSimulator3_0.a */; };
+		91A646EF10D6D8EB00F7C922 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A644C710D6B1EB00F7C922 /* MediaPlayer.framework */; };
+		91A646F010D6D8ED00F7C922 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B770B210BC63590014172A /* AddressBookUI.framework */; };
+		91A646F110D6D8EE00F7C922 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B770C810BC63A70014172A /* AddressBook.framework */; };
 		91AD5A3D100FED36009C2179 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AD5A3C100FED36009C2179 /* MessageUI.framework */; };
 		91AD5A70101017AC009C2179 /* PhotoBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A6F101017AC009C2179 /* PhotoBackButton.png */; };
 		91AD5A721010187D009C2179 /* PhotoForwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AD5A711010187D009C2179 /* PhotoForwardButton.png */; };
@@ -1657,6 +1669,8 @@
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AB4B0D9B1048005BE974 /* twitch_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twitch_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		91063C4010D6ED1900DEAC3A /* AdBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AdBackground.png; path = images/AdBackground.png; sourceTree = "<group>"; };
+		91063C5B10D6EED700DEAC3A /* AdBackgroundDarkTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AdBackgroundDarkTheme.png; path = images/AdBackgroundDarkTheme.png; sourceTree = "<group>"; };
 		910BE1850FF2A755005342EE /* ArbUserTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArbUserTimelineDataSource.h; path = timeline/ArbUserTimelineDataSource.h; sourceTree = "<group>"; };
 		910BE1860FF2A755005342EE /* ArbUserTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArbUserTimelineDataSource.m; path = timeline/ArbUserTimelineDataSource.m; sourceTree = "<group>"; };
 		910BE1FB0FF2B91D005342EE /* UserSummaryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSummaryTableViewCell.h; path = "user-network/UserSummaryTableViewCell.h"; sourceTree = "<group>"; };
@@ -1945,6 +1959,15 @@
 		91A247A60FFE9ED300538F29 /* DeleteTweetDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DeleteTweetDisabled.png; path = images/DeleteTweetDisabled.png; sourceTree = "<group>"; };
 		91A6429D10D2A01700F7C922 /* PushNotificationMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushNotificationMessage.h; path = "push-notifications/PushNotificationMessage.h"; sourceTree = "<group>"; };
 		91A6429E10D2A01700F7C922 /* PushNotificationMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushNotificationMessage.m; path = "push-notifications/PushNotificationMessage.m"; sourceTree = "<group>"; };
+		91A644C710D6B1EB00F7C922 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		91A644F810D6BD3000F7C922 /* TwitbitAdMobDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitbitAdMobDelegate.h; path = ads/TwitbitAdMobDelegate.h; sourceTree = "<group>"; };
+		91A644F910D6BD3000F7C922 /* TwitbitAdMobDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitbitAdMobDelegate.m; path = ads/TwitbitAdMobDelegate.m; sourceTree = "<group>"; };
+		91A6451A10D6BE9200F7C922 /* AdMobDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdMobDelegateProtocol.h; path = AdMob/AdMobDelegateProtocol.h; sourceTree = "<group>"; };
+		91A6451B10D6BE9200F7C922 /* AdMobInterstitialAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdMobInterstitialAd.h; path = AdMob/AdMobInterstitialAd.h; sourceTree = "<group>"; };
+		91A6451C10D6BE9200F7C922 /* AdMobInterstitialDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdMobInterstitialDelegateProtocol.h; path = AdMob/AdMobInterstitialDelegateProtocol.h; sourceTree = "<group>"; };
+		91A6451D10D6BE9200F7C922 /* AdMobView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdMobView.h; path = AdMob/AdMobView.h; sourceTree = "<group>"; };
+		91A6451E10D6BE9200F7C922 /* libAdMobDevice3_0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdMobDevice3_0.a; path = AdMob/libAdMobDevice3_0.a; sourceTree = "<group>"; };
+		91A6451F10D6BE9200F7C922 /* libAdMobSimulator3_0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdMobSimulator3_0.a; path = AdMob/libAdMobSimulator3_0.a; sourceTree = "<group>"; };
 		91AD5A3C100FED36009C2179 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		91AD5A6F101017AC009C2179 /* PhotoBackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoBackButton.png; path = images/PhotoBackButton.png; sourceTree = "<group>"; };
 		91AD5A711010187D009C2179 /* PhotoForwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoForwardButton.png; path = images/PhotoForwardButton.png; sourceTree = "<group>"; };
@@ -2035,6 +2058,10 @@
 				052E059E10700858005CEC5F /* libz.1.2.3.dylib in Frameworks */,
 				052E05DD10700F1D005CEC5F /* libYAJLIPhone.a in Frameworks */,
 				052E05E510700F45005CEC5F /* libTwitVid.a in Frameworks */,
+				91A6452310D6BE9200F7C922 /* libAdMobSimulator3_0.a in Frameworks */,
+				91A646EF10D6D8EB00F7C922 /* MediaPlayer.framework in Frameworks */,
+				91A646F010D6D8ED00F7C922 /* AddressBookUI.framework in Frameworks */,
+				91A646F110D6D8EE00F7C922 /* AddressBook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2061,6 +2088,8 @@
 				055777141063018D006596DB /* libz.1.2.3.dylib in Frameworks */,
 				91B770B310BC63590014172A /* AddressBookUI.framework in Frameworks */,
 				91B770C910BC63A70014172A /* AddressBook.framework in Frameworks */,
+				91A644C810D6B1EB00F7C922 /* MediaPlayer.framework in Frameworks */,
+				91063C7310D6F1AE00DEAC3A /* libAdMobDevice3_0.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2991,6 +3020,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				91A644F710D6BCD900F7C922 /* ads */,
 				91FDD58A106157EF000F7527 /* bitly */,
 				918F7140104741F900FE7ABF /* web */,
 				918F3733103F47E9000236AE /* geo-services */,
@@ -3035,6 +3065,7 @@
 		29B97314FDCFA39411CA2CEA /* twitch */ = {
 			isa = PBXGroup;
 			children = (
+				91A644B610D6B12700F7C922 /* AdMob */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -3092,6 +3123,7 @@
 				055777131063018D006596DB /* libz.1.2.3.dylib */,
 				91B770B210BC63590014172A /* AddressBookUI.framework */,
 				91B770C810BC63A70014172A /* AddressBook.framework */,
+				91A644C710D6B1EB00F7C922 /* MediaPlayer.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3163,6 +3195,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91063C5B10D6EED700DEAC3A /* AdBackgroundDarkTheme.png */,
+				91063C4010D6ED1900DEAC3A /* AdBackground.png */,
 				914EA98E10CEFC5C007036F2 /* NavigationButtonBackgroundDarkTheme.png */,
 				914EA96D10CEF6E8007036F2 /* NavigationButtonBackground.png */,
 				0522E68B10C9B2EB00BB96CE /* GeocodeTimelineIndicatorHighlighted.png */,
@@ -3454,6 +3488,28 @@
 			name = web;
 			sourceTree = "<group>";
 		};
+		91A644B610D6B12700F7C922 /* AdMob */ = {
+			isa = PBXGroup;
+			children = (
+				91A6451A10D6BE9200F7C922 /* AdMobDelegateProtocol.h */,
+				91A6451B10D6BE9200F7C922 /* AdMobInterstitialAd.h */,
+				91A6451C10D6BE9200F7C922 /* AdMobInterstitialDelegateProtocol.h */,
+				91A6451D10D6BE9200F7C922 /* AdMobView.h */,
+				91A6451E10D6BE9200F7C922 /* libAdMobDevice3_0.a */,
+				91A6451F10D6BE9200F7C922 /* libAdMobSimulator3_0.a */,
+			);
+			name = AdMob;
+			sourceTree = "<group>";
+		};
+		91A644F710D6BCD900F7C922 /* ads */ = {
+			isa = PBXGroup;
+			children = (
+				91A644F810D6BD3000F7C922 /* TwitbitAdMobDelegate.h */,
+				91A644F910D6BD3000F7C922 /* TwitbitAdMobDelegate.m */,
+			);
+			name = ads;
+			sourceTree = "<group>";
+		};
 		91FDD58A106157EF000F7527 /* bitly */ = {
 			isa = PBXGroup;
 			children = (
@@ -3719,6 +3775,8 @@
 				0518083C10CF04F000EBFB62 /* TrendExplanationView.xib in Resources */,
 				914EACB110D190F5007036F2 /* dark-theme-trend-style.css in Resources */,
 				914EACB210D190F5007036F2 /* trend-style.css in Resources */,
+				91063C4210D6ED1900DEAC3A /* AdBackground.png in Resources */,
+				91063C5D10D6EED700DEAC3A /* AdBackgroundDarkTheme.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3911,6 +3969,8 @@
 				0518083B10CF04F000EBFB62 /* TrendExplanationView.xib in Resources */,
 				914EACAF10D190F5007036F2 /* dark-theme-trend-style.css in Resources */,
 				914EACB010D190F5007036F2 /* trend-style.css in Resources */,
+				91063C4110D6ED1900DEAC3A /* AdBackground.png in Resources */,
+				91063C5C10D6EED700DEAC3A /* AdBackgroundDarkTheme.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4256,6 +4316,7 @@
 				051807D410CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m in Sources */,
 				0518083810CF047D00EBFB62 /* TrendExplanationViewController.m in Sources */,
 				91A6429F10D2A01700F7C922 /* PushNotificationMessage.m in Sources */,
+				91A644FB10D6BD3000F7C922 /* TwitbitAdMobDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4598,6 +4659,7 @@
 				051807D510CEA84800EBFB62 /* FetchDirectMessageResponseProcessor.m in Sources */,
 				0518083710CF047D00EBFB62 /* TrendExplanationViewController.m in Sources */,
 				91A642A010D2A01700F7C922 /* PushNotificationMessage.m in Sources */,
+				91A644FA10D6BD3000F7C922 /* TwitbitAdMobDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5008,6 +5070,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
+					"\"$(SRCROOT)/AdMob\"",
 				);
 				PRODUCT_NAME = Twitbit;
 			};
@@ -5050,6 +5113,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
+					"\"$(SRCROOT)/AdMob\"",
 				);
 				PRODUCT_NAME = Twitbit;
 			};
@@ -5072,6 +5136,7 @@
 					"\\\"$(SRCROOT)/Classes/vendor/twitvid\\\"",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
+					"\"$(SRCROOT)/AdMob\"",
 				);
 				PRODUCT_NAME = "Twitbit Lite";
 			};
@@ -5092,6 +5157,7 @@
 					"\\\"$(SRCROOT)/Classes/vendor/twitvid\\\"",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
+					"\"$(SRCROOT)/AdMob\"",
 				);
 				PRODUCT_NAME = "Twitbit Lite";
 			};
@@ -5115,6 +5181,7 @@
 					"\\\"$(SRCROOT)/Classes/vendor/twitvid\\\"",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
+					"\"$(SRCROOT)/AdMob\"",
 				);
 				PRODUCT_NAME = "Twitbit Lite";
 			};
@@ -5141,6 +5208,7 @@
 					"\\\"$(SRCROOT)/Classes/vendor/twitvid\\\"",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
+					"\"$(SRCROOT)/AdMob\"",
 				);
 				PRODUCT_NAME = "Twitbit Lite";
 				PROVISIONING_PROFILE = "37E48521-9BD8-4E95-AAE2-9AB07B1C6A06";
@@ -5192,6 +5260,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
+					"\"$(SRCROOT)/AdMob\"",
 				);
 				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "9BD30541-6CA6-4F48-B159-BC45D542BBD5";
@@ -5241,6 +5310,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
+					"\"$(SRCROOT)/AdMob\"",
 				);
 				PRODUCT_NAME = Twitbit;
 			};

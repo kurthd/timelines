@@ -3,6 +3,7 @@
 //
 
 #import "SettingsReader.h"
+#import "UIApplication+ConfigurationAdditions.h"
 
 @implementation SettingsReader
 
@@ -121,6 +122,11 @@ static NSInteger retweetFormat;
     }
 
     return retweetFormat;
+}
+
++ (BOOL)showAds
+{
+    return [[UIApplication sharedApplication] isLiteVersion];
 }
 
 @end

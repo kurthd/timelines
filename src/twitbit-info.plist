@@ -45,8 +45,10 @@
 	<key>TwitPicPostUrl</key>
 	<string>https://twitpic.com/api/upload</string>
 	<key>UIPrerenderedIcon</key>
-	<true/>
+	<false/>
 	<key>YfrogPostUrl</key>
 	<string>https://yfrog.com/api/upload</string>
+	<key>AdMobPublisherId</key>
+	<string>a14b2670184a469</string>
 </dict>
 </plist>

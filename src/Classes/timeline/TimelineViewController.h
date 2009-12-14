@@ -7,6 +7,7 @@
 #import "TimelineViewControllerDelegate.h"
 #import "AsynchronousNetworkFetcherDelegate.h"
 #import "RoundedImage.h"
+#import "TwitbitAdMobDelegate.h"
 
 @interface TimelineViewController :
     UITableViewController
@@ -49,6 +50,9 @@
     NSNumber * visibleTweetId;
 
     BOOL lastShownLandscapeValue;
+
+    UITableViewCell * adCell;
+    TwitbitAdMobDelegate * adMobDelegate;
 }
 
 @property (nonatomic, assign)

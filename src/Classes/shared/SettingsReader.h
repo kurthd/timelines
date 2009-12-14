@@ -31,5 +31,6 @@ typedef enum {
 + (NSInteger)defaultNearbySearchRadius;
 + (BOOL)scrollToTop;
 + (NSInteger)retweetFormat;
++ (BOOL)showAds;
 
 @end
