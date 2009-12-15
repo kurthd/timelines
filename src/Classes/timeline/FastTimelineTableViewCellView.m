@@ -26,6 +26,7 @@ static UIImage * darkenedBottomImage;
 
 static UIFont * authorFont;
 static UIFont * timestampFont;
+static UIFont * timestampBoldFont;
 static UIFont * textFont;
 static UIFont * favoriteFont;
 static UIFont * retweetFormatFont;
@@ -106,7 +107,8 @@ static UIImage * highlightedRetweetGlyph;
     // Fonts
     //
     authorFont = [[UIFont boldSystemFontOfSize:16.0] retain];
-    timestampFont = [[UIFont systemFontOfSize:14.0] retain];
+    timestampFont = [[UIFont systemFontOfSize:12.5] retain];
+    timestampBoldFont = [[UIFont boldSystemFontOfSize:14.0] retain];
     textFont = [[UIFont systemFontOfSize:14.0] retain];
     favoriteFont = [[UIFont boldSystemFontOfSize:16.0] retain];
     retweetFormatFont = [[UIFont systemFontOfSize:14.0] retain];
@@ -162,7 +164,7 @@ static UIImage * highlightedRetweetGlyph;
 - (void)drawRectNormal:(CGRect)rect
 {
     static const CGFloat TIMESTAMP_RIGHT_MARGIN = 8.0;
-    static const CGFloat TIMESTAMP_TOP_MARGIN = 6.0;
+    static const CGFloat TIMESTAMP_TOP_MARGIN = 8.0;
 
     static const CGFloat AUTHOR_TOP_MARGIN = 4.0;
     static const CGFloat AUTHOR_LEFT_MARGIN = 62.0;
@@ -188,15 +190,38 @@ static UIImage * highlightedRetweetGlyph;
     // space that remains after the timestamp has been drawn.
     //
 
+    CGFloat timestampWidth = 0.0;
     [[self timestampColor] set];
-    size = [timestamp sizeWithFont:timestampFont];
+
+    NSString * amPmString = timestamp.amPmString;
+    timestampWidth = [amPmString sizeWithFont:timestampFont].width;
     point =
         CGPointMake(
-            (contentRect.origin.x + contentRect.size.width) -
-            TIMESTAMP_RIGHT_MARGIN - size.width,
-            TIMESTAMP_TOP_MARGIN);
+        (contentRect.origin.x + contentRect.size.width) -
+        TIMESTAMP_RIGHT_MARGIN - timestampWidth,
+        TIMESTAMP_TOP_MARGIN);
+    [amPmString drawAtPoint:point withFont:timestampFont];
 
-    [timestamp drawAtPoint:point withFont:timestampFont];
+    NSString * timeString = timestamp.timeString;
+    timestampWidth += [timeString sizeWithFont:timestampBoldFont].width + 2;
+    point =
+        CGPointMake(
+        (contentRect.origin.x + contentRect.size.width) -
+        TIMESTAMP_RIGHT_MARGIN - timestampWidth,
+        TIMESTAMP_TOP_MARGIN - 2);
+    [timeString drawAtPoint:point withFont:timestampBoldFont];
+
+    NSString * dateString = timestamp.dateString;
+    if (dateString) {
+        timestampWidth += [dateString sizeWithFont:timestampFont].width + 4;
+        point =
+            CGPointMake(
+                (contentRect.origin.x + contentRect.size.width) -
+                TIMESTAMP_RIGHT_MARGIN - timestampWidth,
+                TIMESTAMP_TOP_MARGIN);
+
+        [dateString drawAtPoint:point withFont:timestampFont];
+    }
 
     //
     // Draw the author in the space that remains between the avatar and the
@@ -337,10 +362,28 @@ static UIImage * highlightedRetweetGlyph;
     //
 
     [[self timestampColor] set];
-    CGSize authorLabelSize = size = [timestamp sizeWithFont:timestampFont];
-    point = CGPointMake(TIMESTAMP_LEFT_MARGIN, TIMESTAMP_TOP_MARGIN);
+    CGFloat timestampWidth = 0.0;    
 
-    [timestamp drawAtPoint:point withFont:timestampFont];
+    NSString * dateString = timestamp.dateString;
+    if (dateString) {
+        point = CGPointMake(TIMESTAMP_LEFT_MARGIN, TIMESTAMP_TOP_MARGIN);
+        [dateString drawAtPoint:point withFont:timestampFont];
+        timestampWidth = [dateString sizeWithFont:timestampFont].width + 4;
+    }
+
+    NSString * timeString = timestamp.timeString;
+    point =
+        CGPointMake(TIMESTAMP_LEFT_MARGIN + timestampWidth,
+        TIMESTAMP_TOP_MARGIN - 2);
+    [timeString drawAtPoint:point withFont:timestampBoldFont];
+    timestampWidth += [timeString sizeWithFont:timestampBoldFont].width + 2;
+
+    NSString * amPmString = timestamp.amPmString;
+    point =
+        CGPointMake(TIMESTAMP_LEFT_MARGIN + timestampWidth,
+        TIMESTAMP_TOP_MARGIN);
+    [amPmString drawAtPoint:point withFont:timestampFont];
+    timestampWidth += [amPmString sizeWithFont:timestampFont].width + 1;
 
     //
     // Draw the favorite indicator
@@ -348,7 +391,7 @@ static UIImage * highlightedRetweetGlyph;
     if (favorite) {
         [[self favoriteColor] set];
         point =
-            CGPointMake(TEXT_LEFT_MARGIN + size.width + 5,
+            CGPointMake(TEXT_LEFT_MARGIN + timestampWidth + 5,
             TIMESTAMP_TOP_MARGIN - 2);
         size = CGSizeMake(13, favoriteFont.pointSize);
 
@@ -365,7 +408,7 @@ static UIImage * highlightedRetweetGlyph;
         CGFloat favoriteAdjustment = favorite ? 21 : 5;
         point =
             CGPointMake(
-            TEXT_LEFT_MARGIN + authorLabelSize.width + favoriteAdjustment,
+            TEXT_LEFT_MARGIN + timestampWidth + favoriteAdjustment,
             TIMESTAMP_TOP_MARGIN + 2);
         UIImage * retweetGlyph =
             self.highlighted ?
@@ -455,9 +498,28 @@ static UIImage * highlightedRetweetGlyph;
     //
 
     [[self timestampColor] set];
-    CGSize authorLabelSize = size = [timestamp sizeWithFont:timestampFont];
-    point = CGPointMake(TIMESTAMP_LEFT_MARGIN, TIMESTAMP_TOP_MARGIN);
-    [timestamp drawAtPoint:point withFont:timestampFont];
+    CGFloat timestampWidth = 0.0;    
+
+    NSString * dateString = timestamp.dateString;
+    if (dateString) {
+        point = CGPointMake(TIMESTAMP_LEFT_MARGIN, TIMESTAMP_TOP_MARGIN);
+        [dateString drawAtPoint:point withFont:timestampFont];
+        timestampWidth = [dateString sizeWithFont:timestampFont].width + 4;
+    }
+
+    NSString * timeString = timestamp.timeString;
+    point =
+        CGPointMake(TIMESTAMP_LEFT_MARGIN + timestampWidth,
+        TIMESTAMP_TOP_MARGIN - 2);
+    [timeString drawAtPoint:point withFont:timestampBoldFont];
+    timestampWidth += [timeString sizeWithFont:timestampBoldFont].width + 2;
+
+    NSString * amPmString = timestamp.amPmString;
+    point =
+        CGPointMake(TIMESTAMP_LEFT_MARGIN + timestampWidth,
+        TIMESTAMP_TOP_MARGIN);
+    [amPmString drawAtPoint:point withFont:timestampFont];
+    timestampWidth += [amPmString sizeWithFont:timestampFont].width + 1;
 
     //
     // Draw the favorite indicator
@@ -465,7 +527,7 @@ static UIImage * highlightedRetweetGlyph;
     if (favorite) {
         [[self favoriteColor] set];
         point =
-            CGPointMake(TEXT_LEFT_MARGIN + size.width + 5,
+            CGPointMake(TEXT_LEFT_MARGIN + timestampWidth + 5,
             TIMESTAMP_TOP_MARGIN - 2);
         size = CGSizeMake(13, favoriteFont.pointSize);
 
@@ -482,7 +544,7 @@ static UIImage * highlightedRetweetGlyph;
         CGFloat favoriteAdjustment = favorite ? 21 : 5;
         point =
             CGPointMake(
-            TEXT_LEFT_MARGIN + authorLabelSize.width + favoriteAdjustment,
+            TEXT_LEFT_MARGIN + timestampWidth + favoriteAdjustment,
             TIMESTAMP_TOP_MARGIN + 2);
         UIImage * geocodeGlyph =
             self.highlighted ?
@@ -567,10 +629,27 @@ static UIImage * highlightedRetweetGlyph;
     //
 
     [[self timestampColor] set];
-    size = [timestamp sizeWithFont:timestampFont];
-    point = CGPointMake(TIMESTAMP_LEFT_MARGIN, TIMESTAMP_TOP_MARGIN);
+    CGFloat timestampWidth = 0.0;    
 
-    [timestamp drawAtPoint:point withFont:timestampFont];
+    NSString * dateString = timestamp.dateString;
+    if (dateString) {
+        point = CGPointMake(TIMESTAMP_LEFT_MARGIN, TIMESTAMP_TOP_MARGIN);
+        [dateString drawAtPoint:point withFont:timestampFont];
+        timestampWidth = [dateString sizeWithFont:timestampFont].width + 4;
+    }
+
+    NSString * timeString = timestamp.timeString;
+    point =
+        CGPointMake(TIMESTAMP_LEFT_MARGIN + timestampWidth,
+        TIMESTAMP_TOP_MARGIN - 2);
+    [timeString drawAtPoint:point withFont:timestampBoldFont];
+    timestampWidth += [timeString sizeWithFont:timestampBoldFont].width + 2;
+
+    NSString * amPmString = timestamp.amPmString;
+    point =
+        CGPointMake(TIMESTAMP_LEFT_MARGIN + timestampWidth,
+        TIMESTAMP_TOP_MARGIN);
+    [amPmString drawAtPoint:point withFont:timestampFont];
 
     //
     // Draw the main text.
@@ -651,11 +730,12 @@ static UIImage * highlightedRetweetGlyph;
     }
 }
 
-- (void)setTimestamp:(NSString *)s
+- (void)setTimestamp:(DateDescription *)s
 {
-    if (timestamp != s && ![timestamp isEqualToString:s]) {
+    if (![timestamp isEqual:s]) {
+        [s retain];
         [timestamp release];
-        timestamp = [s copy];
+        timestamp = s;
 
         [self setNeedsDisplay];
     }

@@ -4,6 +4,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FastTimelineTableViewCellDisplayType.h"
+#import "DateDescription.h"
 
 @interface FastTimelineTableViewCellView : UIView
 {
@@ -14,7 +15,7 @@
 
     NSString * text;
     NSString * author;
-    NSString * timestamp;
+    DateDescription * timestamp;
     NSString * retweetAuthorName;
     UIImage * avatar;
     BOOL favorite;
@@ -31,7 +32,7 @@
 @property (nonatomic, copy) NSString * text;
 @property (nonatomic, copy) NSString * author;
 @property (nonatomic, copy) NSString * retweetAuthorName;
-@property (nonatomic, copy) NSString * timestamp;
+@property (nonatomic, retain) DateDescription * timestamp;
 @property (nonatomic, retain) UIImage * avatar;
 @property (nonatomic, assign) BOOL favorite;
 @property (nonatomic, assign) BOOL geocoded;

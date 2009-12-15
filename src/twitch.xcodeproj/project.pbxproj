@@ -897,6 +897,8 @@
 		91063C4210D6ED1900DEAC3A /* AdBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91063C4010D6ED1900DEAC3A /* AdBackground.png */; };
 		91063C5C10D6EED700DEAC3A /* AdBackgroundDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 91063C5B10D6EED700DEAC3A /* AdBackgroundDarkTheme.png */; };
 		91063C5D10D6EED700DEAC3A /* AdBackgroundDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 91063C5B10D6EED700DEAC3A /* AdBackgroundDarkTheme.png */; };
+		91063CBA10D7054700DEAC3A /* DateDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 91063CB910D7054700DEAC3A /* DateDescription.m */; };
+		91063CBB10D7054700DEAC3A /* DateDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 91063CB910D7054700DEAC3A /* DateDescription.m */; };
 		910EFE1D1017E391002083D6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 910EFE1C1017E391002083D6 /* AudioToolbox.framework */; };
 		9112EAB5102E236E002715DC /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
 		9125779A104C7A53006F5DBD /* DarkenedTableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */; };
@@ -1697,6 +1699,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		91063C4010D6ED1900DEAC3A /* AdBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AdBackground.png; path = images/AdBackground.png; sourceTree = "<group>"; };
 		91063C5B10D6EED700DEAC3A /* AdBackgroundDarkTheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AdBackgroundDarkTheme.png; path = images/AdBackgroundDarkTheme.png; sourceTree = "<group>"; };
+		91063CB810D7054700DEAC3A /* DateDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DateDescription.h; path = shared/DateDescription.h; sourceTree = "<group>"; };
+		91063CB910D7054700DEAC3A /* DateDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DateDescription.m; path = shared/DateDescription.m; sourceTree = "<group>"; };
 		910BE1850FF2A755005342EE /* ArbUserTimelineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArbUserTimelineDataSource.h; path = timeline/ArbUserTimelineDataSource.h; sourceTree = "<group>"; };
 		910BE1860FF2A755005342EE /* ArbUserTimelineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArbUserTimelineDataSource.m; path = timeline/ArbUserTimelineDataSource.m; sourceTree = "<group>"; };
 		910BE1FB0FF2B91D005342EE /* UserSummaryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSummaryTableViewCell.h; path = "user-network/UserSummaryTableViewCell.h"; sourceTree = "<group>"; };
@@ -2693,6 +2697,8 @@
 				915B588E10B08CC60028B0B4 /* ActionButtonCellView.m */,
 				91B76FE410BB5B6C0014172A /* TwoLineButton.h */,
 				91B76FE510BB5B6C0014172A /* TwoLineButton.m */,
+				91063CB810D7054700DEAC3A /* DateDescription.h */,
+				91063CB910D7054700DEAC3A /* DateDescription.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -4391,6 +4397,7 @@
 				0518083810CF047D00EBFB62 /* TrendExplanationViewController.m in Sources */,
 				91A6429F10D2A01700F7C922 /* PushNotificationMessage.m in Sources */,
 				91A644FB10D6BD3000F7C922 /* TwitbitAdMobDelegate.m in Sources */,
+				91063CBB10D7054700DEAC3A /* DateDescription.m in Sources */,
 				052056ED10D3010D0063EB48 /* TwitbitObjectBuilder.m in Sources */,
 				0520570910D315410063EB48 /* NSNumber+TwitterParsingHelpers.m in Sources */,
 				053ED5E610D6A8520090F1F8 /* NSDictionary+TwitterParsingHelpers.m in Sources */,
@@ -4741,6 +4748,7 @@
 				0518083710CF047D00EBFB62 /* TrendExplanationViewController.m in Sources */,
 				91A642A010D2A01700F7C922 /* PushNotificationMessage.m in Sources */,
 				91A644FA10D6BD3000F7C922 /* TwitbitAdMobDelegate.m in Sources */,
+				91063CBA10D7054700DEAC3A /* DateDescription.m in Sources */,
 				052056EC10D3010D0063EB48 /* TwitbitObjectBuilder.m in Sources */,
 				0520570810D315410063EB48 /* NSNumber+TwitterParsingHelpers.m in Sources */,
 				053ED5E510D6A8520090F1F8 /* NSDictionary+TwitterParsingHelpers.m in Sources */,
