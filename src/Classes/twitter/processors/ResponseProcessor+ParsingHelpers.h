@@ -31,11 +31,3 @@
 - (void)populateList:(TwitterList *)list fromData:(NSDictionary *)data;
 
 @end
-
-@interface NSString (ParsingHelpers)
-- (NSDate *)twitterDateValue;
-@end
-
-@interface NSNumber (ParsingHelpers)
-- (NSNumber *)twitterIdentifierValue;
-@end

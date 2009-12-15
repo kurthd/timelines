@@ -767,4 +767,9 @@
     displayMgrHelper.navigationController = navc;
 }
 
+- (UINavigationController *)navigationController
+{
+    return displayMgrHelper.navigationController;
+}
+
 @end

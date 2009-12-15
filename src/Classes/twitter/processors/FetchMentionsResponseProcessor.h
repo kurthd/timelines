@@ -6,8 +6,10 @@
 #import "ResponseProcessor.h"
 #import "TwitterCredentials.h"
 #import "TwitterServiceDelegate.h"
+#import "TwitbitObjectBuilder.h"
 
-@interface FetchMentionsResponseProcessor : ResponseProcessor
+@interface FetchMentionsResponseProcessor :
+    ResponseProcessor <TwitbitObjectBuilderDelegate>
 {
     NSNumber * updateId;
     NSNumber * page;

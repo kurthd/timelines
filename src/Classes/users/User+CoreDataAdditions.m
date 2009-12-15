@@ -12,11 +12,8 @@
                  context:(NSManagedObjectContext *)context
 {
     User * user = [[self class] userWithId:anIdentifier context:context];
-    if (!user) {
-        user = [[self class] createInstance:context];
-        Avatar * avatar = [Avatar createInstance:context];
-        user.avatar = avatar;
-    }
+    if (!user)
+        user = [self createInstance:context];
 
     return user;
 }
@@ -49,6 +46,17 @@
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:@"username == %@", username];
     return [self findFirst:predicate context:context];
+}
+
++ (id)createInstance:(NSManagedObjectContext *)context
+{
+    User * user =
+        [NSEntityDescription insertNewObjectForEntityForName:[self className]
+                                      inManagedObjectContext:context];
+    Avatar * avatar = [Avatar createInstance:context];
+    user.avatar = avatar;
+
+    return user;
 }
 
 @end

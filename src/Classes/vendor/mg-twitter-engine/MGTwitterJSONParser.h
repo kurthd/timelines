@@ -14,7 +14,6 @@
     MGTwitterRequestType requestType;
     MGTwitterResponseType responseType;
     NSURL * URL;
-    NSData * json;
 }
 
 + (id)parserWithJSON:(NSData *)theJSON

@@ -10,6 +10,9 @@
 #import "ResponseProcessor+ParsingHelpers.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
 
+#import "JsonObjectFilter.h"
+#import "TwitbitObjectBuilder.h"
+
 @interface FetchMentionsResponseProcessor ()
 
 @property (nonatomic, copy) NSNumber * updateId;
@@ -76,6 +79,62 @@
     if (!statuses)
         return NO;
 
+    id<JsonObjectFilter> filter =
+        [[UserEntityJsonObjectFilter alloc]
+        initWithManagedObjectContext:context
+                         credentials:credentials
+                          entityName:@"Mention"];
+    id<JsonObjectTransformer> transformer =
+        [SimpleJsonObjectTransformer instance];
+
+    id<TwitbitObjectCreator> userCreator =
+        [[UserTwitbitObjectCreator alloc] initWithManagedObjectContext:context];
+    id<TwitbitObjectCreator> creator =
+        [[UserEntityTwitbitObjectCreator alloc]
+        initWithManagedObjectContext:context
+                         userCreator:userCreator
+                         credentials:credentials
+                          entityName:@"Mention"];
+    [userCreator release];
+
+    TwitbitObjectBuilder * builder =
+        [[TwitbitObjectBuilder alloc] initWithFilter:filter
+                                         transformer:transformer
+                                             creator:creator];
+    builder.delegate = self;
+
+    [filter release];
+    [creator release];
+
+    [builder buildObjectsFromJsonObjects:statuses];
+
+    [self retain];
+
+    return YES;
+}
+
+- (void)objectBuilder:(TwitbitObjectBuilder *)builder
+      didBuildObjects:(NSArray *)objects
+{
+    NSError * error;
+    if (![context save:&error])
+        NSLog(@"Failed to save mentions and users: '%@'", error);
+
+
+    SEL sel = @selector(mentions:fetchedSinceUpdateId:page:count:);
+    if ([delegate respondsToSelector:sel])
+        [delegate mentions:objects fetchedSinceUpdateId:updateId page:page
+            count:count];
+
+    [builder autorelease];
+    [self autorelease];
+}
+
+- (BOOL)processResponseSynchronous:(NSArray *)statuses
+{
+    if (!statuses)
+        return NO;
+
     NSMutableArray * tweets = [NSMutableArray arrayWithCapacity:statuses.count];
     for (id status in statuses) {
         Mention * tweet = [self createMentionFromStatus:status
@@ -88,6 +147,7 @@
     NSError * error;
     if (![context save:&error])
         NSLog(@"Failed to save mentions and users: '%@'", error);
+
 
     SEL sel = @selector(mentions:fetchedSinceUpdateId:page:count:);
     if ([delegate respondsToSelector:sel])

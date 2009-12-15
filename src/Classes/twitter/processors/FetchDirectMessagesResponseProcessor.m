@@ -83,6 +83,70 @@
     if (!data)
         return NO;
 
+    id<JsonObjectFilter> filter =
+        [[UserEntityJsonObjectFilter alloc]
+        initWithManagedObjectContext:context
+                         credentials:credentials
+                          entityName:@"DirectMessage"];
+
+    id<JsonObjectTransformer> transformer =
+        [SimpleJsonObjectTransformer instance];
+
+    id<TwitbitObjectCreator> userCreator =
+        [[UserTwitbitObjectCreator alloc] initWithManagedObjectContext:context];
+    id<TwitbitObjectCreator> creator =
+        [[DirectMessageTwitbitObjectCreator alloc]
+        initWithManagedObjectContext:context
+                         userCreator:userCreator
+                         credentials:credentials];
+    [userCreator release];
+
+    TwitbitObjectBuilder * builder =
+        [[TwitbitObjectBuilder alloc] initWithFilter:filter
+                                         transformer:transformer
+                                             creator:creator];
+    builder.delegate = self;
+
+    [filter release];
+    [creator release];
+
+    [builder buildObjectsFromJsonObjects:data];
+
+    [self retain];
+
+    return YES;
+}
+
+- (void)objectBuilder:(TwitbitObjectBuilder *)builder
+      didBuildObjects:(NSArray *)objects
+{
+    NSError * error;
+    if (![context save:&error])
+        NSLog(@"Failed to save direct messages and users: '%@'", error);
+
+    if (sent) {
+        SEL sel =
+            @selector(sentDirectMessages:fetchedSinceUpdateId:page:count:);
+        if ([delegate respondsToSelector:sel])
+            [delegate sentDirectMessages:objects
+                    fetchedSinceUpdateId:self.updateId
+                                    page:self.page
+                                   count:self.count];
+    } else {
+        SEL sel = @selector(directMessages:fetchedSinceUpdateId:page:count:);
+        if ([delegate respondsToSelector:sel])
+            [delegate directMessages:objects
+                fetchedSinceUpdateId:self.updateId
+                                page:self.page
+                               count:self.count];
+    }
+}
+
+- (BOOL)processResponseSynchronous:(NSArray *)data
+{
+    if (!data)
+        return NO;
+
     NSMutableArray * dms = [NSMutableArray arrayWithCapacity:data.count];
     for (NSDictionary * datum in data) {
         NSDictionary * senderData = [datum objectForKey:@"sender"];

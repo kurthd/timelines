@@ -9,6 +9,7 @@
 #import "DirectMessage+CoreDataAdditions.h"
 #import "ResponseProcessor+ParsingHelpers.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
+#import "TwitbitShared.h"
 
 @interface SendDirectMessageResponseProcessor ()
 
