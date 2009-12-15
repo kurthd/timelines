@@ -223,6 +223,7 @@
         [NSEntityDescription insertNewObjectForEntityForName:entityName
                                       inManagedObjectContext:context];
     [object setValue:credentials forKey:@"credentials"];
+    [object setValue:[NSNumber numberWithBool:NO] forKey:@"searchResult"];
 
     return object;
 }
