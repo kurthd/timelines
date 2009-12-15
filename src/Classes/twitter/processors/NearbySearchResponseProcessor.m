@@ -163,6 +163,25 @@
 
         tweet.user = tweetAuthor;
 
+
+        NSDictionary * geodata = [tweetData objectForKey:@"geo"];
+        if (geodata && ![geodata isEqual:[NSNull null]]) {
+            NSArray * coordinates = [geodata objectForKey:@"coordinates"];
+
+            double lat = [[coordinates objectAtIndex:0] doubleValue];
+            double lon = [[coordinates objectAtIndex:1] doubleValue];
+            NSNumber * theLatitude = [NSNumber numberWithDouble:lat];
+            NSNumber * theLongitude = [NSNumber numberWithDouble:lon];
+
+            TweetLocation * loc = tweet.location;
+            if (!loc) {
+                loc = [TweetLocation createInstance:context];
+                tweet.location = loc;
+            }
+            loc.latitude = theLatitude;
+            loc.longitude = theLongitude;
+        }
+
         [tweets addObject:tweet];
     }
 
