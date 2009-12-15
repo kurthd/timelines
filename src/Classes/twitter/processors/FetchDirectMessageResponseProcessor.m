@@ -9,6 +9,7 @@
 #import "User+CoreDataAdditions.h"
 #import "DirectMessage.h"
 #import "DirectMessage+CoreDataAdditions.h"
+#import "TwitbitShared.h"
 
 @interface FetchDirectMessageResponseProcessor ()
 

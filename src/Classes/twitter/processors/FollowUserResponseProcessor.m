@@ -7,6 +7,7 @@
 #import "User+CoreDataAdditions.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
 #import "ResponseProcessor+ParsingHelpers.h"
+#import "TwitbitShared.h"
 
 @interface FollowUserResponseProcessor ()
 

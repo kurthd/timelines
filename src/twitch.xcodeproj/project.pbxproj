@@ -137,6 +137,10 @@
 		051AD44310AA356200CFF86C /* v2.3-1-v2.3-2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 051AD44110AA356200CFF86C /* v2.3-1-v2.3-2.xcmappingmodel */; };
 		051AD4EF10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD4EE10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m */; };
 		051AD4F010AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AD4EE10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m */; };
+		052056EC10D3010D0063EB48 /* TwitbitObjectBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 052056EB10D3010D0063EB48 /* TwitbitObjectBuilder.m */; };
+		052056ED10D3010D0063EB48 /* TwitbitObjectBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 052056EB10D3010D0063EB48 /* TwitbitObjectBuilder.m */; };
+		0520570810D315410063EB48 /* NSNumber+TwitterParsingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0520570710D315410063EB48 /* NSNumber+TwitterParsingHelpers.m */; };
+		0520570910D315410063EB48 /* NSNumber+TwitterParsingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0520570710D315410063EB48 /* NSNumber+TwitterParsingHelpers.m */; };
 		0522E64310C9885D00BB96CE /* GeocodeTimelineIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 0522E64210C9885D00BB96CE /* GeocodeTimelineIndicator.png */; };
 		0522E64410C9885D00BB96CE /* GeocodeTimelineIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 0522E64210C9885D00BB96CE /* GeocodeTimelineIndicator.png */; };
 		0522E68C10C9B2EB00BB96CE /* GeocodeTimelineIndicatorHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0522E68B10C9B2EB00BB96CE /* GeocodeTimelineIndicatorHighlighted.png */; };
@@ -233,6 +237,10 @@
 		053A2C90103F1FAC005BB245 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2C8F103F1FAC005BB245 /* MobileCoreServices.framework */; };
 		053A2D89103F575D005BB245 /* libTwitVid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D88103F575D005BB245 /* libTwitVid.a */; };
 		053A2D8D103F57B2005BB245 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D8C103F57B2005BB245 /* SystemConfiguration.framework */; };
+		053ED5E510D6A8520090F1F8 /* NSDictionary+TwitterParsingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 053ED5E410D6A8520090F1F8 /* NSDictionary+TwitterParsingHelpers.m */; };
+		053ED5E610D6A8520090F1F8 /* NSDictionary+TwitterParsingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 053ED5E410D6A8520090F1F8 /* NSDictionary+TwitterParsingHelpers.m */; };
+		053ED5F010D6A8A30090F1F8 /* NSString+TwitterParsingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 053ED5EF10D6A8A30090F1F8 /* NSString+TwitterParsingHelpers.m */; };
+		053ED5F110D6A8A30090F1F8 /* NSString+TwitterParsingHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 053ED5EF10D6A8A30090F1F8 /* NSString+TwitterParsingHelpers.m */; };
 		053F815410A87F1B00F7912C /* NSObject+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 053F815310A87F1B00F7912C /* NSObject+GeneralHelpers.m */; };
 		053F815510A87F1B00F7912C /* NSObject+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 053F815310A87F1B00F7912C /* NSObject+GeneralHelpers.m */; };
 		054BE35A108A7AC500734CAA /* BitlyUrlShorteningService.m in Sources */ = {isa = PBXBuildFile; fileRef = 054BE359108A7AC500734CAA /* BitlyUrlShorteningService.m */; };
@@ -825,6 +833,12 @@
 		05E3A47110C742C200D935B3 /* TrendsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05E3A46E10C742C200D935B3 /* TrendsView.xib */; };
 		05E3A48610C7446300D935B3 /* WhatTheTrendService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E3A48510C7446300D935B3 /* WhatTheTrendService.m */; };
 		05E3A48710C7446300D935B3 /* WhatTheTrendService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E3A48510C7446300D935B3 /* WhatTheTrendService.m */; };
+		05EBDBA710D70BB500C1B7A8 /* TwitbitObjectCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EBDBA610D70BB500C1B7A8 /* TwitbitObjectCreator.m */; };
+		05EBDBA810D70BB500C1B7A8 /* TwitbitObjectCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EBDBA610D70BB500C1B7A8 /* TwitbitObjectCreator.m */; };
+		05EBDBAB10D70BC600C1B7A8 /* JsonObjectTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EBDBAA10D70BC600C1B7A8 /* JsonObjectTransformer.m */; };
+		05EBDBAC10D70BC600C1B7A8 /* JsonObjectTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EBDBAA10D70BC600C1B7A8 /* JsonObjectTransformer.m */; };
+		05EBDBAF10D70BD600C1B7A8 /* JsonObjectFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EBDBAE10D70BD600C1B7A8 /* JsonObjectFilter.m */; };
+		05EBDBB010D70BD600C1B7A8 /* JsonObjectFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EBDBAE10D70BD600C1B7A8 /* JsonObjectFilter.m */; };
 		05EDAF0C1029FAAB00D0B62B /* TweetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05EDAF0A1029FAAB00D0B62B /* TweetView.xib */; };
 		05EF40D40FFADF95007B59F1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238820FEDC34200A6A2E6 /* MainWindow.xib */; };
 		05EF40D50FFADF95007B59F1 /* LogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B238880FEDC35400A6A2E6 /* LogInView.xib */; };
@@ -1191,6 +1205,10 @@
 		051AD4EE10AA484500CFF86C /* FetchListSubscriptionsResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchListSubscriptionsResponseProcessor.m; path = twitter/processors/FetchListSubscriptionsResponseProcessor.m; sourceTree = "<group>"; };
 		051D7C67101D105A00B867C1 /* SavedSearchMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearchMgr.h; path = search/SavedSearchMgr.h; sourceTree = "<group>"; };
 		051D7C68101D105A00B867C1 /* SavedSearchMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearchMgr.m; path = search/SavedSearchMgr.m; sourceTree = "<group>"; };
+		052056EA10D3010D0063EB48 /* TwitbitObjectBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitbitObjectBuilder.h; path = twitter/builders/TwitbitObjectBuilder.h; sourceTree = "<group>"; };
+		052056EB10D3010D0063EB48 /* TwitbitObjectBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitbitObjectBuilder.m; path = twitter/builders/TwitbitObjectBuilder.m; sourceTree = "<group>"; };
+		0520570610D315410063EB48 /* NSNumber+TwitterParsingHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNumber+TwitterParsingHelpers.h"; path = "twitter/parsers/NSNumber+TwitterParsingHelpers.h"; sourceTree = "<group>"; };
+		0520570710D315410063EB48 /* NSNumber+TwitterParsingHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSNumber+TwitterParsingHelpers.m"; path = "twitter/parsers/NSNumber+TwitterParsingHelpers.m"; sourceTree = "<group>"; };
 		0522E64210C9885D00BB96CE /* GeocodeTimelineIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GeocodeTimelineIndicator.png; path = images/GeocodeTimelineIndicator.png; sourceTree = "<group>"; };
 		0522E68B10C9B2EB00BB96CE /* GeocodeTimelineIndicatorHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GeocodeTimelineIndicatorHighlighted.png; path = images/GeocodeTimelineIndicatorHighlighted.png; sourceTree = "<group>"; };
 		0522E71510C9D1E700BB96CE /* UserSearchResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSearchResponseProcessor.h; path = twitter/processors/UserSearchResponseProcessor.h; sourceTree = "<group>"; };
@@ -1274,6 +1292,10 @@
 		053A2D8C103F57B2005BB245 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		053A2DA1103F58A8005BB245 /* TwitVidPhotoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitVidPhotoService.h; path = photos/twitvid/TwitVidPhotoService.h; sourceTree = "<group>"; };
 		053A2DA2103F58A8005BB245 /* TwitVidPhotoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitVidPhotoService.m; path = photos/twitvid/TwitVidPhotoService.m; sourceTree = "<group>"; };
+		053ED5E310D6A8520090F1F8 /* NSDictionary+TwitterParsingHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+TwitterParsingHelpers.h"; path = "twitter/parsers/NSDictionary+TwitterParsingHelpers.h"; sourceTree = "<group>"; };
+		053ED5E410D6A8520090F1F8 /* NSDictionary+TwitterParsingHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+TwitterParsingHelpers.m"; path = "twitter/parsers/NSDictionary+TwitterParsingHelpers.m"; sourceTree = "<group>"; };
+		053ED5EE10D6A8A30090F1F8 /* NSString+TwitterParsingHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+TwitterParsingHelpers.h"; path = "twitter/parsers/NSString+TwitterParsingHelpers.h"; sourceTree = "<group>"; };
+		053ED5EF10D6A8A30090F1F8 /* NSString+TwitterParsingHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+TwitterParsingHelpers.m"; path = "twitter/parsers/NSString+TwitterParsingHelpers.m"; sourceTree = "<group>"; };
 		053F815210A87F1B00F7912C /* NSObject+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+GeneralHelpers.h"; path = "shared/NSObject+GeneralHelpers.h"; sourceTree = "<group>"; };
 		053F815310A87F1B00F7912C /* NSObject+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+GeneralHelpers.m"; path = "shared/NSObject+GeneralHelpers.m"; sourceTree = "<group>"; };
 		054B6A1E101E153600882C19 /* NSString+HtmlEncodingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HtmlEncodingAdditions.h"; path = "shared/NSString+HtmlEncodingAdditions.h"; sourceTree = "<group>"; };
@@ -1620,6 +1642,12 @@
 		05E3A46F10C742C200D935B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TrendsView.xib; sourceTree = "<group>"; };
 		05E3A48410C7446300D935B3 /* WhatTheTrendService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WhatTheTrendService.h; path = trends/WhatTheTrendService.h; sourceTree = "<group>"; };
 		05E3A48510C7446300D935B3 /* WhatTheTrendService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WhatTheTrendService.m; path = trends/WhatTheTrendService.m; sourceTree = "<group>"; };
+		05EBDBA510D70BB500C1B7A8 /* TwitbitObjectCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitbitObjectCreator.h; path = twitter/creators/TwitbitObjectCreator.h; sourceTree = "<group>"; };
+		05EBDBA610D70BB500C1B7A8 /* TwitbitObjectCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitbitObjectCreator.m; path = twitter/creators/TwitbitObjectCreator.m; sourceTree = "<group>"; };
+		05EBDBA910D70BC600C1B7A8 /* JsonObjectTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsonObjectTransformer.h; path = twitter/transformers/JsonObjectTransformer.h; sourceTree = "<group>"; };
+		05EBDBAA10D70BC600C1B7A8 /* JsonObjectTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JsonObjectTransformer.m; path = twitter/transformers/JsonObjectTransformer.m; sourceTree = "<group>"; };
+		05EBDBAD10D70BD600C1B7A8 /* JsonObjectFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsonObjectFilter.h; path = twitter/filters/JsonObjectFilter.h; sourceTree = "<group>"; };
+		05EBDBAE10D70BD600C1B7A8 /* JsonObjectFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JsonObjectFilter.m; path = twitter/filters/JsonObjectFilter.m; sourceTree = "<group>"; };
 		05EC40410FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+TediousCodeAdditions.h"; path = "shared/NSManagedObject+TediousCodeAdditions.h"; sourceTree = "<group>"; };
 		05EC40420FF004FB00285D27 /* NSManagedObject+TediousCodeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+TediousCodeAdditions.m"; path = "shared/NSManagedObject+TediousCodeAdditions.m"; sourceTree = "<group>"; };
 		05EDAEFA1029F6F500D0B62B /* TweetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetViewController.h; path = timeline/TweetViewController.h; sourceTree = "<group>"; };
@@ -2212,6 +2240,28 @@
 			name = lists;
 			sourceTree = "<group>";
 		};
+		0520557110D1E3460063EB48 /* builders */ = {
+			isa = PBXGroup;
+			children = (
+				052056EA10D3010D0063EB48 /* TwitbitObjectBuilder.h */,
+				052056EB10D3010D0063EB48 /* TwitbitObjectBuilder.m */,
+			);
+			name = builders;
+			sourceTree = "<group>";
+		};
+		0520570510D3151A0063EB48 /* parsers */ = {
+			isa = PBXGroup;
+			children = (
+				053ED5EE10D6A8A30090F1F8 /* NSString+TwitterParsingHelpers.h */,
+				053ED5EF10D6A8A30090F1F8 /* NSString+TwitterParsingHelpers.m */,
+				053ED5E310D6A8520090F1F8 /* NSDictionary+TwitterParsingHelpers.h */,
+				053ED5E410D6A8520090F1F8 /* NSDictionary+TwitterParsingHelpers.m */,
+				0520570610D315410063EB48 /* NSNumber+TwitterParsingHelpers.h */,
+				0520570710D315410063EB48 /* NSNumber+TwitterParsingHelpers.m */,
+			);
+			name = parsers;
+			sourceTree = "<group>";
+		};
 		0524BDF80FF16E0A00A6099B /* accounts */ = {
 			isa = PBXGroup;
 			children = (
@@ -2540,6 +2590,11 @@
 		05B238F80FEDC8EE00A6A2E6 /* twitter */ = {
 			isa = PBXGroup;
 			children = (
+				0520557110D1E3460063EB48 /* builders */,
+				05EBDB9810D70B2D00C1B7A8 /* creators */,
+				05EBDB9710D70B2700C1B7A8 /* transformers */,
+				05EBDB9610D70B1F00C1B7A8 /* filters */,
+				0520570510D3151A0063EB48 /* parsers */,
 				05B23B3C0FEED50E00A6A2E6 /* processors */,
 				05271BD210B092DB008E86DB /* TwitterCredentials.h */,
 				05271BD310B092DB008E86DB /* TwitterCredentials.m */,
@@ -2552,8 +2607,6 @@
 				05B23B3B0FEECECD00A6A2E6 /* TwitterServiceDelegate.h */,
 				059A6FEF103CE12600B7500C /* TwitterBasicAuthAuthenticator.h */,
 				059A6FF0103CE12600B7500C /* TwitterBasicAuthAuthenticator.m */,
-				0518083510CF047D00EBFB62 /* TrendExplanationViewController.h */,
-				0518083610CF047D00EBFB62 /* TrendExplanationViewController.m */,
 			);
 			name = twitter;
 			sourceTree = "<group>";
@@ -3000,10 +3053,39 @@
 				0536EED010C8279500479158 /* TrendsTableViewCellView.m */,
 				0536F03F10C8972F00479158 /* TrendDisplayMgr.h */,
 				0536F04010C8972F00479158 /* TrendDisplayMgr.m */,
+				0518083510CF047D00EBFB62 /* TrendExplanationViewController.h */,
+				0518083610CF047D00EBFB62 /* TrendExplanationViewController.m */,
 				05E3A48410C7446300D935B3 /* WhatTheTrendService.h */,
 				05E3A48510C7446300D935B3 /* WhatTheTrendService.m */,
 			);
 			name = trends;
+			sourceTree = "<group>";
+		};
+		05EBDB9610D70B1F00C1B7A8 /* filters */ = {
+			isa = PBXGroup;
+			children = (
+				05EBDBAD10D70BD600C1B7A8 /* JsonObjectFilter.h */,
+				05EBDBAE10D70BD600C1B7A8 /* JsonObjectFilter.m */,
+			);
+			name = filters;
+			sourceTree = "<group>";
+		};
+		05EBDB9710D70B2700C1B7A8 /* transformers */ = {
+			isa = PBXGroup;
+			children = (
+				05EBDBA910D70BC600C1B7A8 /* JsonObjectTransformer.h */,
+				05EBDBAA10D70BC600C1B7A8 /* JsonObjectTransformer.m */,
+			);
+			name = transformers;
+			sourceTree = "<group>";
+		};
+		05EBDB9810D70B2D00C1B7A8 /* creators */ = {
+			isa = PBXGroup;
+			children = (
+				05EBDBA510D70BB500C1B7A8 /* TwitbitObjectCreator.h */,
+				05EBDBA610D70BB500C1B7A8 /* TwitbitObjectCreator.m */,
+			);
+			name = creators;
 			sourceTree = "<group>";
 		};
 		05F9CF1C103335020010409B /* conversation */ = {
@@ -4317,6 +4399,13 @@
 				0518083810CF047D00EBFB62 /* TrendExplanationViewController.m in Sources */,
 				91A6429F10D2A01700F7C922 /* PushNotificationMessage.m in Sources */,
 				91A644FB10D6BD3000F7C922 /* TwitbitAdMobDelegate.m in Sources */,
+				052056ED10D3010D0063EB48 /* TwitbitObjectBuilder.m in Sources */,
+				0520570910D315410063EB48 /* NSNumber+TwitterParsingHelpers.m in Sources */,
+				053ED5E610D6A8520090F1F8 /* NSDictionary+TwitterParsingHelpers.m in Sources */,
+				053ED5F110D6A8A30090F1F8 /* NSString+TwitterParsingHelpers.m in Sources */,
+				05EBDBA810D70BB500C1B7A8 /* TwitbitObjectCreator.m in Sources */,
+				05EBDBAC10D70BC600C1B7A8 /* JsonObjectTransformer.m in Sources */,
+				05EBDBB010D70BD600C1B7A8 /* JsonObjectFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4660,6 +4749,13 @@
 				0518083710CF047D00EBFB62 /* TrendExplanationViewController.m in Sources */,
 				91A642A010D2A01700F7C922 /* PushNotificationMessage.m in Sources */,
 				91A644FA10D6BD3000F7C922 /* TwitbitAdMobDelegate.m in Sources */,
+				052056EC10D3010D0063EB48 /* TwitbitObjectBuilder.m in Sources */,
+				0520570810D315410063EB48 /* NSNumber+TwitterParsingHelpers.m in Sources */,
+				053ED5E510D6A8520090F1F8 /* NSDictionary+TwitterParsingHelpers.m in Sources */,
+				053ED5F010D6A8A30090F1F8 /* NSString+TwitterParsingHelpers.m in Sources */,
+				05EBDBA710D70BB500C1B7A8 /* TwitbitObjectCreator.m in Sources */,
+				05EBDBAB10D70BC600C1B7A8 /* JsonObjectTransformer.m in Sources */,
+				05EBDBAF10D70BD600C1B7A8 /* JsonObjectFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

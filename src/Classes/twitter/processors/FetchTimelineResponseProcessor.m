@@ -10,6 +10,10 @@
 #import "UserTweet.h"
 #import "ResponseProcessor+ParsingHelpers.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
+#import "TwitbitShared.h"
+
+#import "JsonObjectFilter.h"
+#import "TwitbitObjectBuilder.h"
 
 @interface FetchTimelineResponseProcessor ()
 
@@ -111,6 +115,89 @@
 }
 
 - (BOOL)processResponse:(NSArray *)statuses
+{
+    if (!statuses)
+        return NO;
+
+    BOOL isUserTimeline = !!self.username;
+
+    id<JsonObjectFilter> filter = nil;
+    if (isUserTimeline)
+        filter =
+            [[UserEntityJsonObjectFilter alloc]
+            initWithManagedObjectContext:context
+                             credentials:credentials
+                              entityName:@"UserTweet"];
+    else
+        filter =
+            [[IdentifierJsonObjectFilter alloc]
+            initWithManagedObjectContext:context
+                              entityName:@"Tweet"];
+
+    id<JsonObjectTransformer> transformer =
+        [SimpleJsonObjectTransformer instance];
+
+    id<TwitbitObjectCreator> userCreator =
+        [[UserTwitbitObjectCreator alloc] initWithManagedObjectContext:context];
+
+
+
+    id<TwitbitObjectCreator> creator = nil;
+    if (isUserTimeline)
+        creator =
+            [[UserEntityTwitbitObjectCreator alloc]
+            initWithManagedObjectContext:context
+                             userCreator:userCreator
+                             credentials:credentials
+                              entityName:@"UserTweet"];
+    else
+        creator =
+            [[TweetTwitbitObjectCreator alloc]
+            initWithManagedObjectContext:context
+                             userCreator:userCreator];
+
+    [userCreator release];
+
+    TwitbitObjectBuilder * builder =
+        [[TwitbitObjectBuilder alloc] initWithFilter:filter
+                                         transformer:transformer
+                                             creator:creator];
+    builder.delegate = self;
+
+    [filter release];
+    [creator release];
+
+    [builder buildObjectsFromJsonObjects:statuses];
+
+    [self retain];
+
+    return YES;
+}
+
+- (void)objectBuilder:(TwitbitObjectBuilder *)builder
+      didBuildObjects:(NSArray *)objects
+{
+    NSError * error = nil;
+    if (![context save:&error])
+        NSLog(@"Failed to save context: '%@'", [error detailedDescription]);
+
+    if (self.username) {
+        SEL sel = @selector(timeline:fetchedForUser:sinceUpdateId:page:count:);
+        if ([delegate respondsToSelector:sel])
+            [delegate timeline:objects fetchedForUser:username
+                sinceUpdateId:updateId page:page count:count];
+    } else {
+        SEL sel = @selector(timeline:fetchedSinceUpdateId:page:count:);
+        if ([delegate respondsToSelector:sel])
+            [delegate timeline:objects fetchedSinceUpdateId:updateId page:page
+                count:count];
+    }
+
+    [builder autorelease];
+    [self autorelease];
+}
+
+- (BOOL)processResponseSynchronous:(NSArray *)statuses
 {
     if (!statuses)
         return NO;

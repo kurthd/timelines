@@ -16,4 +16,6 @@
 + (id)userWithUsername:(NSString *)username
                context:(NSManagedObjectContext *)context;
 
++ (id)createInstance:(NSManagedObjectContext *)context;
+
 @end

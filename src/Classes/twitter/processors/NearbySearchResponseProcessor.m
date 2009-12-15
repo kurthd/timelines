@@ -12,6 +12,7 @@
 #import "NSManagedObject+TediousCodeAdditions.h"
 #import "NSString+HtmlEncodingAdditions.h"
 #import "User+UIAdditions.h"
+#import "TwitbitShared.h"
 
 @interface NSDictionary (SafeAdditions)
 - (id)safeObjectForKey:(id)key;

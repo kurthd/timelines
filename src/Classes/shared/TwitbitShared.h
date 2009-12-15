@@ -47,6 +47,12 @@
 
 #import "Tweet.h"
 #import "Tweet+GeneralHelpers.h"
+#import "Tweet+CoreDataAdditions.h"
+
+#import "UserTweet.h"
+
+#import "TweetLocation.h"
+#import "TweetLocation+GeneralHelpers.h"
 
 #import "DirectMessage.h"
 #import "DirectMessage+GeneralHelpers.h"
@@ -76,6 +82,20 @@
 #import "ComposeTweetViewController.h"
 
 #import "TwitchWebBrowserDisplayMgr.h"
+
+#import "NSString+TwitterParsingHelpers.h"
+#import "NSNumber+TwitterParsingHelpers.h"
+#import "NSDictionary+TwitterParsingHelpers.h"
+
+
+//
+// Twitter parsing
+//
+#import "TwitbitObjectBuilder.h"
+#import "JsonObjectFilter.h"
+#import "JsonObjectTransformer.h"
+#import "TwitbitObjectCreator.h"
+
 
 //
 // Vendor libraries

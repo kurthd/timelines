@@ -7,6 +7,7 @@
 #import "User+CoreDataAdditions.h"
 #import "ResponseProcessor+ParsingHelpers.h"
 #import "MGTwitterEngine.h"  // for [NSError twitterApiErrorDomain]
+#import "TwitbitShared.h"
 
 @interface BlockExistsResponseProcessor ()
 

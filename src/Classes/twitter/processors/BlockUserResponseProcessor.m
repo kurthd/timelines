@@ -6,6 +6,7 @@
 #import "User.h"
 #import "User+CoreDataAdditions.h"
 #import "ResponseProcessor+ParsingHelpers.h"
+#import "TwitbitShared.h"
 
 @interface BlockUserResponseProcessor ()
 

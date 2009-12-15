@@ -6,8 +6,10 @@
 #import "ResponseProcessor.h"
 #import "TwitterCredentials.h"
 #import "TwitterServiceDelegate.h"
+#import "TwitbitShared.h"
 
-@interface FetchDirectMessagesResponseProcessor : ResponseProcessor
+@interface FetchDirectMessagesResponseProcessor :
+    ResponseProcessor <TwitbitObjectBuilderDelegate>
 {
     NSNumber * updateId;
     NSNumber * page;

@@ -6,8 +6,10 @@
 #import "ResponseProcessor.h"
 #import "TwitterCredentials.h"
 #import "TwitterServiceDelegate.h"
+#import "TwitbitObjectBuilder.h"
 
-@interface FetchTimelineResponseProcessor : ResponseProcessor
+@interface FetchTimelineResponseProcessor :
+    ResponseProcessor <TwitbitObjectBuilderDelegate>
 {
     NSString * username;
     NSNumber * updateId;
