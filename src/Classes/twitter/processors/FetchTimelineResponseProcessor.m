@@ -119,7 +119,7 @@
     if (!statuses)
         return NO;
 
-    BOOL isUserTimeline = !!self.username;
+    BOOL isUserTimeline = !self.username;
 
     id<JsonObjectFilter> filter = nil;
     if (isUserTimeline)
