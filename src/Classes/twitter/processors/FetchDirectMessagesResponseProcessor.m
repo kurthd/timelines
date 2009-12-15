@@ -90,7 +90,7 @@
                           entityName:@"DirectMessage"];
 
     id<JsonObjectTransformer> transformer =
-        [SimpleJsonObjectTransformer instance];
+        [DirectMessageJsonObjectTransformer instance];
 
     id<TwitbitObjectCreator> userCreator =
         [[UserTwitbitObjectCreator alloc] initWithManagedObjectContext:context];
@@ -122,7 +122,8 @@
 {
     NSError * error;
     if (![context save:&error])
-        NSLog(@"Failed to save direct messages and users: '%@'", error);
+        NSLog(@"Failed to save direct messages and users: '%@'",
+            [error detailedDescription]);
 
     if (sent) {
         SEL sel =

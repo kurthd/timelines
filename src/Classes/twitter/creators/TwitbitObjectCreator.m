@@ -256,6 +256,8 @@
 {
     DirectMessage * dm = [DirectMessage createInstance:context];
     if (dm) {
+        dm.credentials = credentials;
+
         [self populateDirectMessage:dm fromJson:json];
 
         NSDictionary * senderJson = [json objectForKey:@"sender"];

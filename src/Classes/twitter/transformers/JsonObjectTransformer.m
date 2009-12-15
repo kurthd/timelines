@@ -194,7 +194,8 @@
 
     NSString * sourceType =
         [[jsonObject objectForKey:@"source_api_request_type"] description];
-    [transformed setObject:sourceType forKey:@"source_api_request_type"];
+    if (sourceType)
+        [transformed setObject:sourceType forKey:@"source_api_request_type"];
 
     NSDate * created =
         [[jsonObject objectForKey:@"created_at"] twitterDateValue];
