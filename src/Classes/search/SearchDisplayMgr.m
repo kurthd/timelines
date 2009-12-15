@@ -80,7 +80,7 @@
 
 #pragma mark TimelineDataSource implementation
 
-- (void)fetchTimelineSince:(NSNumber *)anUpdateId page:(NSNumber *)page
+- (void)fetchTimelineSince:(NSNumber *)anUpdateId page:(NSNumber *)aPage
 {
     NSLog(@"Search display manager: fetching timeline");
 
@@ -111,6 +111,8 @@
             radiusIsInMiles:NO];
     } else
         [service searchFor:self.queryString cursor:self.cursor];
+
+    self.page = aPage;
 }
 
 - (TwitterCredentials *)credentials
@@ -141,7 +143,7 @@
         self.searchResults = newSearchResults;
         [self.dataSourceDelegate timeline:self.searchResults
                      fetchedSinceUpdateId:self.updateId
-                                     page:page];
+                                     page:self.page];
     }
 }
 
@@ -151,7 +153,7 @@
 {
     if ([query isEqualToString:self.queryString] && !self.nearbySearchLocation)
         [self.dataSourceDelegate failedToFetchTimelineSinceUpdateId:updateId
-                                                               page:page
+                                                               page:self.page
                                                               error:error];
 }
 
@@ -169,7 +171,7 @@
         self.searchResults = newSearchResults;
         [self.dataSourceDelegate timeline:self.searchResults
                      fetchedSinceUpdateId:self.updateId
-                                     page:page];
+                                     page:self.page];
     }
 }
 
@@ -183,7 +185,7 @@
 {
     if ([query isEqualToString:self.queryString] && self.nearbySearchLocation)
         [self.dataSourceDelegate failedToFetchTimelineSinceUpdateId:updateId
-                                                               page:page
+                                                               page:self.page
                                                               error:error];
 }
  
