@@ -897,7 +897,6 @@
 		91063C4210D6ED1900DEAC3A /* AdBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91063C4010D6ED1900DEAC3A /* AdBackground.png */; };
 		91063C5C10D6EED700DEAC3A /* AdBackgroundDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 91063C5B10D6EED700DEAC3A /* AdBackgroundDarkTheme.png */; };
 		91063C5D10D6EED700DEAC3A /* AdBackgroundDarkTheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 91063C5B10D6EED700DEAC3A /* AdBackgroundDarkTheme.png */; };
-		91063C7310D6F1AE00DEAC3A /* libAdMobDevice3_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A6451E10D6BE9200F7C922 /* libAdMobDevice3_0.a */; };
 		910EFE1D1017E391002083D6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 910EFE1C1017E391002083D6 /* AudioToolbox.framework */; };
 		9112EAB5102E236E002715DC /* ChatArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9112EAB4102E236E002715DC /* ChatArrow.png */; };
 		9125779A104C7A53006F5DBD /* DarkenedTableViewCellGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91257798104C7A53006F5DBD /* DarkenedTableViewCellGradient.png */; };
@@ -1038,7 +1037,6 @@
 		91A644C810D6B1EB00F7C922 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A644C710D6B1EB00F7C922 /* MediaPlayer.framework */; };
 		91A644FA10D6BD3000F7C922 /* TwitbitAdMobDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A644F910D6BD3000F7C922 /* TwitbitAdMobDelegate.m */; };
 		91A644FB10D6BD3000F7C922 /* TwitbitAdMobDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A644F910D6BD3000F7C922 /* TwitbitAdMobDelegate.m */; };
-		91A6452310D6BE9200F7C922 /* libAdMobSimulator3_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A6451F10D6BE9200F7C922 /* libAdMobSimulator3_0.a */; };
 		91A646EF10D6D8EB00F7C922 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A644C710D6B1EB00F7C922 /* MediaPlayer.framework */; };
 		91A646F010D6D8ED00F7C922 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B770B210BC63590014172A /* AddressBookUI.framework */; };
 		91A646F110D6D8EE00F7C922 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B770C810BC63A70014172A /* AddressBook.framework */; };
@@ -1994,8 +1992,6 @@
 		91A6451B10D6BE9200F7C922 /* AdMobInterstitialAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdMobInterstitialAd.h; path = AdMob/AdMobInterstitialAd.h; sourceTree = "<group>"; };
 		91A6451C10D6BE9200F7C922 /* AdMobInterstitialDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdMobInterstitialDelegateProtocol.h; path = AdMob/AdMobInterstitialDelegateProtocol.h; sourceTree = "<group>"; };
 		91A6451D10D6BE9200F7C922 /* AdMobView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdMobView.h; path = AdMob/AdMobView.h; sourceTree = "<group>"; };
-		91A6451E10D6BE9200F7C922 /* libAdMobDevice3_0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdMobDevice3_0.a; path = AdMob/libAdMobDevice3_0.a; sourceTree = "<group>"; };
-		91A6451F10D6BE9200F7C922 /* libAdMobSimulator3_0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdMobSimulator3_0.a; path = AdMob/libAdMobSimulator3_0.a; sourceTree = "<group>"; };
 		91AD5A3C100FED36009C2179 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		91AD5A6F101017AC009C2179 /* PhotoBackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoBackButton.png; path = images/PhotoBackButton.png; sourceTree = "<group>"; };
 		91AD5A711010187D009C2179 /* PhotoForwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PhotoForwardButton.png; path = images/PhotoForwardButton.png; sourceTree = "<group>"; };
@@ -2086,7 +2082,6 @@
 				052E059E10700858005CEC5F /* libz.1.2.3.dylib in Frameworks */,
 				052E05DD10700F1D005CEC5F /* libYAJLIPhone.a in Frameworks */,
 				052E05E510700F45005CEC5F /* libTwitVid.a in Frameworks */,
-				91A6452310D6BE9200F7C922 /* libAdMobSimulator3_0.a in Frameworks */,
 				91A646EF10D6D8EB00F7C922 /* MediaPlayer.framework in Frameworks */,
 				91A646F010D6D8ED00F7C922 /* AddressBookUI.framework in Frameworks */,
 				91A646F110D6D8EE00F7C922 /* AddressBook.framework in Frameworks */,
@@ -2117,7 +2112,6 @@
 				91B770B310BC63590014172A /* AddressBookUI.framework in Frameworks */,
 				91B770C910BC63A70014172A /* AddressBook.framework in Frameworks */,
 				91A644C810D6B1EB00F7C922 /* MediaPlayer.framework in Frameworks */,
-				91063C7310D6F1AE00DEAC3A /* libAdMobDevice3_0.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3577,8 +3571,6 @@
 				91A6451B10D6BE9200F7C922 /* AdMobInterstitialAd.h */,
 				91A6451C10D6BE9200F7C922 /* AdMobInterstitialDelegateProtocol.h */,
 				91A6451D10D6BE9200F7C922 /* AdMobView.h */,
-				91A6451E10D6BE9200F7C922 /* libAdMobDevice3_0.a */,
-				91A6451F10D6BE9200F7C922 /* libAdMobSimulator3_0.a */,
 			);
 			name = AdMob;
 			sourceTree = "<group>";
@@ -5140,10 +5132,19 @@
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
 				);
-				OTHER_LDFLAGS = (
+				LIBRARY_SEARCH_PATHS = AdMob;
+				OTHER_LDFLAGS = "";
+				"OTHER_LDFLAGS[sdk=iphoneos*][arch=*]" = (
 					"-ObjC",
 					"-all_load",
 					"-licucore",
+					"-lAdMobDevice3_0",
+				);
+				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=*]" = (
+					"-ObjC",
+					"-all_load",
+					"-licucore",
+					"-lAdMobSimulator3_0",
 				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -5185,10 +5186,19 @@
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
 				);
-				OTHER_LDFLAGS = (
+				LIBRARY_SEARCH_PATHS = AdMob;
+				OTHER_LDFLAGS = "";
+				"OTHER_LDFLAGS[sdk=iphoneos*][arch=*]" = (
 					"-ObjC",
 					"-all_load",
 					"-licucore",
+					"-lAdMobDevice3_0",
+				);
+				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=*]" = (
+					"-ObjC",
+					"-all_load",
+					"-licucore",
+					"-lAdMobSimulator3_0",
 				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -5326,10 +5336,19 @@
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
 				);
-				OTHER_LDFLAGS = (
+				LIBRARY_SEARCH_PATHS = AdMob;
+				OTHER_LDFLAGS = "";
+				"OTHER_LDFLAGS[sdk=iphoneos*][arch=*]" = (
 					"-ObjC",
 					"-all_load",
 					"-licucore",
+					"-lAdMobDevice3_0",
+				);
+				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=*]" = (
+					"-ObjC",
+					"-all_load",
+					"-licucore",
+					"-lAdMobSimulator3_0",
 				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BD30541-6CA6-4F48-B159-BC45D542BBD5";
@@ -5379,10 +5398,19 @@
 					/usr/local/include,
 					$SDKROOT/usr/include/libxml2,
 				);
-				OTHER_LDFLAGS = (
+				LIBRARY_SEARCH_PATHS = AdMob;
+				OTHER_LDFLAGS = "";
+				"OTHER_LDFLAGS[sdk=iphoneos*][arch=*]" = (
 					"-ObjC",
 					"-all_load",
 					"-licucore",
+					"-lAdMobDevice3_0",
+				);
+				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=*]" = (
+					"-ObjC",
+					"-all_load",
+					"-licucore",
+					"-lAdMobSimulator3_0",
 				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DA22B2C2-6918-48F2-BD57-E80A5379D629";
