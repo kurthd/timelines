@@ -168,7 +168,7 @@
     }
 
     NSString * imageUrl = [html stringByMatching:regex capture:capture];
-    NSLog(@"Parsed image '%@' from html; sending request...", imageUrl);
+    NSLog(@"Parsed image '%@' from html", imageUrl);
 
     return imageUrl;
 }

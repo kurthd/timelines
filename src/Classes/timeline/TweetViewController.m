@@ -212,6 +212,7 @@ enum TweetActionSheets {
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    dismissedView = YES;
     lastDisplayedInLandscape = [[RotatableTabBarController instance] landscape];
 }
 
@@ -411,7 +412,7 @@ enum TweetActionSheets {
     [tweetContentView removeFromSuperview];
     [tweetTextTableViewCell.contentView addSubview:tweetContentView];
 
-    if (navigationController &&
+    if (navigationController && !dismissedView &&
         self.parentViewController != navigationController)
         [navigationController pushViewController:self animated:YES];
 
@@ -491,6 +492,8 @@ enum TweetActionSheets {
 - (void)displayTweet:(Tweet *)aTweet
     onNavigationController:(UINavigationController *)navController
 {
+    dismissedView = NO;
+
     // sucks but the map span doesn't seem to set properly if we don't recreate
     if (locationCell) {
         [locationCell release];
@@ -590,7 +593,8 @@ enum TweetActionSheets {
             [CommonTwitterServicePhotoSource photoUrlFromPageHtml:html
             url:urlAsString];
         NSLog(@"Received photo webpage; photo url is: %@", photoUrl);
-        [self setPhotoPreviewInWebView:photoUrl];
+        if (photoUrl)
+            [self setPhotoPreviewInWebView:photoUrl];
     } else {
         NSLog(@"Received avatar for url: %@", url);
         UIImage * avatar = [UIImage imageWithData:data];

@@ -13,6 +13,7 @@
 #import "SettingsReader.h"
 #import "FastTimelineTableViewCell.h"
 #import "TwitbitShared.h"
+#import "AdMobView.h"
 
 @interface TimelineViewController ()
 
@@ -20,6 +21,7 @@
 @property (nonatomic, retain) NSNumber * visibleTweetId;
 @property (nonatomic, assign) BOOL flashingScrollIndicators;
 @property (nonatomic, copy) NSArray * filteredTweets;
+@property (nonatomic, readonly) UITableViewCell * adCell;
 
 - (UIImage *)getLargeAvatarForUser:(User *)aUser;
 - (UIImage *)getThumbnailAvatarForUser:(User *)aUser;
@@ -63,7 +65,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     [headerBackgroundView release];
     [headerTopLine release];
     [headerViewPadding release];
-    
+
     [plainHeaderView release];
     [plainHeaderViewLine release];
     [footerView release];
@@ -86,6 +88,9 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     [mentionUsername release];
 
     [visibleTweetId release];
+
+    [adCell release];
+    [adMobDelegate release];
 
     [super dealloc];
 }
@@ -204,24 +209,31 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (NSInteger)tableView:(UITableView *)tv
     numberOfRowsInSection:(NSInteger)section
 {
+    NSInteger extraAdRows = [SettingsReader showAds] ? 1 : 0;
     return tv == self.tableView ?
-        [[self sortedTweets] count] : [self.filteredTweets count];
+        [[self sortedTweets] count] + extraAdRows : [self.filteredTweets count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv
     cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * reuseIdentifier = @"FastTimelineTableViewCell";
-    FastTimelineTableViewCell * cell = (FastTimelineTableViewCell *)
-        [tv dequeueReusableCellWithIdentifier:reuseIdentifier];
-    if (!cell)
-        cell =
-            [[[FastTimelineTableViewCell alloc]
-            initWithStyle:UITableViewCellStyleDefault
-            reuseIdentifier:reuseIdentifier] autorelease];
+    UITableViewCell * cell;
+    if ([SettingsReader showAds] && indexPath.row == 0 && tv == self.tableView)
+        cell = self.adCell;
+    else {
+        static NSString * reuseIdentifier = @"FastTimelineTableViewCell";
+        FastTimelineTableViewCell * timelineCell = (FastTimelineTableViewCell *)
+            [tv dequeueReusableCellWithIdentifier:reuseIdentifier];
+        if (!timelineCell)
+            timelineCell =
+                [[[FastTimelineTableViewCell alloc]
+                initWithStyle:UITableViewCellStyleDefault
+                reuseIdentifier:reuseIdentifier] autorelease];
 
-    Tweet * tweet = [self tweetAtIndex:indexPath inTableView:tv];
-    [self configureCell:cell forTweet:tweet];
+        Tweet * tweet = [self tweetAtIndex:indexPath inTableView:tv];
+        [self configureCell:timelineCell forTweet:tweet];
+        cell = timelineCell;
+    }
 
     return cell;
 }
@@ -229,8 +241,10 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Tweet * tweet = [self tweetAtIndex:indexPath inTableView:tv];
-    [delegate selectedTweet:tweet];
+    if (![SettingsReader showAds] || indexPath.row > 0) {
+        Tweet * tweet = [self tweetAtIndex:indexPath inTableView:tv];
+        [delegate selectedTweet:tweet];
+    }
 }
 
 #pragma mark UITableViewDelegate implementation
@@ -238,18 +252,27 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (CGFloat)tableView:(UITableView *)aTableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Tweet * tweet = [self tweetAtIndex:indexPath inTableView:aTableView];
-    Tweet * displayTweet = tweet.retweet ? tweet.retweet : tweet;
-    NSString * tweetText = displayTweet.text;
-    FastTimelineTableViewCellDisplayType displayType =
-        showWithoutAvatars ?
-        FastTimelineTableViewCellDisplayTypeNoAvatar :
-        FastTimelineTableViewCellDisplayTypeNormal;
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
+    CGFloat height;
+    if (![SettingsReader showAds] || indexPath.row > 0 ||
+        aTableView != self.tableView) {
 
-    return [FastTimelineTableViewCell
-        heightForContent:tweetText retweet:!!tweet.retweet
-        displayType:displayType landscape:landscape];
+        Tweet * tweet = [self tweetAtIndex:indexPath inTableView:aTableView];
+        Tweet * displayTweet = tweet.retweet ? tweet.retweet : tweet;
+        NSString * tweetText = displayTweet.text;
+        FastTimelineTableViewCellDisplayType displayType =
+            showWithoutAvatars ?
+            FastTimelineTableViewCellDisplayTypeNoAvatar :
+            FastTimelineTableViewCellDisplayTypeNormal;
+        BOOL landscape = [[RotatableTabBarController instance] landscape];
+
+        height =
+            [FastTimelineTableViewCell
+            heightForContent:tweetText retweet:!!tweet.retweet
+            displayType:displayType landscape:landscape];
+    } else
+        height = 49; // ad row
+
+    return height;
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -265,9 +288,9 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         // avoid calling reloadData by setting the avatars of the visible cells
         NSArray * visibleCells = self.tableView.visibleCells;
         for (FastTimelineTableViewCell * cell in visibleCells)
-            if ([cell.userData isEqual:urlAsString])
+            if (cell != self.adCell && [cell.userData isEqual:urlAsString])
                 [cell setAvatar:avatarImage];
-        
+
         NSString * largeProfileUrl = user.avatar.fullImageUrl;
         if ([urlAsString isEqual:largeProfileUrl] && avatarImage)
             [avatarView setImage:avatarImage];
@@ -416,6 +439,8 @@ static BOOL alreadyReadHighlightNewTweetsValue;
                 break;
             visibleRow++;
         }
+        if ([SettingsReader showAds])
+            visibleRow++;
 
         if (visibleRow < [self.sortedTweets count]) {
             NSLog(@"Scrolling to row %d", visibleRow);
@@ -432,8 +457,9 @@ static BOOL alreadyReadHighlightNewTweetsValue;
                 [self.tableView flashScrollIndicators];
         }
     } else if (firstDisplay && [tweets count] > 0) {
+        CGFloat row = [SettingsReader showAds] ? 1 : 0;
         NSIndexPath * scrollIndexPath =
-            [NSIndexPath indexPathForRow:0 inSection:0];
+            [NSIndexPath indexPathForRow:row inSection:0];
         [self.tableView scrollToRowAtIndexPath:scrollIndexPath
             atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
@@ -514,9 +540,16 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
 - (Tweet *)tweetAtIndex:(NSIndexPath *)indexPath inTableView:(UITableView *)tv
 {
-    NSArray * array =
-        tv == self.tableView ? [self sortedTweets] : self.filteredTweets;
-    return [array objectAtIndex:indexPath.row];
+    NSInteger row = indexPath.row;
+    NSArray * array;
+    if (tv == self.tableView) {
+        array = [self sortedTweets];
+        if ([SettingsReader showAds])
+            row--;
+    } else
+        array = self.filteredTweets;
+
+    return [array objectAtIndex:row];
 }
 
 - (NSArray *)sortedTweets
@@ -687,6 +720,23 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     flashingScrollIndicators = YES;
     [self performSelector:@selector(setFlashingScrollIndicators:) withObject:nil
         afterDelay:1.0];
+}
+
+- (UITableViewCell *)adCell
+{
+    if (!adCell) {
+        adCell = [[UITableViewCell alloc] init];
+        NSString * filename =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            @"AdBackgroundDarkTheme.png" : @"AdBackground.png";
+        adCell.contentView.backgroundColor =
+            [UIColor colorWithPatternImage:[UIImage imageNamed:filename]];
+        adMobDelegate = [[TwitbitAdMobDelegate alloc] init];
+        [adCell.contentView
+            addSubview:[AdMobView requestAdWithDelegate:adMobDelegate]];
+    }
+
+    return adCell;
 }
 
 + (BOOL)displayWithUsername

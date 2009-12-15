@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="37"/>
+			<integer value="28"/>
 			<integer value="62"/>
 			<integer value="53"/>
 		</object>
@@ -139,23 +139,10 @@
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="IBUIContentStretch">{{0.5, 0}, {0.5, 1}}</string>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">UserHeaderGradient.png</string>
-								</object>
-							</object>
-							<object class="IBUIImageView" id="786307387">
-								<reference key="NSNextResponder" ref="717978432"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{17, 5}, {64, 64}}</string>
-								<reference key="NSSuperview" ref="717978432"/>
-								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
-								<int key="IBUIContentMode">4</int>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<object class="NSCustomResource" key="IBUIImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">AvatarBackground.png</string>
 								</object>
 							</object>
 							<object class="IBUIView" id="275771538">
@@ -419,14 +406,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">avatarBackgroundView</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="786307387"/>
-					</object>
-					<int key="connectionID">69</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">headerBackgroundView</string>
 						<reference key="source" ref="841351856"/>
 						<reference key="destination" ref="701012251"/>
@@ -526,7 +505,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="275771538"/>
 							<reference ref="639357514"/>
-							<reference ref="786307387"/>
 							<reference ref="968256882"/>
 							<reference ref="701012251"/>
 							<reference ref="967829520"/>
@@ -556,11 +534,6 @@
 						<reference key="object" ref="639357514"/>
 						<reference key="parent" ref="717978432"/>
 						<string key="objectName">Full Name</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">34</int>
-						<reference key="object" ref="786307387"/>
-						<reference key="parent" ref="717978432"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">31</int>
@@ -631,7 +604,6 @@
 					<string>31.IBPluginDependency</string>
 					<string>32.IBPluginDependency</string>
 					<string>33.IBPluginDependency</string>
-					<string>34.IBPluginDependency</string>
 					<string>35.CustomClassName</string>
 					<string>35.IBPluginDependency</string>
 					<string>36.IBPluginDependency</string>
@@ -655,7 +627,6 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{315, 396}, {320, 460}}</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>

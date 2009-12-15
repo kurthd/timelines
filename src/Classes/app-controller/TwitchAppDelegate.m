@@ -46,6 +46,7 @@
 #import "TrendsViewController.h"
 #import "Tweet+CoreDataAdditions.h"
 #import "DirectMessage+CoreDataAdditions.h"
+#import "PushNotificationMessage.h"
 
 @interface TwitchAppDelegate ()
 
@@ -87,13 +88,15 @@
 - (void)loadHomeViewWithCachedData:(TwitterCredentials *)account;
 - (void)loadMentionsViewWithCachedData:(TwitterCredentials *)account;
 - (void)loadMessagesViewWithCachedData:(TwitterCredentials *)account;
-- (void)setUIStateFromPersistence;
+- (void)setUIStateFromPersistenceAndNotification:(NSDictionary *)notification;
+- (void)updateUIStateWithNotification:(NSDictionary *)notification
+    mentionTabLocation:(NSInteger)mentionTabLocation
+    messageTabLocation:(NSInteger)messageTabLocation;
 - (void)persistUIState;
 - (void)setSelectedTabFromPersistence;
 - (NSUInteger)originalTabIndexForIndex:(NSUInteger)index;
 
-- (void)finishInitializationWithTimeInsensitiveOperations:
-    (NSDictionary *)remoteNotification;
+- (void)finishInitializationWithTimeInsensitiveOperations;
 
 - (void)showAccountsView;
 - (void)setTimelineTitleView;
@@ -101,16 +104,8 @@
 
 - (void)initTabForViewController:(UIViewController *)viewController;
 
-- (void)displayTwitterObjectFromNotification:(NSString *)notification;
-
 - (void)activateAccountWithName:(NSString *)accountName;
 - (void)processAccountChange:(TwitterCredentials *)activeAccount;
-
-- (BOOL)isMentionsTabSelected;
-- (BOOL)isMessagesTabSelected;
-- (void)selectMentionsTab;
-- (void)selectMessagesTab;
-- (void)selectTabBarItemWithTag:(NSInteger)tag;
 
 - (void)popAllTabsToRoot;
 
@@ -283,11 +278,11 @@ enum {
         [self.composeTweetDisplayMgr setCredentials:c];
     }
 
-    [self setUIStateFromPersistence];
+    [self setUIStateFromPersistenceAndNotification:notification];
 
     [self performSelector:
-        @selector(finishInitializationWithTimeInsensitiveOperations:)
-        withObject:notification
+        @selector(finishInitializationWithTimeInsensitiveOperations)
+        withObject:nil
         afterDelay:0.6];
 
     accountsButton.action = @selector(showAccountsView);
@@ -313,8 +308,7 @@ enum {
     return YES;
 }
 
-- (void)finishInitializationWithTimeInsensitiveOperations:
-    (NSDictionary *)remoteNotification
+- (void)finishInitializationWithTimeInsensitiveOperations
 {
     [self registerDeviceForPushNotifications];
 
@@ -357,15 +351,12 @@ enum {
         [[[ContactCachePersistenceStore alloc]
         initWithContactCache:contactCache] autorelease];
     [contactCachePersistenceStore load];
-
-    NSString * message =
-        [[remoteNotification objectForKey:@"version1"] objectForKey:@"message"];
-    if (message)
-        [self displayTwitterObjectFromNotification:message];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    [self persistUIState];
+
     if (managedObjectContext != nil) {
         [self prunePersistenceStore];
         if (![self saveContext]) {
@@ -373,8 +364,6 @@ enum {
             exit(-1);
         }
     }
-
-    [self persistUIState];
 }
 
 #pragma mark Composing tweets
@@ -1180,9 +1169,9 @@ enum {
             [self getNavControllerForController:listsNetAwareViewController];
         profileDisplayMgr.navigationController =
             [self getNavControllerForController:profileNetAwareViewController];
-        findPeopleSearchDisplayMgr.navigationController =
+        [findPeopleSearchDisplayMgr setNavigationController:
             [self getNavControllerForController:
-            findPeopleNetAwareViewController];
+            findPeopleNetAwareViewController]];
         trendDisplayMgr.navigationController =
             [self getNavControllerForController:trendsNetAwareViewController];
     }
@@ -1551,42 +1540,6 @@ enum {
     [nc postNotificationName:@"ActiveCredentialsChangedNotification"
                       object:self
                     userInfo:userInfo];
-}
-
-#pragma mark Tab bar helpers
-
-- (BOOL)isMentionsTabSelected
-{
-    return tabBarController.selectedViewController.tabBarItem.tag ==
-        [[self class] mentionsTabBarItemTag];
-}
-
-- (BOOL)isMessagesTabSelected
-{
-    return tabBarController.selectedViewController.tabBarItem.tag ==
-        [[self class] messagesTabBarItemTag];
-}
-
-- (void)selectMentionsTab
-{
-    if (!mentionDisplayMgr)
-        [self initMentionsTab];
-    [self selectTabBarItemWithTag:[[self class] mentionsTabBarItemTag]];
-
-}
-
-- (void)selectMessagesTab
-{
-    if (!directMessageDisplayMgr)
-        [self initMessagesTab];
-    [self selectTabBarItemWithTag:[[self class] messagesTabBarItemTag]];
-}
-
-- (void)selectTabBarItemWithTag:(NSInteger)tag
-{
-    for (UIViewController * c in tabBarController.viewControllers)
-        if (c.tabBarItem.tag == tag)
-            tabBarController.selectedViewController = c;
 }
 
 + (NSInteger)mentionsTabBarItemTag
@@ -1981,7 +1934,7 @@ enum {
     [cache release];
 }
 
-- (void)setUIStateFromPersistence
+- (void)setUIStateFromPersistenceAndNotification:(NSDictionary *)notification
 {
     UIStatePersistenceStore * uiStatePersistenceStore =
         [[[UIStatePersistenceStore alloc] init] autorelease];
@@ -1997,13 +1950,21 @@ enum {
     // least when upgrading from 2.2 to 2.3, let's preserve the default order as
     // set in MainWindow. We may have to do something more intelligent in future
     // versions if we continue to add tabs.
+    NSInteger mentionTabLocation = kOriginalTabOrderMentions;
+    NSInteger messageTabLocation = kOriginalTabOrderMessages;
     if (uiState.tabOrder.count == viewControllers.count) {
         NSArray * tabOrder = uiState.tabOrder;
         if (tabOrder) {
             for (int i = [tabOrder count] - 1; i >= 0; i--) {
                 NSNumber * tabNumber = [tabOrder objectAtIndex:i];
+                NSInteger tabNumberAsInt = [tabNumber intValue];
+                if (tabNumberAsInt == kOriginalTabOrderMentions)
+                    mentionTabLocation = i;
+                else if (tabNumberAsInt == kOriginalTabOrderMessages)
+                    messageTabLocation = i;
+
                 for (UIViewController * vc in tabBarController.viewControllers)
-                    if (vc.tabBarItem.tag == [tabNumber intValue]) {
+                    if (vc.tabBarItem.tag == tabNumberAsInt) {
                         [viewControllers removeObject:vc];
                         [viewControllers insertObject:vc atIndex:0];
                         break;
@@ -2012,6 +1973,11 @@ enum {
         }
         tabBarController.viewControllers = viewControllers;
     }
+
+    if (notification)
+        [self updateUIStateWithNotification:notification
+        mentionTabLocation:mentionTabLocation
+        messageTabLocation:messageTabLocation];
 
     // HACK: see method for details
     [self performSelector:@selector(setSelectedTabFromPersistence)
@@ -2096,6 +2062,35 @@ enum {
         case kOriginalTabOrderTrends:
             [self initTrendsTab];
             break;
+    }
+}
+
+- (void)updateUIStateWithNotification:(NSDictionary *)notification
+    mentionTabLocation:(NSInteger)mentionTabLocation
+    messageTabLocation:(NSInteger)messageTabLocation
+{
+    PushNotificationMessage * pnm =
+        [PushNotificationMessage parseFromDictionary:notification];
+    if (pnm) {
+        if (pnm.messageType == kPushNotificationMessageTypeMention) {
+            uiState.selectedTab = mentionTabLocation;
+            uiState.currentlyViewedMentionId = pnm.messageId;
+        } else {
+            uiState.selectedTab = messageTabLocation;
+            uiState.currentlyViewedMessageId = pnm.messageId;
+        }
+
+        NSString * account = pnm.accountUsername;
+        NSPredicate * pred =
+            [NSPredicate predicateWithFormat:@"SELF.username == %@", account];
+        NSArray * creds =
+            [credentials filteredArrayUsingPredicate:pred];
+
+        if ([creds count] == 1) {
+            NSString * currentUser = activeCredentials.credentials.username;
+            if (![currentUser isEqualToString:account])
+                [self activateAccountWithName:account];
+        }
     }
 }
 
@@ -2478,51 +2473,6 @@ enum {
     }
 
     return instapaperLogInDisplayMgr;
-}
-
-
-- (void)displayTwitterObjectFromNotification:(NSString *)notification
-{
-    //
-    // Since this message comes from the server and could potentially
-    // change in the future, be excessively defensive
-    //
-
-    NSArray * comps = [notification componentsSeparatedByString:@"|"];
-    if ([comps count] == 3) {
-        NSString * account = [comps objectAtIndex:0];
-        NSString * type = [comps objectAtIndex:1];
-        NSString * objectIdAsString = [comps objectAtIndex:2];
-
-        if (account && type && objectIdAsString) {
-            NSNumber * objectId =
-                [NSNumber numberWithLongLong:[objectIdAsString longLongValue]];
-
-            NSPredicate * pred =
-                [NSPredicate
-                predicateWithFormat:@"SELF.username == %@", account];
-            NSArray * creds = [credentials filteredArrayUsingPredicate:pred];
-
-            if ([creds count] == 1) {
-                NSString * currentUser = activeCredentials.credentials.username;
-                if (![currentUser isEqualToString:account])
-                    [self activateAccountWithName:account];
-
-                if ([type isEqualToString:@"m"]) {
-                    if (![self isMentionsTabSelected])
-                        [self selectMentionsTab];
-
-                    [mentionDisplayMgr loadNewTweetWithId:objectId
-                                                 username:account
-                                                 animated:NO];
-                } else if ([type isEqualToString:@"d"]) {
-                    if (![self isMessagesTabSelected])
-                        [self selectMessagesTab];
-                    [directMessageDisplayMgr loadNewMessageWithId:objectId];
-                }
-            }
-        }
-    }
 }
 
 @end

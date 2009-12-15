@@ -137,7 +137,7 @@
             findPeopleBookmarkMgr:findPeopleBookmarkMgr
             contactCache:aContactCache contactMgr:aContactMgr];
         displayHelperService.delegate = displayMgrHelper;
-
+        
         searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
 
         searchBar.autocorrectionType = UITextAutocorrectionTypeNo;

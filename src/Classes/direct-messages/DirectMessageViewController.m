@@ -173,6 +173,12 @@ enum TweetActionSheets {
     [delegate showingTweetDetails:self];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [delegate dismissingDetails:self];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:
     (UIInterfaceOrientation)orientation
 {
@@ -417,7 +423,8 @@ enum TweetActionSheets {
             [CommonTwitterServicePhotoSource photoUrlFromPageHtml:html
             url:urlAsString];
         NSLog(@"Received photo webpage; photo url is: %@", photoUrl);
-        [self.directMessage setPhotoUrl:photoUrl];
+        if (photoUrl)
+            [self.directMessage setPhotoUrl:photoUrl];
 
         [tweetContentView
             loadHTMLStringRelativeToMainBundle:[self.directMessage textAsHtml]];

@@ -86,5 +86,6 @@
 
 - (NSInteger)selectedBookmarkSegment;
 - (void)setSelectedBookmarkSegment:(NSInteger)segment;
+- (void)setNavigationController:(UINavigationController *)navc;
 
 @end

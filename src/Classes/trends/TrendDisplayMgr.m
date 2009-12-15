@@ -23,7 +23,7 @@ static const CGFloat WEB_VIEW_WIDTH_LANDSCAPE = 480;
 
 - (void)dealloc
 {
-    self.navigationController;
+    self.navigationController = nil;
     self.timelineDisplayMgr = nil;
     self.searchDisplayMgr = nil;
 

@@ -150,11 +150,11 @@ static NSMutableDictionary * photoUrlDict;
         [[[self class] photoUrlWebpageDict] objectForKey:self.identifier];
     if (!photoUrl) {
         static NSString * imageUrlRegex =
-            @"\\bhttp://twitpic.com/\\S+|"
-             "\\bhttp://.*\\.?yfrog.com/\\S+|"
-             "\\bhttp://tinypic.com/\\S+|"
-             "\\bhttp://twitgoo.com/\\S+|"
-             "\\bhttp://mobypicture.com/\\S+|"
+            @"\\bhttp://twitpic.com/[a-zA-Z0-9_]+|"
+             "\\bhttp://.*\\.?yfrog.com/[a-zA-Z0-9_]+|"
+             "\\bhttp://tinypic.com/[a-zA-Z0-9_]+|"
+             "\\bhttp://twitgoo.com/[a-zA-Z0-9_]+|"
+             "\\bhttp://mobypicture.com/[a-zA-Z0-9_]+|"
              "\\S+\\.jpg$|\\S+\\.jpeg$|\\S+\\.bmp|\\S+\\.gif|\\S+\\.png";
 
         photoUrl = [self.text stringByMatching:imageUrlRegex];

@@ -427,6 +427,17 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [self deallocateTweetDetailsNode];
 }
 
+- (void)dismissingDetails:(DirectMessageViewController *)viewController
+{
+    if (viewController == self.lastMessageDetailsController) {
+        NSLog(@"Dismissing notification DM view");
+        // this will also update the total count
+        [newDirectMessagesState setCount:0
+            forUserId:viewController.directMessage.sender.identifier];
+        [self setNewDirectMessagesState:newDirectMessagesState];
+    }
+}
+
 - (void)setFavorite:(BOOL)favorite
 {
     // not supported for direct messages
@@ -534,6 +545,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     [inboxController setNumReceivedMessages:0 sentMessages:0];
     self.currentConversationUserId = nil;
     receivedQueryResponse = NO;
+    self.selectedMessage = nil;
 }
 
 - (void)updateDirectMessagesAfterCredentialChange
