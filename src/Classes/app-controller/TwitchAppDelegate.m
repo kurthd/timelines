@@ -1597,33 +1597,32 @@ enum {
     for (UserTwitterList * list in allLists)
         [sparedUsers addObject:list.user];
 
+    NSMutableDictionary * living =
+        [NSMutableDictionary dictionaryWithCapacity:self.credentials.count];
+    NSMutableSet * hitList =
+        [NSMutableSet setWithCapacity:allTweets.count];
+
     // delete all 'un-owned' tweets -- everything that's not in the user's
     // timeline, a mention, or a dm
     for (Tweet * tweet in allTweets) {
         BOOL isOwned =
             [tweet isKindOfClass:[UserTweet class]] ||
             [tweet isKindOfClass:[Mention class]];
-        if (!isOwned) {
-            NSLog(@"Deleting tweet: '%@': '%@'.", tweet.user.username,
-                tweet.text);
-            [context deleteObject:tweet];
-        }
+        if (!isOwned)
+            [hitList addObject:tweet];
     }
 
     // only keep the last n tweets, mentions, and dms for each account
     const NSUInteger NUM_TWEETS_TO_KEEP = [SettingsReader fetchQuantity];
     static const NSUInteger NUM_DIRECT_MESSAGES_TO_KEEP = 500;
 
-    NSMutableDictionary * living =
-        [NSMutableDictionary dictionaryWithCapacity:self.credentials.count];
-    NSMutableArray * hitList =
-        [NSMutableArray arrayWithCapacity:allTweets.count];
-
     // won't include deleted tweets
     allTweets =
         [[[Tweet findAll:context] sortedArrayUsingSelector:@selector(compare:)]
         arrayByReversingContents];
 
+    NSMutableSet * sparedRetweets =
+        [NSMutableSet setWithCapacity:allTweets.count];
     for (NSInteger i = 0, count = allTweets.count; i < count; ++i) {
         Tweet * t = [allTweets objectAtIndex:i];
         NSString * key = nil;
@@ -1656,14 +1655,24 @@ enum {
             if (perTweetType.count < NUM_TWEETS_TO_KEEP) {
                 [perTweetType addObject:t];  // it lives
                 [sparedUsers addObject:t.user];
+
+                if (t.retweet) {
+                    [sparedRetweets addObject:t.retweet];
+                    [sparedUsers addObject:t.retweet.user];
+                }
             } else
                 [hitList addObject:t];  // it dies
         }
     }
 
     // delete all unneeded tweets
-    for (Tweet * tweet in hitList)
-        [context deleteObject:tweet];
+    for (Tweet * tweet in hitList) {
+        if (![sparedRetweets containsObject:tweet]) {
+            NSLog(@"Deleting tweet: '%@': '%@'", tweet.user.username,
+                tweet.text);
+            [context deleteObject:tweet];
+        }
+    }
 
     // now do a similar routine for dms
 
@@ -1700,32 +1709,6 @@ enum {
             NSLog(@"Deleting user: '%@'.", user.username);
             [context deleteObject:user];
         }
-
-    /*
-     * Re-read what exists in persistence. This code can be removed once issue
-     * 481 has been resolved.
-     */
-
-    NSLog(@"***************** Persistence check *****************");
-    NSArray * persistedCredentials = [TwitterCredentials findAll:context];
-    for (TwitterCredentials * c in persistedCredentials) {
-        NSArray * persistedTweets = [[c.userTimeline allObjects] sortedArray];
-        NSLog(@"** %@: %d persisted tweets", c.username, persistedTweets.count);
-        if (persistedTweets.count) {
-            Tweet * newestTweet = [persistedTweets lastObject];
-            Tweet * oldestTweet = [persistedTweets objectAtIndex:0];
-            NSLog(@"** Newest tweet saved to persistence: '%@': '%@': '%@'",
-                newestTweet.identifier, newestTweet.user.username,
-                newestTweet.text);
-            NSLog(@"** Oldest tweet saved to persistence: '%@': '%@': '%@'",
-                oldestTweet.identifier, oldestTweet.user.username,
-                oldestTweet.text);
-        }
-        NSAssert2(persistedTweets.count <= NUM_TWEETS_TO_KEEP,
-            @"WARNING: Persisted too many tweets! Should persist %d but did "
-            "persist %d.", NUM_TWEETS_TO_KEEP, persistedTweets.count);
-    }
-    NSLog(@"***************** Persistence check *****************");
 }
 
 - (void)loadHomeViewWithCachedData:(TwitterCredentials *)account

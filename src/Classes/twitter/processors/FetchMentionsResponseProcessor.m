@@ -89,13 +89,20 @@
 
     id<TwitbitObjectCreator> userCreator =
         [[UserTwitbitObjectCreator alloc] initWithManagedObjectContext:context];
+    id<TwitbitObjectCreator> retweetCreator =
+        [[TweetTwitbitObjectCreator alloc]
+        initWithManagedObjectContext:context
+                         userCreator:userCreator
+                      retweetCreator:nil];
     id<TwitbitObjectCreator> creator =
         [[UserEntityTwitbitObjectCreator alloc]
         initWithManagedObjectContext:context
                          userCreator:userCreator
+                      retweetCreator:retweetCreator
                          credentials:credentials
                           entityName:@"Mention"];
     [userCreator release];
+    [retweetCreator release];
 
     TwitbitObjectBuilder * builder =
         [[TwitbitObjectBuilder alloc] initWithFilter:filter

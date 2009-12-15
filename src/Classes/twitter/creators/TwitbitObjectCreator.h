@@ -29,10 +29,12 @@
 {
     NSManagedObjectContext * context;
     id<TwitbitObjectCreator> userCreator;
+    id<TwitbitObjectCreator> retweetCreator;
 }
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)aContext
-                       userCreator:(id<TwitbitObjectCreator>)aUserCreator;
+                       userCreator:(id<TwitbitObjectCreator>)aUserCreator
+                    retweetCreator:(id<TwitbitObjectCreator>)aRetweetCreator;
 
 
 #pragma mark Protected interface
@@ -53,6 +55,7 @@
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)ctxt
                        userCreator:(id<TwitbitObjectCreator>)uc
+                    retweetCreator:(id<TwitbitObjectCreator>)rc
                        credentials:(TwitterCredentials *)cdtls
                         entityName:(NSString *)aName;
 

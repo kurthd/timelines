@@ -86,15 +86,18 @@
 {
     [context release];
     [userCreator release];
+    [retweetCreator release];
     [super dealloc];
 }
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)aContext
                        userCreator:(id<TwitbitObjectCreator>)aUserCreator
+                    retweetCreator:(id<TwitbitObjectCreator>)aRetweetCreator
 {
     if (self = [super init]) {
         context = [aContext retain];
         userCreator = [aUserCreator retain];
+        retweetCreator = [aRetweetCreator retain];
     }
 
     return self;
@@ -175,7 +178,7 @@
 
     NSDictionary * retweetJson = [json safeObjectForKey:@"retweeted_status"];
     if (retweetJson) {
-        Tweet * retweet = [self createObjectFromJson:retweetJson];
+        Tweet * retweet = [retweetCreator createObjectFromJson:retweetJson];
         tweet.retweet = retweet;
     }
 }
@@ -196,10 +199,15 @@
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)ctxt
                        userCreator:(id<TwitbitObjectCreator>)uc
+                    retweetCreator:(id<TwitbitObjectCreator>)rc
                        credentials:(TwitterCredentials *)cdtls
                         entityName:(NSString *)aName
 {
-    if (self = [super initWithManagedObjectContext:ctxt userCreator:uc]) {
+    self = [super initWithManagedObjectContext:ctxt
+                                   userCreator:uc
+                                retweetCreator:rc];
+
+    if (self) {
         credentials = [cdtls retain];
         entityName = [aName copy];
     }

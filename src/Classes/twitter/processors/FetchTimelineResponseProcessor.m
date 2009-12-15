@@ -139,7 +139,11 @@
 
     id<TwitbitObjectCreator> userCreator =
         [[UserTwitbitObjectCreator alloc] initWithManagedObjectContext:context];
-
+    id<TwitbitObjectCreator> retweetCreator =
+        [[TweetTwitbitObjectCreator alloc]
+        initWithManagedObjectContext:context
+                         userCreator:userCreator
+                      retweetCreator:nil];
 
 
     id<TwitbitObjectCreator> creator = nil;
@@ -148,15 +152,18 @@
             [[UserEntityTwitbitObjectCreator alloc]
             initWithManagedObjectContext:context
                              userCreator:userCreator
+                          retweetCreator:retweetCreator
                              credentials:credentials
                               entityName:@"UserTweet"];
     else
         creator =
             [[TweetTwitbitObjectCreator alloc]
             initWithManagedObjectContext:context
-                             userCreator:userCreator];
+                             userCreator:userCreator
+                          retweetCreator:retweetCreator];
 
     [userCreator release];
+    [retweetCreator release];
 
     TwitbitObjectBuilder * builder =
         [[TwitbitObjectBuilder alloc] initWithFilter:filter
