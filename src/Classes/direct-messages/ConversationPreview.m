@@ -59,4 +59,13 @@
     return dateDescription;
 }
 
+- (DateDescription *)descriptionComponents
+{
+    if (!descriptionComponents)
+        descriptionComponents =
+            [[mostRecentMessageDate tableViewCellDescription] retain];
+
+    return descriptionComponents;
+}
+
 @end

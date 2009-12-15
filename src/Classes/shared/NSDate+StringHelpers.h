@@ -3,6 +3,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DateDescription.h"
 
 @interface NSDate (StringHelpers)
 
@@ -16,6 +17,6 @@
 
 @interface NSDate (TableViewCellHelpers)
 
-- (NSString *)tableViewCellDescription;
+- (DateDescription *)tableViewCellDescription;
 
 @end

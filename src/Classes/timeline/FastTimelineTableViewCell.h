@@ -4,6 +4,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FastTimelineTableViewCellDisplayType.h"
+#import "DateDescription.h"
 
 @class FastTimelineTableViewCellView;
 
@@ -18,7 +19,7 @@
 - (void)setTweetText:(NSString *)tweetText;
 - (void)setAuthor:(NSString *)author;
 - (void)setRetweetAuthor:(NSString *)retweetAuthor;
-- (void)setTimestamp:(NSString *)timestamp;
+- (void)setTimestamp:(DateDescription *)timestamp;
 - (void)setAvatar:(UIImage *)avatar;
 - (void)setFavorite:(BOOL)favorite;
 - (void)setGeocoded:(BOOL)geocoded;

@@ -63,30 +63,41 @@
 
 @implementation NSDate (TableViewCellHelpers)
 
-- (NSString *)tableViewCellDescription
+- (DateDescription *)tableViewCellDescription
 {
     static NSDateFormatter * dateTimeFormatter = nil;
     static NSDateFormatter * timeFormatter = nil;
+    static NSDateFormatter * amPmFormatter = nil;
 
-    NSDateFormatter * formatter = nil;
+    NSString * timeString = nil;
+    NSString * dateString = nil;
+    NSString * amPmString = nil;
 
-    if ([self isToday]) {
-        if (!timeFormatter) {
-            timeFormatter = [[NSDateFormatter alloc] init];
-            [timeFormatter setTimeStyle:NSDateFormatterShortStyle];
-            [timeFormatter setDateStyle:NSDateFormatterNoStyle];
-        }
-        formatter = timeFormatter;
-    } else {
+    if (![self isToday]) {
         if (!dateTimeFormatter) {
             dateTimeFormatter = [[NSDateFormatter alloc] init];
-            [dateTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
+            [dateTimeFormatter setTimeStyle:NSDateFormatterNoStyle];
             [dateTimeFormatter setDateStyle:NSDateFormatterShortStyle];
         }
-        formatter = dateTimeFormatter;
+        dateString = [dateTimeFormatter stringFromDate:self];
     }
 
-    return [formatter stringFromDate:self];
+    if (!timeFormatter) {
+        timeFormatter = [[NSDateFormatter alloc] init];
+        timeFormatter.dateFormat = @"h:mm";
+    }
+    timeString = [timeFormatter stringFromDate:self];
+
+    if (!amPmFormatter) {
+        amPmFormatter = [[NSDateFormatter alloc] init];
+        amPmFormatter.dateFormat = @"a";
+    }
+    amPmString = [amPmFormatter stringFromDate:self];
+
+    return [[[DateDescription alloc]
+        initWithDateString:dateString timeString:timeString
+        amPmString:amPmString]
+        autorelease];
 }
 
 @end

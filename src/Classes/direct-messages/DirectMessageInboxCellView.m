@@ -80,6 +80,9 @@ static UIImage * dotImage;
 
 	UIColor * dateLabelTextColor = nil;
 	UIFont * dateLabelFont = [UIFont systemFontOfSize:DATE_LABEL_FONT_SIZE];
+    UIFont * smallDateLabelFont = [UIFont systemFontOfSize:12.5];
+    UIFont * boldDateLabelFont =
+        [UIFont boldSystemFontOfSize:DATE_LABEL_FONT_SIZE];
 
 	UIColor * previewLabelTextColor = nil;
 	UIFont * previewLabelFont = [UIFont systemFontOfSize:14];
@@ -114,6 +117,10 @@ static UIImage * dotImage;
 
 	CGSize size;
 
+    //
+    // Draw name label
+    //
+
 	[nameLabelTextColor set];
 	point =
 	    CGPointMake(boundsX + LEFT_MARGIN, TOP_MARGIN);
@@ -122,17 +129,48 @@ static UIImage * dotImage;
 	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
 	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
 
+    //
+    // Draw date label
+    //
+
     [dateLabelTextColor set];
-    NSString * timestamp = [preview dateDescription];
-    size = [timestamp sizeWithFont:dateLabelFont];
-	point =
-	    CGPointMake(
-            (contentRect.origin.x + contentRect.size.width) -
-            RIGHT_MARGIN - size.width, TOP_MARGIN);
-    [timestamp drawAtPoint:point forWidth:DATE_LABEL_WIDTH
-	    withFont:dateLabelFont minFontSize:MIN_DATE_LABEL_FONT_SIZE
-	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
-	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
+    if ([preview.mostRecentMessageDate isToday]) {
+        CGFloat timestampWidth = 0.0;
+
+        NSString * amPmString = preview.descriptionComponents.amPmString;
+        timestampWidth = [amPmString sizeWithFont:smallDateLabelFont].width;
+        point =
+            CGPointMake(
+            (contentRect.origin.x + contentRect.size.width) - RIGHT_MARGIN -
+            timestampWidth,
+            TOP_MARGIN + 2);
+        [amPmString drawAtPoint:point withFont:smallDateLabelFont];
+
+        NSString * timeString = preview.descriptionComponents.timeString;
+        timestampWidth += [timeString sizeWithFont:boldDateLabelFont].width + 2;
+        point =
+            CGPointMake(
+            (contentRect.origin.x + contentRect.size.width) - RIGHT_MARGIN -
+            timestampWidth,
+            TOP_MARGIN);
+        [timeString drawAtPoint:point withFont:boldDateLabelFont];
+    } else {
+        NSString * timestamp = [preview dateDescription];
+        size = [timestamp sizeWithFont:dateLabelFont];
+    	point =
+    	    CGPointMake(
+            (contentRect.origin.x + contentRect.size.width) - RIGHT_MARGIN -
+            size.width,
+            TOP_MARGIN);
+        [timestamp drawAtPoint:point forWidth:DATE_LABEL_WIDTH
+    	    withFont:dateLabelFont minFontSize:MIN_DATE_LABEL_FONT_SIZE
+    	    actualFontSize:NULL lineBreakMode:UILineBreakModeTailTruncation
+    	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
+    }
+
+    //
+    // Draw preview text
+    //
 
     NSString * previewText =
         [preview.mostRecentMessage stringByDecodingHtmlEntities];
