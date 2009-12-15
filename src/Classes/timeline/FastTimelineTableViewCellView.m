@@ -337,7 +337,7 @@ static UIImage * highlightedRetweetGlyph;
 - (void)drawRectInverted:(CGRect)rect
 {
     static const CGFloat TIMESTAMP_LEFT_MARGIN = 7.0;
-    static const CGFloat TIMESTAMP_TOP_MARGIN = 6.0;
+    static const CGFloat TIMESTAMP_TOP_MARGIN = 8.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 7.0;
     static const CGFloat TEXT_TOP_MARGIN = 25.0;
@@ -392,7 +392,7 @@ static UIImage * highlightedRetweetGlyph;
         [[self favoriteColor] set];
         point =
             CGPointMake(TEXT_LEFT_MARGIN + timestampWidth + 5,
-            TIMESTAMP_TOP_MARGIN - 2);
+            TIMESTAMP_TOP_MARGIN - 4);
         size = CGSizeMake(13, favoriteFont.pointSize);
 
         [[[self class] starText] drawAtPoint:point forWidth:size.width
@@ -409,7 +409,7 @@ static UIImage * highlightedRetweetGlyph;
         point =
             CGPointMake(
             TEXT_LEFT_MARGIN + timestampWidth + favoriteAdjustment,
-            TIMESTAMP_TOP_MARGIN + 2);
+            TIMESTAMP_TOP_MARGIN);
         UIImage * retweetGlyph =
             self.highlighted ?
             [[self class] highlightedGeocodeGlyph] :
@@ -482,7 +482,7 @@ static UIImage * highlightedRetweetGlyph;
 - (void)drawRectNoAvatar:(CGRect)rect
 {
     const CGFloat TIMESTAMP_LEFT_MARGIN = 7.0;
-    const CGFloat TIMESTAMP_TOP_MARGIN = 6.0;
+    const CGFloat TIMESTAMP_TOP_MARGIN = 8.0;
 
     const CGFloat TEXT_LEFT_MARGIN = 7.0;
     static const CGFloat TEXT_TOP_MARGIN = 25.0;
@@ -528,7 +528,7 @@ static UIImage * highlightedRetweetGlyph;
         [[self favoriteColor] set];
         point =
             CGPointMake(TEXT_LEFT_MARGIN + timestampWidth + 5,
-            TIMESTAMP_TOP_MARGIN - 2);
+            TIMESTAMP_TOP_MARGIN - 4);
         size = CGSizeMake(13, favoriteFont.pointSize);
 
         [[[self class] starText] drawAtPoint:point forWidth:size.width
@@ -545,7 +545,7 @@ static UIImage * highlightedRetweetGlyph;
         point =
             CGPointMake(
             TEXT_LEFT_MARGIN + timestampWidth + favoriteAdjustment,
-            TIMESTAMP_TOP_MARGIN + 2);
+            TIMESTAMP_TOP_MARGIN);
         UIImage * geocodeGlyph =
             self.highlighted ?
             [[self class] highlightedGeocodeGlyph] :
@@ -607,7 +607,7 @@ static UIImage * highlightedRetweetGlyph;
 - (void)drawRectNormalNoName:(CGRect)rect
 {
     static const CGFloat TIMESTAMP_LEFT_MARGIN = 62.0;
-    static const CGFloat TIMESTAMP_TOP_MARGIN = 6.0;
+    static const CGFloat TIMESTAMP_TOP_MARGIN = 8.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 62.0;
     static const CGFloat TEXT_TOP_MARGIN = 25.0;
