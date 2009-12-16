@@ -598,7 +598,7 @@
 
         NSLog(@"Timeline display manager:\
             fetching new timeline when shown for first time...");
-        if (self.refreshButton)
+        if (self.refreshButton && [wrapperController cachedDataAvailable])
             [wrapperController.navigationItem
                 setLeftBarButtonItem:[self updatingTimelineActivityView]
                 animated:NO];
@@ -625,7 +625,7 @@
             page:[NSNumber numberWithInt:0]];
     } else
         NSLog(@"Timeline display manager: not updating due to nil credentials");
-    if (self.refreshButton)
+    if (self.refreshButton && [wrapperController cachedDataAvailable])
         [wrapperController.navigationItem
             setLeftBarButtonItem:[self updatingTimelineActivityView]
             animated:YES];
@@ -640,7 +640,7 @@
         hasBeenDisplayed = YES;
         [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0] page:
             [NSNumber numberWithInt:pagesShown]];
-        if (self.refreshButton)
+        if (self.refreshButton && [wrapperController cachedDataAvailable])
             [wrapperController.navigationItem
                 setLeftBarButtonItem:[self updatingTimelineActivityView]
                 animated:YES];
