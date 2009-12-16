@@ -830,14 +830,13 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
 - (void)setUpdatingState
 {
-    UIBarButtonItem * barButton;
-    if (outstandingReceivedRequests == 0 && outstandingSentRequests == 0)
-        barButton = self.refreshButton;
-    else
-        barButton = [self updatingMessagesActivityView];
-
-    if (self.refreshButton)
-        [wrapperController.navigationItem setLeftBarButtonItem:barButton
+    if (outstandingReceivedRequests == 0 && outstandingSentRequests == 0) {
+        if (self.refreshButton)
+            [wrapperController.navigationItem
+                setLeftBarButtonItem:self.refreshButton animated:YES];
+    } else if (self.refreshButton && [wrapperController cachedDataAvailable])
+        [wrapperController.navigationItem
+            setLeftBarButtonItem:[self updatingMessagesActivityView]
             animated:YES];
 }
 
