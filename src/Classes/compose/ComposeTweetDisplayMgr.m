@@ -831,7 +831,7 @@
 
     [AccountSettings setSettings:settings forKey:settingsKey];
 
-    [NSTimer scheduledTimerWithTimeInterval:0.8
+    [NSTimer scheduledTimerWithTimeInterval:1.0
                                      target:self
                                    selector:@selector(dismissSelector:)
                                    userInfo:nil
@@ -925,6 +925,8 @@
 
 - (void)promptForPhotoSource:(UIViewController *)controller
 {
+    NSLog(@"Prompting for photo source.");
+
     // to help with readability
     UIImagePickerControllerSourceType photoLibrary =
         UIImagePickerControllerSourceTypePhotoLibrary;
@@ -1010,6 +1012,7 @@
 // timer fixes the problem.
 - (void)dismissSelector:(NSTimer *)timer
 {
+    NSLog(@"Dismissing modal view");
     [self.composeTweetViewController dismissModalViewControllerAnimated:YES];
 
     [self performSelector:@selector(promptForPhotoSource:)
