@@ -1634,8 +1634,10 @@ enum {
         } else if ([t isKindOfClass:[Mention class]]) {
             c = [((Mention *) t) credentials];
             key = @"mention";
-        } else
-            NSLog(@"Still have a %@ tweet type!", [t className]);
+        } else if ([t.retweets count] > 0) {
+            c = nil;
+            key = nil;
+        }
 
         if (c) {
             NSMutableDictionary * perCredentials =
