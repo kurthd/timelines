@@ -330,7 +330,7 @@
                                     fromUser:self.origUsername
                                     withText:text];
 
-        if (lastCoordinate)
+        if (lastCoordinate && locationEnabled)
             [self.service sendTweet:text
                          coordinate:*lastCoordinate
                           inReplyTo:self.origTweetId];
@@ -339,7 +339,7 @@
     } else {
         [self.delegate userIsSendingTweet:text];
 
-        if (lastCoordinate)
+        if (lastCoordinate && locationEnabled)
             [self.service sendTweet:text coordinate:*lastCoordinate];
         else
             [self.service sendTweet:text];
