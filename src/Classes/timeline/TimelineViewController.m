@@ -288,7 +288,8 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         // avoid calling reloadData by setting the avatars of the visible cells
         NSArray * visibleCells = self.tableView.visibleCells;
         for (FastTimelineTableViewCell * cell in visibleCells)
-            if (cell != self.adCell && [cell.userData isEqual:urlAsString])
+            if ((![SettingsReader showAds] || cell != self.adCell) &&
+                [cell.userData isEqual:urlAsString])
                 [cell setAvatar:avatarImage];
 
         NSString * largeProfileUrl = user.avatar.fullImageUrl;

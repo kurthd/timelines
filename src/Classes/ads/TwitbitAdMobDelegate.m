@@ -17,7 +17,7 @@
 - (NSString *)publisherId {
     if (!publisherId) {
         InfoPlistConfigReader * configReader = [InfoPlistConfigReader reader];
-        publisherId = [configReader valueForKey:@"AdMobPublisherId"];
+        publisherId = [[configReader valueForKey:@"AdMobPublisherId"] retain];
     }
 
     return publisherId;
