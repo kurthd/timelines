@@ -438,6 +438,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     [super viewWillAppear:animated];
 
+    geoTagButton.enabled = ![self composingDirectMessage];
+
     [self enableSendButtonFromInterface];
     [self updateCharacterCountFromText:textView.text];
 
