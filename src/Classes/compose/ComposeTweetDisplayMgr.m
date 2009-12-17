@@ -10,8 +10,8 @@
 
 @property (nonatomic, retain) UIViewController * rootViewController;
 @property (nonatomic, retain) UINavigationController * navController;
-@property (nonatomic, retain) ComposeTweetViewController *
-    composeTweetViewController;
+@property (nonatomic, readonly)
+    ComposeTweetViewController * composeTweetViewController;
 
 @property (nonatomic, retain) TwitterService * service;
 @property (nonatomic, retain) LogInDisplayMgr * logInDisplayMgr;
@@ -62,7 +62,7 @@
 
 @implementation ComposeTweetDisplayMgr
 
-@synthesize rootViewController, navController, composeTweetViewController;
+@synthesize rootViewController, navController;
 @synthesize service;
 @synthesize credentialsUpdatePublisher, credentialsSetChangedPublisher;
 @synthesize logInDisplayMgr, context;
@@ -82,7 +82,7 @@
     self.delegate = nil;
     self.rootViewController = nil;
     self.navController = nil;
-    self.composeTweetViewController = nil;
+    [composeTweetViewController release];
     self.service = nil;
     self.credentialsUpdatePublisher = nil;
     self.credentialsSetChangedPublisher = nil;

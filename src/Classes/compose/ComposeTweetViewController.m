@@ -76,6 +76,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 @property (nonatomic, copy) NSString * currentSender;
 @property (nonatomic, copy) NSString * textViewText;
 @property (nonatomic, copy) NSString * currentRecipient;
+@property (nonatomic, copy) NSString * locationViewText;
 
 @property (nonatomic, readonly) UIView * photoUploadView;
 @property (nonatomic, readonly) UIProgressView * photoUploadProgressView;
@@ -85,7 +86,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 @implementation ComposeTweetViewController
 
 @synthesize delegate, sendButton, cancelButton, currentSender, textViewText,
-    displayingActivity, currentRecipient, displayLocation;
+    displayingActivity, currentRecipient, displayLocation, locationViewText;
 
 - (void)dealloc
 {
@@ -387,6 +388,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         textView.text = self.textViewText;
     if (self.currentRecipient)
         recipientTextField.text = self.currentRecipient;
+    if (self.locationViewText)
+        [locationView setText:self.locationViewText];
 
     urlShorteningViewHasBeenInitialized = NO;
 
@@ -413,6 +416,19 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     }
 
     [self setViewNeedsInitialization:YES];
+}
+
+- (void)viewDidUnload
+{
+    NSLog(@"View unloading; saving view state");
+    if (![textView.text isEqual:@""])
+        self.textViewText = textView.text;
+    if (![recipientTextField.text isEqual:@""])
+        self.currentRecipient = recipientTextField.text;
+    if (![[locationView text] isEqual:@""])
+        self.locationViewText = [locationView text];
+
+    viewAlreadyDidLoad = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -768,7 +784,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         locationViewFrame.origin.y = 157;
         locationView.frame = locationViewFrame;
     }
-    [self displayUpdatingLocationActivity:displayLocationActivity];
+    if (!viewAlreadyDidLoad)
+        [self displayUpdatingLocationActivity:displayLocationActivity];
 
     if (hideRecipientView || recipientTextField.text.length > 0)
         [textView becomeFirstResponder];
@@ -860,6 +877,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
             self.currentRecipient = nil;
             [self resetView];
         }
+        self.textViewText = nil;
     }
 }
 
@@ -955,7 +973,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     if (!photoUploadView) {
         photoUploadView =
-            [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 367)];
+            [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
         photoUploadView.backgroundColor = [UIColor blackColor];
 
         static const NSInteger BUTTON_WIDTH = 134;

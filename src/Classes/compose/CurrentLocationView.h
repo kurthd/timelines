@@ -19,6 +19,7 @@
 
 @property (nonatomic, assign) IBOutlet <CurrentLocationViewDelegate> delegate;
 
+- (NSString *)text;
 - (void)setText:(NSString *)text;
 - (void)displayActivity:(BOOL)displayActivity;
 - (void)setErrorMessage:(NSString *)errorMessage;

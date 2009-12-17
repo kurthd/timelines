@@ -27,6 +27,11 @@
 
 #pragma mark Public implementation
 
+- (NSString *)text
+{
+    return descriptionLabel.text;
+}
+
 - (void)setText:(NSString *)text
 {
     descriptionLabel.text = text;

@@ -37,6 +37,7 @@
     BOOL displayLocation;
     IBOutlet CurrentLocationView * locationView;
     BOOL displayLocationActivity;  // HACK
+    NSString * locationViewText;
 
     /* Displaying activity while uploading media and shortening links. */
 
@@ -53,6 +54,8 @@
     NSString * currentRecipient;
 
     BOOL viewNeedsInitialization;
+
+    BOOL viewAlreadyDidLoad;
 }
 
 @property (nonatomic, assign) id<ComposeTweetViewControllerDelegate> delegate;
