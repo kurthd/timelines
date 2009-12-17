@@ -69,7 +69,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 - (void)unhideLocationView;
 - (void)hideLocationView;
 
-- (void)initializePhotoUploadView;
 - (void)initializeLinkShorteningView;
 
 + (NSUInteger)minimumAllowedUrlLength;
@@ -77,6 +76,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 @property (nonatomic, copy) NSString * currentSender;
 @property (nonatomic, copy) NSString * textViewText;
 @property (nonatomic, copy) NSString * currentRecipient;
+
+@property (nonatomic, readonly) UIView * photoUploadView;
+@property (nonatomic, readonly) UIProgressView * photoUploadProgressView;
 
 @end
 
@@ -249,24 +251,19 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)displayPhotoUploadView
 {
-    if (!photoUploadViewHasBeenInitialized) {
-        [self initializePhotoUploadView];
-        photoUploadViewHasBeenInitialized = YES;
-    }
-
-    photoUploadView.alpha = 0.0;
+    self.photoUploadView.alpha = 0.0;
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationTransition:UIViewAnimationTransitionNone
-                           forView:photoUploadView
+                           forView:self.photoUploadView
                              cache:YES];
 
-    photoUploadView.alpha = 0.8;
+    self.photoUploadView.alpha = 0.8;
     UIView * keyboardView = [[UIApplication sharedApplication] keyboardView];
     UIView * keyView =
         keyboardView ?
         [keyboardView superview] :
         self.navigationController.view;
-    [keyView addSubview:photoUploadView];
+    [keyView addSubview:self.photoUploadView];
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
 
@@ -277,19 +274,19 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)updatePhotoUploadProgress:(CGFloat)uploadProgress
 {
-    if (photoUploadProgressView.progress != uploadProgress)
-        photoUploadProgressView.progress = uploadProgress;
+    if (self.photoUploadProgressView.progress != uploadProgress)
+        self.photoUploadProgressView.progress = uploadProgress;
 }
 
 - (void)hidePhotoUploadView
 {
-    photoUploadView.alpha = 0.8;
+    self.photoUploadView.alpha = 0.8;
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationTransition:UIViewAnimationTransitionNone
-                           forView:photoUploadView
+                           forView:self.photoUploadView
                              cache:YES];
 
-    photoUploadView.alpha = 0.0;
+    self.photoUploadView.alpha = 0.0;
     UIStatusBarStyle statusBarStyle =
         [SettingsReader displayTheme] == kDisplayThemeDark ?
         UIStatusBarStyleBlackOpaque : UIStatusBarStyleDefault;
@@ -391,7 +388,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     if (self.currentRecipient)
         recipientTextField.text = self.currentRecipient;
 
-    photoUploadViewHasBeenInitialized = NO;
     urlShorteningViewHasBeenInitialized = NO;
 
     UIBarButtonItem * characterCountButton =
@@ -911,38 +907,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [UIView commitAnimations];
 }
 
-- (void)initializePhotoUploadView
-{
-    static const NSInteger BUTTON_WIDTH = 134;
-    CGRect buttonFrame =
-        CGRectMake((320 - BUTTON_WIDTH) / 2, 156, BUTTON_WIDTH, 46);
-    UIButton * photoUploadCancelButton =
-        [[UIButton alloc] initWithFrame:buttonFrame];
-    NSString * cancelButtonTitle =
-        NSLocalizedString(@"composetweet.cancelshortening", @"");
-    [photoUploadCancelButton setTitle:cancelButtonTitle
-        forState:UIControlStateNormal];
-    UIImage * normalImage =
-        [[UIImage imageNamed:@"CancelButton.png"]
-        stretchableImageWithLeftCapWidth:13.0 topCapHeight:0.0];
-    [photoUploadCancelButton setBackgroundImage:normalImage
-        forState:UIControlStateNormal];
-    photoUploadCancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    [photoUploadCancelButton setTitleColor:[UIColor whiteColor]
-        forState:UIControlStateNormal];
-    [photoUploadCancelButton setTitleColor:[UIColor grayColor]
-        forState:UIControlStateHighlighted];
-    [photoUploadCancelButton setTitleShadowColor:[UIColor twitchDarkGrayColor]
-        forState:UIControlStateNormal];
-    photoUploadCancelButton.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
-    [photoUploadCancelButton
-        addTarget:self action:@selector(userDidCancelPhotoUpload)
-        forControlEvents:UIControlEventTouchUpInside];
-
-    [photoUploadView addSubview:photoUploadCancelButton];
-    [photoUploadCancelButton release];
-}
-
 - (void)unhideLocationView
 {
     [locationView setHidden:NO];
@@ -985,6 +949,71 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
     [urlShorteningView addSubview:linkShorteningCancelButton];
     [linkShorteningCancelButton release];
+}
+
+- (UIView *)photoUploadView
+{
+    if (!photoUploadView) {
+        photoUploadView =
+            [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 367)];
+        photoUploadView.backgroundColor = [UIColor blackColor];
+
+        static const NSInteger BUTTON_WIDTH = 134;
+        CGRect buttonFrame =
+            CGRectMake((320 - BUTTON_WIDTH) / 2, 156, BUTTON_WIDTH, 46);
+        UIButton * photoUploadCancelButton =
+            [[UIButton alloc] initWithFrame:buttonFrame];
+        NSString * cancelButtonTitle =
+            NSLocalizedString(@"composetweet.cancelshortening", @"");
+        [photoUploadCancelButton setTitle:cancelButtonTitle
+            forState:UIControlStateNormal];
+        UIImage * normalImage =
+            [[UIImage imageNamed:@"CancelButton.png"]
+            stretchableImageWithLeftCapWidth:13.0 topCapHeight:0.0];
+        [photoUploadCancelButton setBackgroundImage:normalImage
+            forState:UIControlStateNormal];
+        photoUploadCancelButton.titleLabel.font =
+            [UIFont boldSystemFontOfSize:17];
+        [photoUploadCancelButton setTitleColor:[UIColor whiteColor]
+            forState:UIControlStateNormal];
+        [photoUploadCancelButton setTitleColor:[UIColor grayColor]
+            forState:UIControlStateHighlighted];
+        [photoUploadCancelButton
+            setTitleShadowColor:[UIColor twitchDarkGrayColor]
+            forState:UIControlStateNormal];
+        photoUploadCancelButton.titleLabel.shadowOffset = CGSizeMake(0.0, -1.0);
+        [photoUploadCancelButton
+            addTarget:self action:@selector(userDidCancelPhotoUpload)
+            forControlEvents:UIControlEventTouchUpInside];
+
+        [photoUploadView addSubview:photoUploadCancelButton];
+        [photoUploadCancelButton release];
+
+        [photoUploadView addSubview:self.photoUploadProgressView];
+        
+        UILabel * uploadingLabel =
+            [[[UILabel alloc] initWithFrame:CGRectMake(20, 76, 286, 34)]
+            autorelease];
+        uploadingLabel.text = NSLocalizedString(@"composetweet.uploading", @"");
+        uploadingLabel.textColor = [UIColor whiteColor];
+        uploadingLabel.shadowColor = [UIColor blackColor];
+        uploadingLabel.shadowOffset = CGSizeMake(0, 1);
+        uploadingLabel.backgroundColor = [UIColor clearColor];
+        uploadingLabel.font = [UIFont boldSystemFontOfSize:20];
+        uploadingLabel.textAlignment = UITextAlignmentCenter;
+        [photoUploadView addSubview:uploadingLabel];
+    }
+
+    return photoUploadView;
+}
+
+- (UIProgressView *)photoUploadProgressView
+{
+    if (!photoUploadProgressView)
+        photoUploadProgressView =
+            [[UIProgressView alloc] initWithFrame:CGRectMake(80, 118, 170, 9)];
+
+    return photoUploadProgressView;
 }
 
 + (NSUInteger)minimumAllowedUrlLength
