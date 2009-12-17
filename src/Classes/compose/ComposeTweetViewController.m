@@ -973,7 +973,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 {
     if (!photoUploadView) {
         photoUploadView =
-            [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+            [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
         photoUploadView.backgroundColor = [UIColor blackColor];
 
         static const NSInteger BUTTON_WIDTH = 134;
