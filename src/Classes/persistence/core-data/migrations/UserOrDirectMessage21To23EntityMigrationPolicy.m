@@ -13,7 +13,8 @@
     BOOL begin = [super beginEntityMapping:mapping manager:manager error:error];
     if (begin)
         attributesToMigrate =
-        [[NSMutableSet alloc] initWithObjects:@"identifier", nil];
+        [[NSMutableSet alloc]
+        initWithObjects:@"identifier", @"inReplyToTweetId", nil];
 
     return begin;
 }
