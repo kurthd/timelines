@@ -17,6 +17,12 @@
     else
         [desc appendFormat:@"\t%@", self.userInfo];
 
+    NSError * underlyingError =
+        [self.userInfo objectForKey:NSUnderlyingErrorKey];
+    if (underlyingError)
+        [desc appendFormat:@"\tUnderlying error: %@",
+            [underlyingError detailedDescription]];
+
     return [desc autorelease];
 }
 

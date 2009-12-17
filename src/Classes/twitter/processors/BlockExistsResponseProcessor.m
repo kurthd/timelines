@@ -58,13 +58,16 @@
         return NO;
 
     NSDictionary * info = [statuses objectAtIndex:0];
-    NSNumber * userId = [[info objectForKey:@"id"] twitterIdentifierValue];
-    User * user = [User findOrCreateWithId:userId context:context];
-    [self populateUser:user fromData:info];
 
-    SEL sel = @selector(userIsBlocked:);
+    NSString * error = [info objectForKey:@"error"];
+    SEL sel;
+    if ([error isEqualToString:@"You are not blocking this user."])
+        sel = @selector(userIsNotBlocked:);
+    else
+        sel = @selector(userIsBlocked:);
+
     if ([delegate respondsToSelector:sel])
-        [delegate userIsBlocked:username];
+        [delegate performSelector:sel withObject:username];
 
     return YES;
 }
