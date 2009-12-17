@@ -59,7 +59,7 @@
         [UIColor twitchLightLightGrayColor] : [UIColor whiteColor];
 
     size = [username sizeWithFont:usernameFont];
-    CGFloat baseX = (contentRect.size.width - size.width + OFFSET ) / 2;
+    NSInteger baseX = (contentRect.size.width - size.width + OFFSET ) / 2;
 
     [usernameShadowColor set];
     point = CGPointMake(baseX, 1);
