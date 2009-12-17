@@ -282,11 +282,13 @@
 
 - (void)blockUser:(NSString *)aUsername
 {
+    NSLog(@"Blocking user with username '%@'...", aUsername);
     [service blockUserWithUsername:aUsername];
 }
 
 - (void)unblockUser:(NSString *)aUsername
 {
+    NSLog(@"Unblocking user with username '%@'...", aUsername);
     [service unblockUserWithUsername:aUsername];
 }
 

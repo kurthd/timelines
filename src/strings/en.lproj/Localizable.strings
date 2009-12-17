@@ -129,6 +129,7 @@ composetweet.geo.disabled.error.title = "Geotagging Disabled";
 composetweet.geo.disabled.error.message = "Geotagging is disabled for %@. Would you like to enable geotagging now?";
 composetweet.geo.disabled.error.enable = "Enable";
 composetweet.geo.disabled.error.cancel = "Cancel";
+composetweet.uploading = "Uploading...";
 directmessage.failed.alert.title = "Failed to Send Direct Message";
 composedirectmessage.view.title = "DM to @%@";
 compose.draft.save.failed.title = "Failed to Save Draft";

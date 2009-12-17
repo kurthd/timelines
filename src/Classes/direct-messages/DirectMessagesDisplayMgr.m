@@ -282,7 +282,7 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)deletedDirectMessageWithId:(NSNumber *)directMessageId
 {
     [directMessageCache
-        removeDirectMessageWithId:[directMessageId description]];
+        removeDirectMessageWithId:directMessageId];
 }
 
 - (void)failedToDeleteDirectMessageWithId:(NSNumber *)directMessageId
@@ -451,18 +451,30 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 - (void)deleteTweet:(NSNumber *)tweetId
 {
     NSLog(@"Direct message display manager: deleting tweet");
-    [self clearState];
 
-    [conversationController performSelector:@selector(deleteTweet:)
-        withObject:tweetId afterDelay:0.5];
-
+    [self.directMessageCache removeDirectMessageWithId:tweetId];
+    [conversations removeAllObjects];
+    [sortedConversations removeAllObjects];
+    
     // Delete the direct message from Twitter after a longer delay than used
-    // for the deleteTweet: method above. The DirectMessage object is deleted
-    // when we receive confirmation from Twitter that they've deleted it. If
-    // this happens before deleteTweet: executes, the method will crash because
-    // the DirectMessage object is expected to be alive.
+    // for the deleteTweet: method above. The DirectMessage object is
+    // deleted when we receive confirmation from Twitter that they've
+    // deleted it. If this happens before deleteTweet: executes, the method
+    // will crash because the DirectMessage object is expected to be alive.
     [service performSelector:@selector(deleteDirectMessage:)
         withObject:tweetId afterDelay:1.0];
+    
+    if ([conversationController.sortedTweetCache count] > 1) {
+        [wrapperController.navigationController popViewControllerAnimated:YES];
+        [conversationController performSelector:@selector(deleteTweet:)
+            withObject:tweetId afterDelay:0.5];
+        [self performSelector:@selector(updateViewsWithNewMessages)
+            withObject:nil afterDelay:1.0];
+    } else {
+        [wrapperController.navigationController
+            popToViewController:wrapperController animated:YES];
+        [self updateViewsWithNewMessages];
+    }
 }
 
 #pragma mark UIActionSheetDelegate implementation

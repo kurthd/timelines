@@ -42,9 +42,8 @@
 
     BOOL displayingActivity;
 
-    IBOutlet UIView * photoUploadView;
-    IBOutlet UIProgressView * photoUploadProgressView;
-    BOOL photoUploadViewHasBeenInitialized;
+    UIView * photoUploadView;
+    UIProgressView * photoUploadProgressView;
 
     IBOutlet UIView * urlShorteningView;
     BOOL urlShorteningViewHasBeenInitialized;

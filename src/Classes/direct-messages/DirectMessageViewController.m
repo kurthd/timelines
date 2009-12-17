@@ -380,10 +380,8 @@ enum TweetActionSheets {
 - (void)actionSheet:(UIActionSheet *)sheet
     clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0) {
-        [self.navigationController popViewControllerAnimated:YES];
+    if (buttonIndex == 0)
         [delegate deleteTweet:directMessage.identifier];
-    }
 
     NSIndexPath * indexPath = [self.tableView indexPathForSelectedRow];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
