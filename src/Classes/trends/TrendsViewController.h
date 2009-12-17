@@ -3,14 +3,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WhatTheTrendService.h"
+#import "GenericTrendExplanationService.h"
 
 @class NetworkAwareViewController;
 
 @interface TrendsViewController :
-    UITableViewController <WhatTheTrendServiceDelegate>
+    UITableViewController <GenericTrendExplanationServiceDelegate>
 {
-    WhatTheTrendService * service;
+    GenericTrendExplanationService * service;
     NSArray * trends;
 
     NetworkAwareViewController * netController;

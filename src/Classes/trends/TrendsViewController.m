@@ -3,13 +3,13 @@
 //
 
 #import "TrendsViewController.h"
-#import "WhatTheTrendService.h"
+#import "GenericTrendExplanationService.h"
 #import "NetworkAwareViewController.h"
 #import "TrendsTableViewCell.h"
 #import "RotatableTabBarController.h"
 
 @interface TrendsViewController ()
-@property (nonatomic, retain) WhatTheTrendService * service;
+@property (nonatomic, retain) GenericTrendExplanationService * service;
 @property (nonatomic, copy) NSArray * trends;
 @property (nonatomic, readonly) UIBarButtonItem * updatingTrendsActivityView;
 - (void)refreshTrends;
@@ -144,9 +144,9 @@
                                  withObject:trend];
 }
 
-#pragma mark WhatTheTrendServiceDelegate implementation
+#pragma mark GenericTrendExplanationServiceDelegate implementation
 
-- (void)service:(WhatTheTrendService *)svc didFetchTrends:(NSArray *)trnds
+- (void)service:(GenericTrendExplanationService *)svc didFetchTrends:(NSArray *)trnds
 {
     self.trends = trnds;
 
@@ -158,7 +158,7 @@
     [self.tableView flashScrollIndicators];
 }
 
-- (void)service:(WhatTheTrendService *)svc failedToFetchTrends:(NSError *)e
+- (void)service:(GenericTrendExplanationService *)svc failedToFetchTrends:(NSError *)e
 {
     NSLog(@"Failed to fetch trends: %@", e);
 }
@@ -178,10 +178,10 @@
 
 #pragma mark Accessors
 
-- (WhatTheTrendService *)service
+- (GenericTrendExplanationService *)service
 {
     if (!service) {
-        service = [[WhatTheTrendService alloc] init];
+        service = [[GenericTrendExplanationService letsBeTrendsService] retain];
         service.delegate = self;
     }
 
