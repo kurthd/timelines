@@ -97,6 +97,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [cancelButton release];
 
     [shortenLinksButton release];
+    [geoTagButton release];
     [characterCountPortrait release];
     [characterCountLandscape release];
 
@@ -162,6 +163,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     displayLocation = geotag;
 
     [self hideRecipientView];
+    geoTagButton.enabled = YES;
     [self setViewNeedsInitialization:YES];
     if (text.length)
         [self saveCurrentStateAsDraft];
@@ -200,6 +202,7 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     displayLocation = NO;
 
     [self showRecipientView];
+    geoTagButton.enabled = NO;
     [self setViewNeedsInitialization:YES];
     if (text.length)
         [self saveCurrentStateAsDraft];

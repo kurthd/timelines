@@ -24,6 +24,7 @@
     UIBarButtonItem * cancelButton;
 
     IBOutlet UIBarButtonItem * shortenLinksButton;
+    IBOutlet UIBarButtonItem * geoTagButton;
     IBOutlet UILabel * characterCountPortrait;
     IBOutlet UILabel * characterCountLandscape;
 
