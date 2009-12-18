@@ -6,20 +6,23 @@
 
 @implementation GenericTrendExplanationService
 
-@synthesize delegate;
+@synthesize delegate, serviceUrl, webUrl;
 
 - (void)dealloc
 {
     self.delegate = nil;
     [serviceUrl release];
+    [webUrl release];
 
     [super dealloc];
 }
 
-- (id)initWithServiceUrl:(NSURL *)url
+- (id)initWithServiceUrl:(NSURL *)aServiceUrl webUrl:(NSURL *)aWebUrl
 {
-    if (self = [super init])
-        serviceUrl = [url copy];
+    if (self = [super init]) {
+        serviceUrl = [aServiceUrl copy];
+        webUrl = [aWebUrl copy];
+    }
 
     return self;
 }
@@ -90,24 +93,30 @@
 
 @implementation GenericTrendExplanationService (CreationHelpers)
 
-+ (id)serviceWithServiceUrlString:(NSString *)urlString
++ (id)serviceWithServiceUrlString:(NSString *)serviceUrlString
+                     webUrlString:(NSString *)webUrlString
 {
-    NSURL * url = [NSURL URLWithString:urlString];
-    return [[[self alloc] initWithServiceUrl:url] autorelease];
+    NSURL * serviceUrl = [NSURL URLWithString:serviceUrlString];
+    NSURL * webUrl = [NSURL URLWithString:webUrlString];
+    id service = [[self alloc] initWithServiceUrl:serviceUrl webUrl:webUrl];
+
+    return [service autorelease];
 }
 
 + (id)whatTheTrendService
 {
     static NSString * serviceUrl =
         @"http://api.whatthetrend.com/api/v2/trends.json";
-    return [self serviceWithServiceUrlString:serviceUrl];
+    static NSString * webUrl = @"http://whatthetrend.com";
+    return [self serviceWithServiceUrlString:serviceUrl webUrlString:webUrl];
 }
 
 + (id)letsBeTrendsService
 {
     static NSString * serviceUrl =
         @"http://letsbetrends.com/api/current_trends";
-    return [self serviceWithServiceUrlString:serviceUrl];
+    static NSString * webUrl = @"http://letsbetrends.com";
+    return [self serviceWithServiceUrlString:serviceUrl webUrlString:webUrl];
 }
 
 @end

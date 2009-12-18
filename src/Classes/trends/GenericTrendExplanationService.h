@@ -12,12 +12,16 @@
 {
     id<GenericTrendExplanationServiceDelegate> delegate;
     NSURL * serviceUrl;
+    NSURL * webUrl;
 }
 
 @property (nonatomic, assign) id<GenericTrendExplanationServiceDelegate>
     delegate;
 
-- (id)initWithServiceUrl:(NSURL *)aUrl;
+@property (nonatomic, copy, readonly) NSURL * webUrl;
+@property (nonatomic, copy, readonly) NSURL * serviceUrl;
+
+- (id)initWithServiceUrl:(NSURL *)aServiceUrl webUrl:(NSURL *)aWebUrl;
 
 - (void)fetchCurrentTrends;
 

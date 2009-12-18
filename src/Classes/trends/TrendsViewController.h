@@ -25,6 +25,8 @@
 
     UIBarButtonItem * updatingTrendsActivityView;
     UIBarButtonItem * refreshButton;
+
+    IBOutlet UIView * footerView;
 }
 
 @property(nonatomic, assign) id selectionTarget;
@@ -36,5 +38,7 @@
 @property (nonatomic, retain) NetworkAwareViewController * netController;
 
 @property (nonatomic, retain) UIBarButtonItem * refreshButton;
+
+- (IBAction)displayTrendsExplanationAttribution:(id)sender;
 
 @end

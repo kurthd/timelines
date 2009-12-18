@@ -34,6 +34,8 @@
     self.refreshButton = nil;
     [updatingTrendsActivityView release];
 
+    [footerView release];
+
     [super dealloc];
 }
 
@@ -49,6 +51,8 @@
                              target:self
                              action:@selector(refreshTrends)];
     self.netController.navigationItem.rightBarButtonItem = refreshButton;
+
+    self.tableView.tableFooterView = footerView;
 
     [self refreshTrends];
 }
@@ -142,6 +146,14 @@
     Trend * trend = [self.trends objectAtIndex:indexPath.row];
     [self.explanationTarget performSelector:self.explanationAction
                                  withObject:trend];
+}
+
+#pragma mark Button actions
+
+- (IBAction)displayTrendsExplanationAttribution:(id)sender
+{
+    NSString * url = [[service webUrl] absoluteString];
+    [[TwitchWebBrowserDisplayMgr instance] visitWebpage:url];
 }
 
 #pragma mark GenericTrendExplanationServiceDelegate implementation
