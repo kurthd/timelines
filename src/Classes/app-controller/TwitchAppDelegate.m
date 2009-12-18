@@ -1290,18 +1290,143 @@ enum {
     return managedObjectModel;
 }
 
++ (NSString *)persistentStoreType
+{
+    return NSSQLiteStoreType;
+}
+
+- (NSString *)legacyStorePath
+{
+    NSString * documentsDir = [self applicationDocumentsDirectory];
+    return [documentsDir stringByAppendingPathComponent:@"Twitch.sqlite"];
+}
+
+- (NSURL *)legacyStoreUrl
+{
+    return [NSURL fileURLWithPath:[self legacyStorePath]];
+}
+
+- (NSString *)storePath
+{
+    NSString * documentsDir = [self applicationDocumentsDirectory];
+    return [documentsDir stringByAppendingPathComponent:@"Twitbit.sqlite"];
+}
+
+- (NSURL *)storeUrl
+{
+    return [NSURL fileURLWithPath:[self storePath]];
+}
+
+- (NSDictionary *)metaDataForStoreAtUrl:(NSURL *)storeUrl
+{
+    NSError * error = nil;
+    NSDictionary * sourceMetadata =
+        [NSPersistentStoreCoordinator
+        metadataForPersistentStoreOfType:[[self class] persistentStoreType]
+                                     URL:storeUrl
+                                   error:&error];
+
+    return sourceMetadata;
+}
+
+- (BOOL)migratePersistentStoreFromUrl:(NSURL *)sourceUrl
+                                toUrl:(NSURL *)destUrl
+                                error:(NSError **)error
+{
+    NSDictionary * sourceMetadata = [self metaDataForStoreAtUrl:sourceUrl];
+    if (!sourceMetadata)
+        return NO;
+
+    NSManagedObjectModel * sourceModel =
+        [NSManagedObjectModel mergedModelFromBundles:nil
+                                    forStoreMetadata:sourceMetadata];
+
+    NSManagedObjectModel * destinationModel = [self managedObjectModel];
+    NSMappingModel * mappingModel =
+        [NSMappingModel mappingModelFromBundles:nil
+                                 forSourceModel:sourceModel
+                               destinationModel:destinationModel];
+
+    if (mappingModel == nil) {
+        // deal with the error
+        NSLog(@"Failed to find mapping model.");
+        return NO;
+    }
+
+    NSMigrationManager * migrationManager =
+        [[NSMigrationManager alloc] initWithSourceModel:sourceModel
+                                       destinationModel:destinationModel];
+
+    NSDictionary * sourceStoreOptions = nil;
+    NSString * storeType = [[self class] persistentStoreType];
+    NSDictionary * destinationStoreOptions = nil;
+
+    BOOL ok = [migrationManager migrateStoreFromURL:sourceUrl
+                                               type:storeType
+                                            options:sourceStoreOptions
+                                   withMappingModel:mappingModel
+                                   toDestinationURL:destUrl
+                                    destinationType:storeType
+                                 destinationOptions:destinationStoreOptions
+                                              error:error];
+
+    return ok;
+}
+
+- (BOOL)migrateFromLegacyPersistentStoreIfNecessary
+{
+    BOOL migrated = NO;
+    NSError * error = nil;
+
+    NSFileManager * fm = [NSFileManager defaultManager];
+
+    BOOL legacyStoreExists = [fm fileExistsAtPath:[self legacyStorePath]];
+    BOOL storeExists = [fm fileExistsAtPath:[self storePath]];
+
+    if (legacyStoreExists && !storeExists) {
+        NSURL * sourceUrl = [self legacyStoreUrl];
+        NSURL * destUrl = [self storeUrl];
+
+        BOOL migrated =
+            [self migratePersistentStoreFromUrl:sourceUrl
+                                          toUrl:destUrl
+                                          error:&error];
+
+
+        if (migrated)
+            NSLog(@"Migration from '%@' to '%@' succeeded.", sourceUrl,
+                destUrl);
+        else
+            NSLog(@"Failed to migrate from '%@' to '%@': %@", sourceUrl,
+                destUrl, [error detailedDescription]);
+    }
+
+    if (legacyStoreExists) {
+        if ([fm removeItemAtPath:[self legacyStorePath] error:&error])
+            NSLog(@"Deleted legacy persistent store at: '%@'",
+                [self legacyStorePath]);
+        else
+            NSLog(@"Failed to remove legacy source store at: '%@': %@",
+                [self legacyStorePath], [error detailedDescription]);
+    }
+
+    return migrated;
+}
+
 
 /**
  Returns the persistent store coordinator for the application.
  If the coordinator doesn't already exist, it is created and the application's store added to it.
  */
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-	
-    if (persistentStoreCoordinator != nil) {
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+{
+    if (persistentStoreCoordinator != nil)
         return persistentStoreCoordinator;
-    }
+
+    if ([self migrateFromLegacyPersistentStoreIfNecessary])
+        NSLog(@"Successfully migrated from legacy persistent store.");
 	
-    NSURL *storeUrl = [NSURL fileURLWithPath: [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"Twitch.sqlite"]];
+    NSURL * storeUrl = [self storeUrl];
 	
 	NSError *error;
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
