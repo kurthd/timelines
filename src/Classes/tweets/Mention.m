@@ -14,10 +14,4 @@
 
 @dynamic credentials;
 
-- (NSString *)description
-{
-    return [NSString stringWithFormat:@"'%@' was mentioned: '%@': '%@'.",
-        self.credentials.username, self.user, self.text];
-}
-
 @end

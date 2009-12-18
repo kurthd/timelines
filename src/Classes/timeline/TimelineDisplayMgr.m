@@ -270,8 +270,13 @@
     NSLog(@"Timeline display manager: set favorite value for tweet: %@",
         tweet.identifier);
     tweet.favorited = [NSNumber numberWithBool:favorite];
-    if ([self.lastTweetDetailsController.tweet.identifier
-        isEqual:tweet.identifier])
+
+    Tweet * displayedTweet = self.lastTweetDetailsController.tweet;
+
+    BOOL isDisplayed =
+        [tweet.identifier isEqualToNumber:displayedTweet.identifier] ||
+        [tweet.identifier isEqualToNumber:displayedTweet.retweet.identifier];
+    if (isDisplayed)
         [self.lastTweetDetailsController setFavorited:favorite];
 }
 

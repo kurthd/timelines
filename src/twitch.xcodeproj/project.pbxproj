@@ -831,8 +831,8 @@
 		05E3A46C10C7425E00D935B3 /* TrendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E3A46A10C7425E00D935B3 /* TrendsViewController.m */; };
 		05E3A47010C742C200D935B3 /* TrendsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05E3A46E10C742C200D935B3 /* TrendsView.xib */; };
 		05E3A47110C742C200D935B3 /* TrendsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05E3A46E10C742C200D935B3 /* TrendsView.xib */; };
-		05E3A48610C7446300D935B3 /* WhatTheTrendService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E3A48510C7446300D935B3 /* WhatTheTrendService.m */; };
-		05E3A48710C7446300D935B3 /* WhatTheTrendService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E3A48510C7446300D935B3 /* WhatTheTrendService.m */; };
+		05E3A48610C7446300D935B3 /* GenericTrendExplanationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E3A48510C7446300D935B3 /* GenericTrendExplanationService.m */; };
+		05E3A48710C7446300D935B3 /* GenericTrendExplanationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E3A48510C7446300D935B3 /* GenericTrendExplanationService.m */; };
 		05EBDBA710D70BB500C1B7A8 /* TwitbitObjectCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EBDBA610D70BB500C1B7A8 /* TwitbitObjectCreator.m */; };
 		05EBDBA810D70BB500C1B7A8 /* TwitbitObjectCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EBDBA610D70BB500C1B7A8 /* TwitbitObjectCreator.m */; };
 		05EBDBAB10D70BC600C1B7A8 /* JsonObjectTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EBDBAA10D70BC600C1B7A8 /* JsonObjectTransformer.m */; };
@@ -1640,8 +1640,8 @@
 		05E3A46910C7425E00D935B3 /* TrendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrendsViewController.h; path = trends/TrendsViewController.h; sourceTree = "<group>"; };
 		05E3A46A10C7425E00D935B3 /* TrendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrendsViewController.m; path = trends/TrendsViewController.m; sourceTree = "<group>"; };
 		05E3A46F10C742C200D935B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TrendsView.xib; sourceTree = "<group>"; };
-		05E3A48410C7446300D935B3 /* WhatTheTrendService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WhatTheTrendService.h; path = trends/WhatTheTrendService.h; sourceTree = "<group>"; };
-		05E3A48510C7446300D935B3 /* WhatTheTrendService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WhatTheTrendService.m; path = trends/WhatTheTrendService.m; sourceTree = "<group>"; };
+		05E3A48410C7446300D935B3 /* GenericTrendExplanationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GenericTrendExplanationService.h; path = trends/GenericTrendExplanationService.h; sourceTree = "<group>"; };
+		05E3A48510C7446300D935B3 /* GenericTrendExplanationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenericTrendExplanationService.m; path = trends/GenericTrendExplanationService.m; sourceTree = "<group>"; };
 		05EBDBA510D70BB500C1B7A8 /* TwitbitObjectCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitbitObjectCreator.h; path = twitter/creators/TwitbitObjectCreator.h; sourceTree = "<group>"; };
 		05EBDBA610D70BB500C1B7A8 /* TwitbitObjectCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitbitObjectCreator.m; path = twitter/creators/TwitbitObjectCreator.m; sourceTree = "<group>"; };
 		05EBDBA910D70BC600C1B7A8 /* JsonObjectTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsonObjectTransformer.h; path = twitter/transformers/JsonObjectTransformer.h; sourceTree = "<group>"; };
@@ -3055,8 +3055,8 @@
 				0536F04010C8972F00479158 /* TrendDisplayMgr.m */,
 				0518083510CF047D00EBFB62 /* TrendExplanationViewController.h */,
 				0518083610CF047D00EBFB62 /* TrendExplanationViewController.m */,
-				05E3A48410C7446300D935B3 /* WhatTheTrendService.h */,
-				05E3A48510C7446300D935B3 /* WhatTheTrendService.m */,
+				05E3A48410C7446300D935B3 /* GenericTrendExplanationService.h */,
+				05E3A48510C7446300D935B3 /* GenericTrendExplanationService.m */,
 			);
 			name = trends;
 			sourceTree = "<group>";
@@ -4386,7 +4386,7 @@
 				05E3A26B10C6FFCF00D935B3 /* ComposeMapViewController.m in Sources */,
 				914EA11310C72873007036F2 /* RetweetCell.m in Sources */,
 				05E3A46B10C7425E00D935B3 /* TrendsViewController.m in Sources */,
-				05E3A48610C7446300D935B3 /* WhatTheTrendService.m in Sources */,
+				05E3A48610C7446300D935B3 /* GenericTrendExplanationService.m in Sources */,
 				0536EECD10C826CB00479158 /* TrendsTableViewCell.m in Sources */,
 				0536EED110C8279500479158 /* TrendsTableViewCellView.m in Sources */,
 				0536F04110C8972F00479158 /* TrendDisplayMgr.m in Sources */,
@@ -4737,7 +4737,7 @@
 				05E3A26A10C6FFCF00D935B3 /* ComposeMapViewController.m in Sources */,
 				914EA11210C72873007036F2 /* RetweetCell.m in Sources */,
 				05E3A46C10C7425E00D935B3 /* TrendsViewController.m in Sources */,
-				05E3A48710C7446300D935B3 /* WhatTheTrendService.m in Sources */,
+				05E3A48710C7446300D935B3 /* GenericTrendExplanationService.m in Sources */,
 				0536EECE10C826CB00479158 /* TrendsTableViewCell.m in Sources */,
 				0536EED210C8279500479158 /* TrendsTableViewCellView.m in Sources */,
 				0536F04210C8972F00479158 /* TrendDisplayMgr.m in Sources */,

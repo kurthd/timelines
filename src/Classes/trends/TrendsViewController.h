@@ -3,14 +3,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WhatTheTrendService.h"
+#import "GenericTrendExplanationService.h"
 
 @class NetworkAwareViewController;
 
 @interface TrendsViewController :
-    UITableViewController <WhatTheTrendServiceDelegate>
+    UITableViewController <GenericTrendExplanationServiceDelegate>
 {
-    WhatTheTrendService * service;
+    GenericTrendExplanationService * service;
     NSArray * trends;
 
     NetworkAwareViewController * netController;
@@ -25,6 +25,8 @@
 
     UIBarButtonItem * updatingTrendsActivityView;
     UIBarButtonItem * refreshButton;
+
+    IBOutlet UIView * footerView;
 }
 
 @property(nonatomic, assign) id selectionTarget;
@@ -36,5 +38,7 @@
 @property (nonatomic, retain) NetworkAwareViewController * netController;
 
 @property (nonatomic, retain) UIBarButtonItem * refreshButton;
+
+- (IBAction)displayTrendsExplanationAttribution:(id)sender;
 
 @end

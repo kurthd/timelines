@@ -2,34 +2,36 @@
 //  Copyright High Order Bit, Inc. 2009. All rights reserved.
 //
 
-#import "WhatTheTrendService.h"
+#import "GenericTrendExplanationService.h"
 
-@interface WhatTheTrendService ()
-+ (NSURL *)whatTheTrendUrl;
-@end
+@implementation GenericTrendExplanationService
 
-@implementation WhatTheTrendService
-
-@synthesize delegate;
+@synthesize delegate, serviceUrl, webUrl;
 
 - (void)dealloc
 {
     self.delegate = nil;
+    [serviceUrl release];
+    [webUrl release];
 
     [super dealloc];
 }
 
-- (id)init
+- (id)initWithServiceUrl:(NSURL *)aServiceUrl webUrl:(NSURL *)aWebUrl
 {
-    return self = [super init];
+    if (self = [super init]) {
+        serviceUrl = [aServiceUrl copy];
+        webUrl = [aWebUrl copy];
+    }
+
+    return self;
 }
 
 #pragma mark Public implementation
 
 - (void)fetchCurrentTrends
 {
-    NSURL * url = [[self class] whatTheTrendUrl];
-    [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];
+    [AsynchronousNetworkFetcher fetcherWithUrl:serviceUrl delegate:self];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -87,14 +89,34 @@
     [self.delegate service:self failedToFetchTrends:error];
 }
 
-#pragma mark Private implementation
+@end
 
-+ (NSURL *)whatTheTrendUrl
+@implementation GenericTrendExplanationService (CreationHelpers)
+
++ (id)serviceWithServiceUrlString:(NSString *)serviceUrlString
+                     webUrlString:(NSString *)webUrlString
 {
-    static NSString * urlString =
-        @"http://api.whatthetrend.com/api/v2/trends.json";
+    NSURL * serviceUrl = [NSURL URLWithString:serviceUrlString];
+    NSURL * webUrl = [NSURL URLWithString:webUrlString];
+    id service = [[self alloc] initWithServiceUrl:serviceUrl webUrl:webUrl];
 
-    return [NSURL URLWithString:urlString];
+    return [service autorelease];
+}
+
++ (id)whatTheTrendService
+{
+    static NSString * serviceUrl =
+        @"http://api.whatthetrend.com/api/v2/trends.json";
+    static NSString * webUrl = @"http://whatthetrend.com";
+    return [self serviceWithServiceUrlString:serviceUrl webUrlString:webUrl];
+}
+
++ (id)letsBeTrendsService
+{
+    static NSString * serviceUrl =
+        @"http://letsbetrends.com/api/current_trends";
+    static NSString * webUrl = @"http://letsbetrends.com";
+    return [self serviceWithServiceUrlString:serviceUrl webUrlString:webUrl];
 }
 
 @end
