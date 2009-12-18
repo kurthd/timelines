@@ -130,13 +130,13 @@
 {
     [self.navigationItem setRightBarButtonItem:self.activityButton
         animated:YES];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [[UIApplication sharedApplication] networkActivityIsStarting];
 }
 
 - (void)hideActivity
 {
     [self.navigationItem setRightBarButtonItem:self.doneButton animated:YES];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [[UIApplication sharedApplication] networkActivityDidFinish];
 }
 
 #pragma mark Accessors
