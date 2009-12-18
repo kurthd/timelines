@@ -23,9 +23,7 @@
 
 - (void)dealloc
 {
-    [connection release];
     [url release];
-    [data release];
     [super dealloc];
 }
 
@@ -48,6 +46,10 @@
 
         // HACK
         [[UIApplication sharedApplication] networkActivityIsStarting];
+
+        // Bit of a hack, but make sure we are retained while the request is
+        // outstanding
+        [self retain];
     }
 
     return self;
@@ -88,6 +90,10 @@
 
     // HACK
     [[UIApplication sharedApplication] networkActivityDidFinish];
+
+    [connection release];
+    [data release];
+    [self release];
 }
 
 - (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error
@@ -98,6 +104,10 @@
 
     // HACK
     [[UIApplication sharedApplication] networkActivityDidFinish];
+
+    [connection release];
+    [data release];
+    [self release];
 }
 
 @end
