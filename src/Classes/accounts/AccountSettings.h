@@ -12,6 +12,7 @@
     NSString * photoServiceName;
     NSString * videoServiceName;
 
+    NSNumber * didPromptToEnableGeotagging;
     NSNumber * geotagTweets;
 }
 
@@ -26,6 +27,9 @@
 
 - (NSString *)videoServiceName;
 - (void)setVideoServiceName:(NSString *)name;
+
+- (BOOL)didPromptToEnableGeotagging;
+- (void)setDidPromptToEnableGeotagging:(BOOL)didPrompt;
 
 - (BOOL)geotagTweets;
 - (void)setGeotagTweets:(BOOL)geotag;

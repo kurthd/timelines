@@ -19,6 +19,7 @@ enum PushSettings
 
 + (NSNumber *)pushMentionsDefaultValue;
 + (NSNumber *)pushDirectMessagesDefaultValue;
++ (NSNumber *)didPromptToEnableGeotaggingDefaultValue;
 + (NSNumber *)geotagTweetsDefaultValue;
 
 + (NSString *)pushMentionsKey;
@@ -26,6 +27,7 @@ enum PushSettings
 + (NSString *)photoServiceNameKey;
 + (NSString *)videoServiceNameKey;
 + (NSString *)allAccountSettingsKey;
++ (NSString *)didPromptToEnableGeotaggingKey;
 + (NSString *)geotagTweetsKey;
 
 @end
@@ -83,6 +85,7 @@ enum PushSettings
     [photoServiceName release];
     [videoServiceName release];
     [geotagTweets release];
+    [didPromptToEnableGeotagging release];
     [super dealloc];
 }
 
@@ -93,6 +96,8 @@ enum PushSettings
         pushDirectMessages =
             [[[self class] pushDirectMessagesDefaultValue] retain];
         geotagTweets = [[[self class] geotagTweetsDefaultValue] retain];
+        didPromptToEnableGeotagging =
+            [[[self class] didPromptToEnableGeotaggingDefaultValue] retain];
     }
 
     return self;
@@ -115,6 +120,7 @@ enum PushSettings
     [copy setPushDirectMessages:[self pushDirectMessages]];
     [copy setPhotoServiceName:[self photoServiceName]];
     [copy setVideoServiceName:[self videoServiceName]];
+    [copy setDidPromptToEnableGeotagging:[self didPromptToEnableGeotagging]];
     [copy setGeotagTweets:[self geotagTweets]];
 
     return copy;
@@ -174,6 +180,19 @@ enum PushSettings
     }
 }
 
+- (BOOL)didPromptToEnableGeotagging
+{
+    return [didPromptToEnableGeotagging boolValue];
+}
+
+- (void)setDidPromptToEnableGeotagging:(BOOL)didPrompt
+{
+    if ([self didPromptToEnableGeotagging] != didPrompt) {
+        [didPromptToEnableGeotagging release];
+        didPromptToEnableGeotagging = [[NSNumber alloc] initWithBool:didPrompt];
+    }
+}
+
 - (BOOL)geotagTweets
 {
     return [geotagTweets boolValue];
@@ -214,6 +233,7 @@ enum PushSettings
         [NSMutableDictionary dictionaryWithObjectsAndKeys:
         pushMentions, [[self class] pushMentionsKey],
         pushDirectMessages, [[self class] pushDirectMessagesKey],
+        didPromptToEnableGeotagging, [[self class] didPromptToEnableGeotaggingKey],
         geotagTweets, [[self class] geotagTweetsKey],
         nil];
 
@@ -235,6 +255,13 @@ enum PushSettings
         [[dictionary objectForKey:[[self class] pushMentionsKey]] retain];
     settings->pushDirectMessages =
         [[dictionary objectForKey:[[self class] pushDirectMessagesKey]] retain];
+
+    NSNumber * didPrompt =
+        [dictionary objectForKey:[[self class] didPromptToEnableGeotaggingKey]];
+    if (!didPrompt)
+        didPrompt = [[self class] didPromptToEnableGeotaggingDefaultValue];
+    settings->didPromptToEnableGeotagging = [didPrompt retain];
+
     NSNumber * geotag =
         [dictionary objectForKey:[[self class] geotagTweetsKey]];
     if (!geotag)
@@ -284,6 +311,11 @@ enum PushSettings
     return [NSNumber numberWithBool:YES];
 }
 
++ (NSNumber *)didPromptToEnableGeotaggingDefaultValue
+{
+    return [NSNumber numberWithBool:NO];
+}
+
 + (NSNumber *)geotagTweetsDefaultValue
 {
     return [NSNumber numberWithBool:NO];
@@ -314,6 +346,11 @@ enum PushSettings
 + (NSString *)allAccountSettingsKey
 {
     return @"account-settings";
+}
+
++ (NSString *)didPromptToEnableGeotaggingKey
+{
+    return @"did-prompt-to-enable-geotagging";
 }
 
 + (NSString *)geotagTweetsKey

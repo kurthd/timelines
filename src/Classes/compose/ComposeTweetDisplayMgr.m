@@ -678,7 +678,7 @@
         NSLocalizedString(@"imageupload.failed.save", @"");
     NSString * cancelTitle = NSLocalizedString(@"alert.dismiss", @"");
 
-    UIAlertView * alertView =
+    photoUploadFailedAlertView =
         [[UIAlertView alloc]
           initWithTitle:title
                 message:error.localizedDescription
@@ -686,7 +686,7 @@
       cancelButtonTitle:cancelTitle
          otherButtonTitles:savePhotoString, nil];
 
-    [alertView show];
+    [photoUploadFailedAlertView show];
 
     [self.composeTweetViewController hidePhotoUploadView];
 }
@@ -743,18 +743,33 @@
 - (void)alertView:(UIAlertView *)alertView
     didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    // Handles failed photo and video uploads
-    if (buttonIndex == 1) {
-        NSLog(@"Saving photo to album");
-        UIImage * image = photoService.image;
-        if (image)
-            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+    if (alertView == enableGeotaggingAlertView) {
+        enableGeotaggingAlertView = nil;
+
+        if (buttonIndex == 1) {  // user tapped "enable"
+            NSURL * url =
+                [NSURL
+                URLWithString:@"http://twitter.com/account/settings/geo"];
+            NSLog(@"Sending user to '%@'", url);
+
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    } else if (alertView == photoUploadFailedAlertView) {
+        photoUploadFailedAlertView = nil;
+
+        // Handles failed photo and video uploads
+        if (buttonIndex == 1) {
+            NSLog(@"Saving photo to album");
+            UIImage * image = photoService.image;
+            if (image)
+                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+        }
+
+        [photoService autorelease];
+        photoService = nil;
     }
 
     [alertView autorelease];
-
-    [photoService autorelease];
-    photoService = nil;
 }
 
 #pragma mark UIImagePickerControllerDelegate implementation
@@ -1150,32 +1165,39 @@
     // get the user's last setting
     NSString * settingsKey = self.service.credentials.username;
     AccountSettings * settings = [AccountSettings settingsForKey:settingsKey];
+
+    BOOL didPromptBeforeAccount = [settings didPromptToEnableGeotagging];
+    if (!didPromptBeforeAccount) {
+        User * user = self.service.credentials.user;
+        if (![user.geoEnabled boolValue]) {
+            // first time a user has tried to geotag a tweet; prompt the user
+            // to enable it for their account
+            NSString * title = LS(@"composetweet.geo.disabled.error.title");
+            NSString * enable = LS(@"composetweet.geo.disabled.error.enable");
+            NSString * cancel = LS(@"composetweet.geo.disabled.error.cancel");
+            NSString * msgFmtString =
+                LS(@"composetweet.geo.disabled.error.message");
+
+            NSString * message =
+                [NSString stringWithFormat:msgFmtString, user.username, enable];
+
+            enableGeotaggingAlertView =
+                [[UIAlertView alloc] initWithTitle:title
+                                           message:message
+                                          delegate:self
+                                 cancelButtonTitle:cancel
+                                 otherButtonTitles:enable, nil];
+            [enableGeotaggingAlertView show];
+        }
+
+        [settings setDidPromptToEnableGeotagging:YES];
+        [AccountSettings setSettings:settings forKey:settingsKey];
+    }
+
     BOOL lastEnabled = [settings geotagTweets];
 
     if (lastEnabled)
         [self startUpdatingLocation];
-    /*
-    else {
-        NSString * title =
-            NSLocalizedString(@"composetweet.geo.disabled.error.title", @"");
-        NSString * message =
-            [NSString stringWithFormat:
-            NSLocalizedString(@"composetweet.geo.disabled.error.message", @""),
-            self.service.credentials.username];
-        NSString * enable =
-            NSLocalizedString(@"composetweet.geo.disabled.error.enable", @"");
-        NSString * cancel =
-            NSLocalizedString(@"composetweet.geo.disabled.error.cancel", @"");
-
-        UIAlertView * alert =
-            [[UIAlertView alloc] initWithTitle:title
-                                       message:message
-                                      delegate:self
-                             cancelButtonTitle:cancel
-                             otherButtonTitles:enable, nil];
-        [alert show];
-    }
-     */
 
     return lastEnabled;
 }

@@ -70,6 +70,9 @@
     Geolocator * geolocator;
     CLLocationCoordinate2D * lastCoordinate;
     BOOL findingLocation;
+
+    UIAlertView * photoUploadFailedAlertView;
+    UIAlertView * enableGeotaggingAlertView;
 }
 
 @property (nonatomic, assign) id<ComposeTweetDisplayMgrDelegate> delegate;
