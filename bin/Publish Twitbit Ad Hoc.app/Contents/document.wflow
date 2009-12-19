@@ -51,15 +51,6 @@
 						<string>~/src/hob/twitbit/src/twitch.xcodeproj</string>
 					</array>
 				</dict>
-				<key>ActionRuntimeParameters</key>
-				<dict>
-					<key>fileNames</key>
-					<array>
-						<string>~/src/hob/twitbit/src/twitch.xcodeproj</string>
-					</array>
-					<key>temporary items path</key>
-					<string>/var/folders/id/idLJcXMJE6utSIf6zb3fVE+++TI/-Tmp-/3F607F4E-B4DF-4679-B1C3-4B11396227E3/1/com.apple.Automator.SpecifiedFiles</string>
-				</dict>
 				<key>Application</key>
 				<array>
 					<string>Finder</string>
@@ -231,33 +222,6 @@
 					<string>Twitbit</string>
 					<key>targetChoice</key>
 					<integer>4</integer>
-					<key>useSudo</key>
-					<false/>
-				</dict>
-				<key>ActionRuntimeParameters</key>
-				<dict>
-					<key>appendOutput</key>
-					<false/>
-					<key>buildAction</key>
-					<true/>
-					<key>buildStyleChoice</key>
-					<integer>3</integer>
-					<key>buildVariables</key>
-					<array/>
-					<key>cleanAction</key>
-					<true/>
-					<key>installAction</key>
-					<false/>
-					<key>outputPath</key>
-					<string></string>
-					<key>specifiedBuildStyle</key>
-					<string>Distribution - Ad Hoc</string>
-					<key>specifiedTarget</key>
-					<string>Twitbit</string>
-					<key>targetChoice</key>
-					<integer>4</integer>
-					<key>temporary items path</key>
-					<string>/var/folders/id/idLJcXMJE6utSIf6zb3fVE+++TI/-Tmp-/3F607F4E-B4DF-4679-B1C3-4B11396227E3/1/com.apple.Automator.BuildXCodeProject</string>
 					<key>useSudo</key>
 					<false/>
 				</dict>
@@ -2424,7 +2388,7 @@ done</string>
 			<key>to</key>
 			<string>304736E8-BA2E-42A4-BB47-054475C37B14 - 304736E8-BA2E-42A4-BB47-054475C37B14</string>
 		</dict>
-		<key>C2D76F2D-E890-43B6-B59F-DDC8C286BAAE</key>
+		<key>B888792A-5BAE-46A7-AEAD-6AA7ED2BD68A</key>
 		<dict>
 			<key>from</key>
 			<string>08040DCC-31BD-4329-90DB-440E84A73A0D - 08040DCC-31BD-4329-90DB-440E84A73A0D</string>
@@ -2445,13 +2409,6 @@ done</string>
 			<key>to</key>
 			<string>3FE88511-24FE-480C-BE86-82562AF3E5A2 - 3FE88511-24FE-480C-BE86-82562AF3E5A2</string>
 		</dict>
-		<key>D94FA283-AB41-4637-837E-899656C01041</key>
-		<dict>
-			<key>from</key>
-			<string>B5AB5AE0-393E-4AD7-B392-7A36F3670A31 - B5AB5AE0-393E-4AD7-B392-7A36F3670A31</string>
-			<key>to</key>
-			<string>25B8423E-F358-44DE-85B3-57D0C2911D28 - 25B8423E-F358-44DE-85B3-57D0C2911D28</string>
-		</dict>
 		<key>E940197F-D689-4320-80F6-03BED1B6EF89</key>
 		<dict>
 			<key>to</key>
@@ -2463,6 +2420,13 @@ done</string>
 			<string>64F8A29A-F4C8-4AE5-AB25-5ED6E3098EFE - 64F8A29A-F4C8-4AE5-AB25-5ED6E3098EFE</string>
 			<key>to</key>
 			<string>D2274FC9-BC4D-4B1E-ACC7-8F10AA6D6FE9 - D2274FC9-BC4D-4B1E-ACC7-8F10AA6D6FE9</string>
+		</dict>
+		<key>FAF2CDE8-A3F3-4A9D-8BCF-7640CB93C531</key>
+		<dict>
+			<key>from</key>
+			<string>B5AB5AE0-393E-4AD7-B392-7A36F3670A31 - B5AB5AE0-393E-4AD7-B392-7A36F3670A31</string>
+			<key>to</key>
+			<string>25B8423E-F358-44DE-85B3-57D0C2911D28 - 25B8423E-F358-44DE-85B3-57D0C2911D28</string>
 		</dict>
 		<key>FD28877F-0250-43DF-8ED5-307C2532C216</key>
 		<dict>
@@ -2542,7 +2506,7 @@ done</string>
 		<key>windowFrame</key>
 		<string>{{0, 4}, {1920, 1174}}</string>
 		<key>workflowViewScrollPosition</key>
-		<string>{{0, 507}, {1524, 906}}</string>
+		<string>{{0, 0}, {1524, 906}}</string>
 	</dict>
 	<key>variables</key>
 	<array>
