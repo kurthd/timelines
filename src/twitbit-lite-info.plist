@@ -50,5 +50,7 @@
 	<string>https://yfrog.com/api/upload</string>
 	<key>AdMobPublisherId</key>
 	<string>a14b2670184a469</string>
+	<key>TwitbitProUrl</key>
+	<string>http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=322281538&amp;mt=8</string>
 </dict>
 </plist>

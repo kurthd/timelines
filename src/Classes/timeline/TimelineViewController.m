@@ -14,6 +14,7 @@
 #import "FastTimelineTableViewCell.h"
 #import "TwitbitShared.h"
 #import "AdMobView.h"
+#import "InfoPlistConfigReader.h"
 
 @interface TimelineViewController ()
 
@@ -244,6 +245,12 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     if (![SettingsReader showAds] || indexPath.row > 0) {
         Tweet * tweet = [self tweetAtIndex:indexPath inTableView:tv];
         [delegate selectedTweet:tweet];
+    } else {
+        NSLog(@"Going to Twitbit in app store...");
+        NSString * twitbitProUrlString =
+            [[InfoPlistConfigReader reader] valueForKey:@"TwitbitProUrl"];
+        NSURL * url = [NSURL URLWithString:twitbitProUrlString];
+        [[UIApplication sharedApplication] openURL:url];
     }
 }
 
@@ -733,6 +740,29 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         adCell.contentView.backgroundColor =
             [UIColor colorWithPatternImage:[UIImage imageNamed:filename]];
         adMobDelegate = [[TwitbitAdMobDelegate alloc] init];
+
+        CGRect textLabelFrame = CGRectMake(62, 0, 320, 48);
+        UILabel * textLabel =
+            [[[UILabel alloc] initWithFrame:textLabelFrame] autorelease];
+        textLabel.text = NSLocalizedString(@"timelineview.adcelltext", @"");
+        textLabel.backgroundColor = [UIColor clearColor];
+        textLabel.font = [UIFont boldSystemFontOfSize:17];
+        textLabel.textColor = [adMobDelegate primaryTextColor];
+        textLabel.highlightedTextColor = [UIColor whiteColor];
+        textLabel.shadowOffset = CGSizeMake(0, 1);
+        textLabel.shadowColor =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            [UIColor clearColor] :
+            [UIColor twitchLightLightGrayColor];
+        [adCell.contentView addSubview:textLabel];
+
+        UIButtonType infoButtonType =
+            [SettingsReader displayTheme] == kDisplayThemeDark ?
+            UIButtonTypeInfoLight : UIButtonTypeInfoDark;
+        UIButton * infoButton = [UIButton buttonWithType:infoButtonType];
+        infoButton.frame = CGRectMake(36, 15, 18, 19);
+        [adCell.contentView addSubview:infoButton];
+
         [adCell.contentView
             addSubview:[AdMobView requestAdWithDelegate:adMobDelegate]];
     }
