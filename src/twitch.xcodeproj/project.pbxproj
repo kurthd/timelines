@@ -5421,7 +5421,7 @@
 					"-lAdMobSimulator3_0",
 				);
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DA22B2C2-6918-48F2-BD57-E80A5379D629";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BDA08F4A-21FD-4452-8BE8-E51C1842360B";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Distribution - Ad Hoc";
