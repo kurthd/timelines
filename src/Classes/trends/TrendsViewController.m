@@ -161,11 +161,11 @@
 - (void)service:(GenericTrendExplanationService *)svc didFetchTrends:(NSArray *)trnds
 {
     self.trends = trnds;
-
+    
     [self.netController.navigationItem setRightBarButtonItem:self.refreshButton
         animated:YES];
     [self.netController setCachedDataAvailable:YES];
-
+    
     [self.tableView reloadData];
     [self.tableView flashScrollIndicators];
 }
@@ -173,6 +173,10 @@
 - (void)service:(GenericTrendExplanationService *)svc failedToFetchTrends:(NSError *)e
 {
     NSLog(@"Failed to fetch trends: %@", e);
+    NSString * unableToFetchTrendsString =
+        NSLocalizedString(@"trends.fetch.failed", @"");
+    [self.netController setNoConnectionText:unableToFetchTrendsString];
+    [self.netController setUpdatingState:kDisconnected];
 }
 
 #pragma mark Private implementation
@@ -184,6 +188,7 @@
             setRightBarButtonItem:[self updatingTrendsActivityView]
             animated:YES];
     [self.netController setCachedDataAvailable:!!self.trends];
+    [self.netController setUpdatingState:kConnectedAndUpdating];
 
     [self.service fetchCurrentTrends];
 }
