@@ -39,7 +39,7 @@
     <UIApplicationDelegate, UITabBarControllerDelegate, DeviceRegistrarDelegate,
     TwitterServiceDelegate, ComposeTweetDisplayMgrDelegate,
     TwitchWebBrowserDisplayMgrDelegate, InstapaperServiceDelegate,
-    InstapaperLogInDisplayMgrDelegate>
+    InstapaperLogInDisplayMgrDelegate, UIAccelerometerDelegate>
 {
     UIWindow * window;
     UITabBarController * tabBarController;
@@ -108,6 +108,9 @@
     
     ContactCache * contactCache;
     ContactMgr * contactMgr;
+
+    BOOL histeresisExcited;
+    UIAcceleration * lastAcceleration;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;

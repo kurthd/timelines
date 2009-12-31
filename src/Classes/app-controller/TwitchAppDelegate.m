@@ -62,6 +62,8 @@
 @property (nonatomic, retain) InstapaperLogInDisplayMgr *
     instapaperLogInDisplayMgr;
 
+@property (nonatomic, retain) UIAcceleration* lastAcceleration;
+
 - (void)initHomeTab;
 - (void)initMentionsTab;
 - (void)initMessagesTab;
@@ -137,6 +139,7 @@ enum {
 @synthesize instapaperService;
 @synthesize savingInstapaperUrl;
 @synthesize instapaperLogInDisplayMgr;
+@synthesize lastAcceleration;
 
 - (void)dealloc
 {
@@ -202,6 +205,8 @@ enum {
     [instapaperLogInDisplayMgr release];
 
     [uiState release];
+
+    [lastAcceleration release];
 
     [super dealloc];
 }
@@ -351,6 +356,8 @@ enum {
         [[[ContactCachePersistenceStore alloc]
         initWithContactCache:contactCache] autorelease];
     [contactCachePersistenceStore load];
+
+    [UIAccelerometer sharedAccelerometer].delegate = self;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -2583,6 +2590,40 @@ enum {
     }
 
     return instapaperLogInDisplayMgr;
+}
+
+#pragma mark Shake-to-refresh implementation
+
+static BOOL L0AccelerationIsShaking(UIAcceleration* last,
+    UIAcceleration* current, double threshold)
+{
+    double deltaX = fabs(last.x - current.x);
+    double deltaY = fabs(last.y - current.y);
+    double deltaZ = fabs(last.z - current.z);
+
+    return (deltaX > threshold && deltaY > threshold) ||
+        (deltaX > threshold && deltaZ > threshold) ||
+        (deltaY > threshold && deltaZ > threshold);
+}
+
+- (void)accelerometer:(UIAccelerometer *)accelerometer
+    didAccelerate:(UIAcceleration *)acceleration
+{
+    if (self.lastAcceleration) {
+        if (!histeresisExcited &&
+            L0AccelerationIsShaking(self.lastAcceleration, acceleration, 0.7)) {
+            histeresisExcited = YES;
+
+            NSLog(@"Refreshing due to shake...");
+            [timelineDisplayMgr refreshWithLatest];
+            [directMessageDisplayMgr updateDirectMessagesAfterCredentialChange];
+            [mentionDisplayMgr updateMentionsAfterCredentialChange];
+        } else if (histeresisExcited &&
+            !L0AccelerationIsShaking(self.lastAcceleration, acceleration, 0.2))
+            histeresisExcited = NO;
+    }
+
+    self.lastAcceleration = acceleration;
 }
 
 @end
