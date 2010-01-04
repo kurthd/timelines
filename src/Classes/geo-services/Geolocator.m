@@ -3,6 +3,7 @@
 //
 
 #import "Geolocator.h"
+#import "CoordRecentHistoryCache.h"
 
 @interface Geolocator ()
 @property (nonatomic, retain) CLLocationManager * locationManager;
@@ -62,12 +63,20 @@
 
     MKReverseGeocoder * geocoder =
         [[MKReverseGeocoder alloc] initWithCoordinate:[newLocation coordinate]];
+
     [geocoder setDelegate:self];
 
     self.reverseGeocoder = geocoder;
     [geocoder release];
 
-    [self.reverseGeocoder start];
+    CoordRecentHistoryCache * coordCache = [CoordRecentHistoryCache instance];
+    MKPlacemark * cachedPlacemark = [coordCache objectForKey:newLocation];
+    if (!cachedPlacemark)
+        [self.reverseGeocoder start];
+    else {
+        NSLog(@"Using placemark from cache");
+        [self reverseGeocoder:nil didFindPlacemark:cachedPlacemark];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -81,9 +90,19 @@
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder
        didFindPlacemark:(MKPlacemark *)placemark
 {
-    [self.delegate geolocator:self
-            didUpdateLocation:[geocoder coordinate]
-                    placemark:placemark];
+    CLLocationCoordinate2D cacheCoord = [self.reverseGeocoder coordinate];
+    if (geocoder) { // not from the cache
+        CoordRecentHistoryCache * coordCache =
+            [CoordRecentHistoryCache instance];
+        CLLocation * cacheLocation =
+            [[[CLLocation alloc]
+            initWithLatitude:cacheCoord.latitude longitude:cacheCoord.longitude]
+            autorelease];
+        [coordCache setObject:placemark forKey:cacheLocation];
+    }
+
+    [self.delegate geolocator:self didUpdateLocation:cacheCoord
+        placemark:placemark];
 
     if (self.reverseGeocoder == geocoder) {
         [reverseGeocoder autorelease];

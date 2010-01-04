@@ -8,6 +8,7 @@
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
 #import "TwitbitShared.h"
+#import "CoordRecentHistoryCache.h"
 
 enum {
     kLocationInfoSectionAddress,
@@ -260,6 +261,17 @@ enum {
         country:self.country];
     [self.addressCell setFinishedLoading];
 
+    if (geocoder) { // not from the cache
+        CoordRecentHistoryCache * coordCache =
+            [CoordRecentHistoryCache instance];
+        CLLocationCoordinate2D cacheCoord = self.reverseGeocoder.coordinate;
+        CLLocation * cacheLocation =
+            [[[CLLocation alloc]
+            initWithLatitude:cacheCoord.latitude longitude:cacheCoord.longitude]
+            autorelease];
+        [coordCache setObject:placemark forKey:cacheLocation];
+    }
+
     [self.tableView reloadData];
 }
 
@@ -324,7 +336,18 @@ enum {
     self.reverseGeocoder =
         [[[MKReverseGeocoder alloc] initWithCoordinate:coordinate] autorelease];
     self.reverseGeocoder.delegate = self;
-    [self.reverseGeocoder start];
+    CoordRecentHistoryCache * coordCache = [CoordRecentHistoryCache instance];
+    CLLocation * coordAsLocation =
+        [[[CLLocation alloc]
+        initWithLatitude:coordinate.latitude longitude:coordinate.longitude]
+        autorelease];
+    MKPlacemark * cachedPlacemark = [coordCache objectForKey:coordAsLocation];
+    if (!cachedPlacemark)
+        [self.reverseGeocoder start];
+    else {
+        NSLog(@"Using placemark from cache");
+        [self reverseGeocoder:nil didFindPlacemark:cachedPlacemark];
+    }
 
     // the multiple map updates seem excessive, but they consistently cause the
     // map to render, which doesn't happen if either is removed
