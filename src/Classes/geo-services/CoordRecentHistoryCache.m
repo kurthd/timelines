@@ -86,7 +86,7 @@ static CoordRecentHistoryCache * gInstance = NULL;
 
 - (id)init
 {
-    return [self initWithCacheLimit:50];
+    return [self initWithCacheLimit:20];
 }
 
 - (id)initWithCacheLimit:(NSInteger)aCacheLimit

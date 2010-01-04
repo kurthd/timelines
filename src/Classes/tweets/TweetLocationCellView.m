@@ -229,11 +229,10 @@
     self.reverseGeocoder.delegate = self;
     CoordRecentHistoryCache * coordCache = [CoordRecentHistoryCache instance];
     MKPlacemark * cachedPlacemark = [coordCache objectForKey:l];
-    if (!cachedPlacemark) {
-        NSLog(@"Fetching placemark...");
+    if (!cachedPlacemark)
         [self.reverseGeocoder start];
-    } else {
-        NSLog(@"Using cached placemark...");
+    else {
+        NSLog(@"Using placemark from cache");
         [self reverseGeocoder:nil didFindPlacemark:cachedPlacemark];
     }
 
