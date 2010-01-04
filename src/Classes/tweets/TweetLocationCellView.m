@@ -8,6 +8,7 @@
 #import "UIColor+TwitchColors.h"
 #import "RegexKitLite.h"
 #import "SettingsReader.h"
+#import "CoordRecentHistoryCache.h"
 
 @interface TweetLocationCellView ()
 
@@ -183,11 +184,18 @@
         administrativeArea];
 
     [self setNeedsDisplay];
+    
+    if (geocoder) { // not from the cache
+        CoordRecentHistoryCache * coordCache =
+            [CoordRecentHistoryCache instance];
+        [coordCache setObject:placemark forKey:self.location];
+    }
 }
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder
     didFailWithError:(NSError *)error
 {
+    NSLog(@"Failed to reverse geocode coordinate; %@", error);
     loading = NO;
     self.locationDescription = [[self class] locationAsString:self.location];
     [activityIndicator stopAnimating];
@@ -219,7 +227,15 @@
     self.reverseGeocoder =
         [[[MKReverseGeocoder alloc] initWithCoordinate:coord] autorelease];
     self.reverseGeocoder.delegate = self;
-    [self.reverseGeocoder start];
+    CoordRecentHistoryCache * coordCache = [CoordRecentHistoryCache instance];
+    MKPlacemark * cachedPlacemark = [coordCache objectForKey:l];
+    if (!cachedPlacemark) {
+        NSLog(@"Fetching placemark...");
+        [self.reverseGeocoder start];
+    } else {
+        NSLog(@"Using cached placemark...");
+        [self reverseGeocoder:nil didFindPlacemark:cachedPlacemark];
+    }
 
     [self updateMapSpan];
 
