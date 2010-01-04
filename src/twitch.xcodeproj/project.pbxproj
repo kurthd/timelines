@@ -267,6 +267,8 @@
 		059A7091103DAE4A00B7500C /* SelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A708F103DAE4A00B7500C /* SelectionView.xib */; };
 		059A72AA103E1C7800B7500C /* YfrogSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72A8103E1C7800B7500C /* YfrogSettingsView.xib */; };
 		059A7301103E221E00B7500C /* TwitVidSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 059A72FF103E221E00B7500C /* TwitVidSettingsView.xib */; };
+		059E546410F2A55C003558ED /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 059E546310F2A55C003558ED /* Reachability.m */; };
+		059E546510F2A55C003558ED /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 059E546310F2A55C003558ED /* Reachability.m */; };
 		05A7460110A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05A7460010A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel */; };
 		05A7460210A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05A7460010A4C6940086BB49 /* v2.1-v2.3-1.xcmappingmodel */; };
 		05AC573D1029F0EF00F727A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05AC573C1029F0EF00F727A2 /* QuartzCore.framework */; };
@@ -550,7 +552,6 @@
 		05DBF3221082E76B004AB521 /* ASIS3BucketObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0590E1F71062FF2B009D1C11 /* ASIS3BucketObject.m */; };
 		05DBF3231082E76B004AB521 /* ASIS3ListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0590E1F91062FF2B009D1C11 /* ASIS3ListRequest.m */; };
 		05DBF3241082E76B004AB521 /* ASIS3Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 0590E1FB1062FF2B009D1C11 /* ASIS3Request.m */; };
-		05DBF3251082E76B004AB521 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0590E2081062FF79009D1C11 /* Reachability.m */; };
 		05DBF3261082E76B004AB521 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		05DBF3271082E76B004AB521 /* UserTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05DBF1EC1082E61E004AB521 /* UserTweet.m */; };
 		05DBF3281082E76D004AB521 /* BitlyLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 91FDD58C1061581C000F7527 /* BitlyLogInDisplayMgr.m */; };
@@ -812,7 +813,6 @@
 		05DBF4371082E76D004AB521 /* ASIS3BucketObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0590E1F71062FF2B009D1C11 /* ASIS3BucketObject.m */; };
 		05DBF4381082E76D004AB521 /* ASIS3ListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0590E1F91062FF2B009D1C11 /* ASIS3ListRequest.m */; };
 		05DBF4391082E76D004AB521 /* ASIS3Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 0590E1FB1062FF2B009D1C11 /* ASIS3Request.m */; };
-		05DBF43A1082E76D004AB521 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0590E2081062FF79009D1C11 /* Reachability.m */; };
 		05DBF43B1082E76D004AB521 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		05DBF43C1082E76D004AB521 /* UserTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 05DBF1EC1082E61E004AB521 /* UserTweet.m */; };
 		05E39EEB10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 05E39EEA10C5A03F00D935B3 /* ErrorExclamationMarkGrayscale.png */; };
@@ -1377,8 +1377,6 @@
 		0590E1F91062FF2B009D1C11 /* ASIS3ListRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIS3ListRequest.m; path = "vendor/asi-http-request/ASIS3ListRequest.m"; sourceTree = "<group>"; };
 		0590E1FA1062FF2B009D1C11 /* ASIS3Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIS3Request.h; path = "vendor/asi-http-request/ASIS3Request.h"; sourceTree = "<group>"; };
 		0590E1FB1062FF2B009D1C11 /* ASIS3Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIS3Request.m; path = "vendor/asi-http-request/ASIS3Request.m"; sourceTree = "<group>"; };
-		0590E2071062FF79009D1C11 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = "vendor/asi-http-request/Reachability.h"; sourceTree = "<group>"; };
-		0590E2081062FF79009D1C11 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = "vendor/asi-http-request/Reachability.m"; sourceTree = "<group>"; };
 		05948990101569B700C37C98 /* AccountSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountSettingsViewController.h; path = accounts/AccountSettingsViewController.h; sourceTree = "<group>"; };
 		05948991101569B700C37C98 /* AccountSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountSettingsViewController.m; path = accounts/AccountSettingsViewController.m; sourceTree = "<group>"; };
 		05948994101569D500C37C98 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/AccountSettingsView.xib; sourceTree = "<group>"; };
@@ -1435,6 +1433,9 @@
 		059A743A103F13E200B7500C /* YfrogPhotoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YfrogPhotoService.m; path = photos/yfrog/YfrogPhotoService.m; sourceTree = "<group>"; };
 		059A743B103F13E200B7500C /* YfrogResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YfrogResponseParser.h; path = photos/yfrog/YfrogResponseParser.h; sourceTree = "<group>"; };
 		059A743C103F13E200B7500C /* YfrogResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YfrogResponseParser.m; path = photos/yfrog/YfrogResponseParser.m; sourceTree = "<group>"; };
+		059E546110F2A55C003558ED /* ASIHTTPRequestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIHTTPRequestConfig.h; path = "vendor/asi-http-request/ASIHTTPRequestConfig.h"; sourceTree = "<group>"; };
+		059E546210F2A55C003558ED /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = "vendor/asi-http-request/Reachability.h"; sourceTree = "<group>"; };
+		059E546310F2A55C003558ED /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = "vendor/asi-http-request/Reachability.m"; sourceTree = "<group>"; };
 		059F6F921017FAB100B323D7 /* v1-to-v2.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v1-to-v2.xcmappingmodel"; path = "data-model/v1-to-v2.xcmappingmodel"; sourceTree = "<group>"; };
 		05A1F5C81028C06A009F5B3E /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		05A1F5C91028C06A009F5B3E /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
@@ -2427,6 +2428,7 @@
 		0590E1E91062FEFD009D1C11 /* asi-http-request */ = {
 			isa = PBXGroup;
 			children = (
+				059E546110F2A55C003558ED /* ASIHTTPRequestConfig.h */,
 				0590E1EA1062FF2B009D1C11 /* ASIAuthenticationDialog.h */,
 				0590E1EB1062FF2B009D1C11 /* ASIAuthenticationDialog.m */,
 				0590E1EC1062FF2B009D1C11 /* ASIFormDataRequest.h */,
@@ -2445,8 +2447,8 @@
 				0590E1F91062FF2B009D1C11 /* ASIS3ListRequest.m */,
 				0590E1FA1062FF2B009D1C11 /* ASIS3Request.h */,
 				0590E1FB1062FF2B009D1C11 /* ASIS3Request.m */,
-				0590E2071062FF79009D1C11 /* Reachability.h */,
-				0590E2081062FF79009D1C11 /* Reachability.m */,
+				059E546210F2A55C003558ED /* Reachability.h */,
+				059E546310F2A55C003558ED /* Reachability.m */,
 			);
 			name = "asi-http-request";
 			sourceTree = "<group>";
@@ -4321,7 +4323,6 @@
 				05DBF3221082E76B004AB521 /* ASIS3BucketObject.m in Sources */,
 				05DBF3231082E76B004AB521 /* ASIS3ListRequest.m in Sources */,
 				05DBF3241082E76B004AB521 /* ASIS3Request.m in Sources */,
-				05DBF3251082E76B004AB521 /* Reachability.m in Sources */,
 				05DBF3261082E76B004AB521 /* main.m in Sources */,
 				05DBF3271082E76B004AB521 /* UserTweet.m in Sources */,
 				0516694C108646B6000CA4AA /* ComposeTweetDisplayMgr.m in Sources */,
@@ -4405,6 +4406,7 @@
 				05EBDBAC10D70BC600C1B7A8 /* JsonObjectTransformer.m in Sources */,
 				05EBDBB010D70BD600C1B7A8 /* JsonObjectFilter.m in Sources */,
 				05D088C410DA7C1A00089D43 /* v2.1-v2.3.xcmappingmodel in Sources */,
+				059E546410F2A55C003558ED /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4672,7 +4674,6 @@
 				05DBF4371082E76D004AB521 /* ASIS3BucketObject.m in Sources */,
 				05DBF4381082E76D004AB521 /* ASIS3ListRequest.m in Sources */,
 				05DBF4391082E76D004AB521 /* ASIS3Request.m in Sources */,
-				05DBF43A1082E76D004AB521 /* Reachability.m in Sources */,
 				05DBF43B1082E76D004AB521 /* main.m in Sources */,
 				05DBF43C1082E76D004AB521 /* UserTweet.m in Sources */,
 				05166951108646B6000CA4AA /* ComposeTweetDisplayMgr.m in Sources */,
@@ -4756,6 +4757,7 @@
 				05EBDBAB10D70BC600C1B7A8 /* JsonObjectTransformer.m in Sources */,
 				05EBDBAF10D70BD600C1B7A8 /* JsonObjectFilter.m in Sources */,
 				05D088C510DA7C1A00089D43 /* v2.1-v2.3.xcmappingmodel in Sources */,
+				059E546510F2A55C003558ED /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

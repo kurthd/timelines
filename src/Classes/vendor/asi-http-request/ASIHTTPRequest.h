@@ -15,6 +15,15 @@
 	#import <CFNetwork/CFNetwork.h>
 #endif
 #import <stdio.h>
+#import "ASIHTTPRequestConfig.h"
+
+extern NSString *ASIHTTPRequestVersion;
+
+// Make targeting 2.2.1 more reliable
+// See: http://www.blumtnwerx.com/blog/2009/06/cross-sdk-code-hygiene-in-xcode/
+#ifndef __IPHONE_3_0
+	#define __IPHONE_3_0 30000
+#endif
 
 
 typedef enum _ASINetworkErrorType {
@@ -26,7 +35,8 @@ typedef enum _ASINetworkErrorType {
     ASIInternalErrorWhileBuildingRequestType  = 6,
     ASIInternalErrorWhileApplyingCredentialsType  = 7,
 	ASIFileManagementError = 8,
-	ASITooMuchRedirectionErrorType = 9
+	ASITooMuchRedirectionErrorType = 9,
+	ASIUnhandledExceptionError = 10
 	
 } ASINetworkErrorType;
 
@@ -80,6 +90,9 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 	
 	// Dictionary for custom HTTP request headers
 	NSMutableDictionary *requestHeaders;
+	
+	// Set to YES when the request header dictionary has been populated, used to prevent this happening more than once
+	BOOL haveBuiltRequestHeaders;
 	
 	// Will be populated with HTTP response headers from the server
 	NSDictionary *responseHeaders;
@@ -222,12 +235,15 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 	NSConditionLock *authenticationLock;
 	
 	// This lock prevents the operation from being cancelled at an inopportune moment
-	NSLock *cancelledLock;
+	NSRecursiveLock *cancelledLock;
 	
-	// Called on the delegate when the request completes successfully
+	// Called on the delegate (if implemented) when the request starts. Default is requestStarted:
+	SEL didStartSelector;
+	
+	// Called on the delegate (if implemented) when the request completes successfully. Default is requestFinished:
 	SEL didFinishSelector;
 	
-	// Called on the delegate when the request fails
+	// Called on the delegate (if implemented) when the request fails. Default is requestFailed:
 	SEL didFailSelector;
 	
 	// Used for recording when something last happened during the request, we will compare this value with the current date to time out requests when appropriate
@@ -235,9 +251,6 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 	
 	// Number of seconds to wait before timing out - default is 10
 	NSTimeInterval timeOutSeconds;
-	
-	// Autorelease pool for the main loop, since it's highly likely that this operation will run in a thread
-	NSAutoreleasePool *pool;
 	
 	// Will be YES when a HEAD request will handle the content-length before this request starts
 	BOOL shouldResetProgressIndicators;
@@ -298,6 +311,13 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 	
 	// True when request is attempting to handle an authentication challenge
 	BOOL authenticationChallengeInProgress;
+	
+	// When YES, ASIHTTPRequests will present credentials from the session store for requests to the same server before being asked for them
+	// This avoids an extra round trip for requests after authentication has succeeded, which is much for efficient for authenticated requests with large bodies, or on slower connections
+	// Set to NO to only present credentials when explictly asked for them
+	// This only affects credentials stored in the session cache when useSessionPersistance is YES. Credentials from the keychain are never presented unless the server asks for them
+	// Default is YES
+	BOOL shouldPresentCredentialsBeforeChallenge;
 }
 
 #pragma mark init / dealloc
@@ -313,6 +333,13 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 // Add a custom header to the request
 - (void)addRequestHeader:(NSString *)header value:(NSString *)value;
 
+// Populate the request headers dictionary. Called before a request is started, or by a HEAD request that needs to borrow them
+- (void)buildRequestHeaders;
+
+// Used to apply authorization header to a request before it is sent (when shouldPresentCredentialsBeforeChallenge is YES)
+- (void)applyAuthorizationHeader;
+
+// Create the post body
 - (void)buildPostBody;
 
 // Called to add data to the post body. Will append to postBody when shouldStreamPostDataFromDisk is false, or write to postBodyWriteStream when true
@@ -330,6 +357,12 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 // Returns true if the response was gzip compressed
 - (BOOL)isResponseCompressed;
 
+#pragma mark running a request
+
+// Run a request asynchronously by adding it to the global queue
+// (Use [request start] for a synchronous request)
+- (void)startAsynchronous;
+
 #pragma mark request logic
 
 // Main request loop is in here
@@ -337,9 +370,6 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 
 // Start the read stream. Called by loadRequest, and again to restart the request when authentication is needed
 - (void)startRequest;
-
-// Cancel loading and clean up
-- (void)cancelLoad;
 
 // Call to delete the temporary file used during a file download (if it exists)
 // No need to call this if the request succeeds - it is removed automatically
@@ -349,9 +379,13 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 // No need to call this if the request succeeds and you didn't specify postBodyFilePath manually - it is removed automatically
 - (void)removePostDataFile;
 
+#pragma mark HEAD request
+
+// Used by ASINetworkQueue to create a HEAD request appropriate for this request with the same headers (though you can use it yourself)
+- (ASIHTTPRequest *)HEADRequest;
+
 #pragma mark upload/download progress
 
-// Called on main thread to update progress delegates
 - (void)updateProgressIndicators;
 - (void)resetUploadProgress:(unsigned long long)value;
 - (void)updateUploadProgress;
@@ -366,10 +400,13 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 
 #pragma mark handling request complete / failure
 
-// Called when a request completes successfully, lets the delegate now via didFinishSelector
+// Called when a request starts, lets the delegate know via didStartSelector
+- (void)requestStarted;
+
+// Called when a request completes successfully, lets the delegate know via didFinishSelector
 - (void)requestFinished;
 
-// Called when a request fails, and lets the delegate now via didFailSelector
+// Called when a request fails, and lets the delegate know via didFailSelector
 - (void)failWithError:(NSError *)theError;
 
 #pragma mark parsing HTTP response headers
@@ -382,8 +419,8 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 #pragma mark http authentication stuff
 
 // Apply credentials to this request
-- (BOOL)applyCredentials:(NSMutableDictionary *)newCredentials;
-- (BOOL)applyProxyCredentials:(NSMutableDictionary *)newCredentials;
+- (BOOL)applyCredentials:(NSDictionary *)newCredentials;
+- (BOOL)applyProxyCredentials:(NSDictionary *)newCredentials;
 
 // Attempt to obtain credentials for this request from the URL, username and password or keychain
 - (NSMutableDictionary *)findCredentials;
@@ -400,6 +437,15 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 - (void)attemptToApplyCredentialsAndResume;
 - (void)attemptToApplyProxyCredentialsAndResume;
 
+// Attempt to show the built-in authentication dialog, returns YES if credentials were supplied, NO if user cancelled dialog / dialog is disabled / running on main thread
+// Currently only used on iPhone OS
+- (BOOL)showProxyAuthenticationDialog;
+- (BOOL)showAuthenticationDialog;
+
+// Construct a basic authentication header from the username and password supplied, and add it to the request headers
+// Used when shouldPresentCredentialsBeforeChallenge is YES
+- (void)addBasicAuthenticationHeaderWithUsername:(NSString *)theUsername andPassword:(NSString *)thePassword;
+
 #pragma mark stream status handlers
 
 // CFnetwork event handlers
@@ -408,26 +454,41 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 - (void)handleStreamComplete;
 - (void)handleStreamError;
 
-#pragma mark managing the session
+#pragma mark global queue
 
-+ (void)setSessionCredentials:(NSMutableDictionary *)newCredentials;
-+ (void)setSessionAuthentication:(CFHTTPAuthenticationRef)newAuthentication;
-+ (void)setSessionProxyCredentials:(NSMutableDictionary *)newCredentials;
-+ (void)setSessionProxyAuthentication:(CFHTTPAuthenticationRef)newAuthentication;
++ (NSOperationQueue *)sharedRequestQueue;
+
+#pragma mark session credentials
+
++ (NSMutableArray *)sessionProxyCredentialsStore;
++ (NSMutableArray *)sessionCredentialsStore;
+
++ (void)storeProxyAuthenticationCredentialsInSessionStore:(NSDictionary *)credentials;
++ (void)storeAuthenticationCredentialsInSessionStore:(NSDictionary *)credentials;
+
++ (void)removeProxyAuthenticationCredentialsFromSessionStore:(NSDictionary *)credentials;
++ (void)removeAuthenticationCredentialsFromSessionStore:(NSDictionary *)credentials;
+
+- (NSDictionary *)findSessionProxyAuthenticationCredentials;
+- (NSDictionary *)findSessionAuthenticationCredentials;
+
 
 #pragma mark keychain storage
 
 // Save credentials for this request to the keychain
-- (void)saveCredentialsToKeychain:(NSMutableDictionary *)newCredentials;
+- (void)saveCredentialsToKeychain:(NSDictionary *)newCredentials;
 
-// Save creddentials to the keychain
+// Save credentials to the keychain
 + (void)saveCredentials:(NSURLCredential *)credentials forHost:(NSString *)host port:(int)port protocol:(NSString *)protocol realm:(NSString *)realm;
++ (void)saveCredentials:(NSURLCredential *)credentials forProxy:(NSString *)host port:(int)port realm:(NSString *)realm;
 
 // Return credentials from the keychain
 + (NSURLCredential *)savedCredentialsForHost:(NSString *)host port:(int)port protocol:(NSString *)protocol realm:(NSString *)realm;
++ (NSURLCredential *)savedCredentialsForProxy:(NSString *)host port:(int)port protocol:(NSString *)protocol realm:(NSString *)realm;
 
 // Remove credentials from the keychain
 + (void)removeCredentialsForHost:(NSString *)host port:(int)port protocol:(NSString *)protocol realm:(NSString *)realm;
++ (void)removeCredentialsForProxy:(NSString *)host port:(int)port realm:(NSString *)realm;
 
 // We keep track of any cookies we accept, so that we can remove them from the persistent store later
 + (void)setSessionCookies:(NSMutableArray *)newSessionCookies;
@@ -498,15 +559,26 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 // Turns on throttling automatically when WWAN is connected using a custom limit, and turns it off automatically when it isn't
 + (void)throttleBandwidthForWWANUsingLimit:(unsigned long)limit;
 
-// Called when the status of the network changes
-+ (void)reachabilityChanged:(NSNotification *)note;
+
+#pragma mark reachability
+// Returns YES when an iPhone OS device is connected via WWAN, false when connected via WIFI or not connected
++ (BOOL)isNetworkReachableViaWWAN;
+
 #endif
 
-
-- (BOOL)showProxyAuthenticationDialog;
-- (BOOL)showAuthenticationDialog;
-
+// Returns the maximum amount of data we can read as part of the current measurement period, and sleeps this thread if our allowance is used up
 + (unsigned long)maxUploadReadLength;
+
+#pragma mark miscellany 
+
+// Determines whether we're on iPhone OS 2.0 at runtime, currently used to determine whether we should apply a workaround for an issue with converting longs to doubles on iPhone OS 2
++ (BOOL)isiPhoneOS2;
+
+// Used for generating Authorization header when using basic authentication when shouldPresentCredentialsBeforeChallenge is true
+// And also by ASIS3Request
++ (NSString *)base64forData:(NSData *)theData;
+
+#pragma mark ===
 
 @property (retain) NSString *username;
 @property (retain) NSString *password;
@@ -528,6 +600,7 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 @property (assign) BOOL useSessionPersistance;
 @property (retain) NSString *downloadDestinationPath;
 @property (retain) NSString *temporaryFileDownloadPath;
+@property (assign) SEL didStartSelector;
 @property (assign) SEL didFinishSelector;
 @property (assign) SEL didFailSelector;
 @property (retain,readonly) NSString *authenticationRealm;
@@ -574,4 +647,9 @@ extern unsigned long const ASIWWANBandwidthThrottleAmount;
 @property (assign) BOOL shouldPresentAuthenticationDialog;
 @property (assign) BOOL shouldPresentProxyAuthenticationDialog;
 @property (assign) BOOL authenticationChallengeInProgress;
+@property (assign) BOOL shouldPresentCredentialsBeforeChallenge;
+@property (assign, readonly) int authenticationRetryCount;
+@property (assign, readonly) int proxyAuthenticationRetryCount;
+@property (assign) BOOL haveBuiltRequestHeaders;
+@property (assign, nonatomic) BOOL haveBuiltPostBody;
 @end

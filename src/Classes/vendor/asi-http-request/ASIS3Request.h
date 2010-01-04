@@ -1,5 +1,6 @@
 //
 //  ASIS3Request.h
+//  Part of ASIHTTPRequest -> http://allseeing-i.com/ASIHTTPRequest
 //
 //  Created by Ben Copsey on 30/06/2009.
 //  Copyright 2009 All-Seeing Interactive. All rights reserved.
@@ -68,6 +69,9 @@ typedef enum _ASIS3ErrorType {
 // Create a PUT request using the file at filePath as the body
 + (id)PUTRequestForFile:(NSString *)filePath withBucket:(NSString *)bucket path:(NSString *)path;
 
+// Create a PUT request using the supplied NSData as the body (set the mime-type manually with setMimeType: if necessary)
++ (id)PUTRequestForData:(NSData *)data withBucket:(NSString *)bucket path:(NSString *)path;
+	
 // Create a DELETE request for the object at path
 + (id)DELETERequestWithBucket:(NSString *)bucket path:(NSString *)path;
 
@@ -78,10 +82,6 @@ typedef enum _ASIS3ErrorType {
 // Creates a HEAD request for the object at path
 + (id)HEADRequestWithBucket:(NSString *)bucket path:(NSString *)path;
 
-
-// Generates the request headers S3 needs
-// Automatically called before the request begins in startRequest
-- (void)generateS3Headers;
 
 // Uses the supplied date to create a Date header string
 - (void)setDate:(NSDate *)date;
