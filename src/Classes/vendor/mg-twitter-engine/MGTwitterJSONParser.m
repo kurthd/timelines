@@ -4,6 +4,7 @@
 
 #import "MGTwitterJSONParser.h"
 #import "JSON.h"
+#import "MGTwitterEngine.h"  // for twitterErrorDomain
 
 @interface MGTwitterJSONParser ()
 
@@ -73,8 +74,30 @@ connectionIdentifier:(NSString *)identifier
 - (void)parseJsonWrapper:(NSData *)json
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    [self performSelectorOnMainThread:@selector(parsingFinished:)
-                           withObject:[self parse:json]
+
+    NSArray * parsedObjects = [self parse:json];
+
+    id object = parsedObjects;
+    SEL selector = @selector(parsingFinished:);
+
+    if (parsedObjects.count > 0) {
+        NSDictionary * firstObject = [parsedObjects objectAtIndex:0];
+        NSString * errorMessage = [firstObject objectForKey:@"error"];
+        if (errorMessage) {
+            NSString * errorDomain = [NSError twitterApiErrorDomain];
+            NSDictionary * userInfo =
+                [NSDictionary dictionaryWithObject:errorMessage
+                                            forKey:NSLocalizedDescriptionKey];
+            NSError * error =
+                [NSError errorWithDomain:errorDomain code:0 userInfo:userInfo];
+
+            object = error;
+            selector = @selector(parsingErrorOccurred:);
+        }
+    }
+
+    [self performSelectorOnMainThread:selector
+                           withObject:object
                         waitUntilDone:NO];
     [pool release];
 }
