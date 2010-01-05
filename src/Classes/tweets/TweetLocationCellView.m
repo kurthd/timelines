@@ -179,7 +179,8 @@
     loading = NO;
 
     NSString * administrativeArea =
-        placemark.administrativeArea ? placemark.administrativeArea : @"";
+        placemark.administrativeArea ? placemark.administrativeArea :
+        placemark.country;
     self.locationDescription =
         [NSString stringWithFormat:@"%@, %@", placemark.locality,
         administrativeArea];

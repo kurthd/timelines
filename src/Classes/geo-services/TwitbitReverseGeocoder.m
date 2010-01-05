@@ -72,19 +72,27 @@ static NSMutableDictionary * stateAbbreviationMapping;
 
             NSDictionary * administrativeAreaDict =
                 [countryDict objectForKey:@"AdministrativeArea"];
-            NSString * abbreviatedAdminAreaName =
-                [administrativeAreaDict objectForKey:@"AdministrativeAreaName"];
-            NSString * fullAdminAreaName =
-                [[[self class] stateAbbreviationMapping]
-                objectForKey:abbreviatedAdminAreaName];
-            NSString * administrativeAreaName =
-                ([countryNameCode isEqual:@"US"] ||
-                [countryNameCode isEqual:@"USA"]) &&
-                fullAdminAreaName ?
-                fullAdminAreaName : abbreviatedAdminAreaName;
+            NSString * administrativeAreaName = nil;
+            NSDictionary * subAdministrativeAreaDict;
+            if (administrativeAreaDict) {
+                NSString * abbreviatedAdminAreaName =
+                    [administrativeAreaDict
+                    objectForKey:@"AdministrativeAreaName"];
+                NSString * fullAdminAreaName =
+                    [[[self class] stateAbbreviationMapping]
+                    objectForKey:abbreviatedAdminAreaName];
+                administrativeAreaName =
+                    ([countryNameCode isEqual:@"US"] ||
+                    [countryNameCode isEqual:@"USA"]) &&
+                    fullAdminAreaName ?
+                    fullAdminAreaName : abbreviatedAdminAreaName;
+                subAdministrativeAreaDict =
+                    [administrativeAreaDict
+                    objectForKey:@"SubAdministrativeArea"];
+            } else
+                subAdministrativeAreaDict =
+                    [countryDict objectForKey:@"SubAdministrativeArea"];
 
-            NSDictionary * subAdministrativeAreaDict =
-                [administrativeAreaDict objectForKey:@"SubAdministrativeArea"];
             NSString * subAdministrativeAreaName =
                 [subAdministrativeAreaDict
                 objectForKey:@"SubAdministrativeAreaName"];
