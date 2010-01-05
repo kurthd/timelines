@@ -41,7 +41,7 @@
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
 	<key>SBUsesNetwork</key>
-	<false/>
+	<true/>
 	<key>TwitPicPostUrl</key>
 	<string>https://twitpic.com/api/upload</string>
 	<key>UIPrerenderedIcon</key>
