@@ -1047,34 +1047,34 @@
             (CLLocationCoordinate2D *) malloc(sizeof(CLLocationCoordinate2D));
         memset(lastCoordinate, 0, sizeof(CLLocationCoordinate2D));
     }
-
+    
     NSString * desc = [placemark humanReadableDescription];
-
+    
     CLLocationDegrees lat = lastCoordinate->latitude;
     CLLocationDegrees lng = lastCoordinate->longitude;
     if (!firstTime && (crd.latitude == lat && crd.longitude == lng)) {
         NSLog(@"Final location: (%f, %f): %@.", lat, lng, desc);
-
+    
         // we got the same location, so assume location has been determined
         [geolocator stopLocating];
         [geolocator autorelease];
         geolocator = nil;
-
+    
         [self.composeTweetViewController displayUpdatingLocationActivity:NO];
-
+    
         findingLocation = NO;
     } else {
         NSLog(@"Updating location to: (%f, %f): %@.", crd.latitude,
             crd.longitude, desc);
-
+    
         NSString * fmt =
             NSLocalizedString(@"composetweet.location.formatstring", @"");
-
+    
         NSString * fullDesc = [NSString stringWithFormat:fmt, desc];
         [self.composeTweetViewController updateLocationDescription:fullDesc];
-
+    
         memcpy(lastCoordinate, &crd, sizeof(CLLocationCoordinate2D));
-
+    
         findingLocation = YES;
         [self performSelector:@selector(processFindingLocationTimeout)
                    withObject:nil

@@ -375,7 +375,9 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)displayUpdatingLocationError:(NSError *)error
 {
-    [locationView setErrorMessage:error.localizedDescription];
+    NSString * errorMessage =
+        NSLocalizedString(@"composetweet.reversegeocodeerror", @"");
+    [locationView setErrorMessage:errorMessage];
 }
 
 #pragma mark UIViewController overrides
