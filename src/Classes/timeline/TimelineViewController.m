@@ -332,13 +332,16 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
     NSMutableArray * newTweets = [tweets mutableCopy];
     self.sortedTweetCache = nil;
+
     [newTweets insertObject:tweet atIndex:0];
 
     [tweets release];
     tweets = [[NSArray alloc] initWithArray:newTweets];
     [newTweets release];
 
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSInteger newTweetRow = [SettingsReader showAds] ? 1 : 0;
+    NSIndexPath * indexPath =
+        [NSIndexPath indexPathForRow:newTweetRow inSection:0];
 
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
         withRowAnimation:UITableViewRowAnimationFade];
