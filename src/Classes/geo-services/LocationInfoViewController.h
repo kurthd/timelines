@@ -9,10 +9,11 @@
 #import "BasicMapAnnotation.h"
 #import "RoundedImage.h"
 #import "LocationInfoViewControllerDelegate.h"
+#import "TwitbitReverseGeocoder.h"
 
 @interface LocationInfoViewController :
     UITableViewController
-    <UITableViewDelegate, UITableViewDataSource, MKReverseGeocoderDelegate,
+    <UITableViewDelegate, UITableViewDataSource, TwitbitReverseGeocoderDelegate,
     MKMapViewDelegate, UIActionSheetDelegate>
 {
     id<LocationInfoViewControllerDelegate> delegate;
@@ -30,7 +31,7 @@
     UITableViewCell * searchLocationCell;
     UITableViewCell * nearbyTweetsCell;
 
-    MKReverseGeocoder * reverseGeocoder;
+    TwitbitReverseGeocoder * reverseGeocoder;
 
     MKMapView * mapView;
     BasicMapAnnotation * mapAnnotation;

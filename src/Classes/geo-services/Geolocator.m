@@ -7,7 +7,7 @@
 
 @interface Geolocator ()
 @property (nonatomic, retain) CLLocationManager * locationManager;
-@property (nonatomic, retain) MKReverseGeocoder * reverseGeocoder;
+@property (nonatomic, retain) TwitbitReverseGeocoder * reverseGeocoder;
 @end
 
 @implementation Geolocator
@@ -56,18 +56,12 @@
     // Per Apple's documentation, only allow one reverse geocoder to
     // operate at once.
 
-    if (self.reverseGeocoder) {
-        [self.reverseGeocoder cancel];
-        self.reverseGeocoder = nil;
-    }
+    [self.reverseGeocoder cancel];
+    self.reverseGeocoder =
+        [[TwitbitReverseGeocoder alloc]
+        initWithCoordinate:[newLocation coordinate]];
 
-    MKReverseGeocoder * geocoder =
-        [[MKReverseGeocoder alloc] initWithCoordinate:[newLocation coordinate]];
-
-    [geocoder setDelegate:self];
-
-    self.reverseGeocoder = geocoder;
-    [geocoder release];
+    [self.reverseGeocoder setDelegate:self];
 
     CoordRecentHistoryCache * coordCache = [CoordRecentHistoryCache instance];
     MKPlacemark * cachedPlacemark = [coordCache objectForKey:newLocation];
@@ -85,40 +79,30 @@
     [self.delegate geolocator:self didFailWithError:error];
 }
 
-#pragma mark MKReverseGeocoderDelegate implementation
+#pragma mark TwitbitReverseGeocoderDelegate implementation
 
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder
+- (void)reverseGeocoder:(TwitbitReverseGeocoder *)geocoder
        didFindPlacemark:(MKPlacemark *)placemark
 {
-    CLLocationCoordinate2D cacheCoord = [self.reverseGeocoder coordinate];
+    CLLocationCoordinate2D coordinate = [self.reverseGeocoder coordinate];
     if (geocoder) { // not from the cache
         CoordRecentHistoryCache * coordCache =
             [CoordRecentHistoryCache instance];
         CLLocation * cacheLocation =
             [[[CLLocation alloc]
-            initWithLatitude:cacheCoord.latitude longitude:cacheCoord.longitude]
+            initWithLatitude:coordinate.latitude longitude:coordinate.longitude]
             autorelease];
         [coordCache setObject:placemark forKey:cacheLocation];
     }
 
-    [self.delegate geolocator:self didUpdateLocation:cacheCoord
+    [self.delegate geolocator:self didUpdateLocation:coordinate
         placemark:placemark];
-
-    if (self.reverseGeocoder == geocoder) {
-        [reverseGeocoder autorelease];
-        reverseGeocoder = nil;
-    }
 }
 
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder
+- (void)reverseGeocoder:(TwitbitReverseGeocoder *)geocoder
        didFailWithError:(NSError *)error
 {
     [self.delegate geolocator:self didFailWithError:error];
-
-    if (self.reverseGeocoder == geocoder) {
-        [reverseGeocoder autorelease];
-        reverseGeocoder = nil;
-    }
 }
 
 @end

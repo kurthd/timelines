@@ -12,7 +12,7 @@
 
 @interface TweetLocationCellView ()
 
-@property (nonatomic, retain) MKReverseGeocoder * reverseGeocoder;
+@property (nonatomic, retain) TwitbitReverseGeocoder * reverseGeocoder;
 @property (nonatomic, readonly) MKMapView * mapView;
 @property (nonatomic, readonly) UIActivityIndicatorView * activityIndicator;
 @property (nonatomic, readonly) BasicMapAnnotation * mapAnnotation;
@@ -168,12 +168,13 @@
         [self.activityIndicator startAnimating];
 }
 
-#pragma mark MKReverseGeocoderDelegate implementation
+#pragma mark TwitbitReverseGeocoderDelegate implementation
 
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder
+- (void)reverseGeocoder:(TwitbitReverseGeocoder *)geocoder
     didFindPlacemark:(MKPlacemark *)placemark
 {
     NSLog(@"Setting map location description");
+    NSLog(@"Placemark address dict: %@", placemark.addressDictionary);
     [self updateMapSpan];
     loading = NO;
 
@@ -192,7 +193,7 @@
     }
 }
 
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder
+- (void)reverseGeocoder:(TwitbitReverseGeocoder *)geocoder
     didFailWithError:(NSError *)error
 {
     NSLog(@"Failed to reverse geocode coordinate; %@", error);
@@ -225,7 +226,7 @@
 
     [self.reverseGeocoder cancel];
     self.reverseGeocoder =
-        [[[MKReverseGeocoder alloc] initWithCoordinate:coord] autorelease];
+        [[[TwitbitReverseGeocoder alloc] initWithCoordinate:coord] autorelease];
     self.reverseGeocoder.delegate = self;
     CoordRecentHistoryCache * coordCache = [CoordRecentHistoryCache instance];
     MKPlacemark * cachedPlacemark = [coordCache objectForKey:l];

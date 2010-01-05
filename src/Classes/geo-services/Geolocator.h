@@ -5,6 +5,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
+#import "TwitbitReverseGeocoder.h"
+#import "TwitbitReverseGeocoderDelegate.h"
 
 @protocol GeolocatorDelegate;
 
@@ -16,12 +18,12 @@
 // hardware continues to refine its coordinates.
 //
 @interface Geolocator :
-    NSObject <CLLocationManagerDelegate, MKReverseGeocoderDelegate>
+    NSObject <CLLocationManagerDelegate, TwitbitReverseGeocoderDelegate>
 {
     id<GeolocatorDelegate> delegate;
 
     CLLocationManager * locationManager;
-    MKReverseGeocoder * reverseGeocoder;
+    TwitbitReverseGeocoder * reverseGeocoder;
 }
 
 @property (nonatomic, assign) id<GeolocatorDelegate> delegate;

@@ -7,14 +7,15 @@
 #import "Geocoder.h"
 #import "GeocoderDelegate.h"
 #import "BasicMapAnnotation.h"
+#import "TwitbitReverseGeocoder.h"
 
 @interface TweetLocationCellView :
-    UIView <MKReverseGeocoderDelegate, MKMapViewDelegate>
+    UIView <TwitbitReverseGeocoderDelegate, MKMapViewDelegate>
 {
     CLLocation * location;
 
     BOOL highlighted;
-    MKReverseGeocoder * reverseGeocoder;
+    TwitbitReverseGeocoder * reverseGeocoder;
     MKMapView * mapView;
     UIActivityIndicatorView * activityIndicator;
     BasicMapAnnotation * mapAnnotation;

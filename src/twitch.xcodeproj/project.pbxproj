@@ -1109,6 +1109,8 @@
 		91E7CB9E10A392B800FEDA5D /* AccountsAvatarMask.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E7CB9C10A392B800FEDA5D /* AccountsAvatarMask.png */; };
 		91EB286910F1318400C0C1E5 /* CoordRecentHistoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EB286810F1318400C0C1E5 /* CoordRecentHistoryCache.m */; };
 		91EB286A10F1318400C0C1E5 /* CoordRecentHistoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EB286810F1318400C0C1E5 /* CoordRecentHistoryCache.m */; };
+		91EB295410F27DF900C0C1E5 /* TwitbitReverseGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EB295310F27DF900C0C1E5 /* TwitbitReverseGeocoder.m */; };
+		91EB295510F27DF900C0C1E5 /* TwitbitReverseGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EB295310F27DF900C0C1E5 /* TwitbitReverseGeocoder.m */; };
 		91FC6C45101A51F800354D67 /* PersonSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 91FC6C44101A51F800354D67 /* PersonSearch.png */; };
 		91FDD5A510616854000F7527 /* BitlyLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91FDD5A310616854000F7527 /* BitlyLogInView.xib */; };
 /* End PBXBuildFile section */
@@ -2058,6 +2060,9 @@
 		91E7CB9C10A392B800FEDA5D /* AccountsAvatarMask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountsAvatarMask.png; path = images/AccountsAvatarMask.png; sourceTree = "<group>"; };
 		91EB286710F1318400C0C1E5 /* CoordRecentHistoryCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoordRecentHistoryCache.h; path = "geo-services/CoordRecentHistoryCache.h"; sourceTree = "<group>"; };
 		91EB286810F1318400C0C1E5 /* CoordRecentHistoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CoordRecentHistoryCache.m; path = "geo-services/CoordRecentHistoryCache.m"; sourceTree = "<group>"; };
+		91EB295210F27DF900C0C1E5 /* TwitbitReverseGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitbitReverseGeocoder.h; path = "geo-services/TwitbitReverseGeocoder.h"; sourceTree = "<group>"; };
+		91EB295310F27DF900C0C1E5 /* TwitbitReverseGeocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitbitReverseGeocoder.m; path = "geo-services/TwitbitReverseGeocoder.m"; sourceTree = "<group>"; };
+		91EB295610F280A600C0C1E5 /* TwitbitReverseGeocoderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitbitReverseGeocoderDelegate.h; path = "geo-services/TwitbitReverseGeocoderDelegate.h"; sourceTree = "<group>"; };
 		91FC6C44101A51F800354D67 /* PersonSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PersonSearch.png; path = images/PersonSearch.png; sourceTree = "<group>"; };
 		91FDD58B1061581C000F7527 /* BitlyLogInDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitlyLogInDisplayMgr.h; path = bitly/BitlyLogInDisplayMgr.h; sourceTree = "<group>"; };
 		91FDD58C1061581C000F7527 /* BitlyLogInDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BitlyLogInDisplayMgr.m; path = bitly/BitlyLogInDisplayMgr.m; sourceTree = "<group>"; };
@@ -3561,6 +3566,9 @@
 				05295D9510BB0DAB0008BB7F /* Geolocator.m */,
 				0525DE5110BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.h */,
 				0525DE5210BB72FB00F9D69F /* MKPlacemark+GeneralHelpers.m */,
+				91EB295210F27DF900C0C1E5 /* TwitbitReverseGeocoder.h */,
+				91EB295310F27DF900C0C1E5 /* TwitbitReverseGeocoder.m */,
+				91EB295610F280A600C0C1E5 /* TwitbitReverseGeocoderDelegate.h */,
 			);
 			name = "geo-services";
 			sourceTree = "<group>";
@@ -4412,6 +4420,7 @@
 				05EBDBB010D70BD600C1B7A8 /* JsonObjectFilter.m in Sources */,
 				05D088C410DA7C1A00089D43 /* v2.1-v2.3.xcmappingmodel in Sources */,
 				91EB286910F1318400C0C1E5 /* CoordRecentHistoryCache.m in Sources */,
+				91EB295410F27DF900C0C1E5 /* TwitbitReverseGeocoder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4764,6 +4773,7 @@
 				05EBDBAF10D70BD600C1B7A8 /* JsonObjectFilter.m in Sources */,
 				05D088C510DA7C1A00089D43 /* v2.1-v2.3.xcmappingmodel in Sources */,
 				91EB286A10F1318400C0C1E5 /* CoordRecentHistoryCache.m in Sources */,
+				91EB295510F27DF900C0C1E5 /* TwitbitReverseGeocoder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

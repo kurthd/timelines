@@ -37,7 +37,7 @@ enum {
 @property (nonatomic, readonly) ButtonCell * directionsFromCell;
 @property (nonatomic, readonly) UITableViewCell * searchLocationCell;
 @property (nonatomic, readonly) UITableViewCell * nearbyTweetsCell;
-@property (nonatomic, retain) MKReverseGeocoder * reverseGeocoder;
+@property (nonatomic, retain) TwitbitReverseGeocoder * reverseGeocoder;
 
 @property (nonatomic, readonly) MKMapView * mapView;
 @property (nonatomic, readonly) BasicMapAnnotation * mapAnnotation;
@@ -240,9 +240,9 @@ enum {
     return cell;
 }
 
-#pragma mark MKReverseGeocoderDelegate implementation
+#pragma mark TwitbitReverseGeocoderDelegate implementation
 
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder
+- (void)reverseGeocoder:(TwitbitReverseGeocoder *)geocoder
     didFindPlacemark:(MKPlacemark *)placemark
 {
     foundAddress = YES;
@@ -275,7 +275,7 @@ enum {
     [self.tableView reloadData];
 }
 
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder
+- (void)reverseGeocoder:(TwitbitReverseGeocoder *)geocoder
     didFailWithError:(NSError *)error
 {
     foundAddress = NO;
@@ -334,7 +334,7 @@ enum {
     [self.addressCell setLoading];
     [self.reverseGeocoder cancel];
     self.reverseGeocoder =
-        [[[MKReverseGeocoder alloc] initWithCoordinate:coordinate] autorelease];
+        [[[TwitbitReverseGeocoder alloc] initWithCoordinate:coordinate] autorelease];
     self.reverseGeocoder.delegate = self;
     CoordRecentHistoryCache * coordCache = [CoordRecentHistoryCache instance];
     CLLocation * coordAsLocation =
