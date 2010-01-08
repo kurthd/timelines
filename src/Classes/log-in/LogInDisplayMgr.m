@@ -190,13 +190,13 @@
 
 - (void)statusesReceived:(NSArray *)statuses forRequest:(NSString *)identifier
 {
-    NSLog(@"Statuses recieved for request '%@': %@", identifier, statuses);
+    NSLog(@"Statuses received for request '%@': %@", identifier, statuses);
 }
 
 - (void)directMessagesReceived:(NSArray *)messages
                     forRequest:(NSString *)identifier
 {
-    NSLog(@"Direct messages recieved for request '%@': %@", identifier,
+    NSLog(@"Direct messages received for request '%@': %@", identifier,
         messages);
 }
 
