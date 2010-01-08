@@ -52,7 +52,7 @@ static NSMutableDictionary * stateAbbreviationMapping;
     if (!canceled) {
         querying = NO;
         NSString * response =
-            [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]
+            [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]
             autorelease];
         NSLog(@"Received reverse geocode response: %@", response);
         NSError * error = nil;
@@ -96,8 +96,13 @@ static NSMutableDictionary * stateAbbreviationMapping;
             NSString * subAdministrativeAreaName =
                 [subAdministrativeAreaDict
                 objectForKey:@"SubAdministrativeAreaName"];
+            // locality could be under administrative area, or
+            // sub-administrative area
             NSDictionary * localityDict =
                 [subAdministrativeAreaDict objectForKey:@"Locality"];
+            if (!localityDict && administrativeAreaDict)
+                localityDict =
+                [administrativeAreaDict objectForKey:@"Locality"];
             NSString * localityName =
                 [localityDict objectForKey:@"LocalityName"];
             NSDictionary * postalCodeDict =
@@ -106,6 +111,14 @@ static NSMutableDictionary * stateAbbreviationMapping;
                 [postalCodeDict objectForKey:@"PostalCodeNumber"];
             NSDictionary * thoroughfareDict =
                 [localityDict objectForKey:@"Thoroughfare"];
+            if (!thoroughfareDict)
+                thoroughfareDict =
+                    [subAdministrativeAreaDict objectForKey:@"Thoroughfare"];
+            if (!thoroughfareDict && administrativeAreaDict)
+                thoroughfareDict =
+                    [administrativeAreaDict objectForKey:@"Thoroughfare"];
+            if (!thoroughfareDict)
+                thoroughfareDict = [countryDict objectForKey:@"Thoroughfare"];
             NSString * thoroughfareName =
                 [thoroughfareDict objectForKey:@"ThoroughfareName"];
             NSString * addressBookSubThoroughfareName =

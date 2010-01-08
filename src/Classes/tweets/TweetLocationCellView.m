@@ -182,11 +182,13 @@
         placemark.administrativeArea ? placemark.administrativeArea :
         placemark.country;
     self.locationDescription =
+        placemark.locality ?
         [NSString stringWithFormat:@"%@, %@", placemark.locality,
-        administrativeArea];
+        administrativeArea] :
+        administrativeArea;
 
     [self setNeedsDisplay];
-    
+
     if (geocoder) { // not from the cache
         CoordRecentHistoryCache * coordCache =
             [CoordRecentHistoryCache instance];
