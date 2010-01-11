@@ -242,7 +242,7 @@
     
     self.nextWrapperController.navigationItem.rightBarButtonItem = sendDMButton;
 
-    wrapperController.delegate = self.timelineDisplayMgr;
+    self.nextWrapperController.delegate = self.timelineDisplayMgr;
     
     TwitterService * twitterService =
         [[[TwitterService alloc] initWithTwitterCredentials:nil
