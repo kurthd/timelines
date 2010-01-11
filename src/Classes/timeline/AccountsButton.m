@@ -39,7 +39,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-#define OFFSET 20
+#define OFFSET 19
 #define AVATAR_WIDTH 27
 
     CGContextClearRect(UIGraphicsGetCurrentContext(), rect);
@@ -49,7 +49,7 @@
     CGPoint point;
     CGSize size;
 
-    UIFont * usernameFont = [UIFont boldSystemFontOfSize:21.0];
+    UIFont * usernameFont = [UIFont boldSystemFontOfSize:20.0];
 
     UIColor * usernameShadowColor =
         [SettingsReader displayTheme] == kDisplayThemeDark ?
@@ -62,7 +62,7 @@
     NSInteger baseX = (contentRect.size.width - size.width + OFFSET ) / 2;
 
     [usernameShadowColor set];
-    point = CGPointMake(baseX, 1);
+    point = CGPointMake(baseX, 3);
 
 	[username drawAtPoint:point forWidth:150
 	    withFont:usernameFont minFontSize:18
@@ -70,7 +70,7 @@
 	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
 
     [usernameColor set];
-    point = CGPointMake(baseX, 2);
+    point = CGPointMake(baseX, 4);
 
 	[username drawAtPoint:point forWidth:150
 	    withFont:usernameFont minFontSize:18
@@ -78,21 +78,21 @@
 	    baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
 
     CGRect dropDownArrowRect =
-        CGRectMake((contentRect.size.width + size.width + OFFSET) / 2 + 3, 9,
+        CGRectMake((contentRect.size.width + size.width + OFFSET) / 2 + 3, 10,
         14, 14);
     if (self.highlighted)
         [self.highlightedDropDownArrow drawInRect:dropDownArrowRect];
     else
         [self.dropDownArrow drawInRect:dropDownArrowRect];
 
-    CGRect avatarBackgroundRect = CGRectMake(baseX - 41, 0, 33, 33);
+    CGRect avatarBackgroundRect = CGRectMake(baseX - 39, 0, 33, 33);
     [self.avatarBackground drawInRect:avatarBackgroundRect];
 
-    self.highlightedAvatarMask.frame = CGRectMake(baseX - 40, 1, 31, 31);
+    self.highlightedAvatarMask.frame = CGRectMake(baseX - 38, 1, 31, 31);
     self.highlightedAvatarMask.hidden = !self.highlighted;
 
     CGRect avatarFrame = self.avatar.frame;
-    avatarFrame.origin.x = baseX - 38;
+    avatarFrame.origin.x = baseX - 36;
     self.avatar.frame = avatarFrame;
 
     if (newUser) {
