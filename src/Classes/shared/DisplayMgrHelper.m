@@ -260,7 +260,7 @@
     
     twitterService.delegate = dataSource;
     [self.timelineDisplayMgr setService:dataSource tweets:nil page:1
-        forceRefresh:NO allPagesLoaded:NO];
+        forceRefresh:NO allPagesLoaded:NO verticalOffset:0];
     dataSource.delegate = self.timelineDisplayMgr;
 
     [dataSource setCredentials:credentials];

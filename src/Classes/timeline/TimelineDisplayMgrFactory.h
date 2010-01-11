@@ -28,5 +28,5 @@
     navigationController:(UINavigationController *)navigationController
     title:(NSString *)title
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr;
-    
+
 @end

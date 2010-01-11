@@ -24,6 +24,7 @@
 + (NSString *)currentlyViewedTweetIdKey;
 + (NSString *)currentlyViewedMentionIdKey;
 + (NSString *)currentlyViewedMessageIdKey;
++ (NSString *)timelineContentOffsetKey;
 
 @end
 
@@ -68,6 +69,9 @@
         [dict objectForKey:[[self class] currentlyViewedMentionIdKey]];
     NSNumber * currentlyViewedMessageId =
         [dict objectForKey:[[self class] currentlyViewedMessageIdKey]];
+    NSUInteger timelineContentOffset =
+        [[dict objectForKey:[[self class] timelineContentOffsetKey]]
+        unsignedIntValue];
     state.selectedTab = selectedTab;
     state.selectedTimelineFeed = selectedTimelineFeed;
     state.tabOrder = tabOrder;
@@ -84,6 +88,7 @@
     state.currentlyViewedTweetId = currentlyViewedTweetId;
     state.currentlyViewedMentionId = currentlyViewedMentionId;
     state.currentlyViewedMessageId = currentlyViewedMessageId;
+    state.timelineContentOffset = timelineContentOffset;
 
     return state;
 }
@@ -148,6 +153,11 @@
     if (state.currentlyViewedMessageId)
         [dict setObject:state.currentlyViewedMessageId
             forKey:[[self class] currentlyViewedMessageIdKey]];
+
+    NSNumber * timelineContentOffset =
+        [NSNumber numberWithUnsignedInt:state.timelineContentOffset];
+    [dict setObject:timelineContentOffset
+        forKey:[[self class] timelineContentOffsetKey]];
 
     [PlistUtils saveDictionary:dict toPlist:[[self class] plistName]];
 }
@@ -235,6 +245,11 @@
 + (NSString *)currentlyViewedMessageIdKey
 {
     return @"currentlyViewedMessageId";
+}
+
++ (NSString *)timelineContentOffsetKey
+{
+    return @"timelineContentOffset";
 }
 
 @end

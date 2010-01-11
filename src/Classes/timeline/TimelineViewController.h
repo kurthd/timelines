@@ -70,6 +70,9 @@
 - (void)setUser:(User *)user;
 - (void)setTweets:(NSArray *)tweets page:(NSUInteger)page
     visibleTweetId:(NSNumber *)visibleTweetId;
+- (void)setTweets:(NSArray *)tweets page:(NSUInteger)page
+    verticalOffset:(CGFloat)verticalOffset;
+- (void)setWithoutScrollingTweets:(NSArray *)tweets page:(NSUInteger)page;
 - (void)setAllPagesLoaded:(BOOL)allLoaded;
 - (void)selectTweetId:(NSString *)tweetId;
 
@@ -79,6 +82,8 @@
 - (void)addTweet:(Tweet *)tweet;
 - (void)deleteTweet:(NSString *)tweetId;
 - (NSNumber *)mostRecentTweetId;
+
+- (CGFloat)contentHeight;
 
 // HACK: Exposed to allow for "Save Search" button
 - (void)setTimelineHeaderView:(UIView *)aView;

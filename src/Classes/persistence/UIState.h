@@ -28,6 +28,8 @@
     NSNumber * currentlyViewedTweetId;
     NSNumber * currentlyViewedMentionId;
     NSNumber * currentlyViewedMessageId;
+
+    NSUInteger timelineContentOffset;
 }
 
 @property (nonatomic, assign) NSUInteger selectedTab;
@@ -53,5 +55,7 @@
 @property (nonatomic, copy) NSNumber * currentlyViewedTweetId;
 @property (nonatomic, copy) NSNumber * currentlyViewedMentionId;
 @property (nonatomic, copy) NSNumber * currentlyViewedMessageId;
+
+@property (nonatomic, assign) NSUInteger timelineContentOffset;
 
 @end

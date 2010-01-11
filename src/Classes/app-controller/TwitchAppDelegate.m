@@ -639,6 +639,10 @@ enum {
 
         [self setTimelineTitleView];
     }
+    
+    CGFloat offset = uiState.timelineContentOffset;
+    if (offset > 44 && offset < [timelineDisplayMgr timelineContentHeight])
+        [timelineDisplayMgr setTableViewContentOffset:offset];
 }
 
 - (void)setTimelineTitleView
@@ -2277,6 +2281,8 @@ enum {
     uiState.currentlyViewedMentionId = mentionDisplayMgr.currentlyViewedTweetId;
     uiState.currentlyViewedMessageId =
         directMessageDisplayMgr.currentlyViewedMessageId;
+
+    uiState.timelineContentOffset = [timelineDisplayMgr tableViewContentOffset];
 
     [uiStatePersistenceStore save:uiState];
 

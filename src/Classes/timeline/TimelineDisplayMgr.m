@@ -191,15 +191,18 @@
             [service fetchUserInfoForUsername:self.currentUsername];
     }
 
-    BOOL scrollToTop = [SettingsReader scrollToTop];
-    NSNumber * scrollId = scrollToTop ? anUpdateId : self.tweetIdToShow;
+    BOOL scrollToTop = [SettingsReader scrollToTop] || setUserToFirstTweeter;
     if (self.refreshButton)
         [wrapperController.navigationItem
             setLeftBarButtonItem:self.refreshButton
             animated:YES];
     [wrapperController setCachedDataAvailable:YES];
-    [timelineController setTweets:[timeline allValues] page:pagesShown
-        visibleTweetId:scrollId];
+    if (scrollToTop)
+        [timelineController setTweets:[timeline allValues] page:pagesShown
+            visibleTweetId:anUpdateId];
+    else
+        [timelineController setWithoutScrollingTweets:[timeline allValues]
+            page:pagesShown];
     refreshingTweets = NO;
     [[ErrorState instance] exitErrorState];
     firstFetchReceived = YES;
@@ -340,8 +343,8 @@
     [self.tweetDetailsController.tableView setContentOffset:CGPointMake(0, 300)
         animated:NO];
 
-    NSLog(@"Timeline display manager: selected tweet: %@: %@",
-        tweet.user.username, tweet.text);
+    NSLog(@"Timeline display manager: selected tweet(%@): %@: %@",
+        tweet.identifier, tweet.user.username, tweet.text);
     self.selectedTweet = tweet;
 
     BOOL tweetByUser = [tweet.user.username isEqual:credentials.username];
@@ -654,6 +657,22 @@
         NSLog(@"Timeline display manager: not updating due to nil credentials");
 }
 
+- (CGFloat)tableViewContentOffset
+{
+    return self.timelineController.tableView.contentOffset.y;
+}
+
+- (void)setTableViewContentOffset:(CGFloat)contentOffset
+{
+    CGPoint offset = CGPointMake(0, contentOffset);
+    [self.timelineController.tableView setContentOffset:offset animated:NO];
+}
+
+- (CGFloat)timelineContentHeight
+{
+    return [self.timelineController contentHeight];
+}
+
 - (void)addTweet:(Tweet *)tweet
 {
     NSLog(@"Timeline display manager: adding tweet");
@@ -782,6 +801,18 @@
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page
     forceRefresh:(BOOL)refresh allPagesLoaded:(BOOL)newAllPagesLoaded
 {
+    CGFloat headerHeight =
+        timelineController.tableView.tableHeaderView.frame.size.height;
+    [self setService:aTimelineSource tweets:someTweets page:page
+        forceRefresh:refresh allPagesLoaded:newAllPagesLoaded
+        verticalOffset:headerHeight];
+}
+
+- (void)setService:(NSObject<TimelineDataSource> *)aTimelineSource
+    tweets:(NSDictionary *)someTweets page:(NSUInteger)page
+    forceRefresh:(BOOL)refresh allPagesLoaded:(BOOL)newAllPagesLoaded
+    verticalOffset:(CGFloat)verticalOffset
+{
     NSLog(@"Setting service; page: %d", page);
     [aTimelineSource retain];
     [timelineSource release];
@@ -806,12 +837,8 @@
 
     [aTimelineSource setCredentials:credentials];
 
-    // HACK: forces timeline to scroll to top
-    [timelineController.tableView setContentOffset:CGPointMake(0, 300)
-        animated:NO];
-
     [timelineController setTweets:[timeline allValues] page:pagesShown
-        visibleTweetId:self.tweetIdToShow];
+        verticalOffset:verticalOffset];
     [timelineController setAllPagesLoaded:allPagesLoaded];
 
     if (refresh || [[someTweets allKeys] count] == 0) {
@@ -846,7 +873,8 @@
         [service setCredentials:nil];
 
         [timeline removeAllObjects];
-        [timelineController setTweets:[NSArray array] page:0 visibleTweetId:nil];
+        [timelineController setTweets:[NSArray array] page:0
+            visibleTweetId:nil];
 
         [credentials release];
         credentials = nil;
@@ -903,7 +931,6 @@
         needsRefresh = YES;
         pagesShown = 1;
 
-        // HACK: forces timeline to scroll to top
         [timelineController.tableView setContentOffset:CGPointMake(0, 300)
             animated:NO];
     } else if (hasBeenDisplayed) {// set for first time and persisted data shown

@@ -24,6 +24,10 @@
 @property (nonatomic, copy) NSArray * filteredTweets;
 @property (nonatomic, readonly) UITableViewCell * adCell;
 
+- (BOOL)setTweets:(NSArray *)tweets page:(NSUInteger)page;
+
+- (CGFloat)heightForTweet:(Tweet *)tweet;
+
 - (UIImage *)getLargeAvatarForUser:(User *)aUser;
 - (UIImage *)getThumbnailAvatarForUser:(User *)aUser;
 - (UIImage *)convertUrlToImage:(NSString *)url;
@@ -264,22 +268,27 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         aTableView != self.tableView) {
 
         Tweet * tweet = [self tweetAtIndex:indexPath inTableView:aTableView];
-        Tweet * displayTweet = tweet.retweet ? tweet.retweet : tweet;
-        NSString * tweetText = displayTweet.text;
-        FastTimelineTableViewCellDisplayType displayType =
-            showWithoutAvatars ?
-            FastTimelineTableViewCellDisplayTypeNoAvatar :
-            FastTimelineTableViewCellDisplayTypeNormal;
-        BOOL landscape = [[RotatableTabBarController instance] landscape];
-
-        height =
-            [FastTimelineTableViewCell
-            heightForContent:tweetText retweet:!!tweet.retweet
-            displayType:displayType landscape:landscape];
+        height = [self heightForTweet:tweet];
     } else
         height = 49; // ad row
 
     return height;
+}
+
+- (CGFloat)heightForTweet:(Tweet *)tweet
+{
+    Tweet * displayTweet = tweet.retweet ? tweet.retweet : tweet;
+    NSString * tweetText = displayTweet.text;
+    FastTimelineTableViewCellDisplayType displayType =
+        showWithoutAvatars ?
+        FastTimelineTableViewCellDisplayTypeNoAvatar :
+        FastTimelineTableViewCellDisplayTypeNormal;
+    BOOL landscape = [[RotatableTabBarController instance] landscape];
+
+    return
+        [FastTimelineTableViewCell
+        heightForContent:tweetText retweet:!!tweet.retweet
+        displayType:displayType landscape:landscape];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -412,35 +421,11 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)setTweets:(NSArray *)someTweets page:(NSUInteger)page
     visibleTweetId:(NSNumber *)aVisibleTweetId
 {
-    NSLog(@"Setting %d tweets on timeline; page: %d", [someTweets count], page);
+    NSLog(@"Setting tweets with visible tweet id");
+    BOOL firstDisplay = [self setTweets:someTweets page:page];
+
     if (aVisibleTweetId && !self.visibleTweetId)
         self.visibleTweetId = aVisibleTweetId;
-
-    BOOL firstDisplay = !tweets;
-
-    self.sortedTweetCache = nil;
-    NSArray * tempTweets = [someTweets copy];
-    [tweets release];
-    tweets = tempTweets;
-
-    NSString * showingMultPagesFormatString =
-        NSLocalizedString(@"timelineview.showingmultiplepages", @"");
-    NSString * showingSinglePageFormatString =
-        NSLocalizedString(@"timelineview.showingsinglepage", @"");
-    currentPagesLabel.text =
-        page > 1 ?
-        [NSString stringWithFormat:showingMultPagesFormatString, page] :
-        showingSinglePageFormatString;
-
-    [self.tableView reloadData];
-
-    UIColor * buttonColor =
-        [SettingsReader displayTheme] == kDisplayThemeDark ?
-        [UIColor twitchBlueOnDarkBackgroundColor] : [UIColor twitchBlueColor];
-        
-    [loadMoreButton setTitleColor:buttonColor forState:UIControlStateNormal];
-    loadMoreButton.enabled = YES;
-    [loadingMoreIndicator stopAnimating];
 
     if (aVisibleTweetId) {
         NSLog(@"Scrolling to visible tweet id %@", aVisibleTweetId);
@@ -474,6 +459,112 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         [self.tableView scrollToRowAtIndexPath:scrollIndexPath
             atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
+}
+
+- (void)setTweets:(NSArray *)someTweets page:(NSUInteger)page
+    verticalOffset:(CGFloat)verticalOffset
+{
+    [self setTweets:someTweets page:page];
+
+    CGFloat heightOfCurrentTweets = 0;
+    for (Tweet * tweet in someTweets)
+        heightOfCurrentTweets += [self heightForTweet:tweet];
+
+    if (verticalOffset < heightOfCurrentTweets) {
+        CGPoint newContentOffset = CGPointMake(0, verticalOffset);
+        [self.tableView setContentOffset:newContentOffset animated:NO];
+    } else if ([someTweets count] > 0) {
+        CGFloat row = [SettingsReader showAds] ? 1 : 0;
+        NSIndexPath * scrollIndexPath =
+            [NSIndexPath indexPathForRow:row inSection:0];
+        [self.tableView scrollToRowAtIndexPath:scrollIndexPath
+            atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    } else {
+        CGPoint newContentOffset = CGPointMake(0, 0);
+        [self.tableView setContentOffset:newContentOffset animated:NO];
+    }
+
+    if (!flashingScrollIndicators)
+        [self.tableView flashScrollIndicators];
+}
+
+- (void)setWithoutScrollingTweets:(NSArray *)someTweets page:(NSUInteger)page
+{
+    NSNumber * mostRecentTweetId = [self mostRecentTweetId];
+    CGFloat previousVerticalOffset = self.tableView.contentOffset.y;
+
+    BOOL firstDisplay = [self setTweets:someTweets page:page];
+
+    if (!firstDisplay) {
+        NSInteger tweetsCount = [[self sortedTweets] count];
+        
+        NSInteger startOfNewTweetsIndex = - 1;
+        for (NSInteger i = 0; i < tweetsCount; i++) {
+            Tweet * tweet = [[self sortedTweets] objectAtIndex:i];
+            if ([tweet.identifier isEqual:mostRecentTweetId])
+                break;
+            startOfNewTweetsIndex++;
+        }
+        
+        CGFloat heightOfNewTweets = 0;
+        for (NSInteger i = 0; i <= startOfNewTweetsIndex; i++) {
+            Tweet * tweet = [[self sortedTweets] objectAtIndex:i];
+            heightOfNewTweets += [self heightForTweet:tweet];
+        }
+        
+        CGFloat heightOfCurrentTweets = heightOfNewTweets;
+        for (NSInteger i = startOfNewTweetsIndex + 1; i < tweetsCount; i++) {
+            Tweet * tweet = [[self sortedTweets] objectAtIndex:i];
+            heightOfCurrentTweets += [self heightForTweet:tweet];
+        }
+        CGFloat newVerticalOffset = previousVerticalOffset + heightOfNewTweets;
+        if (newVerticalOffset < heightOfCurrentTweets) {
+            CGPoint newContentOffset = CGPointMake(0, newVerticalOffset);
+            [self.tableView setContentOffset:newContentOffset animated:NO];
+        } else {
+            CGFloat row = [SettingsReader showAds] ? 1 : 0;
+            NSIndexPath * scrollIndexPath =
+                [NSIndexPath indexPathForRow:row inSection:0];
+            [self.tableView scrollToRowAtIndexPath:scrollIndexPath
+                atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        }
+        
+        if (!flashingScrollIndicators)
+            [self.tableView flashScrollIndicators];
+    }
+}
+
+- (BOOL)setTweets:(NSArray *)someTweets page:(NSUInteger)page
+{
+    NSLog(@"Setting %d tweets on timeline; page: %d", [someTweets count], page);
+
+    BOOL firstDisplay = !tweets;
+
+    self.sortedTweetCache = nil;
+    NSArray * tempTweets = [someTweets copy];
+    [tweets release];
+    tweets = tempTweets;
+
+    NSString * showingMultPagesFormatString =
+        NSLocalizedString(@"timelineview.showingmultiplepages", @"");
+    NSString * showingSinglePageFormatString =
+        NSLocalizedString(@"timelineview.showingsinglepage", @"");
+    currentPagesLabel.text =
+        page > 1 ?
+        [NSString stringWithFormat:showingMultPagesFormatString, page] :
+        showingSinglePageFormatString;
+
+    [self.tableView reloadData];
+
+    UIColor * buttonColor =
+        [SettingsReader displayTheme] == kDisplayThemeDark ?
+        [UIColor twitchBlueOnDarkBackgroundColor] : [UIColor twitchBlueColor];
+        
+    [loadMoreButton setTitleColor:buttonColor forState:UIControlStateNormal];
+    loadMoreButton.enabled = YES;
+    [loadingMoreIndicator stopAnimating];
+    
+    return firstDisplay;
 }
 
 - (void)selectTweetId:(NSString *)tweetId
@@ -619,6 +710,16 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         mostRecentId = nil;
 
     return mostRecentId;
+}
+
+- (CGFloat)contentHeight
+{
+    CGFloat totalContentHeight =
+        self.tableView.tableHeaderView.frame.size.height;
+    for (Tweet * tweet in [self sortedTweets])
+        totalContentHeight += [self heightForTweet:tweet];
+
+    return totalContentHeight;
 }
 
 // HACK: Exposed to allow for "Save Search" button

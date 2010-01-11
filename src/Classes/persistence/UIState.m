@@ -10,6 +10,6 @@
     selectedSearchBookmarkIndex, selectedPeopleBookmarkIndex, findPeopleText,
     searchText, nearbySearch, composingTweet, directMessageRecipient,
     viewingUrl, viewingHtml, currentlyViewedTweetId, currentlyViewedMentionId,
-    currentlyViewedMessageId;
+    currentlyViewedMessageId, timelineContentOffset;
 
 @end

@@ -138,11 +138,19 @@
 - (void)setService:(NSObject<TimelineDataSource> *)aService
     tweets:(NSDictionary *)someTweets page:(NSUInteger)page
     forceRefresh:(BOOL)refresh allPagesLoaded:(BOOL)allPagesLoaded;
+- (void)setService:(NSObject<TimelineDataSource> *)aTimelineSource
+    tweets:(NSDictionary *)someTweets page:(NSUInteger)page
+    forceRefresh:(BOOL)refresh allPagesLoaded:(BOOL)newAllPagesLoaded
+    verticalOffset:(CGFloat)verticalOffset;
 - (void)setTweets:(NSDictionary *)someTweets;
 - (void)setCredentials:(TwitterCredentials *)credentials;
 - (void)replyToTweet;
 - (void)refreshWithLatest;
 - (void)refreshWithCurrentPages;
+
+- (CGFloat)tableViewContentOffset;
+- (void)setTableViewContentOffset:(CGFloat)offset;
+- (CGFloat)timelineContentHeight;
 
 - (void)addTweet:(Tweet *)tweet;
 

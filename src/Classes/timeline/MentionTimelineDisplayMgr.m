@@ -188,10 +188,12 @@
 
     receivedQueryResponse = YES;
 
-    BOOL scrollToTop = [SettingsReader scrollToTop];
-    NSNumber * scrollId = scrollToTop ? updateId : self.mentionIdToShow;
-    [timelineController setTweets:[mentions allValues] page:pagesShown
-        visibleTweetId:scrollId];
+    if ([SettingsReader scrollToTop])
+        [timelineController setTweets:[mentions allValues] page:pagesShown
+            visibleTweetId:updateId];
+    else
+        [timelineController setWithoutScrollingTweets:[mentions allValues]
+            page:pagesShown];
 
     [self updateViewWithNewMentions];
 
