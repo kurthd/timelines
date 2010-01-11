@@ -1858,7 +1858,9 @@ enum {
         [NSPredicate predicateWithFormat:@"credentials.username == %@",
         account.username];
 
-    NSArray * paths = [NSArray arrayWithObjects:@"user", @"user.avatar", nil];
+    NSArray * paths =
+        [NSArray arrayWithObjects:@"user", @"user.avatar", @"retweet",
+        @"retweet.user", @"retweet.user.avatar", nil];
     NSArray * allTweets = [UserTweet findAll:predicate
                                      context:context
                           prefetchedKeyPaths:paths];
