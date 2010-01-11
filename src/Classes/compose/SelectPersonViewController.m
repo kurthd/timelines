@@ -13,6 +13,8 @@
 
 @property (nonatomic, copy) NSArray * people;
 @property (nonatomic, copy) NSArray * filteredPeople;
+@property (nonatomic, retain) NSMutableArray * sectionTitles;
+@property (nonatomic, retain) NSMutableDictionary * peopleInSections;
 
 - (void)initializeNavigationItem;
 
@@ -26,7 +28,7 @@
 
 @implementation SelectPersonViewController
 
-@synthesize delegate, people, filteredPeople;
+@synthesize delegate, people, filteredPeople, sectionTitles, peopleInSections;
 
 - (void)dealloc
 {
@@ -34,6 +36,7 @@
 
     self.people = nil;
     self.filteredPeople = nil;
+    self.sectionTitles = nil;
 
     [super dealloc];
 }
@@ -42,8 +45,11 @@
 
 - (id)initWithDelegate:(id<SelectPersonViewControllerDelegate>)aDelegate
 {
-    if (self = [super initWithNibName:@"SelectPersonView" bundle:nil])
+    if (self = [super initWithNibName:@"SelectPersonView" bundle:nil]) {
         self.delegate = aDelegate;
+        self.sectionTitles = [NSMutableArray array];
+        self.peopleInSections = [NSMutableDictionary dictionary];
+    }
 
     return self;
 }
@@ -53,6 +59,24 @@
 - (void)displayPeople:(NSArray *)somePeople
 {
     self.people = somePeople;
+
+    [self.sectionTitles removeAllObjects];
+    [self.peopleInSections removeAllObjects];
+    NSString * currentTitle = nil;
+    for (User * user in somePeople) {
+        NSString * firstChar = [user.username length] > 0 ?
+            [[user.username substringToIndex:1] capitalizedString] : @"";
+        NSMutableArray * users;
+        if (![currentTitle isEqual:firstChar]) {
+            currentTitle = firstChar;
+            [self.sectionTitles addObject:currentTitle];
+            users = [NSMutableArray array];
+            [self.peopleInSections setObject:users forKey:currentTitle];
+        }
+        users = [self.peopleInSections objectForKey:currentTitle];
+        [users addObject:user];
+    }
+
     [self.tableView reloadData];
 }
 
@@ -85,7 +109,14 @@
 - (NSInteger)tableView:(UITableView *)tv
  numberOfRowsInSection:(NSInteger)section
 {
-    return tv == self.tableView ? self.people.count : self.filteredPeople.count;
+    NSString * sectionTitle =
+        [self.sectionTitles objectAtIndex:section];
+    NSArray * array =
+        tv == self.tableView ?
+        [self.peopleInSections objectForKey:sectionTitle] :
+        self.filteredPeople;
+
+    return [array count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv
@@ -117,6 +148,29 @@
     cell.imageView.image = [[self class] avatarByResizingIfNecessary:avatar];
 
     return cell;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tv
+{
+    return tv == self.tableView ? [self.sectionTitles count] : 1;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tv
+{
+    return tv == self.tableView ? self.sectionTitles : nil;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+    sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+    return index;
+}
+
+- (NSString *)tableView:(UITableView *)tv
+    titleForHeaderInSection:(NSInteger)section
+{
+    return tv == self.tableView ?
+        [self.sectionTitles objectAtIndex:section] : nil;
 }
 
 #pragma mark UITableViewDelegate implementation
@@ -208,7 +262,13 @@
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath
             inTableView:(UITableView *)tv
 {
-    NSArray * array = tv == self.tableView ? self.people : self.filteredPeople;
+    NSString * sectionTitle =
+        [self.sectionTitles objectAtIndex:indexPath.section];
+    NSArray * array =
+        tv == self.tableView ?
+        [self.peopleInSections objectForKey:sectionTitle] :
+        self.filteredPeople;
+
     return [array objectAtIndex:indexPath.row];
 }
 

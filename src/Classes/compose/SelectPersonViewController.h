@@ -16,6 +16,9 @@
 
     NSArray * people;
     NSArray * filteredPeople;
+
+    NSMutableArray * sectionTitles;
+    NSMutableDictionary * peopleInSections;
 }
 
 @property (nonatomic, assign) id<SelectPersonViewControllerDelegate> delegate;
