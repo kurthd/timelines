@@ -669,7 +669,7 @@ static NSMutableDictionary * oaTokens;
 
 - (void)statusesReceived:(NSArray *)statuses forRequest:(NSString *)requestId
 {
-    NSLog(@"Recieved %d statuses for request '%@'", statuses.count, requestId);
+    NSLog(@"Received %d statuses for request '%@'", statuses.count, requestId);
     [self request:requestId succeededWithResponse:statuses];
     [self cleanUpRequest:requestId];
 }
