@@ -538,7 +538,7 @@ static UIImage * highlightedRetweetGlyph;
     }
     
     //
-    // Draw the geocode inidcator
+    // Draw the geocode indicator
     //
     if (geocoded) {
         CGFloat favoriteAdjustment = favorite ? 22 : 7;
