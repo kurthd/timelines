@@ -106,7 +106,7 @@ static UIImage * highlightedRetweetGlyph;
     //
     // Fonts
     //
-    authorFont = [[UIFont boldSystemFontOfSize:16.0] retain];
+    authorFont = [[UIFont boldSystemFontOfSize:15.0] retain];
     timestampFont = [[UIFont systemFontOfSize:12.5] retain];
     timestampBoldFont = [[UIFont boldSystemFontOfSize:14.0] retain];
     textFont = [[UIFont systemFontOfSize:14.0] retain];
@@ -164,13 +164,13 @@ static UIImage * highlightedRetweetGlyph;
 - (void)drawRectNormal:(CGRect)rect
 {
     static const CGFloat TIMESTAMP_RIGHT_MARGIN = 8.0;
-    static const CGFloat TIMESTAMP_TOP_MARGIN = 8.0;
+    static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat AUTHOR_TOP_MARGIN = 4.0;
     static const CGFloat AUTHOR_LEFT_MARGIN = 62.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 62.0;
-    static const CGFloat TEXT_TOP_MARGIN = 25.0;
+    static const CGFloat TEXT_TOP_MARGIN = 24.0;
 
     const CGFloat AVATAR_LEFT_MARGIN = 7.0;
     const CGFloat AVATAR_TOP_MARGIN = 7.0;
@@ -233,7 +233,7 @@ static UIImage * highlightedRetweetGlyph;
     if (favorite)
         padding += 14.0;
     if (geocoded)
-        padding += 9.0;
+        padding += 11.0;
 
     CGSize authorLabelSize = size =
         CGSizeMake(point.x - padding - AUTHOR_LEFT_MARGIN,
@@ -261,14 +261,14 @@ static UIImage * highlightedRetweetGlyph;
     }
 
     //
-    // Draw the retweet inidcator
+    // Draw the geocode inidcator
     //
     if (geocoded) {
         CGFloat favoriteAdjustment = favorite ? 17 : 2;
         point =
             CGPointMake(
             AUTHOR_LEFT_MARGIN + authorLabelSize.width + favoriteAdjustment,
-            AUTHOR_TOP_MARGIN + 4);
+            AUTHOR_TOP_MARGIN + 3);
         UIImage * geocodeGlyph =
             self.highlighted ?
             [[self class] highlightedGeocodeGlyph] :
@@ -309,7 +309,7 @@ static UIImage * highlightedRetweetGlyph;
         // draw format string
         [[self retweetTextColor] set];
         point = CGPointMake(
-            point.x + retweetGlyph.size.width + 2,
+            point.x + retweetGlyph.size.width + 4,
             size.height + TEXT_TOP_MARGIN + 2);
         [[[self class] retweetFormatString] drawAtPoint:point
             withFont:retweetFormatFont];
@@ -337,10 +337,10 @@ static UIImage * highlightedRetweetGlyph;
 - (void)drawRectInverted:(CGRect)rect
 {
     static const CGFloat TIMESTAMP_LEFT_MARGIN = 7.0;
-    static const CGFloat TIMESTAMP_TOP_MARGIN = 8.0;
+    static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 7.0;
-    static const CGFloat TEXT_TOP_MARGIN = 25.0;
+    static const CGFloat TEXT_TOP_MARGIN = 24.0;
 
     static const CGFloat AVATAR_RIGHT_MARGIN = 9.0;
     static const CGFloat AVATAR_TOP_MARGIN = 7.0;
@@ -402,10 +402,10 @@ static UIImage * highlightedRetweetGlyph;
     }
     
     //
-    // Draw the retweet inidcator
+    // Draw the geocode inidcator
     //
     if (geocoded) {
-        CGFloat favoriteAdjustment = favorite ? 21 : 5;
+        CGFloat favoriteAdjustment = favorite ? 22 : 7;
         point =
             CGPointMake(
             TEXT_LEFT_MARGIN + timestampWidth + favoriteAdjustment,
@@ -461,7 +461,7 @@ static UIImage * highlightedRetweetGlyph;
         CGSize retweetFormatSize =
             [[[self class] retweetFormatString] sizeWithFont:retweetFormatFont];
         point =
-            CGPointMake(point.x + retweetFormatSize.width + 2,
+            CGPointMake(point.x + retweetFormatSize.width + 4,
             size.height + TEXT_TOP_MARGIN + 2);
 
         [self.retweetAuthorName drawAtPoint:point withFont:retweetAuthorFont];
@@ -482,10 +482,10 @@ static UIImage * highlightedRetweetGlyph;
 - (void)drawRectNoAvatar:(CGRect)rect
 {
     const CGFloat TIMESTAMP_LEFT_MARGIN = 7.0;
-    const CGFloat TIMESTAMP_TOP_MARGIN = 8.0;
+    const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     const CGFloat TEXT_LEFT_MARGIN = 7.0;
-    static const CGFloat TEXT_TOP_MARGIN = 25.0;
+    static const CGFloat TEXT_TOP_MARGIN = 24.0;
 
     CGPoint point;
     CGSize size;
@@ -541,7 +541,7 @@ static UIImage * highlightedRetweetGlyph;
     // Draw the geocode inidcator
     //
     if (geocoded) {
-        CGFloat favoriteAdjustment = favorite ? 21 : 5;
+        CGFloat favoriteAdjustment = favorite ? 22 : 7;
         point =
             CGPointMake(
             TEXT_LEFT_MARGIN + timestampWidth + favoriteAdjustment,
@@ -598,7 +598,7 @@ static UIImage * highlightedRetweetGlyph;
         CGSize retweetFormatSize =
             [[[self class] retweetFormatString] sizeWithFont:retweetFormatFont];
         point =
-            CGPointMake(point.x + retweetFormatSize.width + 2,
+            CGPointMake(point.x + retweetFormatSize.width + 4,
             size.height + TEXT_TOP_MARGIN + 2);
         [self.retweetAuthorName drawAtPoint:point withFont:retweetAuthorFont];
     }
@@ -607,10 +607,10 @@ static UIImage * highlightedRetweetGlyph;
 - (void)drawRectNormalNoName:(CGRect)rect
 {
     static const CGFloat TIMESTAMP_LEFT_MARGIN = 62.0;
-    static const CGFloat TIMESTAMP_TOP_MARGIN = 8.0;
+    static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
     static const CGFloat TEXT_LEFT_MARGIN = 62.0;
-    static const CGFloat TEXT_TOP_MARGIN = 25.0;
+    static const CGFloat TEXT_TOP_MARGIN = 24.0;
 
     static const CGFloat AVATAR_LEFT_MARGIN = 7.0;
     static const CGFloat AVATAR_TOP_MARGIN = 7.0;
@@ -833,8 +833,8 @@ static UIImage * highlightedRetweetGlyph;
     NSInteger minHeight =
         displayType == FastTimelineTableViewCellDisplayTypeNoAvatar ?
         0 : MIN_CELL_HEIGHT;
-    
-    CGFloat height = 32.0 + size.height;
+
+    CGFloat height = 30.0 + size.height;
     if (retweet)
         height += 19;
 
