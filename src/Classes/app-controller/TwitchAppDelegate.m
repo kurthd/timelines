@@ -639,9 +639,10 @@ enum {
 
         [self setTimelineTitleView];
     }
-    
+
     CGFloat offset = uiState.timelineContentOffset;
-    if (offset > 44 && offset < [timelineDisplayMgr timelineContentHeight])
+    if (offset > 44 && offset < [timelineDisplayMgr timelineContentHeight] &&
+        ![SettingsReader scrollToTop])
         [timelineDisplayMgr setTableViewContentOffset:offset];
 }
 
@@ -2103,8 +2104,8 @@ enum {
 
     if (notification)
         [self updateUIStateWithNotification:notification
-        mentionTabLocation:mentionTabLocation
-        messageTabLocation:messageTabLocation];
+            mentionTabLocation:mentionTabLocation
+            messageTabLocation:messageTabLocation];
 
     // HACK: see method for details
     [self performSelector:@selector(setSelectedTabFromPersistence)
@@ -2215,8 +2216,10 @@ enum {
 
         if ([creds count] == 1) {
             NSString * currentUser = activeCredentials.credentials.username;
-            if (![currentUser isEqualToString:account])
+            if (![currentUser isEqualToString:account]) {
                 [self activateAccountWithName:account];
+                uiState.timelineContentOffset = 0;
+            }
         }
     }
 }

@@ -60,11 +60,22 @@ static NSMutableDictionary * stateAbbreviationMapping;
         if (responseDict) {
             NSArray * placemarkArray =
                 [responseDict objectForKey:@"Placemark"];
+
+            if (!placemarkArray) {
+                [delegate reverseGeocoder:self didFailWithError:nil];
+                return;
+            }
+
             NSDictionary * placemarkDict = [placemarkArray objectAtIndex:0];
             NSDictionary * addressDetailsDict =
                 [placemarkDict objectForKey:@"AddressDetails"];
             NSMutableDictionary * countryDict =
                 [addressDetailsDict objectForKey:@"Country"];
+                
+            if (!countryDict) {
+                [delegate reverseGeocoder:self didFailWithError:nil];
+                return;
+            }
 
             NSString * countryName = [countryDict objectForKey:@"CountryName"];
             NSString * countryNameCode =
