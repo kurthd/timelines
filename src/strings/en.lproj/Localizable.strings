@@ -182,6 +182,8 @@ account.addaccount = "Add Account";
 /* AccountSettingsViewController */
 accountsettings.push.header = "Push Notifications";
 accountsettings.push.footer = "Twitbit can send push notifications for \nmentions and direct messages.";
+accountsettings.push.sound.label = "Sound";
+accountsettings.push.sound.selector.title = "Notification Sound";
 accountsettings.photo.header = "Photo & Video";
 accountsettings.photo.integration.label = "Photo & Video";
 accountsettings.photo.compression.label = "Compression";

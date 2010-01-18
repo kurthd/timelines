@@ -19,11 +19,14 @@ enum PushSettings
 
 + (NSNumber *)pushMentionsDefaultValue;
 + (NSNumber *)pushDirectMessagesDefaultValue;
++ (PushNotificationSound *)pushNotificationSoundDefaultValue;
 + (NSNumber *)didPromptToEnableGeotaggingDefaultValue;
 + (NSNumber *)geotagTweetsDefaultValue;
 
 + (NSString *)pushMentionsKey;
 + (NSString *)pushDirectMessagesKey;
++ (NSString *)pushNotificationSoundNameKey;
++ (NSString *)pushNotificationSoundFileKey;
 + (NSString *)photoServiceNameKey;
 + (NSString *)videoServiceNameKey;
 + (NSString *)allAccountSettingsKey;
@@ -82,6 +85,7 @@ enum PushSettings
 {
     [pushMentions release];
     [pushDirectMessages release];
+    [pushNotificationSound release];
     [photoServiceName release];
     [videoServiceName release];
     [geotagTweets release];
@@ -95,6 +99,8 @@ enum PushSettings
         pushMentions = [[[self class] pushMentionsDefaultValue] retain];
         pushDirectMessages =
             [[[self class] pushDirectMessagesDefaultValue] retain];
+        pushNotificationSound =
+            [[[self class] pushNotificationSoundDefaultValue] retain];
         geotagTweets = [[[self class] geotagTweetsDefaultValue] retain];
         didPromptToEnableGeotagging =
             [[[self class] didPromptToEnableGeotaggingDefaultValue] retain];
@@ -118,6 +124,7 @@ enum PushSettings
 
     [copy setPushMentions:[self pushMentions]];
     [copy setPushDirectMessages:[self pushDirectMessages]];
+    [copy setPushNotificationSound:[self pushNotificationSound]];
     [copy setPhotoServiceName:[self photoServiceName]];
     [copy setVideoServiceName:[self videoServiceName]];
     [copy setDidPromptToEnableGeotagging:[self didPromptToEnableGeotagging]];
@@ -152,6 +159,17 @@ enum PushSettings
         [pushDirectMessages release];
         pushDirectMessages = [[NSNumber alloc] initWithBool:b];
     }
+}
+
+- (PushNotificationSound *)pushNotificationSound
+{
+    return pushNotificationSound;
+}
+
+- (void)setPushNotificationSound:(PushNotificationSound *)aSound
+{
+    [pushNotificationSound release];
+    pushNotificationSound = [aSound copy];
 }
 
 - (NSString *)photoServiceName
@@ -218,11 +236,13 @@ enum PushSettings
     return [NSNumber numberWithInteger:n];
 }
 
-- (BOOL)isEqualToSettings:(AccountSettings *)otherSettings
+- (BOOL)pushSettingsAreEqualToPushSettings:(AccountSettings *)otherSettings
 {
     return
         [self pushMentions] == [otherSettings pushMentions] &&
-        [self pushDirectMessages] == [otherSettings pushDirectMessages];
+        [self pushDirectMessages] == [otherSettings pushDirectMessages] &&
+        [[self pushNotificationSound] isEqualToSound:
+            [otherSettings pushNotificationSound]];
 }
 
 #pragma mark Converting from and to an NSDictionary
@@ -233,7 +253,12 @@ enum PushSettings
         [NSMutableDictionary dictionaryWithObjectsAndKeys:
         pushMentions, [[self class] pushMentionsKey],
         pushDirectMessages, [[self class] pushDirectMessagesKey],
-        didPromptToEnableGeotagging, [[self class] didPromptToEnableGeotaggingKey],
+
+        pushNotificationSound.name, [[self class] pushNotificationSoundNameKey],
+        pushNotificationSound.file, [[self class] pushNotificationSoundFileKey],
+
+        didPromptToEnableGeotagging,
+            [[self class] didPromptToEnableGeotaggingKey],
         geotagTweets, [[self class] geotagTweetsKey],
         nil];
 
@@ -255,6 +280,13 @@ enum PushSettings
         [[dictionary objectForKey:[[self class] pushMentionsKey]] retain];
     settings->pushDirectMessages =
         [[dictionary objectForKey:[[self class] pushDirectMessagesKey]] retain];
+
+    NSString * soundName =
+        [dictionary objectForKey:[[self class] pushNotificationSoundNameKey]];
+    NSString * soundFile =
+        [dictionary objectForKey:[[self class] pushNotificationSoundFileKey]];
+    settings->pushNotificationSound =
+        [[PushNotificationSound alloc] initWithName:soundName file:soundFile];
 
     NSNumber * didPrompt =
         [dictionary objectForKey:[[self class] didPromptToEnableGeotaggingKey]];
@@ -311,6 +343,11 @@ enum PushSettings
     return [NSNumber numberWithBool:YES];
 }
 
++ (PushNotificationSound *)pushNotificationSoundDefaultValue
+{
+    return [PushNotificationSound tritoneSound];
+}
+
 + (NSNumber *)didPromptToEnableGeotaggingDefaultValue
 {
     return [NSNumber numberWithBool:NO];
@@ -331,6 +368,16 @@ enum PushSettings
 + (NSString *)pushDirectMessagesKey
 {
     return @"push-direct-messages";
+}
+
++ (NSString *)pushNotificationSoundNameKey
+{
+    return @"push-sound-name";
+}
+
++ (NSString *)pushNotificationSoundFileKey
+{
+    return @"push-sound-file";
 }
 
 + (NSString *)photoServiceNameKey

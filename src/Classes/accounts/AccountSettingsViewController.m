@@ -7,16 +7,26 @@
 #import "InstapaperCredentials.h"
 #import "UIApplication+ConfigurationAdditions.h"
 
+
+NSInteger pushNotificationSoundSort(PushNotificationSound * sound1,
+                                    PushNotificationSound * sound2,
+                                    void * context)
+{
+    return [sound1.name compare:sound2.name];
+}
+
+
 static const NSInteger NUM_SECTIONS = 2;
 enum {
     kPushNotificationSection,
     kIntegrationSection
 };
 
-static const NSInteger NUM_PUSH_NOTIFICATION_ROWS = 2;
+static const NSInteger NUM_PUSH_NOTIFICATION_ROWS = 3;
 enum {
     kMentionsRow,
-    kDirectMessagesRow
+    kDirectMessagesRow,
+    kNotificationSoundRow
 };
 
 static const NSInteger NUM_INTEGRATION_ROWS = 2; // don't show bitly for now
@@ -30,6 +40,7 @@ enum {
 
 @property (nonatomic, retain) UITableViewCell * pushMentionsCell;
 @property (nonatomic, retain) UITableViewCell * pushDirectMessagesCell;
+@property (nonatomic, retain) UITableViewCell * pushNotificationSoundCell;
 
 @property (nonatomic, retain) UISwitch * pushMentionsSwitch;
 @property (nonatomic, retain) UISwitch * pushDirectMessagesSwitch;
@@ -39,6 +50,12 @@ enum {
 @property (nonatomic, retain) TwitterCredentials * credentials;
 @property (nonatomic, copy) AccountSettings * settings;
 
+@property (nonatomic, retain) SelectionViewController * soundSelector;
+
+@property (nonatomic, copy) NSArray * pushNotificationSounds;
+
+@property (nonatomic, retain) SoundPlayer * soundPlayer;
+
 - (void)syncDisplayWithSettings;
 - (NSInteger)effectiveSectionForSection:(NSInteger)section;
 
@@ -47,10 +64,13 @@ enum {
 @implementation AccountSettingsViewController
 
 @synthesize delegate;
-@synthesize pushMentionsCell, pushDirectMessagesCell;
+@synthesize pushMentionsCell, pushDirectMessagesCell, pushNotificationSoundCell;
 @synthesize pushMentionsSwitch, pushDirectMessagesSwitch;
 @synthesize pushSettingTableViewCells;
 @synthesize credentials, settings;
+@synthesize soundSelector;
+@synthesize pushNotificationSounds;
+@synthesize soundPlayer;
 
 - (void)dealloc
 {
@@ -58,6 +78,7 @@ enum {
 
     self.pushMentionsCell = nil;
     self.pushDirectMessagesCell = nil;
+    self.pushNotificationSoundCell = nil;
 
     self.pushMentionsSwitch = nil;
     self.pushDirectMessagesSwitch = nil;
@@ -66,6 +87,12 @@ enum {
 
     self.credentials = nil;
     self.settings = nil;
+
+    self.soundSelector = nil;
+
+    self.pushNotificationSounds = nil;
+
+    self.soundPlayer = nil;
 
     [super dealloc];
 }
@@ -84,7 +111,8 @@ enum {
 
     pushSettingTableViewCells =
         [[NSArray alloc] initWithObjects:
-        pushMentionsCell, pushDirectMessagesCell, nil];
+        pushMentionsCell, pushDirectMessagesCell, pushNotificationSoundCell,
+        nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -100,8 +128,7 @@ enum {
     [self.settings setPushMentions:self.pushMentionsSwitch.on];
     [self.settings setPushDirectMessages:self.pushDirectMessagesSwitch.on];
 
-    [delegate userDidCommitSettings:self.settings
-                         forAccount:self.credentials];
+    [delegate userDidCommitSettings:self.settings forAccount:self.credentials];
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -230,7 +257,14 @@ enum {
 {
     NSInteger section = [self effectiveSectionForSection:indexPath.section];
 
-    if (section == kIntegrationSection) {
+    if (section == kPushNotificationSection) {
+        if (indexPath.row == kNotificationSoundRow) {
+            // HACK: just push the sound selector here; I'm too lazy at this
+            // point to bother passing it through the display manager
+            [self.navigationController pushViewController:self.soundSelector
+                                                 animated:YES];
+        }
+    } else if (section == kIntegrationSection) {
         if (indexPath.row == kPhotAndVideoRow)
             [self.delegate
                 userWantsToConfigurePhotoServicesForAccount:self.credentials];
@@ -241,6 +275,54 @@ enum {
             [self.delegate
                 userWantsToConfigureBitlyForAccount:self.credentials];
     }
+}
+
+#pragma mark SelectionViewControllerDelegate implementation
+
+- (NSArray *)allChoices:(SelectionViewController *)controller
+{
+    return self.pushNotificationSounds;
+}
+
+- (NSInteger)initialSelectedIndex:(SelectionViewController *)controller
+{
+    PushNotificationSound * sound = [settings pushNotificationSound];
+
+    NSInteger selectedIndex = 0;
+    for (NSInteger i = 0; i < self.pushNotificationSounds.count; ++i) {
+        PushNotificationSound * pns =
+            [self.pushNotificationSounds objectAtIndex:i];
+        if ([pns.name isEqualToString:sound.name]) {
+            selectedIndex = i;
+            break;
+        }
+    }
+
+    return selectedIndex;
+}
+
+- (void)selectionViewController:(SelectionViewController *)controller
+       userDidSelectItemAtIndex:(NSInteger)index
+{
+    PushNotificationSound * sound =
+        [self.pushNotificationSounds objectAtIndex:index];
+    NSLog(@"Selected sound: %@", sound);
+
+    // play the sound
+    /*
+    SystemSoundID soundId;
+    OSStatus status = AudioServicesCreateSystemSoundID(url, &soundId);
+    NSLog(@"Returned status: %d", status);
+
+    AudioServicesDisposeSystemSoundID(soundId);
+     */
+    [self.soundPlayer playSoundInMainBundle:sound.file];
+
+
+    // save the new setting
+    [settings setPushNotificationSound:sound];
+
+    [self.delegate userDidCommitSettings:settings forAccount:credentials];
 }
 
 #pragma mark Public interface implementation
@@ -256,8 +338,7 @@ enum {
     self.navigationItem.title = credentials.username;
     [self.tableView reloadData];
     // this forces the tableview to scroll to top
-    [self.tableView setContentOffset:CGPointMake(0, 0)
-                            animated:NO];
+    [self.tableView setContentOffset:CGPointMake(0, 0) animated:NO];
 }
 
 - (void)reloadDisplay
@@ -272,12 +353,67 @@ enum {
 {
     [pushMentionsSwitch setOn:[settings pushMentions] animated:NO];
     [pushDirectMessagesSwitch setOn:[settings pushDirectMessages] animated:NO];
+
+    self.pushNotificationSoundCell.detailTextLabel.text =
+        [settings pushNotificationSound].name;
 }
 
 - (NSInteger)effectiveSectionForSection:(NSInteger)section
 {
     return [[UIApplication sharedApplication] isLiteVersion] ?
         kIntegrationSection : section;
+}
+
+#pragma mark Accessors
+
+- (UITableViewCell *)pushNotificationSoundCell
+{
+    if (!pushNotificationSoundCell) {
+        pushNotificationSoundCell =
+            [[UITableViewCell alloc]
+            initWithStyle:UITableViewCellStyleValue1
+          reuseIdentifier:@"pushNotificationSoundCell"];
+        pushNotificationSoundCell.textLabel.text =
+            LS(@"accountsettings.push.sound.label");
+        pushNotificationSoundCell.accessoryType =
+            UITableViewCellAccessoryDisclosureIndicator;
+    }
+
+    return pushNotificationSoundCell;
+}
+
+- (SelectionViewController *)soundSelector
+{
+    if (!soundSelector) {
+        soundSelector =
+            [[SelectionViewController alloc] initWithNibName:@"SelectionView"
+                                                      bundle:nil];
+        soundSelector.viewTitle =
+            LS(@"accountsettings.push.sound.selector.title");
+        soundSelector.delegate = self;
+    }
+
+    return soundSelector;
+}
+
+- (NSArray *)pushNotificationSounds
+{
+    if (!pushNotificationSounds) {
+        NSArray * tmp = [[PushNotificationSound systemSounds] allObjects];
+        pushNotificationSounds =
+            [[tmp sortedArrayUsingFunction:pushNotificationSoundSort
+                                   context:NULL] copy];
+    }
+
+    return pushNotificationSounds;
+}
+
+- (SoundPlayer *)soundPlayer
+{
+    if (!soundPlayer)
+        soundPlayer = [[SoundPlayer alloc] init];
+
+    return soundPlayer;
 }
 
 @end

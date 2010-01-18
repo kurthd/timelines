@@ -3,11 +3,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PushNotificationSound.h"
 
 @interface AccountSettings : NSObject <NSCopying>
 {
     NSNumber * pushMentions;
     NSNumber * pushDirectMessages;
+
+    PushNotificationSound * pushNotificationSound;
 
     NSString * photoServiceName;
     NSString * videoServiceName;
@@ -21,6 +24,9 @@
 
 - (BOOL)pushDirectMessages;
 - (void)setPushDirectMessages:(BOOL)pushDirectMessages;
+
+- (PushNotificationSound *)pushNotificationSound;
+- (void)setPushNotificationSound:(PushNotificationSound *)aSound;
 
 - (NSString *)photoServiceName;
 - (void)setPhotoServiceName:(NSString *)name;
@@ -37,7 +43,7 @@
 // returns all push settings masked together in an integer
 - (NSNumber *)pushSettings;
 
-- (BOOL)isEqualToSettings:(AccountSettings *)otherSettings;
+- (BOOL)pushSettingsAreEqualToPushSettings:(AccountSettings *)otherSettings;
 
 + (AccountSettings *)settingsForKey:(NSString *)key;
 + (void)setSettings:(AccountSettings *)settings

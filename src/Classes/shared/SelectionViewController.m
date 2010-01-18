@@ -69,7 +69,8 @@
             initWithStyle:UITableViewCellStyleDefault
             reuseIdentifier:CellIdentifier] autorelease];
 
-    cell.textLabel.text = [self.choices objectAtIndex:indexPath.row];
+    cell.textLabel.text =
+        [[self.choices objectAtIndex:indexPath.row] description];
     if (indexPath.row == selectedIndex)
         [[self class] configureSelectedCell:cell];
     else

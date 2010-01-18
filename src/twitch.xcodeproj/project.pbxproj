@@ -250,6 +250,28 @@
 		0552818A1088E8020055A37C /* NSString+UrlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 055281891088E8020055A37C /* NSString+UrlAdditions.m */; };
 		0552818B1088E8020055A37C /* NSString+UrlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 055281891088E8020055A37C /* NSString+UrlAdditions.m */; };
 		055777141063018D006596DB /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 055777131063018D006596DB /* libz.1.2.3.dylib */; };
+		05725FC411017CF000E6AB85 /* PushNotificationSound.m in Sources */ = {isa = PBXBuildFile; fileRef = 05725FC311017CF000E6AB85 /* PushNotificationSound.m */; };
+		05725FC511017CF000E6AB85 /* PushNotificationSound.m in Sources */ = {isa = PBXBuildFile; fileRef = 05725FC311017CF000E6AB85 /* PushNotificationSound.m */; };
+		057260731102CE2500E6AB85 /* Basso.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606A1102CE2500E6AB85 /* Basso.caf */; };
+		057260741102CE2500E6AB85 /* Blow.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606B1102CE2500E6AB85 /* Blow.caf */; };
+		057260751102CE2500E6AB85 /* Funk.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606C1102CE2500E6AB85 /* Funk.caf */; };
+		057260761102CE2500E6AB85 /* Glass.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606D1102CE2500E6AB85 /* Glass.caf */; };
+		057260771102CE2500E6AB85 /* Hero.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606E1102CE2500E6AB85 /* Hero.caf */; };
+		057260781102CE2500E6AB85 /* Ping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606F1102CE2500E6AB85 /* Ping.caf */; };
+		057260791102CE2500E6AB85 /* Purr.caf in Resources */ = {isa = PBXBuildFile; fileRef = 057260701102CE2500E6AB85 /* Purr.caf */; };
+		0572607A1102CE2500E6AB85 /* Sosumi.caf in Resources */ = {isa = PBXBuildFile; fileRef = 057260711102CE2500E6AB85 /* Sosumi.caf */; };
+		0572607B1102CE2500E6AB85 /* Submarine.caf in Resources */ = {isa = PBXBuildFile; fileRef = 057260721102CE2500E6AB85 /* Submarine.caf */; };
+		0572607C1102CE2500E6AB85 /* Basso.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606A1102CE2500E6AB85 /* Basso.caf */; };
+		0572607D1102CE2500E6AB85 /* Blow.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606B1102CE2500E6AB85 /* Blow.caf */; };
+		0572607E1102CE2500E6AB85 /* Funk.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606C1102CE2500E6AB85 /* Funk.caf */; };
+		0572607F1102CE2500E6AB85 /* Glass.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606D1102CE2500E6AB85 /* Glass.caf */; };
+		057260801102CE2500E6AB85 /* Hero.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606E1102CE2500E6AB85 /* Hero.caf */; };
+		057260811102CE2500E6AB85 /* Ping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606F1102CE2500E6AB85 /* Ping.caf */; };
+		057260821102CE2500E6AB85 /* Purr.caf in Resources */ = {isa = PBXBuildFile; fileRef = 057260701102CE2500E6AB85 /* Purr.caf */; };
+		057260831102CE2500E6AB85 /* Sosumi.caf in Resources */ = {isa = PBXBuildFile; fileRef = 057260711102CE2500E6AB85 /* Sosumi.caf */; };
+		057260841102CE2500E6AB85 /* Submarine.caf in Resources */ = {isa = PBXBuildFile; fileRef = 057260721102CE2500E6AB85 /* Submarine.caf */; };
+		057260C611038E0800E6AB85 /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 057260C511038E0800E6AB85 /* SoundPlayer.m */; };
+		057260C711038E0800E6AB85 /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 057260C511038E0800E6AB85 /* SoundPlayer.m */; };
 		0572F16710BC9708006EF58D /* CurrentLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0572F16610BC9708006EF58D /* CurrentLocationView.m */; };
 		0572F16810BC9708006EF58D /* CurrentLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0572F16610BC9708006EF58D /* CurrentLocationView.m */; };
 		0572F22C10BCB172006EF58D /* PushpinGrayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 0572F22B10BCB172006EF58D /* PushpinGrayscale.png */; };
@@ -1315,6 +1337,19 @@
 		055C92E110362DC2000B9A00 /* Avatar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Avatar.m; path = users/Avatar.m; sourceTree = "<group>"; };
 		0562BE2D0FF6AB6B005DA549 /* FetchTweetResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTweetResponseProcessor.h; path = twitter/processors/FetchTweetResponseProcessor.h; sourceTree = "<group>"; };
 		0562BE2E0FF6AB6B005DA549 /* FetchTweetResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchTweetResponseProcessor.m; path = twitter/processors/FetchTweetResponseProcessor.m; sourceTree = "<group>"; };
+		05725FC211017CF000E6AB85 /* PushNotificationSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushNotificationSound.h; path = accounts/PushNotificationSound.h; sourceTree = "<group>"; };
+		05725FC311017CF000E6AB85 /* PushNotificationSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushNotificationSound.m; path = accounts/PushNotificationSound.m; sourceTree = "<group>"; };
+		0572606A1102CE2500E6AB85 /* Basso.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Basso.caf; path = sounds/Basso.caf; sourceTree = "<group>"; };
+		0572606B1102CE2500E6AB85 /* Blow.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Blow.caf; path = sounds/Blow.caf; sourceTree = "<group>"; };
+		0572606C1102CE2500E6AB85 /* Funk.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Funk.caf; path = sounds/Funk.caf; sourceTree = "<group>"; };
+		0572606D1102CE2500E6AB85 /* Glass.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Glass.caf; path = sounds/Glass.caf; sourceTree = "<group>"; };
+		0572606E1102CE2500E6AB85 /* Hero.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Hero.caf; path = sounds/Hero.caf; sourceTree = "<group>"; };
+		0572606F1102CE2500E6AB85 /* Ping.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ping.caf; path = sounds/Ping.caf; sourceTree = "<group>"; };
+		057260701102CE2500E6AB85 /* Purr.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Purr.caf; path = sounds/Purr.caf; sourceTree = "<group>"; };
+		057260711102CE2500E6AB85 /* Sosumi.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Sosumi.caf; path = sounds/Sosumi.caf; sourceTree = "<group>"; };
+		057260721102CE2500E6AB85 /* Submarine.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Submarine.caf; path = sounds/Submarine.caf; sourceTree = "<group>"; };
+		057260C411038E0800E6AB85 /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundPlayer.h; path = shared/SoundPlayer.h; sourceTree = "<group>"; };
+		057260C511038E0800E6AB85 /* SoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoundPlayer.m; path = shared/SoundPlayer.m; sourceTree = "<group>"; };
 		0572F16510BC9708006EF58D /* CurrentLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurrentLocationView.h; path = compose/CurrentLocationView.h; sourceTree = "<group>"; };
 		0572F16610BC9708006EF58D /* CurrentLocationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurrentLocationView.m; path = compose/CurrentLocationView.m; sourceTree = "<group>"; };
 		0572F22B10BCB172006EF58D /* PushpinGrayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PushpinGrayscale.png; path = images/PushpinGrayscale.png; sourceTree = "<group>"; };
@@ -2283,6 +2318,8 @@
 				05948991101569B700C37C98 /* AccountSettingsViewController.m */,
 				05948A0310157B6400C37C98 /* AccountSettings.h */,
 				05948A0410157B6400C37C98 /* AccountSettings.m */,
+				05725FC211017CF000E6AB85 /* PushNotificationSound.h */,
+				05725FC311017CF000E6AB85 /* PushNotificationSound.m */,
 				05C7B8A7103B5A5D0017874C /* PhotoServicesDisplayMgr.h */,
 				05C7B8A8103B5A5D0017874C /* PhotoServicesDisplayMgr.m */,
 				05C7B8AA103B5CE40017874C /* PhotoServicesViewController.h */,
@@ -2374,6 +2411,22 @@
 				0590E1E91062FEFD009D1C11 /* asi-http-request */,
 			);
 			name = vendor;
+			sourceTree = "<group>";
+		};
+		057260691102CE0800E6AB85 /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				0572606A1102CE2500E6AB85 /* Basso.caf */,
+				0572606B1102CE2500E6AB85 /* Blow.caf */,
+				0572606C1102CE2500E6AB85 /* Funk.caf */,
+				0572606D1102CE2500E6AB85 /* Glass.caf */,
+				0572606E1102CE2500E6AB85 /* Hero.caf */,
+				0572606F1102CE2500E6AB85 /* Ping.caf */,
+				057260701102CE2500E6AB85 /* Purr.caf */,
+				057260711102CE2500E6AB85 /* Sosumi.caf */,
+				057260721102CE2500E6AB85 /* Submarine.caf */,
+			);
+			name = sounds;
 			sourceTree = "<group>";
 		};
 		05761F5B0FF72C1C00392ADC /* oath-consumer */ = {
@@ -2710,6 +2763,8 @@
 				91B76FE510BB5B6C0014172A /* TwoLineButton.m */,
 				91063CB810D7054700DEAC3A /* DateDescription.h */,
 				91063CB910D7054700DEAC3A /* DateDescription.m */,
+				057260C411038E0800E6AB85 /* SoundPlayer.h */,
+				057260C511038E0800E6AB85 /* SoundPlayer.m */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -3186,6 +3241,7 @@
 				05B239440FEDD0E400A6A2E6 /* nibs */,
 				05B239450FEDD0F800A6A2E6 /* strings */,
 				0554E3EF0FFDB9EF00329FFA /* entitlements */,
+				057260691102CE0800E6AB85 /* sounds */,
 				05EF41970FFAE449007B59F1 /* twitbit-info.plist */,
 				052E05BB10700B7E005CEC5F /* twitbit-lite-info.plist */,
 				05977A3B0FEF0C9700E37B9C /* Icon.png */,
@@ -3873,6 +3929,15 @@
 				914EACB210D190F5007036F2 /* trend-style.css in Resources */,
 				91063C4210D6ED1900DEAC3A /* AdBackground.png in Resources */,
 				91063C5D10D6EED700DEAC3A /* AdBackgroundDarkTheme.png in Resources */,
+				057260731102CE2500E6AB85 /* Basso.caf in Resources */,
+				057260741102CE2500E6AB85 /* Blow.caf in Resources */,
+				057260751102CE2500E6AB85 /* Funk.caf in Resources */,
+				057260761102CE2500E6AB85 /* Glass.caf in Resources */,
+				057260771102CE2500E6AB85 /* Hero.caf in Resources */,
+				057260781102CE2500E6AB85 /* Ping.caf in Resources */,
+				057260791102CE2500E6AB85 /* Purr.caf in Resources */,
+				0572607A1102CE2500E6AB85 /* Sosumi.caf in Resources */,
+				0572607B1102CE2500E6AB85 /* Submarine.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4067,6 +4132,15 @@
 				914EACB010D190F5007036F2 /* trend-style.css in Resources */,
 				91063C4110D6ED1900DEAC3A /* AdBackground.png in Resources */,
 				91063C5C10D6EED700DEAC3A /* AdBackgroundDarkTheme.png in Resources */,
+				0572607C1102CE2500E6AB85 /* Basso.caf in Resources */,
+				0572607D1102CE2500E6AB85 /* Blow.caf in Resources */,
+				0572607E1102CE2500E6AB85 /* Funk.caf in Resources */,
+				0572607F1102CE2500E6AB85 /* Glass.caf in Resources */,
+				057260801102CE2500E6AB85 /* Hero.caf in Resources */,
+				057260811102CE2500E6AB85 /* Ping.caf in Resources */,
+				057260821102CE2500E6AB85 /* Purr.caf in Resources */,
+				057260831102CE2500E6AB85 /* Sosumi.caf in Resources */,
+				057260841102CE2500E6AB85 /* Submarine.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4423,6 +4497,8 @@
 				059E546410F2A55C003558ED /* Reachability.m in Sources */,
 				91EB286910F1318400C0C1E5 /* CoordRecentHistoryCache.m in Sources */,
 				91EB295410F27DF900C0C1E5 /* TwitbitReverseGeocoder.m in Sources */,
+				05725FC411017CF000E6AB85 /* PushNotificationSound.m in Sources */,
+				057260C611038E0800E6AB85 /* SoundPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4776,6 +4852,8 @@
 				059E546510F2A55C003558ED /* Reachability.m in Sources */,
 				91EB286A10F1318400C0C1E5 /* CoordRecentHistoryCache.m in Sources */,
 				91EB295510F27DF900C0C1E5 /* TwitbitReverseGeocoder.m in Sources */,
+				05725FC511017CF000E6AB85 /* PushNotificationSound.m in Sources */,
+				057260C711038E0800E6AB85 /* SoundPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

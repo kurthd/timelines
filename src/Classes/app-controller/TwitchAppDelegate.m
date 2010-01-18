@@ -1539,11 +1539,15 @@ enum {
         NSString * secretKey = [NSString stringWithFormat:@"secret%d", i];
         NSString * configKey =
             [NSString stringWithFormat:@"push_notification_config%d", i];
+        NSString * soundFileKey =
+            [NSString stringWithFormat:@"push_notification_sound%d", i];
 
         [args setObject:c.username forKey:usernameKey];
         [args setObject:c.key forKey:keyKey];
         [args setObject:c.secret forKey:secretKey];
         [args setObject:[settings pushSettings] forKey:configKey];
+        [args setObject:[settings pushNotificationSound].file
+                 forKey:soundFileKey];
     }
 
     return args;

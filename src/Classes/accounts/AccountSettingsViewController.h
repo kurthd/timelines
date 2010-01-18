@@ -5,6 +5,7 @@
 #import <UIKit/UIKit.h>
 #import "AccountSettings.h"
 #import "TwitterCredentials.h"
+#import "TwitbitShared.h"
 
 @protocol AccountSettingsViewControllerDelegate
 
@@ -20,12 +21,14 @@
 
 @end
 
-@interface AccountSettingsViewController : UITableViewController
+@interface AccountSettingsViewController :
+    UITableViewController <SelectionViewControllerDelegate>
 {
     id<AccountSettingsViewControllerDelegate> delegate;
 
     IBOutlet UITableViewCell * pushMentionsCell;
     IBOutlet UITableViewCell * pushDirectMessagesCell;
+    UITableViewCell * pushNotificationSoundCell;
 
     IBOutlet UISwitch * pushMentionsSwitch;
     IBOutlet UISwitch * pushDirectMessagesSwitch;
@@ -34,6 +37,12 @@
 
     TwitterCredentials * credentials;
     AccountSettings * settings;
+
+    SelectionViewController * soundSelector;
+
+    NSArray * pushNotificationSounds;
+
+    SoundPlayer * soundPlayer;
 }
 
 @property (nonatomic, retain) id<AccountSettingsViewControllerDelegate>

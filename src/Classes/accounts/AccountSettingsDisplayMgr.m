@@ -72,7 +72,7 @@
     AccountSettings * settings =
         [AccountSettings settingsForKey:credentials.username];
 
-    if (![settings isEqualToSettings:newSettings]) {
+    if (![settings pushSettingsAreEqualToPushSettings:newSettings]) {
         NSLog(@"Committing settings: '%@' for account: '%@'", newSettings,
             credentials);
 

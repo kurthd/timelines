@@ -89,12 +89,24 @@
 
 
 //
+// Shared views, view controllers, etc.
+//
+#import "SelectionViewController.h"
+
+
+//
 // Twitter parsing
 //
 #import "TwitbitObjectBuilder.h"
 #import "JsonObjectFilter.h"
 #import "JsonObjectTransformer.h"
 #import "TwitbitObjectCreator.h"
+
+
+//
+// Miscellaneous classes
+//
+#import "SoundPlayer.h"
 
 
 //
