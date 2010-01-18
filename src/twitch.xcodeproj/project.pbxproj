@@ -252,15 +252,6 @@
 		055777141063018D006596DB /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 055777131063018D006596DB /* libz.1.2.3.dylib */; };
 		05725FC411017CF000E6AB85 /* PushNotificationSound.m in Sources */ = {isa = PBXBuildFile; fileRef = 05725FC311017CF000E6AB85 /* PushNotificationSound.m */; };
 		05725FC511017CF000E6AB85 /* PushNotificationSound.m in Sources */ = {isa = PBXBuildFile; fileRef = 05725FC311017CF000E6AB85 /* PushNotificationSound.m */; };
-		057260731102CE2500E6AB85 /* Basso.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606A1102CE2500E6AB85 /* Basso.caf */; };
-		057260741102CE2500E6AB85 /* Blow.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606B1102CE2500E6AB85 /* Blow.caf */; };
-		057260751102CE2500E6AB85 /* Funk.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606C1102CE2500E6AB85 /* Funk.caf */; };
-		057260761102CE2500E6AB85 /* Glass.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606D1102CE2500E6AB85 /* Glass.caf */; };
-		057260771102CE2500E6AB85 /* Hero.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606E1102CE2500E6AB85 /* Hero.caf */; };
-		057260781102CE2500E6AB85 /* Ping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606F1102CE2500E6AB85 /* Ping.caf */; };
-		057260791102CE2500E6AB85 /* Purr.caf in Resources */ = {isa = PBXBuildFile; fileRef = 057260701102CE2500E6AB85 /* Purr.caf */; };
-		0572607A1102CE2500E6AB85 /* Sosumi.caf in Resources */ = {isa = PBXBuildFile; fileRef = 057260711102CE2500E6AB85 /* Sosumi.caf */; };
-		0572607B1102CE2500E6AB85 /* Submarine.caf in Resources */ = {isa = PBXBuildFile; fileRef = 057260721102CE2500E6AB85 /* Submarine.caf */; };
 		0572607C1102CE2500E6AB85 /* Basso.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606A1102CE2500E6AB85 /* Basso.caf */; };
 		0572607D1102CE2500E6AB85 /* Blow.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606B1102CE2500E6AB85 /* Blow.caf */; };
 		0572607E1102CE2500E6AB85 /* Funk.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0572606C1102CE2500E6AB85 /* Funk.caf */; };
@@ -3929,15 +3920,6 @@
 				914EACB210D190F5007036F2 /* trend-style.css in Resources */,
 				91063C4210D6ED1900DEAC3A /* AdBackground.png in Resources */,
 				91063C5D10D6EED700DEAC3A /* AdBackgroundDarkTheme.png in Resources */,
-				057260731102CE2500E6AB85 /* Basso.caf in Resources */,
-				057260741102CE2500E6AB85 /* Blow.caf in Resources */,
-				057260751102CE2500E6AB85 /* Funk.caf in Resources */,
-				057260761102CE2500E6AB85 /* Glass.caf in Resources */,
-				057260771102CE2500E6AB85 /* Hero.caf in Resources */,
-				057260781102CE2500E6AB85 /* Ping.caf in Resources */,
-				057260791102CE2500E6AB85 /* Purr.caf in Resources */,
-				0572607A1102CE2500E6AB85 /* Sosumi.caf in Resources */,
-				0572607B1102CE2500E6AB85 /* Submarine.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
