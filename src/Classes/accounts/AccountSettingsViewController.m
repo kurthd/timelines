@@ -309,15 +309,9 @@ enum {
     NSLog(@"Selected sound: %@", sound);
 
     // play the sound
-    /*
-    SystemSoundID soundId;
-    OSStatus status = AudioServicesCreateSystemSoundID(url, &soundId);
-    NSLog(@"Returned status: %d", status);
-
-    AudioServicesDisposeSystemSoundID(soundId);
-     */
-    [self.soundPlayer playSoundInMainBundle:sound.file];
-
+    [self.soundPlayer
+        performSelectorInBackground:@selector(playSoundInMainBundle:)
+                         withObject:sound.file];
 
     // save the new setting
     [settings setPushNotificationSound:sound];
