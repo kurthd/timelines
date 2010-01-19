@@ -84,19 +84,17 @@
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row != selectedIndex) {
-        NSIndexPath * oldIndexPath = [NSIndexPath indexPathForRow:selectedIndex
-                                                        inSection:0];
-        UITableViewCell * oldCell = [tv cellForRowAtIndexPath:oldIndexPath];
-        [[self class] configureNormalCell:oldCell];
+    NSIndexPath * oldIndexPath = [NSIndexPath indexPathForRow:selectedIndex
+                                                    inSection:0];
+    UITableViewCell * oldCell = [tv cellForRowAtIndexPath:oldIndexPath];
+    [[self class] configureNormalCell:oldCell];
 
-        UITableViewCell * newCell = [tv cellForRowAtIndexPath:indexPath];
-        [[self class] configureSelectedCell:newCell];
+    UITableViewCell * newCell = [tv cellForRowAtIndexPath:indexPath];
+    [[self class] configureSelectedCell:newCell];
 
-        selectedIndex = indexPath.row;
-        [self.delegate selectionViewController:self
-                      userDidSelectItemAtIndex:selectedIndex];
-    }
+    selectedIndex = indexPath.row;
+    [self.delegate selectionViewController:self
+                  userDidSelectItemAtIndex:selectedIndex];
 
     [tv deselectRowAtIndexPath:indexPath animated:YES];
 }
