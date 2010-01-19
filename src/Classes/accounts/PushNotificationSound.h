@@ -27,15 +27,11 @@
 + (id)defaultSound;
 
 + (id)tritoneSound;
-+ (id)bassoSound;
-+ (id)blowSound;
-+ (id)funkSound;
-+ (id)glassSound;
-+ (id)heroSound;
-+ (id)pingSound;
-+ (id)purrSound;
-+ (id)sosumiSound;
-+ (id)submarineSound;
++ (id)alarmSound;
++ (id)chimeSound;
++ (id)electronicSound;
++ (id)synthesizerSound;
++ (id)triangleSound;
 
 + (NSSet *)systemSounds;
 

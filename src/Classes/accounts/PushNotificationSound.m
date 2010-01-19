@@ -71,63 +71,39 @@
     return [self soundWithName:@"Tri-tone" file:@"default"];
 }
 
-+ (id)bassoSound
++ (id)alarmSound
 {
-    return [self soundWithName:@"Basso" file:@"Basso.caf"];
+    return [self soundWithName:@"Alarm" file:@"Alarm.aiff"];
 }
 
-+ (id)blowSound
++ (id)chimeSound
 {
-    return [self soundWithName:@"Blow" file:@"Blow.caf"];
+    return [self soundWithName:@"Chime" file:@"Chime.aiff"];
 }
 
-+ (id)funkSound
++ (id)electronicSound
 {
-    return [self soundWithName:@"Funk" file:@"Funk.caf"];
+    return [self soundWithName:@"Electronic" file:@"Electronic.aiff"];
 }
 
-+ (id)glassSound
++ (id)synthesizerSound
 {
-    return [self soundWithName:@"Glass" file:@"Glass.caf"];
+    return [self soundWithName:@"Synthesizer" file:@"Synthesizer.aiff"];
 }
 
-+ (id)heroSound
++ (id)triangleSound
 {
-    return [self soundWithName:@"Hero" file:@"Hero.caf"];
-}
-
-+ (id)pingSound
-{
-    return [self soundWithName:@"Ping" file:@"Ping.caf"];
-}
-
-+ (id)purrSound
-{
-    return [self soundWithName:@"Purr" file:@"Purr.caf"];
-}
-
-+ (id)sosumiSound
-{
-    return [self soundWithName:@"Sosumi" file:@"Sosumi.caf"];
-}
-
-+ (id)submarineSound
-{
-    return [self soundWithName:@"Submarine" file:@"Submarine.caf"];
+    return [self soundWithName:@"Triangle" file:@"Triangle.aiff"];
 }
 
 + (NSSet *)systemSounds
 {
     return [NSSet setWithObjects:[self tritoneSound],
-                                 [self bassoSound],
-                                 [self blowSound],
-                                 [self funkSound],
-                                 [self glassSound],
-                                 [self heroSound],
-                                 [self pingSound],
-                                 [self purrSound],
-                                 [self sosumiSound],
-                                 [self submarineSound],
+                                 [self alarmSound],
+                                 [self chimeSound],
+                                 [self electronicSound],
+                                 [self synthesizerSound],
+                                 [self triangleSound],
                                  nil];
 }
 
