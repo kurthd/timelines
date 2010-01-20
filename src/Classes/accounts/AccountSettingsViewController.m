@@ -337,8 +337,8 @@ enum {
 
 - (void)reloadDisplay
 {
-    [self syncDisplayWithSettings];
     [self.tableView reloadData];
+    [self syncDisplayWithSettings];
 }
 
 #pragma mark Display helpers
@@ -393,10 +393,27 @@ enum {
 - (NSArray *)pushNotificationSounds
 {
     if (!pushNotificationSounds) {
-        NSArray * tmp = [[PushNotificationSound systemSounds] allObjects];
-        pushNotificationSounds =
+        NSMutableSet * sounds =
+            [[PushNotificationSound systemSounds] mutableCopy];
+
+        PushNotificationSound * defaultSound =
+            [PushNotificationSound defaultSound];
+
+        for (PushNotificationSound * sound in sounds)
+            if ([defaultSound.name isEqualToString:sound.name]) {
+                [sounds removeObject:sound];
+                break;
+            }
+
+        NSArray * tmp = [sounds allObjects];
+        NSMutableArray * sortedSounds =
             [[tmp sortedArrayUsingFunction:pushNotificationSoundSort
-                                   context:NULL] copy];
+                                   context:NULL] mutableCopy];
+
+        [sortedSounds insertObject:defaultSound atIndex:0];
+        pushNotificationSounds = sortedSounds;
+
+        [sounds release];
     }
 
     return pushNotificationSounds;
