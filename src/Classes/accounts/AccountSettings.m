@@ -285,7 +285,10 @@ enum PushSettings
         [dictionary objectForKey:[[self class] pushNotificationSoundNameKey]];
     NSString * soundFile =
         [dictionary objectForKey:[[self class] pushNotificationSoundFileKey]];
+
     settings->pushNotificationSound =
+        !soundName || !soundFile ?
+        [[PushNotificationSound defaultSound] retain] :
         [[PushNotificationSound alloc] initWithName:soundName file:soundFile];
 
     NSNumber * didPrompt =
