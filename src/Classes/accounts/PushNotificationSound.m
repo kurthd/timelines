@@ -68,7 +68,7 @@
 
 + (id)tritoneSound
 {
-    return [self soundWithName:@"Tri-tone" file:@"default"];
+    return [self soundWithName:@"Default" file:@"default"];
 }
 
 + (id)alarmSound
