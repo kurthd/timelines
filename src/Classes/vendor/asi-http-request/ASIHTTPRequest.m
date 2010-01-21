@@ -1097,7 +1097,7 @@ static BOOL isiPhoneOS2;
 		// Prevent timeouts before 128KB* has been sent when the size of data to upload is greater than 128KB* (*32KB on iPhone 3.0 SDK)
 		// This is to workaround the fact that kCFStreamPropertyHTTPRequestBytesWrittenCount is the amount written to the buffer, not the amount actually sent
 		// This workaround prevents erroneous timeouts in low bandwidth situations (eg iPhone)
-		if ((totalBytesSent || postLength <= uploadBufferSize || (uploadBufferSize > 0 && totalBytesSent > uploadBufferSize))) {
+		if ((postLength != totalBytesSent) && (totalBytesSent || postLength <= uploadBufferSize || (uploadBufferSize > 0 && totalBytesSent > uploadBufferSize))) {
 			// Do we need to auto-retry this request?
 			if ([self numberOfTimesToRetryOnTimeout] > [self retryCount]) {
 				[self setRetryCount:[self retryCount]+1];
@@ -1111,8 +1111,7 @@ static BOOL isiPhoneOS2;
 			[self setComplete:YES];
 			[[self cancelledLock] unlock];
 			return;
-		} else
-            NSLog(@"Not processing a timeout.");
+		}
 	}
 	
 	// readStream will be null if we aren't currently running (perhaps we're waiting for a delegate to supply credentials)
