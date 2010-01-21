@@ -15,6 +15,7 @@
 @property (nonatomic, copy) NSArray * filteredPeople;
 @property (nonatomic, retain) NSMutableArray * sectionTitles;
 @property (nonatomic, retain) NSMutableDictionary * peopleInSections;
+@property (nonatomic, retain) NSMutableSet * fetchers;
 
 - (void)initializeNavigationItem;
 
@@ -29,6 +30,7 @@
 @implementation SelectPersonViewController
 
 @synthesize delegate, people, filteredPeople, sectionTitles, peopleInSections;
+@synthesize fetchers;
 
 - (void)dealloc
 {
@@ -37,6 +39,11 @@
     self.people = nil;
     self.filteredPeople = nil;
     self.sectionTitles = nil;
+
+    for (AsynchronousNetworkFetcher * fetcher in fetchers)
+        fetcher.delegate = nil;  // don't point to us anymore
+
+    self.fetchers = nil;
 
     [super dealloc];
 }
@@ -49,6 +56,7 @@
         self.delegate = aDelegate;
         self.sectionTitles = [NSMutableArray array];
         self.peopleInSections = [NSMutableDictionary dictionary];
+        self.fetchers = [NSMutableSet set];
     }
 
     return self;
@@ -143,7 +151,10 @@
     if (!avatar) {
         avatar = [Avatar defaultAvatar];
         NSURL * avatarUrl = [NSURL URLWithString:user.avatar.thumbnailImageUrl];
-        [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+
+        AsynchronousNetworkFetcher * fetcher =
+            [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+        [fetchers addObject:fetcher];
     }
     cell.imageView.image = [[self class] avatarByResizingIfNecessary:avatar];
 
@@ -230,11 +241,17 @@
             if ([user.username isEqualToString:cell.textLabel.text])
                 cell.imageView.image = avatarImage;
     }
+
+    fetcher.delegate = nil;
+    [fetchers removeObject:fetcher];
 }
 
 - (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
     failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
-{}
+{
+    fetcher.delegate = nil;
+    [fetchers removeObject:fetcher];
+}
 
 #pragma mark Private implementation
 

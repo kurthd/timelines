@@ -19,6 +19,8 @@
 
     NSMutableArray * sectionTitles;
     NSMutableDictionary * peopleInSections;
+
+    NSMutableSet * fetchers;
 }
 
 @property (nonatomic, assign) id<SelectPersonViewControllerDelegate> delegate;
