@@ -215,6 +215,9 @@ static NSNumberFormatter * formatter;
     }
 
     [self layoutViews];
+    
+    if (user)
+        [self setUser:user];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -774,17 +777,16 @@ static NSNumberFormatter * formatter;
     ABRecordSetValue(person, kABPersonLastNameProperty, lastName, &error);
 
     NSString * twitterUsernameString =
-        [NSString stringWithFormat:@"Twitter: %@", user.username];
-    ABRecordSetValue(person, kABPersonNoteProperty, twitterUsernameString,
-        &error);
+        [NSString stringWithFormat:@"twitbit://%@", user.username];
 
-    if (user.webpage) {
-        ABMutableMultiValueRef blogs =
-            ABMultiValueCreateMutable(kABMultiStringPropertyType);
+    ABMutableMultiValueRef blogs =
+        ABMultiValueCreateMutable(kABMultiStringPropertyType);
+    ABMultiValueAddValueAndLabel(
+        blogs, twitterUsernameString, CFSTR("twitter"), NULL);
+    if (user.webpage) 
         ABMultiValueAddValueAndLabel(blogs, user.webpage, kABHomeLabel, NULL);
-        ABRecordSetValue(person, kABPersonURLProperty, blogs, &error);
-    }
-
+    ABRecordSetValue(person, kABPersonURLProperty, blogs, &error);
+    
     if (user.avatar && user.avatar.thumbnailImage) {
         NSData * data = user.avatar.thumbnailImage;
         ABPersonSetImageData(person, (CFDataRef)data, &error);

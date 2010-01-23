@@ -307,8 +307,22 @@ enum {
     NSString * crazyLongKey = UIApplicationLaunchOptionsRemoteNotificationKey;
     NSDictionary * remoteNotification = [options objectForKey:crazyLongKey];
 
+    NSString * urlKey = UIApplicationLaunchOptionsURLKey;
+    NSURL * url = [options objectForKey:urlKey];
+    NSString * username = nil;
+    if (url) {
+        NSString * urlString = [url absoluteString];
+        NSArray * urlArray = [urlString componentsSeparatedByString:@"//"];
+        username = [urlArray count] > 1 ? [urlArray objectAtIndex:1] : nil;
+        if (username)
+            showHomeTab = YES;
+    }
+
     [self processApplicationLaunch:application
             withRemoteNotification:remoteNotification];
+
+    if (username)
+        [timelineDisplayMgr showUserInfoForUsername:username];
 
     return YES;
 }
@@ -2080,6 +2094,7 @@ enum {
     // versions if we continue to add tabs.
     NSInteger mentionTabLocation = kOriginalTabOrderMentions;
     NSInteger messageTabLocation = kOriginalTabOrderMessages;
+    NSInteger homeTabLocation = kOriginalTabOrderTimeline;
     if (uiState.tabOrder.count == viewControllers.count) {
         NSArray * tabOrder = uiState.tabOrder;
         if (tabOrder) {
@@ -2090,6 +2105,8 @@ enum {
                     mentionTabLocation = i;
                 else if (tabNumberAsInt == kOriginalTabOrderMessages)
                     messageTabLocation = i;
+                else if (tabNumberAsInt == kOriginalTabOrderTimeline)
+                    homeTabLocation = i;
 
                 for (UIViewController * vc in tabBarController.viewControllers)
                     if (vc.tabBarItem.tag == tabNumberAsInt) {
@@ -2102,7 +2119,9 @@ enum {
         tabBarController.viewControllers = viewControllers;
     }
 
-    if (notification)
+    if (showHomeTab)
+        uiState.selectedTab = homeTabLocation;
+    else if (notification)
         [self updateUIStateWithNotification:notification
             mentionTabLocation:mentionTabLocation
             messageTabLocation:messageTabLocation];

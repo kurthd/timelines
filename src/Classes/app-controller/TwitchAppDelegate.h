@@ -111,6 +111,8 @@
 
     BOOL histeresisExcited;
     UIAcceleration * lastAcceleration;
+    
+    BOOL showHomeTab;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;

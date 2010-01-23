@@ -250,16 +250,23 @@
     toContact:(ABRecordRef)toContact
 {
     CFErrorRef error = NULL;
-        
+
     ABMutableMultiValueRef value =
         ABMultiValueCreateMutableCopy(ABRecordCopyValue(toContact, property));
-    
+
+    ABMutableMultiValueRef fromValue =
+        ABMultiValueCreateMutableCopy(ABRecordCopyValue(fromContact, property));
+
     ABRecordRef recordRef = ABRecordCopyValue(fromContact, property);
     NSArray * newValues = recordRef ?
         (NSArray *)ABMultiValueCopyArrayOfAllValues(recordRef) :
         [NSArray array];
-    for (NSString * newValue in newValues)
-        ABMultiValueAddValueAndLabel(value, newValue, kABHomeLabel, NULL);
+
+    for (NSInteger i = 0; i < [newValues count]; i++) {
+        NSString * newValue = [newValues objectAtIndex:i];
+        CFStringRef label = ABMultiValueCopyLabelAtIndex(fromValue, i);
+        ABMultiValueAddValueAndLabel(value, newValue, label, NULL);
+    }
     ABRecordSetValue(toContact, property, value, &error);
 
     if (value)
