@@ -52,5 +52,16 @@
 	<string>a14b2670184a469</string>
 	<key>TwitbitProUrl</key>
 	<string>http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=322281538&amp;mt=8</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>twitbit</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>com.highorderbit.twitbit</string>
+		</dict>
+	</array>
 </dict>
 </plist>
