@@ -111,6 +111,8 @@
 
 - (void)popAllTabsToRoot;
 
+- (void)loadContactCache;
+
 + (NSInteger)mentionsTabBarItemTag;
 + (NSInteger)messagesTabBarItemTag;
 
@@ -321,8 +323,10 @@ enum {
     [self processApplicationLaunch:application
             withRemoteNotification:remoteNotification];
 
-    if (username)
+    if (username) {
+        [self loadContactCache];
         [timelineDisplayMgr showUserInfoForUsername:username];
+    }
 
     return YES;
 }
@@ -366,12 +370,20 @@ enum {
         [self initTabForViewController:moreController];
     }
 
-    ContactCachePersistenceStore * contactCachePersistenceStore =
-        [[[ContactCachePersistenceStore alloc]
-        initWithContactCache:contactCache] autorelease];
-    [contactCachePersistenceStore load];
+    [self loadContactCache];
 
     [UIAccelerometer sharedAccelerometer].delegate = self;
+}
+
+- (void)loadContactCache
+{
+    if (!loadedContactCache) {
+        ContactCachePersistenceStore * contactCachePersistenceStore =
+            [[[ContactCachePersistenceStore alloc]
+            initWithContactCache:contactCache] autorelease];
+        [contactCachePersistenceStore load];
+        loadedContactCache = YES;
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

@@ -113,6 +113,7 @@
     UIAcceleration * lastAcceleration;
     
     BOOL showHomeTab;
+    BOOL loadedContactCache;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;
