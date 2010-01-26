@@ -54,6 +54,8 @@
 
 @property (nonatomic, readonly) UIBarButtonItem * updatingMessagesActivityView;
 
+@property (nonatomic, readonly) SoundPlayer * soundPlayer;
+
 @end
 
 @implementation DirectMessagesDisplayMgr
@@ -102,6 +104,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
 
     [updatingMessagesActivityView release];
     [refreshButton release];
+
+    [soundPlayer release];
 
     [super dealloc];
 }
@@ -1101,6 +1105,10 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     // introduce a delay so adding the cell animates correctly
     [self performSelector:@selector(updateViewsWithNewMessages) withObject:nil
         afterDelay:0.3];
+
+    [self.soundPlayer
+        performSelectorInBackground:@selector(playSoundInMainBundle:)
+        withObject:@"Bloop.wav"];
 }
 
 - (void)loadNewMessageWithId:(NSNumber *)messageId
@@ -1224,6 +1232,14 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     }
 
     return updatingMessagesActivityView;
+}
+
+- (SoundPlayer *)soundPlayer
+{
+    if (!soundPlayer)
+        soundPlayer = [[SoundPlayer alloc] init];
+
+    return soundPlayer;
 }
 
 @end

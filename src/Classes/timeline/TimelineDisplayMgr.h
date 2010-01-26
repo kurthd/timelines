@@ -21,6 +21,7 @@
 #import "ConversationDisplayMgr.h"
 #import "ContactCache.h"
 #import "ContactMgr.h"
+#import "SoundPlayer.h"
 
 @class TimelineDisplayMgrFactory;
 @class TweetViewController;
@@ -88,6 +89,8 @@
 
     UIBarButtonItem * updatingTimelineActivityView;
     UIBarButtonItem * refreshButton;
+
+    SoundPlayer * soundPlayer;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;

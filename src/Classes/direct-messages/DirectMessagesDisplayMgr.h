@@ -23,6 +23,7 @@
 #import "DisplayMgrHelper.h"
 #import "ContactCache.h"
 #import "ContactMgr.h"
+#import "SoundPlayer.h"
 
 /*  This class is responsible for managing the display of the direct messages
     tab.  It will function very similarly to the timeline display, re-using many
@@ -112,6 +113,8 @@
 
     UIBarButtonItem * updatingMessagesActivityView;
     UIBarButtonItem * refreshButton;
+
+    SoundPlayer * soundPlayer;
 }
 
 @property (nonatomic, retain) DirectMessageCache * directMessageCache;

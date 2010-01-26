@@ -998,6 +998,8 @@
 		915B588C10B08CB00028B0B4 /* ActionButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B588A10B08CB00028B0B4 /* ActionButtonCell.m */; };
 		915B588F10B08CC60028B0B4 /* ActionButtonCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B588E10B08CC60028B0B4 /* ActionButtonCellView.m */; };
 		915B589010B08CC60028B0B4 /* ActionButtonCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 915B588E10B08CC60028B0B4 /* ActionButtonCellView.m */; };
+		91674A40110E656000769C6A /* Bloop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 91674A3F110E656000769C6A /* Bloop.wav */; };
+		91674A41110E656000769C6A /* Bloop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 91674A3F110E656000769C6A /* Bloop.wav */; };
 		916A24431083E59800C5895D /* DarkThemeBottomGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A24421083E59800C5895D /* DarkThemeBottomGradient.png */; };
 		916A24501083E72300C5895D /* DarkThemeTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A244F1083E72300C5895D /* DarkThemeTopGradient.png */; };
 		916A25431084283D00C5895D /* DarkThemeButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A25421084283D00C5895D /* DarkThemeButtonBackground.png */; };
@@ -1854,6 +1856,7 @@
 		915B588A10B08CB00028B0B4 /* ActionButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionButtonCell.m; path = shared/ActionButtonCell.m; sourceTree = "<group>"; };
 		915B588D10B08CC60028B0B4 /* ActionButtonCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionButtonCellView.h; path = shared/ActionButtonCellView.h; sourceTree = "<group>"; };
 		915B588E10B08CC60028B0B4 /* ActionButtonCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionButtonCellView.m; path = shared/ActionButtonCellView.m; sourceTree = "<group>"; };
+		91674A3F110E656000769C6A /* Bloop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Bloop.wav; path = sounds/Bloop.wav; sourceTree = "<group>"; };
 		916A24421083E59800C5895D /* DarkThemeBottomGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeBottomGradient.png; path = images/DarkThemeBottomGradient.png; sourceTree = "<group>"; };
 		916A244F1083E72300C5895D /* DarkThemeTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeTopGradient.png; path = images/DarkThemeTopGradient.png; sourceTree = "<group>"; };
 		916A25421084283D00C5895D /* DarkThemeButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DarkThemeButtonBackground.png; path = images/DarkThemeButtonBackground.png; sourceTree = "<group>"; };
@@ -2399,6 +2402,7 @@
 		057260691102CE0800E6AB85 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				91674A3F110E656000769C6A /* Bloop.wav */,
 				05DA70C61106460600C4FBDB /* Alarm.aiff */,
 				05DA70C71106460600C4FBDB /* Chime.aiff */,
 				05DA70C81106460600C4FBDB /* Electronic.aiff */,
@@ -3908,6 +3912,7 @@
 				914EACB210D190F5007036F2 /* trend-style.css in Resources */,
 				91063C4210D6ED1900DEAC3A /* AdBackground.png in Resources */,
 				91063C5D10D6EED700DEAC3A /* AdBackgroundDarkTheme.png in Resources */,
+				91674A40110E656000769C6A /* Bloop.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4107,6 +4112,7 @@
 				05DA70D21106460600C4FBDB /* Electronic.aiff in Resources */,
 				05DA70D31106460600C4FBDB /* Synthesizer.aiff in Resources */,
 				05DA70D41106460600C4FBDB /* Triangle.aiff in Resources */,
+				91674A41110E656000769C6A /* Bloop.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

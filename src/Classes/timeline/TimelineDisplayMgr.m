@@ -30,6 +30,8 @@
 
 @property (nonatomic, readonly) UIBarButtonItem * updatingTimelineActivityView;
 
+@property (nonatomic, readonly) SoundPlayer * soundPlayer;
+
 @end
 
 @implementation TimelineDisplayMgr
@@ -75,6 +77,8 @@
     [updatingTimelineActivityView release];
 
     [refreshButton release];
+
+    [soundPlayer release];
 
     [super dealloc];
 }
@@ -679,6 +683,10 @@
     [timeline setObject:tweet forKey:tweet.identifier];
 
     [timelineController addTweet:tweet];
+
+    [self.soundPlayer
+        performSelectorInBackground:@selector(playSoundInMainBundle:)
+        withObject:@"Bloop.wav"];
 }
 
 - (BOOL)cachedDataAvailable
@@ -1053,6 +1061,14 @@
     }
 
     return updatingTimelineActivityView;
+}
+
+- (SoundPlayer *)soundPlayer
+{
+    if (!soundPlayer)
+        soundPlayer = [[SoundPlayer alloc] init];
+
+    return soundPlayer;
 }
 
 @end
