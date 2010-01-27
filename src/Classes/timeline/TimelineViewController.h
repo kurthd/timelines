@@ -71,7 +71,8 @@
 - (void)setTweets:(NSArray *)tweets page:(NSUInteger)page
     visibleTweetId:(NSNumber *)visibleTweetId;
 - (void)setTweets:(NSArray *)tweets page:(NSUInteger)page
-    verticalOffset:(CGFloat)verticalOffset;
+    verticalOffset:(CGFloat)verticalOffset
+    visibleTweetId:(NSNumber *)visibleTweetId;
 - (void)setWithoutScrollingTweets:(NSArray *)tweets page:(NSUInteger)page;
 - (void)setAllPagesLoaded:(BOOL)allLoaded;
 - (void)selectTweetId:(NSString *)tweetId;

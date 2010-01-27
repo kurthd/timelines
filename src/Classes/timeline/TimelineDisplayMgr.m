@@ -846,7 +846,7 @@
     [aTimelineSource setCredentials:credentials];
 
     [timelineController setTweets:[timeline allValues] page:pagesShown
-        verticalOffset:verticalOffset];
+        verticalOffset:verticalOffset visibleTweetId:self.tweetIdToShow];
     [timelineController setAllPagesLoaded:allPagesLoaded];
 
     if (refresh || [[someTweets allKeys] count] == 0) {
