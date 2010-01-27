@@ -463,7 +463,11 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
 - (void)setTweets:(NSArray *)someTweets page:(NSUInteger)page
     verticalOffset:(CGFloat)verticalOffset
+    visibleTweetId:(NSNumber *)aVisibleTweetId
 {
+    if (aVisibleTweetId && !self.visibleTweetId)
+        self.visibleTweetId = aVisibleTweetId;
+
     [self setTweets:someTweets page:page];
 
     CGFloat heightOfCurrentTweets = 0;
