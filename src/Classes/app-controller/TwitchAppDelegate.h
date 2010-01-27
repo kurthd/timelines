@@ -34,6 +34,7 @@
 @class ActiveTwitterCredentials;
 @class TrendDisplayMgr;
 @class TrendsViewController;
+@class ManagedObjectContextPruner;
 
 @interface TwitchAppDelegate : NSObject
     <UIApplicationDelegate, UITabBarControllerDelegate, DeviceRegistrarDelegate,
@@ -59,6 +60,7 @@
     NSManagedObjectModel * managedObjectModel;
     NSManagedObjectContext * managedObjectContext;
     NSPersistentStoreCoordinator * persistentStoreCoordinator;
+    ManagedObjectContextPruner * managedObjectContextPruner;
 
     // Root view controllers
     IBOutlet NetworkAwareViewController * homeNetAwareViewController;

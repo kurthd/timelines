@@ -288,6 +288,8 @@
 		05C7B99E103B7E1D0017874C /* TwitPicLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B99C103B7E1D0017874C /* TwitPicLogo.png */; };
 		05C7B9F8103B8D360017874C /* YfrogLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B9F7103B8D360017874C /* YfrogLogo.png */; };
 		05C7BA09103B90310017874C /* TwitVidLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7BA08103B90310017874C /* TwitVidLogo.png */; };
+		05CDE7431110D89900BEEBDB /* ManagedObjectContextPruner.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CDE7421110D89900BEEBDB /* ManagedObjectContextPruner.m */; };
+		05CDE7441110D89900BEEBDB /* ManagedObjectContextPruner.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CDE7421110D89900BEEBDB /* ManagedObjectContextPruner.m */; };
 		05D088C410DA7C1A00089D43 /* v2.1-v2.3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D088C310DA7C1A00089D43 /* v2.1-v2.3.xcmappingmodel */; };
 		05D088C510DA7C1A00089D43 /* v2.1-v2.3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 05D088C310DA7C1A00089D43 /* v2.1-v2.3.xcmappingmodel */; };
 		05D44C4710AD3498006E605B /* FetchListStatusesResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D44C4610AD3498006E605B /* FetchListStatusesResponseProcessor.m */; };
@@ -1605,6 +1607,8 @@
 		05C7BA08103B90310017874C /* TwitVidLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TwitVidLogo.png; path = images/TwitVidLogo.png; sourceTree = "<group>"; };
 		05C886D2101639050097FEFF /* AccountSettingsChangedPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountSettingsChangedPublisher.h; path = publishers/AccountSettingsChangedPublisher.h; sourceTree = "<group>"; };
 		05C886D3101639050097FEFF /* AccountSettingsChangedPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountSettingsChangedPublisher.m; path = publishers/AccountSettingsChangedPublisher.m; sourceTree = "<group>"; };
+		05CDE7411110D89900BEEBDB /* ManagedObjectContextPruner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ManagedObjectContextPruner.h; path = "persistence/core-data/ManagedObjectContextPruner.h"; sourceTree = "<group>"; };
+		05CDE7421110D89900BEEBDB /* ManagedObjectContextPruner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ManagedObjectContextPruner.m; path = "persistence/core-data/ManagedObjectContextPruner.m"; sourceTree = "<group>"; };
 		05D088C310DA7C1A00089D43 /* v2.1-v2.3.xcmappingmodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcmappingmodel; name = "v2.1-v2.3.xcmappingmodel"; path = "data-model/v2.1-v2.3.xcmappingmodel"; sourceTree = "<group>"; };
 		05D173E10FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TwitterCredentials+KeychainAdditions.h"; path = "twitter/TwitterCredentials+KeychainAdditions.h"; sourceTree = "<group>"; };
 		05D173E20FF69CBE00DCB22D /* TwitterCredentials+KeychainAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TwitterCredentials+KeychainAdditions.m"; path = "twitter/TwitterCredentials+KeychainAdditions.m"; sourceTree = "<group>"; };
@@ -2973,6 +2977,8 @@
 			isa = PBXGroup;
 			children = (
 				05B8D6C510A3C7AA0030F0BF /* migrations */,
+				05CDE7411110D89900BEEBDB /* ManagedObjectContextPruner.h */,
+				05CDE7421110D89900BEEBDB /* ManagedObjectContextPruner.m */,
 			);
 			name = "core-data";
 			sourceTree = "<group>";
@@ -4471,6 +4477,7 @@
 				05DA72BC1107A96800C4FBDB /* ASIS3ListRequest.m in Sources */,
 				05DA72BD1107A96800C4FBDB /* ASIS3Request.m in Sources */,
 				05DA72BE1107A96800C4FBDB /* Reachability.m in Sources */,
+				05CDE7431110D89900BEEBDB /* ManagedObjectContextPruner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4826,6 +4833,7 @@
 				05DA72C61107A96800C4FBDB /* ASIS3ListRequest.m in Sources */,
 				05DA72C71107A96800C4FBDB /* ASIS3Request.m in Sources */,
 				05DA72C81107A96800C4FBDB /* Reachability.m in Sources */,
+				05CDE7441110D89900BEEBDB /* ManagedObjectContextPruner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
