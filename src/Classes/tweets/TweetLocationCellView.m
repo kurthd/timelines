@@ -219,11 +219,14 @@
 - (void)setLocation:(CLLocation *)l
 {
     NSLog(@"Setting location text on cell view: %@", self);
+
     [l retain];
     [location release];
     location = l;
 
     loading = YES;
+
+    [self updateMapSpan];
 
     CLLocationCoordinate2D coord = l.coordinate;
 
@@ -240,8 +243,6 @@
         [self reverseGeocoder:nil didFindPlacemark:cachedPlacemark];
     }
 
-    [self updateMapSpan];
-
     [self.mapView setCenterCoordinate:coord animated:NO];
     self.mapAnnotation.coordinate = coord;
 
@@ -252,7 +253,7 @@
 
 - (void)updateMapSpan
 {
-    MKCoordinateRegion region = mapView.region;
+    MKCoordinateRegion region = self.mapView.region;
     MKCoordinateSpan span;
     span.latitudeDelta = .002;
     region.span = span;
