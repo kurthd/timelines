@@ -524,7 +524,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         if (newVerticalOffset < heightOfCurrentTweets) {
             CGPoint newContentOffset = CGPointMake(0, newVerticalOffset);
             [self.tableView setContentOffset:newContentOffset animated:NO];
-        } else {
+        } else if (someTweets.count > 0) {
             CGFloat row = [SettingsReader showAds] ? 1 : 0;
             NSIndexPath * scrollIndexPath =
                 [NSIndexPath indexPathForRow:row inSection:0];
