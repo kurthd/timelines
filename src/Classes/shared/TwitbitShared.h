@@ -13,6 +13,7 @@
 #import "NSDate+StringHelpers.h"
 #import "NSError+GeneralHelpers.h"
 #import "NSError+InstantiationAdditions.h"
+#import "NSArray+IterationAdditions.h"
 
 
 //
@@ -50,6 +51,7 @@
 #import "Tweet+CoreDataAdditions.h"
 
 #import "UserTweet.h"
+#import "Mention.h"
 
 #import "TweetLocation.h"
 #import "TweetLocation+GeneralHelpers.h"
@@ -63,6 +65,9 @@
 
 #import "Avatar.h"
 #import "Avatar+UIAdditions.h"
+
+#import "TwitterList.h"
+#import "UserTwitterList.h"
 
 #import "Trend.h"
 

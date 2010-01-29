@@ -465,8 +465,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     verticalOffset:(CGFloat)verticalOffset
     visibleTweetId:(NSNumber *)aVisibleTweetId
 {
-    if (aVisibleTweetId && !self.visibleTweetId)
-        self.visibleTweetId = aVisibleTweetId;
+    self.visibleTweetId = aVisibleTweetId;
 
     [self setTweets:someTweets page:page];
 
