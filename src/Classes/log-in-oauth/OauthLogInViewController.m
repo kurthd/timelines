@@ -122,6 +122,17 @@
 - (void)webViewDidFinishLoad:(UIWebView *)view
 {
     [self hideActivity];
+
+    NSString * pin =
+        [[view stringByEvaluatingJavaScriptFromString:
+        @"document.getElementById('oauth-pin').innerHTML"]
+        stringByTrimmingCharactersInSet:
+        [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    if (pin && pin.length > 0) {
+        self.pinTextField.text = pin;
+        self.doneButton.enabled = YES;
+    }
 }
 
 #pragma mark UI Helpers
