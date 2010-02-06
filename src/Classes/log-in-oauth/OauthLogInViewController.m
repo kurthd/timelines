@@ -23,6 +23,19 @@
 - (void)showActivity;
 - (void)hideActivity;
 
+- (void)changeHeightOfView:(UIView *)theView
+                  toHeight:(CGFloat)height
+         animationDuration:(NSTimeInterval)animationDuration;
+
+- (void)keyboardWillShow:(NSNotification *)notification;
+- (void)keyboardWillHide:(NSNotification *)notification;
+
+- (void)registerForKeyboardNotifications;
+- (void)unregisterForKeyboardNotifications;
+
+- (CGRect)keyboardRectFromNotification:(NSNotification *)n;
+- (NSTimeInterval)keyboardAnimationDurationForNotification:(NSNotification *)n;
+
 @end
 
 @implementation OauthLogInViewController
@@ -100,6 +113,43 @@
 
 #pragma mark UITextFieldDelegate implementation
 
+//
+// HACK: To correctly move the PIN number into place when the entry field has
+// focus, we reposition the webview when the PIN text field has focus. To do
+// this, we have to register for keyboard notifications so we can retrieve the
+// keyboard's size and animation duration. But if we do this all the time, we
+// will also receive notifications when the username/password fields in the
+// Twitter oauth screen have focus. Therefore we track when the PIN text field
+// has focus and only reposition the webview when it has focus.
+//
+static BOOL textFieldHasFocus = NO;
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    textFieldHasFocus = YES;
+    [self registerForKeyboardNotifications];
+
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    // HACK: Do this after a delay so that the keyboard event will be processed
+    // before the 'textFieldHasFocus' is reset and the notification observer
+    // removed.
+    [self performSelector:@selector(processTextFieldShouldEndEditing)
+               withObject:nil
+               afterDelay:1.0];
+
+    return YES;
+}
+
+- (void)processTextFieldShouldEndEditing
+{
+    textFieldHasFocus = NO;
+    [self unregisterForKeyboardNotifications];
+}
+
 - (BOOL)textField:(UITextField *)textField
     shouldChangeCharactersInRange:(NSRange)range
                 replacementString:(NSString *)s
@@ -148,6 +198,102 @@
 {
     [self.navigationItem setRightBarButtonItem:self.doneButton animated:YES];
     [[UIApplication sharedApplication] networkActivityDidFinish];
+}
+
+- (void)changeHeightOfView:(UIView *)theView
+                  toHeight:(CGFloat)height
+         animationDuration:(NSTimeInterval)animationDuration
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+
+    CGRect rect = theView.frame;
+    rect.size.height = height;
+    theView.frame = rect;
+
+    [UIView commitAnimations];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    if (!textFieldHasFocus)
+        return;
+
+    CGRect rect = [self keyboardRectFromNotification:notification];
+    NSTimeInterval duration =
+        [self keyboardAnimationDurationForNotification:notification];
+    CGFloat height = self.webView.frame.size.height - rect.size.height;
+
+    [self changeHeightOfView:self.webView
+                    toHeight:height
+           animationDuration:duration];
+
+    // HACK: Scroll the PIN number into view; it's otherwise obscured by
+    // the keyboard, and it's impossible to manually scroll it into view
+    [self.webView stringByEvaluatingJavaScriptFromString:
+        @"var x = document.getElementById('oauth-pin');"
+         "if (x != null) { x.scrollIntoView(true); }"];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    if (!textFieldHasFocus)
+        return;
+
+    CGRect rect = [self keyboardRectFromNotification:notification];
+    NSTimeInterval duration =
+        [self keyboardAnimationDurationForNotification:notification];
+    CGFloat height = self.webView.frame.size.height + rect.size.height;
+
+    [self changeHeightOfView:self.webView
+                    toHeight:height
+           animationDuration:duration];
+}
+
+- (void)registerForKeyboardNotifications
+{
+    NSNotificationCenter * notificationCenter =
+        [NSNotificationCenter defaultCenter];
+
+    [notificationCenter addObserver:self
+                           selector:@selector(keyboardWillShow:)
+                               name:UIKeyboardWillShowNotification
+                             object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(keyboardWillHide:)
+                               name:UIKeyboardWillHideNotification
+                             object:nil];
+}
+
+- (void)unregisterForKeyboardNotifications
+{
+    NSNotificationCenter * notificationCenter =
+        [NSNotificationCenter defaultCenter];
+
+    [notificationCenter removeObserver:self
+                                  name:UIKeyboardWillShowNotification
+                                object:nil];
+    [notificationCenter removeObserver:self
+                                  name:UIKeyboardWillHideNotification
+                                object:nil];
+}
+
+- (CGRect)keyboardRectFromNotification:(NSNotification *)n
+{
+    CGRect rect;
+    [[n.userInfo valueForKey:UIKeyboardBoundsUserInfoKey] getValue:&rect];
+
+    return rect;
+}
+
+- (NSTimeInterval)keyboardAnimationDurationForNotification:(NSNotification *)n
+{
+    NSValue * value =
+        [n.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval duration = 0;
+    [value getValue:&duration];
+
+    return duration;
 }
 
 #pragma mark Accessors
