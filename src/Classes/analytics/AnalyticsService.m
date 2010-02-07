@@ -14,6 +14,8 @@
 
 @implementation AnalyticsService
 
+#pragma mark Public implementation
+
 - (void)startAnalytics
 {
     NSString * applicationCode = [[self class] applicationCode];
@@ -27,6 +29,11 @@
 - (void)stopAnalytics
 {
     [Beacon endBeacon];
+}
+
+- (void)setLocation:(CLLocation *)location
+{
+    [[Beacon shared] setBeaconLocation:location];
 }
 
 #pragma mark Private implementation

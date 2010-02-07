@@ -10,6 +10,7 @@
 #import "ErrorState.h"
 #import "RotatableTabBarController.h"
 #import "SettingsReader.h"
+#import "TwitchAppDelegate.h"
 
 @interface SearchBarDisplayMgr ()
 
@@ -537,6 +538,13 @@
             setRightBarButtonItem:self.locationButton animated:YES];
     locationButtonState = kLocationButtonStateOn;
     [self searchBarSearchButtonClicked:searchBar];
+
+    // HACK: Tell the app delegate the location so it can tell the analytics
+    // engine the location. This code exists wherever this delegate method is
+    // implementated.
+    TwitchAppDelegate * appDelegate = (TwitchAppDelegate *)
+        [[UIApplication sharedApplication] delegate];
+    [appDelegate setLocation:newLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager

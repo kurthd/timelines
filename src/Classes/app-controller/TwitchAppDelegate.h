@@ -135,4 +135,6 @@
 
 - (IBAction)composeTweet:(id)sender;
 
+- (void)setLocation:(CLLocation *)location;
+
 @end

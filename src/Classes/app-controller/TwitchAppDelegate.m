@@ -428,6 +428,13 @@ enum {
     [self.composeTweetDisplayMgr composeTweetAnimated:YES];
 }
 
+#pragma mark Location management
+
+- (void)setLocation:(CLLocation *)location
+{
+    [self.analyticsService setLocation:location];
+}
+
 #pragma mark ComposeTweetDisplayMgrDelegate implementation
 
 - (void)userDidCancelComposingTweet

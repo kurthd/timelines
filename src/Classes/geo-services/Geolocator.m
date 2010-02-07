@@ -4,6 +4,7 @@
 
 #import "Geolocator.h"
 #import "CoordRecentHistoryCache.h"
+#import "TwitchAppDelegate.h"
 
 @interface Geolocator ()
 @property (nonatomic, retain) CLLocationManager * locationManager;
@@ -71,6 +72,13 @@
         NSLog(@"Using placemark from cache");
         [self reverseGeocoder:nil didFindPlacemark:cachedPlacemark];
     }
+
+    // HACK: Tell the app delegate the location so it can tell the analytics
+    // engine the location. This code exists wherever this delegate method is
+    // implementated.
+    TwitchAppDelegate * appDelegate = (TwitchAppDelegate *)
+    [[UIApplication sharedApplication] delegate];
+    [appDelegate setLocation:newLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager
