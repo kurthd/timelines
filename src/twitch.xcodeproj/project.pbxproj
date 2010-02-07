@@ -233,6 +233,10 @@
 		0536F04210C8972F00479158 /* TrendDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 0536F04010C8972F00479158 /* TrendDisplayMgr.m */; };
 		05377FC910A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */; };
 		05377FCA10A10C3000DE3FDA /* NSError+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */; };
+		05387454111F651E00580251 /* libPMAnalytics-r91.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05387453111F651E00580251 /* libPMAnalytics-r91.a */; };
+		05387455111F652600580251 /* libPMAnalytics-r91.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05387453111F651E00580251 /* libPMAnalytics-r91.a */; };
+		05387479111F65AF00580251 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 05387478111F65AF00580251 /* libsqlite3.dylib */; };
+		0538747E111F65C500580251 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 05387478111F65AF00580251 /* libsqlite3.dylib */; };
 		0538FE97104C7897009E50CE /* InstapaperLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0538FE95104C7897009E50CE /* InstapaperLogInView.xib */; };
 		053A2C90103F1FAC005BB245 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2C8F103F1FAC005BB245 /* MobileCoreServices.framework */; };
 		053A2D89103F575D005BB245 /* libTwitVid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D88103F575D005BB245 /* libTwitVid.a */; };
@@ -1290,6 +1294,10 @@
 		0536F04010C8972F00479158 /* TrendDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrendDisplayMgr.m; path = trends/TrendDisplayMgr.m; sourceTree = "<group>"; };
 		05377FC710A10C3000DE3FDA /* NSError+GeneralHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+GeneralHelpers.h"; path = "shared/NSError+GeneralHelpers.h"; sourceTree = "<group>"; };
 		05377FC810A10C3000DE3FDA /* NSError+GeneralHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+GeneralHelpers.m"; path = "shared/NSError+GeneralHelpers.m"; sourceTree = "<group>"; };
+		05387431111F650B00580251 /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Beacon.h; path = "vendor/pinch-analytics/Beacon.h"; sourceTree = "<group>"; };
+		05387432111F650B00580251 /* Beacon+FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Beacon+FBConnect.h"; path = "vendor/pinch-analytics/Beacon+FBConnect.h"; sourceTree = "<group>"; };
+		05387453111F651E00580251 /* libPMAnalytics-r91.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPMAnalytics-r91.a"; path = "Classes/vendor/pinch-analytics/libPMAnalytics-r91.a"; sourceTree = "<group>"; };
+		05387478111F65AF00580251 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		0538FE1C104C4584009E50CE /* DeleteDirectMessageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeleteDirectMessageResponseProcessor.h; path = twitter/processors/DeleteDirectMessageResponseProcessor.h; sourceTree = "<group>"; };
 		0538FE1D104C4584009E50CE /* DeleteDirectMessageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeleteDirectMessageResponseProcessor.m; path = twitter/processors/DeleteDirectMessageResponseProcessor.m; sourceTree = "<group>"; };
 		0538FE5A104C4F16009E50CE /* InstapaperService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstapaperService.h; path = instapaper/InstapaperService.h; sourceTree = "<group>"; };
@@ -2124,6 +2132,8 @@
 				91A646EF10D6D8EB00F7C922 /* MediaPlayer.framework in Frameworks */,
 				91A646F010D6D8ED00F7C922 /* AddressBookUI.framework in Frameworks */,
 				91A646F110D6D8EE00F7C922 /* AddressBook.framework in Frameworks */,
+				05387454111F651E00580251 /* libPMAnalytics-r91.a in Frameworks */,
+				05387479111F65AF00580251 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2151,6 +2161,8 @@
 				91B770B310BC63590014172A /* AddressBookUI.framework in Frameworks */,
 				91B770C910BC63A70014172A /* AddressBook.framework in Frameworks */,
 				91A644C810D6B1EB00F7C922 /* MediaPlayer.framework in Frameworks */,
+				05387455111F652600580251 /* libPMAnalytics-r91.a in Frameworks */,
+				0538747E111F65C500580251 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2341,6 +2353,15 @@
 			name = "app-controller";
 			sourceTree = "<group>";
 		};
+		05387430111F64F200580251 /* pinch-analytics */ = {
+			isa = PBXGroup;
+			children = (
+				05387431111F650B00580251 /* Beacon.h */,
+				05387432111F650B00580251 /* Beacon+FBConnect.h */,
+			);
+			name = "pinch-analytics";
+			sourceTree = "<group>";
+		};
 		0538FE59104C4EF1009E50CE /* instapaper */ = {
 			isa = PBXGroup;
 			children = (
@@ -2399,6 +2420,7 @@
 				053A2D76103F572D005BB245 /* twitvid */,
 				05B7C8BE105899D00043298A /* json */,
 				0590E1E91062FEFD009D1C11 /* asi-http-request */,
+				05387430111F64F200580251 /* pinch-analytics */,
 			);
 			name = vendor;
 			sourceTree = "<group>";
@@ -3262,6 +3284,8 @@
 				91B770B210BC63590014172A /* AddressBookUI.framework */,
 				91B770C810BC63A70014172A /* AddressBook.framework */,
 				91A644C710D6B1EB00F7C922 /* MediaPlayer.framework */,
+				05387453111F651E00580251 /* libPMAnalytics-r91.a */,
+				05387478111F65AF00580251 /* libsqlite3.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -5254,6 +5278,7 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 					"\"$(SRCROOT)/AdMob\"",
+					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
 				PRODUCT_NAME = Twitbit;
 			};
@@ -5306,6 +5331,7 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 					"\"$(SRCROOT)/AdMob\"",
+					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
 				PRODUCT_NAME = Twitbit;
 			};
@@ -5329,6 +5355,7 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 					"\"$(SRCROOT)/AdMob\"",
+					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
 				PRODUCT_NAME = "Twitbit Lite";
 			};
@@ -5350,6 +5377,7 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 					"\"$(SRCROOT)/AdMob\"",
+					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
 				PRODUCT_NAME = "Twitbit Lite";
 			};
@@ -5374,6 +5402,7 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 					"\"$(SRCROOT)/AdMob\"",
+					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
 				PRODUCT_NAME = "Twitbit Lite";
 			};
@@ -5401,6 +5430,7 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 					"\"$(SRCROOT)/AdMob\"",
+					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
 				PRODUCT_NAME = "Twitbit Lite";
 				PROVISIONING_PROFILE = "37E48521-9BD8-4E95-AAE2-9AB07B1C6A06";
@@ -5462,6 +5492,7 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 					"\"$(SRCROOT)/AdMob\"",
+					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
 				PRODUCT_NAME = Twitbit;
 				PROVISIONING_PROFILE = "9BD30541-6CA6-4F48-B159-BC45D542BBD5";
@@ -5521,6 +5552,7 @@
 					"\"$(SRCROOT)/Classes/vendor/yajl\"",
 					"\"$(SRCROOT)/Classes/vendor/twitvid\"",
 					"\"$(SRCROOT)/AdMob\"",
+					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
 				PRODUCT_NAME = Twitbit;
 			};
