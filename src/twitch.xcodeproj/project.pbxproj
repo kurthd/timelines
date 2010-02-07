@@ -237,6 +237,8 @@
 		05387455111F652600580251 /* libPMAnalytics-r91.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05387453111F651E00580251 /* libPMAnalytics-r91.a */; };
 		05387479111F65AF00580251 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 05387478111F65AF00580251 /* libsqlite3.dylib */; };
 		0538747E111F65C500580251 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 05387478111F65AF00580251 /* libsqlite3.dylib */; };
+		05387491111F670700580251 /* AnalyticsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05387490111F670700580251 /* AnalyticsService.m */; };
+		05387492111F670700580251 /* AnalyticsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05387490111F670700580251 /* AnalyticsService.m */; };
 		0538FE97104C7897009E50CE /* InstapaperLogInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0538FE95104C7897009E50CE /* InstapaperLogInView.xib */; };
 		053A2C90103F1FAC005BB245 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2C8F103F1FAC005BB245 /* MobileCoreServices.framework */; };
 		053A2D89103F575D005BB245 /* libTwitVid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053A2D88103F575D005BB245 /* libTwitVid.a */; };
@@ -1298,6 +1300,8 @@
 		05387432111F650B00580251 /* Beacon+FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Beacon+FBConnect.h"; path = "vendor/pinch-analytics/Beacon+FBConnect.h"; sourceTree = "<group>"; };
 		05387453111F651E00580251 /* libPMAnalytics-r91.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPMAnalytics-r91.a"; path = "Classes/vendor/pinch-analytics/libPMAnalytics-r91.a"; sourceTree = "<group>"; };
 		05387478111F65AF00580251 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		0538748F111F670700580251 /* AnalyticsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnalyticsService.h; path = analytics/AnalyticsService.h; sourceTree = "<group>"; };
+		05387490111F670700580251 /* AnalyticsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnalyticsService.m; path = analytics/AnalyticsService.m; sourceTree = "<group>"; };
 		0538FE1C104C4584009E50CE /* DeleteDirectMessageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeleteDirectMessageResponseProcessor.h; path = twitter/processors/DeleteDirectMessageResponseProcessor.h; sourceTree = "<group>"; };
 		0538FE1D104C4584009E50CE /* DeleteDirectMessageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeleteDirectMessageResponseProcessor.m; path = twitter/processors/DeleteDirectMessageResponseProcessor.m; sourceTree = "<group>"; };
 		0538FE5A104C4F16009E50CE /* InstapaperService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstapaperService.h; path = instapaper/InstapaperService.h; sourceTree = "<group>"; };
@@ -2362,6 +2366,15 @@
 			name = "pinch-analytics";
 			sourceTree = "<group>";
 		};
+		0538748E111F66E900580251 /* analytics */ = {
+			isa = PBXGroup;
+			children = (
+				0538748F111F670700580251 /* AnalyticsService.h */,
+				05387490111F670700580251 /* AnalyticsService.m */,
+			);
+			name = analytics;
+			sourceTree = "<group>";
+		};
 		0538FE59104C4EF1009E50CE /* instapaper */ = {
 			isa = PBXGroup;
 			children = (
@@ -3180,6 +3193,7 @@
 			isa = PBXGroup;
 			children = (
 				91A644F710D6BCD900F7C922 /* ads */,
+				0538748E111F66E900580251 /* analytics */,
 				91FDD58A106157EF000F7527 /* bitly */,
 				918F7140104741F900FE7ABF /* web */,
 				918F3733103F47E9000236AE /* geo-services */,
@@ -4502,6 +4516,7 @@
 				05DA72BD1107A96800C4FBDB /* ASIS3Request.m in Sources */,
 				05DA72BE1107A96800C4FBDB /* Reachability.m in Sources */,
 				05CDE7431110D89900BEEBDB /* ManagedObjectContextPruner.m in Sources */,
+				05387492111F670700580251 /* AnalyticsService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4858,6 +4873,7 @@
 				05DA72C71107A96800C4FBDB /* ASIS3Request.m in Sources */,
 				05DA72C81107A96800C4FBDB /* Reachability.m in Sources */,
 				05CDE7441110D89900BEEBDB /* ManagedObjectContextPruner.m in Sources */,
+				05387491111F670700580251 /* AnalyticsService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

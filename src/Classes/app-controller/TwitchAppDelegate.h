@@ -35,6 +35,7 @@
 @class TrendDisplayMgr;
 @class TrendsViewController;
 @class ManagedObjectContextPruner;
+@class AnalyticsService;
 
 @interface TwitchAppDelegate : NSObject
     <UIApplicationDelegate, UITabBarControllerDelegate, DeviceRegistrarDelegate,
@@ -116,6 +117,8 @@
     
     BOOL showHomeTab;
     BOOL loadedContactCache;
+
+    AnalyticsService * analyticsService;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;

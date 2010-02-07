@@ -25,6 +25,7 @@
 #import "UIAlertView+InstantiationAdditions.h"
 #import "UIWebView+FileLoadingAdditions.h"
 #import "NSString+WebViewAdditions.h"
+#import "UIApplication+ConfigurationAdditions.h"
 
 
 //

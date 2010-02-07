@@ -48,6 +48,7 @@
 #import "DirectMessage+CoreDataAdditions.h"
 #import "PushNotificationMessage.h"
 #import "ManagedObjectContextPruner.h"
+#import "AnalyticsService.h"
 
 @interface TwitchAppDelegate ()
 
@@ -65,6 +66,8 @@
 
 @property (nonatomic, retain) UIAcceleration* lastAcceleration;
 
+@property (nonatomic, retain) AnalyticsService * analyticsService;
+
 - (void)initHomeTab;
 - (void)initMentionsTab;
 - (void)initMessagesTab;
@@ -75,6 +78,9 @@
 - (void)initListsTab;
 - (void)initTrendsTab;
 - (UINavigationController *)getNavControllerForController:(UIViewController *)c;
+
+- (void)initAnalytics;
+- (void)terminateAnalytics;
 
 - (UIBarButtonItem *)newTweetButtonItem;
 - (UIBarButtonItem *)homeSendingTweetProgressView;
@@ -143,6 +149,7 @@ enum {
 @synthesize savingInstapaperUrl;
 @synthesize instapaperLogInDisplayMgr;
 @synthesize lastAcceleration;
+@synthesize analyticsService;
 
 - (void)dealloc
 {
@@ -212,6 +219,8 @@ enum {
 
     [lastAcceleration release];
 
+    [analyticsService release];
+
     [super dealloc];
 }
 
@@ -220,6 +229,8 @@ enum {
 - (void)processApplicationLaunch:(UIApplication *)application
           withRemoteNotification:(NSDictionary *)notification
 {
+    NSLog(@"Device ID: %@", [UIDevice currentDevice].uniqueIdentifier);
+
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         UINavigationController * moreNavController =
             tabBarController.moreNavigationController;
@@ -375,6 +386,8 @@ enum {
     [self loadContactCache];
 
     [UIAccelerometer sharedAccelerometer].delegate = self;
+
+    [self initAnalytics];
 }
 
 - (void)loadContactCache
@@ -399,6 +412,13 @@ enum {
             exit(-1);
         }
     }
+
+    // Note that the Pinch documentation suggestions calling this method
+    // last, as the iPhone OS has a watchdog that terminates processes if
+    // they don't terminate in an unspecified amount of time. Do all
+    // application-critical stuff first. If analytics communication fails,
+    // the data will be sent next time the application runs on startup.
+    [self terminateAnalytics];
 }
 
 #pragma mark Composing tweets
@@ -1166,6 +1186,19 @@ enum {
         NSLocalizedString(@"account.title", @"");
 
     [displayMgr release];
+}
+
+- (void)initAnalytics
+{
+    NSLog(@"Starting analytics collection.");
+    [self.analyticsService startAnalytics];
+}
+
+- (void)terminateAnalytics
+{
+    NSLog(@"Stopping analytics collection");
+    [self.analyticsService stopAnalytics];
+    NSLog(@"Analytics collection stopped");
 }
 
 #pragma mark UITabBarControllerDelegate implementation
@@ -2521,6 +2554,14 @@ enum {
     }
 
     return instapaperLogInDisplayMgr;
+}
+
+- (AnalyticsService *)analyticsService
+{
+    if (!analyticsService)
+        analyticsService = [[AnalyticsService alloc] init];
+
+    return analyticsService;
 }
 
 #pragma mark Shake-to-refresh implementation
