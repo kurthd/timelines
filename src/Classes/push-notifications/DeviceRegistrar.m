@@ -30,8 +30,8 @@
     if (self = [super init])
         // device contacts a url of the form:
         //  https://sandbox.twitch.highorderbit.com/device/register
-        self.urlString = @"http://twitbit-push.appspot.com/register-device";
-            //[NSString stringWithFormat:@"https://%@/device/register", aDomain];
+        self.urlString =
+            [NSString stringWithFormat:@"https://%@/device/register", aDomain];
 
     return self;
 }
