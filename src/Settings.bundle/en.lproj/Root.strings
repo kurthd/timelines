@@ -15,6 +15,11 @@
 "fetchquantity.fifty" = "50";
 "fetchquantity.onehundred" = "100";
 
+"fontsize" = "Font Size";
+"fontsize.small" = "Small";
+"fontsize.medium" = "Medium";
+"fontsize.large" = "Large";
+
 "tweetcompositiongroupname" = "Tweet Composition";
 
 "retweetformat" = "Retweet Format";

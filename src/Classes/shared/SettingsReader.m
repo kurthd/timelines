@@ -28,6 +28,9 @@ static BOOL scrollToTop;
 static NSInteger retweetFormatValueAlredyRead;
 static NSInteger retweetFormat;
 
+static BOOL alreadyReadFontSizeValue;
+static NSInteger timelineFontSize;
+
 + (NSInteger)fetchQuantity
 {
     if (!alreadyReadFetchQuantityValue) {
@@ -127,6 +130,20 @@ static NSInteger retweetFormat;
 + (BOOL)showAds
 {
     return [[UIApplication sharedApplication] isLiteVersion];
+}
+
++ (TimelineFontSize)timelineFontSize
+{
+    if (!alreadyReadFontSizeValue) {
+        alreadyReadFontSizeValue = YES;
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        timelineFontSize =
+            defaults ?
+            [defaults integerForKey:@"font_size"] :
+            kTimelineFontSizeMedium;
+    }
+
+    return timelineFontSize;
 }
 
 @end

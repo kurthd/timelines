@@ -20,6 +20,12 @@ typedef enum {
     kDisplayThemeDark
 } DisplayTheme;
 
+typedef enum {
+    kTimelineFontSizeSmall,
+    kTimelineFontSizeMedium,
+    kTimelineFontSizeLarge
+} TimelineFontSize;
+
 @interface SettingsReader : NSObject
 
 + (NSInteger)fetchQuantity;
@@ -32,5 +38,6 @@ typedef enum {
 + (BOOL)scrollToTop;
 + (NSInteger)retweetFormat;
 + (BOOL)showAds;
++ (TimelineFontSize)timelineFontSize;
 
 @end

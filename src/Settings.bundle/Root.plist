@@ -77,6 +77,28 @@
 			<false/>
 		</dict>
 		<dict>
+			<key>DefaultValue</key>
+			<integer>1</integer>
+			<key>Title</key>
+			<string>fontsize</string>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>fontsize.small</string>
+				<string>fontsize.medium</string>
+				<string>fontsize.large</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Key</key>
+			<string>font_size</string>
+		</dict>
+		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
