@@ -66,7 +66,7 @@
                                                              delegate:self
                                                      startImmediately:YES];
 
-    NSLog(@"Started connection: '%@'.", conn);
+    NSLog(@"Device registration: Started connection: '%@'.", conn);
 }
 
 #pragma mark NSURLConnectionDelegate implementation
@@ -80,13 +80,13 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    NSLog(@"Received data: '%@'.",
+    NSLog(@"Device registration: received data: '%@'.",
         [[[NSString alloc] initWithData:data encoding:4] autorelease]);
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)conn
 {
-    NSLog(@"Connection did finish loading: '%@'.", conn);
+    NSLog(@"Device registration: Connection did finish loading: '%@'.", conn);
 
     [delegate registeredDeviceWithToken:self.deviceToken];
     self.deviceToken = nil;
@@ -94,7 +94,8 @@
 
 - (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error
 {
-    NSLog(@"Connection '%@' did fail with error: '%@'.", conn, error);
+    NSLog(@"Device registration: Connection '%@' did fail with error: '%@'.",
+        conn, error);
 
     [delegate failedToRegisterDeviceWithToken:self.deviceToken error:error];
     self.deviceToken = nil;
