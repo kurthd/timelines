@@ -108,6 +108,7 @@
 
 - (void)loadAuthRequest:(NSURLRequest *)request
 {
+    NSLog(@"Loading auth request...");
     [self.webView loadRequest:request];
 }
 

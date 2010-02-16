@@ -112,15 +112,14 @@
 
 - (void)receivedRequestToken:(id)sender
 {
-    NSLog(@"Received request token:: '%@'.", self.twitter.requestToken);
-
     self.requestToken = self.twitter.requestToken;
+    NSLog(@"Received request token: '%@'.", self.twitter.requestToken);
 
     NSURL * url = [NSURL URLWithString:
         [NSString stringWithFormat:@"http://twitter.com/oauth/"
         "authorize?oauth_token=%@&oauth_callback=oob", self.requestToken.key]];
     NSURLRequest * req = [NSURLRequest requestWithURL:url];
-
+    
     if (self.navigationController)
         [self.navigationController
             pushViewController:self.oauthLogInViewController animated:YES];
@@ -129,8 +128,8 @@
             [[[UINavigationController alloc]
             initWithRootViewController:self.oauthLogInViewController]
             autorelease];
-        [self.explainOauthViewController presentModalViewController:navController
-            animated:YES];
+        [self.explainOauthViewController
+            presentModalViewController:navController animated:YES];
     }
 
     [self.oauthLogInViewController performSelector:@selector(loadAuthRequest:)
@@ -213,6 +212,11 @@
 
 - (void)beginAuthorization
 {
+    NSLog(@"Sending request token to Twitter...");
+    // Force a new 'twitter' instance to be created
+    [twitter release];
+    twitter = nil;
+    
     [self.twitter requestRequestToken];
     [self.explainOauthViewController showActivityView];
 
