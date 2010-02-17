@@ -69,7 +69,8 @@ static UIImage * highlightedRetweetGlyph;
 @implementation FastTimelineTableViewCellView
 
 @synthesize landscape, highlighted;
-@synthesize displayType, text, author, timestamp, avatar, favorite, geocoded;
+@synthesize displayType, text, author, timestamp, avatar, favorite, geocoded,
+    attachment;
 @synthesize displayAsMention, displayAsOld;
 @synthesize retweetAuthorName;
 

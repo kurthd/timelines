@@ -86,6 +86,11 @@
     timelineView.geocoded = geocoded;
 }
 
+- (void)setAttachment:(BOOL)attachment
+{
+    timelineView.attachment = attachment;
+}
+
 - (void)displayAsMention:(BOOL)displayAsMention
 {
     timelineView.displayAsMention = displayAsMention;

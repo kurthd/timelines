@@ -23,6 +23,7 @@
 - (void)setAvatar:(UIImage *)avatar;
 - (void)setFavorite:(BOOL)favorite;
 - (void)setGeocoded:(BOOL)geocoded;
+- (void)setAttachment:(BOOL)attachment;
 
 - (void)displayAsMention:(BOOL)displayAsMention;
 - (void)displayAsOld:(BOOL)displayAsOld;
