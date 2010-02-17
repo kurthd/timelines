@@ -78,13 +78,13 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<integer>1</integer>
+			<integer>0</integer>
 			<key>Title</key>
 			<string>fontsize</string>
 			<key>Values</key>
 			<array>
-				<integer>0</integer>
 				<integer>1</integer>
+				<integer>0</integer>
 				<integer>2</integer>
 			</array>
 			<key>Titles</key>

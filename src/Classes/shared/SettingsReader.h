@@ -21,8 +21,8 @@ typedef enum {
 } DisplayTheme;
 
 typedef enum {
-    kTimelineFontSizeSmall,
     kTimelineFontSizeMedium,
+    kTimelineFontSizeSmall,
     kTimelineFontSizeLarge
 } TimelineFontSize;
 
