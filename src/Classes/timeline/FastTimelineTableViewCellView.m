@@ -61,6 +61,9 @@ static UIImage * highlightedRetweetGlyph;
 + (UIImage *)geocodeGlyph;
 + (UIImage *)highlightedGeocodeGlyph;
 
++ (UIImage *)attachmentGlyph;
++ (UIImage *)highlightedAttachmentGlyph;
+
 @end
 
 @implementation FastTimelineTableViewCellView
@@ -254,6 +257,8 @@ static UIImage * highlightedRetweetGlyph;
         padding += 14.0;
     if (geocoded)
         padding += 11.0;
+    if (attachment)
+        padding += 24.0;
 
     CGSize authorLabelSize = size =
         CGSizeMake(point.x - padding - AUTHOR_LEFT_MARGIN,
@@ -284,16 +289,34 @@ static UIImage * highlightedRetweetGlyph;
     // Draw the geocode inidcator
     //
     if (geocoded) {
-        CGFloat favoriteAdjustment = favorite ? 17 : 2;
+        CGFloat adjustment = favorite ? 17 : 2;
         point =
             CGPointMake(
-            AUTHOR_LEFT_MARGIN + authorLabelSize.width + favoriteAdjustment,
+            AUTHOR_LEFT_MARGIN + authorLabelSize.width + adjustment,
             AUTHOR_TOP_MARGIN + 3);
         UIImage * geocodeGlyph =
             self.highlighted ?
             [[self class] highlightedGeocodeGlyph] :
             [[self class] geocodeGlyph];
         [geocodeGlyph drawAtPoint:point];
+    }
+    
+    //
+    // Draw the attachment glyph
+    //
+    if (attachment) {
+        CGFloat adjustment = favorite ? 18 : 2;
+        if (geocoded)
+            adjustment += 12;
+        point =
+            CGPointMake(
+            AUTHOR_LEFT_MARGIN + authorLabelSize.width + adjustment,
+            AUTHOR_TOP_MARGIN + 3);
+        UIImage * attachmentGlyph =
+            self.highlighted ?
+            [[self class] highlightedAttachmentGlyph] :
+            [[self class] attachmentGlyph];
+        [attachmentGlyph drawAtPoint:point];
     }
 
     //
@@ -357,7 +380,7 @@ static UIImage * highlightedRetweetGlyph;
 }
 
 - (void)drawRectInverted:(CGRect)rect
-{
+{   
     static const CGFloat TIMESTAMP_LEFT_MARGIN = 7.0;
     static const CGFloat TIMESTAMP_TOP_MARGIN = 7.0;
 
@@ -439,6 +462,24 @@ static UIImage * highlightedRetweetGlyph;
             [[self class] highlightedGeocodeGlyph] :
             [[self class] geocodeGlyph];
         [retweetGlyph drawAtPoint:point];
+    }
+    
+    //
+    // Draw the attachment glyph
+    //
+    if (attachment) {
+        CGFloat adjustment = favorite ? 21 : 5;
+        if (geocoded)
+            adjustment += 14;
+        point =
+            CGPointMake(
+            TEXT_LEFT_MARGIN + timestampWidth + adjustment,
+            TIMESTAMP_TOP_MARGIN);
+        UIImage * attachmentGlyph =
+            self.highlighted ?
+            [[self class] highlightedAttachmentGlyph] :
+            [[self class] attachmentGlyph];
+        [attachmentGlyph drawAtPoint:point];
     }
 
     //
@@ -580,6 +621,24 @@ static UIImage * highlightedRetweetGlyph;
             [[self class] geocodeGlyph];
         [geocodeGlyph drawAtPoint:point];
     }
+    
+    //
+    // Draw the attachment glyph
+    //
+    if (attachment) {
+        CGFloat adjustment = favorite ? 21 : 5;
+        if (geocoded)
+            adjustment += 14;
+        point =
+            CGPointMake(
+            TEXT_LEFT_MARGIN + timestampWidth + adjustment,
+            TIMESTAMP_TOP_MARGIN);
+        UIImage * attachmentGlyph =
+            self.highlighted ?
+            [[self class] highlightedAttachmentGlyph] :
+            [[self class] attachmentGlyph];
+        [attachmentGlyph drawAtPoint:point];
+    }
 
     //
     // Draw the main text.
@@ -682,6 +741,21 @@ static UIImage * highlightedRetweetGlyph;
         CGPointMake(TIMESTAMP_LEFT_MARGIN + timestampWidth,
         TIMESTAMP_TOP_MARGIN);
     [amPmString drawAtPoint:point withFont:timestampFont];
+    
+    //
+    // Draw the attachment glyph
+    //
+    if (attachment) {
+        point =
+            CGPointMake(
+            TEXT_LEFT_MARGIN + timestampWidth + 25,
+            TIMESTAMP_TOP_MARGIN);
+        UIImage * attachmentGlyph =
+            self.highlighted ?
+            [[self class] highlightedAttachmentGlyph] :
+            [[self class] attachmentGlyph];
+        [attachmentGlyph drawAtPoint:point];
+    }
 
     //
     // Draw the main text.
@@ -1073,6 +1147,24 @@ static UIImage * highlightedRetweetGlyph;
         glyph =
             [[UIImage imageNamed:@"GeocodeTimelineIndicatorHighlighted.png"]
             retain];
+
+    return glyph;
+}
+
++ (UIImage *)attachmentGlyph
+{
+    static UIImage * glyph = nil;
+    if (!glyph)
+        glyph = [[UIImage imageNamed:@"Attachment.png"] retain];
+
+    return glyph;
+}
+
++ (UIImage *)highlightedAttachmentGlyph
+{
+    static UIImage * glyph = nil;
+    if (!glyph)
+        glyph = [[UIImage imageNamed:@"AttachmentHighlighted.png"] retain];
 
     return glyph;
 }

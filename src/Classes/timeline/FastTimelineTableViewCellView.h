@@ -20,6 +20,7 @@
     UIImage * avatar;
     BOOL favorite;
     BOOL geocoded;
+    BOOL attachment;
 
     BOOL displayAsMention;
     BOOL displayAsOld;

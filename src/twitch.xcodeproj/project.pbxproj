@@ -1034,6 +1034,10 @@
 		917246E9102A02F2007E0DF6 /* CellBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 917246E8102A02F2007E0DF6 /* CellBackground.png */; };
 		9172499A102CBAFB007E0DF6 /* TableViewCellTopGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 91724999102CBAFB007E0DF6 /* TableViewCellTopGradient.png */; };
 		917249C5102CCEEE007E0DF6 /* FavoriteIconForUserView.png in Resources */ = {isa = PBXBuildFile; fileRef = 917249C4102CCEEE007E0DF6 /* FavoriteIconForUserView.png */; };
+		917322A0112C5C39002FFE00 /* Attachment.png in Resources */ = {isa = PBXBuildFile; fileRef = 9173229F112C5C39002FFE00 /* Attachment.png */; };
+		917322A1112C5C39002FFE00 /* Attachment.png in Resources */ = {isa = PBXBuildFile; fileRef = 9173229F112C5C39002FFE00 /* Attachment.png */; };
+		91732382112C8AC1002FFE00 /* AttachmentHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91732381112C8AC1002FFE00 /* AttachmentHighlighted.png */; };
+		91732383112C8AC1002FFE00 /* AttachmentHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91732381112C8AC1002FFE00 /* AttachmentHighlighted.png */; };
 		9176A47610321999001656E0 /* PublicReplyButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 9176A47510321999001656E0 /* PublicReplyButtonIconHighlighted.png */; };
 		9176A478103219F5001656E0 /* RetweetButtonIconHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 9176A477103219F5001656E0 /* RetweetButtonIconHighlighted.png */; };
 		9180B6BF101240B60096DFA1 /* ButtonBackground-92x35.png in Resources */ = {isa = PBXBuildFile; fileRef = 9180B6BE101240B60096DFA1 /* ButtonBackground-92x35.png */; };
@@ -1958,6 +1962,8 @@
 		9172485B102BB666007E0DF6 /* UserSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSummaryView.m; path = "user-network/UserSummaryView.m"; sourceTree = "<group>"; };
 		91724999102CBAFB007E0DF6 /* TableViewCellTopGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TableViewCellTopGradient.png; path = images/TableViewCellTopGradient.png; sourceTree = "<group>"; };
 		917249C4102CCEEE007E0DF6 /* FavoriteIconForUserView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FavoriteIconForUserView.png; path = images/FavoriteIconForUserView.png; sourceTree = "<group>"; };
+		9173229F112C5C39002FFE00 /* Attachment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Attachment.png; path = images/Attachment.png; sourceTree = "<group>"; };
+		91732381112C8AC1002FFE00 /* AttachmentHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AttachmentHighlighted.png; path = images/AttachmentHighlighted.png; sourceTree = "<group>"; };
 		9176A2561030CF0C001656E0 /* UserListDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserListDisplayMgr.h; path = "user-network/UserListDisplayMgr.h"; sourceTree = "<group>"; };
 		9176A2571030CF0C001656E0 /* UserListDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserListDisplayMgr.m; path = "user-network/UserListDisplayMgr.m"; sourceTree = "<group>"; };
 		9176A2B71030FEF8001656E0 /* UserListDisplayMgrFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserListDisplayMgrFactory.h; path = "user-network/UserListDisplayMgrFactory.h"; sourceTree = "<group>"; };
@@ -3371,6 +3377,8 @@
 		916BD7CB0FEEB112007143A9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				91732381112C8AC1002FFE00 /* AttachmentHighlighted.png */,
+				9173229F112C5C39002FFE00 /* Attachment.png */,
 				91063C5B10D6EED700DEAC3A /* AdBackgroundDarkTheme.png */,
 				91063C4010D6ED1900DEAC3A /* AdBackground.png */,
 				914EA98E10CEFC5C007036F2 /* NavigationButtonBackgroundDarkTheme.png */,
@@ -3957,6 +3965,8 @@
 				91063C4210D6ED1900DEAC3A /* AdBackground.png in Resources */,
 				91063C5D10D6EED700DEAC3A /* AdBackgroundDarkTheme.png in Resources */,
 				91674A40110E656000769C6A /* Bloop.wav in Resources */,
+				917322A0112C5C39002FFE00 /* Attachment.png in Resources */,
+				91732382112C8AC1002FFE00 /* AttachmentHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4157,6 +4167,8 @@
 				05DA70D31106460600C4FBDB /* Synthesizer.aiff in Resources */,
 				05DA70D41106460600C4FBDB /* Triangle.aiff in Resources */,
 				91674A41110E656000769C6A /* Bloop.wav in Resources */,
+				917322A1112C5C39002FFE00 /* Attachment.png in Resources */,
+				91732383112C8AC1002FFE00 /* AttachmentHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
