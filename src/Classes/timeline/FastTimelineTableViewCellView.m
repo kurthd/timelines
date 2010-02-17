@@ -259,7 +259,7 @@ static UIImage * highlightedRetweetGlyph;
     if (geocoded)
         padding += 11.0;
     if (attachment)
-        padding += 24.0;
+        padding += 23.0;
 
     CGSize authorLabelSize = size =
         CGSizeMake(point.x - padding - AUTHOR_LEFT_MARGIN,
@@ -306,7 +306,7 @@ static UIImage * highlightedRetweetGlyph;
     // Draw the attachment glyph
     //
     if (attachment) {
-        CGFloat adjustment = favorite ? 18 : 2;
+        CGFloat adjustment = favorite ? 17 : 2;
         if (geocoded)
             adjustment += 12;
         point =

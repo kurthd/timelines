@@ -307,6 +307,7 @@ static UIImage * defaultAvatar;
     [cell setTimestamp:[dm.created tableViewCellDescription]];
     [cell setTweetText:[dm htmlDecodedText]];
     [cell setAvatar:[self getThumbnailAvatarForUser:dm.sender]];
+    [cell setAttachment:!!dm.photoUrlWebpage];
     cell.userData = dm.sender.avatar.thumbnailImageUrl;
 }
 

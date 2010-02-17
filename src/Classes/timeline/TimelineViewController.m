@@ -828,6 +828,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         highlightForMention = !NSEqualRanges(where, NSMakeRange(NSNotFound, 0));
     }
     [cell displayAsMention:highlightForMention];
+    [cell setAttachment:!!displayTweet.photoUrlWebpage];
 }
 
 - (void)setScrollIndicatorBlackoutTimer
