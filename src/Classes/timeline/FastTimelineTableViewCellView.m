@@ -941,7 +941,7 @@ static UIImage * highlightedRetweetGlyph;
         displayType == FastTimelineTableViewCellDisplayTypeNoAvatar ?
         0 : MIN_CELL_HEIGHT;
 
-    CGFloat height = 30.0 + size.height;
+    CGFloat height = 31.0 + size.height;
     if (retweet)
         height += 19;
 
