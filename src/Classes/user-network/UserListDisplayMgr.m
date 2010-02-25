@@ -252,7 +252,17 @@
         [cache setObject:friend forKey:friend.username];
     BOOL allLoaded = [aCursor isEqualToString:@"0"];
     [userListController setAllPagesLoaded:allLoaded];
-    [userListController setUsers:[cache allValues]];
+
+    // Append the users we just received with the users already displayed so
+    // that the ordering is preserved and the user's position in the list is
+    // preserved.
+    NSArray * currentUsers = [userListController users];
+    NSArray * allUsers =
+        currentUsers ?
+        [currentUsers arrayByAddingObjectsFromArray:users] :
+        users;
+    [userListController setUsers:allUsers];
+
     [wrapperController setUpdatingState:kConnectedAndNotUpdating];
     [wrapperController setCachedDataAvailable:YES];
     failedState = NO;

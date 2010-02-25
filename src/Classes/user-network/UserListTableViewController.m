@@ -11,28 +11,11 @@
 #import "SettingsReader.h"
 #import "TwitbitShared.h"
 
-@interface User (Sorting)
-- (NSComparisonResult)compare:(User *)user;
-@end
-
-@implementation User (Sorting)
-- (NSComparisonResult)compare:(User *)user
-{
-    NSNumber * myId =
-        [NSNumber numberWithLongLong:[self.identifier longLongValue]];
-    NSNumber * theirId =
-        [NSNumber numberWithLongLong:[user.identifier longLongValue]];
-
-    return [myId compare:theirId];
-}
-@end
-
 #define ROW_HEIGHT 48
 
 @interface UserListTableViewController ()
 
 - (UIImage *)getAvatarForUser:(User *)user;
-- (NSArray *)sortedUsers;
 
 + (UIImage *)defaultAvatar;
 
@@ -45,7 +28,7 @@
 
 static UIImage * defaultAvatar;
 
-@synthesize delegate, sortedUserCache;
+@synthesize delegate, users;
 
 - (void)dealloc
 {
@@ -57,8 +40,6 @@ static UIImage * defaultAvatar;
 
     [users release];
     [alreadySent release];
-
-    [sortedUserCache release];
 
     [super dealloc];
 }
@@ -134,7 +115,8 @@ static UIImage * defaultAvatar;
 		cell.frame = CGRectMake(0.0, 0.0, 320.0, ROW_HEIGHT);
     }
 
-    User * user = [[self sortedUsers] objectAtIndex:indexPath.row];
+    //User * user = [[self sortedUsers] objectAtIndex:indexPath.row];
+    User * user = [[self users] objectAtIndex:indexPath.row];
     [cell setUser:user];
 
     UIImage * avatarImage = [self getAvatarForUser:user];
@@ -149,7 +131,8 @@ static UIImage * defaultAvatar;
 - (void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    User * user = [[self sortedUsers] objectAtIndex:indexPath.row];
+    //User * user = [[self sortedUsers] objectAtIndex:indexPath.row];
+    User * user = [[self users] objectAtIndex:indexPath.row];
     [delegate showUserInfoForUser:user];
 }
 
@@ -185,8 +168,6 @@ static UIImage * defaultAvatar;
 
 - (void)setUsers:(NSArray *)someUsers
 {
-    self.sortedUserCache = nil;
-    
     NSArray * tempUsers = [someUsers copy];
     [users release];
     users = tempUsers;
@@ -238,15 +219,6 @@ static UIImage * defaultAvatar;
         forState:UIControlStateNormal];
     loadMoreButton.enabled = NO;
     [loadingMoreIndicator startAnimating];
-}
-
-- (NSArray *)sortedUsers
-{
-    if (!self.sortedUserCache)
-        self.sortedUserCache =
-            [users sortedArrayUsingSelector:@selector(compare:)];
-
-    return sortedUserCache;
 }
 
 + (UIImage *)defaultAvatar
