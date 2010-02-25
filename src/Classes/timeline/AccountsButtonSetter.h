@@ -15,6 +15,7 @@
     NSManagedObjectContext * context;
 
     NSString * username;
+    NSString * avatarUrl;
 }
 
 - (id)initWithAccountsButton:(AccountsButton *)accountsButton

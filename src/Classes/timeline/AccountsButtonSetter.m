@@ -8,6 +8,7 @@
 @interface AccountsButtonSetter ()
 
 @property (nonatomic, copy) NSString * username;
+@property (nonatomic, copy) NSString * avatarUrl;
 
 - (void)fetchUserInfoForUsername:(NSString *)aUsername;
 - (void)fetchAvatarAtUrl:(NSString *)urlAsString;
@@ -17,6 +18,7 @@
 @implementation AccountsButtonSetter
 
 @synthesize username;
+@synthesize avatarUrl;
 
 - (void)dealloc
 {
@@ -25,6 +27,7 @@
     [context release];
     
     [username release];
+    [avatarUrl release];
 
     [super dealloc];
 }
@@ -52,10 +55,14 @@
         avatar = [Avatar defaultAvatar];
     [accountsButton setUsername:self.username avatar:avatar];
 
-    if (!user)
+    if (user) {
+        self.avatarUrl = user.avatar.thumbnailImageUrl;
+        [self performSelector:@selector(fetchUserInfoForUsername:)
+                   withObject:self.username
+                   afterDelay:5];
+    } else
+        // fetch the user's avatar immediately
         [self fetchUserInfoForUsername:self.username];
-    else if (![user thumbnailAvatar])
-        [self fetchAvatarAtUrl:user.avatar.thumbnailImageUrl];
 }
 
 #pragma mark TwitterServiceDelegate implementation
@@ -63,7 +70,9 @@
 - (void)userInfo:(User *)user fetchedForUsername:(NSString *)aUsername
 {
     if ([aUsername isEqual:self.username])
-        [self fetchAvatarAtUrl:user.avatar.thumbnailImageUrl];
+        // only re-fetch if the avatar URL has changed
+        if (![user.avatar.thumbnailImageUrl isEqual:self.avatarUrl])
+            [self fetchAvatarAtUrl:user.avatar.thumbnailImageUrl];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -85,8 +94,8 @@
 
 - (void)fetchAvatarAtUrl:(NSString *)urlAsString
 {
-    NSURL * avatarUrl = [NSURL URLWithString:urlAsString];
-    [AsynchronousNetworkFetcher fetcherWithUrl:avatarUrl delegate:self];
+    NSURL * url = [NSURL URLWithString:urlAsString];
+    [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];
 }
 
 @end
