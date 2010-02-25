@@ -175,7 +175,7 @@ userinfo.addtobookmarks.two = "Bookmarks";
 /* AccountsViewController */
 account.title = "Accounts";
 account.deletion.failed.alert.title = "Failed to Remove %@";
-account.prompt = "Choose an Account...";
+account.prompt = "Accounts and Settings";
 account.footer = "If you use multiple Twitter accounts, add\nthem all here to save your preferences for each. Set application-specific preferences\nin the Settings application.";
 account.addaccount = "Add Account";
 
