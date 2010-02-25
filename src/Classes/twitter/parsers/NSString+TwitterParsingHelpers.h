@@ -14,4 +14,9 @@
 // to the photo itself
 + (NSString *)photoUrlWebpageFromTweetText:(NSString *)text;
 
+
+- (BOOL)isTwitterUrl;
+- (NSNumber *)tweetIdFromTwitterUrl;
+- (NSString *)twitterUsernameFromTwitterUrl;
+
 @end

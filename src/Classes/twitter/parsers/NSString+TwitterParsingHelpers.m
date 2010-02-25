@@ -40,4 +40,31 @@
     return [text stringByMatching:imageUrlRegex];
 }
 
++ (NSString *)twitterUrlRegex
+{
+    return @"\\bhttps?://twitter.com/([a-zA-Z0-9_]+)/status/([\\d]+)\\b";
+}
+
+- (BOOL)isTwitterUrl
+{
+    //
+    // Example:
+    //  https://twitter.com/twitbitapp/status/9638422901
+    //
+
+    return [self isMatchedByRegex:[[self class] twitterUrlRegex]];
+}
+
+- (NSNumber *)tweetIdFromTwitterUrl
+{
+    NSString * s = [self stringByMatching:[[self class] twitterUrlRegex]
+                                  capture:2];
+    return s ? [NSNumber numberWithLongLong:[s longLongValue]] : nil;
+}
+
+- (NSString *)twitterUsernameFromTwitterUrl
+{
+    return [self stringByMatching:[[self class] twitterUrlRegex] capture:1];
+}
+
 @end

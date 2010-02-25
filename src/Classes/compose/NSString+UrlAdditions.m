@@ -24,6 +24,7 @@
 
 + (NSString *)urlRegex
 {
+    // Should this check for https too?
     return @"\\b(?:http://)[-a-zA-Z0-9+&@#/%?=~_()\\|!:,.;]*";
 }
 
