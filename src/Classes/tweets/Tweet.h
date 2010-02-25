@@ -2,8 +2,8 @@
 //  Tweet.h
 //  twitch
 //
-//  Created by John A. Debay on 12/1/09.
-//  Copyright 2009 High Order Bit, Inc.. All rights reserved.
+//  Created by John A. Debay on 2/24/10.
+//  Copyright 2010 High Order Bit, Inc.. All rights reserved.
 //
 
 #import <CoreData/CoreData.h>
@@ -21,6 +21,7 @@
 @property (nonatomic, retain) NSString * source;
 @property (nonatomic, retain) NSNumber * inReplyToTwitterTweetId;
 @property (nonatomic, retain) NSNumber * identifier;
+@property (nonatomic, retain) NSString * photoUrlWebpage;
 @property (nonatomic, retain) NSNumber * favorited;
 @property (nonatomic, retain) NSNumber * truncated;
 @property (nonatomic, retain) NSString * text;

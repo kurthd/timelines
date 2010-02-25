@@ -181,6 +181,9 @@
         Tweet * retweet = [retweetCreator createObjectFromJson:retweetJson];
         tweet.retweet = retweet;
     }
+
+    tweet.photoUrlWebpage =
+        [json safeObjectForKey:@"twitbit_photo_url_webpage"];
 }
 
 @end
@@ -289,6 +292,7 @@
     dm.text = [json objectForKey:@"text"];
     dm.sourceApiRequestType = [json objectForKey:@"source_api_request_type"];
     dm.created = [json objectForKey:@"created_at"];
+    dm.photoUrlWebpage = [json objectForKey:@"twitbit_photo_url_webpage"];
 }
 
 

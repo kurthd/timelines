@@ -39,33 +39,6 @@ static NSMutableDictionary * photoUrlDict;
     [[[self class] photoUrlDict] setObject:photoUrl forKey:self.identifier];
 }
 
-- (NSString *)photoUrlWebpage
-{
-    static NSString * noPhotoUrlsString = @"nil";
-    NSString * photoUrl =
-        [[[self class] photoUrlWebpageDict] objectForKey:self.identifier];
-    if (!photoUrl) {
-        static NSString * imageUrlRegex =
-            @"\\bhttp://twitpic.com/\\S+|"
-            "\\bhttp://.*\\.?yfrog.com/\\S+|"
-            "\\bhttp://tinypic.com/\\S+|"
-            "\\bhttp://twitgoo.com/\\S+|"
-            "\\bhttp://mobypicture.com/\\S+|"
-            "\\.jpg$|\\.jpeg$|\\.bmp|\\.gif|\\.png";
-
-        photoUrl = [self.text stringByMatching:imageUrlRegex];
-        if (photoUrl)
-            [[[self class] photoUrlWebpageDict]
-                setObject:photoUrl forKey:self.identifier];
-        else
-            [[[self class] photoUrlWebpageDict]
-                setObject:noPhotoUrlsString forKey:self.identifier];
-    } else if ([photoUrl isEqual:noPhotoUrlsString])
-        photoUrl = nil;
-
-    return photoUrl;
-}
-
 + (NSMutableDictionary *)photoUrlWebpageDict
 {
     if (!photoUrlWebpageDict)

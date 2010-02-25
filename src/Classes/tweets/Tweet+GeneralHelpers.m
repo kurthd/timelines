@@ -10,7 +10,6 @@
 static NSString * usernameRegex = @"\\B(@[\\w_]+)";
 static NSString * hashRegex = @"\\B(#[\\w_]+)";
 
-static NSMutableDictionary * photoUrlWebpageDict;
 static NSMutableDictionary * photoUrlDict;
 
 @interface Tweet (GeneralHelpersPrivate)
@@ -18,7 +17,6 @@ static NSMutableDictionary * photoUrlDict;
 + (NSString *)bodyWithUserLinks:(NSString *)body;
 + (NSString *)bodyWithHashLinks:(NSString *)body;
 
-+ (NSMutableDictionary *)photoUrlWebpageDict;
 + (NSMutableDictionary *)photoUrlDict;
 
 + (BOOL)displayWithUsername;
@@ -143,33 +141,6 @@ static NSMutableDictionary * photoUrlDict;
     [[[self class] photoUrlDict] setObject:photoUrl forKey:self.identifier];
 }
 
-- (NSString *)photoUrlWebpage
-{
-    static NSString * noPhotoUrlsString = @"nil";
-    NSString * photoUrl =
-        [[[self class] photoUrlWebpageDict] objectForKey:self.identifier];
-    if (!photoUrl) {
-        static NSString * imageUrlRegex =
-            @"\\bhttp://twitpic.com/[a-zA-Z0-9_]+|"
-             "\\bhttp://.*\\.?yfrog.com/[a-zA-Z0-9_]+|"
-             "\\bhttp://tinypic.com/[a-zA-Z0-9_]+|"
-             "\\bhttp://twitgoo.com/[a-zA-Z0-9_]+|"
-             "\\bhttp://mobypicture.com/[a-zA-Z0-9_]+|"
-             "\\S+\\.jpg$|\\S+\\.jpeg$|\\S+\\.bmp|\\S+\\.gif|\\S+\\.png";
-
-        photoUrl = [self.text stringByMatching:imageUrlRegex];
-        if (photoUrl)
-            [[[self class] photoUrlWebpageDict]
-                setObject:photoUrl forKey:self.identifier];
-        else
-            [[[self class] photoUrlWebpageDict]
-                setObject:noPhotoUrlsString forKey:self.identifier];
-    } else if ([photoUrl isEqual:noPhotoUrlsString])
-        photoUrl = nil;
-
-    return photoUrl;
-}
-
 #pragma mark Private implementation
 
 + (NSString *)bodyWithLinks:(NSString *)body
@@ -262,14 +233,6 @@ static NSMutableDictionary * photoUrlDict;
     }
 
     return bodyWithHashLinks;
-}
-
-+ (NSMutableDictionary *)photoUrlWebpageDict
-{
-    if (!photoUrlWebpageDict)
-        photoUrlWebpageDict = [[NSMutableDictionary dictionary] retain];
-
-    return photoUrlWebpageDict;
 }
 
 + (NSMutableDictionary *)photoUrlDict

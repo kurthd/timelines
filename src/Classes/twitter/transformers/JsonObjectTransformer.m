@@ -103,6 +103,12 @@
         [transformed setObject:transformedRetweet forKey:@"retweeted_status"];
     }
 
+    NSString * text = [tweet safeObjectForKey:@"text"];
+    NSString * photoUrlWebpage = [NSString photoUrlWebpageFromTweetText:text];
+    if (photoUrlWebpage)
+        [transformed setObject:photoUrlWebpage
+                        forKey:@"twitbit_photo_url_webpage"];
+
     return transformed;
 }
 
@@ -209,6 +215,12 @@
     NSDictionary * transformedRecipient =
         [userTransformer transformObject:recipient];
     [transformed setObject:transformedRecipient forKey:@"recipient"];
+
+    NSString * text = [jsonObject safeObjectForKey:@"text"];
+    NSString * photoUrlWebpage = [NSString photoUrlWebpageFromTweetText:text];
+    if (photoUrlWebpage)
+        [transformed setObject:photoUrlWebpage
+                        forKey:@"twitbit_photo_url_webpage"];
 
     return transformed;
 }

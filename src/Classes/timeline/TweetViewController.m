@@ -587,7 +587,7 @@ enum TweetActionSheets {
     NSString * urlAsString = [url absoluteString];
     if (fetcher == self.photoPreviewFetcher) {
         NSString * html =
-            [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]
+            [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]
             autorelease];
         NSString * photoUrl =
             [CommonTwitterServicePhotoSource photoUrlFromPageHtml:html

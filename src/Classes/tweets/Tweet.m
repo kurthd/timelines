@@ -2,8 +2,8 @@
 //  Tweet.m
 //  twitch
 //
-//  Created by John A. Debay on 12/1/09.
-//  Copyright 2009 High Order Bit, Inc.. All rights reserved.
+//  Created by John A. Debay on 2/24/10.
+//  Copyright 2010 High Order Bit, Inc.. All rights reserved.
 //
 
 #import "Tweet.h"
@@ -19,6 +19,7 @@
 @dynamic source;
 @dynamic inReplyToTwitterTweetId;
 @dynamic identifier;
+@dynamic photoUrlWebpage;
 @dynamic favorited;
 @dynamic truncated;
 @dynamic text;

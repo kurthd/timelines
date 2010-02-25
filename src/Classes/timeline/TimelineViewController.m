@@ -823,8 +823,9 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
     BOOL highlightForMention = NO;
     if (self.mentionString) {
+        NSStringCompareOptions options = NSCaseInsensitiveSearch;
         NSRange where = [displayTweet.text rangeOfString:mentionString
-                                          options:NSCaseInsensitiveSearch];
+                                                 options:options];
         highlightForMention = !NSEqualRanges(where, NSMakeRange(NSNotFound, 0));
     }
     [cell displayAsMention:highlightForMention];
