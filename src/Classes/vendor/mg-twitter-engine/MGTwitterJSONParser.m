@@ -81,7 +81,14 @@ connectionIdentifier:(NSString *)identifier
     id object = parsedObjects;
     SEL selector = @selector(parsingFinished:);
 
-    if (error) {
+    /**
+     * Some responses are not valid JSON fragments, but are short responses to
+     * some queries. See comments in -parse:error: for more details. In those
+     * cases, when we get legitimate responses, we will have an error instance,
+     * but we will also have a parsedObjects instance. Don't treat this case as
+     * an error.
+     */
+    if (error && !parsedObjects) {
         object = error;
         selector = @selector(parsingErrorOccurred:);
     } else {
@@ -119,31 +126,29 @@ connectionIdentifier:(NSString *)identifier
     id results = [s JSONValueOrError:error];
     [s release];
 
-    if (error == nil || *error == nil) {  // no parsing error occurred
-        if (results)
-            if ([results isKindOfClass:[NSDictionary class]])
-                parsedObjects = [NSArray arrayWithObject:results];
-            else
-                parsedObjects = results;
+    if (results)
+        if ([results isKindOfClass:[NSDictionary class]])
+            parsedObjects = [NSArray arrayWithObject:results];
         else
-            if ([json length] <= 5) {
-                // this is a hack for API methods that return short JSON
-                // responses that can't be parsed by YAJL. These include:
-                //   friendships/exists: returns "true" or "false"
-                //   help/test: returns "ok"
-                NSMutableDictionary * dictionary =
-                    [NSMutableDictionary dictionary];
-                if ([s isEqualToString:@"\"ok\""])
-                    [dictionary setObject:[NSNumber numberWithBool:YES]
-                                   forKey:@"ok"];
-                else {
-                    BOOL isFriend = [s isEqualToString:@"true"];
-                    [dictionary setObject:[NSNumber numberWithBool:isFriend]
-                                   forKey:@"friends"];
-                }
-                parsedObjects = [NSArray arrayWithObject:dictionary];
+            parsedObjects = results;
+    else
+        if ([json length] <= 5) {
+            // this is a hack for API methods that return short JSON
+            // responses that can't be parsed by YAJL. These include:
+            //   friendships/exists: returns "true" or "false"
+            //   help/test: returns "ok"
+            NSMutableDictionary * dictionary =
+                [NSMutableDictionary dictionary];
+            if ([s isEqualToString:@"\"ok\""])
+                [dictionary setObject:[NSNumber numberWithBool:YES]
+                               forKey:@"ok"];
+            else {
+                BOOL isFriend = [s isEqualToString:@"true"];
+                [dictionary setObject:[NSNumber numberWithBool:isFriend]
+                               forKey:@"friends"];
             }
-    }
+            parsedObjects = [NSArray arrayWithObject:dictionary];
+        }
 
     return parsedObjects;
 }
