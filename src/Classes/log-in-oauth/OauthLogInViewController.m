@@ -176,7 +176,7 @@ static BOOL textFieldHasFocus = NO;
 
     NSString * pin =
         [[view stringByEvaluatingJavaScriptFromString:
-        @"document.getElementById('oauth-pin').innerHTML"]
+        @"document.getElementById('oauth_pin').innerHTML"]
         stringByTrimmingCharactersInSet:
         [NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
@@ -232,7 +232,7 @@ static BOOL textFieldHasFocus = NO;
     // HACK: Scroll the PIN number into view; it's otherwise obscured by
     // the keyboard, and it's impossible to manually scroll it into view
     [self.webView stringByEvaluatingJavaScriptFromString:
-        @"var x = document.getElementById('oauth-pin');"
+        @"var x = document.getElementById('oauth_pin');"
          "if (x != null) { x.scrollIntoView(true); }"];
 }
 
