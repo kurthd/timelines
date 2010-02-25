@@ -71,10 +71,10 @@ listsdisplaymgr.error.fetchlists = "Failed to fetch lists";
 listsdisplaymgr.nolists = "You are not subscribed to any lists";
 
 /* ProfileDisplayMgr */
-profiledisplaymgr.error = "Failed to update profile for '%@'";
+profiledisplaymgr.error = "Failed to update profile for \"%@\"";
 
 /* FindPeopleDisplayMgr */
-findpeopledisplaymgr.error = "Failed to search people for '%@'";
+findpeopledisplaymgr.error = "Failed to search people for \"%@\"";
 
 /* ListsViewController */
 listsviewcontroller.sections.lists = "My Lists";
