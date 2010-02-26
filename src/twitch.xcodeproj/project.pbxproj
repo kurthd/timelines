@@ -2801,10 +2801,10 @@
 		05B239440FEDD0E400A6A2E6 /* nibs */ = {
 			isa = PBXGroup;
 			children = (
+				05B238820FEDC34200A6A2E6 /* MainWindow.xib */,
 				914EA11410C729B0007036F2 /* RetweetCell.xib */,
 				91DCE9071073C58D00095FD0 /* DirectMessageView.xib */,
 				91FDD5A310616854000F7527 /* BitlyLogInView.xib */,
-				05B238820FEDC34200A6A2E6 /* MainWindow.xib */,
 				916BD7ED0FEEB958007143A9 /* NoDataView.xib */,
 				05B238880FEDC35400A6A2E6 /* LogInView.xib */,
 				916BD8020FEEBD56007143A9 /* TimelineView.xib */,

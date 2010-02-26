@@ -134,7 +134,7 @@
                 animated:YES];
         [netAwareController setCachedDataAvailable:YES];
 
-        [userInfoController setUser:user];
+        [userInfoController setUser:user refreshAvatar:YES];
         freshProfile = YES;
     }
 }

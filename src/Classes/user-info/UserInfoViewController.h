@@ -63,7 +63,8 @@
 @property (nonatomic, retain) ContactMgr * contactMgr;
 @property (nonatomic, retain) NSObject<ContactCacheReader> * contactCacheReader;
 
-- (void)setUser:(User *)user;
+- (void)setUser:(User *)user;  // does not refresh the avatar
+- (void)setUser:(User *)user refreshAvatar:(BOOL)refreshAvatar;
 - (void)setFollowing:(BOOL)enabled;
 - (void)setFailedToQueryFollowing;
 - (void)showingNewUser;

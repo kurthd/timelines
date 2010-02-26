@@ -540,6 +540,11 @@ static NSNumberFormatter * formatter;
 
 - (void)setUser:(User *)aUser
 {
+    [self setUser:aUser refreshAvatar:NO];
+}
+
+- (void)setUser:(User *)aUser refreshAvatar:(BOOL)refreshAvatar
+{
     BOOL newUser = ![aUser.username isEqual:user.username];
 
     [aUser retain];
@@ -574,7 +579,7 @@ static NSNumberFormatter * formatter;
     blockButton.enabled = blockedStateSet;
 
     UIImage * avatar = [user fullAvatar];
-    if (!avatar) {
+    if (refreshAvatar || !avatar) {
         avatar = [user thumbnailAvatar];
 
         NSURL * url = [NSURL URLWithString:user.avatar.fullImageUrl];
