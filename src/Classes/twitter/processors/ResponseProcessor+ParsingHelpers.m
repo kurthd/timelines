@@ -226,6 +226,8 @@
         loc.latitude = latitude;
         loc.longitude = longitude;
     }
+
+    tweet.photoUrlWebpage = [NSString photoUrlWebpageFromTweetText:tweet.text];
 }
 
 - (void)populateDirectMessage:(DirectMessage *)dm fromData:(NSDictionary *)data
@@ -241,6 +243,8 @@
         [[data objectForKey:@"source_api_request_type"] description];
 
     dm.created = [[data objectForKey:@"created_at"] twitterDateValue];
+
+    dm.photoUrlWebpage = [NSString photoUrlWebpageFromTweetText:dm.text];
 }
 
 - (void)populateList:(TwitterList *)list fromData:(NSDictionary *)data
