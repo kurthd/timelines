@@ -150,9 +150,9 @@ static UIImage * highlightedRetweetGlyph;
         retweetFormatFont = [[UIFont systemFontOfSize:14.0] retain];
         retweetAuthorFont = [[UIFont boldSystemFontOfSize:14.0] retain];     
     } else {
-        authorFont = [[UIFont boldSystemFontOfSize:17.0] retain];
-        timestampFont = [[UIFont systemFontOfSize:14.5] retain];
-        timestampBoldFont = [[UIFont boldSystemFontOfSize:16.0] retain];
+        authorFont = [[UIFont boldSystemFontOfSize:16.5] retain];
+        timestampFont = [[UIFont systemFontOfSize:14.0] retain];
+        timestampBoldFont = [[UIFont boldSystemFontOfSize:15.5] retain];
         textFont = [[UIFont systemFontOfSize:16.0] retain];
         favoriteFont = [[UIFont boldSystemFontOfSize:18.0] retain];
         retweetFormatFont = [[UIFont systemFontOfSize:16.0] retain];
@@ -249,15 +249,16 @@ static UIImage * highlightedRetweetGlyph;
 
     NSString * timeString = timestamp.timeString;
     timestampWidth += [timeString sizeWithFont:timestampBoldFont].width + 2;
+    NSInteger fontSize = [SettingsReader timelineFontSize];
     CGFloat timeVertOffset =
-        [SettingsReader timelineFontSize] == kTimelineFontSizeLarge ? 1 : 2;
+        fontSize == kTimelineFontSizeLarge ? 1 : 2;
     point =
         CGPointMake(
         (contentRect.origin.x + contentRect.size.width) -
         TIMESTAMP_RIGHT_MARGIN - timestampWidth,
         TIMESTAMP_TOP_MARGIN - timeVertOffset);
     [timeString drawAtPoint:point withFont:timestampBoldFont];
-
+    
     NSString * dateString = timestamp.dateString;
     if (dateString) {
         timestampWidth += [dateString sizeWithFont:timestampFont].width + 4;
@@ -266,7 +267,7 @@ static UIImage * highlightedRetweetGlyph;
                 (contentRect.origin.x + contentRect.size.width) -
                 TIMESTAMP_RIGHT_MARGIN - timestampWidth,
                 TIMESTAMP_TOP_MARGIN);
-
+        
         [dateString drawAtPoint:point withFont:timestampFont];
     }
 
@@ -287,7 +288,10 @@ static UIImage * highlightedRetweetGlyph;
     CGSize authorLabelSize = size =
         CGSizeMake(point.x - padding - AUTHOR_LEFT_MARGIN,
         authorFont.pointSize);
-    point = CGPointMake(AUTHOR_LEFT_MARGIN, AUTHOR_TOP_MARGIN);
+    CGFloat authorTopMargin =
+        fontSize == kTimelineFontSizeLarge ?
+        AUTHOR_TOP_MARGIN + 1 : AUTHOR_TOP_MARGIN;
+    point = CGPointMake(AUTHOR_LEFT_MARGIN, authorTopMargin);
 
     [author drawAtPoint:point forWidth:size.width withFont:authorFont
         fontSize:authorFont.pointSize
@@ -332,10 +336,11 @@ static UIImage * highlightedRetweetGlyph;
         CGFloat adjustment = favorite ? 17 : 2;
         if (geocoded)
             adjustment += 12;
+        CGFloat verAdjustment = fontSize == kTimelineFontSizeLarge ? 1 : 0;
         point =
             CGPointMake(
             AUTHOR_LEFT_MARGIN + authorLabelSize.width + adjustment,
-            AUTHOR_TOP_MARGIN + 3);
+            AUTHOR_TOP_MARGIN + 3 + verAdjustment);
         UIImage * attachmentGlyph =
             self.highlighted ?
             [[self class] highlightedAttachmentGlyph] :
@@ -354,7 +359,10 @@ static UIImage * highlightedRetweetGlyph;
             constrainedToSize:textSize
                 lineBreakMode:UILineBreakModeWordWrap];
 
-    CGRect drawingRect = CGRectMake(TEXT_LEFT_MARGIN, TEXT_TOP_MARGIN,
+    CGFloat textTopMargin =
+        fontSize == kTimelineFontSizeLarge ?
+        TEXT_TOP_MARGIN + 3 : TEXT_TOP_MARGIN;
+    CGRect drawingRect = CGRectMake(TEXT_LEFT_MARGIN, textTopMargin,
         size.width, size.height);
 
     [text drawInRect:drawingRect
@@ -366,9 +374,9 @@ static UIImage * highlightedRetweetGlyph;
     //
     if (self.retweetAuthorName) {
         CGFloat retweetVertOffset =
-            [SettingsReader timelineFontSize] == kTimelineFontSizeLarge ? 1 : 2;
+            [SettingsReader timelineFontSize] == kTimelineFontSizeLarge ? 3 : 2;
         point =
-            CGPointMake(AUTHOR_LEFT_MARGIN, size.height + TEXT_TOP_MARGIN + 4);
+            CGPointMake(AUTHOR_LEFT_MARGIN, size.height + textTopMargin + 4);
         UIImage * retweetGlyph =
             self.highlighted ?
             [[self class] highlightedRetweetGlyph] :
@@ -441,8 +449,9 @@ static UIImage * highlightedRetweetGlyph;
     }
 
     NSString * timeString = timestamp.timeString;
+    NSInteger fontSize = [SettingsReader timelineFontSize];
     CGFloat timeVertOffset =
-        [SettingsReader timelineFontSize] == kTimelineFontSizeLarge ? 1 : 2;
+        fontSize == kTimelineFontSizeLarge ? 1 : 2;
     point =
         CGPointMake(TIMESTAMP_LEFT_MARGIN + timestampWidth,
         TIMESTAMP_TOP_MARGIN - timeVertOffset);
@@ -495,10 +504,11 @@ static UIImage * highlightedRetweetGlyph;
         CGFloat adjustment = favorite ? 21 : 5;
         if (geocoded)
             adjustment += 14;
+        CGFloat verAdjustment = fontSize == kTimelineFontSizeLarge ? 1 : 0;
         point =
             CGPointMake(
             TEXT_LEFT_MARGIN + timestampWidth + adjustment,
-            TIMESTAMP_TOP_MARGIN);
+            TIMESTAMP_TOP_MARGIN + verAdjustment);
         UIImage * attachmentGlyph =
             self.highlighted ?
             [[self class] highlightedAttachmentGlyph] :
@@ -516,9 +526,10 @@ static UIImage * highlightedRetweetGlyph;
     size = [text sizeWithFont:textFont
             constrainedToSize:textSize
                 lineBreakMode:UILineBreakModeWordWrap];
-    point = CGPointMake(TEXT_LEFT_MARGIN, TEXT_TOP_MARGIN);
-
-    CGRect drawingRect = CGRectMake(TEXT_LEFT_MARGIN, TEXT_TOP_MARGIN,
+    CGFloat textTopMargin =
+        fontSize == kTimelineFontSizeLarge ?
+        TEXT_TOP_MARGIN + 3 : TEXT_TOP_MARGIN;
+    CGRect drawingRect = CGRectMake(TEXT_LEFT_MARGIN, textTopMargin,
         size.width, size.height);
 
     [text drawInRect:drawingRect
@@ -531,9 +542,9 @@ static UIImage * highlightedRetweetGlyph;
     if (self.retweetAuthorName) {
         // draw the retweet glyph
         CGFloat retweetVertOffset =
-            [SettingsReader timelineFontSize] == kTimelineFontSizeLarge ? 1 : 2;
+            [SettingsReader timelineFontSize] == kTimelineFontSizeLarge ? 3 : 2;
         point =
-            CGPointMake(TEXT_LEFT_MARGIN, size.height + TEXT_TOP_MARGIN + 4);
+            CGPointMake(TEXT_LEFT_MARGIN, size.height + textTopMargin + 4);
         UIImage * retweetGlyph =
             self.highlighted ?
             [[self class] highlightedRetweetGlyph] :
@@ -599,8 +610,9 @@ static UIImage * highlightedRetweetGlyph;
     }
 
     NSString * timeString = timestamp.timeString;
+    NSInteger fontSize = [SettingsReader timelineFontSize];
     CGFloat timeVertOffset =
-        [SettingsReader timelineFontSize] == kTimelineFontSizeLarge ? 1 : 2;
+        fontSize == kTimelineFontSizeLarge ? 1 : 2;
     point =
         CGPointMake(TIMESTAMP_LEFT_MARGIN + timestampWidth,
         TIMESTAMP_TOP_MARGIN - timeVertOffset);
@@ -653,10 +665,11 @@ static UIImage * highlightedRetweetGlyph;
         CGFloat adjustment = favorite ? 21 : 5;
         if (geocoded)
             adjustment += 14;
+        CGFloat verAdjustment = fontSize == kTimelineFontSizeLarge ? 1 : 0;
         point =
             CGPointMake(
             TEXT_LEFT_MARGIN + timestampWidth + adjustment,
-            TIMESTAMP_TOP_MARGIN);
+            TIMESTAMP_TOP_MARGIN + verAdjustment);
         UIImage * attachmentGlyph =
             self.highlighted ?
             [[self class] highlightedAttachmentGlyph] :
@@ -675,9 +688,10 @@ static UIImage * highlightedRetweetGlyph;
     size = [text sizeWithFont:textFont
             constrainedToSize:textSize
                 lineBreakMode:UILineBreakModeWordWrap];
-    point = CGPointMake(TEXT_LEFT_MARGIN, TEXT_TOP_MARGIN);
-
-    CGRect drawingRect = CGRectMake(TEXT_LEFT_MARGIN, TEXT_TOP_MARGIN,
+    CGFloat textTopMargin =
+        fontSize == kTimelineFontSizeLarge ?
+        TEXT_TOP_MARGIN + 3 : TEXT_TOP_MARGIN;
+    CGRect drawingRect = CGRectMake(TEXT_LEFT_MARGIN, textTopMargin,
         size.width, size.height);
 
     [text drawInRect:drawingRect
@@ -690,9 +704,9 @@ static UIImage * highlightedRetweetGlyph;
     if (self.retweetAuthorName) {
         // draw the retweet glyph
         CGFloat retweetVertOffset =
-            [SettingsReader timelineFontSize] == kTimelineFontSizeLarge ? 1 : 2;
+            [SettingsReader timelineFontSize] == kTimelineFontSizeLarge ? 3 : 2;
         point =
-            CGPointMake(TEXT_LEFT_MARGIN, size.height + TEXT_TOP_MARGIN + 2);
+            CGPointMake(TEXT_LEFT_MARGIN, size.height + textTopMargin + 2);
         UIImage * retweetGlyph =
             self.highlighted ?
             [[self class] highlightedRetweetGlyph] :
@@ -752,8 +766,9 @@ static UIImage * highlightedRetweetGlyph;
     }
 
     NSString * timeString = timestamp.timeString;
+    NSInteger fontSize = [SettingsReader timelineFontSize];
     CGFloat timeVertOffset =
-        [SettingsReader timelineFontSize] == kTimelineFontSizeLarge ? 1 : 2;
+        fontSize == kTimelineFontSizeLarge ? 1 : 2;
     point =
         CGPointMake(TIMESTAMP_LEFT_MARGIN + timestampWidth,
         TIMESTAMP_TOP_MARGIN - timeVertOffset);
@@ -770,10 +785,11 @@ static UIImage * highlightedRetweetGlyph;
     // Draw the attachment glyph
     //
     if (attachment) {
+        CGFloat verAdjustment = fontSize == kTimelineFontSizeLarge ? 1 : 0;
         point =
             CGPointMake(
             TEXT_LEFT_MARGIN + timestampWidth + 25,
-            TIMESTAMP_TOP_MARGIN);
+            TIMESTAMP_TOP_MARGIN + verAdjustment);
         UIImage * attachmentGlyph =
             self.highlighted ?
             [[self class] highlightedAttachmentGlyph] :
@@ -791,9 +807,10 @@ static UIImage * highlightedRetweetGlyph;
     size = [text sizeWithFont:textFont
             constrainedToSize:textSize
                 lineBreakMode:UILineBreakModeWordWrap];
-    point = CGPointMake(TEXT_LEFT_MARGIN, TEXT_TOP_MARGIN);
-
-    CGRect drawingRect = CGRectMake(TEXT_LEFT_MARGIN, TEXT_TOP_MARGIN,
+    CGFloat textTopMargin =
+        fontSize == kTimelineFontSizeLarge ?
+        TEXT_TOP_MARGIN + 3 : TEXT_TOP_MARGIN;
+    CGRect drawingRect = CGRectMake(TEXT_LEFT_MARGIN, textTopMargin,
         size.width, size.height);
 
     [text drawInRect:drawingRect
@@ -967,6 +984,8 @@ static UIImage * highlightedRetweetGlyph;
     CGFloat height = 31.0 + size.height;
     if (retweet)
         height += 19;
+    if ([SettingsReader timelineFontSize] == kTimelineFontSizeLarge)
+        height += 3;
 
     return MAX(height, minHeight);
 }
@@ -1036,50 +1055,6 @@ static UIImage * highlightedRetweetGlyph;
         self.bounds.size.height - bottomImage.size.height,
         480.0, bottomImage.size.height);
     [bottomImage drawInRect:bottomImageRect];
-
-    /*
-    CGRect backgroundImageRect =
-        CGRectMake(
-        0,
-        self.bounds.size.height - bottomImageRect.size.height + 1,
-        480.0,
-        bottomImageRect.size.height);
-        */
-
-    /*
-    CGRect backgroundImageRect =
-        CGRectMake(0,
-        self.bounds.size.height - normalBottomImage.size.height + 1,
-        480.0, normalBottomImage.size.height);
-    [normalBottomImage drawInRect:backgroundImageRect];
-
-    CGRect topGradientImageRect =
-        CGRectMake(0, 0, 480.0, normalTopImage.size.height);
-    [normalTopImage drawInRect:topGradientImageRect];
-    */
-
-    /*
-    UIImage * bottomImage;
-    UIImage * topImage;
-    if (highlightForMention) {
-        bottomImage = mentionBottomImage;
-        topImage = mentionTopImage;
-    } else if (darkenForOld) {
-        bottomImage = darkenedBottomImage;
-        topImage = darkenedTopImage;
-    } else {
-        bottomImage = backgroundImage;
-        topImage = topGradientImage;
-    }
-    CGRect backgroundImageRect =
-        CGRectMake(0, self.bounds.size.height - bottomImage.size.height,
-        480.0, backgroundImage.size.height);
-    [bottomImage drawInRect:backgroundImageRect];
-    
-    CGRect topGradientImageRect =
-        CGRectMake(0, 0, 480.0, topImage.size.height);
-    [topImage drawInRect:topGradientImageRect];
-     */
 }
 
 - (UIColor *)authorColor
