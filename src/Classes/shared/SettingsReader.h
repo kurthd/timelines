@@ -17,7 +17,8 @@ typedef enum {
 
 typedef enum {
     kDisplayThemeLight,
-    kDisplayThemeDark
+    kDisplayThemeDark,
+    kDisplayThemePlain
 } DisplayTheme;
 
 typedef enum {

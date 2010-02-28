@@ -79,34 +79,57 @@ static UIImage * highlightedRetweetGlyph;
     //
     // Background images
     //
-
-    lightTheme = [SettingsReader displayTheme] == kDisplayThemeLight;
-
-    normalTopImage =
-        lightTheme ?
-        [[UIImage imageNamed:@"TableViewCellTopGradient.png"] retain] :
-        [[UIImage imageNamed:@"DarkThemeTopGradient.png"] retain];
-    normalBottomImage =
-        lightTheme ?
-        [[UIImage imageNamed:@"TableViewCellGradient.png"] retain] :
-        [[UIImage imageNamed:@"DarkThemeBottomGradient.png"] retain];
-    mentionTopImage =
-        lightTheme ?
-        [[UIImage imageNamed:@"MentionTopGradient.png"] retain] :
-        [[UIImage imageNamed:@"MentionTopGradientDarkTheme.png"] retain];
-    mentionBottomImage =
-        lightTheme ?
-        [[UIImage imageNamed:@"MentionBottomGradient.png"] retain] :
-        [[UIImage imageNamed:@"MentionBottomGradientDarkTheme.png"] retain];
-    darkenedTopImage =
-        lightTheme ?
-        [[UIImage imageNamed:@"DarkenedTableViewCellTopGradient.png"] retain] :
-        [[UIImage imageNamed:@"DarkenedDarkThemeTopGradient.png"] retain];
-    darkenedBottomImage =
-        lightTheme ?
-        [[UIImage imageNamed:@"DarkenedTableViewCellGradient.png"] retain] :
-        [[UIImage imageNamed:@"DarkenedDarkThemeBottomGradient.png"] retain];
-
+    NSInteger displayTheme = [SettingsReader displayTheme];
+    lightTheme = displayTheme != kDisplayThemeDark;
+    
+    switch (displayTheme) {
+        case kDisplayThemeLight:
+            normalTopImage =
+                [[UIImage imageNamed:@"TableViewCellTopGradient.png"] retain];
+            normalBottomImage =
+                [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
+            mentionTopImage =
+                [[UIImage imageNamed:@"MentionTopGradient.png"] retain];
+            mentionBottomImage =
+                [[UIImage imageNamed:@"MentionBottomGradient.png"] retain];
+            darkenedTopImage =
+                [[UIImage imageNamed:@"DarkenedTableViewCellTopGradient.png"]
+                retain];
+            darkenedBottomImage =
+                [[UIImage imageNamed:@"DarkenedTableViewCellGradient.png"]
+                retain];
+            break;
+        case kDisplayThemeDark:
+            normalTopImage =
+                [[UIImage imageNamed:@"DarkThemeTopGradient.png"] retain];
+            normalBottomImage =
+                [[UIImage imageNamed:@"DarkThemeBottomGradient.png"] retain];
+            mentionTopImage =
+                [[UIImage imageNamed:@"MentionTopGradientDarkTheme.png"]
+                retain];
+            mentionBottomImage =
+                [[UIImage imageNamed:@"MentionBottomGradientDarkTheme.png"]
+                retain];
+            darkenedTopImage =
+                [[UIImage imageNamed:@"DarkenedDarkThemeTopGradient.png"]
+                retain];
+            darkenedBottomImage =
+                [[UIImage imageNamed:@"DarkenedDarkThemeBottomGradient.png"]
+                retain];
+            break;
+        case kDisplayThemePlain:
+            normalTopImage = nil;
+            normalBottomImage =
+                [[UIImage imageNamed:@"PlainTableViewCellBorder.png"] retain];
+            mentionTopImage = nil;
+            mentionBottomImage =
+                [[UIImage imageNamed:@"PlainTableViewCellBorder.png"] retain];
+            darkenedTopImage = nil;
+            darkenedBottomImage =
+                [[UIImage imageNamed:@"PlainTableViewCellBorder.png"] retain];
+            break;
+    }
+    
     //
     // Fonts
     //
