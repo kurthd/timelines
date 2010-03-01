@@ -72,7 +72,7 @@ static UIImage * highlightedRetweetGlyph;
 @synthesize displayType, text, author, timestamp, avatar, favorite, geocoded,
     attachment;
 @synthesize displayAsMention, displayAsOld;
-@synthesize retweetAuthorName;
+@synthesize retweetAuthorName, additionalRetweeters;
 
 + (void)initialize
 {
@@ -399,6 +399,18 @@ static UIImage * highlightedRetweetGlyph;
             retweetGlyph.size.width + 2,
             size.height + TEXT_TOP_MARGIN + retweetVertOffset);
         [self.retweetAuthorName drawAtPoint:point withFont:retweetAuthorFont];
+        
+        if (additionalRetweeters) {
+            CGSize usernameSize =
+                [self.retweetAuthorName sizeWithFont:retweetAuthorFont];
+            point = CGPointMake(
+                AUTHOR_LEFT_MARGIN + retweetFormatSize.width +
+                retweetGlyph.size.width + 5 + usernameSize.width,
+                size.height + TEXT_TOP_MARGIN + retweetVertOffset);
+            NSString * additionalString =
+                [NSString stringWithFormat:@"(+%d)", additionalRetweeters];
+            [additionalString drawAtPoint:point withFont:retweetFormatFont];
+        }
     }
 
     //
@@ -873,6 +885,14 @@ static UIImage * highlightedRetweetGlyph;
         [retweetAuthorName release];
         retweetAuthorName = [s copy];
 
+        [self setNeedsDisplay];
+    }
+}
+
+- (void)setAdditionalRetweeters:(NSInteger)n
+{
+    if (additionalRetweeters != n) {
+        additionalRetweeters = n;
         [self setNeedsDisplay];
     }
 }

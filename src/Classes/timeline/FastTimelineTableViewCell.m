@@ -66,6 +66,11 @@
     timelineView.retweetAuthorName = retweetAuthor;
 }
 
+- (void)setAdditionalRetweeters:(NSInteger)additionalRetweeters
+{
+    timelineView.additionalRetweeters = additionalRetweeters;
+}
+
 - (void)setTimestamp:(DateDescription *)timestamp
 {
     timelineView.timestamp = timestamp;
