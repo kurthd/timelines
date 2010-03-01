@@ -91,16 +91,6 @@
                                         credentials:credentials
                                             context:context];
 
-        NSDictionary * retweetData =
-            [tweetData objectForKey:@"retweeted_status"];
-        Tweet * retweet = [self createTweetFromStatus:retweetData
-                                          isUserTweet:YES
-                                       isSearchResult:NO
-                                          credentials:credentials
-                                              context:context];
-
-        tweet.retweet = retweet;
-
         NSError * error;
         if (![context save:&error])
             NSLog(@"Failed to save tweets and users: '%@'", error);

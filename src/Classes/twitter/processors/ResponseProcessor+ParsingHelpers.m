@@ -83,6 +83,16 @@
         isSearchResult:isSearchResult context:context];
     tweet.user = tweetAuthor;
 
+    NSDictionary * retweetStatus = [status safeObjectForKey:@"retweeted_status"];
+    if (retweetStatus) {
+        Tweet * retweet = [self createTweetFromStatus:retweetStatus
+                                          isUserTweet:NO
+                                       isSearchResult:NO
+                                          credentials:credentials
+                                              context:context];
+        tweet.retweet = retweet;
+    }
+
     if (credentials && [credentials.username isEqual:tweetAuthor.username])
         credentials.user = tweetAuthor;
 
