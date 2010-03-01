@@ -30,9 +30,12 @@
 @dynamic location;
 @dynamic user;
 
-- (NSComparisonResult)compare:(Tweet *)tweet
+- (NSComparisonResult)compare:(Tweet *)t
 {
-    return [self.identifier compare:tweet.identifier];
+    NSNumber * id1 = self.retweet ? self.retweet.identifier : self.identifier;
+    NSNumber * id2 = t.retweet ? t.retweet.identifier : t.identifier;
+
+    return [id1 compare:id2];
 }
 
 @end
