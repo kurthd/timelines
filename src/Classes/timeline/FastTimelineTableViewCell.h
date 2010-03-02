@@ -19,6 +19,7 @@
 - (void)setTweetText:(NSString *)tweetText;
 - (void)setAuthor:(NSString *)author;
 - (void)setRetweetAuthor:(NSString *)retweetAuthor;
+- (void)setAdditionalRetweeters:(NSInteger)additionalRetweeters;
 - (void)setTimestamp:(DateDescription *)timestamp;
 - (void)setAvatar:(UIImage *)avatar;
 - (void)setFavorite:(BOOL)favorite;

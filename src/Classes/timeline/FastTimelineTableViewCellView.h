@@ -17,6 +17,7 @@
     NSString * author;
     DateDescription * timestamp;
     NSString * retweetAuthorName;
+    NSInteger additionalRetweeters;
     UIImage * avatar;
     BOOL favorite;
     BOOL geocoded;
@@ -33,6 +34,7 @@
 @property (nonatomic, copy) NSString * text;
 @property (nonatomic, copy) NSString * author;
 @property (nonatomic, copy) NSString * retweetAuthorName;
+@property (nonatomic, assign) NSInteger additionalRetweeters;
 @property (nonatomic, retain) DateDescription * timestamp;
 @property (nonatomic, retain) UIImage * avatar;
 @property (nonatomic, assign) BOOL favorite;

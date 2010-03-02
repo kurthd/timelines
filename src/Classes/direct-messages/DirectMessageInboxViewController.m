@@ -111,7 +111,10 @@
 - (CGFloat)tableView:(UITableView *)aTableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return ROW_HEIGHT;
+    return
+        [SettingsReader timelineFontSize] == kTimelineFontSizeLarge ?
+        ROW_HEIGHT + 3 :
+        ROW_HEIGHT;
 }
 
 #pragma mark DirectMessageInboxViewController implementation

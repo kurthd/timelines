@@ -734,7 +734,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         [[RotatableTabBarController instance] landscape] ?
         CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
 
-    if ([SettingsReader displayTheme] == kDisplayThemeLight)
+    if ([SettingsReader displayTheme] != kDisplayThemeDark)
         self.tableView.backgroundColor = [UIColor whiteColor];
 
     self.tableView.tableHeaderView = aView;

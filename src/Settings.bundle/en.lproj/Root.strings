@@ -40,5 +40,6 @@
 "searchradius.twofifty" = "250 km";
 
 "theme" = "Theme";
-"theme.light" = "Light";
+"theme.light" = "Gradients";
 "theme.dark" = "Dark";
+"theme.plain" = "Plain";

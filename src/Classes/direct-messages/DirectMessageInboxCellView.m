@@ -57,15 +57,10 @@ static UIImage * dotImage;
 #define LEFT_MARGIN 32
 #define RIGHT_MARGIN 3
 
-#define TOP_MARGIN 2
-
 #define NAME_LABEL_WIDTH 167
-#define NAME_LABEL_FONT_SIZE 16
 
 #define DATE_LABEL_OFFSET 207
 #define DATE_LABEL_WIDTH 84
-#define DATE_LABEL_FONT_SIZE 14
-#define MIN_DATE_LABEL_FONT_SIZE 12
 
 #define PREVIEW_LABEL_TOP_MARGIN 22
 #define PREVIEW_LABEL_WIDTH 259
@@ -74,18 +69,44 @@ static UIImage * dotImage;
 
 #define DOT_IMAGE_TOP_MARGIN 23
 #define DOT_IMAGE_LEFT_MARGIN 9
-
+    
+    CGFloat TOP_MARGIN;
+    CGFloat NAME_LABEL_FONT_SIZE;
+    CGFloat DATE_LABEL_FONT_SIZE;
+    CGFloat MIN_DATE_LABEL_FONT_SIZE;
+    CGFloat SMALL_DATE_LABEL_FONT_SIZE;
+    CGFloat PREVIEW_LABEL_FONT_SIZE;
+    if ([SettingsReader timelineFontSize] == kTimelineFontSizeLarge) {
+        TOP_MARGIN = 3;
+        
+        NAME_LABEL_FONT_SIZE = 16.5;
+        DATE_LABEL_FONT_SIZE = 15;
+        MIN_DATE_LABEL_FONT_SIZE = 13;
+        SMALL_DATE_LABEL_FONT_SIZE = 13.5;
+        PREVIEW_LABEL_FONT_SIZE = 15.5;
+    } else {
+        TOP_MARGIN = 2;
+        
+        NAME_LABEL_FONT_SIZE = 16;
+        DATE_LABEL_FONT_SIZE = 14;
+        MIN_DATE_LABEL_FONT_SIZE = 12;
+        SMALL_DATE_LABEL_FONT_SIZE = 12.5;
+        PREVIEW_LABEL_FONT_SIZE = 14;
+    }
+    
 	UIColor * nameLabelTextColor = nil;
     UIFont * nameLabelFont = [UIFont boldSystemFontOfSize:NAME_LABEL_FONT_SIZE];
 
 	UIColor * dateLabelTextColor = nil;
 	UIFont * dateLabelFont = [UIFont systemFontOfSize:DATE_LABEL_FONT_SIZE];
-    UIFont * smallDateLabelFont = [UIFont systemFontOfSize:12.5];
+    UIFont * smallDateLabelFont =
+        [UIFont systemFontOfSize:SMALL_DATE_LABEL_FONT_SIZE];
     UIFont * boldDateLabelFont =
         [UIFont boldSystemFontOfSize:DATE_LABEL_FONT_SIZE];
 
 	UIColor * previewLabelTextColor = nil;
-	UIFont * previewLabelFont = [UIFont systemFontOfSize:14];
+	UIFont * previewLabelFont =
+	    [UIFont systemFontOfSize:PREVIEW_LABEL_FONT_SIZE];
 
 	if (self.highlighted) {
 		nameLabelTextColor = [UIColor whiteColor];
@@ -148,11 +169,13 @@ static UIImage * dotImage;
 
         NSString * timeString = preview.descriptionComponents.timeString;
         timestampWidth += [timeString sizeWithFont:boldDateLabelFont].width + 2;
+        CGFloat vertAdjustment =
+            [SettingsReader timelineFontSize] == kTimelineFontSizeLarge ? 1 : 0;
         point =
             CGPointMake(
             (contentRect.origin.x + contentRect.size.width) - RIGHT_MARGIN -
             timestampWidth,
-            TOP_MARGIN);
+            TOP_MARGIN + vertAdjustment);
         [timeString drawAtPoint:point withFont:boldDateLabelFont];
     } else {
         NSString * timestamp = [preview dateDescription];
