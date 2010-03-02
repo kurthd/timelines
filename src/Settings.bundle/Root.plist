@@ -220,9 +220,9 @@
 			<key>Title</key>
 			<string>Version</string>
 			<key>Key</key>
-			<string>version-2.7.1</string>
+			<string>version-2.8.0</string>
 			<key>DefaultValue</key>
-			<string>2.7.1</string>
+			<string>2.8.0</string>
 		</dict>
 	</array>
 </dict>

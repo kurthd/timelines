@@ -13,6 +13,7 @@
 #import "NSArray+IterationAdditions.h"
 #import "DisplayMgrHelper.h"
 #import "SettingsReader.h"
+#import "TwitchAppDelegate.h"
 
 @interface TimelineDisplayMgr ()
 
@@ -308,7 +309,10 @@
     if ([self.lastTweetDetailsController.tweet.identifier
         isEqual:tweetId]) {
         [self.lastTweetDetailsController setSentRetweet];
-        [self addTweet:retweet];
+
+        TwitchAppDelegate * appDelegate = (TwitchAppDelegate *)
+            [[UIApplication sharedApplication] delegate];
+        [appDelegate userDidSendTweet:retweet];
     }
 }
 

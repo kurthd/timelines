@@ -7,6 +7,7 @@
 #import "ErrorState.h"
 #import "NSArray+IterationAdditions.h"
 #import "SettingsReader.h"
+#import "TwitchAppDelegate.h"
 
 @interface MentionTimelineDisplayMgr ()
 
@@ -267,8 +268,13 @@
 - (void)retweetSentSuccessfully:(Tweet *)retweet tweetId:(NSNumber *)tweetId
 {
     NSLog(@"Successfully posted retweet; id: %@", tweetId);
-    if ([self.lastTweetDetailsController.tweet.identifier isEqual:tweetId])
+    if ([self.lastTweetDetailsController.tweet.identifier isEqual:tweetId]) {
         [self.lastTweetDetailsController setSentRetweet];
+        
+        TwitchAppDelegate * appDelegate = (TwitchAppDelegate *)
+            [[UIApplication sharedApplication] delegate];
+        [appDelegate userDidSendTweet:retweet];
+    }
 }
 
 - (void)failedToSendRetweet:(NSNumber *)tweetId error:(NSError *)error
