@@ -25,7 +25,7 @@
 #import "ContactMgr.h"
 #import "ProfileDisplayMgr.h"
 
-@class OauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
+@class XauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
 @class SearchBarDisplayMgr;
 @class AccountsViewController;
 @class DeviceRegistrar;
@@ -46,7 +46,7 @@
     UIWindow * window;
     UITabBarController * tabBarController;
 
-    OauthLogInDisplayMgr * logInDisplayMgr;
+    XauthLogInDisplayMgr * logInDisplayMgr;
 
     DeviceRegistrar * registrar;
 

@@ -10,6 +10,9 @@ explainoauth.begin = "Authorize with Twitter";
 explainoauth.header = "Twitbit requires your authorization";
 explainoauth.footer = "Authorization is a simple process. You will be provided with a Twitter log in screen and given the option to give Twitbit access to your account.";
 oauth.requesttokenfetch.failed.message = "Failed to connect to Twitter.";
+xauthview.footer = "Please provide your Twitter username and password. If you don't have a Twitter account, get one free at twitter.com.";
+xauth.tokenstring.invalid = "Invalid token/secret pair received from Twitter.";
+xauth.auth.failed = "Log In Failed";
 loginhelpview.title = "Help";
 
 /* TwitchAppDelegate */

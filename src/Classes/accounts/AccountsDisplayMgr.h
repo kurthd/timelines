@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AccountsViewController.h"
-#import "OauthLogInDisplayMgr.h"
+#import "XauthLogInDisplayMgr.h"
 #import "TwitterCredentials.h"
 #import "AccountSettingsDisplayMgr.h"
 #import "UserFetcher.h"
@@ -13,12 +13,12 @@
 
 @interface AccountsDisplayMgr :
     NSObject
-    <AccountsViewControllerDelegate, OathLogInDisplayMgrDelegate,
+    <AccountsViewControllerDelegate, XauthLogInDisplayMgrDelegate,
     AccountSettingsDisplayMgrDelegate, UserFetcherDelegate>
 {
     AccountsViewController * accountsViewController;
 
-    OauthLogInDisplayMgr * logInDisplayMgr;
+    XauthLogInDisplayMgr * logInDisplayMgr;
     AccountSettingsDisplayMgr * accountSettingsDisplayMgr;
 
     NSMutableSet * userAccounts;
@@ -30,7 +30,7 @@
 }
 
 - (id)initWithAccountsViewController:(AccountsViewController *)aViewController
-                     logInDisplayMgr:(OauthLogInDisplayMgr *)aLogInDisplayMgr
+                     logInDisplayMgr:(XauthLogInDisplayMgr *)aLogInDisplayMgr
                              context:(NSManagedObjectContext *)aContext;
 
 - (TwitterCredentials *)selectedAccount;

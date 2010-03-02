@@ -4,7 +4,7 @@
 
 #import "TwitchAppDelegate.h"
 #import "DeviceRegistrar.h"
-#import "OauthLogInDisplayMgr.h"
+#import "XauthLogInDisplayMgr.h"
 #import "CredentialsActivatedPublisher.h"
 #import "CredentialsSetChangedPublisher.h"
 #import "AccountSettingsChangedPublisher.h"
@@ -52,7 +52,7 @@
 
 @interface TwitchAppDelegate ()
 
-@property (nonatomic, retain) OauthLogInDisplayMgr * logInDisplayMgr;
+@property (nonatomic, retain) XauthLogInDisplayMgr * logInDisplayMgr;
 @property (nonatomic, retain) ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 @property (nonatomic, retain) DeviceRegistrar * registrar;
 @property (nonatomic, retain) NSMutableArray * credentials;
@@ -1171,8 +1171,8 @@ enum {
     accountsViewController.selectedAccountAction =
         @selector(processUserAccountSelection);
 
-    OauthLogInDisplayMgr * displayMgr =
-        [[OauthLogInDisplayMgr alloc]
+    XauthLogInDisplayMgr * displayMgr =
+        [[XauthLogInDisplayMgr alloc]
         initWithRootViewController:tabBarController
         managedObjectContext:[self managedObjectContext]];
     displayMgr.navigationController = accountsNavController;
@@ -2375,11 +2375,11 @@ enum {
     return registrar;
 }
 
-- (OauthLogInDisplayMgr *)logInDisplayMgr
+- (XauthLogInDisplayMgr *)logInDisplayMgr
 {
     if (!logInDisplayMgr)
         logInDisplayMgr =
-            [[OauthLogInDisplayMgr alloc]
+            [[XauthLogInDisplayMgr alloc]
             initWithRootViewController:tabBarController
                   managedObjectContext:[self managedObjectContext]];
 

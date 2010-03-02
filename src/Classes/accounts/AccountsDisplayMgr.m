@@ -14,7 +14,7 @@
 @interface AccountsDisplayMgr ()
 
 @property (nonatomic, retain) AccountsViewController * accountsViewController;
-@property (nonatomic, retain) OauthLogInDisplayMgr * logInDisplayMgr;
+@property (nonatomic, retain) XauthLogInDisplayMgr * logInDisplayMgr;
 @property (nonatomic, retain) AccountSettingsDisplayMgr *
     accountSettingsDisplayMgr;
 @property (nonatomic, retain) NSMutableSet * userAccounts;
@@ -48,7 +48,7 @@
 }
 
 - (id)initWithAccountsViewController:(AccountsViewController *)aViewController
-                     logInDisplayMgr:(OauthLogInDisplayMgr *)aLogInDisplayMgr
+                     logInDisplayMgr:(XauthLogInDisplayMgr *)aLogInDisplayMgr
                              context:(NSManagedObjectContext *)aContext
 {
     if (self = [super init]) {

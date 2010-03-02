@@ -26,6 +26,7 @@
 #import "UIWebView+FileLoadingAdditions.h"
 #import "NSString+WebViewAdditions.h"
 #import "UIApplication+ConfigurationAdditions.h"
+#import "UIApplication+NetworkActivityIndicatorAdditions.h"
 
 
 //
@@ -46,6 +47,9 @@
 // Twitbit
 //
 #import "NSManagedObject+TediousCodeAdditions.h"
+
+#import "TwitterCredentials.h"
+#import "TwitterCredentials+KeychainAdditions.h"
 
 #import "Tweet.h"
 #import "Tweet+GeneralHelpers.h"
@@ -74,6 +78,13 @@
 
 #import "PhotoService+ServiceAdditions.h"
 #import "TwitterCredentials+PhotoServiceAdditions.h"
+
+#import "TwitPicCredentials.h"
+#import "TwitPicCredentials+KeychainAdditions.h"
+#import "TwitVidCredentials.h"
+#import "TwitVidCredentials+KeychainAdditions.h"
+#import "YfrogCredentials.h"
+#import "YfrogCredentials+KeychainAdditions.h"
 
 #import "AccountSettings.h"
 
