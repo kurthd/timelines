@@ -15,6 +15,8 @@
 @property (nonatomic, retain) NSManagedObjectContext * context;
 @property (nonatomic, assign) id<TwitterServiceDelegate> delegate;
 
++ (NSString *)notBlockedMessage;
+
 @end
 
 @implementation BlockExistsResponseProcessor
@@ -61,7 +63,7 @@
 
     NSString * error = [info objectForKey:@"error"];
     SEL sel;
-    if ([error isEqualToString:@"You are not blocking this user."])
+    if ([error isEqualToString:[[self class] notBlockedMessage]])
         sel = @selector(userIsNotBlocked:);
     else
         sel = @selector(userIsBlocked:);
@@ -74,13 +76,16 @@
 
 - (BOOL)processErrorResponse:(NSError *)error
 {
+    NSString * errorMessage = error.localizedDescription;
     NSString * twitterApiErrorDomain = [NSError twitterApiErrorDomain];
     if ([error.domain isEqual:twitterApiErrorDomain] && error.code == 404) {
         // Twitter sends a 404 when a block does not exist
         SEL sel = @selector(userIsNotBlocked:);
         if ([delegate respondsToSelector:sel])
             [delegate userIsNotBlocked:username];
-    } else {
+    } else if ([errorMessage isEqualToString:[[self class] notBlockedMessage]])
+        [delegate userIsNotBlocked:username];
+    else {
         // an actual error occurred
         SEL sel = @selector(failedToCheckIfUserIsBlocked:error:);
         if ([delegate respondsToSelector:sel])
@@ -88,6 +93,11 @@
     }
 
     return YES;
+}
+
++ (NSString *)notBlockedMessage
+{
+    return @"You are not blocking this user.";
 }
 
 @end
