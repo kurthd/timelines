@@ -69,7 +69,7 @@
 
     NSNumber * userId = [[info objectForKey:@"id"] twitterIdentifierValue];
     User * user = [User findOrCreateWithId:userId context:context];
-    [self populateUser:user fromData:info];
+    [self populateUser:user fromData:info context:context];
 
     SEL sel;
     if (following)

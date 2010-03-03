@@ -78,7 +78,7 @@
             continue;
 
         User * user = [User findOrCreateWithId:userId context:context];
-        [self populateUser:user fromData:info];
+        [self populateUser:user fromData:info context:context];
         [users addObject:user];
     }
 

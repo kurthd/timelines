@@ -125,7 +125,7 @@
 {
     NSNumber * userId = [[data objectForKey:@"id"] twitterIdentifierValue];
     User * user = [User findOrCreateWithId:userId context:context];
-    [self populateUser:user fromData:data];
+    [self populateUser:user fromData:data context:context];
 
     return user;
 }

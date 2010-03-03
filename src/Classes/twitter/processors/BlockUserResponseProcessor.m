@@ -66,7 +66,7 @@
     NSDictionary * info = [statuses objectAtIndex:0];
     NSNumber * userId = [[info objectForKey:@"id"] twitterIdentifierValue];
     User * user = [User findOrCreateWithId:userId context:context];
-    [self populateUser:user fromData:info];
+    [self populateUser:user fromData:info context:context];
 
     if (blocking) {
         SEL sel = @selector(blockedUser:withUsername:);

@@ -81,7 +81,7 @@
         // only set user data the first time we see it, so we are saving
         // the freshest data
         if (![uniqueUsers containsObject:userId]) {
-            [self populateUser:tweetAuthor fromData:userData];
+            [self populateUser:tweetAuthor fromData:userData context:context];
             [uniqueUsers addObject:userId];
         }
 

@@ -58,7 +58,7 @@
 
     NSNumber * userId = [[userData objectForKey:@"id"] twitterIdentifierValue];
     User * tweetAuthor = [User findOrCreateWithId:userId context:context];
-    [self populateUser:tweetAuthor fromData:userData];
+    [self populateUser:tweetAuthor fromData:userData context:context];
 
     NSNumber * tweetId =
         [[tweetData objectForKey:@"id"] twitterIdentifierValue];
@@ -126,7 +126,7 @@
 
     NSNumber * userId = [[userData objectForKey:@"id"] twitterIdentifierValue];
     User * tweetAuthor = [User findOrCreateWithId:userId context:context];
-    [self populateUser:tweetAuthor fromData:userData];
+    [self populateUser:tweetAuthor fromData:userData context:context];
 
     NSNumber * tweetId =
         [[tweetData objectForKey:@"id"] twitterIdentifierValue];
@@ -144,7 +144,9 @@
     return tweet;
 }
 
-- (void)populateUser:(User *)user fromData:(NSDictionary *)data
+- (void)populateUser:(User *)user
+            fromData:(NSDictionary *)data
+             context:(NSManagedObjectContext *)context
 {
     /*
      * Any numeric value created by the JSON parser is an NSDecimalNumber
@@ -175,6 +177,25 @@
         [data safeObjectForKey:@"profile_image_url"];
     user.avatar.fullImageUrl =
         [User fullAvatarUrlForUrl:user.avatar.thumbnailImageUrl];
+
+    //
+    // Because Twitter sends us a user with a different ID via the REST API
+    // than they do via the search API, do a quick search here for an avatar
+    // object that already exists. If there is one, grab whatever data has
+    // already been downloaded.
+    //
+    NSPredicate * pred =
+        [NSPredicate predicateWithFormat:@"thumbnailImageUrl == %@",
+        user.avatar.thumbnailImageUrl];
+    NSArray * avatars = [Avatar findAll:pred context:context];
+    for (Avatar * avatar in avatars) {
+        if (![[avatar objectID] isEqual:[user.avatar objectID]]) {
+            if (avatar.thumbnailImage && !user.avatar.thumbnailImage)
+                user.avatar.thumbnailImage = avatar.thumbnailImage;
+            if (avatar.fullImage && !user.avatar.fullImage)
+                user.avatar.fullImage = avatar.fullImage;
+        }
+    }
 
     NSDecimalNumber * count = [data objectForKey:@"statuses_count"];
     NSString * scount = [count description];

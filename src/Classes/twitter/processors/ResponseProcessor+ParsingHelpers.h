@@ -21,7 +21,9 @@
                          credentials:(TwitterCredentials *)credentials
                              context:(NSManagedObjectContext *)context;
 
-- (void)populateUser:(User *)user fromData:(NSDictionary *)data;
+- (void)populateUser:(User *)user
+            fromData:(NSDictionary *)data
+             context:(NSManagedObjectContext *)context;
 - (void)populateTweet:(Tweet *)tweet
              fromData:(NSDictionary *)data
        isSearchResult:(BOOL)isSearchResult
