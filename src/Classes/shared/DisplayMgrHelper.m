@@ -44,6 +44,8 @@
 - (UIView *)removeSearchView;
 - (UIView *)toggleSaveSearchViewWithTitle:(NSString *)title action:(SEL)action;
 
++ (BOOL)userIsIncomplete:(User *)user;
+
 @end
 
 @implementation DisplayMgrHelper
@@ -604,8 +606,15 @@
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:@"username like[c] %@", aUsername];
     NSArray * users = [User findAll:predicate context:context];
-    if (users.count == 1)
-        [self showUserInfoForUser:[users objectAtIndex:0]];
+    User * user = nil;
+    for (User * u in users)
+        if (![[self class] userIsIncomplete:u]) {
+            user = u;
+            break;
+        }
+
+    if (user)
+        [self showUserInfoForUser:user];
     else {
         self.userInfoUsername = [aUsername lowercaseString];
 
@@ -847,6 +856,28 @@
     [view addSubview:grayLineView];
     
     return [view autorelease];
+}
+
++ (BOOL)userIsIncomplete:(User *)user
+{
+    //
+    // HACK: Sometimes we are supposed to display users that are mentioned in
+    // tweets, but that have also been downloaded with search results. In this
+    // case, the user is going to be 'incomplete', because that is what Twitter
+    // gives us for user objects as part of search results. We're going to do a
+    // simple heuristic to determine if users are incomplete. If the heuristic
+    // fails, the cost is minimal as we will just re-fetch a user we've already
+    // fetched, which does not result in incorrect behavior and should be a rare
+    // case anyway.
+    //
+
+    return user.bio == nil &&
+           user.credentials == nil &&
+           user.webpage == nil &&
+           (user.name == nil || [user.name isEqualToString:@""]) &&
+           [user.statusesCount integerValue] == 0 &&
+           [user.friendsCount integerValue] == 0 &&
+           [user.followersCount integerValue] == 0;
 }
 
 @end
