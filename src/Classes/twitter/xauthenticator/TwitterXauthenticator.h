@@ -18,9 +18,10 @@
 }
 
 @property (nonatomic, assign) id<TwitterXauthenticatorDelegate> delegate;
-@property (nonatomic, copy, readonly) NSString * username;
-@property (nonatomic, copy, readonly) NSString * password;
 
+//
+// Create a new instance with Twitbit for iPhone's oauth consumer key and secret
+//
 + (id)twitbitForIphoneXauthenticator;
 
 - (id)initWithConsumerKey:(NSString *)consumerKey

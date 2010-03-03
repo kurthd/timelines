@@ -117,7 +117,6 @@
         TwitterCredentials * creds =
             [self addAccountWithUsername:username token:token secret:secret];
         if (creds) {
-            NSString * password = [xauthenticator password];
             [self addPhotoAccountsForCredentials:creds password:password];
 
             [self dismissView];
