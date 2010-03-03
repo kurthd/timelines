@@ -113,22 +113,22 @@ static NSMutableDictionary * followersDescriptions;
 
 + (void)setAvatar:(UIImage *)image forUrl:(NSString *)url
 {
+    // just grabbing the context like this is a total hack
     id delegate = [[UIApplication sharedApplication] delegate];
     NSManagedObjectContext * context = [delegate managedObjectContext];
 
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:@"thumbnailImageUrl == %@", url];
-    Avatar * avatar = [Avatar findFirst:predicate context:context];
-    if (avatar)
-        avatar.thumbnailImage = UIImagePNGRepresentation(image);
-    else {
+    NSArray * avatars = [Avatar findAll:predicate context:context];
+    if (avatars.count == 0) {
         predicate =
             [NSPredicate predicateWithFormat:@"fullImageUrl == %@", url];
-        avatar = [Avatar findFirst:predicate context:context];
-
-        if (avatar)
+        avatars = [Avatar findAll:predicate context:context];
+        for (Avatar * avatar in avatars)
             avatar.fullImage = UIImagePNGRepresentation(image);
-    }
+    } else
+        for (Avatar * avatar in avatars)
+            avatar.thumbnailImage = UIImagePNGRepresentation(image);
 }
 
 + (NSString *)fullAvatarUrlForUrl:(NSString *)url
