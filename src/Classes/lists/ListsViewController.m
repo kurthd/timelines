@@ -100,9 +100,10 @@
 - (NSInteger)tableView:(UITableView *)tableView
     numberOfRowsInSection:(NSInteger)section
 {
+    NSInteger sortedListCount = [[self sortedLists] count];
     NSInteger numRows =
-        section == 0 ?
-        [[self sortedLists] count] : [[self sortedSubscriptions] count];
+        section == 0 && sortedListCount ?
+        sortedListCount : [[self sortedSubscriptions] count];
 
     return numRows;
 }
