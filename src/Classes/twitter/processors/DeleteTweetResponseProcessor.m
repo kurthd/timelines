@@ -5,6 +5,7 @@
 #import "DeleteTweetResponseProcessor.h"
 #import "Tweet.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
+#import "MGTwitterEngine.h"  // for twitterApiErrorDomain
 
 @interface DeleteTweetResponseProcessor ()
 
@@ -64,7 +65,7 @@
 
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:@"identifier == %@", tweetId];
-    Tweet * tweet = [Tweet findFirst:predicate context:context];
+    Tweet * tweet = [UserTweet findFirst:predicate context:context];
     NSAssert1(tweet, @"Failed to find deleted tweet with ID: '%@'", tweetId);
     [context deleteObject:tweet];
     [context save:NULL];
@@ -76,9 +77,19 @@
 {
     NSLog(@"Failed to delete tweet: %@.", error);
 
-    SEL sel = @selector(failedToDeleteTweetWithId:error:);
-    if ([delegate respondsToSelector:sel])
-        [delegate failedToDeleteTweetWithId:tweetId error:error];
+    NSString * notFoundErrorDomain = [NSError twitterApiErrorDomain];
+    NSString * notFoundMessage = @"No status found with that ID.";
+    BOOL wasNotFound =
+        [[error domain] isEqualToString:notFoundErrorDomain] &&
+        [[error localizedDescription] isEqualToString:notFoundMessage];
+
+    if (wasNotFound)  // don't treat as an error
+        [self processResponse:[NSArray arrayWithObject:[NSNull null]]];
+    else {
+        SEL sel = @selector(failedToDeleteTweetWithId:error:);
+        if ([delegate respondsToSelector:sel])
+            [delegate failedToDeleteTweetWithId:tweetId error:error];
+    }
 
     return YES;
 }
