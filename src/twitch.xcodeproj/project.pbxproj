@@ -5577,7 +5577,7 @@
 					"-lAdMobSimulator3_0",
 				);
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BD30541-6CA6-4F48-B159-BC45D542BBD5";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0449F799-7C65-44C0-82D2-5084B70FC2A6";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Distribution - App Store";
@@ -5641,7 +5641,7 @@
 					"-lAdMobSimulator3_0",
 				);
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "71E2A517-9571-4649-8CE6-91322260BC4F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8C1C0080-1D06-4347-9E2E-2A6B5137BFD9";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Distribution - Ad Hoc";
