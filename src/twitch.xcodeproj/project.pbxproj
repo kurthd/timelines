@@ -5522,6 +5522,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: High Order Bit, Inc.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: High Order Bit, Inc.";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
@@ -5540,6 +5542,8 @@
 					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
 				PRODUCT_NAME = "Twitbit Lite";
+				PROVISIONING_PROFILE = "37E48521-9BD8-4E95-AAE2-9AB07B1C6A06";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "37E48521-9BD8-4E95-AAE2-9AB07B1C6A06";
 			};
 			name = "Distribution - App Store";
 		};
@@ -5547,7 +5551,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: High Order Bit, Inc.";
 				DEVICE_REGISTRATION_DOMAIN = client.twitbit.highorderbit.com;
 				GCC_CW_ASM_SYNTAX = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -5573,7 +5577,7 @@
 					"-lAdMobSimulator3_0",
 				);
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0449F799-7C65-44C0-82D2-5084B70FC2A6";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Distribution - App Store";
@@ -5583,6 +5587,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: High Order Bit, Inc.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: High Order Bit, Inc.";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = twitch_Prefix.pch;
@@ -5599,6 +5605,8 @@
 					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
 				PRODUCT_NAME = Twitbit;
+				PROVISIONING_PROFILE = "9BD30541-6CA6-4F48-B159-BC45D542BBD5";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9BD30541-6CA6-4F48-B159-BC45D542BBD5";
 			};
 			name = "Distribution - App Store";
 		};
