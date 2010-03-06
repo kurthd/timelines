@@ -3,7 +3,7 @@
 //
 
 #import "DeleteTweetResponseProcessor.h"
-#import "Tweet.h"
+#import "UserTweet.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
 #import "MGTwitterEngine.h"  // for twitterApiErrorDomain
 
@@ -65,7 +65,7 @@
 
     NSPredicate * predicate =
         [NSPredicate predicateWithFormat:@"identifier == %@", tweetId];
-    Tweet * tweet = [UserTweet findFirst:predicate context:context];
+    UserTweet * tweet = [UserTweet findFirst:predicate context:context];
     NSAssert1(tweet, @"Failed to find deleted tweet with ID: '%@'", tweetId);
     [context deleteObject:tweet];
     [context save:NULL];
