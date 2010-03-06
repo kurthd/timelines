@@ -84,7 +84,7 @@
     // the first set of lists that have been retrieved, in effect
     // 'resetting' the lists once we start paging through them.
     NSMutableDictionary * currentLists = nil;
-    if (cursor)
+    if (!cursor)
         currentLists =
             [[self currentListsForAccount:credentials.username] mutableCopy];
 
@@ -107,6 +107,11 @@
         list.credentials = credentials;
 
         [lists addObject:list];
+
+        // remove this list from the current set of lists
+        UserTwitterList * currentList = [currentLists objectForKey:listId];
+        if (currentList)
+            [currentLists removeObjectForKey:listId];
     }
 
     NSString * nextCursor = [[wrapper objectForKey:@"next_cursor"] description];
@@ -154,7 +159,7 @@
 {
     NSPredicate * predicate = 
         [NSPredicate predicateWithFormat:
-        @"credentials.username == %@ AND user.username == %@",
+        @"credentials.username == %@ AND user.username != %@",
         username, aUsername];
     NSArray * lists = [UserTwitterList findAll:predicate context:context];
     NSMutableDictionary * d =

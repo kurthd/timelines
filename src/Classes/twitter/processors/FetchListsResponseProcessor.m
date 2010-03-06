@@ -84,7 +84,7 @@
     // the first set of lists that have been retrieved, in effect
     // 'resetting' the lists once we start paging through them.
     NSMutableDictionary * currentLists = nil;
-    if (cursor)
+    if (!cursor)
         currentLists =
             [[self currentListsForAccount:credentials.username] mutableCopy];
 
