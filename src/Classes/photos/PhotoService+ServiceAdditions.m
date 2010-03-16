@@ -8,6 +8,27 @@
 
 @implementation PhotoService (ServiceAdditions)
 
+
++ (NSDictionary *)freePhotoServiceNamesAndLogos
+{
+    return
+        [NSDictionary dictionaryWithObjectsAndKeys:
+            [UIImage imageNamed:@"TwitPicLogo.png"], @"TwitPic",
+            [UIImage imageNamed:@"YfrogLogo.png"], @"Yfrog",
+            [UIImage imageNamed:@"TwitVidLogo.png"], @"TwitVid",
+            nil];
+}
+
++ (NSDictionary *)premiumPhotoServiceNamesAndLogos
+{
+    return
+        [NSDictionary dictionaryWithObjectsAndKeys:
+            [UIImage imageNamed:@"FlickrLogo.png"], @"Flickr",
+            [UIImage imageNamed:@"PicasaLogo.png"], @"Picasa",
+            [UIImage imageNamed:@"PosterousLogo.png"], @"Posterous",
+            nil];
+}
+
 + (NSDictionary *)photoServiceNamesAndLogos
 {
     //
@@ -42,6 +63,8 @@
             @"TwitVidPhotoService", @"TwitVid",
             @"YfrogPhotoService", @"Yfrog",
             @"FlickrPhotoService", @"Flickr",
+            @"FlickrPhotoService", @"Picasa",
+            @"FlickrPhotoService", @"Posterous",
             nil];
 
     NSString * className = [serviceClassNames objectForKey:serviceName];

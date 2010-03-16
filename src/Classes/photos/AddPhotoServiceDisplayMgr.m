@@ -97,13 +97,9 @@
 
 #pragma mark PhotoServiceSelectorViewControllerDelegate implementation
 
-- (NSDictionary *)photoServices
+- (NSDictionary *)availablePhotoServicesFromAllServices:(NSDictionary *)services
 {
-    // Supply the list of services, with the user's currently installed
-    // services removed.
-
-    NSMutableDictionary * remainingServices =
-        [[PhotoService photoServiceNamesAndLogos] mutableCopy];
+    NSMutableDictionary * availableServices = [services mutableCopy];
 
     NSSet * userServices = self.credentials.photoServiceCredentials;
     NSSet * userServiceNames =
@@ -111,11 +107,23 @@
         [[userServices allObjects]
         arrayByTransformingObjectsUsingSelector:@selector(serviceName)]];
 
-    for (NSString * serviceName in [remainingServices allKeys])
+    for (NSString * serviceName in [availableServices allKeys])
         if ([userServiceNames containsObject:serviceName])
-            [remainingServices removeObjectForKey:serviceName];
+            [availableServices removeObjectForKey:serviceName];
 
-    return remainingServices;
+    return [availableServices autorelease];
+}
+
+- (NSDictionary *)freePhotoServices
+{
+    return [self availablePhotoServicesFromAllServices:
+        [PhotoService freePhotoServiceNamesAndLogos]];
+}
+
+- (NSDictionary *)premiumPhotoServices
+{
+    return [self availablePhotoServicesFromAllServices:
+        [PhotoService premiumPhotoServiceNamesAndLogos]];
 }
 
 - (void)userSelectedServiceNamed:(NSString *)serviceName

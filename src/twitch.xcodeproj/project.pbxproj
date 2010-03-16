@@ -300,6 +300,10 @@
 		05B8D5FE10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D5FA10A3B4910030F0BF /* TweetLocation+GeneralHelpers.m */; };
 		05B8D6C910A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D6C810A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m */; };
 		05B8D6CA10A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B8D6C810A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m */; };
+		05BAECA2114EF82F001ECFD3 /* PicasaLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BAECA1114EF82F001ECFD3 /* PicasaLogo.png */; };
+		05BAECA3114EF82F001ECFD3 /* PicasaLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BAECA1114EF82F001ECFD3 /* PicasaLogo.png */; };
+		05BAECE4114EFA39001ECFD3 /* PosterousLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BAECE3114EFA39001ECFD3 /* PosterousLogo.png */; };
+		05BAECE5114EFA39001ECFD3 /* PosterousLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BAECE3114EFA39001ECFD3 /* PosterousLogo.png */; };
 		05C7B8BA103B5FAF0017874C /* PhotoServicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B8B8103B5FAF0017874C /* PhotoServicesView.xib */; };
 		05C7B962103B791A0017874C /* PhotoServiceSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B960103B791A0017874C /* PhotoServiceSelectorView.xib */; };
 		05C7B99D103B7E1D0017874C /* FlickrLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B99B103B7E1D0017874C /* FlickrLogo.png */; };
@@ -1580,6 +1584,8 @@
 		05B8D69210A3BA430030F0BF /* twitch-v2.3-1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v2.3-1.xcdatamodel"; sourceTree = "<group>"; };
 		05B8D6C710A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringToNumericIdentifierEntityMigrationPolicy.h; path = "persistence/core-data/migrations/StringToNumericIdentifierEntityMigrationPolicy.h"; sourceTree = "<group>"; };
 		05B8D6C810A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringToNumericIdentifierEntityMigrationPolicy.m; path = "persistence/core-data/migrations/StringToNumericIdentifierEntityMigrationPolicy.m"; sourceTree = "<group>"; };
+		05BAECA1114EF82F001ECFD3 /* PicasaLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PicasaLogo.png; path = images/PicasaLogo.png; sourceTree = "<group>"; };
+		05BAECE3114EFA39001ECFD3 /* PosterousLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PosterousLogo.png; path = images/PosterousLogo.png; sourceTree = "<group>"; };
 		05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarDisplayMgr.h; path = search/SearchBarDisplayMgr.h; sourceTree = "<group>"; };
 		05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBarDisplayMgr.m; path = search/SearchBarDisplayMgr.m; sourceTree = "<group>"; };
 		05C5E7B00FF455B00073E7F2 /* FetchTrendsResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTrendsResponseProcessor.h; path = twitter/processors/FetchTrendsResponseProcessor.h; sourceTree = "<group>"; };
@@ -3086,6 +3092,13 @@
 			name = migrations;
 			sourceTree = "<group>";
 		};
+		05BAED3A114F0649001ECFD3 /* posterous */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = posterous;
+			sourceTree = "<group>";
+		};
 		05C5E7B70FF45EE10073E7F2 /* yajl */ = {
 			isa = PBXGroup;
 			children = (
@@ -3160,6 +3173,7 @@
 				05C7B892103B59BA0017874C /* twitpic */,
 				059A72E9103E209500B7500C /* twitvid */,
 				0519C752104349B700C2C7BD /* flickr */,
+				05BAED3A114F0649001ECFD3 /* posterous */,
 			);
 			name = photos;
 			sourceTree = "<group>";
@@ -3505,6 +3519,8 @@
 				05C7BA08103B90310017874C /* TwitVidLogo.png */,
 				05C7B9F7103B8D360017874C /* YfrogLogo.png */,
 				05C7B99B103B7E1D0017874C /* FlickrLogo.png */,
+				05BAECA1114EF82F001ECFD3 /* PicasaLogo.png */,
+				05BAECE3114EFA39001ECFD3 /* PosterousLogo.png */,
 				05C7B99C103B7E1D0017874C /* TwitPicLogo.png */,
 				051975F9103A119100883FAC /* AccountSelectedCheckmark.png */,
 				0519760D103A142000883FAC /* AccountSelectedCheckmarkHighlighted.png */,
@@ -4028,6 +4044,8 @@
 				91732382112C8AC1002FFE00 /* AttachmentHighlighted.png in Resources */,
 				913E02AA113ADBB000694FDE /* PlainTableViewCellBorder.png in Resources */,
 				05592BD9113D93DA00DECDFF /* XauthLogInView.xib in Resources */,
+				05BAECA3114EF82F001ECFD3 /* PicasaLogo.png in Resources */,
+				05BAECE5114EFA39001ECFD3 /* PosterousLogo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4232,6 +4250,8 @@
 				91732383112C8AC1002FFE00 /* AttachmentHighlighted.png in Resources */,
 				913E02AC113ADBB000694FDE /* PlainTableViewCellBorder.png in Resources */,
 				05592BD8113D93DA00DECDFF /* XauthLogInView.xib in Resources */,
+				05BAECA2114EF82F001ECFD3 /* PicasaLogo.png in Resources */,
+				05BAECE4114EFA39001ECFD3 /* PosterousLogo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

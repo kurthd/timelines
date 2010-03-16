@@ -133,8 +133,12 @@ NSInteger serviceNameSort(PhotoServiceCredentials * service1,
 
 - (BOOL)areMoreServicesAvailable
 {
+    NSDictionary * freeServices = [PhotoService freePhotoServiceNamesAndLogos];
+    NSDictionary * premiumServices =
+        [PhotoService premiumPhotoServiceNamesAndLogos];
+
     return self.credentials.photoServiceCredentials.count <
-        [PhotoService photoServiceNamesAndLogos].count;
+        freeServices.count + premiumServices.count;
 }
 
 - (NSArray *)servicesForAccount:(TwitterCredentials *)someCredentials

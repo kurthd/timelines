@@ -7,7 +7,8 @@
 
 @interface PhotoService (ServiceAdditions)
 
-+ (NSDictionary *)photoServiceNamesAndLogos;
++ (NSDictionary *)freePhotoServiceNamesAndLogos;
++ (NSDictionary *)premiumPhotoServiceNamesAndLogos;
 
 + (id)photoServiceWithServiceName:(NSString *)serviceName;
 

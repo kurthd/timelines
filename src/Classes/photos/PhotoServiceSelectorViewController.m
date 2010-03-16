@@ -3,21 +3,36 @@
 //
 
 #import "PhotoServiceSelectorViewController.h"
-#import "UIAlertView+InstantiationAdditions.h"
-#import "RotatableTabBarController.h"
+#import "TwitbitShared.h"
+
+static const NSInteger NUM_SECTIONS = 2;
+enum {
+    kFreePhotoServicesSection,
+    kPremiumPhotoServicesSection
+};
 
 @interface PhotoServiceSelectorViewController ()
 
 @property (nonatomic, retain) UIBarButtonItem * cancelButton;
 
+/*
 @property (nonatomic, copy) NSArray * names;
 @property (nonatomic, copy) NSArray * logos;
+*/
+
+@property (nonatomic, copy) NSDictionary * freePhotoServices;
+@property (nonatomic, copy) NSDictionary * premiumPhotoServices;
+
+- (NSInteger)effectiveSection:(NSInteger)section;
+- (NSDictionary *)servicesInSection:(NSInteger)section;
+- (NSArray *)arrangedServiceNames:(NSDictionary *)services;
 
 @end
 
 @implementation PhotoServiceSelectorViewController
 
-@synthesize delegate, cancelButton, names, logos, allowCancel;
+@synthesize delegate, cancelButton, /*names, logos,*/ allowCancel;
+@synthesize freePhotoServices, premiumPhotoServices;
 
 - (void)dealloc
 {
@@ -25,8 +40,13 @@
 
     self.cancelButton = nil;
 
+    /*
     self.names = nil;
     self.logos = nil;
+    */
+
+    self.freePhotoServices = nil;
+    self.premiumPhotoServices = nil;
 
     [super dealloc];
 }
@@ -50,16 +70,8 @@
         self.cancelButton :
         nil;
 
-    NSDictionary * services = [self.delegate photoServices];
-    self.names =
-        [[services allKeys] sortedArrayUsingSelector:@selector(compare:)];
-    NSMutableArray * theLogos = [NSMutableArray array];
-
-    for (NSString * name in self.names) {
-        UIImage * logo = [services objectForKey:name];
-        [theLogos addObject:logo];
-    }
-    self.logos = theLogos;
+    self.freePhotoServices = [self.delegate freePhotoServices];
+    self.premiumPhotoServices = [self.delegate premiumPhotoServices];
 
     [self.tableView reloadData];
 }
@@ -80,14 +92,34 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv
 {
-    return 1;
+    NSInteger count = 0;
+    for (NSInteger i = 0; i < NUM_SECTIONS; ++i)
+        if ([self servicesInSection:i].count > 0)
+            ++count;
+
+    return count;
 }
 
-// Customize the number of rows in the table view.
+- (NSString *)tableView:(UITableView *)tableView
+    titleForHeaderInSection:(NSInteger)section
+{
+    section = [self effectiveSection:section];
+
+    switch (section) {
+        case kFreePhotoServicesSection:
+            return LS(@"photoserviceselector.section.free.title");
+        case kPremiumPhotoServicesSection:
+            return LS(@"photoserviceselector.section.premium.title");
+        default:
+            return nil;
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tv
  numberOfRowsInSection:(NSInteger)section
 {
-    return self.names.count;
+    section = [self effectiveSection:section];
+    return [self servicesInSection:section].count;
 }
 
 - (CGFloat)tableView:(UITableView *)tv
@@ -111,7 +143,13 @@
             reuseIdentifier:CellIdentifier]
             autorelease];
 
-    UIImage * logo = [self.logos objectAtIndex:indexPath.row];
+    NSInteger section = [self effectiveSection:indexPath.section];
+    NSDictionary * services = [self servicesInSection:section];
+    NSArray * serviceNames = [self arrangedServiceNames:services];
+    NSString * serviceName = [serviceNames objectAtIndex:indexPath.row];
+    UIImage * logo = [services objectForKey:serviceName];
+
+    //UIImage * logo = [self.logos objectAtIndex:indexPath.row];
 
     UIImageView * logoView = [[UIImageView alloc] initWithImage:logo];
 
@@ -142,7 +180,11 @@
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString * serviceName = [self.names objectAtIndex:indexPath.row];
+    NSInteger section = [self effectiveSection:indexPath.section];
+    NSDictionary * services = [self servicesInSection:section];
+    NSArray * serviceNames = [self arrangedServiceNames:services];
+    NSString * serviceName = [serviceNames objectAtIndex:indexPath.row];
+
     [self.delegate userSelectedServiceNamed:serviceName];
 }
 
@@ -151,6 +193,35 @@
 - (IBAction)userDidCancel:(id)sender
 {
     [self.delegate userDidCancel];
+}
+
+#pragma mark Private implementation
+
+- (NSInteger)effectiveSection:(NSInteger)section
+{
+    NSInteger effectiveSection = section;
+
+    if ([self servicesInSection:kFreePhotoServicesSection].count == 0)
+        effectiveSection += 1;
+
+    return effectiveSection;
+}
+
+- (NSDictionary *)servicesInSection:(NSInteger)section
+{
+    switch (section) {
+        case kFreePhotoServicesSection:
+            return self.freePhotoServices;
+        case kPremiumPhotoServicesSection:
+            return self.premiumPhotoServices;
+        default:
+            return nil;
+    }
+}
+
+- (NSArray *)arrangedServiceNames:(NSDictionary *)services
+{
+    return [services.allKeys sortedArrayUsingSelector:@selector(compare:)];
 }
 
 @end

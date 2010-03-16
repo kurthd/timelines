@@ -28,6 +28,8 @@
             @"YfrogLogInDisplayMgr", @"Yfrog",
             @"TwitVidLogInDisplayMgr", @"TwitVid",
             @"FlickrLogInDisplayMgr", @"Flickr",
+            @"FlickrLogInDisplayMgr", @"Picasa",
+            @"FlickrLogInDisplayMgr", @"Posterous",
             nil];
     }
 

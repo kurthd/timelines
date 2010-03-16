@@ -4,14 +4,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol PhotoServiceSelectorViewControllerDelegate
-
-- (NSDictionary *)photoServices;
-
-- (void)userSelectedServiceNamed:(NSString *)serviceName;
-- (void)userDidCancel;
-
-@end
+@protocol PhotoServiceSelectorViewControllerDelegate;
 
 @interface PhotoServiceSelectorViewController : UITableViewController
 {
@@ -19,8 +12,13 @@
 
     IBOutlet UIBarButtonItem * cancelButton;
 
+    /*
     NSArray * names;
     NSArray * logos;
+    */
+
+    NSDictionary * freePhotoServices;
+    NSDictionary * premiumPhotoServices;
 
     BOOL allowCancel;
 }
@@ -33,3 +31,15 @@
 - (IBAction)userDidCancel:(id)sender;
 
 @end
+
+
+@protocol PhotoServiceSelectorViewControllerDelegate
+
+- (NSDictionary *)freePhotoServices;
+- (NSDictionary *)premiumPhotoServices;
+
+- (void)userSelectedServiceNamed:(NSString *)serviceName;
+- (void)userDidCancel;
+
+@end
+
