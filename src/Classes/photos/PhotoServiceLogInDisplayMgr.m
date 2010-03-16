@@ -29,7 +29,7 @@
             @"TwitVidLogInDisplayMgr", @"TwitVid",
             @"FlickrLogInDisplayMgr", @"Flickr",
             @"FlickrLogInDisplayMgr", @"Picasa",
-            @"FlickrLogInDisplayMgr", @"Posterous",
+            @"PosterousLogInDisplayMgr", @"Posterous",
             nil];
     }
 

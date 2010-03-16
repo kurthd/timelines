@@ -64,7 +64,7 @@
             @"YfrogPhotoService", @"Yfrog",
             @"FlickrPhotoService", @"Flickr",
             @"FlickrPhotoService", @"Picasa",
-            @"FlickrPhotoService", @"Posterous",
+            @"PosterousPhotoService", @"Posterous",
             nil];
 
     NSString * className = [serviceClassNames objectForKey:serviceName];

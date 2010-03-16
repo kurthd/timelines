@@ -19,6 +19,7 @@
             @"YfrogEditPhotoServiceDisplayMgr", @"Yfrog",
             @"TwitVidEditPhotoServiceDisplayMgr", @"TwitVid",
             @"FlickrEditPhotoServiceDisplayMgr", @"Flickr",
+            @"PosterousEditPhotoServiceDisplayMgr", @"Posterous",
             nil];
     }
 

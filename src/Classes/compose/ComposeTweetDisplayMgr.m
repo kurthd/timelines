@@ -801,6 +801,7 @@
             [info objectForKey:UIImagePickerControllerEditedImage];
         if (!image)
             image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        NSAssert(image, @"No image included to attach.");
 
         PhotoServiceCredentials * c =
             [service.credentials defaultPhotoServiceCredentials];

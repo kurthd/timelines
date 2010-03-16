@@ -27,6 +27,7 @@
 #import "NSString+WebViewAdditions.h"
 #import "UIApplication+ConfigurationAdditions.h"
 #import "UIApplication+NetworkActivityIndicatorAdditions.h"
+#import "UIButton+StandardButtonAdditions.h"
 
 
 //

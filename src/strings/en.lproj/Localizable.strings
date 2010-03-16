@@ -310,6 +310,17 @@ twitvidsettingsview.delete.alert.title = "Are you sure you want to delete this s
 twitvidsettingsview.delete.alert.cancel.title = "Cancel";
 twitvidsettingsview.delete.alert.delete.title = "Delete Service";
 
+/* PosterousLogInView */
+posterousloginview.view.title = "Posterous Log In";  // different than structures from others to avoid truncation
+posterousloginview.view.instructions = "Enter your Twitter username and password to log in. Posterous will post to your default Posterous site. If you don't have a Posterous site, one will be created for you automatically.";
+
+/* PosterousSettingsView */
+posteroussettings.view.title = "Posterous Settings";
+posteroussettingsview.delete.alert.title = "Delete Service";
+posteroussettingsview.delete.alert.cancel.title = "Cancel";
+posteroussettingsview.delete.alert.delete.title = "Delete Service";
+
+
 /* LocationInfoView */
 locationinfo.title = "Location Info";
 locationinfo.searchlocation = "Search for This Location";

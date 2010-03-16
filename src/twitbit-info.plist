@@ -44,6 +44,8 @@
 	<true/>
 	<key>TwitPicPostUrl</key>
 	<string>https://twitpic.com/api/upload</string>
+	<key>PosterousPostUrl</key>
+	<string>https://posterous.com/api/upload</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>YfrogPostUrl</key>

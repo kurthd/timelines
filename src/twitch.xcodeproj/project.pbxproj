@@ -304,6 +304,22 @@
 		05BAECA3114EF82F001ECFD3 /* PicasaLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BAECA1114EF82F001ECFD3 /* PicasaLogo.png */; };
 		05BAECE4114EFA39001ECFD3 /* PosterousLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BAECE3114EFA39001ECFD3 /* PosterousLogo.png */; };
 		05BAECE5114EFA39001ECFD3 /* PosterousLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BAECE3114EFA39001ECFD3 /* PosterousLogo.png */; };
+		05BAED46114F07D3001ECFD3 /* PosterousEditPhotoServiceDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED3D114F07D3001ECFD3 /* PosterousEditPhotoServiceDisplayMgr.m */; };
+		05BAED47114F07D3001ECFD3 /* PosterousLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED3F114F07D3001ECFD3 /* PosterousLogInDisplayMgr.m */; };
+		05BAED48114F07D3001ECFD3 /* PosterousPhotoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED41114F07D3001ECFD3 /* PosterousPhotoService.m */; };
+		05BAED49114F07D3001ECFD3 /* PosterousResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED43114F07D3001ECFD3 /* PosterousResponseParser.m */; };
+		05BAED4A114F07D3001ECFD3 /* PosterousSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED45114F07D3001ECFD3 /* PosterousSettingsViewController.m */; };
+		05BAED4B114F07D3001ECFD3 /* PosterousEditPhotoServiceDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED3D114F07D3001ECFD3 /* PosterousEditPhotoServiceDisplayMgr.m */; };
+		05BAED4C114F07D3001ECFD3 /* PosterousLogInDisplayMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED3F114F07D3001ECFD3 /* PosterousLogInDisplayMgr.m */; };
+		05BAED4D114F07D3001ECFD3 /* PosterousPhotoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED41114F07D3001ECFD3 /* PosterousPhotoService.m */; };
+		05BAED4E114F07D3001ECFD3 /* PosterousResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED43114F07D3001ECFD3 /* PosterousResponseParser.m */; };
+		05BAED4F114F07D3001ECFD3 /* PosterousSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED45114F07D3001ECFD3 /* PosterousSettingsViewController.m */; };
+		05BAED5B114F09B0001ECFD3 /* PosterousCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED5A114F09B0001ECFD3 /* PosterousCredentials.m */; };
+		05BAED5C114F09B0001ECFD3 /* PosterousCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED5A114F09B0001ECFD3 /* PosterousCredentials.m */; };
+		05BAED61114F09E3001ECFD3 /* PosterousCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED60114F09E3001ECFD3 /* PosterousCredentials+KeychainAdditions.m */; };
+		05BAED62114F09E3001ECFD3 /* PosterousCredentials+KeychainAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BAED60114F09E3001ECFD3 /* PosterousCredentials+KeychainAdditions.m */; };
+		05BAED8E114F0AC2001ECFD3 /* PosterousSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05BAED8C114F0AC2001ECFD3 /* PosterousSettingsView.xib */; };
+		05BAED8F114F0AC2001ECFD3 /* PosterousSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05BAED8C114F0AC2001ECFD3 /* PosterousSettingsView.xib */; };
 		05C7B8BA103B5FAF0017874C /* PhotoServicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B8B8103B5FAF0017874C /* PhotoServicesView.xib */; };
 		05C7B962103B791A0017874C /* PhotoServiceSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B960103B791A0017874C /* PhotoServiceSelectorView.xib */; };
 		05C7B99D103B7E1D0017874C /* FlickrLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05C7B99B103B7E1D0017874C /* FlickrLogo.png */; };
@@ -1586,6 +1602,22 @@
 		05B8D6C810A3C9A70030F0BF /* StringToNumericIdentifierEntityMigrationPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringToNumericIdentifierEntityMigrationPolicy.m; path = "persistence/core-data/migrations/StringToNumericIdentifierEntityMigrationPolicy.m"; sourceTree = "<group>"; };
 		05BAECA1114EF82F001ECFD3 /* PicasaLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PicasaLogo.png; path = images/PicasaLogo.png; sourceTree = "<group>"; };
 		05BAECE3114EFA39001ECFD3 /* PosterousLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PosterousLogo.png; path = images/PosterousLogo.png; sourceTree = "<group>"; };
+		05BAED3C114F07D3001ECFD3 /* PosterousEditPhotoServiceDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PosterousEditPhotoServiceDisplayMgr.h; path = photos/posterous/PosterousEditPhotoServiceDisplayMgr.h; sourceTree = "<group>"; };
+		05BAED3D114F07D3001ECFD3 /* PosterousEditPhotoServiceDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PosterousEditPhotoServiceDisplayMgr.m; path = photos/posterous/PosterousEditPhotoServiceDisplayMgr.m; sourceTree = "<group>"; };
+		05BAED3E114F07D3001ECFD3 /* PosterousLogInDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PosterousLogInDisplayMgr.h; path = photos/posterous/PosterousLogInDisplayMgr.h; sourceTree = "<group>"; };
+		05BAED3F114F07D3001ECFD3 /* PosterousLogInDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PosterousLogInDisplayMgr.m; path = photos/posterous/PosterousLogInDisplayMgr.m; sourceTree = "<group>"; };
+		05BAED40114F07D3001ECFD3 /* PosterousPhotoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PosterousPhotoService.h; path = photos/posterous/PosterousPhotoService.h; sourceTree = "<group>"; };
+		05BAED41114F07D3001ECFD3 /* PosterousPhotoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PosterousPhotoService.m; path = photos/posterous/PosterousPhotoService.m; sourceTree = "<group>"; };
+		05BAED42114F07D3001ECFD3 /* PosterousResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PosterousResponseParser.h; path = photos/posterous/PosterousResponseParser.h; sourceTree = "<group>"; };
+		05BAED43114F07D3001ECFD3 /* PosterousResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PosterousResponseParser.m; path = photos/posterous/PosterousResponseParser.m; sourceTree = "<group>"; };
+		05BAED44114F07D3001ECFD3 /* PosterousSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PosterousSettingsViewController.h; path = photos/posterous/PosterousSettingsViewController.h; sourceTree = "<group>"; };
+		05BAED45114F07D3001ECFD3 /* PosterousSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PosterousSettingsViewController.m; path = photos/posterous/PosterousSettingsViewController.m; sourceTree = "<group>"; };
+		05BAED54114F0925001ECFD3 /* twitch-v3.0.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "twitch-v3.0.xcdatamodel"; sourceTree = "<group>"; };
+		05BAED59114F09B0001ECFD3 /* PosterousCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PosterousCredentials.h; path = photos/posterous/PosterousCredentials.h; sourceTree = "<group>"; };
+		05BAED5A114F09B0001ECFD3 /* PosterousCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PosterousCredentials.m; path = photos/posterous/PosterousCredentials.m; sourceTree = "<group>"; };
+		05BAED5F114F09E3001ECFD3 /* PosterousCredentials+KeychainAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PosterousCredentials+KeychainAdditions.h"; path = "photos/posterous/PosterousCredentials+KeychainAdditions.h"; sourceTree = "<group>"; };
+		05BAED60114F09E3001ECFD3 /* PosterousCredentials+KeychainAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PosterousCredentials+KeychainAdditions.m"; path = "photos/posterous/PosterousCredentials+KeychainAdditions.m"; sourceTree = "<group>"; };
+		05BAED8D114F0AC2001ECFD3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/PosterousSettingsView.xib; sourceTree = "<group>"; };
 		05C35E410FF5436E00F91448 /* SearchBarDisplayMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchBarDisplayMgr.h; path = search/SearchBarDisplayMgr.h; sourceTree = "<group>"; };
 		05C35E420FF5436E00F91448 /* SearchBarDisplayMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchBarDisplayMgr.m; path = search/SearchBarDisplayMgr.m; sourceTree = "<group>"; };
 		05C5E7B00FF455B00073E7F2 /* FetchTrendsResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchTrendsResponseProcessor.h; path = twitter/processors/FetchTrendsResponseProcessor.h; sourceTree = "<group>"; };
@@ -2883,6 +2915,7 @@
 				059A6E9C103CA27400B7500C /* TwitPicSettingsView.xib */,
 				059A72A8103E1C7800B7500C /* YfrogSettingsView.xib */,
 				059A72FF103E221E00B7500C /* TwitVidSettingsView.xib */,
+				05BAED8C114F0AC2001ECFD3 /* PosterousSettingsView.xib */,
 				059A708F103DAE4A00B7500C /* SelectionView.xib */,
 				918F38F61042129C000236AE /* LocationInfoView.xib */,
 				918F392810433325000236AE /* LocationInfoLabelCell.xib */,
@@ -3095,6 +3128,20 @@
 		05BAED3A114F0649001ECFD3 /* posterous */ = {
 			isa = PBXGroup;
 			children = (
+				05BAED59114F09B0001ECFD3 /* PosterousCredentials.h */,
+				05BAED5A114F09B0001ECFD3 /* PosterousCredentials.m */,
+				05BAED5F114F09E3001ECFD3 /* PosterousCredentials+KeychainAdditions.h */,
+				05BAED60114F09E3001ECFD3 /* PosterousCredentials+KeychainAdditions.m */,
+				05BAED3C114F07D3001ECFD3 /* PosterousEditPhotoServiceDisplayMgr.h */,
+				05BAED3D114F07D3001ECFD3 /* PosterousEditPhotoServiceDisplayMgr.m */,
+				05BAED3E114F07D3001ECFD3 /* PosterousLogInDisplayMgr.h */,
+				05BAED3F114F07D3001ECFD3 /* PosterousLogInDisplayMgr.m */,
+				05BAED40114F07D3001ECFD3 /* PosterousPhotoService.h */,
+				05BAED41114F07D3001ECFD3 /* PosterousPhotoService.m */,
+				05BAED42114F07D3001ECFD3 /* PosterousResponseParser.h */,
+				05BAED43114F07D3001ECFD3 /* PosterousResponseParser.m */,
+				05BAED44114F07D3001ECFD3 /* PosterousSettingsViewController.h */,
+				05BAED45114F07D3001ECFD3 /* PosterousSettingsViewController.m */,
 			);
 			name = posterous;
 			sourceTree = "<group>";
@@ -4046,6 +4093,7 @@
 				05592BD9113D93DA00DECDFF /* XauthLogInView.xib in Resources */,
 				05BAECA3114EF82F001ECFD3 /* PicasaLogo.png in Resources */,
 				05BAECE5114EFA39001ECFD3 /* PosterousLogo.png in Resources */,
+				05BAED8E114F0AC2001ECFD3 /* PosterousSettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4252,6 +4300,7 @@
 				05592BD8113D93DA00DECDFF /* XauthLogInView.xib in Resources */,
 				05BAECA2114EF82F001ECFD3 /* PicasaLogo.png in Resources */,
 				05BAECE4114EFA39001ECFD3 /* PosterousLogo.png in Resources */,
+				05BAED8F114F0AC2001ECFD3 /* PosterousSettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4616,6 +4665,13 @@
 				05592BB8113D92D900DECDFF /* TwitterXauthenticator.m in Sources */,
 				05592BE2113D945300DECDFF /* XauthLogInViewController.m in Sources */,
 				05592BE8113D949700DECDFF /* XauthLogInDisplayMgr.m in Sources */,
+				05BAED4B114F07D3001ECFD3 /* PosterousEditPhotoServiceDisplayMgr.m in Sources */,
+				05BAED4C114F07D3001ECFD3 /* PosterousLogInDisplayMgr.m in Sources */,
+				05BAED4D114F07D3001ECFD3 /* PosterousPhotoService.m in Sources */,
+				05BAED4E114F07D3001ECFD3 /* PosterousResponseParser.m in Sources */,
+				05BAED4F114F07D3001ECFD3 /* PosterousSettingsViewController.m in Sources */,
+				05BAED5B114F09B0001ECFD3 /* PosterousCredentials.m in Sources */,
+				05BAED61114F09E3001ECFD3 /* PosterousCredentials+KeychainAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4977,6 +5033,13 @@
 				05592BB7113D92D900DECDFF /* TwitterXauthenticator.m in Sources */,
 				05592BE1113D945300DECDFF /* XauthLogInViewController.m in Sources */,
 				05592BE7113D949700DECDFF /* XauthLogInDisplayMgr.m in Sources */,
+				05BAED46114F07D3001ECFD3 /* PosterousEditPhotoServiceDisplayMgr.m in Sources */,
+				05BAED47114F07D3001ECFD3 /* PosterousLogInDisplayMgr.m in Sources */,
+				05BAED48114F07D3001ECFD3 /* PosterousPhotoService.m in Sources */,
+				05BAED49114F07D3001ECFD3 /* PosterousResponseParser.m in Sources */,
+				05BAED4A114F07D3001ECFD3 /* PosterousSettingsViewController.m in Sources */,
+				05BAED5C114F09B0001ECFD3 /* PosterousCredentials.m in Sources */,
+				05BAED62114F09E3001ECFD3 /* PosterousCredentials+KeychainAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5126,6 +5189,14 @@
 			);
 			name = Localizable.strings;
 			path = strings/en.lproj;
+			sourceTree = "<group>";
+		};
+		05BAED8C114F0AC2001ECFD3 /* PosterousSettingsView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				05BAED8D114F0AC2001ECFD3 /* en */,
+			);
+			name = PosterousSettingsView.xib;
 			sourceTree = "<group>";
 		};
 		05C7051B0FF88C4100936E4C /* ExplainOauthView.xib */ = {
@@ -5742,8 +5813,9 @@
 				05271E9A10B0E274008E86DB /* twitch-v2.3-4.xcdatamodel */,
 				05E3A05410C5E0F500D935B3 /* twitch-v2.3-5.xcdatamodel */,
 				05B561171135EB6A00A39E52 /* twitch-v2.7-1.xcdatamodel */,
+				05BAED54114F0925001ECFD3 /* twitch-v3.0.xcdatamodel */,
 			);
-			currentVersion = 05B561171135EB6A00A39E52 /* twitch-v2.7-1.xcdatamodel */;
+			currentVersion = 05BAED54114F0925001ECFD3 /* twitch-v3.0.xcdatamodel */;
 			name = twitch.xcdatamodeld;
 			path = "data-model/twitch.xcdatamodeld";
 			sourceTree = "<group>";
