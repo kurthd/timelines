@@ -2605,4 +2605,11 @@ static BOOL L0AccelerationIsShaking(UIAcceleration* last,
     self.lastAcceleration = acceleration;
 }
 
+#pragma mark Memory warnings
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    NSLog(@"WARNING: application received a memory warning.");
+}
+
 @end
