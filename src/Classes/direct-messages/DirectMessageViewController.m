@@ -334,7 +334,7 @@ enum TweetActionSheets {
             [delegate showResultsForSearch:query];
         } else if ([webpage isMatchedByRegex:@"^mailto:"]) {
             NSLog(@"Opening 'Mail' with url: %@", webpage);
-            NSURL * url = [[NSURL alloc] initWithString:webpage];
+            NSURL * url = [NSURL URLWithString:webpage];
             [[UIApplication sharedApplication] openURL:url];
         } else if ([webpage isMatchedByRegex:imageUrlRegex options:options
             inRange:range error:&error]) {
@@ -464,6 +464,7 @@ enum TweetActionSheets {
         [[RemotePhoto alloc]
         initWithImage:remoteAvatar url:url name:selectedUser.name];
     [[PhotoBrowserDisplayMgr instance] showPhotoInBrowser:remotePhoto];
+    [remotePhoto release];
 }
 
 - (IBAction)sendInEmail
