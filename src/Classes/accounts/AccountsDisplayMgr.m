@@ -159,7 +159,8 @@
 
 - (UIImage *)avatarImageForUsername:(NSString *)username
 {
-    User * user = [User userWithUsername:username context:context];
+    User * user = [User userWithCaseInsensitiveUsername:username
+                                                context:context];
     UIImage * avatar = [user thumbnailAvatar];
 
     if (!avatar && ![pendingUserFetches containsObject:username]) {

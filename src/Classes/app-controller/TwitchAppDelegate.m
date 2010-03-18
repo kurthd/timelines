@@ -968,8 +968,8 @@ enum {
 
     if (creds) {
         User * user =
-            [User userWithUsername:creds.username
-            context:[self managedObjectContext]];
+            [User userWithCaseInsensitiveUsername:creds.username
+                                          context:[self managedObjectContext]];
         [profileDisplayMgr setNewProfileUsername:creds.username user:user];
     }
 }
@@ -2355,8 +2355,8 @@ enum {
     [listsDisplayMgr resetState];
 
     User * user =
-        [User userWithUsername:activeAccount.username
-        context:[self managedObjectContext]];
+        [User userWithCaseInsensitiveUsername:activeAccount.username
+                                      context:[self managedObjectContext]];
     [profileDisplayMgr setNewProfileUsername:activeAccount.username user:user];
 }
 
