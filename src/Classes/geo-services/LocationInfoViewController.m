@@ -197,7 +197,7 @@ enum {
 - (NSInteger)tableView:(UITableView *)tableView
     numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger numRows;
+    NSInteger numRows = 0;
 
     NSInteger correctedSection = [self correctedSectionForSection:section];
     switch (correctedSection) {
@@ -218,7 +218,7 @@ enum {
 - (UITableViewCell *)tableView:(UITableView *)tableView
     cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell * cell;
+    UITableViewCell * cell = nil;
     NSInteger correctedSection =
         [self correctedSectionForSection:indexPath.section];
     switch (correctedSection) {
