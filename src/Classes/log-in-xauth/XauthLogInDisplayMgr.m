@@ -109,13 +109,18 @@
 
 - (void)xauthenticator:(TwitterXauthenticator *)xauthenticator
        didReceiveToken:(NSString *)token
-             andSecret:(NSString *)secret
+                secret:(NSString *)secret
+         andScreenName:(NSString *)screenName
            forUsername:(NSString *)username
            andPassword:(NSString *)password
 {
     if (authenticating) {
+        // Note that the twitter screen name can be different than the username
+        // provided, e.g. when what the user typed does not have the same case
+        // as what Twitter provides. User the twitter screen name when saving
+        // the account.
         TwitterCredentials * creds =
-            [self addAccountWithUsername:username token:token secret:secret];
+            [self addAccountWithUsername:screenName token:token secret:secret];
         if (creds) {
             [self addPhotoAccountsForCredentials:creds password:password];
 

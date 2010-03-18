@@ -35,7 +35,8 @@
 
 - (void)xauthenticator:(TwitterXauthenticator *)xauthenticator
        didReceiveToken:(NSString *)key
-             andSecret:(NSString *)secret
+                secret:(NSString *)secret
+         andScreenName:(NSString *)screenName
            forUsername:(NSString *)username
            andPassword:(NSString *)password;
 
