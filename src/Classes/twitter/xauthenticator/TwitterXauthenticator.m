@@ -85,11 +85,13 @@
 
     NSString * token = [pairs objectForKey:@"oauth_token"];
     NSString * secret = [pairs objectForKey:@"oauth_token_secret"];
+    NSString * screenName = [pairs objectForKey:@"screen_name"];
 
     if (token && secret)
         [[self delegate] xauthenticator:self
                         didReceiveToken:token
-                              andSecret:secret
+                                 secret:secret
+                          andScreenName:screenName
                             forUsername:[self username]
                             andPassword:[self password]];
     else {
