@@ -22,13 +22,6 @@
 @dynamic credentials;
 @dynamic recipient;
 
-- (NSString *)description
-{
-    return [NSString stringWithFormat:@"DM for '%@': '%@' -> '%@': '%@'.",
-        self.credentials.username, self.sender.username,
-        self.recipient.username, self.text];
-}
-
 - (NSComparisonResult)compare:(DirectMessage *)dm
 {
     return [self.identifier compare:dm.identifier];
