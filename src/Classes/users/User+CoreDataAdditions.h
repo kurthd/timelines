@@ -13,8 +13,8 @@
 + (id)userWithId:(NSNumber *)anIdentifier
          context:(NSManagedObjectContext *)context;
 
-+ (id)userWithUsername:(NSString *)username
-               context:(NSManagedObjectContext *)context;
++ (id)userWithCaseInsensitiveUsername:(NSString *)username
+                              context:(NSManagedObjectContext *)context;
 
 + (id)createInstance:(NSManagedObjectContext *)context;
 

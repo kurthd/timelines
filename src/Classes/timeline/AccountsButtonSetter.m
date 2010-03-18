@@ -49,7 +49,8 @@
 {
     self.username = aUsername;
 
-    User * user = [User userWithUsername:username context:context];
+    User * user = [User userWithCaseInsensitiveUsername:username
+                                                context:context];
     UIImage * avatar = [user thumbnailAvatar];
     if (!avatar)
         avatar = [Avatar defaultAvatar];

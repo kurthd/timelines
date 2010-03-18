@@ -22,7 +22,7 @@
          context:(NSManagedObjectContext *)context
 {
     NSPredicate * predicate = 
-    [NSPredicate predicateWithFormat:@"identifier == %@", targetId];
+        [NSPredicate predicateWithFormat:@"identifier == %@", targetId];
 
     NSError * error;
     NSArray * results =
@@ -40,11 +40,11 @@
     return [results lastObject];
 }
 
-+ (id)userWithUsername:(NSString *)username
-               context:(NSManagedObjectContext *)context
++ (id)userWithCaseInsensitiveUsername:(NSString *)username
+                              context:(NSManagedObjectContext *)context
 {
     NSPredicate * predicate =
-        [NSPredicate predicateWithFormat:@"username == %@", username];
+        [NSPredicate predicateWithFormat:@"username like[c] %@", username];
     return [self findFirst:predicate context:context];
 }
 
