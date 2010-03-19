@@ -74,13 +74,6 @@
                               sourceLink:[[self class] sourceLink]];
 }
 
-- (void)sendVideo:(NSData *)aVideo
-  withCredentials:(PosterousCredentials *)ctls
-{
-    NSAssert(NO,
-        @"Trying to send a video via Posterous, which does not support it.");
-}
-
 #pragma mark Private implementation
 
 - (void)processImageUploadResponse:(NSData *)response
