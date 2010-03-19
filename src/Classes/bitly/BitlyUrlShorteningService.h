@@ -15,6 +15,8 @@
     NSString * version;
     NSString * username;
     NSString * apiKey;
+    NSString * defaultUsername;
+    NSString * defaultApiKey;
 
     NSMutableDictionary * requests;
 }
