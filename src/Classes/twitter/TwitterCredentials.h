@@ -2,13 +2,14 @@
 //  TwitterCredentials.h
 //  twitch
 //
-//  Created by John A. Debay on 11/15/09.
-//  Copyright 2009 High Order Bit, Inc.. All rights reserved.
+//  Created by John A. Debay on 3/18/10.
+//  Copyright 2010 High Order Bit, Inc.. All rights reserved.
 //
 
 #import <CoreData/CoreData.h>
 
 @class ActiveTwitterCredentials;
+@class BitlyCredentials;
 @class DirectMessage;
 @class DirectMessageDraft;
 @class InstapaperCredentials;
@@ -24,25 +25,26 @@
 }
 
 @property (nonatomic, retain) NSString * username;
-@property (nonatomic, retain) NSSet* directMessages;
-@property (nonatomic, retain) User * user;
-@property (nonatomic, retain) ActiveTwitterCredentials * activeCredentials;
+@property (nonatomic, retain) NSSet* lists;
+@property (nonatomic, retain) InstapaperCredentials * instapaperCredentials;
 @property (nonatomic, retain) NSSet* userTimeline;
 @property (nonatomic, retain) NSSet* directMessageDrafts;
-@property (nonatomic, retain) NSSet* lists;
-@property (nonatomic, retain) TweetDraft * tweetDraft;
+@property (nonatomic, retain) BitlyCredentials * bitlyCredentials;
+@property (nonatomic, retain) NSSet* directMessages;
 @property (nonatomic, retain) NSSet* mentions;
+@property (nonatomic, retain) ActiveTwitterCredentials * activeCredentials;
+@property (nonatomic, retain) TweetDraft * tweetDraft;
+@property (nonatomic, retain) User * user;
 @property (nonatomic, retain) NSSet* photoServiceCredentials;
-@property (nonatomic, retain) InstapaperCredentials * instapaperCredentials;
 
 @end
 
 
 @interface TwitterCredentials (CoreDataGeneratedAccessors)
-- (void)addDirectMessagesObject:(DirectMessage *)value;
-- (void)removeDirectMessagesObject:(DirectMessage *)value;
-- (void)addDirectMessages:(NSSet *)value;
-- (void)removeDirectMessages:(NSSet *)value;
+- (void)addListsObject:(UserTwitterList *)value;
+- (void)removeListsObject:(UserTwitterList *)value;
+- (void)addLists:(NSSet *)value;
+- (void)removeLists:(NSSet *)value;
 
 - (void)addUserTimelineObject:(UserTweet *)value;
 - (void)removeUserTimelineObject:(UserTweet *)value;
@@ -54,10 +56,10 @@
 - (void)addDirectMessageDrafts:(NSSet *)value;
 - (void)removeDirectMessageDrafts:(NSSet *)value;
 
-- (void)addListsObject:(UserTwitterList *)value;
-- (void)removeListsObject:(UserTwitterList *)value;
-- (void)addLists:(NSSet *)value;
-- (void)removeLists:(NSSet *)value;
+- (void)addDirectMessagesObject:(DirectMessage *)value;
+- (void)removeDirectMessagesObject:(DirectMessage *)value;
+- (void)addDirectMessages:(NSSet *)value;
+- (void)removeDirectMessages:(NSSet *)value;
 
 - (void)addMentionsObject:(Mention *)value;
 - (void)removeMentionsObject:(Mention *)value;

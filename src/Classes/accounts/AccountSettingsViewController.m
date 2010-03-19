@@ -5,6 +5,7 @@
 #import "AccountSettingsViewController.h"
 #import "UIAlertView+InstantiationAdditions.h"
 #import "InstapaperCredentials.h"
+#import "BitlyCredentials.h"
 #import "UIApplication+ConfigurationAdditions.h"
 
 
@@ -29,11 +30,11 @@ enum {
     kNotificationSoundRow
 };
 
-static const NSInteger NUM_INTEGRATION_ROWS = 2; // don't show bitly for now
+static const NSInteger NUM_INTEGRATION_ROWS = 3;
 enum {
     kPhotAndVideoRow,
     kInstapaperRow,
-    kBitlyRow
+    kJmpRow
 };
 
 @interface AccountSettingsViewController ()
@@ -51,9 +52,7 @@ enum {
 @property (nonatomic, copy) AccountSettings * settings;
 
 @property (nonatomic, retain) SelectionViewController * soundSelector;
-
 @property (nonatomic, copy) NSArray * pushNotificationSounds;
-
 @property (nonatomic, retain) SoundPlayer * soundPlayer;
 
 - (void)syncDisplayWithSettings;
@@ -89,9 +88,7 @@ enum {
     self.settings = nil;
 
     self.soundSelector = nil;
-
     self.pushNotificationSounds = nil;
-
     self.soundPlayer = nil;
 
     [super dealloc];
@@ -219,8 +216,7 @@ enum {
             @"accountsettings.integration.instapaper.notconfigured.label",
             @"");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else if (section == kIntegrationSection &&
-        indexPath.row == kBitlyRow) {
+    } else if (section == kIntegrationSection && indexPath.row == kJmpRow) {
         static NSString * CellIdentifier =
             @"AccountSettingsIntegrationTableViewCell";
 
@@ -232,18 +228,14 @@ enum {
                 reuseIdentifier:CellIdentifier]
                 autorelease];
 
-        cell.textLabel.text =
-            NSLocalizedString(
-            @"accountsettings.integration.bitly.label", @"");
+        cell.textLabel.text = LS(@"accountsettings.integration.bitly.label");
 
         // TODO: add bitlyCredentials to credentials
-        id bitlyCreds = nil;
+        BitlyCredentials * bitlyCreds = self.credentials.bitlyCredentials;
         cell.detailTextLabel.text =
             bitlyCreds ?
-            /* bitlyCreds.username */ @"" :
-            NSLocalizedString(
-            @"accountsettings.integration.bitly.notconfigured.label",
-            @"");
+            bitlyCreds.username :
+            LS(@"accountsettings.integration.bitly.notconfigured.label");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
@@ -271,7 +263,7 @@ enum {
         else if (indexPath.row == kInstapaperRow)
             [self.delegate
                 userWantsToConfigureInstapaperForAccount:self.credentials];
-        else if (indexPath.row == kBitlyRow)
+        else if (indexPath.row == kJmpRow)
             [self.delegate
                 userWantsToConfigureBitlyForAccount:self.credentials];
     }

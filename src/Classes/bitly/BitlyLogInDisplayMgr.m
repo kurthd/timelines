@@ -4,7 +4,9 @@
 
 #import "BitlyLogInDisplayMgr.h"
 #import "UIAlertView+InstantiationAdditions.h"
+#import "BitlyCredentials.h"
 #import "NSManagedObject+TediousCodeAdditions.h"
+#import "TwitbitShared.h"
 
 @interface BitlyLogInDisplayMgr ()
 
@@ -72,94 +74,58 @@
 
     [self.navigationController pushViewController:self.viewController
                                          animated:YES];
-//    self.viewController.credentials = self.credentials.bitlyCredentials;
-    // self.viewController.editingExistingAccount =
-    //     !!self.credentials.bitlyCredentials;
 }
 
 #pragma mark BitlyLogInViewControllerDelegate implementation
 
-- (void)userDidSave:(NSString *)username password:(NSString *)password
+- (void)userDidSave:(NSString *)username apiKey:(NSString *)apiKey
 {
-    [self.viewController displayActivity];
+    BOOL editingExisting = NO;
 
-    NSLog(@"Authenticating Bitly username: '%@'.", username);
-//    [self.instapaperService authenticateUsername:username password:password];
-    authenticating = YES;
+    BitlyCredentials * bc = self.credentials.bitlyCredentials;
+    if (!bc) {
+        bc = [BitlyCredentials createInstance:context];
+        bc.credentials = self.credentials;
+        editingExisting = YES;
+    }
+    bc.username = username;
+    bc.apiKey = apiKey;
+
+    NSError * error = nil;
+    if (![context save:&error])
+        NSLog(@"Failed to save changes to bitly credentials: %@",
+            [error detailedDescription]);
+
+    if (editingExisting)
+        [self.delegate accountEdited:bc];
+    else
+        [self.delegate accountCreated:bc];
+
+    [self dismissLogInViewController];
 }
 
 - (void)userDidCancel
 {
+    if (self.credentials.bitlyCredentials)
+        [self.delegate
+            editingAccountCancelled:self.credentials.bitlyCredentials];
+    else
+        [self.delegate accountCreationCancelled];
+
     [self dismissLogInViewController];
-    // if (authenticating)
-    //     [self.instapaperService cancelAuthentication];
-
-    // InstapaperCredentials * instapaperCredentials =
-    //     self.credentials.instapaperCredentials;
-    // if (instapaperCredentials)
-    //     [self.delegate editingAccountCancelled:instapaperCredentials];
-    // else
-    //     [self.delegate accountCreationCancelled];
 }
 
-// - (void)deleteAccount:(InstapaperCredentials *)instapaperCredentials
-// {
-//     [self.delegate accountWillBeDeleted:instapaperCredentials];
-//     
-//     [self.context deleteObject:instapaperCredentials];
-//     [self.context save:NULL];
-//     
-//     [self dismissInstapaperLogInViewController];
-// }
-
-#pragma mark InstapaperServiceDelegate implementation
-
--(void)authenticatedUsername:(NSString *)username
-                    password:(NSString *)password
+- (void)deleteAccount:(NSString *)username
 {
-    // NSLog(@"'%@': Successfully authenticated Bitly account.", username);
-    // 
-    // BOOL changingExisting = !!self.credentials.instapaperCredentials;
-    // 
-    // InstapaperCredentials * instapaperCredentials =
-    //     changingExisting ?
-    //     self.credentials.instapaperCredentials :
-    //     [InstapaperCredentials createInstance:self.context];
-    // instapaperCredentials.username = username;
-    // [instapaperCredentials setPassword:password];
-    // instapaperCredentials.credentials = self.credentials;
-    // [self.context save:NULL];
-    // 
-    // [self.viewController hideActivity];
-    // [self dismissInstapaperLogInViewController];
-    // authenticating = NO;
-    // 
-    // if (changingExisting)
-    //     [self.delegate accountEdited:instapaperCredentials];
-    // else
-    //     [self.delegate accountCreated:instapaperCredentials];
-}
+    BitlyCredentials * bc = self.credentials.bitlyCredentials;
+    if (bc) {
+        [self.delegate accountWillBeDeleted:bc];
 
-- (void)failedToAuthenticateUsername:(NSString *)username
-                            password:(NSString *)password
-                               error:(NSError *)error
-{
-    NSString * title =
-        NSLocalizedString(@"bitly.login.failed.alert.title", @"");
-    NSString * message = error.localizedDescription;
+        [self.context deleteObject:bc];
+        [self.context save:NULL];
+    }
 
-    [[UIAlertView simpleAlertViewWithTitle:title message:message] show];
-
-    [self.viewController hideActivity];
-    authenticating = NO;
-}
-
-- (void)postedUrl:(NSString *)url
-{
-}
-
-- (void)failedToPostUrl:(NSString *)url error:(NSError *)error
-{
+    [self dismissLogInViewController];
 }
 
 #pragma mark Private implementation
@@ -176,21 +142,16 @@
 
 - (BitlyLogInViewController *)viewController
 {
-    if (!viewController)
+    if (!viewController) {
+        BitlyCredentials * c = credentials.bitlyCredentials;
         viewController =
-            [[BitlyLogInViewController alloc] initWithDelegate:self];
+            [[BitlyLogInViewController alloc] initWithUsername:c.username
+                                                        apiKey:c.apiKey];
+        viewController.editingExistingAccount = !!c;
+        viewController.delegate = self;
+    }
 
     return viewController;
 }
-
-// - (InstapaperService *)instapaperService
-// {
-//     if (!instapaperService) {
-//         instapaperService = [[InstapaperService alloc] init];
-//         instapaperService.delegate = self;
-//     }
-// 
-//     return instapaperService;
-// }
 
 @end

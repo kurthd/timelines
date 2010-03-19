@@ -5,69 +5,48 @@
 #import "BitlyLogInViewController.h"
 #import "UIButton+StandardButtonAdditions.h"
 #import "SettingsReader.h"
+#import "TwitbitShared.h"
 
 @interface BitlyLogInViewController ()
-
-@property (nonatomic, readonly) UIBarButtonItem * activityButton;
+@property (nonatomic, copy) NSString * username;
+@property (nonatomic, copy) NSString * apiKey;
 
 - (void)syncInterfaceToState;
-
 @end
 
 @implementation BitlyLogInViewController
 
-@synthesize delegate, /* credentials, */ displayMode;
-@synthesize displayingActivity, editingExistingAccount;
+@synthesize username, apiKey;
+@synthesize delegate/*, displayMode*/;
+@synthesize /*displayingActivity,*/ editingExistingAccount;
 
 - (void)dealloc
 {
     self.delegate = nil;
 
+    self.username = nil;
+    self.apiKey = nil;
+
     [saveButton release];
     [cancelButton release];
-    [activityButton release];
 
     [usernameCell release];
-    [passwordCell release];
+    [apiKeyCell release];
 
     [usernameTextField release];
-    [passwordTextField release];
-
-//    [credentials release];
+    [apiKeyTextField release];
 
     [super dealloc];
 }
 
-- (id)initWithDelegate:(id<BitlyLogInViewControllerDelegate>)aDelegate
+- (id)initWithUsername:(NSString *)aUsername apiKey:(NSString *)anApiKey
 {
-    if (self = [super initWithNibName:@"BitlyLogInView" bundle:nil])
-        self.delegate = aDelegate;
+    if (self = [super initWithNibName:@"BitlyLogInView" bundle:nil]) {
+        self.username = aUsername;
+        self.apiKey = anApiKey;
+    }
 
     return self;
-}
-
-#pragma mark Public interface
-
-- (void)displayActivity
-{
-    [self.navigationItem setRightBarButtonItem:self.activityButton
-        animated:YES];
-    usernameTextField.enabled = NO;
-    passwordTextField.enabled = NO;
-    [usernameTextField resignFirstResponder];
-    [passwordTextField resignFirstResponder];
-
-    displayingActivity = YES;
-}
-
-- (void)hideActivity
-{
-    [self.navigationItem setRightBarButtonItem:saveButton animated:YES];
-    usernameTextField.enabled = YES;
-    passwordTextField.enabled = YES;
-    [usernameTextField becomeFirstResponder];
-
-    displayingActivity = NO;
 }
 
 #pragma mark UIViewController overrides
@@ -76,19 +55,9 @@
 {
     [super viewDidLoad];
 
-    self.navigationItem.title =
-        NSLocalizedString(@"bitlyloginview.title", @"");
+    self.navigationItem.title = LS(@"bitlyloginview.title");
     self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.rightBarButtonItem = saveButton;
-
-    UIActivityIndicatorView * ai =
-        [[UIActivityIndicatorView alloc]
-        initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    [ai startAnimating];
-    [ai release];
-
-    displayingActivity = NO;
-    editingExistingAccount = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -132,7 +101,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.row == 0 ? usernameCell : passwordCell;
+    return indexPath.row == 0 ? usernameCell : apiKeyCell;
 }
 
 #pragma mark Button actions
@@ -140,7 +109,7 @@
 - (IBAction)save:(id)sender
 {
     [self.delegate userDidSave:usernameTextField.text
-                      password:passwordTextField.text];
+                        apiKey:apiKeyTextField.text];
 }
 
 - (IBAction)cancel:(id)sender
@@ -173,11 +142,11 @@
 {
     if (textField == usernameTextField) {
         [usernameTextField resignFirstResponder];
-        [passwordTextField becomeFirstResponder];
+        [apiKeyTextField becomeFirstResponder];
     } else {
-        NSString * username = usernameTextField.text;
-        NSString * password = passwordTextField.text;
-        [self.delegate userDidSave:username password:password];
+        self.username = usernameTextField.text;
+        self.apiKey = apiKeyTextField.text;
+        [self.delegate userDidSave:self.username apiKey:self.apiKey];
     }
 
     return YES;
@@ -187,34 +156,30 @@
 
 - (void)syncInterfaceToState
 {
-    // usernameTextField.text = credentials.username;
-    // passwordTextField.text = [credentials password];
-    // 
-    // saveButton.enabled = credentials.username.length > 0;
-    // 
-    // if (editingExistingAccount) {
-    //     NSString * title =
-    //         NSLocalizedString(@"bitlyloginview.deleteaccount.button.title",
-    //         @"");
-    //     UIButton * deleteButton = [UIButton deleteButtonWithTitle:title];
-    //     [deleteButton addTarget:self
-    //                      action:@selector(deleteAccount:)
-    //            forControlEvents:UIControlEventTouchUpInside];
-    // 
-    //     self.tableView.tableFooterView = deleteButton;
-    //     [deleteButton release];
-    // } else
-    //     self.tableView.tableFooterView = nil;
+    usernameTextField.text = self.username;
+    apiKeyTextField.text = self.apiKey;
+
+    saveButton.enabled = self.username.length > 0 && self.apiKey.length > 0;
+    if (self.editingExistingAccount) {
+        NSString * title = LS(@"bitlyloginview.deleteaccount.button.title");
+        UIButton * deleteButton = [UIButton deleteButtonWithTitle:title];
+        [deleteButton addTarget:self
+                         action:@selector(deleteAccount:)
+               forControlEvents:UIControlEventTouchUpInside];
+        self.tableView.tableFooterView = deleteButton;
+        [deleteButton release];  // delete button is returned with retain count
+                                 // of 1 (should be autoreleased)
+    } else
+        self.tableView.tableFooterView = nil;
 }
 
 - (void)deleteAccount:(id)sender
 {
-    NSString * title =
-        NSLocalizedString(@"bitlyloginview.deleteaccount.confirm.title", @"");
+    NSString * title = nil;
     NSString * cancelButtonTitle =
-        NSLocalizedString(@"bitlyloginview.deleteaccount.confirm.cancel", @"");
+        LS(@"bitlyloginview.deleteaccount.confirm.cancel");
     NSString * destructiveButtonTitle =
-        NSLocalizedString(@"bitlyloginview.deleteaccount.confirm.delete", @"");
+        LS(@"bitlyloginview.deleteaccount.confirm.delete");
 
     // released in the delegate method
     UIActionSheet * sheet =
@@ -232,60 +197,12 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet
     clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    // if (buttonIndex == 0) {
-    //     NSLog(@"Deleting Bitly account: %@.", self.credentials.username);
-    //     [self.delegate deleteAccount:credentials];
-    // }
-    // 
-    // [actionSheet autorelease];
-}
-
-#pragma mark Accessors
-
-// - (void)setCredentials:(InstapaperCredentials *)someCredentials
-// {
-//     if (credentials != someCredentials) {
-//         [credentials release];
-//         credentials = [someCredentials retain];
-// 
-//         [self syncInterfaceToState];
-//     }
-// }
-
-- (UIBarButtonItem *)activityButton
-{
-    if (!activityButton) {
-        NSString * backgroundImageFilename =
-            [SettingsReader displayTheme] == kDisplayThemeDark ?
-            @"NavigationButtonBackgroundDarkTheme.png" :
-            @"NavigationButtonBackground.png";
-        UIView * view =
-            [[UIImageView alloc]
-            initWithImage:[UIImage imageNamed:backgroundImageFilename]];
-        UIActivityIndicatorView * activityView =
-            [[[UIActivityIndicatorView alloc]
-            initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
-            autorelease];
-        activityView.frame = CGRectMake(7, 5, 20, 20);
-        [view addSubview:activityView];
-
-        activityButton =
-            [[UIBarButtonItem alloc] initWithCustomView:view];
-
-        [activityView startAnimating];
-
-        [view release];
+    if (buttonIndex == 0) {
+        NSLog(@"Deleting Bitly account: %@.", self.username);
+       [self.delegate deleteAccount:self.username];
     }
 
-    return activityButton;
-}
-
-- (void)setEditingExistingAccount:(BOOL)editing
-{
-    if (editing != editingExistingAccount) {
-        editingExistingAccount = editing;
-        [self syncInterfaceToState];
-    }
+    [actionSheet autorelease];
 }
 
 @end

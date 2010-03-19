@@ -4,18 +4,11 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
-    BitlyLogInViewControllerDisplayModeCreateAccount,
-    BitlyLogInViewControllerDisplayModeEditAccount
-} BitlyLogInViewControllerDisplayMode;
-
 @protocol BitlyLogInViewControllerDelegate
-
-- (void)userDidSave:(NSString *)username password:(NSString *)password;
+- (void)userDidSave:(NSString *)username apiKey:(NSString *)apiKey;
 - (void)userDidCancel;
 
-//- (void)deleteAccount:(BitlyCredentials *)credentials;
-
+- (void)deleteAccount:(NSString *)username;
 @end
 
 @interface BitlyLogInViewController :
@@ -23,37 +16,30 @@ typedef enum {
 {
     id<BitlyLogInViewControllerDelegate> delegate;
 
+    NSString * username;
+    NSString * apiKey;
+
     IBOutlet UIBarButtonItem * saveButton;
     IBOutlet UIBarButtonItem * cancelButton;
-    UIBarButtonItem * activityButton;
 
     IBOutlet UITableViewCell * usernameCell;
-    IBOutlet UITableViewCell * passwordCell;
+    IBOutlet UITableViewCell * apiKeyCell;
 
     IBOutlet UITextField * usernameTextField;
-    IBOutlet UITextField * passwordTextField;
+    IBOutlet UITextField * apiKeyTextField;
 
-//    BitlyCredentials * credentials;
+    //BitlyLogInViewControllerDisplayMode displayMode;
 
-    BitlyLogInViewControllerDisplayMode displayMode;
-
-    BOOL displayingActivity;
+    //BOOL displayingActivity;
     BOOL editingExistingAccount;
 }
 
 @property (nonatomic, assign) id<BitlyLogInViewControllerDelegate> delegate;
-//@property (nonatomic, retain) BitlyCredentials * credentials;
-@property (nonatomic, assign) BitlyLogInViewControllerDisplayMode displayMode;
-
-@property (nonatomic, assign, readonly) BOOL displayingActivity;
 @property (nonatomic, assign) BOOL editingExistingAccount;
 
-- (id)initWithDelegate:(id<BitlyLogInViewControllerDelegate>)aDelegate;
+//@property (nonatomic, assign) BOOL editingExistingAccount;
 
-#pragma mark Public interface
-
-- (void)displayActivity;
-- (void)hideActivity;
+- (id)initWithUsername:(NSString *)username apiKey:(NSString *)apiKey;
 
 #pragma mark Button actions
 

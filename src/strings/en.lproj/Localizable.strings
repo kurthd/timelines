@@ -193,7 +193,7 @@ accountsettings.photo.compression.label = "Compression";
 accountsettings.integration.header = "Services";
 accountsettings.integration.instapaper.label = "Instapaper";
 accountsettings.integration.instapaper.notconfigured.label = "not configured";
-accountsettings.integration.bitly.label = "bit.ly";
+accountsettings.integration.bitly.label = "j.mp (bit.ly)";
 accountsettings.integration.bitly.notconfigured.label = "not configured";
 
 /* PhotoServicesViewController */
@@ -380,10 +380,10 @@ instapaperloginview.deleteaccount.confirm.cancel = "Cancel";
 instapaperloginview.deleteaccount.confirm.delete = "Delete Account";
 
 /* BitlyLogInView */
-bitlyloginview.title = "bit.ly";
-bitlyloginview.footer = "bit.ly is a free service that shortens long links.\nIf you would like to track links shortened in Twitbit, provide your bit.ly credentials above. Get an account at bit.ly.";
+bitlyloginview.title = "j.mp";
+bitlyloginview.footer = "j.mp is a free service that shortens long links.\nIf you would like to track links shortened in Twitbit, provide your j.mp credentials above.";
 bitlyloginview.deleteaccount.button.title = "Delete Account";
-bitlyloginview.deleteaccount.confirm.title = "Are you sure you want to delete your bit.ly account?";
+bitlyloginview.deleteaccount.confirm.title = "Are you sure you want to delete your j.mp account?";
 bitlyloginview.deleteaccount.confirm.cancel = "Cancel";
 bitlyloginview.deleteaccount.confirm.delete = "Delete Account";
 

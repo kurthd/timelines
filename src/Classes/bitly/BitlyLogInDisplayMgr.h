@@ -35,12 +35,12 @@
 
 @protocol BitlyLogInDisplayMgrDelegate
 
-// - (void)accountCreated:(BitlyCredentials *)credentials;
-// - (void)accountCreationCancelled;
-// 
-// - (void)accountEdited:(BitlyCredentials *)credentials;
-// - (void)editingAccountCancelled:(BitlyCredentials *)credentials;
-// 
-// - (void)accountWillBeDeleted:(BitlyCredentials *)credentials;
+- (void)accountCreated:(BitlyCredentials *)credentials;
+- (void)accountCreationCancelled;
+
+- (void)accountEdited:(BitlyCredentials *)credentials;
+- (void)editingAccountCancelled:(BitlyCredentials *)credentials;
+
+- (void)accountWillBeDeleted:(BitlyCredentials *)credentials;
 
 @end

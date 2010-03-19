@@ -211,9 +211,7 @@
 
 - (void)deleteAccount:(id)sender
 {
-    NSString * title =
-        NSLocalizedString(@"instapaperloginview.deleteaccount.confirm.title",
-        @"");
+    NSString * title = nil;
     NSString * cancelButtonTitle =
         NSLocalizedString(@"instapaperloginview.deleteaccount.confirm.cancel",
         @"");
