@@ -24,6 +24,7 @@
 - (id)init;
 - (id)initWithDelegate:(id<BitlyUrlShorteningServiceDelegate>)aDelegate;
 
+- (void)setUsername:(NSString *)username apiKey:(NSString *)apiKey;
 - (void)shortenUrl:(NSString *)url;
 
 @end

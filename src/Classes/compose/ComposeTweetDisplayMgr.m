@@ -4,6 +4,7 @@
 
 #import "ComposeTweetDisplayMgr.h"
 #import "TwitbitShared.h"
+#import "BitlyCredentials.h"
 #import <MobileCoreServices/MobileCoreServices.h>  // for kUTTypeMovie
 
 @interface ComposeTweetDisplayMgr ()
@@ -1333,6 +1334,10 @@
     if (!urlShorteningService) {
         urlShorteningService = [[BitlyUrlShorteningService alloc] init];
         urlShorteningService.delegate = self;
+
+        BitlyCredentials * bc = self.service.credentials.bitlyCredentials;
+        if (bc)
+            [urlShorteningService setUsername:bc.username apiKey:bc.apiKey];
     }
 
     return urlShorteningService;

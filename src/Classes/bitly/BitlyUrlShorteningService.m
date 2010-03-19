@@ -50,15 +50,17 @@
 
         self.version =
             [[InfoPlistConfigReader reader] valueForKey:@"BitlyVersion"];
-        self.username =
-            [[InfoPlistConfigReader reader] valueForKey:@"BitlyUsername"];
-        self.apiKey =
-            [[InfoPlistConfigReader reader] valueForKey:@"BitlyApiKey"];
 
         self.requests = [NSMutableDictionary dictionary];
     }
 
     return self;
+}
+
+- (void)setUsername:(NSString *)aUsername apiKey:(NSString *)anApiKey
+{
+    self.username = aUsername;
+    self.apiKey = anApiKey;
 }
 
 - (void)shortenUrl:(NSString *)url
@@ -68,10 +70,13 @@
     NSString * encodedUrl =
         [url urlEncodedStringWithEscapedAllowedCharacters:allowed];
 
-    NSString * urlAsString =
-        [NSString stringWithFormat:
-        @"http://api.j.mp/shorten?version=%@&longUrl=%@&login=%@&apiKey=%@",
-        version, encodedUrl, username, apiKey];
+    NSMutableString * urlAsString =
+        [NSMutableString stringWithFormat:
+        @"http://api.j.mp/shorten?version=%@&longUrl=%@", version, encodedUrl];
+    if (self.username && self.apiKey)
+        [urlAsString appendFormat:@"&login=%@&apiKey=%@", self.username,
+            self.apiKey];
+
     NSLog(@"Link shortening request: %@", urlAsString);
 
     NSURL * theUrl = [NSURL URLWithString:urlAsString];
