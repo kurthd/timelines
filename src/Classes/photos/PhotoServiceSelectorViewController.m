@@ -5,48 +5,28 @@
 #import "PhotoServiceSelectorViewController.h"
 #import "TwitbitShared.h"
 
-static const NSInteger NUM_SECTIONS = 2;
-enum {
-    kFreePhotoServicesSection,
-    kPremiumPhotoServicesSection
-};
+static const NSInteger NUM_SECTIONS = 1;
 
 @interface PhotoServiceSelectorViewController ()
 
 @property (nonatomic, retain) UIBarButtonItem * cancelButton;
 
-/*
-@property (nonatomic, copy) NSArray * names;
-@property (nonatomic, copy) NSArray * logos;
-*/
+@property (nonatomic, copy) NSDictionary * services;
 
-@property (nonatomic, copy) NSDictionary * freePhotoServices;
-@property (nonatomic, copy) NSDictionary * premiumPhotoServices;
-
-- (NSInteger)effectiveSection:(NSInteger)section;
-- (NSDictionary *)servicesInSection:(NSInteger)section;
 - (NSArray *)arrangedServiceNames:(NSDictionary *)services;
 
 @end
 
 @implementation PhotoServiceSelectorViewController
 
-@synthesize delegate, cancelButton, /*names, logos,*/ allowCancel;
-@synthesize freePhotoServices, premiumPhotoServices;
+@synthesize delegate, cancelButton, allowCancel, services;
 
 - (void)dealloc
 {
     self.delegate = nil;
 
     self.cancelButton = nil;
-
-    /*
-    self.names = nil;
-    self.logos = nil;
-    */
-
-    self.freePhotoServices = nil;
-    self.premiumPhotoServices = nil;
+    self.services = nil;
 
     [super dealloc];
 }
@@ -66,12 +46,15 @@ enum {
     [super viewWillAppear:animated];
 
     self.navigationItem.leftBarButtonItem =
-        self.allowCancel?
+        self.allowCancel ?
         self.cancelButton :
         nil;
 
-    self.freePhotoServices = [self.delegate freePhotoServices];
-    self.premiumPhotoServices = [self.delegate premiumPhotoServices];
+    NSMutableDictionary * allServices =
+        [[self.delegate freePhotoServices] mutableCopy];
+    [allServices addEntriesFromDictionary:[self.delegate premiumPhotoServices]];
+    self.services = allServices;
+    [allServices release];
 
     [self.tableView reloadData];
 }
@@ -92,34 +75,13 @@ enum {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tv
 {
-    NSInteger count = 0;
-    for (NSInteger i = 0; i < NUM_SECTIONS; ++i)
-        if ([self servicesInSection:i].count > 0)
-            ++count;
-
-    return count;
-}
-
-- (NSString *)tableView:(UITableView *)tableView
-    titleForHeaderInSection:(NSInteger)section
-{
-    section = [self effectiveSection:section];
-
-    switch (section) {
-        case kFreePhotoServicesSection:
-            return LS(@"photoserviceselector.section.free.title");
-        case kPremiumPhotoServicesSection:
-            return LS(@"photoserviceselector.section.premium.title");
-        default:
-            return nil;
-    }
+    return NUM_SECTIONS;
 }
 
 - (NSInteger)tableView:(UITableView *)tv
  numberOfRowsInSection:(NSInteger)section
 {
-    section = [self effectiveSection:section];
-    return [self servicesInSection:section].count;
+    return self.services.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tv
@@ -143,14 +105,10 @@ enum {
             reuseIdentifier:CellIdentifier]
             autorelease];
 
-    NSInteger section = [self effectiveSection:indexPath.section];
-    NSDictionary * services = [self servicesInSection:section];
-    NSArray * serviceNames = [self arrangedServiceNames:services];
+    NSArray * serviceNames = [self arrangedServiceNames:self.services];
     NSString * serviceName = [serviceNames objectAtIndex:indexPath.row];
+
     UIImage * logo = [services objectForKey:serviceName];
-
-    //UIImage * logo = [self.logos objectAtIndex:indexPath.row];
-
     UIImageView * logoView = [[UIImageView alloc] initWithImage:logo];
 
     NSArray * subviews = cell.contentView.subviews;
@@ -180,9 +138,7 @@ enum {
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger section = [self effectiveSection:indexPath.section];
-    NSDictionary * services = [self servicesInSection:section];
-    NSArray * serviceNames = [self arrangedServiceNames:services];
+    NSArray * serviceNames = [self arrangedServiceNames:self.services];
     NSString * serviceName = [serviceNames objectAtIndex:indexPath.row];
 
     [self.delegate userSelectedServiceNamed:serviceName];
@@ -197,31 +153,9 @@ enum {
 
 #pragma mark Private implementation
 
-- (NSInteger)effectiveSection:(NSInteger)section
+- (NSArray *)arrangedServiceNames:(NSDictionary *)svcs
 {
-    NSInteger effectiveSection = section;
-
-    if ([self servicesInSection:kFreePhotoServicesSection].count == 0)
-        effectiveSection += 1;
-
-    return effectiveSection;
-}
-
-- (NSDictionary *)servicesInSection:(NSInteger)section
-{
-    switch (section) {
-        case kFreePhotoServicesSection:
-            return self.freePhotoServices;
-        case kPremiumPhotoServicesSection:
-            return self.premiumPhotoServices;
-        default:
-            return nil;
-    }
-}
-
-- (NSArray *)arrangedServiceNames:(NSDictionary *)services
-{
-    return [services.allKeys sortedArrayUsingSelector:@selector(compare:)];
+    return [svcs.allKeys sortedArrayUsingSelector:@selector(compare:)];
 }
 
 @end

@@ -12,13 +12,7 @@
 
     IBOutlet UIBarButtonItem * cancelButton;
 
-    /*
-    NSArray * names;
-    NSArray * logos;
-    */
-
-    NSDictionary * freePhotoServices;
-    NSDictionary * premiumPhotoServices;
+    NSDictionary * services;
 
     BOOL allowCancel;
 }

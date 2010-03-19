@@ -274,8 +274,6 @@ photoserviceview.service.notselected = "None";
 
 /* PhotoServiceSelectorView */
 photoserviceselector.view.title = "Select a Service";
-photoserviceselector.section.free.title = "Free Services";
-photoserviceselector.section.premium.title = "Premium Services";
 
 /* YfrogLogInView */
 yfrogloginview.view.title = "Log In to Yfrog";

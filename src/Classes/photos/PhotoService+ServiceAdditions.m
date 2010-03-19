@@ -21,35 +21,18 @@
 
 + (NSDictionary *)premiumPhotoServiceNamesAndLogos
 {
-    return
-        [NSDictionary dictionaryWithObjectsAndKeys:
-            [UIImage imageNamed:@"FlickrLogo.png"], @"Flickr",
-            [UIImage imageNamed:@"PicasaLogo.png"], @"Picasa",
-            [UIImage imageNamed:@"PosterousLogo.png"], @"Posterous",
-            nil];
-}
-
-+ (NSDictionary *)photoServiceNamesAndLogos
-{
     //
     // This is where we restrict the set of photo services available in the
     // free version.
     //
 
     if ([[UIApplication sharedApplication] isLiteVersion])
-        return
-            [NSDictionary dictionaryWithObjectsAndKeys:
-            [UIImage imageNamed:@"TwitPicLogo.png"], @"TwitPic",
-            [UIImage imageNamed:@"YfrogLogo.png"], @"Yfrog",
-            [UIImage imageNamed:@"TwitVidLogo.png"], @"TwitVid",
-            nil];
+        return nil;
     else
-        return
-            [NSDictionary dictionaryWithObjectsAndKeys:
+        return [NSDictionary dictionaryWithObjectsAndKeys:
             [UIImage imageNamed:@"FlickrLogo.png"], @"Flickr",
-            [UIImage imageNamed:@"TwitPicLogo.png"], @"TwitPic",
-            [UIImage imageNamed:@"YfrogLogo.png"], @"Yfrog",
-            [UIImage imageNamed:@"TwitVidLogo.png"], @"TwitVid",
+            [UIImage imageNamed:@"PicasaLogo.png"], @"Picasa",
+            [UIImage imageNamed:@"PosterousLogo.png"], @"Posterous",
             nil];
 }
 
