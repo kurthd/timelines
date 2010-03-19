@@ -30,7 +30,7 @@
 
 - (BOOL)supportsVideo
 {
-    return NO;
+    return YES;
 }
 
 @end
