@@ -143,9 +143,9 @@ enum {
     section = [self effectiveSectionForSection:section];
 
     if (section == kPushNotificationSection)
-        title = NSLocalizedString(@"accountsettings.push.header", @"");
+        title = LS(@"accountsettings.push.header");
     else if (section == kIntegrationSection)
-        title = NSLocalizedString(@"accountsettings.integration.header", @"");
+        title = LS(@"accountsettings.integration.header");
 
     return title;
 }
@@ -158,8 +158,11 @@ enum {
 
     if (section == kPushNotificationSection)
         nrows = NUM_PUSH_NOTIFICATION_ROWS;
-    else if (section == kIntegrationSection)
+    else if (section == kIntegrationSection) {
         nrows = NUM_INTEGRATION_ROWS;
+        if ([[UIApplication sharedApplication] isLiteVersion])
+            --nrows;
+    }
 
     return nrows;
 }
@@ -184,9 +187,7 @@ enum {
                 reuseIdentifier:CellIdentifier]
                 autorelease];
 
-
-        cell.textLabel.text =
-            NSLocalizedString(@"accountsettings.photo.integration.label", @"");
+        cell.textLabel.text = LS(@"accountsettings.photo.integration.label");
 
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -204,17 +205,14 @@ enum {
                 autorelease];
 
         cell.textLabel.text =
-            NSLocalizedString(
-            @"accountsettings.integration.instapaper.label", @"");
+            LS(@"accountsettings.integration.instapaper.label");
 
         InstapaperCredentials * ic =
             self.credentials.instapaperCredentials;
         cell.detailTextLabel.text =
             ic ?
             ic.username :
-            NSLocalizedString(
-            @"accountsettings.integration.instapaper.notconfigured.label",
-            @"");
+            LS(@"accountsettings.integration.instapaper.notconfigured.label");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else if (section == kIntegrationSection && indexPath.row == kJmpRow) {
         static NSString * CellIdentifier =
