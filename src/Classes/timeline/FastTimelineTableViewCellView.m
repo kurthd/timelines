@@ -419,8 +419,11 @@ static UIImage * highlightedRetweetGlyph;
     CGRect avatarRect =
         CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN, AVATAR_WIDTH,
         AVATAR_HEIGHT);
-    [avatar drawInRect:avatarRect
-        withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
+    if ([SettingsReader displayTheme] == kDisplayThemePlain)
+        [avatar drawInRect:avatarRect];
+    else
+        [avatar drawInRect:avatarRect
+            withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
 }
 
 - (void)drawRectInverted:(CGRect)rect
@@ -589,8 +592,12 @@ static UIImage * highlightedRetweetGlyph;
     CGRect avatarRect =
         CGRectMake(avatarLeftMargin, AVATAR_TOP_MARGIN, AVATAR_WIDTH,
         AVATAR_HEIGHT);
-    [avatar drawInRect:avatarRect
-        withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
+    
+    if ([SettingsReader displayTheme] == kDisplayThemePlain)
+        [avatar drawInRect:avatarRect];
+    else
+        [avatar drawInRect:avatarRect
+            withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
 }
 
 - (void)drawRectNoAvatar:(CGRect)rect
@@ -835,8 +842,12 @@ static UIImage * highlightedRetweetGlyph;
     CGRect avatarRect =
         CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN, AVATAR_WIDTH,
         AVATAR_HEIGHT);
-    [avatar drawInRect:avatarRect
-        withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
+    
+    if ([SettingsReader displayTheme] == kDisplayThemePlain)
+        [avatar drawInRect:avatarRect];
+    else
+        [avatar drawInRect:avatarRect
+            withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
 }
 
 #pragma mark Accessors
@@ -1015,40 +1026,46 @@ static UIImage * highlightedRetweetGlyph;
 - (void)drawHighlightedAvatarBorderWithTopMargin:(NSInteger)topMargin
     leftMargin:(NSInteger)leftMargin
 {
-    CGFloat roundedCornerWidth = AVATAR_ROUNDED_CORNER_RADIUS * 2 + 1;
-    CGFloat roundedCornerHeight = AVATAR_ROUNDED_CORNER_RADIUS * 2 + 1;
-
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     CGContextSetFillColorWithColor(context, [[UIColor whiteColor] CGColor]);
 
-    CGContextFillRect(context,
-        CGRectMake(AVATAR_ROUNDED_CORNER_RADIUS + leftMargin, topMargin,
-        AVATAR_WIDTH + 2 - roundedCornerWidth, AVATAR_HEIGHT + 2));
+    if ([SettingsReader displayTheme] == kDisplayThemePlain) {
+        CGContextFillRect(context,
+            CGRectMake(
+            leftMargin, topMargin, AVATAR_WIDTH + 2, AVATAR_HEIGHT + 2));
+    } else {
+        CGFloat roundedCornerWidth = AVATAR_ROUNDED_CORNER_RADIUS * 2 + 1;
+        CGFloat roundedCornerHeight = AVATAR_ROUNDED_CORNER_RADIUS * 2 + 1;
+        
+        CGContextFillRect(context,
+            CGRectMake(AVATAR_ROUNDED_CORNER_RADIUS + leftMargin, topMargin,
+            AVATAR_WIDTH + 2 - roundedCornerWidth, AVATAR_HEIGHT + 2));
 
-    // Draw rounded corners
-    CGContextFillEllipseInRect(context,
-        CGRectMake(leftMargin, topMargin, roundedCornerWidth,
-        roundedCornerHeight));
-    CGContextFillEllipseInRect(context,
-        CGRectMake(leftMargin,
-        AVATAR_HEIGHT + 2 + topMargin - roundedCornerHeight,
-        roundedCornerWidth, roundedCornerHeight));
-    CGContextFillRect(context,
-        CGRectMake(leftMargin, topMargin + 1 + roundedCornerHeight / 2,
-        roundedCornerWidth, AVATAR_HEIGHT  + 1 - roundedCornerHeight));
+        // Draw rounded corners
+        CGContextFillEllipseInRect(context,
+            CGRectMake(leftMargin, topMargin, roundedCornerWidth,
+            roundedCornerHeight));
+        CGContextFillEllipseInRect(context,
+            CGRectMake(leftMargin,
+            AVATAR_HEIGHT + 2 + topMargin - roundedCornerHeight,
+            roundedCornerWidth, roundedCornerHeight));
+        CGContextFillRect(context,
+            CGRectMake(leftMargin, topMargin + 1 + roundedCornerHeight / 2,
+            roundedCornerWidth, AVATAR_HEIGHT  + 1 - roundedCornerHeight));
 
-    CGContextFillEllipseInRect(context,
-        CGRectMake(leftMargin + 2 + AVATAR_WIDTH - roundedCornerWidth,
-        topMargin, roundedCornerWidth, roundedCornerHeight));
-    CGContextFillEllipseInRect(context,
-        CGRectMake(leftMargin + 2 + AVATAR_WIDTH - roundedCornerWidth,
-        AVATAR_HEIGHT + 2 + topMargin - roundedCornerHeight, roundedCornerWidth,
-        roundedCornerHeight));
-    CGContextFillRect(context,
-        CGRectMake(leftMargin + 2 + AVATAR_WIDTH - roundedCornerWidth,
-        topMargin + 1 + roundedCornerHeight / 2, roundedCornerWidth,
-        AVATAR_HEIGHT - roundedCornerHeight));
+        CGContextFillEllipseInRect(context,
+            CGRectMake(leftMargin + 2 + AVATAR_WIDTH - roundedCornerWidth,
+            topMargin, roundedCornerWidth, roundedCornerHeight));
+        CGContextFillEllipseInRect(context,
+            CGRectMake(leftMargin + 2 + AVATAR_WIDTH - roundedCornerWidth,
+            AVATAR_HEIGHT + 2 + topMargin - roundedCornerHeight,
+            roundedCornerWidth, roundedCornerHeight));
+        CGContextFillRect(context,
+            CGRectMake(leftMargin + 2 + AVATAR_WIDTH - roundedCornerWidth,
+            topMargin + 1 + roundedCornerHeight / 2, roundedCornerWidth,
+            AVATAR_HEIGHT - roundedCornerHeight));
+    }
 }
 
 - (void)drawBackground
