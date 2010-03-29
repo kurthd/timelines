@@ -325,22 +325,45 @@ enum {
     NSString * urlKey = UIApplicationLaunchOptionsURLKey;
     NSURL * url = [options objectForKey:urlKey];
     NSString * username = nil;
+    NSString * messageText = nil;
     if (url) {
         NSString * urlString = [url absoluteString];
         NSArray * urlArray = [urlString componentsSeparatedByString:@"//"];
-        username = [urlArray count] > 1 ? [urlArray objectAtIndex:1] : nil;
-        if (username)
-            showHomeTab = YES;
+        NSString * domain =
+            [urlArray count] > 1 ? [urlArray objectAtIndex:1] : nil;
+        if (domain) {
+            NSArray * domainArray =
+                [domain componentsSeparatedByString:@"action.compose"];
+            if (domainArray.count == 1) { // interpret as username
+                username = domain;
+                if (username)
+                    showHomeTab = YES;
+            } else { // interpret as action
+                NSArray * domainArgArray =
+                    [domain componentsSeparatedByString:@"?body="];
+                if (domainArgArray.count == 1)
+                    messageText = @"";
+                else {
+                    NSString * encodedBody = [domainArgArray objectAtIndex:1];
+                    messageText =
+                        [encodedBody
+                        stringByReplacingPercentEscapesUsingEncoding:
+                        NSASCIIStringEncoding];
+                }
+            }
+        }
     }
-
+    
     [self processApplicationLaunch:application
             withRemoteNotification:remoteNotification];
-
+    
     if (username) {
         [self loadContactCache];
         [timelineDisplayMgr showUserInfoForUsername:username];
-    }
-
+    } else if (messageText)
+        [self.composeTweetDisplayMgr composeTweetWithText:messageText
+            animated:NO];
+    
     return YES;
 }
 
