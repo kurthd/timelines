@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>BitlyUsername</key>
-	<string>twitbitapp</string>
+	<string>twitbitappdefault</string>
 	<key>BitlyApiKey</key>
-	<string>R_2fabc643b863319ee6d61261d4452171</string>
+	<string>R_f20d3efb2ca10bc77c4ed9f0bbe649a2</string>
 	<key>BitlyVersion</key>
 	<string>2.0.1</string>
 	<key>CFBundleDevelopmentRegion</key>
