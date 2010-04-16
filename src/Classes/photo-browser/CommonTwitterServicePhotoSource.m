@@ -106,14 +106,15 @@
     NSInteger capture = 0;
 
     if ([url isMatchedByRegex:@"^http://twitpic.com/"]) {
+        NSLog(@"Matching twitpic");
+        NSLog(@"HTML: %@", html);
         // extract the 'src' attribute from the main img tag:
-        //   <img id="photo-display"
-        //        class="photo-large"
-        //        src="http://web2.twitpic.com/..."
-        //        alt="my twitpic">
+        // <img class="photo"
+        //      id="photo-display"
+        //      src="http://s3.amazonaws.com/twitpic/photos/large/...">
         regex =
-            @"<img id=\"photo-display\"\\s+"
-                   "class=\"photo-large\"\\s+"
+            @"<img class=\"photo\"\\s+"
+                   "id=\"photo-display\"\\s+"
                    "src=\"(.*?)\".*?>";
         capture = 1;
     } else if ([url isMatchedByRegex:@"^http://.*\\.?yfrog.com/"]) {
