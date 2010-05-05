@@ -8,7 +8,6 @@
 #import "User+UIAdditions.h"
 #import "PhotoBrowserDisplayMgr.h"
 #import "RegexKitLite.h"
-#import "RotatableTabBarController.h"
 #import "NSArray+IterationAdditions.h"
 #import "SettingsReader.h"
 #import "FastTimelineTableViewCell.h"
@@ -62,7 +61,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
 @synthesize delegate, sortedTweetCache, invertedCellUsernames,
     showWithoutAvatars, mentionUsername, mentionString, visibleTweetId,
-    flashingScrollIndicators, filteredTweets, searchBar;
+    flashingScrollIndicators, filteredTweets;
 
 - (void)dealloc
 {
@@ -106,14 +105,13 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
     // this ensures that any header set before the view is showed scales
     // correctly when changing orientation
-    self.view.frame =
-        [[RotatableTabBarController instance] landscape] ?
-        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+    self.view.frame = CGRectMake(0, 0, 320, 416);
 
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
-        plainHeaderView.backgroundColor = [UIColor twitchDarkGrayColor];
-        plainHeaderViewLine.backgroundColor = [UIColor twitchDarkDarkGrayColor];
-        footerView.backgroundColor = [UIColor twitchDarkGrayColor];
+        plainHeaderView.backgroundColor = [UIColor defaultDarkThemeCellColor];
+        plainHeaderViewLine.backgroundColor =
+            [UIColor colorWithRed:.373 green:.373 blue:.373 alpha:1];
+        footerView.backgroundColor = [UIColor defaultDarkThemeCellColor];
         self.tableView.backgroundColor = [UIColor twitchDarkGrayColor];
         currentPagesLabel.textColor = [UIColor twitchLightLightGrayColor];
         noMorePagesLabel.textColor = [UIColor twitchLightGrayColor];
@@ -129,10 +127,10 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 
         numUpdatesLabel.textColor = [UIColor lightGrayColor];
         numUpdatesLabel.shadowColor = [UIColor blackColor];
-
-        searchBar.tintColor = [UIColor twitchDarkDarkGrayColor];
     }
-
+    
+    self.tableView.tableHeaderView = plainHeaderView;
+    self.tableView.contentInset = UIEdgeInsetsMake(-392, 0, -300, 0);
     self.tableView.tableFooterView = footerView;
     alreadySent = [[NSMutableDictionary dictionary] retain];
     showInbox = YES;
@@ -141,67 +139,13 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
-    self.view.frame =
-        landscape ? CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
-
-    UITableView * searchTableView =
-        self.searchDisplayController.searchResultsTableView;
-
-    if (lastShownLandscapeValue != landscape) {
-        [self.tableView reloadData];
-        [searchTableView reloadData];
-    }
-
     [self setScrollIndicatorBlackoutTimer];
-
-    [searchTableView
-        deselectRowAtIndexPath:searchTableView.indexPathForSelectedRow
-        animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     lastShownLandscapeValue = [[RotatableTabBarController instance] landscape];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)orientation
-{
-    return YES;
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
-    duration:(NSTimeInterval)duration
-{
-    [self.tableView reloadData];
-    [self.searchDisplayController.searchResultsTableView reloadData];
-}
-
-#pragma mark UISearchDisplayControllerDelegate implementation
-
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller
-    shouldReloadTableForSearchString:(NSString *)searchString
-{
-    // Not sure why, but this needs to be set every time results are shown
-    UITableView * searchTableView =
-        self.searchDisplayController.searchResultsTableView;
-    searchTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    if ([SettingsReader displayTheme] == kDisplayThemeDark)
-        searchTableView.backgroundColor = [UIColor twitchDarkDarkGrayColor];
-    else
-        searchTableView.backgroundColor = [UIColor twitchLightLightGrayColor];
-
-    NSPredicate * predicate =
-        [NSPredicate predicateWithFormat:
-        @"SELF.text contains[cd] %@ OR SELF.user.username contains[cd] %@ OR SELF.user.name contains[cd] %@",
-        searchString, searchString, searchString];
-    self.filteredTweets =
-        [[self sortedTweets] filteredArrayUsingPredicate:predicate];
-
-    return YES;
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -289,6 +233,13 @@ static BOOL alreadyReadHighlightNewTweetsValue;
         [FastTimelineTableViewCell
         heightForContent:tweetText retweet:!!tweet.retweet
         displayType:displayType landscape:landscape];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.y ==
+        self.tableView.tableHeaderView.frame.size.height)
+        [delegate userViewedNewestTweets];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation
@@ -796,8 +747,6 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     FastTimelineTableViewCellDisplayType displayType;
     if (showWithoutAvatars)
         displayType = FastTimelineTableViewCellDisplayTypeNoAvatar;
-    else if ([invertedCellUsernames containsObject:displayTweet.user.username])
-        displayType = FastTimelineTableViewCellDisplayTypeInverted;
     else
         displayType = FastTimelineTableViewCellDisplayTypeNormal;
     [cell setDisplayType:displayType];
@@ -805,7 +754,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
     [cell setTweetText:[displayTweet htmlDecodedText]];
     [cell setAuthor:[displayTweet displayName]];
     [cell setTimestamp:[displayTweet.timestamp tableViewCellDescription]];
-    [cell setFavorite:[displayTweet.favorited boolValue]];
+    [cell setFavorite:NO];
     [cell setGeocoded:!!displayTweet.location];
 
     [cell setAvatar:[self getThumbnailAvatarForUser:displayTweet.user]];

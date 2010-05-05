@@ -11,7 +11,6 @@
 #import "User+UIAdditions.h"
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "PhotoBrowserDisplayMgr.h"
-#import "RotatableTabBarController.h"
 #import "Tweet+GeneralHelpers.h"
 #import "TweetLocation+GeneralHelpers.h"
 #import "SettingsReader.h"
@@ -22,7 +21,6 @@ static NSString * usernameRegex = @"x-twitbit://user\\?screen_name=@([\\w_]+)";
 static NSString * hashRegex = @"x-twitbit://search\\?query=(.+)";
 
 const CGFloat WEB_VIEW_WIDTH = 290;
-const CGFloat WEB_VIEW_WIDTH_LANDSCAPE = 450;
 
 static const NSInteger NUM_SECTIONS = 2;
 enum Sections {
@@ -82,8 +80,6 @@ enum TweetActionSheets {
 - (NSInteger)sectionForActualSection:(NSInteger)section;
 
 - (void)confirmDeletion;
-
-- (void)updateButtonsForOrientation:(UIInterfaceOrientation)o;
 
 - (Tweet *)displayTweet;
 
@@ -194,62 +190,13 @@ enum TweetActionSheets {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
-    self.view.frame =
-        landscape ? CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
-
     [delegate showingTweetDetails:self];
-    
-    UIInterfaceOrientation orientation =
-        [[RotatableTabBarController instance] interfaceOrientation];
-    [self updateButtonsForOrientation:orientation];
-
-    if (lastDisplayedInLandscape != landscape)
-        [self loadTweetWebView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     dismissedView = YES;
-    lastDisplayedInLandscape = [[RotatableTabBarController instance] landscape];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)orientation
-{
-    return YES;
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
-    duration:(NSTimeInterval)duration
-{
-    [self updateButtonsForOrientation:o];
-    [self loadTweetWebView];
-}
-
-- (void)updateButtonsForOrientation:(UIInterfaceOrientation)o
-{
-    CGFloat buttonWidth;
-    CGFloat emailButtonX;
-    if (o == UIInterfaceOrientationPortrait ||
-        o == UIInterfaceOrientationPortraitUpsideDown) {
-        buttonWidth = 147;
-        emailButtonX = 164;
-    } else {
-        buttonWidth = 227;
-        emailButtonX = 244;
-    }
-
-    CGRect openInBrowserButtonFrame = openInBrowserButton.frame;
-    openInBrowserButtonFrame.size.width = buttonWidth;
-    openInBrowserButton.frame = openInBrowserButtonFrame;
-
-    CGRect emailButtonFrame = emailButton.frame;
-    emailButtonFrame.size.width = buttonWidth;
-    emailButtonFrame.origin.x = emailButtonX;
-    emailButton.frame = emailButtonFrame;
 }
 
 #pragma mark Table view methods
@@ -324,8 +271,7 @@ enum TweetActionSheets {
                 [NSString stringWithFormat:formatString,
                 [self displayTweet].inReplyToTwitterUsername];
         } else if (transformedPath.row == kLocationRow) {
-            BOOL landscape = [[RotatableTabBarController instance] landscape];
-            [self.locationCell setLandscape:landscape];
+            [self.locationCell setLandscape:NO];
             cell = self.locationCell;
         } else if (transformedPath.row == kRetweetAuthorRow) {
             cell = self.retweetAuthorCell;
@@ -396,8 +342,7 @@ enum TweetActionSheets {
 - (void)webViewDidFinishLoad:(UIWebView *)view
 {
     // first shrink the frame so 'sizeThatFits' calculates properly
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
-    CGFloat width = !landscape ? WEB_VIEW_WIDTH : WEB_VIEW_WIDTH_LANDSCAPE;
+    CGFloat width = WEB_VIEW_WIDTH;
     CGRect frame = CGRectMake(5, 0, width, 31);
 
     tweetContentView.frame = frame;
@@ -798,8 +743,7 @@ enum TweetActionSheets {
 
 - (void)loadTweetWebView
 {
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
-    CGFloat width = !landscape ? WEB_VIEW_WIDTH : WEB_VIEW_WIDTH_LANDSCAPE;
+    CGFloat width = WEB_VIEW_WIDTH;
     CGRect frame = CGRectMake(5, 0, width, 1);
 
     UIWebView * contentView = [[UIWebView alloc] initWithFrame:frame];

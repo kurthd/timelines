@@ -247,7 +247,7 @@
     if (self.navigationController)
         [self.navigationController popViewControllerAnimated:YES];
     else
-        [self.logInViewController dismissModalViewControllerAnimated:YES];
+        [self.rootViewController dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark Accessoors
@@ -266,10 +266,12 @@
 
 - (UINavigationController *)logInNavController
 {
-    if (!logInNavController)
+    if (!logInNavController) {
         logInNavController = 
             [[UINavigationController alloc]
             initWithRootViewController:self.logInViewController];
+        logInNavController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    }
 
     return logInNavController;
 }

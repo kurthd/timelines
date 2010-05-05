@@ -25,6 +25,10 @@
     NSObject<TwitchBrowserViewControllerDelegate> * delegate;
 
     BOOL displayed;
+    
+    // This is set as soon as the interface starts to change, instead of after
+    // it finishes animating
+    UIInterfaceOrientation effectiveOrientation;
 }
 
 @property (nonatomic, copy) NSString * currentUrl;

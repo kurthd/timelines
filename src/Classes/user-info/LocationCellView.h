@@ -3,26 +3,19 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MapKit/MKMapView.h>
-#import "Geocoder.h"
-#import "GeocoderDelegate.h"
-#import "BasicMapAnnotation.h"
+#import "AsynchronousNetworkFetcherDelegate.h"
+#import "AsynchronousNetworkFetcher.h"
 
-@interface LocationCellView : UIView <GeocoderDelegate, MKMapViewDelegate>
+@interface LocationCellView : UIView <AsynchronousNetworkFetcherDelegate>
 {
     NSString * locationText;
-
     BOOL highlighted;
-    Geocoder * geocoder;
-    MKMapView * mapView;
+    UIImage * mapImage;
     UIActivityIndicatorView * activityIndicator;
     BOOL updatingMap;
-    BasicMapAnnotation * mapAnnotation;
     UIColor * textColor;
-
-    double mapSpan;
-
     BOOL landscape;
+    AsynchronousNetworkFetcher * impageUrlFetcher;
 }
 
 @property (nonatomic, copy) NSString * locationText;

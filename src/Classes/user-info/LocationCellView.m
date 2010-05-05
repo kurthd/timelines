@@ -8,15 +8,14 @@
 #import "UIColor+TwitchColors.h"
 #import "RegexKitLite.h"
 #import "SettingsReader.h"
+#import "AsynchronousNetworkFetcher.h"
+#import "RegexKitLite.h"
 
 @interface LocationCellView ()
 
-@property (nonatomic, retain) Geocoder * geocoder;
-@property (nonatomic, readonly) MKMapView * mapView;
 @property (nonatomic, readonly) UIActivityIndicatorView * activityIndicator;
-@property (nonatomic, readonly) BasicMapAnnotation * mapAnnotation;
-
-- (void)updateMapSpan;
+@property (nonatomic, retain) UIImage * mapImage;
+@property (nonatomic, retain) AsynchronousNetworkFetcher * impageUrlFetcher;
 
 + (NSString *)updateLabelText;
 
@@ -27,16 +26,15 @@
 #define MAP_WIDTH 86
 #define MAP_HEIGHT 48
 
-@synthesize locationText, highlighted, geocoder, landscape, textColor;
+@synthesize locationText, highlighted, landscape, textColor, mapImage,
+    impageUrlFetcher;
 
 - (void)dealloc
 {
     [locationText release];
-    [geocoder release];
-    [mapView release];
     [activityIndicator release];
-    [mapAnnotation release];
     [textColor release];
+    [impageUrlFetcher release];
     [super dealloc];
 }
 
@@ -149,51 +147,44 @@
         MAP_HEIGHT - roundedCornerHeight));
 
     if (!updatingMap) {
-        UIGraphicsBeginImageContext(self.mapView.bounds.size);
-        [self.mapView.layer renderInContext:UIGraphicsGetCurrentContext()];
-        UIImage * viewImage = UIGraphicsGetImageFromCurrentImageContext();
-        [viewImage retain]; // Hack: not sure why, but this needs to be retained
-        UIGraphicsEndImageContext();
-        
         CGRect mapViewRect =
             CGRectMake(TOP_MARGIN + 1, LEFT_MARGIN + 1, MAP_WIDTH, MAP_HEIGHT);
-        [viewImage drawInRect:mapViewRect
+        [mapImage drawInRect:mapViewRect
             withRoundedCornersWithRadius:ROUNDED_CORNER_RADIUS];
-
+        
         [self.activityIndicator stopAnimating];
     } else
         [self.activityIndicator startAnimating];
 }
 
-#pragma mark GeocoderDelegate implementation
+#pragma mark AsynchronousNetworkFetcherDelegate implementation
 
-- (void)geocoder:(Geocoder *)coder
-    didFindCoordinate:(CLLocationCoordinate2D)coordinate
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    didReceiveData:(NSData *)data fromUrl:(NSURL *)url
 {
-    NSLog(@"Setting map coordinates");
-    [self updateMapSpan];
+    if (fetcher == self.impageUrlFetcher) {
+        NSString * mapResponse =
+            [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSString * mapUrlString =
+            [mapResponse stringByMatching:@">(http://.*)<" capture:1];
+        if (mapUrlString) {
+            NSURL * mapUrl = [NSURL URLWithString:mapUrlString];
+            [AsynchronousNetworkFetcher fetcherWithUrl:mapUrl delegate:self];
+        } else {
+            updatingMap = NO;
+            [self setNeedsDisplay];
+        }
+    } else {
+        self.mapImage = [UIImage imageWithData:data];
+        updatingMap = NO;
+        [self setNeedsDisplay];
+    }
+}
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
+{
     updatingMap = NO;
-    [self.mapView setCenterCoordinate:coordinate animated:NO];
-    self.mapAnnotation.coordinate = coordinate;
-    // force map to display, otherwise it won't really update the center
-    [self setNeedsDisplay];
-}
-
-- (void)geocoder:(Geocoder *)coder didFailWithError:(NSError *)error
-{
-    [activityIndicator stopAnimating];
-}
-
-- (void)unableToFindCoordinatesWithGeocoder:(Geocoder *)coder
-{
-    [activityIndicator stopAnimating];    
-}
-
-#pragma mark MKMapViewDelegate implementation
-
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)aMapView
-{
-    NSLog(@"Finished loading map");
     [self setNeedsDisplay];
 }
 
@@ -205,58 +196,19 @@
     NSString * tempLocationText = [lt copy];
     [locationText release];
     locationText = tempLocationText;
-
-    static NSString * coordRegex =
-        @"[^[-\\d\\.]]*([-\\d\\.]+\\s*,\\s*[-\\d\\.]+)[^[-\\d\\.]]*";
-
-    BOOL streetLevel = [lt isMatchedByRegex:coordRegex];
-    mapSpan = streetLevel ? .002 : 7.5;
-
-    if (!streetLevel) {
-        [self.geocoder cancel];
-        self.geocoder = [[[Geocoder alloc] initWithQuery:lt] autorelease];
-        self.geocoder.delegate = self;
-        [self.geocoder start];
-        updatingMap = YES;
-    } else {
-        [self updateMapSpan];
-        NSString * coordinatesAsString =
-            [lt stringByMatching:coordRegex capture:1];
-        NSArray * components =
-            [coordinatesAsString componentsSeparatedByRegex:@"\\s*,\\s*"];
-        CLLocationCoordinate2D coord;
-        coord.latitude = [[components objectAtIndex:0] doubleValue];
-        coord.longitude = [[components objectAtIndex:1] doubleValue];
-
-        updatingMap = NO;
-        [self.mapView setCenterCoordinate:coord animated:NO];
-        self.mapAnnotation.coordinate = coord;
-    }
-
+    
+    updatingMap = YES;
+    NSString * locationSearchString =
+        [lt stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString * mapRequest =
+        [NSString stringWithFormat:@"http://local.yahooapis.com/MapsService/V1/mapImage?appid=C6jk31jV34FnMBsiQ3kq0a8vVPX7P3WKQhihvCytcAuNrRI9LhgSVDu2K_.0_FTWOw--&location=%@&radius=200&image_height=96&image_width=172", locationSearchString];
+    NSURL * url = [NSURL URLWithString:mapRequest];
+    self.impageUrlFetcher =
+        [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];
+    
     // force map to display, otherwise it won't really update the center
     // and we need to update the location text
     [self setNeedsDisplay];
-}
-
-- (void)updateMapSpan
-{
-    MKCoordinateRegion region = mapView.region;
-    MKCoordinateSpan span;
-    span.latitudeDelta = mapSpan;
-    region.span = span;
-    self.mapView.region = region;
-}
-
-- (MKMapView *)mapView
-{
-    if (!mapView) {
-        CGRect frame = CGRectMake(0, 0, MAP_WIDTH * 1.8, MAP_HEIGHT * 1.8);
-        mapView = [[MKMapView alloc] initWithFrame:frame];
-        mapView.delegate = self;
-        [mapView addAnnotation:self.mapAnnotation];
-    }
-
-    return mapView;
 }
 
 - (UIActivityIndicatorView *)activityIndicator
@@ -273,14 +225,6 @@
     }
 
     return activityIndicator;
-}
-
-- (BasicMapAnnotation *)mapAnnotation
-{
-    if (!mapAnnotation)
-        mapAnnotation = [[BasicMapAnnotation alloc] init];
-
-    return mapAnnotation;
 }
 
 + (NSString *)updateLabelText

@@ -54,7 +54,8 @@
     NSNumber * updateId;
     NSUInteger pagesShown;
     BOOL allPagesLoaded;
-
+    NSString * baseTitle;
+    
     TwitterCredentials * credentials;
 
     BOOL displayAsConversation;
@@ -91,6 +92,10 @@
     UIBarButtonItem * refreshButton;
 
     SoundPlayer * soundPlayer;
+    
+    BOOL autoUpdate;
+    BOOL autoUpdateStarted;
+    NSInteger numUnreadTweets;
 }
 
 @property (readonly) NetworkAwareViewController * wrapperController;
@@ -124,6 +129,11 @@
 @property (nonatomic, assign) BOOL showMentions;
 
 @property (nonatomic, retain) UIBarButtonItem * refreshButton;
+
+@property (nonatomic, readonly) BOOL needsRefresh;
+@property (nonatomic, readonly) BOOL hasBeenDisplayed;
+
+@property (nonatomic, assign) BOOL autoUpdate;
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     navigationController:(UINavigationController *)navigationController

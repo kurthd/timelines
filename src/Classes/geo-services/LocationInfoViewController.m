@@ -26,7 +26,6 @@ enum {
     kLocationInfoDirectionsFrom
 };
 
-
 #define MAP_WIDTH 58
 #define MAP_HEIGHT 58
 
@@ -38,16 +37,12 @@ enum {
 @property (nonatomic, readonly) UITableViewCell * searchLocationCell;
 @property (nonatomic, readonly) UITableViewCell * nearbyTweetsCell;
 @property (nonatomic, retain) TwitbitReverseGeocoder * reverseGeocoder;
-
-@property (nonatomic, readonly) MKMapView * mapView;
-@property (nonatomic, readonly) BasicMapAnnotation * mapAnnotation;
+@property (nonatomic, retain) AsynchronousNetworkFetcher * imageUrlFetcher;
 
 @property (nonatomic, retain) NSString * street;
 @property (nonatomic, retain) NSString * city;
 @property (nonatomic, retain) NSString * country;
 
-- (void)updateMapSpan;
-- (void)updateMap;
 - (void)showLocationInMaps:(NSString *)locationString;
 - (void)showForwardOptions;
 - (NSInteger)correctedSectionForSection:(NSInteger)section;
@@ -62,6 +57,7 @@ enum {
 @synthesize delegate;
 @synthesize reverseGeocoder;
 @synthesize street, city, country;
+@synthesize imageUrlFetcher;
 
 - (void)dealloc
 {
@@ -80,12 +76,11 @@ enum {
 
     [reverseGeocoder release];
 
-    [mapView release];
-    [mapAnnotation release];
-
     [street release];
     [city release];
     [country release];
+    
+    [imageUrlFetcher release];
 
     [super dealloc];
 }
@@ -113,24 +108,30 @@ enum {
     self.tableView.tableHeaderView = headerView;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)orientation
-{
-    return YES;
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
-    duration:(NSTimeInterval)duration
-{
-    [self layoutViews];
-}
-
 - (void)layoutViews
 {
     CGRect titleLabelFrame = titleLabel.frame;
     BOOL landscape = [[RotatableTabBarController instance] landscape];
     titleLabelFrame.size.width = landscape ? 369 : 209;
     titleLabel.frame = titleLabelFrame;
+}
+
+#pragma mark AsynchronousNetworkFetcherDelegate implementation
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    didReceiveData:(NSData *)data fromUrl:(NSURL *)url
+{
+    if (fetcher == self.imageUrlFetcher) {
+        NSString * mapResponse =
+            [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSString * mapUrlString =
+            [mapResponse stringByMatching:@">(http://.*)<" capture:1];
+        if (mapUrlString) {
+            NSURL * mapUrl = [NSURL URLWithString:mapUrlString];
+            [AsynchronousNetworkFetcher fetcherWithUrl:mapUrl delegate:self];
+        }
+    } else
+        [mapThumbnail setImage:[UIImage imageWithData:data]];
 }
 
 #pragma mark UITableViewDelegate implementation
@@ -149,12 +150,12 @@ enum {
             if (indexPath.row == kLocationInfoSearchLocation)
                 [delegate showResultsForSearch:titleLabel.text];
             else {
-                NSNumber * latitude =
-                    [NSNumber
-                    numberWithDouble:mapView.centerCoordinate.latitude];
-                NSNumber * longitude =
-                    [NSNumber
-                    numberWithDouble:mapView.centerCoordinate.longitude];
+               NSNumber * latitude =
+                   [NSNumber
+                   numberWithDouble:coord.latitude];
+               NSNumber * longitude =
+                   [NSNumber
+                   numberWithDouble:coord.longitude];
                 [delegate showResultsForNearbySearchWithLatitude:latitude
                     longitude:longitude];
             }
@@ -282,27 +283,6 @@ enum {
     [self.tableView reloadData];
 }
 
-#pragma mark MKMapViewDelegate implementation
-
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
-{
-    [self updateMap];
-}
-
-- (void)updateMap
-{
-    self.mapAnnotation.coordinate = self.mapView.centerCoordinate;
-    
-    UIGraphicsBeginImageContext(self.mapView.bounds.size);
-    [self.mapView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage * image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    [mapThumbnail setImage:image];
-
-    [self updateMapSpan];
-}
-
 #pragma mark UIActionSheetDelegate implementation
 
 - (void)actionSheet:(UIActionSheet *)sheet
@@ -319,10 +299,21 @@ enum {
 - (void)setLocationString:(NSString *)locationString
     coordinate:(CLLocationCoordinate2D)coordinate
 {
+    coord = coordinate;
+    
     self.street = nil;
     self.city = nil;
     self.country = nil;
-
+    
+    NSString * locationSearchString =
+        [NSString stringWithFormat:@"%f,%f",
+        coordinate.latitude, coordinate.longitude];
+    NSString * mapRequest =
+        [NSString stringWithFormat:@"http://local.yahooapis.com/MapsService/V1/mapImage?appid=C6jk31jV34FnMBsiQ3kq0a8vVPX7P3WKQhihvCytcAuNrRI9LhgSVDu2K_.0_FTWOw--&location=%@&radius=0.2&image_height=58&image_width=58", locationSearchString];
+    NSURL * url = [NSURL URLWithString:mapRequest];
+    self.imageUrlFetcher =
+        [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];
+    
     foundAddress = YES;
     static NSString * coordRegex =
         @"[^[-\\d\\.]]*([-\\d\\.]+\\s*,\\s*[-\\d\\.]+)[^[-\\d\\.]]*";
@@ -349,12 +340,12 @@ enum {
         [self reverseGeocoder:nil didFindPlacemark:cachedPlacemark];
     }
 
-    // the multiple map updates seem excessive, but they consistently cause the
-    // map to render, which doesn't happen if either is removed
-    [self updateMap];
-    [self.mapView setCenterCoordinate:coordinate animated:NO];
-    self.mapAnnotation.coordinate = coordinate;
-    [self updateMap];
+    // // the multiple map updates seem excessive, but they consistently cause the
+    // // map to render, which doesn't happen if either is removed
+    // [self updateMap];
+    // [self.mapView setCenterCoordinate:coordinate animated:NO];
+    // self.mapAnnotation.coordinate = coordinate;
+    // [self updateMap];
 }
 
 - (LocationInfoLabelCell *)addressCell
@@ -467,35 +458,6 @@ enum {
     }
 
     return nearbyTweetsCell;
-}
-
-- (void)updateMapSpan
-{
-    MKCoordinateRegion region = mapView.region;
-    MKCoordinateSpan span;
-    span.latitudeDelta = .001;
-    region.span = span;
-    self.mapView.region = region;
-}
-
-- (MKMapView *)mapView
-{
-    if (!mapView) {
-        CGRect frame = CGRectMake(0, 0, MAP_WIDTH * 1.5, MAP_HEIGHT * 1.5);
-        mapView = [[MKMapView alloc] initWithFrame:frame];
-        mapView.delegate = self;
-        [mapView addAnnotation:self.mapAnnotation];
-    }
-
-    return mapView;
-}
-
-- (BasicMapAnnotation *)mapAnnotation
-{
-    if (!mapAnnotation)
-        mapAnnotation = [[BasicMapAnnotation alloc] init];
-
-    return mapAnnotation;
 }
 
 - (void)showLocationInMaps:(NSString *)locationString

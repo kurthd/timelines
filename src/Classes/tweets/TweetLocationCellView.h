@@ -3,27 +3,25 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MapKit/MKMapView.h>
 #import "Geocoder.h"
 #import "GeocoderDelegate.h"
-#import "BasicMapAnnotation.h"
 #import "TwitbitReverseGeocoder.h"
+#import "AsynchronousNetworkFetcherDelegate.h"
+#import "AsynchronousNetworkFetcher.h"
 
 @interface TweetLocationCellView :
-    UIView <TwitbitReverseGeocoderDelegate, MKMapViewDelegate>
+    UIView <TwitbitReverseGeocoderDelegate, AsynchronousNetworkFetcherDelegate>
 {
     CLLocation * location;
-
     BOOL highlighted;
     TwitbitReverseGeocoder * reverseGeocoder;
-    MKMapView * mapView;
     UIActivityIndicatorView * activityIndicator;
-    BasicMapAnnotation * mapAnnotation;
     NSString * locationDescription;
     UIColor * textColor;
-    double mapSpan;
     BOOL landscape;
     BOOL loading;
+    AsynchronousNetworkFetcher * impageUrlFetcher;
+    UIImage * mapImage;
 }
 
 @property (nonatomic, retain) CLLocation * location;

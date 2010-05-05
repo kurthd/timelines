@@ -65,5 +65,7 @@
 			<string>com.highorderbit.twitbit</string>
 		</dict>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleBlackOpaque</string>
 </dict>
 </plist>

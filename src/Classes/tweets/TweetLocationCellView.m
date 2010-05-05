@@ -13,14 +13,11 @@
 @interface TweetLocationCellView ()
 
 @property (nonatomic, retain) TwitbitReverseGeocoder * reverseGeocoder;
-@property (nonatomic, readonly) MKMapView * mapView;
 @property (nonatomic, readonly) UIActivityIndicatorView * activityIndicator;
-@property (nonatomic, readonly) BasicMapAnnotation * mapAnnotation;
 @property (nonatomic, copy) NSString * locationDescription;
+@property (nonatomic, retain) AsynchronousNetworkFetcher * impageUrlFetcher;
+@property (nonatomic, retain) UIImage * mapImage;
 
-- (void)updateMapSpan;
-
-+ (NSString *)updateLabelText;
 + (NSString *)locationAsString:(CLLocation *)location;
 
 @end
@@ -31,16 +28,16 @@
 #define MAP_HEIGHT 48
 
 @synthesize location, highlighted, reverseGeocoder, landscape,
-    locationDescription, textColor;
+    locationDescription, textColor, impageUrlFetcher, mapImage;
 
 - (void)dealloc
 {
     [location release];
     [reverseGeocoder release];
-    [mapView release];
     [activityIndicator release];
-    [mapAnnotation release];
     [textColor release];
+    [impageUrlFetcher release];
+    [mapImage release];
     [super dealloc];
 }
 
@@ -151,16 +148,10 @@
         [self.locationDescription drawInRect:drawingRect
             withFont:locationTextLabelFont
             lineBreakMode:UILineBreakModeTailTruncation];
-
-        UIGraphicsBeginImageContext(self.mapView.bounds.size);
-        [self.mapView.layer renderInContext:UIGraphicsGetCurrentContext()];
-        UIImage * viewImage = UIGraphicsGetImageFromCurrentImageContext();
-        [viewImage retain]; // Hack: not sure why, but this needs to be retained
-        UIGraphicsEndImageContext();
         
-        CGRect mapViewRect =
+       CGRect mapViewRect =
             CGRectMake(TOP_MARGIN + 1, LEFT_MARGIN + 1, MAP_WIDTH, MAP_HEIGHT);
-        [viewImage drawInRect:mapViewRect
+       [self.mapImage drawInRect:mapViewRect
             withRoundedCornersWithRadius:ROUNDED_CORNER_RADIUS];
 
         [self.activityIndicator stopAnimating];
@@ -175,7 +166,6 @@
 {
     NSLog(@"Setting map location description");
     NSLog(@"Placemark address dict: %@", placemark.addressDictionary);
-    [self updateMapSpan];
     loading = NO;
 
     NSString * administrativeArea =
@@ -206,11 +196,34 @@
     [self setNeedsDisplay];
 }
 
-#pragma mark MKMapViewDelegate implementation
+#pragma mark AsynchronousNetworkFetcherDelegate implementation
 
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)aMapView
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    didReceiveData:(NSData *)data fromUrl:(NSURL *)url
 {
-    NSLog(@"Finished loading map");
+    if (fetcher == self.impageUrlFetcher) {
+        NSString * mapResponse =
+            [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSString * mapUrlString =
+            [mapResponse stringByMatching:@">(http://.*)<" capture:1];
+        if (mapUrlString) {
+            NSURL * mapUrl = [NSURL URLWithString:mapUrlString];
+            [AsynchronousNetworkFetcher fetcherWithUrl:mapUrl delegate:self];
+        } else {
+            loading = NO;
+            [self setNeedsDisplay];
+        }
+    } else {
+        self.mapImage = [UIImage imageWithData:data];
+        loading = NO;
+        [self setNeedsDisplay];
+    }
+}
+
+- (void)fetcher:(AsynchronousNetworkFetcher *)fetcher
+    failedToReceiveDataFromUrl:(NSURL *)url error:(NSError *)error
+{
+    loading = NO;
     [self setNeedsDisplay];
 }
 
@@ -223,13 +236,20 @@
     [l retain];
     [location release];
     location = l;
-
+    
     loading = YES;
-
-    [self updateMapSpan];
-
+    
     CLLocationCoordinate2D coord = l.coordinate;
-
+    
+    NSString * locationSearchString =
+        [NSString stringWithFormat:@"%f,%f",
+        location.coordinate.latitude, location.coordinate.longitude];
+    NSString * mapRequest =
+        [NSString stringWithFormat:@"http://local.yahooapis.com/MapsService/V1/mapImage?appid=C6jk31jV34FnMBsiQ3kq0a8vVPX7P3WKQhihvCytcAuNrRI9LhgSVDu2K_.0_FTWOw--&location=%@&radius=0.2&image_height=96&image_width=172", locationSearchString];
+    NSURL * url = [NSURL URLWithString:mapRequest];
+    self.impageUrlFetcher =
+        [AsynchronousNetworkFetcher fetcherWithUrl:url delegate:self];
+    
     [self.reverseGeocoder cancel];
     self.reverseGeocoder =
         [[[TwitbitReverseGeocoder alloc] initWithCoordinate:coord] autorelease];
@@ -243,33 +263,9 @@
         [self reverseGeocoder:nil didFindPlacemark:cachedPlacemark];
     }
 
-    [self.mapView setCenterCoordinate:coord animated:NO];
-    self.mapAnnotation.coordinate = coord;
-
     // force map to display, otherwise it won't really update the center
     // and we need to update the location text
     [self setNeedsDisplay];
-}
-
-- (void)updateMapSpan
-{
-    MKCoordinateRegion region = self.mapView.region;
-    MKCoordinateSpan span;
-    span.latitudeDelta = .002;
-    region.span = span;
-    self.mapView.region = region;
-}
-
-- (MKMapView *)mapView
-{
-    if (!mapView) {
-        CGRect frame = CGRectMake(0, 0, MAP_WIDTH * 1.8, MAP_HEIGHT * 1.8);
-        mapView = [[MKMapView alloc] initWithFrame:frame];
-        mapView.delegate = self;
-        [mapView addAnnotation:self.mapAnnotation];
-    }
-
-    return mapView;
 }
 
 - (UIActivityIndicatorView *)activityIndicator
@@ -286,19 +282,6 @@
     }
 
     return activityIndicator;
-}
-
-- (BasicMapAnnotation *)mapAnnotation
-{
-    if (!mapAnnotation)
-        mapAnnotation = [[BasicMapAnnotation alloc] init];
-
-    return mapAnnotation;
-}
-
-+ (NSString *)updateLabelText
-{
-    return @"Last location update:";
 }
 
 + (NSString *)locationAsString:(CLLocation *)location

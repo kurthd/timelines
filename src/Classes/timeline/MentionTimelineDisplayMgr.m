@@ -14,7 +14,6 @@
 - (void)setUpdatingState;
 - (void)fetchMentionsSinceId:(NSNumber *)updateId page:(NSNumber *)page
     numMessages:(NSNumber *)numMessages;
-- (void)updateBadge;
 - (void)updateTweetIndexCache;
 - (void)updateViewWithNewMentions;
 
@@ -43,7 +42,7 @@
 @implementation MentionTimelineDisplayMgr
 
 @synthesize lastUpdateId, mentions, activeAcctUsername, mentionIdToShow,
-    selectedTweet, lastTweetDetailsWrapperController, numNewMentions, showBadge,
+    selectedTweet, lastTweetDetailsWrapperController,
     lastTweetDetailsController, navigationController, refreshButton;
 
 - (void)dealloc
@@ -100,7 +99,6 @@
         managedObjectContext = [aManagedObjectContext retain];
         service = [aService retain];
         tabBarItem = [aTabBarItem retain];
-        showBadge = YES;
         pagesShown = 1;
 
         TwitterService * displayHelperService =
@@ -161,13 +159,6 @@
 
     if (refreshingMessages) {
         if ([newMentions count] > 0) {
-            if (!displayed && showBadge) {
-                numNewMentions += [newMentions count];
-                [self updateBadge];
-            }
-
-            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
-
             pagesShown = [mentions count] / [SettingsReader fetchQuantity];
             pagesShown = pagesShown > 0 ? pagesShown : 1;
         }
@@ -303,11 +294,7 @@
 {
     NSLog(@"Mentions timeline will appear");
     displayed = YES;
-    numNewMentions = 0;
     self.selectedTweet = nil;
-    [self updateBadge];
-    timelineController.searchBar.placeholder =
-        NSLocalizedString(@"mentiondisplaymgr.searchplaceholder", @"");
 }
 
 - (void)networkAwareViewWillDisappear
@@ -420,6 +407,9 @@
     NSLog(@"Mention display manager: loading more tweets...");
     [self loadAnotherPageOfMentions];
 }
+
+- (void)userViewedNewestTweets
+{}
 
 #pragma mark TweetViewControllerDelegate implementation
 
@@ -659,24 +649,11 @@
     alreadyBeenDisplayedAfterCredentialChange = NO;
     pagesShown = 1;
     refreshingMessages = NO;
-    numNewMentions = 0;
     self.lastUpdateId = nil;
     [conversationDisplayMgrs removeAllObjects];
     [self.tweetIdToIndexDict removeAllObjects];
     [self.tweetIndexToIdDict removeAllObjects];
     [timelineController setTweets:[NSArray array] page:0 visibleTweetId:nil];
-}
-
-- (void)setNumNewMentions:(NSInteger)numMentions
-{
-    numNewMentions = showBadge ? numMentions : 0;
-    [self updateBadge];
-}
-
-- (void)setShowBadge:(BOOL)aShowBadgeValue
-{
-    showBadge = aShowBadgeValue;
-    [self updateBadge];
 }
 
 #pragma mark Private interface implementation
@@ -778,17 +755,6 @@
         [service fetchMentionsSinceUpdateId:updateId page:page
             count:numMessages];
     }
-}
-
-- (void)updateBadge
-{
-    NSLog(@"Updating mentions badge");
-    if (!showBadge)
-        numNewMentions = 0;
-
-    tabBarItem.badgeValue =
-        numNewMentions > 0 ?
-        [NSString stringWithFormat:@"%d", numNewMentions] : nil;
 }
 
 - (void)updateTweetIndexCache

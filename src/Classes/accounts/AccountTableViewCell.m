@@ -29,7 +29,7 @@
 		    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	    accountCellView.contentMode = UIViewContentModeTopLeft;
 		[self.contentView addSubview:accountCellView];
-
+        
 		self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
 

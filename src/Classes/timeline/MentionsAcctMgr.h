@@ -8,7 +8,6 @@
 @interface MentionsAcctMgr : NSObject
 {
     MentionTimelineDisplayMgr * displayMgr;
-    NSMutableDictionary * newMentionCounts;
 }
 
 - (id)initWithMentionTimelineDisplayMgr:(MentionTimelineDisplayMgr *)displayMgr;

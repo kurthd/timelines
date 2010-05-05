@@ -10,5 +10,6 @@
 
 - (void)selectedTweet:(Tweet *)tweet;
 - (void)loadMoreTweets;
+- (void)userViewedNewestTweets;
 
 @end

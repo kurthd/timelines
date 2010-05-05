@@ -6,10 +6,8 @@
 #import "NetworkAwareViewController.h"
 #import "DeviceRegistrarDelegate.h"
 #import "TimelineDisplayMgrFactory.h"
-#import "DirectMessageDisplayMgrFactory.h"
 #import "TwitterServiceDelegate.h"
 #import "DirectMessageAcctMgr.h"
-#import "FindPeopleSearchDisplayMgr.h"
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "InstapaperService.h"
 #import "InstapaperLogInDisplayMgr.h"
@@ -19,32 +17,28 @@
 #import "MentionsAcctMgr.h"
 #import "AccountsButton.h"
 #import "AccountsButtonSetter.h"
-#import "ListsDisplayMgr.h"
 #import "TwitterCredentials.h"
 #import "ContactCache.h"
 #import "ContactMgr.h"
-#import "ProfileDisplayMgr.h"
+#import "TimelineSelectionViewController.h"
+#import "ListsDisplayMgr.h"
 
 @class XauthLogInDisplayMgr, ComposeTweetDisplayMgr, AccountsDisplayMgr;
-@class SearchBarDisplayMgr;
 @class AccountsViewController;
 @class DeviceRegistrar;
 @class CredentialsActivatedPublisher, CredentialsSetChangedPublisher;
 @class AccountSettingsChangedPublisher;
 @class ActiveTwitterCredentials;
-@class TrendDisplayMgr;
-@class TrendsViewController;
 @class ManagedObjectContextPruner;
 @class AnalyticsService;
 
 @interface TwitchAppDelegate : NSObject
-    <UIApplicationDelegate, UITabBarControllerDelegate, DeviceRegistrarDelegate,
-    TwitterServiceDelegate, ComposeTweetDisplayMgrDelegate,
-    TwitchWebBrowserDisplayMgrDelegate, InstapaperServiceDelegate,
-    InstapaperLogInDisplayMgrDelegate, UIAccelerometerDelegate>
+    <UIApplicationDelegate, DeviceRegistrarDelegate, TwitterServiceDelegate,
+    ComposeTweetDisplayMgrDelegate, TwitchWebBrowserDisplayMgrDelegate,
+    InstapaperServiceDelegate, InstapaperLogInDisplayMgrDelegate,
+    UIAccelerometerDelegate, TimelineSelectionViewControllerDelegate>
 {
     UIWindow * window;
-    UITabBarController * tabBarController;
 
     XauthLogInDisplayMgr * logInDisplayMgr;
 
@@ -62,46 +56,26 @@
     NSManagedObjectContext * managedObjectContext;
     NSPersistentStoreCoordinator * persistentStoreCoordinator;
     ManagedObjectContextPruner * managedObjectContextPruner;
-
-    // Root view controllers
+    
     IBOutlet NetworkAwareViewController * homeNetAwareViewController;
+    IBOutlet UINavigationController * mainNavController;
+    IBOutlet AccountsViewController * accountsViewController;
+    IBOutlet TimelineSelectionViewController * timelineSelectionController;
     IBOutlet NetworkAwareViewController * mentionsNetAwareViewController;
-    IBOutlet NetworkAwareViewController * messagesNetAwareViewController;
-    IBOutlet NetworkAwareViewController * searchNetAwareViewController;
-    IBOutlet NetworkAwareViewController * findPeopleNetAwareViewController;
-    IBOutlet NetworkAwareViewController * listsNetAwareViewController;
-    IBOutlet NetworkAwareViewController * trendsNetAwareViewController;
-    IBOutlet NetworkAwareViewController * profileNetAwareViewController;
-
-    IBOutlet AccountsButton * accountsButton;
-    AccountsButtonSetter * accountsButtonSetter;
-    UINavigationController * accountsNavController;
-    AccountsViewController * accountsViewController;
-
+    IBOutlet NetworkAwareViewController * favoritesNetAwareViewController;
+    
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
-    DirectMessageDisplayMgrFactory * directMessageDisplayMgrFactory;
-    DirectMessagesDisplayMgr * directMessageDisplayMgr;
-    DirectMessageAcctMgr * directMessageAcctMgr;
     MentionsAcctMgr * mentionsAcctMgr;
     TimelineDisplayMgr * timelineDisplayMgr;
-    TimelineDisplayMgr * searchBarTimelineDisplayMgr;
-
+    TimelineDisplayMgr * favoritesDisplayMgr;
+    ListsDisplayMgr * listsDisplayMgr;
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 
-    SearchBarDisplayMgr * searchBarDisplayMgr;
-    FindPeopleSearchDisplayMgr * findPeopleSearchDisplayMgr;
-    ProfileDisplayMgr * profileDisplayMgr;
     AccountsDisplayMgr * accountsDisplayMgr;
     MentionTimelineDisplayMgr * mentionDisplayMgr;
-    ListsDisplayMgr * listsDisplayMgr;
-    TrendDisplayMgr * trendDisplayMgr;
-    TrendsViewController * trendsViewController;
 
     UIBarButtonItem * homeSendingTweetProgressView;
     UIBarButtonItem * mentionsSendingTweetProgressView;
-    UIBarButtonItem * listsSendingTweetProgressView;
-
-    SavedSearchMgr * findPeopleBookmarkMgr;
 
     InstapaperService * instapaperService;
     NSString * savingInstapaperUrl;
@@ -122,7 +96,6 @@
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow * window;
-@property (nonatomic, retain) IBOutlet UITabBarController * tabBarController;
 
 @property (nonatomic, retain, readonly) NSManagedObjectModel *
     managedObjectModel;
@@ -134,6 +107,7 @@
 @property (nonatomic, readonly) NSString * applicationDocumentsDirectory;
 
 - (IBAction)composeTweet:(id)sender;
+- (IBAction)userWantsToAddAccount:(id)sender;
 
 - (void)setLocation:(CLLocation *)location;
 

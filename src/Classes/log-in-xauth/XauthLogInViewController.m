@@ -61,9 +61,18 @@
     self.navigationItem.title = LS(@"account.addaccount");
     self.navigationItem.leftBarButtonItem = self.cancelButton;
     self.navigationItem.rightBarButtonItem = self.saveButton;
-
+    
     self.saveButton.enabled = NO;
     self.cancelButton.enabled = self.allowsCancel;
+    
+    self.tableView.separatorColor = [UIColor twitchGrayColor];
+    self.tableView.backgroundColor = [UIColor twitchBackgroundColor];
+    self.usernameCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
+    self.passwordCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
+    usernameLabel.textColor = [UIColor whiteColor];
+    passwordLabel.textColor = [UIColor whiteColor];
+    usernameTextField.textColor = [UIColor whiteColor];
+    passwordTextField.textColor = [UIColor whiteColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -71,11 +80,6 @@
     [super viewWillAppear:animated];
 
     [self.usernameTextField becomeFirstResponder];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)io
-{
-    return YES;
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -97,10 +101,30 @@
     return indexPath.row == 0 ? self.usernameCell : self.passwordCell;
 }
 
-- (NSString *)tableView:(UITableView *)tableView
-titleForFooterInSection:(NSInteger)section
+- (UIView *)tableView:(UITableView *)tableView
+    viewForFooterInSection:(NSInteger)section
 {
-    return LS(@"xauthview.footer");
+    static UILabel * footerLabel;
+    if (!footerLabel) {
+        footerLabel = [[UILabel alloc] init];
+        footerLabel.frame = CGRectMake(15, 15, 290, 65);
+        footerLabel.backgroundColor = self.view.backgroundColor;
+        footerLabel.textColor = [UIColor lightGrayColor];
+        footerLabel.shadowColor = [UIColor blackColor];
+        footerLabel.numberOfLines = 3;
+        footerLabel.shadowOffset = CGSizeMake(0, 1);
+        footerLabel.textAlignment = UITextAlignmentCenter;
+        footerLabel.text = LS(@"xauthview.footer");
+        footerLabel.font = [UIFont systemFontOfSize:15];
+    }
+    
+    return footerLabel;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView
+    heightForFooterInSection:(NSInteger)section
+{
+    return 80;
 }
 
 #pragma mark UITextFieldDelegate implementation

@@ -7,7 +7,6 @@
 #import "User.h"
 #import "AsynchronousNetworkFetcher.h"
 #import "User+UIAdditions.h"
-#import "RotatableTabBarController.h"
 #import "SettingsReader.h"
 #import "TwitbitShared.h"
 
@@ -60,27 +59,13 @@ static UIImage * defaultAvatar;
         currentPagesLabel.textColor = [UIColor twitchLightLightGrayColor];
     }
 
-    self.view.frame =
-        [[RotatableTabBarController instance] landscape] ?
-        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+    self.view.frame = CGRectMake(0, 0, 320, 416);
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [delegate userListViewWillAppear];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)orientation
-{
-    return YES;
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
-    duration:(NSTimeInterval)duration
-{
-    [self.tableView reloadData];
 }
 
 #pragma mark UITableViewDataSource implementation

@@ -8,6 +8,7 @@
 #import "TwitterService.h"
 #import "TimelineDisplayMgr.h"
 #import "TimelineDisplayMgrFactory.h"
+#import "TimelineSelectionViewController.h"
 
 enum {
     kListRequestTypeInitial,
@@ -21,12 +22,12 @@ enum {
 {
     NetworkAwareViewController * wrapperController;
     UINavigationController * navigationController;
-    ListsViewController * listsViewController;
+    TimelineSelectionViewController * listsViewController;
     TwitterService * service;
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
     NSManagedObjectContext * context;
-
+    
     BOOL fetchedInitialLists;
     NSUInteger outstandingListRequests;
     NSUInteger outstandingListSubscriptionRequests;
@@ -40,9 +41,9 @@ enum {
     NetworkAwareViewController * nextWrapperController;
     TimelineDisplayMgr * timelineDisplayMgr;
     CredentialsActivatedPublisher * credentialsPublisher;
-
+    
     TwitterCredentials * credentials;
-
+    
     UIBarButtonItem * updatingListsActivityView;
     UIBarButtonItem * refreshButton;
 }
@@ -53,7 +54,7 @@ enum {
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     navigationController:(UINavigationController *)aNavigationController
-    listsViewController:(ListsViewController *)listsViewController
+    listsViewController:(TimelineSelectionViewController *)listsViewController
     service:(TwitterService *)aService
     factory:(TimelineDisplayMgrFactory *)timelineDisplayMgrFactory
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr

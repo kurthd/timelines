@@ -8,6 +8,7 @@
 #import "CredentialsSetChangedPublisher.h"
 #import "AllTimelineDataSource.h"
 #import "UserListDisplayMgrFactory.h"
+#import "MyFavoritesTimelineDataSource.h"
 
 @implementation TimelineDisplayMgrFactory
 
@@ -79,6 +80,68 @@
         userListDisplayMgrFactory:userListDisplayMgrFactory
         contactCache:contactCache contactMgr:contactMgr]
         autorelease];
+    timelineDisplayMgr.autoUpdate = YES;
+    dataSource.delegate = timelineDisplayMgr;
+    timelineController.delegate = timelineDisplayMgr;
+    wrapperController.delegate = timelineDisplayMgr;
+    timelineService.delegate = timelineDisplayMgr;
+
+    // Don't autorelease
+    [[CredentialsActivatedPublisher alloc]
+        initWithListener:timelineDisplayMgr action:@selector(setCredentials:)];
+
+    [[CredentialsSetChangedPublisher alloc]
+        initWithListener:timelineDisplayMgr
+        action:@selector(credentialsSetChanged:added:)];
+
+    return timelineDisplayMgr;
+}
+
+- (TimelineDisplayMgr *)
+    createFavoritesDisplayMgrWithWrapperController:
+    (NetworkAwareViewController *)wrapperController
+    navigationController:(UINavigationController *)navigationController
+    title:(NSString *)title
+    composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr
+{
+    TimelineViewController * timelineController =
+        [[[TimelineViewController alloc]
+        initWithNibName:@"TimelineView" bundle:nil] autorelease];
+    wrapperController.targetViewController = timelineController;
+
+    TwitterService * service =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:context]
+        autorelease];
+    MyFavoritesTimelineDataSource * dataSource =
+        [[[MyFavoritesTimelineDataSource alloc] initWithTwitterService:service]
+        autorelease];
+    service.delegate = dataSource;
+
+    TwitterService * timelineService =
+        [[[TwitterService alloc] initWithTwitterCredentials:nil
+        context:context]
+        autorelease];
+
+    UserListDisplayMgrFactory * userListDisplayMgrFactory =
+        [[[UserListDisplayMgrFactory alloc]
+        initWithContext:context findPeopleBookmarkMgr:findPeopleBookmarkMgr
+        contactCache:contactCache contactMgr:contactMgr]
+        autorelease];
+
+    TimelineDisplayMgr * timelineDisplayMgr =
+        [[[TimelineDisplayMgr alloc]
+        initWithWrapperController:wrapperController
+        navigationController:navigationController
+        timelineController:timelineController timelineSource:dataSource
+        service:timelineService title:title factory:self
+        managedObjectContext:context
+        composeTweetDisplayMgr:composeTweetDisplayMgr
+        findPeopleBookmarkMgr:findPeopleBookmarkMgr
+        userListDisplayMgrFactory:userListDisplayMgrFactory
+        contactCache:contactCache contactMgr:contactMgr]
+        autorelease];
+    timelineDisplayMgr.autoUpdate = YES;
     dataSource.delegate = timelineDisplayMgr;
     timelineController.delegate = timelineDisplayMgr;
     wrapperController.delegate = timelineDisplayMgr;

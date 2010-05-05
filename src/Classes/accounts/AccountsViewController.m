@@ -20,7 +20,6 @@ NSInteger usernameSort(TwitterCredentials * user1,
 @property (nonatomic, copy) NSArray * accounts;
 @property (nonatomic, retain) UIBarButtonItem * rightButton;
 
-+ (void)configureSelectedAccountCell:(AccountTableViewCell *)cell;
 + (void)configureNormalAccountCell:(AccountTableViewCell *)cell;
 
 @end
@@ -38,14 +37,13 @@ NSInteger usernameSort(TwitterCredentials * user1,
     [super dealloc];
 }
 
-- (id)init
+- (void)viewDidLoad
 {
-    if (self = [super initWithStyle:UITableViewStyleGrouped]) {
-        self.tableView.allowsSelectionDuringEditing = NO;
-        self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    }
-
-    return self;
+    self.tableView.separatorColor =
+        [UIColor colorWithRed:.32 green:.32 blue:.32 alpha:1];
+    self.tableView.backgroundColor = [UIColor defaultDarkThemeCellColor];
+    self.tableView.allowsSelectionDuringEditing = NO;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -60,25 +58,13 @@ NSInteger usernameSort(TwitterCredentials * user1,
     [self.tableView reloadData];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)orientation
-{
-    return YES;
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
-    duration:(NSTimeInterval)duration
-{
-    [self.tableView reloadData];
-}
-
 #pragma mark Button actions
 
 - (IBAction)userWantsToAddAccount:(id)sender
 {
     if (self.editing)
         [self setEditing:NO animated:YES];
-
+    
     [self.delegate userWantsToAddAccount];
 }
 
@@ -108,13 +94,6 @@ NSInteger usernameSort(TwitterCredentials * user1,
     [self.tableView
         insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
               withRowAnimation:UITableViewRowAnimationFade];
-
-    if (self.accounts.count == 1) {
-        AccountTableViewCell * cell =
-            (AccountTableViewCell *)
-            [self.tableView cellForRowAtIndexPath:indexPath];
-        [[self class] configureSelectedAccountCell:cell];
-    }
 }
 
 - (void)refreshAvatarImages
@@ -140,8 +119,7 @@ NSInteger usernameSort(TwitterCredentials * user1,
 - (NSInteger)tableView:(UITableView *)tv
  numberOfRowsInSection:(NSInteger)section
 {
-    return
-        self.tableView.editing ? self.accounts.count : self.accounts.count + 1;
+    return self.accounts.count;
 }
 
 // Customize the appearance of table view cells.
@@ -149,50 +127,32 @@ NSInteger usernameSort(TwitterCredentials * user1,
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell * cell;
-    if (indexPath.row == self.accounts.count) {
-        NSString * cellIdentifier = @"AddAccountTableViewCell";
-        cell =
-            [tv dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (!cell)
-            cell =
-                [[[UITableViewCell alloc]
-                initWithStyle:UITableViewCellStyleDefault
-                reuseIdentifier:cellIdentifier]
-                autorelease];
+    NSString * cellIdentifier = @"AccountTableViewCell";
+    AccountTableViewCell * accountCell =
+        (AccountTableViewCell *)
+        [tv dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!accountCell)
+        accountCell =
+            [[[AccountTableViewCell alloc]
+            initWithStyle:UITableViewCellStyleDefault
+            reuseIdentifier:cellIdentifier]
+            autorelease];
 
-        cell.textLabel.text = NSLocalizedString(@"account.addaccount", @"");
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else {
-        NSString * cellIdentifier = @"AccountTableViewCell";
-        AccountTableViewCell * accountCell =
-            (AccountTableViewCell *)
-            [tv dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (!accountCell)
-            accountCell =
-                [[[AccountTableViewCell alloc]
-                initWithStyle:UITableViewCellStyleDefault
-                reuseIdentifier:cellIdentifier]
-                autorelease];
+    TwitterCredentials * account =
+        [self.accounts objectAtIndex:indexPath.row];
+    [accountCell setUsername:account.username];
 
-        TwitterCredentials * account =
-            [self.accounts objectAtIndex:indexPath.row];
-        [accountCell setUsername:account.username];
+    UIImage * avatar = [delegate avatarImageForUsername:account.username];
+    [accountCell setAvatarImage:avatar];
+    
+    [[self class] configureNormalAccountCell:accountCell];
+    
+    accountCell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    accountCell.accessoryType =
+        UITableViewCellAccessoryDisclosureIndicator;
+    accountCell.editingAccessoryType = UITableViewCellAccessoryNone;
 
-        UIImage * avatar = [delegate avatarImageForUsername:account.username];
-        [accountCell setAvatarImage:avatar];
-
-        if ([account.username isEqualToString:self.selectedAccount.username])
-            [[self class] configureSelectedAccountCell:accountCell];
-        else
-            [[self class] configureNormalAccountCell:accountCell];
-
-        accountCell.selectionStyle = UITableViewCellSelectionStyleBlue;
-        accountCell.accessoryType =
-            UITableViewCellAccessoryDetailDisclosureButton;
-        accountCell.editingAccessoryType = UITableViewCellAccessoryNone;
-
-        cell = accountCell;
-    }
+    cell = accountCell;
 
     return cell;
 }
@@ -202,34 +162,23 @@ NSInteger usernameSort(TwitterCredentials * user1,
 {
     NSAssert(!self.tableView.editing, @"Should never be called while editing.");
 
-    if (indexPath.row == [accounts count])
-        [delegate userWantsToAddAccount];
-    else {
-        // toggle the active account
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSInteger accountIndex =
+        [self.accounts indexOfObject:self.selectedAccount];
+    if (accountIndex != indexPath.row) {
+        NSIndexPath * oldIndexPath =
+            [NSIndexPath indexPathForRow:accountIndex inSection:0];
 
-        NSInteger accountIndex =
-            [self.accounts indexOfObject:self.selectedAccount];
-        if (accountIndex != indexPath.row) {
-            NSIndexPath * oldIndexPath =
-                [NSIndexPath indexPathForRow:accountIndex inSection:0];
- 
-            AccountTableViewCell * newCell =
-                (AccountTableViewCell *)
-                [self.tableView cellForRowAtIndexPath:indexPath];
-            [[self class] configureSelectedAccountCell:newCell];
-            self.selectedAccount = [self.accounts objectAtIndex:indexPath.row];
+        self.selectedAccount = [self.accounts objectAtIndex:indexPath.row];
 
-            AccountTableViewCell * oldCell =
-                (AccountTableViewCell *)
-                [self.tableView cellForRowAtIndexPath:oldIndexPath];
-            [[self class] configureNormalAccountCell:oldCell];
-        }
-
-        if (selectedAccountTarget)
-            [selectedAccountTarget performSelector:selectedAccountAction
-                withObject:nil];
+        AccountTableViewCell * oldCell =
+            (AccountTableViewCell *)
+            [self.tableView cellForRowAtIndexPath:oldIndexPath];
+        [[self class] configureNormalAccountCell:oldCell];
     }
+
+    if (selectedAccountTarget)
+        [selectedAccountTarget performSelector:selectedAccountAction
+            withObject:nil];
 }
 
 - (void)tableView:(UITableView *)tableView
@@ -265,34 +214,14 @@ NSInteger usernameSort(TwitterCredentials * user1,
             // deleted the active account; make the next one active
             NSInteger index = indexPath.row == 0 ? 0 : indexPath.row - 1;
             self.selectedAccount = [self.accounts objectAtIndex:index];
-
-            NSIndexPath * newIndexPath =
-                [NSIndexPath indexPathForRow:index inSection:0];
-            AccountTableViewCell * cell =
-                (AccountTableViewCell *)
-                [self.tableView cellForRowAtIndexPath:newIndexPath];
-
-            [[self class] configureSelectedAccountCell:cell];
         }
     }
-}
-
-- (NSString *)tableView:(UITableView *)tableView
-    titleForHeaderInSection:(NSInteger)section
-{
-    return NSLocalizedString(@"account.prompt", @"");
-}
-
-- (NSString *)tableView:(UITableView *)tableView
-    titleForFooterInSection:(NSInteger)section
-{
-    return NSLocalizedString(@"account.footer", @"");
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 48;
+    return 44;
 }
 
 - (BOOL)tableView:(UITableView *)tableView
@@ -308,30 +237,14 @@ NSInteger usernameSort(TwitterCredentials * user1,
     if (editing) {
         self.rightButton = self.navigationItem.rightBarButtonItem;
         [self.navigationItem setRightBarButtonItem:nil animated:animated];
-
-        NSIndexPath * path =
-            [NSIndexPath indexPathForRow:accounts.count inSection:0];
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:path]
-                              withRowAnimation:UITableViewRowAnimationTop];
-
     } else {
         if (self.rightButton)
             [self.navigationItem setRightBarButtonItem:self.rightButton
                                               animated:animated];
-
-        NSIndexPath * path =
-            [NSIndexPath indexPathForRow:accounts.count inSection:0];
-        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:path]
-                              withRowAnimation:UITableViewRowAnimationTop];
     }
 }
 
 #pragma mark Private implementation
-
-+ (void)configureSelectedAccountCell:(AccountTableViewCell *)cell
-{
-    [cell setSelectedAccount:YES];
-}
 
 + (void)configureNormalAccountCell:(AccountTableViewCell *)cell
 {

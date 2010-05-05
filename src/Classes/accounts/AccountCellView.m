@@ -30,7 +30,7 @@
 {
 	if (self = [super initWithFrame:frame]) {
 		self.opaque = YES;
-		self.backgroundColor = [UIColor whiteColor];
+		self.backgroundColor = [UIColor defaultDarkThemeCellColor];
 	}
 
 	return self;
@@ -103,47 +103,29 @@
 
 - (void)drawRect:(CGRect)rect
 {
-#define TOP_MARGIN 5
+#define TOP_MARGIN 2
 #define LEFT_MARGIN 5
 
 #define ROUNDED_CORNER_RADIUS 4
 #define AVATAR_WIDTH 28
 
-#define LABEL_OFFSET 
-
     UIColor * usernameColor = nil;
-    UIFont * usernameFont = [UIFont boldSystemFontOfSize:18.0];
-
-    UIColor * darkLabelColor =
-        selectedAccount ?
-        [[UIColor colorWithRed:0.196 green:0.310 blue:0.522 alpha:1.0] retain] :
-        [UIColor blackColor];
-
-    usernameColor = !self.highlighted ? darkLabelColor : [UIColor whiteColor];
-
+    UIFont * usernameFont = [UIFont boldSystemFontOfSize:20.0];
+    
+    usernameColor = [UIColor whiteColor];
+    
     [usernameColor set];
-    CGPoint point = CGPointMake(48, 9);
+    CGPoint point = CGPointMake(48, 5);
     [username drawAtPoint:point withFont:usernameFont];
-
-    // Draw check mark
-    if (selectedAccount) {
-        UIImage * currentCheckMark =
-            self.highlighted ? self.highlightedCheckMark : self.checkMark;
-        CGSize usernameLabelSize = [username sizeWithFont:usernameFont];
-        CGRect checkMarkRect =
-            CGRectMake(point.x + usernameLabelSize.width + 10, 13, 14, 13);
-        [currentCheckMark drawInRect:checkMarkRect];
-    }
-
+    
     //
     // Draw avatar
     //
     CGContextRef context = UIGraphicsGetCurrentContext();
 
-    UIColor * darkColor =
-        selectedAccount ? darkLabelColor : [UIColor twitchDarkGrayColor];
     UIColor * rectColor =
-        self.highlighted ? [UIColor whiteColor] : darkColor;
+        highlighted ?
+        [UIColor whiteColor] : [UIColor twitchLightLightGrayColor];
 
     CGContextSetFillColorWithColor(context, [rectColor CGColor]);
     
@@ -179,7 +161,7 @@
         AVATAR_WIDTH - roundedCornerHeight));
     
     CGRect avatarRect =
-        CGRectMake(TOP_MARGIN + 1, LEFT_MARGIN + 1, AVATAR_WIDTH, AVATAR_WIDTH);
+        CGRectMake(LEFT_MARGIN + 1, TOP_MARGIN + 1, AVATAR_WIDTH, AVATAR_WIDTH);
     [avatar drawInRect:avatarRect
         withRoundedCornersWithRadius:ROUNDED_CORNER_RADIUS];
 }

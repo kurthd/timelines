@@ -5,7 +5,6 @@
 #import "TwitchBrowserViewController.h"
 #import "RegexKitLite.h"
 #import "UIAlertView+InstantiationAdditions.h"
-#import "RotatableTabBarController.h"
 #import "SettingsReader.h"
 
 @interface TwitchBrowserViewController ()
@@ -50,10 +49,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    UIInterfaceOrientation orientation =
-        [[RotatableTabBarController instance] effectiveOrientation];
-    [self displayForOrientation:orientation];
+    [self displayForOrientation:effectiveOrientation];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -65,6 +61,8 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:
     (UIInterfaceOrientation)orientation
 {
+    effectiveOrientation = orientation;
+    
     return YES;
 }
 

@@ -43,7 +43,8 @@
     currentUsername, allPagesLoaded,setUserToAuthenticatedUser,
     firstFetchReceived, tweetIdToShow, suppressTimelineFailures, credentials,
     showMentions, tweetIdToIndexDict, navigationController,
-    updatingTimelineActivityView, refreshButton;
+    updatingTimelineActivityView, refreshButton, needsRefresh, hasBeenDisplayed,
+    autoUpdate;
 
 - (void)dealloc
 {
@@ -64,6 +65,7 @@
     [user release];
     [timeline release];
     [updateId release];
+    [baseTitle release];
 
     [credentials release];
 
@@ -130,7 +132,8 @@
 
         [wrapperController setCachedDataAvailable:NO];
         wrapperController.title = title;
-
+        baseTitle = [title copy];
+        
         conversationDisplayMgrs = [[NSMutableArray alloc] init];
 
         // attempt to preload the tweet view, but not in the critical path
@@ -184,8 +187,12 @@
             pagesShown = pageAsInt;
 
         [timelineController setAllPagesLoaded:allPagesLoaded];
+    } else if (aTimeline.count > 0) {
+        numUnreadTweets += aTimeline.count;
+        wrapperController.title =
+            [NSString stringWithFormat:@"%@ (%d)", baseTitle, numUnreadTweets];
     }
-
+    
     if (setUserToFirstTweeter) {
         timelineController.showWithoutAvatars = YES;
         if ([aTimeline count] > 0) {
@@ -196,18 +203,12 @@
             [service fetchUserInfoForUsername:self.currentUsername];
     }
 
-    BOOL scrollToTop = [SettingsReader scrollToTop] || setUserToFirstTweeter;
-    if (self.refreshButton)
-        [wrapperController.navigationItem
-            setLeftBarButtonItem:self.refreshButton
-            animated:YES];
     [wrapperController setCachedDataAvailable:YES];
-    if (scrollToTop)
-        [timelineController setTweets:[timeline allValues] page:pagesShown
-            visibleTweetId:anUpdateId];
-    else
+    
+    if (!refreshingTweets || aTimeline.count > 0) // only if something changed
         [timelineController setWithoutScrollingTweets:[timeline allValues]
             page:pagesShown];
+    
     refreshingTweets = NO;
     [[ErrorState instance] exitErrorState];
     firstFetchReceived = YES;
@@ -456,6 +457,12 @@
     [wrapperController setCachedDataAvailable:[self cachedDataAvailable]];
 }
 
+- (void)userViewedNewestTweets
+{
+    numUnreadTweets = 0;
+    wrapperController.title = baseTitle;
+}
+
 - (void)deleteTweet:(NSNumber *)tweetId
 {
     NSLog(@"Removing tweet with id %@", tweetId);
@@ -468,8 +475,8 @@
     // confirmation from Twitter that they've deleted it. If this happens before
     // deleteTweet: executes, the method will crash because the Tweet object is
     // expected to be alive.
-    [service performSelector:@selector(deleteTweet:)
-        withObject:tweetId afterDelay:1.0];
+    [service performSelector:@selector(deleteTweet:) withObject:tweetId
+        afterDelay:1.0];
 
     [self updateTweetIndexCache];
 }
@@ -620,6 +627,12 @@
                 animated:NO];
         [timelineSource fetchTimelineSince:[NSNumber numberWithInt:0]
             page:[NSNumber numberWithInt:pagesShown]];
+        
+        if (autoUpdate && !autoUpdateStarted) {
+            autoUpdateStarted = YES;
+            [self performSelector:@selector(refreshAndReschedule) withObject:nil
+                afterDelay:45];
+        }
     }
     
     hasBeenDisplayed = YES;
@@ -627,6 +640,13 @@
     self.selectedTweet = nil;
 
     [conversationDisplayMgrs removeAllObjects];
+}
+
+- (void)refreshAndReschedule
+{
+    [self refreshWithLatest];
+    [self performSelector:@selector(refreshAndReschedule) withObject:nil
+        afterDelay:45];
 }
 
 #pragma mark TimelineDisplayMgr implementation

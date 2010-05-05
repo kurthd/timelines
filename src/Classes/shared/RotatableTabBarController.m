@@ -46,8 +46,9 @@ static RotatableTabBarController * gInstance = NULL;
 
 - (BOOL)landscape
 {
-    return effectiveOrientation == UIInterfaceOrientationLandscapeLeft ||
-        effectiveOrientation == UIInterfaceOrientationLandscapeRight;
+    return NO;
+    // return effectiveOrientation == UIInterfaceOrientationLandscapeLeft ||
+    //     effectiveOrientation == UIInterfaceOrientationLandscapeRight;
 }
 
 @end

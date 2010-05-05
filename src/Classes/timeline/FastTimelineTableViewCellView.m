@@ -100,19 +100,14 @@ static UIImage * highlightedRetweetGlyph;
                 retain];
             break;
         case kDisplayThemeDark:
-            normalTopImage =
-                [[UIImage imageNamed:@"DarkThemeTopGradient.png"] retain];
+            normalTopImage = nil;
             normalBottomImage =
                 [[UIImage imageNamed:@"DarkThemeBottomGradient.png"] retain];
-            mentionTopImage =
-                [[UIImage imageNamed:@"MentionTopGradientDarkTheme.png"]
-                retain];
+            mentionTopImage = nil;
             mentionBottomImage =
                 [[UIImage imageNamed:@"MentionBottomGradientDarkTheme.png"]
                 retain];
-            darkenedTopImage =
-                [[UIImage imageNamed:@"DarkenedDarkThemeTopGradient.png"]
-                retain];
+            darkenedTopImage = nil;
             darkenedBottomImage =
                 [[UIImage imageNamed:@"DarkenedDarkThemeBottomGradient.png"]
                 retain];
@@ -396,7 +391,7 @@ static UIImage * highlightedRetweetGlyph;
             [[[self class] retweetFormatString] sizeWithFont:retweetFormatFont];
         point = CGPointMake(
             AUTHOR_LEFT_MARGIN + retweetFormatSize.width +
-            retweetGlyph.size.width + 2,
+            retweetGlyph.size.width + 3,
             size.height + TEXT_TOP_MARGIN + retweetVertOffset);
         [self.retweetAuthorName drawAtPoint:point withFont:retweetAuthorFont];
         
@@ -419,11 +414,7 @@ static UIImage * highlightedRetweetGlyph;
     CGRect avatarRect =
         CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN, AVATAR_WIDTH,
         AVATAR_HEIGHT);
-    if ([SettingsReader displayTheme] == kDisplayThemePlain)
-        [avatar drawInRect:avatarRect];
-    else
-        [avatar drawInRect:avatarRect
-            withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
+    [avatar drawInRect:avatarRect];
 }
 
 - (void)drawRectInverted:(CGRect)rect
@@ -569,7 +560,7 @@ static UIImage * highlightedRetweetGlyph;
         // draw format string
         [[self retweetTextColor] set];
         point = CGPointMake(
-            TEXT_LEFT_MARGIN + retweetGlyph.size.width + 2,
+            TEXT_LEFT_MARGIN + retweetGlyph.size.width + 3,
             size.height + TEXT_TOP_MARGIN + retweetVertOffset);
         [[[self class] retweetFormatString] drawAtPoint:point
             withFont:retweetFormatFont];
@@ -593,11 +584,7 @@ static UIImage * highlightedRetweetGlyph;
         CGRectMake(avatarLeftMargin, AVATAR_TOP_MARGIN, AVATAR_WIDTH,
         AVATAR_HEIGHT);
     
-    if ([SettingsReader displayTheme] == kDisplayThemePlain)
-        [avatar drawInRect:avatarRect];
-    else
-        [avatar drawInRect:avatarRect
-            withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
+    [avatar drawInRect:avatarRect];
 }
 
 - (void)drawRectNoAvatar:(CGRect)rect
@@ -735,7 +722,7 @@ static UIImage * highlightedRetweetGlyph;
         // draw format string
         [[self retweetTextColor] set];
         point = CGPointMake(
-            TEXT_LEFT_MARGIN + retweetGlyph.size.width + 2,
+            TEXT_LEFT_MARGIN + retweetGlyph.size.width + 3,
             size.height + TEXT_TOP_MARGIN + retweetVertOffset);
         [[[self class] retweetFormatString] drawAtPoint:point
             withFont:retweetFormatFont];
@@ -843,11 +830,7 @@ static UIImage * highlightedRetweetGlyph;
         CGRectMake(AVATAR_LEFT_MARGIN, AVATAR_TOP_MARGIN, AVATAR_WIDTH,
         AVATAR_HEIGHT);
     
-    if ([SettingsReader displayTheme] == kDisplayThemePlain)
-        [avatar drawInRect:avatarRect];
-    else
-        [avatar drawInRect:avatarRect
-            withRoundedCornersWithRadius:AVATAR_ROUNDED_CORNER_RADIUS];
+    [avatar drawInRect:avatarRect];
 }
 
 #pragma mark Accessors
@@ -1030,42 +1013,8 @@ static UIImage * highlightedRetweetGlyph;
 
     CGContextSetFillColorWithColor(context, [[UIColor whiteColor] CGColor]);
 
-    if ([SettingsReader displayTheme] == kDisplayThemePlain) {
-        CGContextFillRect(context,
-            CGRectMake(
-            leftMargin, topMargin, AVATAR_WIDTH + 2, AVATAR_HEIGHT + 2));
-    } else {
-        CGFloat roundedCornerWidth = AVATAR_ROUNDED_CORNER_RADIUS * 2 + 1;
-        CGFloat roundedCornerHeight = AVATAR_ROUNDED_CORNER_RADIUS * 2 + 1;
-        
-        CGContextFillRect(context,
-            CGRectMake(AVATAR_ROUNDED_CORNER_RADIUS + leftMargin, topMargin,
-            AVATAR_WIDTH + 2 - roundedCornerWidth, AVATAR_HEIGHT + 2));
-
-        // Draw rounded corners
-        CGContextFillEllipseInRect(context,
-            CGRectMake(leftMargin, topMargin, roundedCornerWidth,
-            roundedCornerHeight));
-        CGContextFillEllipseInRect(context,
-            CGRectMake(leftMargin,
-            AVATAR_HEIGHT + 2 + topMargin - roundedCornerHeight,
-            roundedCornerWidth, roundedCornerHeight));
-        CGContextFillRect(context,
-            CGRectMake(leftMargin, topMargin + 1 + roundedCornerHeight / 2,
-            roundedCornerWidth, AVATAR_HEIGHT  + 1 - roundedCornerHeight));
-
-        CGContextFillEllipseInRect(context,
-            CGRectMake(leftMargin + 2 + AVATAR_WIDTH - roundedCornerWidth,
-            topMargin, roundedCornerWidth, roundedCornerHeight));
-        CGContextFillEllipseInRect(context,
-            CGRectMake(leftMargin + 2 + AVATAR_WIDTH - roundedCornerWidth,
-            AVATAR_HEIGHT + 2 + topMargin - roundedCornerHeight,
-            roundedCornerWidth, roundedCornerHeight));
-        CGContextFillRect(context,
-            CGRectMake(leftMargin + 2 + AVATAR_WIDTH - roundedCornerWidth,
-            topMargin + 1 + roundedCornerHeight / 2, roundedCornerWidth,
-            AVATAR_HEIGHT - roundedCornerHeight));
-    }
+    CGContextFillRect(context,
+        CGRectMake(leftMargin, topMargin, AVATAR_WIDTH + 2, AVATAR_HEIGHT + 2));
 }
 
 - (void)drawBackground
@@ -1099,7 +1048,8 @@ static UIImage * highlightedRetweetGlyph;
     if (highlighted)
         return [UIColor whiteColor];
     else
-        return lightTheme ? [UIColor blackColor] : [UIColor whiteColor];
+        return lightTheme ?
+            [UIColor blackColor] : [UIColor twitchLightLightGrayColor];
 }
 
 - (UIColor *)timestampColor
@@ -1128,7 +1078,8 @@ static UIImage * highlightedRetweetGlyph;
 
 - (UIColor *)retweetTextColor
 {
-    return highlighted ? [UIColor whiteColor] : [UIColor grayColor];
+    return highlighted ? [UIColor whiteColor] :
+        [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1];
 }
 
 + (NSString *)starText

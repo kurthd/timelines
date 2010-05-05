@@ -50,7 +50,6 @@
     [composeTweetDisplayMgr release];
     [context release];
 
-    [listsViewController release];
     [subscriptionsCursor release];
     [lists release];
     [subscriptions release];
@@ -69,7 +68,7 @@
 
 - (id)initWithWrapperController:(NetworkAwareViewController *)aWrapperController
     navigationController:(UINavigationController *)aNavigationController
-    listsViewController:(ListsViewController *)aListsViewController
+    listsViewController:(TimelineSelectionViewController *)aListsViewController
     service:(TwitterService *)aService
     factory:(TimelineDisplayMgrFactory *)aTimelineDisplayMgrFactory
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)aComposeTweetDisplayMgr
@@ -261,10 +260,6 @@
     self.lists = [NSMutableDictionary dictionary];
     self.subscriptions = [NSMutableDictionary dictionary];
     [wrapperController setCachedDataAvailable:NO];
-
-    // HACK: forces to scroll to top
-    [listsViewController.tableView setContentOffset:CGPointMake(0, 0)
-        animated:NO];
 }
 
 - (void)refreshLists
@@ -346,14 +341,14 @@
             pagesShown++;
         else
             pagesShown = 1;
-
+        
         if (self.refreshButton)
             [wrapperController.navigationItem
                 setLeftBarButtonItem:self.refreshButton
                 animated:YES];
-
+        
         [listsViewController setLists:self.lists
-            subscriptions:self.subscriptions pagesShown:pagesShown];
+            subscriptions:self.subscriptions];
 
         if ([self.lists count] > 0 || [self.subscriptions count] > 0) {
             [wrapperController setUpdatingState:kConnectedAndNotUpdating];

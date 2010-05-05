@@ -39,7 +39,6 @@
     NSMutableDictionary * mentions;
     NSString * activeAcctUsername;
     NSNumber * mentionIdToShow;
-    NSInteger numNewMentions;
     Tweet * selectedTweet;
     TwitterCredentials * credentials;
 
@@ -49,7 +48,6 @@
     BOOL displayed;
     NSInteger outstandingRequests;
     NSInteger pagesShown;
-    BOOL showBadge;
 
     NSMutableDictionary * tweetIdToIndexDict;
     NSMutableDictionary * tweetIndexToIdDict;
@@ -67,8 +65,6 @@
     UIBarButtonItem * refreshButton;
 }
 
-@property (nonatomic, assign) NSInteger numNewMentions;
-@property (nonatomic, assign) BOOL showBadge;
 @property (nonatomic, copy) NSNumber * mentionIdToShow;
 @property (nonatomic, retain) UINavigationController * navigationController;
 @property (nonatomic, retain) UIBarButtonItem * refreshButton;

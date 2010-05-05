@@ -3,18 +3,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MapKit/MapKit.h>
 #import "LocationInfoLabelCell.h"
 #import "ButtonCell.h"
-#import "BasicMapAnnotation.h"
 #import "RoundedImage.h"
 #import "LocationInfoViewControllerDelegate.h"
 #import "TwitbitReverseGeocoder.h"
+#import "AsynchronousNetworkFetcherDelegate.h"
+#import "AsynchronousNetworkFetcher.h"
 
 @interface LocationInfoViewController :
     UITableViewController
     <UITableViewDelegate, UITableViewDataSource, TwitbitReverseGeocoderDelegate,
-    MKMapViewDelegate, UIActionSheetDelegate>
+    UIActionSheetDelegate, AsynchronousNetworkFetcherDelegate>
 {
     id<LocationInfoViewControllerDelegate> delegate;
 
@@ -33,19 +33,20 @@
 
     TwitbitReverseGeocoder * reverseGeocoder;
 
-    MKMapView * mapView;
-    BasicMapAnnotation * mapAnnotation;
-
     BOOL foundAddress;
     BOOL streetLevel;
     NSString * street;
     NSString * city;
     NSString * country;
+    
+    CLLocationCoordinate2D coord;
+    
+    AsynchronousNetworkFetcher * imageUrlFetcher;
 }
 
 @property (nonatomic, assign) id<LocationInfoViewControllerDelegate> delegate;
 
 - (void)setLocationString:(NSString *)locationString
     coordinate:(CLLocationCoordinate2D)coordinate;
-    
+
 @end

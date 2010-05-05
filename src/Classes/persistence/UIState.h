@@ -6,56 +6,33 @@
 
 @interface UIState : NSObject
 {
-    NSUInteger selectedTab;
-    NSUInteger selectedTimelineFeed;
-    NSArray * tabOrder;
-
-    NSUInteger selectedSearchBookmarkIndex;
-    NSUInteger selectedPeopleBookmarkIndex;
-
-    NSString * findPeopleText;
-    NSString * searchText;
-    BOOL nearbySearch;
-
     NSInteger numNewMentions;
 
     BOOL composingTweet;
-    NSString * directMessageRecipient;
 
     NSString * viewingUrl;
     NSString * viewingHtml;
 
     NSNumber * currentlyViewedTweetId;
     NSNumber * currentlyViewedMentionId;
-    NSNumber * currentlyViewedMessageId;
 
     NSUInteger timelineContentOffset;
+    
+    NSUInteger currentlyViewedTimeline;
 }
-
-@property (nonatomic, assign) NSUInteger selectedTab;
-@property (nonatomic, assign) NSUInteger selectedTimelineFeed;
-@property (nonatomic, copy) NSArray * tabOrder;
-
-@property (nonatomic, assign) NSUInteger selectedSearchBookmarkIndex;
-@property (nonatomic, assign) NSUInteger selectedPeopleBookmarkIndex;
-
-@property (nonatomic, copy) NSString * findPeopleText;
-@property (nonatomic, copy) NSString * searchText;
-
-@property (nonatomic, assign) BOOL nearbySearch;
 
 @property (nonatomic, assign) NSInteger numNewMentions;
 
 @property (nonatomic, assign) BOOL composingTweet;
-@property (nonatomic, copy) NSString * directMessageRecipient;
 
 @property (nonatomic, copy) NSString * viewingUrl;
 @property (nonatomic, copy) NSString * viewingHtml;
 
 @property (nonatomic, copy) NSNumber * currentlyViewedTweetId;
 @property (nonatomic, copy) NSNumber * currentlyViewedMentionId;
-@property (nonatomic, copy) NSNumber * currentlyViewedMessageId;
 
 @property (nonatomic, assign) NSUInteger timelineContentOffset;
+
+@property (nonatomic, assign) NSUInteger currentlyViewedTimeline;
 
 @end

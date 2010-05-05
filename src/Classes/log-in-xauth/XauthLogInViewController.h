@@ -19,6 +19,9 @@
 
     IBOutlet UITextField * usernameTextField;
     IBOutlet UITextField * passwordTextField;
+    
+    IBOutlet UILabel * usernameLabel;
+    IBOutlet UILabel * passwordLabel;
 
     BOOL allowsCancel;
 }

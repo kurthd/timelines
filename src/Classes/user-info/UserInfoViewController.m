@@ -11,7 +11,6 @@
 #import "User+UIAdditions.h"
 #import "TwitchWebBrowserDisplayMgr.h"
 #import "PhotoBrowserDisplayMgr.h"
-#import "RotatableTabBarController.h"
 #import "SettingsReader.h"
 #import "TwitbitShared.h"
 #import "ActionButtonCell.h"
@@ -148,9 +147,7 @@ static NSNumberFormatter * formatter;
         lineTwo:addToBookmarksLineTwo];
     bookmarkButton.action = @selector(bookmark);
 
-    self.view.frame =
-        [[RotatableTabBarController instance] landscape] ?
-        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+    self.view.frame = CGRectMake(0, 0, 320, 416);
 
     if ([SettingsReader displayTheme] == kDisplayThemeDark) {
         self.tableView.separatorColor = [UIColor twitchGrayColor];
@@ -223,22 +220,9 @@ static NSNumberFormatter * formatter;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    self.view.frame =
-        [[RotatableTabBarController instance] landscape] ?
-        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
-
+    
     [delegate showingUserInfoView];
-    UIInterfaceOrientation orientation =
-        [[RotatableTabBarController instance] effectiveOrientation];
-    [self updateButtonsForOrientation:orientation];
-
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
-    if (lastDisplayedInLandscape != landscape) {
-        [self.tableView reloadData];
-        [self layoutViews];
-    }
-
+    
     if (user.username) {
         // This captures the case where the user just added a contact and the
         // modal view is removed
@@ -256,21 +240,6 @@ static NSNumberFormatter * formatter;
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    lastDisplayedInLandscape = [[RotatableTabBarController instance] landscape];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)orientation
-{
-    return YES;
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)o
-    duration:(NSTimeInterval)duration
-{
-    [self updateButtonsForOrientation:o];
-    [self.tableView reloadData];
-    [self layoutViews];
 }
 
 - (void)updateButtonsForOrientation:(UIInterfaceOrientation)o
@@ -345,10 +314,9 @@ static NSNumberFormatter * formatter;
     ActionButtonCell * actionButtonCell;
     NSString * actionText;
     UIImage * actionImage;
-    BOOL landscape = [[RotatableTabBarController instance] landscape];
     switch (indexPath.section) {
         case kUserInfoSectionDetails:
-            [self.locationCell setLandscape:landscape];
+            [self.locationCell setLandscape:NO];
             cell = self.locationCell;
             break;
         case kUserInfoSectionNetwork:

@@ -51,8 +51,6 @@
 
     SavedSearchMgr * findPeopleBookmarkMgr;
     LocationCell * locationCell;
-
-    BOOL lastDisplayedInLandscape;
 }
 
 @property (nonatomic, assign)

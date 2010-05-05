@@ -19,9 +19,6 @@ static ComposeTweetImageQuality imageQuality;
 static BOOL alreadyReadNearbySearchRadiusValue;
 static NSInteger nearbySearchRadius;
 
-static BOOL alreadyReadThemeValue;
-static NSInteger theme;
-
 static BOOL scrollToTopValueAlreadyRead;
 static BOOL scrollToTop;
 
@@ -94,15 +91,7 @@ static NSInteger timelineFontSize;
 
 + (DisplayTheme)displayTheme
 {
-    if (!alreadyReadThemeValue) {
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        NSInteger themeValAsNumber = [defaults integerForKey:@"theme"];
-        theme = themeValAsNumber;
-    }
-
-    alreadyReadThemeValue = YES;
-
-    return theme;
+    return kDisplayThemeDark;
 }
 
 + (BOOL)scrollToTop
@@ -112,7 +101,7 @@ static NSInteger timelineFontSize;
         scrollToTop = [defaults boolForKey:@"scroll_to_top"];
         scrollToTopValueAlreadyRead = YES;
     }
-
+    
     return scrollToTop;
 }
 

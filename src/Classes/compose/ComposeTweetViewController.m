@@ -48,7 +48,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
 
 - (void)saveCurrentStateAsDraft;
 
-- (void)displayForOrientation:(UIInterfaceOrientation)orientation;
 - (void)displayForPortraitMode;
 
 - (BOOL)composingDirectMessage;
@@ -459,49 +458,37 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [textView resignFirstResponder];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)orientation
-{
-    return !displayingActivity;
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
-                                duration:(NSTimeInterval)duration
-{
-    [self displayForOrientation:orientation];
-}
-
-- (void)displayForOrientation:(UIInterfaceOrientation)orientation
-{
-    if (orientation == UIInterfaceOrientationPortrait ||
-        orientation == UIInterfaceOrientationPortraitUpsideDown)
-        [self displayForPortraitMode];
-    else {
-        if ([self composingDirectMessage]) {
-            CGRect recipientViewFrame = recipientView.frame;
-            recipientViewFrame.size.height = 29;
-            recipientView.frame = recipientViewFrame;
-
-            CGRect textViewFrame = textView.frame;
-            textViewFrame.origin.y = 29;
-            textViewFrame.size.height = 125;
-            textView.frame = textViewFrame;
-
-            CGRect addRecipientButtonFrame = addRecipientButton.frame;
-            addRecipientButtonFrame.origin.y = 0;
-            addRecipientButton.frame = addRecipientButtonFrame;
-        } else {
-            CGRect textViewFrame = textView.frame;
-            textViewFrame.size.height = 165.0;
-            textView.frame= textViewFrame;
-        }
-
-        characterCountLandscape.alpha = 1.0;
-        toolbar.hidden = YES;
-
-        self.navigationItem.titleView = nil;
-    }
-}
+// - (void)displayForOrientation:(UIInterfaceOrientation)orientation
+// {
+//     if (orientation == UIInterfaceOrientationPortrait ||
+//         orientation == UIInterfaceOrientationPortraitUpsideDown)
+//         [self displayForPortraitMode];
+//     else {
+//         if ([self composingDirectMessage]) {
+//             CGRect recipientViewFrame = recipientView.frame;
+//             recipientViewFrame.size.height = 29;
+//             recipientView.frame = recipientViewFrame;
+// 
+//             CGRect textViewFrame = textView.frame;
+//             textViewFrame.origin.y = 29;
+//             textViewFrame.size.height = 125;
+//             textView.frame = textViewFrame;
+// 
+//             CGRect addRecipientButtonFrame = addRecipientButton.frame;
+//             addRecipientButtonFrame.origin.y = 0;
+//             addRecipientButton.frame = addRecipientButtonFrame;
+//         } else {
+//             CGRect textViewFrame = textView.frame;
+//             textViewFrame.size.height = 165.0;
+//             textView.frame= textViewFrame;
+//         }
+// 
+//         characterCountLandscape.alpha = 1.0;
+//         toolbar.hidden = YES;
+// 
+//         self.navigationItem.titleView = nil;
+//     }
+// }
 
 - (void)displayForPortraitMode
 {
@@ -518,10 +505,10 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         addRecipientButtonFrame.origin.y = 5;
         addRecipientButton.frame = addRecipientButtonFrame;
     }
-
+    
     characterCountLandscape.alpha = 0.0;
     toolbar.hidden = NO;
-
+    
     self.navigationItem.titleView = portraitHeaderView;
 }
 
@@ -803,10 +790,6 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
     [self updateCharacterCountFromInterface];
     [self enableUrlShorteningButtonFromInterface];
 
-    UIInterfaceOrientation orientation =
-        [[RotatableTabBarController instance] effectiveOrientation];
-    [self displayForOrientation:orientation];
-
     [self setTitleView];
 
     // set the colors for the current theme
@@ -816,6 +799,8 @@ static const NSInteger MAX_TWEET_LENGTH = 140;
         textView.backgroundColor = [UIColor defaultDarkThemeCellColor];
         textView.textColor = [UIColor whiteColor];
     }
+    
+    [self displayForPortraitMode];
 }
 
 - (BOOL)viewNeedsInitialization

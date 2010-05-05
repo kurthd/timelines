@@ -11,7 +11,6 @@
 
 - (void)userWantsToAddAccount;
 - (BOOL)userDeletedAccount:(TwitterCredentials *)credentials;
-
 - (void)userWantsToEditAccount:(TwitterCredentials *)credentials;
 
 - (TwitterCredentials *)currentActiveAccount;

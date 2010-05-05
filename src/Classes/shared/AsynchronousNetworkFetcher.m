@@ -45,7 +45,7 @@
         self.delegate = aDelegate;
 
         // HACK
-        [[UIApplication sharedApplication] networkActivityIsStarting];
+        // [[UIApplication sharedApplication] networkActivityIsStarting];
 
         // Bit of a hack, but make sure we are retained while the request is
         // outstanding
@@ -89,7 +89,7 @@
         [delegate fetcher:self didReceiveData:data fromUrl:url];
 
     // HACK
-    [[UIApplication sharedApplication] networkActivityDidFinish];
+    // [[UIApplication sharedApplication] networkActivityDidFinish];
 
     [connection release];
     [data release];
@@ -103,7 +103,7 @@
         [delegate fetcher:self failedToReceiveDataFromUrl:url error:error];
 
     // HACK
-    [[UIApplication sharedApplication] networkActivityDidFinish];
+    // [[UIApplication sharedApplication] networkActivityDidFinish];
 
     [connection release];
     [data release];

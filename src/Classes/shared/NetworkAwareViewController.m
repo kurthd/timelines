@@ -4,7 +4,6 @@
 
 #import "NetworkAwareViewController.h"
 #import "UIColor+TwitchColors.h"
-#import "RotatableTabBarController.h"
 
 @interface NetworkAwareViewController (Private)
 
@@ -64,9 +63,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 - (id)initWithTargetViewController:(UIViewController *)aTargetViewController
 {
     if (self = [super init]) {
-        CGRect frame =
-            [[RotatableTabBarController instance] landscape] ?
-            CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+        CGRect frame = CGRectMake(0, 0, 320, 416);
         self.view = [[UIView alloc] initWithFrame:frame];
 
         [self noDataViewController].view.backgroundColor =
@@ -92,9 +89,7 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 {
     [super viewWillAppear:animated];
 
-    self.view.frame =
-        [[RotatableTabBarController instance] landscape] ?
-        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+    self.view.frame = CGRectMake(0, 0, 320, 416);
 
     if ([self targetViewIsDisplayed])
         [targetViewController viewWillAppear:animated];
@@ -153,38 +148,6 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
         [targetViewController viewDidDisappear:animated];
     else
         [noDataViewController viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:
-    (UIInterfaceOrientation)orientation
-{
-    return YES;
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
-                                duration:(NSTimeInterval)duration
-{
-    self.view.frame =
-        orientation == UIInterfaceOrientationPortrait ||
-        orientation == UIInterfaceOrientationPortraitUpsideDown ?
-        CGRectMake(0, 0, 320, 367) :
-        CGRectMake(0, 0, 480, 220);
-
-    [targetViewController willRotateToInterfaceOrientation:orientation
-        duration:duration];
-    [noDataViewController willRotateToInterfaceOrientation:orientation
-        duration:duration];
-    if ([delegate respondsToSelector:@selector(viewWillRotateToOrientation:)])
-        [delegate viewWillRotateToOrientation:orientation];
-
-    [self updatingView].hidden = YES;
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)orientation
-{
-    [targetViewController didRotateFromInterfaceOrientation:orientation];
-
-    [self resetUpdatingView];
 }
 
 - (void)resetUpdatingView
@@ -404,17 +367,17 @@ static const CGFloat ACTIVITY_INDICATOR_LENGTH = 20;
 
 - (CGFloat)y
 {
-    return ![[RotatableTabBarController instance] landscape] ? 338 : 190;
+    return 190;
 }
 
 - (CGFloat)screenWidth
 {
-    return ![[RotatableTabBarController instance] landscape] ? 320 : 480;
+    return 480;
 }
 
 - (CGFloat)viewLength
 {
-    return ![[RotatableTabBarController instance] landscape] ? 320 : 480;
+    return 480;
 }
 
 - (CGFloat)viewHeight
