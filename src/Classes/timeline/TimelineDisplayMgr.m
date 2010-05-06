@@ -154,24 +154,43 @@
     NSLog(@"Timeline update id: %@", anUpdateId);
     NSLog(@"Timeline page: %@", page);
 
+    NSArray * sortedTimeline;
     if ([aTimeline count] > 0) {
-        NSArray * sortedTimeline =
+        sortedTimeline =
             [[aTimeline sortedArrayUsingSelector:@selector(compare:)]
             arrayByReversingContents];
         Tweet * mostRecentTweet = [sortedTimeline objectAtIndex:0];
         long long updateIdAsLongLong =
             [mostRecentTweet.identifier longLongValue];
         self.updateId = [NSNumber numberWithLongLong:updateIdAsLongLong];
-    }
-
+    } else
+        sortedTimeline = aTimeline;
+    
+    NSNumber * mostRecentOldTweetId = nil;
     NSInteger oldTimelineCount = [[timeline allKeys] count];
-    if (!firstFetchReceived)
+    if (!firstFetchReceived && timeline.count > 0) {
+        NSArray * sortedOldKeys =
+            [[timeline allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        mostRecentOldTweetId =
+            [sortedOldKeys objectAtIndex:sortedOldKeys.count - 1];
         [timeline removeAllObjects];
-    for (Tweet * tweet in aTimeline)
+    }
+    
+    for (Tweet * tweet in sortedTimeline) {
+        if (mostRecentOldTweetId) {
+            if ([mostRecentOldTweetId isEqual:tweet.identifier])
+                mostRecentOldTweetId = nil; // force to stop incrementing
+            else
+                numUnreadTweets++;
+        }
         [timeline setObject:tweet forKey:tweet.identifier];
-
+    }
+    // Don't bother if they're all new
+    if (numUnreadTweets == [[timeline allKeys] count])
+        numUnreadTweets = 0;
+    
     NSInteger newTimelineCount = [[timeline allKeys] count];
-
+    
     if (!refreshingTweets) { // loading more
         NSInteger pageAsInt = [page intValue];
         allPagesLoaded =
@@ -187,11 +206,12 @@
             pagesShown = pageAsInt;
 
         [timelineController setAllPagesLoaded:allPagesLoaded];
-    } else if (aTimeline.count > 0) {
+    } else if (newTimelineCount > oldTimelineCount && oldTimelineCount != 0)
         numUnreadTweets += aTimeline.count;
+    
+    if (numUnreadTweets > 0)
         wrapperController.title =
             [NSString stringWithFormat:@"%@ (%d)", baseTitle, numUnreadTweets];
-    }
     
     if (setUserToFirstTweeter) {
         timelineController.showWithoutAvatars = YES;
@@ -205,7 +225,7 @@
 
     [wrapperController setCachedDataAvailable:YES];
     
-    if (!refreshingTweets || aTimeline.count > 0) // only if something changed
+    if (!refreshingTweets || newTimelineCount > oldTimelineCount)
         [timelineController setWithoutScrollingTweets:[timeline allValues]
             page:pagesShown];
     

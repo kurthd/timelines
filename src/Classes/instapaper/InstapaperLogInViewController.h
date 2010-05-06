@@ -33,6 +33,9 @@ typedef enum {
 
     IBOutlet UITextField * usernameTextField;
     IBOutlet UITextField * passwordTextField;
+    
+    IBOutlet UILabel * usernameLabel;
+    IBOutlet UILabel * passwordLabel;
 
     InstapaperCredentials * credentials;
 

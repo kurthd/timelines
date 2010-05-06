@@ -16,6 +16,7 @@
 - (NSArray *)sortedLists;
 - (NSArray *)sortedSubscriptions;
 - (NSString *)listNameAtRow:(NSInteger)row;
+- (TwitterList *)listAtRow:(NSInteger)row;
 
 @end
 
@@ -93,6 +94,8 @@
 - (void)tableView:(UITableView *)tv
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSInteger listsRange =
+        4 + [self sortedLists].count + [self sortedSubscriptions].count;
     switch (indexPath.row) {
         case 0:
             [delegate showTimeline];
@@ -105,6 +108,12 @@
             break;
         case 3:
             [delegate showRetweets];
+            break;
+        default:
+            if (indexPath.row < listsRange) {
+                TwitterList * twitterList = [self listAtRow:indexPath.row];
+                [delegate userDidSelectListWithId:twitterList.identifier];
+            }
             break;
     }
 }
@@ -160,6 +169,19 @@
     }
     
     return listNameAtRow;
+}
+
+- (TwitterList *)listAtRow:(NSInteger)row
+{
+    TwitterList * listAtRow;
+    if (row < 4 + [self sortedLists].count)
+        listAtRow = [[self sortedLists] objectAtIndex:row - 4];
+    else
+        listAtRow =
+            [[self sortedSubscriptions]
+            objectAtIndex:row - 4 - [self sortedLists].count];
+    
+    return listAtRow;
 }
 
 @end

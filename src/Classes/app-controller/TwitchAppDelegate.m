@@ -241,9 +241,9 @@ enum {
         
         [mainNavController pushViewController:timelineSelectionController
             animated:YES];
+        
+        [self setUIStateFromPersistenceAndNotification:notification];
     }
-    
-    [self setUIStateFromPersistenceAndNotification:notification];
     
     [self performSelector:
         @selector(finishInitializationWithTimeInsensitiveOperations)
@@ -390,8 +390,7 @@ enum {
 #pragma mark ComposeTweetDisplayMgrDelegate implementation
 
 - (void)userDidCancelComposingTweet
-{
-}
+{}
 
 - (void)userIsSendingTweet:(NSString *)tweet
 {
@@ -718,7 +717,7 @@ enum {
 
     listsDisplayMgr =
         [[ListsDisplayMgr alloc]
-        initWithWrapperController:nil
+        initWithWrapperController:listsNetAwareViewController
         navigationController:mainNavController
         listsViewController:timelineSelectionController
         service:service
@@ -726,7 +725,8 @@ enum {
         composeTweetDisplayMgr:self.composeTweetDisplayMgr
         context:[self managedObjectContext]];
     service.delegate = listsDisplayMgr;
-
+    listsNetAwareViewController.delegate = listsDisplayMgr;
+    
     [listsDisplayMgr setCredentials:creds];
     // Don't autorelease
     [[CredentialsActivatedPublisher alloc]
@@ -1103,6 +1103,7 @@ enum {
             
             [mainNavController pushViewController:timelineSelectionController
                 animated:NO];
+            [listsDisplayMgr refreshLists];
         }
         [self.credentials addObject:changedCredentials];
     } else {
@@ -1547,8 +1548,11 @@ enum {
 }
 
 - (void)showRetweetsAnimated:(BOOL)animated
+{}
+
+- (void)userDidSelectListWithId:(NSNumber *)identifier
 {
-    
+    [listsDisplayMgr userDidSelectListWithId:identifier];
 }
 
 #pragma mark Accessors

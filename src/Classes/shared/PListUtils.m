@@ -62,7 +62,7 @@
     NSData * plistData =
         [NSPropertyListSerialization
         dataFromPropertyList:obj
-        format:NSPropertyListXMLFormat_v1_0
+        format:NSPropertyListBinaryFormat_v1_0
         errorDescription:&errorDesc];
 
     if (plistData)

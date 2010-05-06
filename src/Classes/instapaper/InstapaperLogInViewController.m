@@ -6,6 +6,7 @@
 #import "InstapaperCredentials+KeychainAdditions.h"
 #import "UIButton+StandardButtonAdditions.h"
 #import "SettingsReader.h"
+#import "UIColor+TwitchColors.h"
 
 @interface InstapaperLogInViewController ()
 
@@ -91,6 +92,16 @@
 
     displayingActivity = NO;
     editingExistingAccount = NO;
+    
+    self.tableView.separatorColor = [UIColor twitchGrayColor];
+    self.tableView.backgroundColor = [UIColor twitchBackgroundColor];
+    
+    usernameCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
+    passwordCell.backgroundColor = [UIColor defaultDarkThemeCellColor];
+    usernameLabel.textColor = [UIColor whiteColor];
+    passwordLabel.textColor = [UIColor whiteColor];
+    usernameTextField.textColor = [UIColor whiteColor];
+    passwordTextField.textColor = [UIColor whiteColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -122,10 +133,31 @@
     return 2;
 }
 
-- (NSString *)tableView:(UITableView *)tableView
-    titleForFooterInSection:(NSInteger)section
+- (UIView *)tableView:(UITableView *)tableView
+    viewForFooterInSection:(NSInteger)section
 {
-    return NSLocalizedString(@"instapaperloginview.footer", @"");
+    static UILabel * footerLabel;
+    if (!footerLabel) {
+        footerLabel = [[UILabel alloc] init];
+        footerLabel.frame = CGRectMake(15, 5, 290, 85);
+        footerLabel.backgroundColor = self.view.backgroundColor;
+        footerLabel.textColor = [UIColor lightGrayColor];
+        footerLabel.shadowColor = [UIColor blackColor];
+        footerLabel.numberOfLines = 4;
+        footerLabel.shadowOffset = CGSizeMake(0, 1);
+        footerLabel.textAlignment = UITextAlignmentCenter;
+        footerLabel.text =
+            NSLocalizedString(@"instapaperloginview.footer", @"");
+        footerLabel.font = [UIFont systemFontOfSize:15];
+    }
+    
+    return footerLabel;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView
+    heightForFooterInSection:(NSInteger)section
+{
+    return 100;
 }
 
 // Customize the appearance of table view cells.

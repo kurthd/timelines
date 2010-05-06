@@ -10,6 +10,7 @@
 - (void)showMentions;
 - (void)showFavorites;
 - (void)showRetweets;
+- (void)userDidSelectListWithId:(NSNumber *)identifier;
 
 @end
 

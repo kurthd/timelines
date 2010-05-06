@@ -6,8 +6,6 @@
 
 @interface UIState : NSObject
 {
-    NSInteger numNewMentions;
-
     BOOL composingTweet;
 
     NSString * viewingUrl;
@@ -20,8 +18,6 @@
     
     NSUInteger currentlyViewedTimeline;
 }
-
-@property (nonatomic, assign) NSInteger numNewMentions;
 
 @property (nonatomic, assign) BOOL composingTweet;
 

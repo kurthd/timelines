@@ -8,7 +8,6 @@
 @interface UIStatePersistenceStore (Private)
 
 + (NSString *)plistName;
-+ (NSString *)numNewMentionsKey;
 + (NSString *)composingTweetKey;
 + (NSString *)viewingUrlKey;
 + (NSString *)viewingHtmlKey;
@@ -28,8 +27,6 @@
     NSDictionary * dict =
         [PlistUtils getDictionaryFromPlist:[[self class] plistName]];
 
-    NSUInteger numNewMentions =
-        [[dict objectForKey:[[self class] numNewMentionsKey]] unsignedIntValue];
     BOOL composingTweet =
         [[dict objectForKey:[[self class] composingTweetKey]] boolValue];
     NSString * viewingUrl = [dict objectForKey:[[self class] viewingUrlKey]];
@@ -44,7 +41,6 @@
     NSInteger currentlyViewedTimeline =
         [[dict objectForKey:[[self class] currentlyViewedTimelineKey]]
         unsignedIntValue];
-    state.numNewMentions = numNewMentions;
     state.composingTweet = composingTweet;
     state.viewingUrl = viewingUrl;
     state.viewingHtml = viewingHtml;
@@ -59,10 +55,6 @@
 - (void)save:(UIState *)state
 {
     NSMutableDictionary * dict = [NSMutableDictionary dictionary];
-
-    NSNumber * numNewMentions =
-        [NSNumber numberWithUnsignedInt:state.numNewMentions];
-    [dict setObject:numNewMentions forKey:[[self class] numNewMentionsKey]];
 
     NSNumber * composingTweet = [NSNumber numberWithBool:state.composingTweet];
     [dict setObject:composingTweet forKey:[[self class] composingTweetKey]];
@@ -97,11 +89,6 @@
 + (NSString *)plistName
 {
     return @"UIState";
-}
-
-+ (NSString *)numNewMentionsKey
-{
-    return @"numNewMentions";
 }
 
 + (NSString *)composingTweetKey

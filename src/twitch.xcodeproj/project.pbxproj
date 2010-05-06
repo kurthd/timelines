@@ -1776,7 +1776,7 @@
 		05EDAEFD1029F75600D0B62B /* TweetTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetTextTableViewCell.h; path = timeline/TweetTextTableViewCell.h; sourceTree = "<group>"; };
 		05EDAEFE1029F75600D0B62B /* TweetTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetTextTableViewCell.m; path = timeline/TweetTextTableViewCell.m; sourceTree = "<group>"; };
 		05EDAF0B1029FAAB00D0B62B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/TweetView.xib; sourceTree = "<group>"; };
-		05EF418F0FFADF95007B59F1 /* Twitbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		05EF418F0FFADF95007B59F1 /* Timelines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timelines.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05EF41970FFAE449007B59F1 /* twitbit-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "twitbit-info.plist"; sourceTree = "<group>"; };
 		05F459ED0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FetchDirectMessagesResponseProcessor.h; path = twitter/processors/FetchDirectMessagesResponseProcessor.h; sourceTree = "<group>"; };
 		05F459EE0FF012D900EBAFC7 /* FetchDirectMessagesResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FetchDirectMessagesResponseProcessor.m; path = twitter/processors/FetchDirectMessagesResponseProcessor.m; sourceTree = "<group>"; };
@@ -3379,7 +3379,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				05EF418F0FFADF95007B59F1 /* Twitbit.app */,
+				05EF418F0FFADF95007B59F1 /* Timelines.app */,
 				052E05A910700858005CEC5F /* Twitbit Lite.app */,
 			);
 			name = Products;
@@ -3900,7 +3900,7 @@
 			);
 			name = Twitbit;
 			productName = twitch;
-			productReference = 05EF418F0FFADF95007B59F1 /* Twitbit.app */;
+			productReference = 05EF418F0FFADF95007B59F1 /* Timelines.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -5527,7 +5527,7 @@
 					"\"$(SRCROOT)/AdMob\"",
 					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
-				PRODUCT_NAME = Twitbit;
+				PRODUCT_NAME = Timelines;
 			};
 			name = Debug;
 		};
@@ -5581,7 +5581,7 @@
 					"\"$(SRCROOT)/AdMob\"",
 					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
-				PRODUCT_NAME = Twitbit;
+				PRODUCT_NAME = Timelines;
 			};
 			name = Release;
 		};
@@ -5743,7 +5743,7 @@
 					"\"$(SRCROOT)/AdMob\"",
 					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
-				PRODUCT_NAME = Twitbit;
+				PRODUCT_NAME = Timelines;
 				PROVISIONING_PROFILE = "2D37E309-EE83-4DFE-9C43-AE121257A653";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2D37E309-EE83-4DFE-9C43-AE121257A653";
 			};
@@ -5804,7 +5804,7 @@
 					"\"$(SRCROOT)/AdMob\"",
 					"\"$(SRCROOT)/Classes/vendor/pinch-analytics\"",
 				);
-				PRODUCT_NAME = Twitbit;
+				PRODUCT_NAME = Timelines;
 			};
 			name = "Distribution - Ad Hoc";
 		};

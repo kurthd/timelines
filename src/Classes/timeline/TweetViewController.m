@@ -191,6 +191,9 @@ enum TweetActionSheets {
 {
     [super viewWillAppear:animated];
     [delegate showingTweetDetails:self];
+    
+    // this fixes a bug in the dimensions when the app loads on this view
+    self.view.frame = CGRectMake(0, 0, 320, 416);
 }
 
 - (void)viewWillDisappear:(BOOL)animated

@@ -106,7 +106,6 @@ static NSNumberFormatter * formatter;
     [stopFollowingButton release];
     [blockButton release];
     [addToContactsButton release];
-    [bookmarkButton release];
 
     [user release];
 
@@ -125,27 +124,6 @@ static NSNumberFormatter * formatter;
 
     self.tableView.tableHeaderView = headerView;
     self.tableView.tableFooterView = footerView;
-
-    NSString * addToContactsLineOne =
-        NSLocalizedString(@"userinfo.addtocontacts.one", @"");
-    NSString * addToContactsLineTwo =
-        NSLocalizedString(@"userinfo.addtocontacts.two", @"");
-    [addToContactsButton setLineOne:addToContactsLineOne
-        lineTwo:addToContactsLineTwo];
-    addToContactsButton.action = @selector(addUserToContacts);
-
-    NSString * blockLineOne = NSLocalizedString(@"userinfo.block", @"");
-    NSString * blockLineTwo = NSLocalizedString(@"userinfo.blockuser.two", @"");
-    [blockButton setLineOne:blockLineOne lineTwo:blockLineTwo];
-    blockButton.action = @selector(changeBlockedState);
-
-    NSString * addToBookmarksLineOne =
-        NSLocalizedString(@"userinfo.addtobookmarks.one", @"");
-    NSString * addToBookmarksLineTwo =
-        NSLocalizedString(@"userinfo.addtobookmarks.two", @"");
-    [bookmarkButton setLineOne:addToBookmarksLineOne
-        lineTwo:addToBookmarksLineTwo];
-    bookmarkButton.action = @selector(bookmark);
 
     self.view.frame = CGRectMake(0, 0, 320, 416);
 
@@ -209,6 +187,23 @@ static NSNumberFormatter * formatter;
         followsYouLabel.backgroundColor = self.view.backgroundColor;
         followsYouLabel.textColor = [UIColor lightGrayColor];
         followsYouLabel.shadowColor = [UIColor blackColor];
+        
+        UIImage * buttonImage =
+            [[UIImage imageNamed:@"DarkThemeButtonBackground.png"]
+            stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+        [blockButton setBackgroundImage:buttonImage
+            forState:UIControlStateNormal];
+        [blockButton setBackgroundImage:buttonImage
+            forState:UIControlStateDisabled];
+        [addToContactsButton setBackgroundImage:buttonImage
+            forState:UIControlStateNormal];
+        [blockButton setTitleColor:[UIColor twitchBlueOnDarkBackgroundColor]
+            forState:UIControlStateNormal];
+        [blockButton setTitleColor:[UIColor blackColor]
+            forState:UIControlStateDisabled];
+        [addToContactsButton
+            setTitleColor:[UIColor twitchBlueOnDarkBackgroundColor]
+            forState:UIControlStateNormal];
     }
 
     [self layoutViews];
@@ -257,24 +252,6 @@ static NSNumberFormatter * formatter;
         addToContactsX = 166;
         bookmarkButtonX = 323;
     }
-
-    CGRect blockButtonFrame = blockButton.frame;
-    blockButtonFrame.size.width = buttonWidth;
-    blockButton.frame = blockButtonFrame;
-
-    CGRect addToContactsButtonFrame = addToContactsButton.frame;
-    addToContactsButtonFrame.size.width = buttonWidth;
-    addToContactsButtonFrame.origin.x = addToContactsX;
-    addToContactsButton.frame = addToContactsButtonFrame;
-
-    CGRect bookmarkButtonFrame = bookmarkButton.frame;
-    bookmarkButtonFrame.size.width = buttonWidth;
-    bookmarkButtonFrame.origin.x = bookmarkButtonX;
-    bookmarkButton.frame = bookmarkButtonFrame;
-    
-    [blockButton setNeedsDisplay];
-    [addToContactsButton setNeedsDisplay];
-    [bookmarkButton setNeedsDisplay];
 }
 
 #pragma mark UITableViewDataSource implementation
@@ -573,9 +550,6 @@ static NSNumberFormatter * formatter;
     if (newUser)
         [self.locationCell setLocationText:user.location];
 
-    bookmarkButton.enabled =
-        ![findPeopleBookmarkMgr isSearchSaved:user.username];
-
     // allow adding to contacts iff not already added or not in the address book
     ABRecordID recordId = [contactCacheReader recordIdForUser:user.username];
     ABAddressBookRef addressBook = ABAddressBookCreate();
@@ -624,12 +598,8 @@ static NSNumberFormatter * formatter;
     blockedStateSet = YES;
     blockButton.enabled = YES;
 
-    NSString * title =
-        blocked ?
-        NSLocalizedString(@"userinfo.unblock", @"") :
-        NSLocalizedString(@"userinfo.block", @"");
-    NSString * blockLineTwo = NSLocalizedString(@"userinfo.blockuser.two", @"");
-    [blockButton setLineOne:title lineTwo:blockLineTwo];
+    NSString * title = blocked ? @"Unblock User" : @"Block User";
+    [blockButton setTitle:title forState:UIControlStateNormal];
 }
 
 - (void)setFailedToQueryBlocked
@@ -716,14 +686,7 @@ static NSNumberFormatter * formatter;
     [delegate sendDirectMessageToUser:user.username];
 }
 
-- (void)bookmark
-{
-    NSLog(@"Bookmarking user");
-    [findPeopleBookmarkMgr addSavedSearch:user.username];
-    bookmarkButton.enabled = NO;
-}
-
-- (void)changeBlockedState
+- (IBAction)changeBlockedState
 {
     blockButton.enabled = NO;
     if (currentlyBlocked)
@@ -732,7 +695,7 @@ static NSNumberFormatter * formatter;
         [delegate blockUser:user.username];
 }
 
-- (void)addUserToContacts
+- (IBAction)addUserToContacts
 {
     NSLog(@"Tapped 'Add to Contacts' button");
     ABRecordRef person = ABPersonCreate();
@@ -874,6 +837,16 @@ static NSNumberFormatter * formatter;
     }
 
     return locationCell;
+}
+
+- (IBAction)toggleBlockedState:(id)sender
+{
+    
+}
+
+- (IBAction)addToContacts:(id)sender
+{
+    
 }
 
 + (UIImage *)defaultAvatar

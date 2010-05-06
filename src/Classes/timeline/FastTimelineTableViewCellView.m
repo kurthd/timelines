@@ -79,80 +79,28 @@ static UIImage * highlightedRetweetGlyph;
     //
     // Background images
     //
-    NSInteger displayTheme = [SettingsReader displayTheme];
-    lightTheme = displayTheme != kDisplayThemeDark;
-    
-    switch (displayTheme) {
-        case kDisplayThemeLight:
-            normalTopImage =
-                [[UIImage imageNamed:@"TableViewCellTopGradient.png"] retain];
-            normalBottomImage =
-                [[UIImage imageNamed:@"TableViewCellGradient.png"] retain];
-            mentionTopImage =
-                [[UIImage imageNamed:@"MentionTopGradient.png"] retain];
-            mentionBottomImage =
-                [[UIImage imageNamed:@"MentionBottomGradient.png"] retain];
-            darkenedTopImage =
-                [[UIImage imageNamed:@"DarkenedTableViewCellTopGradient.png"]
-                retain];
-            darkenedBottomImage =
-                [[UIImage imageNamed:@"DarkenedTableViewCellGradient.png"]
-                retain];
-            break;
-        case kDisplayThemeDark:
-            normalTopImage = nil;
-            normalBottomImage =
-                [[UIImage imageNamed:@"DarkThemeBottomGradient.png"] retain];
-            mentionTopImage = nil;
-            mentionBottomImage =
-                [[UIImage imageNamed:@"MentionBottomGradientDarkTheme.png"]
-                retain];
-            darkenedTopImage = nil;
-            darkenedBottomImage =
-                [[UIImage imageNamed:@"DarkenedDarkThemeBottomGradient.png"]
-                retain];
-            break;
-        case kDisplayThemePlain:
-            normalTopImage = nil;
-            normalBottomImage =
-                [[UIImage imageNamed:@"PlainTableViewCellBorder.png"] retain];
-            mentionTopImage = nil;
-            mentionBottomImage =
-                [[UIImage imageNamed:@"PlainTableViewCellBorder.png"] retain];
-            darkenedTopImage = nil;
-            darkenedBottomImage =
-                [[UIImage imageNamed:@"PlainTableViewCellBorder.png"] retain];
-            break;
-    }
+    normalTopImage = nil;
+    normalBottomImage =
+        [[UIImage imageNamed:@"DarkThemeBottomGradient.png"] retain];
+    mentionTopImage = nil;
+    mentionBottomImage =
+        [[UIImage imageNamed:@"MentionBottomGradientDarkTheme.png"]
+        retain];
+    darkenedTopImage = nil;
+    darkenedBottomImage =
+        [[UIImage imageNamed:@"DarkenedDarkThemeBottomGradient.png"]
+        retain];
     
     //
     // Fonts
     //
-    if ([SettingsReader timelineFontSize] == kTimelineFontSizeSmall) {
-        authorFont = [[UIFont boldSystemFontOfSize:14.0] retain];
-        timestampFont = [[UIFont systemFontOfSize:11.5] retain];
-        timestampBoldFont = [[UIFont boldSystemFontOfSize:13.0] retain];
-        textFont = [[UIFont systemFontOfSize:13.0] retain];
-        favoriteFont = [[UIFont boldSystemFontOfSize:15.0] retain];
-        retweetFormatFont = [[UIFont systemFontOfSize:13.0] retain];
-        retweetAuthorFont = [[UIFont boldSystemFontOfSize:13.0] retain];
-    } else if ([SettingsReader timelineFontSize] == kTimelineFontSizeMedium) {
-        authorFont = [[UIFont boldSystemFontOfSize:15.0] retain];
-        timestampFont = [[UIFont systemFontOfSize:12.5] retain];
-        timestampBoldFont = [[UIFont boldSystemFontOfSize:14.0] retain];
-        textFont = [[UIFont systemFontOfSize:14.0] retain];
-        favoriteFont = [[UIFont boldSystemFontOfSize:16.0] retain];
-        retweetFormatFont = [[UIFont systemFontOfSize:14.0] retain];
-        retweetAuthorFont = [[UIFont boldSystemFontOfSize:14.0] retain];     
-    } else {
-        authorFont = [[UIFont boldSystemFontOfSize:16.5] retain];
-        timestampFont = [[UIFont systemFontOfSize:14.0] retain];
-        timestampBoldFont = [[UIFont boldSystemFontOfSize:15.5] retain];
-        textFont = [[UIFont systemFontOfSize:16.0] retain];
-        favoriteFont = [[UIFont boldSystemFontOfSize:18.0] retain];
-        retweetFormatFont = [[UIFont systemFontOfSize:16.0] retain];
-        retweetAuthorFont = [[UIFont boldSystemFontOfSize:16.0] retain];
-    }
+    authorFont = [[UIFont boldSystemFontOfSize:15.0] retain];
+    timestampFont = [[UIFont systemFontOfSize:12.5] retain];
+    timestampBoldFont = [[UIFont boldSystemFontOfSize:14.0] retain];
+    textFont = [[UIFont systemFontOfSize:14.0] retain];
+    favoriteFont = [[UIFont boldSystemFontOfSize:16.0] retain];
+    retweetFormatFont = [[UIFont systemFontOfSize:14.0] retain];
+    retweetAuthorFont = [[UIFont boldSystemFontOfSize:14.0] retain];     
 }
 
 - (void)dealloc
@@ -273,8 +221,6 @@ static UIImage * highlightedRetweetGlyph;
 
     [[self authorColor] set];
     CGFloat padding = 5.0;
-    if (favorite)
-        padding += 14.0;
     if (geocoded)
         padding += 11.0;
     if (attachment)
@@ -292,21 +238,6 @@ static UIImage * highlightedRetweetGlyph;
         fontSize:authorFont.pointSize
         lineBreakMode:UILineBreakModeTailTruncation
         baselineAdjustment:UIBaselineAdjustmentNone];
-
-    //
-    // Draw the favorite indicator
-    //
-    if (favorite) {
-        [[self favoriteColor] set];
-        point =
-            CGPointMake(AUTHOR_LEFT_MARGIN + size.width + 1, AUTHOR_TOP_MARGIN);
-        size = CGSizeMake(13, authorFont.pointSize);
-
-        [[[self class] starText] drawAtPoint:point forWidth:size.width
-            withFont:authorFont fontSize:authorFont.pointSize
-            lineBreakMode:UILineBreakModeTailTruncation
-            baselineAdjustment:UIBaselineAdjustmentNone];
-    }
 
     //
     // Draw the geocode inidcator
@@ -394,18 +325,6 @@ static UIImage * highlightedRetweetGlyph;
             retweetGlyph.size.width + 3,
             size.height + TEXT_TOP_MARGIN + retweetVertOffset);
         [self.retweetAuthorName drawAtPoint:point withFont:retweetAuthorFont];
-        
-        if (additionalRetweeters) {
-            CGSize usernameSize =
-                [self.retweetAuthorName sizeWithFont:retweetAuthorFont];
-            point = CGPointMake(
-                AUTHOR_LEFT_MARGIN + retweetFormatSize.width +
-                retweetGlyph.size.width + 5 + usernameSize.width,
-                size.height + TEXT_TOP_MARGIN + retweetVertOffset);
-            NSString * additionalString =
-                [NSString stringWithFormat:@"(+%d)", additionalRetweeters];
-            [additionalString drawAtPoint:point withFont:retweetFormatFont];
-        }
     }
 
     //

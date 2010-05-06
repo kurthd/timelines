@@ -63,6 +63,7 @@
     IBOutlet TimelineSelectionViewController * timelineSelectionController;
     IBOutlet NetworkAwareViewController * mentionsNetAwareViewController;
     IBOutlet NetworkAwareViewController * favoritesNetAwareViewController;
+    IBOutlet NetworkAwareViewController * listsNetAwareViewController;
     
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     MentionsAcctMgr * mentionsAcctMgr;

@@ -43,7 +43,7 @@
 - (void)displayActivity:(BOOL)activity
 {
     self.saveButton.enabled = !activity;
-    self.cancelButton.enabled = self.allowsCancel && !activity;
+    self.cancelButton.enabled = !activity;
 
     self.usernameTextField.enabled = !activity;
     self.passwordTextField.enabled = !activity;
@@ -58,12 +58,13 @@
 {
     [super viewDidLoad];
 
-    self.navigationItem.title = LS(@"account.addaccount");
-    self.navigationItem.leftBarButtonItem = self.cancelButton;
+    self.navigationItem.title =
+        self.allowsCancel ? LS(@"account.addaccount") : @"Log In";
     self.navigationItem.rightBarButtonItem = self.saveButton;
     
     self.saveButton.enabled = NO;
-    self.cancelButton.enabled = self.allowsCancel;
+    self.navigationItem.leftBarButtonItem =
+        self.allowsCancel ? self.cancelButton : nil;
     
     self.tableView.separatorColor = [UIColor twitchGrayColor];
     self.tableView.backgroundColor = [UIColor twitchBackgroundColor];

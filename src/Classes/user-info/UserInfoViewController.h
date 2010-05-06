@@ -29,9 +29,8 @@
     IBOutlet UILabel * bioLabel;
     IBOutlet UIButton * followButton;
     IBOutlet UIButton * stopFollowingButton;
-    IBOutlet TwoLineButton * blockButton;
-    IBOutlet TwoLineButton * addToContactsButton;
-    IBOutlet TwoLineButton * bookmarkButton;
+    IBOutlet UIButton * blockButton;
+    IBOutlet UIButton * addToContactsButton;
     IBOutlet UIActivityIndicatorView * processingFollowingIndicator;
     IBOutlet UIButton * webAddressButton;
     IBOutlet UILabel * followsYouLabel;
@@ -71,6 +70,8 @@
 - (IBAction)sendMessage:(id)sender;
 - (IBAction)showFullProfileImage:(id)sender;
 - (IBAction)visitWebpage:(id)sender;
+- (IBAction)changeBlockedState;
+- (IBAction)addUserToContacts;
 
 - (void)setQueryingFollowedBy;
 - (void)setFailedToQueryFollowedBy;

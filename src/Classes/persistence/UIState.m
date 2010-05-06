@@ -6,8 +6,7 @@
 
 @implementation UIState
 
-@synthesize numNewMentions, composingTweet, viewingUrl,
-    viewingHtml, currentlyViewedTweetId, currentlyViewedMentionId,
-    timelineContentOffset, currentlyViewedTimeline;
+@synthesize composingTweet, viewingUrl, viewingHtml, currentlyViewedTweetId,
+    currentlyViewedMentionId, timelineContentOffset, currentlyViewedTimeline;
 
 @end
