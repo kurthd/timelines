@@ -61,6 +61,7 @@
 - (void)initHomeTab;
 - (void)initMentionsTab;
 - (void)initFavoritesTab;
+- (void)initRetweetsTab;
 - (void)initAccountsView;
 - (void)initListsMgr;
 
@@ -160,6 +161,7 @@ enum {
     [mentionsAcctMgr release];
     [mentionDisplayMgr release];
     [favoritesDisplayMgr release];
+    [retweetsDisplayMgr release];
     [listsDisplayMgr release];
     [composeTweetDisplayMgr release];
 
@@ -675,6 +677,24 @@ enum {
     TwitterCredentials * c = self.activeCredentials.credentials;
     if (c)
         [favoritesDisplayMgr setCredentials:c];
+}
+
+- (void)initRetweetsTab
+{
+    retweetsDisplayMgr =
+        [[timelineDisplayMgrFactory
+        createRetweetsDisplayMgrWithWrapperController:
+        retweetsNetAwareViewController
+        navigationController:mainNavController
+        title:@"Retweets"
+        composeTweetDisplayMgr:self.composeTweetDisplayMgr]
+        retain];
+    retweetsDisplayMgr.displayAsConversation = YES;
+    retweetsDisplayMgr.showMentions = YES;
+    
+    TwitterCredentials * c = self.activeCredentials.credentials;
+    if (c)
+        [retweetsDisplayMgr setCredentials:c];
 }
 
 - (void)initAccountsView
@@ -1352,6 +1372,9 @@ enum {
         case 2: // favorites
             [self showFavoritesAnimated:NO];
             break;
+        case 3: // retweets
+            [self showRetweetsAnimated:NO];
+            break;
     }
     
     if (uiState.currentlyViewedTweetId) {
@@ -1548,7 +1571,16 @@ enum {
 }
 
 - (void)showRetweetsAnimated:(BOOL)animated
-{}
+{
+    if (!retweetsDisplayMgr)
+        [self initRetweetsTab];
+    if (!retweetsDisplayMgr.needsRefresh &&
+        retweetsDisplayMgr.hasBeenDisplayed)
+        [retweetsDisplayMgr refreshWithLatest];
+    [mainNavController pushViewController:retweetsNetAwareViewController
+        animated:animated];
+    uiState.currentlyViewedTimeline = 3;
+}
 
 - (void)userDidSelectListWithId:(NSNumber *)identifier
 {

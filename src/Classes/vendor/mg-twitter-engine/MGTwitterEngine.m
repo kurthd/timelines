@@ -1740,6 +1740,31 @@
                            responseType:MGTwitterStatuses];
 }
 
+// Getting retweets
+- (NSString *)getRetweetsSinceID:(NSString *)updateID
+                            page:(int)pageNum
+                           count:(int)count
+{
+    NSString *path = [NSString stringWithFormat:@"statuses/retweeted_to_me.%@", API_FORMAT];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
+    if ([updateID longLongValue] > 0) {
+        [params setObject:[NSString stringWithFormat:@"%@", updateID] forKey:@"since_id"];
+    }
+    if (pageNum > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", pageNum] forKey:@"page"];
+    }
+    int tweetCount = DEFAULT_TWEET_COUNT;
+    if (count > 0) {
+        tweetCount = count;
+    }
+    [params setObject:[NSString stringWithFormat:@"%d", tweetCount] forKey:@"count"];
+    
+    return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil 
+                            requestType:MGTwitterStatusesRequest 
+                           responseType:MGTwitterStatuses];
+}
+
 #pragma mark Sending and editing direct messages
 
 

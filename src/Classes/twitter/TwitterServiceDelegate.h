@@ -80,6 +80,17 @@
                                      count:(NSNumber *)count
                                      error:(NSError *)error;
 
+#pragma mark Retweets
+
+- (void)retweets:(NSArray *)retweets
+ fetchedSinceUpdateId:(NSNumber *)updateId
+                 page:(NSNumber *)page
+                count:(NSNumber *)count;
+- (void)failedToFetchRetweetsSinceUpdateId:(NSNumber *)updateId
+                                   page:(NSNumber *)page
+                                  count:(NSNumber *)count
+                                  error:(NSError *)error;
+
 #pragma mark Direct messages
 
 @optional

@@ -1037,7 +1037,7 @@
 // HACK: Added to get "Save Search" button in header view.
 - (void)setTimelineHeaderView:(UIView *)view
 {
-    [timelineController setTimelineHeaderView:view];
+//    [timelineController setTimelineHeaderView:view];
 }
 
 - (void)setShowMentions:(BOOL)show

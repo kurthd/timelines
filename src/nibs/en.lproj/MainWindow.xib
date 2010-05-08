@@ -12,13 +12,14 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="124"/>
+			<integer value="288"/>
+			<integer value="283"/>
 			<integer value="2"/>
 			<integer value="212"/>
-			<integer value="288"/>
-			<integer value="295"/>
 			<integer value="292"/>
-			<integer value="283"/>
+			<integer value="295"/>
+			<integer value="124"/>
+			<integer value="303"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -248,6 +249,22 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<bool key="IBUIHorizontal">NO</bool>
 			</object>
+			<object class="IBUIViewController" id="571853455">
+				<object class="IBUINavigationItem" key="IBUINavigationItem" id="116448596">
+					<reference key="IBUINavigationBar"/>
+					<string key="IBUITitle">Retweets</string>
+					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+				</object>
+				<object class="IBUISimulatedNavigationBarMetrics" key="IBUISimulatedTopBarMetrics">
+					<bool key="IBUIPrompted">NO</bool>
+				</object>
+				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
+				<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
+					<int key="interfaceOrientation">1</int>
+				</object>
+				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+				<bool key="IBUIHorizontal">NO</bool>
+			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
@@ -395,6 +412,14 @@
 						<reference key="destination" ref="664661524"/>
 					</object>
 					<int key="connectionID">302</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">retweetsNetAwareViewController</string>
+						<reference key="source" ref="664661524"/>
+						<reference key="destination" ref="571853455"/>
+					</object>
+					<int key="connectionID">305</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -601,6 +626,20 @@
 						<reference key="object" ref="312986563"/>
 						<reference key="parent" ref="123523170"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">303</int>
+						<reference key="object" ref="571853455"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="116448596"/>
+						</object>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">304</int>
+						<reference key="object" ref="116448596"/>
+						<reference key="parent" ref="571853455"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -648,6 +687,10 @@
 					<string>299.IBPluginDependency</string>
 					<string>3.CustomClassName</string>
 					<string>3.IBPluginDependency</string>
+					<string>303.CustomClassName</string>
+					<string>303.IBEditorWindowLastContentRect</string>
+					<string>303.IBPluginDependency</string>
+					<string>304.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -698,6 +741,10 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>TwitchAppDelegate</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>NetworkAwareViewController</string>
+					<string>{{0, 665}, {320, 480}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -716,7 +763,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">302</int>
+			<int key="maxID">305</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -847,6 +894,7 @@
 							<string>listsNetAwareViewController</string>
 							<string>mainNavController</string>
 							<string>mentionsNetAwareViewController</string>
+							<string>retweetsNetAwareViewController</string>
 							<string>timelineSelectionController</string>
 							<string>window</string>
 						</object>
@@ -857,6 +905,7 @@
 							<string>NetworkAwareViewController</string>
 							<string>NetworkAwareViewController</string>
 							<string>UINavigationController</string>
+							<string>NetworkAwareViewController</string>
 							<string>NetworkAwareViewController</string>
 							<string>TimelineSelectionViewController</string>
 							<string>UIWindow</string>

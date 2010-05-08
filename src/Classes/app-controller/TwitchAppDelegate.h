@@ -63,12 +63,14 @@
     IBOutlet TimelineSelectionViewController * timelineSelectionController;
     IBOutlet NetworkAwareViewController * mentionsNetAwareViewController;
     IBOutlet NetworkAwareViewController * favoritesNetAwareViewController;
+    IBOutlet NetworkAwareViewController * retweetsNetAwareViewController;
     IBOutlet NetworkAwareViewController * listsNetAwareViewController;
     
     TimelineDisplayMgrFactory * timelineDisplayMgrFactory;
     MentionsAcctMgr * mentionsAcctMgr;
     TimelineDisplayMgr * timelineDisplayMgr;
     TimelineDisplayMgr * favoritesDisplayMgr;
+    TimelineDisplayMgr * retweetsDisplayMgr;
     ListsDisplayMgr * listsDisplayMgr;
     ComposeTweetDisplayMgr * composeTweetDisplayMgr;
 

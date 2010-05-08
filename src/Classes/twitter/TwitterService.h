@@ -77,6 +77,13 @@
                               page:(NSNumber *)page
                              count:(NSNumber *)count;
 
+
+#pragma mark Retweets
+
+- (void)fetchRetweetsSinceUpdateId:(NSNumber *)updateId
+                              page:(NSNumber *)page
+                             count:(NSNumber *)count;
+
 #pragma mark Direct messages
 
 - (void)fetchDirectMessagesSinceId:(NSNumber *)updateId

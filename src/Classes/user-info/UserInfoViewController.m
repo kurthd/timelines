@@ -199,7 +199,7 @@ static NSNumberFormatter * formatter;
             forState:UIControlStateNormal];
         [blockButton setTitleColor:[UIColor twitchBlueOnDarkBackgroundColor]
             forState:UIControlStateNormal];
-        [blockButton setTitleColor:[UIColor blackColor]
+        [blockButton setTitleColor:[UIColor grayColor]
             forState:UIControlStateDisabled];
         [addToContactsButton
             setTitleColor:[UIColor twitchBlueOnDarkBackgroundColor]

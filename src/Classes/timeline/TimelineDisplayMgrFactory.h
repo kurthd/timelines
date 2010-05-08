@@ -36,4 +36,11 @@
     title:(NSString *)title
     composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr;
 
+- (TimelineDisplayMgr *)
+    createRetweetsDisplayMgrWithWrapperController:
+    (NetworkAwareViewController *)wrapperController
+    navigationController:(UINavigationController *)navigationController
+    title:(NSString *)title
+    composeTweetDisplayMgr:(ComposeTweetDisplayMgr *)composeTweetDisplayMgr;
+
 @end

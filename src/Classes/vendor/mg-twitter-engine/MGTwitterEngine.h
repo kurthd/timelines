@@ -115,6 +115,8 @@
 // Getting mentions
 - (NSString *)getMentionsSinceID:(NSString *)updateID page:(int)page count:(int)count;
 
+- (NSString *)getRetweetsSinceID:(NSString *)updateID page:(int)pageNum count:(int)count;
+
 - (NSString *)getFeaturedUsers; // statuses/features (undocumented, returns invalid JSON data)
 
 

@@ -238,6 +238,27 @@ static NSMutableDictionary * oaTokens;
     [self request:requestId isHandledBy:processor];
 }
 
+#pragma mark Retweets
+
+- (void)fetchRetweetsSinceUpdateId:(NSNumber *)updateId page:(NSNumber *)page
+    count:(NSNumber *)count
+{
+    ResponseProcessor * processor =
+        [FetchRetweetsResponseProcessor processorWithUpdateId:updateId
+                                                         page:page
+                                                        count:count
+                                                  credentials:credentials
+                                                      context:context
+                                                     delegate:delegate];
+
+    NSString * requestId =
+        [twitter getRetweetsSinceID:[updateId description]
+                               page:[page integerValue]
+                              count:[count integerValue]];
+
+    [self request:requestId isHandledBy:processor];
+}
+                             
 #pragma mark Direct messages
 
 - (void)fetchDirectMessagesSinceId:(NSNumber *)updateId

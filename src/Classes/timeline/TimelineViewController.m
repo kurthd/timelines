@@ -681,9 +681,7 @@ static BOOL alreadyReadHighlightNewTweetsValue;
 {
     // this ensures that any header set before the view is showed scales
     // correctly when changing orientation
-    self.view.frame =
-        [[RotatableTabBarController instance] landscape] ?
-        CGRectMake(0, 0, 480, 220) : CGRectMake(0, 0, 320, 367);
+    self.view.frame = CGRectMake(0, 0, 320, 416);
 
     if ([SettingsReader displayTheme] != kDisplayThemeDark)
         self.tableView.backgroundColor = [UIColor whiteColor];
