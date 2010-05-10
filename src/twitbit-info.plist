@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>BitlyUsername</key>
-	<string>twitbitappdefault</string>
+	<key>AdMobPublisherId</key>
+	<string>a14b2670184a469</string>
 	<key>BitlyApiKey</key>
 	<string>R_f20d3efb2ca10bc77c4ed9f0bbe649a2</string>
+	<key>BitlyUsername</key>
+	<string>twitbitappdefault</string>
 	<key>BitlyVersion</key>
 	<string>2.0.1</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -17,7 +19,7 @@
 	<key>CFBundleIconFile</key>
 	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>com.highorderbit.twitch</string>
+	<string>com.highorderbit.timelines</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -26,6 +28,17 @@
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.highorderbit.twitbit</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>twitbit</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>2.8.3</string>
 	<key>DeviceRegistrationDomain</key>
@@ -40,32 +53,19 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
+	<key>PosterousPostUrl</key>
+	<string>https://posterous.com/api/upload</string>
 	<key>SBUsesNetwork</key>
 	<true/>
 	<key>TwitPicPostUrl</key>
 	<string>https://twitpic.com/api/upload</string>
-	<key>PosterousPostUrl</key>
-	<string>https://posterous.com/api/upload</string>
-	<key>UIPrerenderedIcon</key>
-	<true/>
-	<key>YfrogPostUrl</key>
-	<string>https://yfrog.com/api/upload</string>
-	<key>AdMobPublisherId</key>
-	<string>a14b2670184a469</string>
 	<key>TwitbitProUrl</key>
 	<string>http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=322281538&amp;mt=8</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>twitbit</string>
-			</array>
-			<key>CFBundleURLName</key>
-			<string>com.highorderbit.twitbit</string>
-		</dict>
-	</array>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleBlackOpaque</string>
+	<key>YfrogPostUrl</key>
+	<string>https://yfrog.com/api/upload</string>
 </dict>
 </plist>
