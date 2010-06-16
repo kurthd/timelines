@@ -4272,7 +4272,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "";
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Douglas Kurth (899W8AC8X3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVICE_REGISTRATION_DOMAIN = sandbox.twitbit.highorderbit.com;
 				GCC_CW_ASM_SYNTAX = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -4328,7 +4328,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Douglas Kurth (899W8AC8X3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVICE_REGISTRATION_DOMAIN = sandbox.twitbit.highorderbit.com;
 				GCC_CW_ASM_SYNTAX = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -4353,7 +4353,7 @@
 					"-lAdMobSimulator3_0",
 				);
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4FB9C1F8-C1B9-4F19-BDCB-33FE53C20D69";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos3.0;
 			};
 			name = Release;
@@ -4382,7 +4382,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Douglas Kurth (899W8AC8X3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Debay (FFCUDQN2ZL)";
 				DEVICE_REGISTRATION_DOMAIN = client.twitbit.highorderbit.com;
 				GCC_CW_ASM_SYNTAX = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -4408,7 +4408,7 @@
 					"-lAdMobSimulator3_0",
 				);
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4FB9C1F8-C1B9-4F19-BDCB-33FE53C20D69";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "96A94869-42D1-4773-AE97-EA534F5DDD13";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Distribution - App Store";
