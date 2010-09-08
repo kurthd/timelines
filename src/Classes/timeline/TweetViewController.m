@@ -531,7 +531,8 @@ enum TweetActionSheets {
     }
 
     [controller dismissModalViewControllerAnimated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO
+        withAnimation:UIStatusBarAnimationNone];
 }
 
 #pragma mark AsynchronousNetworkFetcherDelegate implementation

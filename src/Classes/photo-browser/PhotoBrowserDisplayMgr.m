@@ -38,7 +38,8 @@ static PhotoBrowserDisplayMgr * gInstance = NULL;
 {
     NSLog(@"Showing photo: %@", remotePhoto);
 
-    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES
+        withAnimation:UIStatusBarAnimationNone];
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleBlackTranslucent
         animated:YES];
@@ -46,7 +47,8 @@ static PhotoBrowserDisplayMgr * gInstance = NULL;
     [self.hostViewController presentModalViewController:self.photoBrowser
         animated:YES];
     [self.photoBrowser addRemotePhoto:remotePhoto];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO
+        withAnimation:UIStatusBarAnimationNone];
 }
 
 - (PhotoBrowser *)photoBrowser

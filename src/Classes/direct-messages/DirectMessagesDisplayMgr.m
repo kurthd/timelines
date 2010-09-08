@@ -526,7 +526,8 @@ static BOOL alreadyReadDisplayWithUsernameValue;
     }
 
     [controller dismissModalViewControllerAnimated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO
+        withAnimation:UIStatusBarAnimationNone];
 }
 
 #pragma mark Public DirectMessagesDisplayMgr implementation

@@ -62,6 +62,10 @@
     self.view.frame = viewFrame;
 
     previousOrientation = -1;
+    
+    CGRect progressViewFrame = progressView.frame;
+    progressViewFrame.size.height = 14;
+    progressView.frame = progressViewFrame;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -86,26 +90,36 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:
     (UIInterfaceOrientation)orientation
 {
-    if (isDisplayed)
-        [self configureViewForInterfaceOrientation:orientation];
+    BOOL shouldRotate =
+        orientation == UIInterfaceOrientationPortrait;
+    if (shouldRotate) {
+        if (isDisplayed)
+            [self configureViewForInterfaceOrientation:orientation];
+        previousOrientation = orientation;
 
-    previousOrientation = orientation;
+        return YES;
+    }
 
-    return YES;
+    return NO;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
     duration:(NSTimeInterval)duration
 {
     if (![[UIApplication sharedApplication] isStatusBarHidden]) {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
+        [[UIApplication sharedApplication] setStatusBarHidden:YES
+            withAnimation:UIStatusBarAnimationNone];
         [self performSelector:@selector(showStatusBar) withObject:nil
             afterDelay:0.3];
     }
-
-    RemotePhoto * selectedImage = [self.photoList objectAtIndex:selectedIndex];
-    UIImage * image = selectedImage.image;
-    [self showImageZoomed:image];
+    
+    if (self.photoList.count > selectedIndex) {
+        RemotePhoto * selectedImage =
+            [self.photoList objectAtIndex:selectedIndex];
+        UIImage * image = selectedImage.image;
+        [self performSelector:@selector(showImageZoomed:) withObject:image
+            afterDelay:0];
+    }
 }
 
 #pragma mark PhotoSourceDelegate implementation
@@ -115,7 +129,7 @@
     NSLog(@"Received image for url: %@", url);
     RemotePhoto * remoteImage = [self remoteImageForUrl:url];
     remoteImage.image = image;
-
+    
     RemotePhoto * selectedImage = [self.photoList objectAtIndex:selectedIndex];
     if ([remoteImage isEqual:selectedImage])
         [self showImage:image];
@@ -218,9 +232,11 @@
         [alert show];
     }
 
-    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
+    [[UIApplication sharedApplication]
+        setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
     [controller dismissModalViewControllerAnimated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
+    [[UIApplication sharedApplication]
+        setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
 
@@ -268,9 +284,10 @@
 
     selectedIndex = index;
 
-    if (selectedImage.image)
-        [self showImage:selectedImage.image];
-    else {
+    if (selectedImage.image) {
+        [self performSelector:@selector(showImage:)
+            withObject:selectedImage.image afterDelay:0];
+    } else {
         [self.photoSource fetchImageWithUrl:selectedImage.url];
         [self setLoadingState:YES];
         progressView.progress = 0;
@@ -453,13 +470,15 @@
 - (void)hideStatusBar
 {
     if (isDisplayed && barsFaded && !sendingInEmail)
-        [[UIApplication sharedApplication] setStatusBarHidden:YES animated:YES];
+        [[UIApplication sharedApplication]
+            setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)showStatusBar
 {
     if (!barsFaded)
-        [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
+        [[UIApplication sharedApplication]
+            setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 }
 
 - (void)showBars
@@ -483,7 +502,8 @@
     [UIView commitAnimations];
 
     if (isDisplayed)
-        [[UIApplication sharedApplication] setStatusBarHidden:NO animated:YES];
+        [[UIApplication sharedApplication]
+            setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 
     barsFaded = NO;
 }
@@ -532,7 +552,8 @@
 {
     sendingInEmail = YES;
 
-    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
+    [[UIApplication sharedApplication]
+        setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault
         animated:YES];
 

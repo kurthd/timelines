@@ -581,6 +581,8 @@
 		91B771F710BD8D5B0014172A /* ContactCachePersistenceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B771F610BD8D5B0014172A /* ContactCachePersistenceStore.m */; };
 		91B927531187F4C200EDE69C /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B927521187F4C200EDE69C /* libxml2.dylib */; };
 		91BD113B1006736F0082D209 /* PhotoBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BD11391006736F0082D209 /* PhotoBrowserView.xib */; };
+		91BDAB2212370AB500CB115A /* ContactCache.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91BDAB2112370AB500CB115A /* ContactCache.plist */; };
+		91BDAB3B123710EE00CB115A /* UIState.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91BDAB3A123710EE00CB115A /* UIState.plist */; };
 		91C10B56118DE49600F9BEDB /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C10B54118DE49600F9BEDB /* RootViewController.m */; };
 		91D36956100D12B300B59D12 /* ButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36955100D12B300B59D12 /* ButtonBackground.png */; };
 		91D36965100D1CC900B59D12 /* ButtonBackgroundHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D36964100D1CC900B59D12 /* ButtonBackgroundHighlighted.png */; };
@@ -1567,6 +1569,8 @@
 		91B771F610BD8D5B0014172A /* ContactCachePersistenceStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactCachePersistenceStore.m; path = "user-info/ContactCachePersistenceStore.m"; sourceTree = "<group>"; };
 		91B927521187F4C200EDE69C /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		91BD113A1006736F0082D209 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = nibs/en.lproj/PhotoBrowserView.xib; sourceTree = "<group>"; };
+		91BDAB2112370AB500CB115A /* ContactCache.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ContactCache.plist; sourceTree = "<group>"; };
+		91BDAB3A123710EE00CB115A /* UIState.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UIState.plist; sourceTree = "<group>"; };
 		91C10B53118DE49600F9BEDB /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = accounts/RootViewController.h; sourceTree = "<group>"; };
 		91C10B54118DE49600F9BEDB /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = accounts/RootViewController.m; sourceTree = "<group>"; };
 		91C4F25510192FDA00896046 /* DirectMessageAcctMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectMessageAcctMgr.h; path = "direct-messages/DirectMessageAcctMgr.h"; sourceTree = "<group>"; };
@@ -2804,6 +2808,8 @@
 				05EF41970FFAE449007B59F1 /* twitbit-info.plist */,
 				052E05BB10700B7E005CEC5F /* twitbit-lite-info.plist */,
 				05977A3B0FEF0C9700E37B9C /* Icon.png */,
+				91BDAB2112370AB500CB115A /* ContactCache.plist */,
+				91BDAB3A123710EE00CB115A /* UIState.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -3504,6 +3510,8 @@
 				91832804118F8D3A009C6E88 /* RetweetsGlyph.png in Resources */,
 				91832805118F8D3A009C6E88 /* TimelineGlyph.png in Resources */,
 				91832839118F90F3009C6E88 /* MentionsGlyph.png in Resources */,
+				91BDAB2212370AB500CB115A /* ContactCache.plist in Resources */,
+				91BDAB3B123710EE00CB115A /* UIState.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4298,7 +4306,7 @@
 				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4FB9C1F8-C1B9-4F19-BDCB-33FE53C20D69";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
 		};
@@ -4354,7 +4362,7 @@
 				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Release;
 		};
@@ -4409,7 +4417,7 @@
 				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "96A94869-42D1-4773-AE97-EA534F5DDD13";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.0;
 			};
 			name = "Distribution - App Store";
 		};
@@ -4473,7 +4481,7 @@
 				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4FB9C1F8-C1B9-4F19-BDCB-33FE53C20D69";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.0;
 			};
 			name = "Distribution - Ad Hoc";
 		};
